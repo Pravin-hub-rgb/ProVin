@@ -1,0 +1,149 @@
+/* Optimized sidebar styles for smooth resizing */
+
+.sidebar {
+  /* Hardware acceleration for transforms */
+  transform: translateZ(0);
+  will-change: width;
+  
+  /* Smooth transitions when not resizing */
+  transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar.isResizing {
+  /* Disable transitions during resize for immediate response */
+  transition: none;
+  /* Better cursor during resize */
+  cursor: col-resize !important;
+}
+
+.resizeHandle {
+  /* Make resize handle clearly slidable - Full Height Overlay */
+  width: 12px;
+  height: 100%;
+  background: transparent;
+  cursor: col-resize;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  z-index: 50;
+  transition: all 0.2s ease;
+  /* Position it between sidebar and content */
+  left: 300px; /* Initial position based on default sidebar width */
+  
+  /* Add visual affordances for dragging */
+  &:hover {
+    background: rgba(156, 163, 175, 0.1);
+  }
+  
+  /* Vertical dotted line pattern */
+  &::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(
+      to bottom,
+      transparent 0%,
+      rgba(156, 163, 175, 0.3) 50%,
+      transparent 100%
+    );
+    background-size: 1px 4px;
+    transform: translateX(-50%);
+    transition: background-color 0.2s ease;
+  }
+  
+  /* Tooltip positioning */
+  & > div {
+    top: 50%;
+    left: 50%;
+  }
+  
+  /* Gripper dots in the center */
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 6px;
+    height: 24px;
+    background: 
+      radial-gradient(circle, rgba(156, 163, 175, 0.6) 2px, transparent 2px) 0 0/6px 8px no-repeat,
+      radial-gradient(circle, rgba(156, 163, 175, 0.6) 2px, transparent 2px) 0 8px/6px 8px no-repeat,
+      radial-gradient(circle, rgba(156, 163, 175, 0.6) 2px, transparent 2px) 0 16px/6px 8px no-repeat;
+    opacity: 0.8;
+    transition: all 0.2s ease;
+  }
+  
+  /* Hover state enhancements */
+  &:hover {
+    background: rgba(59, 130, 246, 0.1);
+    
+    &::before {
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(59, 130, 246, 0.6) 50%,
+        transparent 100%
+      );
+      background-size: 1px 4px;
+    }
+    
+    &::after {
+      background: 
+        radial-gradient(circle, rgba(59, 130, 246, 0.8) 2px, transparent 2px) 0 0/6px 8px no-repeat,
+        radial-gradient(circle, rgba(59, 130, 246, 0.8) 2px, transparent 2px) 0 8px/6px 8px no-repeat,
+        radial-gradient(circle, rgba(59, 130, 246, 0.8) 2px, transparent 2px) 0 16px/6px 8px no-repeat;
+      opacity: 1;
+    }
+  }
+  
+  /* Active/resizing state */
+  &.isResizing {
+    background: rgba(59, 130, 246, 0.2);
+    
+    &::before {
+      background: linear-gradient(
+        to bottom,
+        transparent 0%,
+        rgba(59, 130, 246, 0.9) 50%,
+        transparent 100%
+      );
+      background-size: 1px 4px;
+    }
+    
+    &::after {
+      background: 
+        radial-gradient(circle, rgba(59, 130, 246, 1) 2px, transparent 2px) 0 0/6px 8px no-repeat,
+        radial-gradient(circle, rgba(59, 130, 246, 1) 2px, transparent 2px) 0 8px/6px 8px no-repeat,
+        radial-gradient(circle, rgba(59, 130, 246, 1) 2px, transparent 2px) 0 16px/6px 8px no-repeat;
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1.1);
+    }
+  }
+  
+  /* Tooltip for accessibility */
+  &:hover::selection {
+    background: none;
+  }
+}
+
+/* Content area optimization */
+.contentArea {
+  /* Hardware acceleration for content area */
+  transform: translateZ(0);
+  will-change: auto;
+}
+
+/* Body styles during resize */
+body.resizing {
+  user-select: none;
+  cursor: col-resize;
+}
+
+/* Smooth animations for other elements */
+.transitionSmooth {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
