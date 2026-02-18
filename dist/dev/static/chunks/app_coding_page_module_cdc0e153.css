@@ -1,0 +1,106 @@
+/* [project]/app/coding/page.module.css [app-client] (css) */
+.page-module__3DnRJG__sidebar {
+  will-change: width;
+  transition: width .2s cubic-bezier(.4, 0, .2, 1);
+  transform: translateZ(0);
+}
+
+.page-module__3DnRJG__sidebar.page-module__3DnRJG__isResizing {
+  transition: none;
+  cursor: col-resize !important;
+}
+
+.page-module__3DnRJG__resizeHandle {
+  cursor: col-resize;
+  z-index: 50;
+  background: none;
+  width: 12px;
+  height: 100%;
+  transition: all .2s;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 300px;
+}
+
+.page-module__3DnRJG__resizeHandle:hover {
+  background: #9ca3af1a;
+}
+
+.page-module__3DnRJG__resizeHandle:before {
+  content: "";
+  background: linear-gradient(#0000 0%, #9ca3af4d 50%, #0000 100%) 0 0 / 1px 4px;
+  width: 1px;
+  transition: background-color .2s;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.page-module__3DnRJG__resizeHandle > div {
+  top: 50%;
+  left: 50%;
+}
+
+.page-module__3DnRJG__resizeHandle:after {
+  content: "";
+  opacity: .8;
+  background: radial-gradient(circle, #9ca3af99 2px, #0000 2px) 0 0 / 6px 8px no-repeat, radial-gradient(circle, #9ca3af99 2px, #0000 2px) 0 8px / 6px 8px no-repeat, radial-gradient(circle, #9ca3af99 2px, #0000 2px) 0 16px / 6px 8px no-repeat;
+  width: 6px;
+  height: 24px;
+  transition: all .2s;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.page-module__3DnRJG__resizeHandle:hover {
+  background: #3b82f61a;
+}
+
+.page-module__3DnRJG__resizeHandle:hover:before {
+  background: linear-gradient(#0000 0%, #3b82f699 50%, #0000 100%) 0 0 / 1px 4px;
+}
+
+.page-module__3DnRJG__resizeHandle:hover:after {
+  opacity: 1;
+  background: radial-gradient(circle, #3b82f6cc 2px, #0000 2px) 0 0 / 6px 8px no-repeat, radial-gradient(circle, #3b82f6cc 2px, #0000 2px) 0 8px / 6px 8px no-repeat, radial-gradient(circle, #3b82f6cc 2px, #0000 2px) 0 16px / 6px 8px no-repeat;
+}
+
+.page-module__3DnRJG__resizeHandle.page-module__3DnRJG__isResizing {
+  background: #3b82f633;
+}
+
+.page-module__3DnRJG__resizeHandle.page-module__3DnRJG__isResizing:before {
+  background: linear-gradient(#0000 0%, #3b82f6e6 50%, #0000 100%) 0 0 / 1px 4px;
+}
+
+.page-module__3DnRJG__resizeHandle.page-module__3DnRJG__isResizing:after {
+  opacity: 1;
+  background: radial-gradient(circle, #3b82f6 2px, #0000 2px) 0 0 / 6px 8px no-repeat, radial-gradient(circle, #3b82f6 2px, #0000 2px) 0 8px / 6px 8px no-repeat, radial-gradient(circle, #3b82f6 2px, #0000 2px) 0 16px / 6px 8px no-repeat;
+  transform: translate(-50%, -50%)scale(1.1);
+}
+
+.page-module__3DnRJG__resizeHandle:hover::selection {
+  background: none;
+}
+
+.page-module__3DnRJG__contentArea {
+  will-change: auto;
+  transform: translateZ(0);
+}
+
+body.page-module__3DnRJG__resizing {
+  -webkit-user-select: none;
+  user-select: none;
+  cursor: col-resize;
+}
+
+.page-module__3DnRJG__transitionSmooth {
+  transition: all .2s cubic-bezier(.4, 0, .2, 1);
+}
+
+/*# sourceMappingURL=app_coding_page_module_cdc0e153.css.map*/

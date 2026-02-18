@@ -1,0 +1,12 @@
+[00:00:01.431] Server  LOG     ✓ Ready in 1074ms
+[00:00:02.997] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:13.407] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:00:27.545] Server  LOG     Original file parameter: "docs/coding/python/1 Lec variables & functions/notes.md"
+[00:00:27.546] Server  LOG     Decoded file path: "docs/coding/python/1 Lec variables & functions/notes.md"
+[00:00:27.546] Server  LOG     Clean file path: "docs/coding/python/1 Lec variables & functions/notes.md"
+[00:00:27.546] Server  LOG     Full file path: "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\python\\1 Lec variables & functions\\notes.md"
+[00:00:29.796] Server  LOG     Original file parameter: "docs/coding/python/5 Lec Modules/notes.md"
+[00:00:29.796] Server  LOG     Decoded file path: "docs/coding/python/5 Lec Modules/notes.md"
+[00:00:29.796] Server  LOG     Clean file path: "docs/coding/python/5 Lec Modules/notes.md"
+[00:00:29.797] Server  LOG     Full file path: "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\python\\5 Lec Modules\\notes.md"
+[03:16:25.507] Server  LOG     ✓ Compiled in 207ms
