@@ -1,0 +1,172 @@
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden">JavaScript Course Roadmap for Fullstack/Frontend Interviews — 6 phases covering all must-know concepts</h2>
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: var(--font-sans); }
+  .roadmap { padding: 1.5rem 0; }
+  .phase { margin-bottom: 2rem; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; }
+  .phase-header { padding: 0.9rem 1.25rem; display: flex; align-items: center; gap: 12px; }
+  .phase-num { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 500; flex-shrink: 0; }
+  .phase-title { font-size: 16px; font-weight: 500; color: var(--color-text-primary); }
+  .phase-sub { font-size: 13px; color: var(--color-text-secondary); margin-top: 2px; }
+  .phase-body { padding: 0 1.25rem 1.25rem; }
+  .topics { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+  .topic { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; }
+  .topic-name { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 3px; }
+  .topic-desc { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+  .interview-tag { display: inline-block; font-size: 11px; padding: 2px 7px; border-radius: 999px; margin-top: 5px; }
+  .hot { background: #FAECE7; color: #993C1D; }
+  .important { background: #E6F1FB; color: #185FA5; }
+  .divider { height: 0.5px; background: var(--color-border-tertiary); margin: 0 0 1.25rem; }
+  .legend { display: flex; gap: 12px; padding: 0 1.25rem 1rem; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--color-text-secondary); }
+  .phase1 .phase-header { background: #EAF3DE; } .phase1 .phase-num { background: #639922; color: white; }
+  .phase2 .phase-header { background: #E6F1FB; } .phase2 .phase-num { background: #185FA5; color: white; }
+  .phase3 .phase-header { background: #EEEDFE; } .phase3 .phase-num { background: #534AB7; color: white; }
+  .phase4 .phase-header { background: #FAEEDA; } .phase4 .phase-num { background: #BA7517; color: white; }
+  .phase5 .phase-header { background: #E1F5EE; } .phase5 .phase-num { background: #0F6E56; color: white; }
+  .phase6 .phase-header { background: #FAECE7; } .phase6 .phase-num { background: #993C1D; color: white; }
+</style>
+
+<div class="roadmap">
+
+  <div style="margin-bottom:1.25rem; padding:0.75rem 1.25rem; background:var(--color-background-secondary); border-radius:var(--border-radius-md); display:flex; gap:16px; flex-wrap:wrap;">
+    <div class="legend-item"><span class="interview-tag hot">🔥 asked a lot</span> very frequent in interviews</div>
+    <div class="legend-item"><span class="interview-tag important">must know</span> core concept, can't skip</div>
+  </div>
+
+  <div class="phase phase1">
+    <div class="phase-header">
+      <div class="phase-num">1</div>
+      <div>
+        <div class="phase-title">The absolute basics — JS foundations</div>
+        <div class="phase-sub">Variables, types, functions — understand this before anything else</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="divider"></div>
+      <div class="topics">
+        <div class="topic"><div class="topic-name">var / let / const</div><div class="topic-desc">Difference, when to use which. Block scope vs function scope.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Data types</div><div class="topic-desc">Primitive vs reference types. typeof, null vs undefined.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Functions</div><div class="topic-desc">Regular, arrow functions, default params, rest params.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Scope</div><div class="topic-desc">Global, local, block scope. Lexical scope — foundation for closures.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Hoisting</div><div class="topic-desc">var hoisted to undefined. let/const in temporal dead zone. Functions fully hoisted.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Type coercion</div><div class="topic-desc">== vs ===. Implicit conversions that trip people up.</div><span class="interview-tag important">must know</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase2">
+    <div class="phase-header">
+      <div class="phase-num">2</div>
+      <div>
+        <div class="phase-title">Core concepts — the interview favorites</div>
+        <div class="phase-sub">Closures, this, prototype — these come up in nearly every interview</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="divider"></div>
+      <div class="topics">
+        <div class="topic"><div class="topic-name">Closures</div><div class="topic-desc">A function remembers variables from outer scope even after outer function finishes. Used in data privacy, callbacks, counters.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">this keyword</div><div class="topic-desc">How this changes with context — regular fn, arrow fn, object method, new keyword, call/apply/bind.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Prototype & prototype chain</div><div class="topic-desc">Every object has __proto__. How JS looks up properties up the chain. Foundation of inheritance.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Classes</div><div class="topic-desc">ES6 class syntax. constructor, methods, extends, super. Classes = syntax sugar over prototypes.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">call, apply, bind</div><div class="topic-desc">Manually set this. call/apply invoke immediately, bind returns a new function.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">IIFE</div><div class="topic-desc">Immediately Invoked Function Expression. Avoids polluting global scope.</div><span class="interview-tag important">must know</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase3">
+    <div class="phase-header">
+      <div class="phase-num">3</div>
+      <div>
+        <div class="phase-title">Async JavaScript — how JS handles time</div>
+        <div class="phase-sub">Event loop, promises, async/await — heavily tested</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="divider"></div>
+      <div class="topics">
+        <div class="topic"><div class="topic-name">Synchronous vs Asynchronous</div><div class="topic-desc">Sync = one at a time, blocks. Async = continues while waiting (API calls, timers).</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Event Loop</div><div class="topic-desc">Call stack + web APIs + callback queue + microtask queue. How JS is single-threaded but non-blocking.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Callbacks</div><div class="topic-desc">Function passed to another function to run later. Leads to callback hell — why promises exist.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Promises</div><div class="topic-desc">Object representing future value. .then(), .catch(), .finally(). Promise.all, Promise.race.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">async / await</div><div class="topic-desc">Cleaner syntax over promises. await pauses until promise resolves. try/catch for errors. Same power, better readability.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Fetch API</div><div class="topic-desc">Making HTTP requests in the browser. Works with async/await. Handling JSON responses.</div><span class="interview-tag important">must know</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase4">
+    <div class="phase-header">
+      <div class="phase-num">4</div>
+      <div>
+        <div class="phase-title">Arrays, objects & functional patterns</div>
+        <div class="phase-sub">You'll use these every single day as a dev</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="divider"></div>
+      <div class="topics">
+        <div class="topic"><div class="topic-name">Array methods</div><div class="topic-desc">map, filter, reduce, find, forEach, some, every, flat, flatMap. Know all of these cold.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Destructuring</div><div class="topic-desc">Pull values out of arrays/objects cleanly. Used everywhere in React.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Spread & Rest</div><div class="topic-desc">... operator. Spread to expand, rest to collect. Copying arrays/objects without mutation.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Higher-order functions</div><div class="topic-desc">Functions that take or return other functions. map/filter are examples.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Memoization</div><div class="topic-desc">Cache results of expensive function calls. Return cached result if same input seen before. Performance pattern.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Currying</div><div class="topic-desc">Transforming f(a,b) into f(a)(b). Partial application of functions.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Pure functions</div><div class="topic-desc">Same input always gives same output. No side effects. Foundation of good JS and React.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Optional chaining & nullish</div><div class="topic-desc">obj?.prop and ?? operator. Avoids "cannot read property of undefined" errors.</div><span class="interview-tag important">must know</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase5">
+    <div class="phase-header">
+      <div class="phase-num">5</div>
+      <div>
+        <div class="phase-title">DOM & browser — making things interactive</div>
+        <div class="phase-sub">Events, delegation, bubbling — real frontend work</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="divider"></div>
+      <div class="topics">
+        <div class="topic"><div class="topic-name">DOM manipulation</div><div class="topic-desc">querySelector, getElementById, createElement, appendChild, innerHTML. The basics of changing a page.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Event handling</div><div class="topic-desc">addEventListener, removeEventListener. Click, keydown, input events.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Event bubbling</div><div class="topic-desc">Events travel up the DOM tree — child to parent. stopPropagation to stop it.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Event delegation</div><div class="topic-desc">Attach one listener on parent instead of many on children. Efficient and handles dynamic elements.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">Debounce & throttle</div><div class="topic-desc">Control how often a function fires. Debounce = wait until stopped. Throttle = limit rate.</div><span class="interview-tag hot">🔥 asked a lot</span></div>
+        <div class="topic"><div class="topic-name">localStorage / sessionStorage</div><div class="topic-desc">Persisting data in browser. Difference between the two.</div><span class="interview-tag important">must know</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="phase phase6">
+    <div class="phase-header">
+      <div class="phase-num">6</div>
+      <div>
+        <div class="phase-title">Advanced & modern JS — senior-level topics</div>
+        <div class="phase-sub">Learn after phases 1–5 are solid. These show depth.</div>
+      </div>
+    </div>
+    <div class="phase-body">
+      <div class="divider"></div>
+      <div class="topics">
+        <div class="topic"><div class="topic-name">Modules (import/export)</div><div class="topic-desc">ES6 module system. Named vs default exports. Used in every React project.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Error handling</div><div class="topic-desc">try/catch/finally. Custom errors. Handling promise rejections properly.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Generators & iterators</div><div class="topic-desc">function* syntax. yield. Custom iteration. Good to know, rarely asked at junior level.</div></div>
+        <div class="topic"><div class="topic-name">WeakMap / WeakRef</div><div class="topic-desc">Memory-efficient structures. Advanced garbage collection topics.</div></div>
+        <div class="topic"><div class="topic-name">Design patterns</div><div class="topic-desc">Singleton, Observer, Factory. Show you can write scalable code.</div><span class="interview-tag important">must know</span></div>
+        <div class="topic"><div class="topic-name">Memory & performance</div><div class="topic-desc">Memory leaks, garbage collection, avoiding re-renders. Important for fullstack.</div><span class="interview-tag important">must know</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--color-background-secondary); border-radius:var(--border-radius-lg); padding:1rem 1.25rem; margin-top:0.5rem;">
+    <div style="font-size:14px; font-weight:500; color:var(--color-text-primary); margin-bottom:6px;">After JS is done → React</div>
+    <div style="font-size:13px; color:var(--color-text-secondary);">useState, useEffect, useRef, useCallback, useMemo → props/state → Context API → React Router → then a project. All the React stuff makes sense once JS is solid.</div>
+  </div>
+
+</div>
