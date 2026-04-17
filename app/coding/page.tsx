@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect, useRef, useCallback } from "react"
-import { ChevronDown, ChevronRight, Book, FileText, ArrowLeft, ArrowRight } from "lucide-react"
+import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
 
 // Simple markdown content loader
@@ -25,7 +25,14 @@ type Lecture = {
   path: string
 }
 
+type Subject = {
+  id: string
+  title: string
+  description: string
+}
+
 export default function CodingPage() {
+  const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null)
   const [sidebarWidth, setSidebarWidth] = useState(300)
   const [isResizing, setIsResizing] = useState(false)
   const [pythonOpen, setPythonOpen] = useState(true)
@@ -37,6 +44,30 @@ export default function CodingPage() {
   const rafRef = useRef<number | null>(null)
   const isUpdatingRef = useRef(false)
   const sidebarRef = useRef<HTMLDivElement>(null)
+
+  // Subjects Data
+  const subjects: Subject[] = [
+    { 
+      id: "python", 
+      title: "Python", 
+      description: "Complete Python fundamentals"
+    },
+    { 
+      id: "nextjs", 
+      title: "Next.js", 
+      description: "Fullstack React framework"
+    },
+    { 
+      id: "react", 
+      title: "React", 
+      description: "UI component library"
+    },
+    { 
+      id: "typescript", 
+      title: "TypeScript", 
+      description: "Type safe JavaScript"
+    }
+  ]
 
   // Lecture data - manually configured
   const lectures: Lecture[] = [
@@ -151,9 +182,52 @@ export default function CodingPage() {
     }
   }, [selectedLecture])
 
+  // Render Dashboard View
+  if (!selectedSubject) {
+    return (
+      <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+          <div className="mb-10">
+            <h1 className="text-3xl font-bold text-foreground mb-2">Coding Dashboard</h1>
+            <p className="text-muted-foreground">Select a subject to view learning materials</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {subjects.map((subject) => (
+              <button
+                key={subject.id}
+                onClick={() => setSelectedSubject(subject)}
+                className="group text-left bg-background/50 border border-border/50 rounded-lg overflow-hidden hover:border-primary/50 hover:bg-accent/30 transition-all duration-200"
+              >
+                <div className="p-5">
+                  <h3 className="text-base font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
+                    {subject.title}
+                  </h3>
+                  <p className="text-xs text-muted-foreground">{subject.description}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Render Notes View
   return (
     <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 relative">
-      <div className="flex h-full">
+      <button
+        onClick={() => {
+          setSelectedSubject(null)
+          setSelectedLecture(null)
+        }}
+        className="absolute top-4 left-4 z-50 flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-xl border border-border/50 rounded-md text-sm hover:bg-accent/50 transition-colors"
+      >
+        <ChevronRight className="w-4 h-4 rotate-180" />
+        Back to Dashboard
+      </button>
+      
+      <div className="flex h-full pt-12">
         {/* Sidebar */}
         <div 
           ref={sidebarRef}
