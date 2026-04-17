@@ -3,33 +3,8 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
-
-// Simple markdown content loader
-const loadMarkdownContent = async (filePath: string): Promise<string> => {
-  try {
-    const response = await fetch(`/api/notes?file=${encodeURIComponent(filePath)}`)
-    if (response.ok) {
-      return await response.text()
-    } else {
-      return `# Error Loading Notes\n\nFailed to load: ${filePath}`
-    }
-  } catch (error) {
-    return `# Error Loading Notes\n\n${error instanceof Error ? error.message : 'Unknown error'}`
-  }
-}
+import { subjects, loadMarkdownContent, type Subject, type Lecture } from "@/lib/coding-data"
 import styles from "./page.module.css"
-
-type Lecture = {
-  id: string
-  title: string
-  path: string
-}
-
-type Subject = {
-  id: string
-  title: string
-  description: string
-}
 
 export default function CodingPage() {
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null)
@@ -45,38 +20,6 @@ export default function CodingPage() {
   const isUpdatingRef = useRef(false)
   const sidebarRef = useRef<HTMLDivElement>(null)
 
-  // Subjects Data
-  const subjects: Subject[] = [
-    { 
-      id: "python", 
-      title: "Python", 
-      description: "Complete Python fundamentals"
-    },
-    { 
-      id: "nextjs", 
-      title: "Next.js", 
-      description: "Fullstack React framework"
-    },
-    { 
-      id: "react", 
-      title: "React", 
-      description: "UI component library"
-    },
-    { 
-      id: "typescript", 
-      title: "TypeScript", 
-      description: "Type safe JavaScript"
-    }
-  ]
-
-  // Lecture data - manually configured
-  const lectures: Lecture[] = [
-    { id: "lec1", title: "Lec 1 - Variables & Functions", path: "docs/coding/python/1 Lec variables & functions/notes.md" },
-    { id: "lec2", title: "Lec 2 - Conditionals", path: "docs/coding/python/2 Lec/notes.md" },
-    { id: "lec3", title: "Lec 3 - Loops", path: "docs/coding/python/3 Lec loops/notes.md" },
-    { id: "lec4", title: "Lec 4 - Exceptions", path: "docs/coding/python/4 Lec Exceptions/notes.md" },
-    { id: "lec5", title: "Lec 5 - Modules", path: "docs/coding/python/5 Lec Modules/notes.md" }
-  ]
 
   // Optimized resize handler with requestAnimationFrame
   const handleResize = useCallback((e: MouseEvent) => {
@@ -157,12 +100,17 @@ export default function CodingPage() {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [handleKeyDown])
 
-  // Load first lecture by default
+  // Load first lecture by default when subject changes
   useEffect(() => {
-    if (!selectedLecture) {
-      setSelectedLecture(lectures[0])
+    if (selectedSubject && selectedSubject.lectures.length > 0 && !selectedLecture) {
+      setSelectedLecture(selectedSubject.lectures[0])
     }
-  }, [selectedLecture, lectures])
+    
+    // Reset selected lecture when switching subjects
+    if (!selectedSubject) {
+      setSelectedLecture(null)
+    }
+  }, [selectedSubject, selectedLecture])
 
   // Load markdown content when lecture changes
   useEffect(() => {
@@ -257,9 +205,9 @@ export default function CodingPage() {
                   onClick={() => setPythonOpen(!pythonOpen)}
                   className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-accent/50 transition-colors"
                 >
-                  <span className="font-medium text-foreground">Python</span>
+                  <span className="font-medium text-foreground">{selectedSubject.title}</span>
                   <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">5 lectures</span>
+                    <span className="text-xs text-muted-foreground">{selectedSubject.lectures.length} lectures</span>
                     {pythonOpen ? (
                       <ChevronDown className="w-4 h-4 text-muted-foreground" />
                     ) : (
@@ -270,7 +218,7 @@ export default function CodingPage() {
                 
                 {pythonOpen && (
                   <div className="border-t border-border/50 bg-background/50">
-                    {lectures.map((lecture) => (
+                    {selectedSubject?.lectures.map((lecture) => (
                       <button
                         key={lecture.id}
                         onClick={() => setSelectedLecture(lecture)}
