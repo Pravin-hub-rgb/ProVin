@@ -5,6 +5,12 @@ import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
 import { subjects, loadMarkdownContent, type Subject, type Lecture } from "@/lib/coding-data"
 import styles from "./page.module.css"
+import ProgressChecklist from "@/components/progress-checklist"
+
+// ✅ Proper TypeScript Type Narrowing (No `any`)
+const isComponentLecture = (lecture: Lecture | null): lecture is Lecture & { isComponent: true } => {
+  return lecture !== null && 'isComponent' in lecture && lecture.isComponent === true
+}
 
 export default function CodingPage() {
   const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null)
@@ -258,7 +264,7 @@ export default function CodingPage() {
 
         {/* Content Area */}
         <div className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
-          {selectedLecture ? (
+          {selectedLecture ? (  
             <div className="max-w-4xl">
               <div className="mb-6">
                 <h1 className="text-3xl font-bold text-foreground mb-2">
@@ -273,8 +279,12 @@ export default function CodingPage() {
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
                   <p className="mt-4 text-muted-foreground">Loading notes...</p>
                 </div>
-              ) : (
-                <LectureViewer content={markdownContent} />
+               ) : (
+                 isComponentLecture(selectedLecture) ? (
+                   <ProgressChecklist subject={selectedSubject!} />
+                 ) : (
+                   <LectureViewer content={markdownContent} />
+                 )
               )}
             </div>
           ) : (

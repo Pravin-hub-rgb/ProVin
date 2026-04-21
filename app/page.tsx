@@ -7,7 +7,8 @@ import CodingPage from "./coding/page"
 type Tab = "Dashboard" | "Coding" | "Trading"
 
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<Tab>("Dashboard")
+  const savedTabs = typeof window !== "undefined" ? window.localStorage.getItem("activeTab") : null
+  const [activeTab, setActiveTab] = useState<Tab>(savedTabs as Tab || "Dashboard")
 
   return (
     <>
