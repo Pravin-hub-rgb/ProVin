@@ -115,6 +115,11 @@ export const subjects: Subject[] = [
         openByDefault: true,
         lectures: [
           {
+            id: "js-lec0",
+            title: "0.0 Introduction to JavaScript",
+            path: "docs/coding/JS/Phase 1 - Foundations/0.0 Introduction to JavaScript.md",
+          },
+          {
             id: "js-lec1",
             title: "1.1 var / let / const",
             path: "docs/coding/JS/Phase 1 - Foundations/1.1 var let const.md",

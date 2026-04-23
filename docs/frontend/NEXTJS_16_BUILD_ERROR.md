@@ -129,19 +129,29 @@ export const dynamic = "force-dynamic" on page "/api/notes" cannot be used with 
 
 ✅ This is by design. Static export means 100% static files. No server. No runtime. Nothing.
 
-### ✅ The fix for static export:
+### ✅ The actual fix:
 
-You have two options:
+You have two options. **Option 1 is what 99% of people need.**
 
-#### Option 1: Remove `output: 'export'`
-If you are deploying to Vercel / Netlify / any proper host that supports functions: remove that line completely. It is not needed.
+#### ✅ Option 1: Just delete this line
+Open `next.config.ts` and **DELETE** this line completely:
+```ts
+output: 'export'
+```
 
-#### Option 2: Read all markdown files at build time
-If you actually need true static export:
+That is it. That is the entire fix.
+
+You don't need it. It was never required. It is only for when you want to export pure static html files with zero server.
+
+If you are deploying to Vercel / Netlify / Cloudflare Pages / any proper host that supports server functions: you don't need this line. Remove it. Build will pass.
+
+#### ❌ Option 2: If you actually need true static export
+If you actually want pure static html files:
+✅ You cannot have API routes at all. They are completely incompatible.
 ✅ Move all the notes reading logic out of the API route
 ✅ Read all markdown files at build time
 ✅ Bundle them directly into the client bundle
-✅ Remove the API route completely
+✅ Delete the API route completely
 
 There is no middle ground. This is intentional.
 
