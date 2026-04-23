@@ -26,7 +26,15 @@ export type Subject = {
   title: string;
   description: string;
   lectures: Lecture[];
+  phases?: LectureGroup[];
   progress?: Phase[];
+};
+
+export type LectureGroup = {
+  id: string;
+  title: string;
+  lectures: Lecture[];
+  openByDefault?: boolean;
 };
 
 /**
@@ -100,6 +108,50 @@ export const subjects: Subject[] = [
         isComponent: true,
       },
     ],
+    phases: [
+      {
+        id: "phase1",
+        title: "Phase 1 — Foundations",
+        openByDefault: true,
+        lectures: [
+          {
+            id: "js-lec1",
+            title: "1.1 var / let / const",
+            path: "docs/coding/JS/Phase 1 - Foundations/1.1 var let const.md",
+          },
+          {
+            id: "js-lec2",
+            title: "1.2 Data Types",
+            path: "docs/coding/JS/Phase 1 - Foundations/1.2 Data Types.md",
+          },
+          {
+            id: "js-lec3",
+            title: "1.3 Scope",
+            path: "docs/coding/JS/Phase 1 - Foundations/1.3 Scope.md",
+          },
+          {
+            id: "js-lec4",
+            title: "1.4 Hoisting",
+            path: "docs/coding/JS/Phase 1 - Foundations/1.4 Hoisting.md",
+          },
+          {
+            id: "js-lec5",
+            title: "1.5 Type Coercion & Equality",
+            path: "docs/coding/JS/Phase 1 - Foundations/1.5 Type Coercion.md",
+          },
+          {
+            id: "js-lec6",
+            title: "1.6 Functions — All Forms",
+            path: "docs/coding/JS/Phase 1 - Foundations/1.6 Functions.md",
+          },
+          {
+            id: "js-lec7",
+            title: "1.7 Template Literals",
+            path: "docs/coding/JS/Phase 1 - Foundations/1.7 Template Literals.md",
+          },
+        ]
+      }
+    ],
     progress: [
       {
         phase: "Phase 1 - Foundations",
@@ -124,7 +176,7 @@ export const subjects: Subject[] = [
     description: "Type safe JavaScript",
     lectures: [],
   },
-];
+] as const;
 
 /**
  * Helper function to load markdown content from API endpoint

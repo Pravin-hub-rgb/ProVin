@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
-import { subjects, loadMarkdownContent, type Subject, type Lecture } from "@/lib/coding-data"
+import { subjects, loadMarkdownContent, type Subject, type Lecture, type LectureGroup } from "@/lib/coding-data"
 import styles from "./page.module.css"
 import ProgressChecklist from "@/components/progress-checklist"
 
@@ -12,12 +12,41 @@ const isComponentLecture = (lecture: Lecture | null): lecture is Lecture & { isC
   return lecture !== null && 'isComponent' in lecture && lecture.isComponent === true
 }
 
-export default function CodingPage() {
-  const [selectedSubject, setSelectedSubject] = useState<Subject | null>(null)
+import type { Dispatch, SetStateAction } from "react"
+
+type CodingPageProps = {
+  selectedSubject: string | null
+  setSelectedSubject: Dispatch<SetStateAction<string | null>>
+  selectedLecture: string | null
+  setSelectedLecture: Dispatch<SetStateAction<string | null>>
+}
+
+export default function CodingPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: CodingPageProps) {
+
+  // Lookup actual objects from ids
+  const currentSubject = subjects.find(s => s.id === selectedSubject) ?? null
+  
+  // Find lecture in both top level and inside phases
+  let currentLecture: Lecture | null = null
+  if (currentSubject) {
+    // Check top level lectures first
+    currentLecture = currentSubject.lectures.find(l => l.id === selectedLecture) ?? null
+    
+    // If not found, check all phases
+    if (!currentLecture && currentSubject.phases) {
+      for (const phase of currentSubject.phases) {
+        const found = phase.lectures.find(l => l.id === selectedLecture)
+        if (found) {
+          currentLecture = found
+          break
+        }
+      }
+    }
+  }
   const [sidebarWidth, setSidebarWidth] = useState(300)
   const [isResizing, setIsResizing] = useState(false)
-  const [pythonOpen, setPythonOpen] = useState(true)
-  const [selectedLecture, setSelectedLecture] = useState<Lecture | null>(null)
+  const [openPhases, setOpenPhases] = useState<Record<string, boolean>>({})
+ 
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   
@@ -30,7 +59,6 @@ export default function CodingPage() {
   // Optimized resize handler with requestAnimationFrame
   const handleResize = useCallback((e: MouseEvent) => {
     if (!isResizing) return
-    
     const newWidth = e.clientX
     const min = 251
     const max = 600
@@ -107,24 +135,45 @@ export default function CodingPage() {
   }, [handleKeyDown])
 
   // Load first lecture by default when subject changes
+  // Initialize open phases state when subject changes
   useEffect(() => {
-    if (selectedSubject && selectedSubject.lectures.length > 0 && !selectedLecture) {
-      setSelectedLecture(selectedSubject.lectures[0])
+    if (currentSubject?.phases) {
+      const initialState: Record<string, boolean> = {}
+      currentSubject.phases.forEach(phase => {
+        initialState[phase.id] = phase.openByDefault ?? false
+      })
+      setOpenPhases(initialState)
+    }
+  }, [currentSubject])
+
+  useEffect(() => {
+    if (currentSubject) {
+      // If we have phases, load first lecture from first phase
+      if (currentSubject.phases && currentSubject.phases.length > 0 && !selectedLecture) {
+        const firstPhaseLectures = currentSubject.phases[0].lectures
+        if (firstPhaseLectures.length > 0) {
+          setSelectedLecture(firstPhaseLectures[0].id)
+        }
+      }
+      // Fallback to old lecture list
+      else if (currentSubject.lectures.length > 0 && !selectedLecture) {
+        setSelectedLecture(currentSubject.lectures[0].id)
+      }
     }
     
     // Reset selected lecture when switching subjects
     if (!selectedSubject) {
       setSelectedLecture(null)
     }
-  }, [selectedSubject, selectedLecture])
+  }, [selectedSubject, selectedLecture, currentSubject])
 
   // Load markdown content when lecture changes
   useEffect(() => {
-    if (selectedLecture) {
+    if (currentLecture) {
       const loadContent = async () => {
         setIsLoading(true)
         try {
-          const content = await loadMarkdownContent(selectedLecture.path)
+          const content = await loadMarkdownContent(currentLecture.path)
           setMarkdownContent(content)
         } catch (error) {
           setMarkdownContent(`# Error Loading Notes\n\n${error instanceof Error ? error.message : 'Unknown error'}`)
@@ -150,7 +199,7 @@ export default function CodingPage() {
             {subjects.map((subject) => (
               <button
                 key={subject.id}
-                onClick={() => setSelectedSubject(subject)}
+                onClick={() => setSelectedSubject(subject.id)}
                 className="group text-left bg-background/50 border border-border/50 rounded-lg overflow-hidden hover:border-primary/50 hover:bg-accent/30 transition-all duration-200"
               >
                 <div className="p-5">
@@ -168,6 +217,10 @@ export default function CodingPage() {
   }
 
   // Render Notes View
+  if (!currentSubject) {
+    return null
+  }
+
   return (
     <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 relative">
       <button
@@ -204,32 +257,18 @@ export default function CodingPage() {
               )}
             </h2>
             
-            <div className="space-y-2">
-              {/* Python Section */}
-              <div className="border border-border/50 rounded-lg overflow-hidden">
-                <button
-                  onClick={() => setPythonOpen(!pythonOpen)}
-                  className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-accent/50 transition-colors"
-                >
-                  <span className="font-medium text-foreground">{selectedSubject.title}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-muted-foreground">{selectedSubject.lectures.length} lectures</span>
-                    {pythonOpen ? (
-                      <ChevronDown className="w-4 h-4 text-muted-foreground" />
-                    ) : (
-                      <ChevronRight className="w-4 h-4 text-muted-foreground" />
-                    )}
-                  </div>
-                </button>
-                
-                {pythonOpen && (
+            <div className="space-y-3">
+
+              {/* Top Level Lectures (Roadmap / Checklist) */}
+              {currentSubject.lectures.length > 0 && (
+                <div className="border border-border/50 rounded-lg overflow-hidden">
                   <div className="border-t border-border/50 bg-background/50">
-                    {selectedSubject?.lectures.map((lecture) => (
+                    {currentSubject.lectures.map((lecture) => (
                       <button
                         key={lecture.id}
-                        onClick={() => setSelectedLecture(lecture)}
-                        className={`w-full px-6 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                          selectedLecture?.id === lecture.id 
+                        onClick={() => setSelectedLecture(lecture.id)}
+                        className={`w-full px-4 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
+                          selectedLecture === lecture.id 
                             ? "bg-primary/15 text-primary" 
                             : "text-muted-foreground hover:text-foreground"
                         }`}
@@ -239,8 +278,73 @@ export default function CodingPage() {
                       </button>
                     ))}
                   </div>
-                )}
-              </div>
+                </div>
+              )}
+
+              {/* Phases Groups if subject has phases */}
+              {currentSubject.phases && currentSubject.phases.map((phase) => (
+                <div key={phase.id} className="border border-border/50 rounded-lg overflow-hidden">
+                  <button
+                    onClick={() => setOpenPhases(prev => ({
+                      ...prev,
+                      [phase.id]: !prev[phase.id]
+                    }))}
+                    className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-accent/50 transition-colors"
+                  >
+                    <span className="font-medium text-foreground">{phase.title}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-muted-foreground">{phase.lectures.length} topics</span>
+                      {openPhases[phase.id] ? (
+                        <ChevronDown className="w-4 h-4 text-muted-foreground" />
+                      ) : (
+                        <ChevronRight className="w-4 h-4 text-muted-foreground" />
+                      )}
+                    </div>
+                  </button>
+                  
+                  {openPhases[phase.id] && (
+                    <div className="border-t border-border/50 bg-background/50">
+                      {phase.lectures.map((lecture) => (
+                        <button
+                          key={lecture.id}
+                          onClick={() => setSelectedLecture(lecture.id)}
+                          className={`w-full px-6 py-2.5 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
+                            selectedLecture === lecture.id 
+                              ? "bg-primary/15 text-primary" 
+                              : "text-muted-foreground hover:text-foreground"
+                          }`}
+                        >
+                          <FileText className="w-3.5 h-3.5" />
+                          {lecture.title}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ))}
+
+              {/* Legacy single list if no phases */}
+              {!currentSubject.phases && currentSubject.lectures.length > 0 && (
+                <div className="border border-border/50 rounded-lg overflow-hidden">
+                  <div className="border-t border-border/50 bg-background/50">
+                    {currentSubject.lectures.map((lecture) => (
+                      <button
+                        key={lecture.id}
+                        onClick={() => setSelectedLecture(lecture.id)}
+                        className={`w-full px-6 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
+                          selectedLecture === lecture.id 
+                            ? "bg-primary/15 text-primary" 
+                            : "text-muted-foreground hover:text-foreground"
+                        }`}
+                      >
+                        <FileText className="w-4 h-4" />
+                        {lecture.title}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
             </div>
           </div>
         </div>
@@ -264,11 +368,11 @@ export default function CodingPage() {
 
         {/* Content Area */}
         <div className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
-          {selectedLecture ? (  
+          {currentLecture ? (  
             <div className="max-w-4xl">
               <div className="mb-6">
                 <h1 className="text-3xl font-bold text-foreground mb-2">
-                  {selectedLecture.title}
+                  {currentLecture.title}
                 </h1>
                 <div className="w-24 h-1 bg-gradient-to-r from-primary to-blue-500 rounded-full" />
               </div>
@@ -280,8 +384,8 @@ export default function CodingPage() {
                   <p className="mt-4 text-muted-foreground">Loading notes...</p>
                 </div>
                ) : (
-                 isComponentLecture(selectedLecture) ? (
-                   <ProgressChecklist subject={selectedSubject!} />
+                 isComponentLecture(currentLecture) ? (
+                   <ProgressChecklist subject={currentSubject!} />
                  ) : (
                    <LectureViewer content={markdownContent} />
                  )

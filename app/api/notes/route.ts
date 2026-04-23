@@ -2,8 +2,8 @@ import { NextResponse } from 'next/server'
 import { readFile, access, constants } from 'fs/promises'
 import { join, resolve } from 'path'
 
-// Configure for static export - this route should be generated at build time
-export const dynamic = 'force-static'
+// This API route needs to run dynamically at request time
+export const dynamic = 'force-dynamic'
 
 export async function GET(request: Request) {
   const url = new URL(request.url)

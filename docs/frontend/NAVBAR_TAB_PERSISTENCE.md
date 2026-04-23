@@ -188,7 +188,15 @@ Add this useEffect anywhere inside the component:
 // ✅ New value is saved to localStorage immediately
 // You never have to remember to save it. It just happens.
 useEffect(() => {
-  localStorage.setItem('activeTab', activeTab)
+  // ✅ Important: Check window exists before accessing localStorage inside useEffect
+  //
+  // ❌ Hydration Error Fix:
+  // Even though useEffect only runs on client, Next.js still checks this code on server.
+  // Server sees `localStorage` and throws hydration mismatch error.
+  // Always wrap inside if (typeof window !== 'undefined') check inside useEffect
+  if (typeof window !== "undefined") {
+    window.localStorage.setItem("activeTab", activeTab)
+  }
 }, [activeTab])
 ```
 

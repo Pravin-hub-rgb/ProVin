@@ -7,6 +7,14 @@
   
   /* Smooth transitions when not resizing */
   transition: width 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Fix scrolling: sidebar stays fixed, scrolls internally only */
+  height: calc(100vh - 3.5rem);
+  overflow-y: auto;
+  overflow-x: hidden;
+  position: sticky;
+  top: 3.5rem;
+  overscroll-behavior: contain;
 }
 
 .sidebar.isResizing {
@@ -135,6 +143,11 @@
   /* Hardware acceleration for content area */
   transform: translateZ(0);
   will-change: auto;
+
+  /* Content scrolls independently */
+  height: calc(100vh - 3.5rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
 }
 
 /* Body styles during resize */
