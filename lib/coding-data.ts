@@ -142,12 +142,12 @@ export const subjects: Subject[] = [
           {
             id: "js-lec5",
             title: "1.5 Type Coercion & Equality",
-            path: "docs/coding/JS/Phase 1 - Foundations/1.5 Type Coercion.md",
+            path: "docs/coding/JS/Phase 1 - Foundations/1.5 Type Coercion & Equality.md",
           },
           {
             id: "js-lec6",
             title: "1.6 Functions — All Forms",
-            path: "docs/coding/JS/Phase 1 - Foundations/1.6 Functions.md",
+            path: "docs/coding/JS/Phase 1 - Foundations/1.6 Functions — All Forms.md",
           },
           {
             id: "js-lec7",
@@ -162,8 +162,8 @@ export const subjects: Subject[] = [
         phase: "Phase 1 - Foundations",
         topics: [
           { id: "var-let-const", title: "var / let / const", completed: true },
-          { id: "data-types", title: "Data Types", completed: false },
-          { id: "scope", title: "Scope", completed: false },
+          { id: "data-types", title: "Data Types", completed: true },
+          { id: "scope", title: "Scope", completed: true },
           { id: "hoisting", title: "Hoisting", completed: false },
           {
             id: "type-coercion",
