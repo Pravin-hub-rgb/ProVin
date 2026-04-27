@@ -136,15 +136,36 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
 
   // Load first lecture by default when subject changes
   // Initialize open phases state when subject changes
+  // ✅ Always open the phase that contains currently selected lecture
   useEffect(() => {
     if (currentSubject?.phases) {
       const initialState: Record<string, boolean> = {}
+      
+      // Find which phase contains the currently selected lecture
+      let activePhaseId: string | null = null
+      if (selectedLecture) {
+        for (const phase of currentSubject.phases) {
+          if (phase.lectures.some(l => l.id === selectedLecture)) {
+            activePhaseId = phase.id
+            break
+          }
+        }
+      }
+
       currentSubject.phases.forEach(phase => {
-        initialState[phase.id] = phase.openByDefault ?? false
+        // If this is the phase that has current lecture: open it
+        if (phase.id === activePhaseId) {
+          initialState[phase.id] = true
+        } else {
+          // ✅ All other phases are FORCE CLOSED
+          // No defaults. Only active phase is open.
+          initialState[phase.id] = false
+        }
       })
+      
       setOpenPhases(initialState)
     }
-  }, [currentSubject])
+  }, [currentSubject, selectedLecture])
 
   useEffect(() => {
     if (currentSubject) {
@@ -222,13 +243,13 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   }
 
   return (
-    <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 relative">
+    <div className="h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 relative overflow-hidden">
       <button
         onClick={() => {
           setSelectedSubject(null)
           setSelectedLecture(null)
         }}
-        className="absolute top-4 left-4 z-50 flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-xl border border-border/50 rounded-md text-sm hover:bg-accent/50 transition-colors"
+        className="absolute top-4 left-4 z-[101] flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-xl border border-border/50 rounded-md text-sm hover:bg-accent/50 transition-colors"
       >
         <ChevronRight className="w-4 h-4 rotate-180" />
         Back to Dashboard
@@ -243,10 +264,12 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
           } ${isResizing ? styles.isResizing : ''}`}
           style={{ 
             width: sidebarWidth,
-            willChange: isResizing ? 'width' : 'auto'
+            willChange: isResizing ? 'width' : 'auto',
+            height: 'calc(100vh - 3.5rem)',
+            overflowY: 'auto'
           }}
         >
-          <div className="p-6">
+          <div className="p-6 pb-20">
             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <Book className="w-5 h-5 text-primary" />
               Theory Notes

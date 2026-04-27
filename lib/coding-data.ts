@@ -153,7 +153,61 @@ export const subjects: Subject[] = [
             id: "js-lec7",
             title: "1.7 Template Literals",
             path: "docs/coding/JS/Phase 1 - Foundations/1.7 Template Literals.md",
+          }
+        ]
+      },
+      {
+        id: "phase2",
+        title: "Phase 2 — Core Concepts",
+        openByDefault: false,
+        lectures: [
+          {
+            id: "js-lec8",
+            title: "2.1 Closures",
+            path: "docs/coding/JS/Phase 2 - Core Concepts/2.1 Closures.md",
           },
+          {
+            id: "js-lec9",
+            title: "2.2 `this` Keyword",
+            path: "docs/coding/JS/Phase 2 - Core Concepts/2.2 this Keyword.md",
+          },
+          {
+            id: "js-lec10",
+            title: "2.3 call, apply, bind",
+            path: "docs/coding/JS/Phase 2 - Core Concepts/2.3 call, apply, bind.md",
+          },
+          {
+            id: "js-lec11",
+            title: "2.4 Prototype & Prototype Chain",
+            path: "docs/coding/JS/Phase 2 - Core Concepts/2.4 Prototype & Prototype Chain.md",
+          },
+          {
+            id: "js-lec12",
+            title: "2.5 Classes",
+            path: "docs/coding/JS/Phase 2 - Core Concepts/2.5 Classes.md",
+          },
+          {
+            id: "js-lec13",
+            title: "2.6 IIFE",
+            path: "docs/coding/JS/Phase 2 - Core Concepts/2.6 IIFE.md",
+          }
+        ]
+      },
+      {
+        id: "phase3",
+        title: "Phase 3 — Async JavaScript",
+        openByDefault: false,
+        lectures: [
+          {
+            id: "js-lec14",
+            title: "3.1 Synchronous vs Asynchronous",
+            path: "docs/coding/JS/Phase 3 - Async JavaScript/3.1 Synchronous vs Asynchronous.md",
+          },
+          {
+            id: "js-lec15",
+            title: "3.2 Event Loop",
+            path: "docs/coding/JS/Phase 3 - Async JavaScript/3.2 Event Loop.md",
+          }
         ]
       }
     ],

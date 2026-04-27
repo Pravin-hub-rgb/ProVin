@@ -1,5 +1,3 @@
-greet(); // ✅ Works perfectly. "Hello"
-
-function greet() {
-  console.log("Hello");
-}
+(function() {
+  console.log('Hello, World!');
+})();
