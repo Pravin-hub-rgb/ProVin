@@ -207,6 +207,16 @@ export const subjects: Subject[] = [
             id: "js-lec15",
             title: "3.2 Event Loop",
             path: "docs/coding/JS/Phase 3 - Async JavaScript/3.2 Event Loop.md",
+          },
+          {
+            id: "js-lec16",
+            title: "3.3 Callbacks",
+            path: "docs/coding/JS/Phase 3 - Async JavaScript/3.3 Callbacks.md",
+          },
+          {
+            id: "js-lec17",
+            title: "3.4 Promises",
+            path: "docs/coding/JS/Phase 3 - Async JavaScript/3.4 Promises.md",
           }
         ]
       }
