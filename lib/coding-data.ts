@@ -217,6 +217,48 @@ export const subjects: Subject[] = [
             id: "js-lec17",
             title: "3.4 Promises",
             path: "docs/coding/JS/Phase 3 - Async JavaScript/3.4 Promises.md",
+          },
+          {
+            id: "js-lec18",
+            title: "3.5 async / await",
+            path: "docs/coding/JS/Phase 3 - Async JavaScript/3.5 async await.md",
+          },
+          {
+            id: "js-lec19",
+            title: "3.6 Fetch API",
+            path: "docs/coding/JS/Phase 3 - Async JavaScript/3.6 Fetch API.md",
+          }
+        ]
+      },
+      {
+        id: "phase4",
+        title: "Phase 4 — Arrays, Objects & Functional Patterns",
+        openByDefault: false,
+        lectures: [
+          {
+            id: "js-lec20",
+            title: "4.1 Array Methods",
+            path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.1 Array Methods.md",
+          },
+          {
+            id: "js-lec21",
+            title: "4.2 Destructuring",
+            path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.2 Destructuring.md",
+          },
+          {
+            id: "js-lec22",
+            title: "4.3 Spread & Rest Operator",
+            path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.3 Spread & Rest Operator.md",
+          },
+          {
+            id: "js-lec23",
+            title: "4.4 Higher Order Functions",
+            path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.4 Higher Order Functions.md",
+          },
+          {
+            id: "js-lec24",
+            title: "4.5 Memoization",
+            path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.5 Memoization.md",
           }
         ]
       }
