@@ -259,6 +259,95 @@ export const subjects: Subject[] = [
             id: "js-lec24",
             title: "4.5 Memoization",
             path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.5 Memoization.md",
+          },
+          {
+            id: "js-lec25",
+            title: "4.6 Currying",
+            path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.6 Currying.md",
+          },
+          {
+            id: "js-lec26",
+            title: "4.7 Pure Functions",
+            path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.7 Pure Functions.md",
+          },
+          {
+            id: "js-lec27",
+            title: "4.8 Optional Chaining & Nullish Coalescing",
+            path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.8 Optional Chaining & Nullish Coalescing.md",
+          },
+          {
+            id: "js-lec28",
+            title: "4.9 Short-circuit Evaluation",
+            path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.9 Short-circuit Evaluation.md",
+          }
+        ]
+      },
+      {
+        id: "phase5",
+        title: "Phase 5 — DOM & Browser",
+        openByDefault: false,
+        lectures: [
+          {
+            id: "js-lec29",
+            title: "5.1 DOM Manipulation",
+            path: "docs/coding/JS/Phase 5 - DOM & Browser/5.1 DOM Manipulation.md",
+          },
+          {
+            id: "js-lec30",
+            title: "5.2 Events",
+            path: "docs/coding/JS/Phase 5 - DOM & Browser/5.2 Events.md",
+          },
+          {
+            id: "js-lec31",
+            title: "5.3 Event Bubbling",
+            path: "docs/coding/JS/Phase 5 - DOM & Browser/5.3 Event Bubbling.md",
+          },
+          {
+            id: "js-lec32",
+            title: "5.4 Event Delegation",
+            path: "docs/coding/JS/Phase 5 - DOM & Browser/5.4 Event Delegation.md",
+          },
+          {
+            id: "js-lec33",
+            title: "5.5 Debounce & Throttle",
+            path: "docs/coding/JS/Phase 5 - DOM & Browser/5.5 Debounce & Throttle.md",
+          },
+          {
+            id: "js-lec34",
+            title: "5.6 localStorage & sessionStorage",
+            path: "docs/coding/JS/Phase 5 - DOM & Browser/5.6 localStorage & sessionStorage.md",
+          }
+        ]
+      },
+      {
+        id: "phase6",
+        title: "Phase 6 — Advanced Topics",
+        openByDefault: false,
+        lectures: [
+          {
+            id: "js-lec35",
+            title: "6.1 Modules (import / export)",
+            path: "docs/coding/JS/Phase 6 - Advanced Topics/6.1 Modules import export.md",
+          },
+          {
+            id: "js-lec36",
+            title: "6.2 Error Handling",
+            path: "docs/coding/JS/Phase 6 - Advanced Topics/6.2 Error Handling.md",
+          },
+          {
+            id: "js-lec37",
+            title: "6.3 Design Patterns",
+            path: "docs/coding/JS/Phase 6 - Advanced Topics/6.3 Design Patterns.md",
+          },
+          {
+            id: "js-lec38",
+            title: "6.4 Memory & Performance",
+            path: "docs/coding/JS/Phase 6 - Advanced Topics/6.4 Memory & Performance.md",
+          },
+          {
+            id: "js-lec39",
+            title: "6.5 Generators",
+            path: "docs/coding/JS/Phase 6 - Advanced Topics/6.5 Generators.md",
           }
         ]
       }
