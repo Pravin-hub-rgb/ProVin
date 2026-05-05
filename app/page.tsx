@@ -5,7 +5,7 @@ import { Navbar } from "@/components/navbar";
 import CodingPage from "./coding/page";
 import { subjects } from "@/lib/coding-data";
 
-type Tab = "Dashboard" | "Coding" | "Trading";
+type Tab = "Dashboard" | "Coding" | "Finance";
 type SubjectId = (typeof subjects)[number]["id"];
 type LectureId = (typeof subjects)[number]["lectures"][number]["id"];
 
@@ -97,7 +97,7 @@ export default function Home() {
         setSelectedLecture={setSelectedLecture}
         />}
 
-        {activeTab === "Trading" && (
+        {activeTab === "Finance" && (
           <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 flex items-center justify-center">
             <div className="text-center px-4">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
@@ -106,11 +106,11 @@ export default function Home() {
                   from-foreground via-foreground to-foreground/70 
                   dark:from-white dark:via-purple-100 dark:to-purple-300"
                 >
-                  Trading
+                  Finance
                 </span>
               </h1>
               <p className="mt-4 text-muted-foreground text-lg">
-                Your trading dashboard will appear here.
+                Your Finance dashboard will appear here.
               </p>
             </div>
           </div>

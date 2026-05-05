@@ -11,10 +11,18 @@
 
 ---
 
-## Brief se Entities
+## Brief se Entities Nikaalte Hain
 
 ```
 Brief: "Rooms/channels, real-time messaging, online status, DMs."
+
+NOUNS extract karo:
+→ Rooms/channels  → Room entity
+→ Messages        → Message entity
+→ Online Status   → ✅ Nahi SQL mein, Redis mein store karenge
+→ DMs             → Room hi hai (isPrivate = true)
+→ Users           → User entity
+→ Room Members    → RoomMember junction table
 
 ENTITIES: User, Room, Message, RoomMember (junction)
 
@@ -162,11 +170,20 @@ EXPIRE online_status:u_001 300  // 5 minute TTL — heartbeat refresh karta hai
 
 # Project 4 — ShopKaro: E-Commerce
 
-## Brief se Entities
+## Brief se Entities Nikaalte Hain
 
 ```
 Brief: "Products browse karo, cart mein add karo, checkout karo, payment karo.
         Admin products manage kare, orders track kare."
+
+NOUNS extract karo:
+→ Products    → Product entity
+→ Cart        → ✅ Session ya client side, SQL table nahi chahiye
+→ Checkout    → Order entity
+→ Payment     → Order ke andar fields
+→ Admin       → User (role = ADMIN)
+→ Categories  → Category entity
+→ Order Items → OrderItem junction table
 
 ENTITIES: User, Product, Category, Order, OrderItem
 
@@ -365,11 +382,18 @@ Ye snapshot pattern ka fayda hai!
 
 # Project 5 — DataLens: Analytics Dashboard
 
-## Brief se Entities
+## Brief se Entities Nikaalte Hain
 
 ```
 Brief: "Sales team apna performance dekhe — daily/weekly/monthly sales,
         top products, region breakdown, salesperson performance."
+
+NOUNS extract karo:
+→ Sales Team    → User entity (role = SALESPERSON / MANAGER)
+→ Sales         → Sale entity
+→ Products      → Product entity
+→ Regions       → User ke column mein
+→ Performance   → Calculated field, separate table nahi chahiye
 
 ENTITIES: User, Sale, Product
 

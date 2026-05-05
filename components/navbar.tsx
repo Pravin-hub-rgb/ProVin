@@ -3,7 +3,7 @@
 import { ThemeToggle } from "@/components/theme-toggle"
 import { Zap } from "lucide-react"
 
-type Tab = "Dashboard" | "Coding" | "Trading"
+type Tab = "Dashboard" | "Coding" | "Finance"
 
 interface NavbarProps {
   activeTab: Tab
@@ -11,7 +11,7 @@ interface NavbarProps {
 }
 
 export function Navbar({ activeTab, onTabChange }: NavbarProps) {
-  const tabs: Tab[] = ["Dashboard", "Coding", "Trading"]
+  const tabs: Tab[] = ["Dashboard", "Coding", "Finance"]
 
   return (
     <nav className="sticky top-0 z-50 w-full h-14 

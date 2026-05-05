@@ -64,6 +64,20 @@ export const webdevSubject: Subject = {
       ]
     },
     {
+      id: "database",
+      title: "🗄️ Database Understanding SQL",
+      openByDefault: false,
+      lectures: [
+        { id: "db-01", title: "01 - Database Design Process", path: "docs/coding/WEB-DEV/Project Understanding/database understanding sql/db-01-design-process.md" },
+        { id: "db-02", title: "02 - Relationships Deep Dive", path: "docs/coding/WEB-DEV/Project Understanding/database understanding sql/db-02-relationships-deep.md" },
+        { id: "db-03", title: "03 - Indexes & Performance", path: "docs/coding/WEB-DEV/Project Understanding/database understanding sql/db-03-indexes-performance.md" },
+        { id: "db-04", title: "04 - Naming & Migrations", path: "docs/coding/WEB-DEV/Project Understanding/database understanding sql/db-04-naming-migrations.md" },
+        { id: "db-05", title: "05 - StaffSync DB Project", path: "docs/coding/WEB-DEV/Project Understanding/database understanding sql/db-project-01-staffsync.md" },
+        { id: "db-06", title: "06 - HireHop DB Project", path: "docs/coding/WEB-DEV/Project Understanding/database understanding sql/db-project-02-hirehop.md" },
+        { id: "db-07", title: "07 - DB Projects 3,4,5", path: "docs/coding/WEB-DEV/Project Understanding/database understanding sql/db-projects-03-04-05.md" }
+      ]
+    },
+    {
       id: "web-history",
       title: "📜 Web History",
       openByDefault: false,
