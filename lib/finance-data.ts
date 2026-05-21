@@ -31,3 +31,16 @@ export interface Subject {
   phases?: Phase[];
   progress?: ProgressPhase[];
 }
+
+export async function loadMarkdownContent(path: string): Promise<string> {
+  try {
+    const res = await fetch(`/api/notes?file=${encodeURIComponent(path)}`);
+    if (!res.ok) {
+      throw new Error(`Failed to load ${path}`);
+    }
+    return await res.text();
+  } catch (error) {
+    console.error('Error loading markdown:', error);
+    throw error;
+  }
+}

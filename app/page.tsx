@@ -3,19 +3,16 @@
 import { useEffect, useState, startTransition } from "react";
 import { Navbar } from "@/components/navbar";
 import CodingPage from "./coding/page";
+import FinancePage from "./finance/page";
 import { subjects } from "@/lib/coding-data";
 
 type Tab = "Dashboard" | "Coding" | "Finance";
-type SubjectId = (typeof subjects)[number]["id"];
-type LectureId = (typeof subjects)[number]["lectures"][number]["id"];
+type SubjectId = string | null;
+type LectureId = string | null;
 
 export default function Home() {
-  const [selectedSubject, setSelectedSubject] = useState<SubjectId | null>(
-    null,
-  );
-  const [selectedLecture, setSelectedLecture] = useState<LectureId | null>(
-    null,
-  );
+  const [selectedSubject, setSelectedSubject] = useState<SubjectId>(null);
+  const [selectedLecture, setSelectedLecture] = useState<LectureId>(null);
   const [activeTab, setActiveTab] = useState<Tab>("Dashboard");
 
   useEffect(() => {
@@ -37,6 +34,12 @@ export default function Home() {
       localStorage.setItem("selectedLecture", selectedLecture ?? "");
     }
   }, [activeTab, selectedSubject, selectedLecture]);
+
+  // ✅ FIX: Reset state when switching tabs between Coding / Finance
+  useEffect(() => {
+    setSelectedSubject(null);
+    setSelectedLecture(null);
+  }, [activeTab]);
 
   return (
     <>
@@ -97,24 +100,12 @@ export default function Home() {
         setSelectedLecture={setSelectedLecture}
         />}
 
-        {activeTab === "Finance" && (
-          <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 flex items-center justify-center">
-            <div className="text-center px-4">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
-                <span
-                  className="bg-clip-text text-transparent bg-gradient-to-r 
-                  from-foreground via-foreground to-foreground/70 
-                  dark:from-white dark:via-purple-100 dark:to-purple-300"
-                >
-                  Finance
-                </span>
-              </h1>
-              <p className="mt-4 text-muted-foreground text-lg">
-                Your Finance dashboard will appear here.
-              </p>
-            </div>
-          </div>
-        )}
+        {activeTab === "Finance" && <FinancePage
+        selectedSubject={selectedSubject}
+        setSelectedSubject={setSelectedSubject}
+        selectedLecture={selectedLecture}
+        setSelectedLecture={setSelectedLecture}
+        />}
       </main>
     </>
   );

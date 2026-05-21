@@ -6,6 +6,11 @@ export const cfoSubject: Subject = {
   description: "Complete financial literacy, accounting and business finance for developers",
   lectures: [
     {
+      id: "basics",
+      title: "📚 Finance Foundation Basics",
+      path: "docs/finance/CFO/basics.md",
+    },
+    {
       id: "roadmap",
       title: "📋 CFO Complete Roadmap",
       path: "docs/finance/CFO/roadmap.md",

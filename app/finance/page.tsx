@@ -4,7 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
 import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
 import { cfoSubject } from "@/lib/finance-subjects/cfo.subject"
-import type { Subject, Lecture } from "@/lib/finance-data"
+import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/finance-data"
 import styles from "../coding/page.module.css"
 
 // ✅ Proper TypeScript Type Narrowing (No `any`)
@@ -23,6 +23,9 @@ type FinancePageProps = {
 
 export default function FinancePage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: FinancePageProps) {
 
+  // ✅ DEBUG: Force render check
+  console.log("FINANCE PAGE RENDERED ✅", selectedSubject, selectedLecture);
+  
   // Lookup actual objects from ids
   const currentSubject = selectedSubject === 'cfo' ? cfoSubject : null
   
@@ -190,9 +193,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
       const loadContent = async () => {
         setIsLoading(true)
         try {
-          const res = await fetch(currentLecture.path)
-          if (!res.ok) throw new Error('File not found')
-          const content = await res.text()
+          const content = await loadMarkdownContent(currentLecture.path)
           setMarkdownContent(content)
         } catch (error) {
           setMarkdownContent(`# Error Loading Notes\n\n${error instanceof Error ? error.message : 'Unknown error'}`)
