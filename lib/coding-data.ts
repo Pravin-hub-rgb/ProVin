@@ -35,6 +35,7 @@ export type LectureGroup = {
   title: string;
   lectures: Lecture[];
   openByDefault?: boolean;
+  groups?: LectureGroup[];
 };
 
 /**

@@ -40,12 +40,24 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
           currentLecture = found
           break
         }
+        // Also check nested groups inside phase
+        if (!currentLecture && (phase as any).groups) {
+          for (const subGroup of (phase as any).groups) {
+            const foundInGroup = subGroup.lectures.find((l: Lecture) => l.id === selectedLecture)
+            if (foundInGroup) {
+              currentLecture = foundInGroup
+              break
+            }
+          }
+          if (currentLecture) break
+        }
       }
     }
   }
   const [sidebarWidth, setSidebarWidth] = useState(300)
   const [isResizing, setIsResizing] = useState(false)
   const [openPhases, setOpenPhases] = useState<Record<string, boolean>>({})
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({})
  
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
@@ -327,6 +339,47 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                   
                   {openPhases[phase.id] && (
                     <div className="border-t border-border/50 bg-background/50">
+                      {/* Sub-groups first (like folders in explorer) */}
+                      {(phase as any).groups?.map((subGroup: any) => (
+                        <div key={subGroup.id}>
+                          <button
+                            onClick={() => setOpenGroups(prev => ({
+                              ...prev,
+                              [subGroup.id]: !prev[subGroup.id]
+                            }))}
+                            className="w-full px-6 py-2 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-2 text-muted-foreground"
+                          >
+                            {openGroups[subGroup.id] ? (
+                              <ChevronDown className="w-3 h-3" />
+                            ) : (
+                              <ChevronRight className="w-3 h-3" />
+                            )}
+                            <span className="text-xs font-medium">{subGroup.title}</span>
+                            <span className="text-xs ml-auto text-muted-foreground/70">{subGroup.lectures.length} docs</span>
+                          </button>
+                          
+                          {openGroups[subGroup.id] && (
+                            <div className="ml-3 border-l border-border/30 pl-2">
+                              {subGroup.lectures.map((lecture: any) => (
+                                <button
+                                  key={lecture.id}
+                                  onClick={() => setSelectedLecture(lecture.id)}
+                                  className={`w-full px-4 py-2 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
+                                    selectedLecture === lecture.id 
+                                      ? "bg-primary/15 text-primary" 
+                                      : "text-muted-foreground hover:text-foreground"
+                                  }`}
+                                >
+                                  <FileText className="w-3 h-3" />
+                                  {lecture.title}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                      
+                      {/* Main lectures after groups */}
                       {phase.lectures.map((lecture) => (
                         <button
                           key={lecture.id}
