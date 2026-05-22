@@ -32,8 +32,9 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
   // Find lecture in both top level and inside phases
   let currentLecture: Lecture | null = null
   if (currentSubject) {
+    const lectures = currentSubject.lectures
     // Check top level lectures first
-    currentLecture = currentSubject.lectures.find(l => l.id === selectedLecture) ?? null
+    currentLecture = lectures?.find(l => l.id === selectedLecture) ?? null
     
     // If not found, check all phases
     if (!currentLecture && currentSubject.phases) {
@@ -176,8 +177,9 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
         }
       }
       // Fallback to old lecture list
-      else if (currentSubject.lectures.length > 0 && !selectedLecture) {
-        setSelectedLecture(currentSubject.lectures[0].id)
+      const lectures = currentSubject.lectures
+      if (lectures && lectures.length > 0 && !selectedLecture) {
+        setSelectedLecture(lectures[0]?.id ?? null)
       }
     }
     
@@ -238,6 +240,9 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
     return null
   }
 
+  // Narrow lectures type for the render section
+  const lectureList = currentSubject.lectures ?? []
+
   return (
     <div className="h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 relative overflow-hidden">
       <button
@@ -279,10 +284,10 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
             <div className="space-y-3">
 
               {/* Top Level Lectures */}
-              {currentSubject.lectures.length > 0 && (
+              {lectureList.length > 0 && (
                 <div className="border border-border/50 rounded-lg overflow-hidden">
                   <div className="border-t border-border/50 bg-background/50">
-                    {currentSubject.lectures.map((lecture) => (
+                    {lectureList.map((lecture) => (
                       <button
                         key={lecture.id}
                         onClick={() => setSelectedLecture(lecture.id)}
