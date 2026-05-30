@@ -45,11 +45,13 @@ export type LectureGroup = {
 import { pythonSubject } from "./subjects/python.subject";
 import { javascriptSubject } from "./subjects/javascript.subject";
 import { webdevSubject } from "./subjects/webdev.subject";
+import { iknowcomputersSubject } from "./subjects/iknowcomputers.subject";
 
 export const subjects: Subject[] = [
   pythonSubject,
   javascriptSubject,
   webdevSubject,
+  iknowcomputersSubject,
   {
     id: "typescript",
     title: "TypeScript",

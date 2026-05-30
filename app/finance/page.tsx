@@ -177,9 +177,8 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
         }
       }
       // Fallback to old lecture list
-      const lectures = currentSubject.lectures
-      if (lectures && lectures.length > 0 && !selectedLecture) {
-        setSelectedLecture(lectures[0]?.id ?? null)
+      else if (currentSubject.lectures.length > 0 && !selectedLecture) {
+        setSelectedLecture(currentSubject.lectures[0].id)
       }
     }
     

@@ -35,15 +35,15 @@ export default function Home() {
     }
   }, [activeTab, selectedSubject, selectedLecture]);
 
-  // ✅ FIX: Reset state when switching tabs between Coding / Finance
-  useEffect(() => {
+  const handleTabChange = (tab: Tab) => {
     setSelectedSubject(null);
     setSelectedLecture(null);
-  }, [activeTab]);
+    setActiveTab(tab);
+  };
 
   return (
     <>
-      <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navbar activeTab={activeTab} onTabChange={handleTabChange} />
       <main className="min-h-[calc(100vh-3.5rem)]">
         {activeTab === "Dashboard" && (
           <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 flex items-center justify-center">
