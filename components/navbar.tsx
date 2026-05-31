@@ -67,35 +67,41 @@ export function Navbar({ activeTab, onTabChange }: NavbarProps) {
       </nav>
 
       {/* Bottom tab bar — mobile only */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-3 pointer-events-none">
-        <div className="pointer-events-auto mx-5 w-full max-w-sm">
-          <div className="relative flex items-center justify-around h-16 px-2
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom, 6px)' }}>
+        <div className="mx-4">
+          <div className="relative flex items-end justify-around h-[68px] px-2 pb-1.5
             bg-background/80 backdrop-blur-2xl
             rounded-2xl border border-border/40
-            shadow-[0_-4px_24px_rgba(0,0,0,0.06)] 
-            dark:shadow-[0_-4px_24px_rgba(0,0,0,0.25)]
-            before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-b before:from-white/[0.04] before:to-transparent
-            before:pointer-events-none">
+            shadow-[0_-4px_24px_rgba(0,0,0,0.06)]
+            dark:shadow-[0_-4px_24px_rgba(0,0,0,0.25)]">
             {tabs.map((tab) => {
               const isActive = activeTab === tab.id
               return (
                 <button
                   key={tab.id}
                   onClick={() => onTabChange(tab.id)}
-                  className="relative flex flex-col items-center justify-center gap-0.5 w-full h-full"
+                  className={`relative flex flex-col items-center justify-center transition-all duration-500 ease-out
+                    ${isActive ? '-translate-y-2' : 'translate-y-0'}`}
+                  style={{ width: '68px' }}
                 >
                   {isActive && (
-                    <span className="absolute inset-y-2 inset-x-3 bg-primary/12 rounded-xl border border-primary/10 shadow-sm shadow-primary/5" />
+                    <span className="absolute -inset-x-1 -inset-y-2 bg-gradient-to-b from-primary to-primary/85 
+                      rounded-2xl shadow-lg shadow-primary/30 border border-primary/20
+                      transition-all duration-500" />
                   )}
-                  <span className={`relative z-10 transition-all duration-300
-                    ${isActive
-                      ? "text-primary scale-110 -translate-y-0.5"
-                      : "text-muted-foreground/50 scale-100 translate-y-0"
+                  <span className={`relative z-10 transition-all duration-500
+                    ${isActive 
+                      ? 'text-primary-foreground scale-110' 
+                      : 'text-muted-foreground/50'
                     }`}>
                     {tab.icon}
                   </span>
-                  <span className={`relative z-10 text-[10px] font-semibold leading-none transition-all duration-300
-                    ${isActive ? "text-primary opacity-100" : "text-muted-foreground/50 opacity-60"}`}>
+                  <span className={`relative z-10 transition-all duration-500 leading-none
+                    ${isActive
+                      ? 'text-[10px] font-bold text-primary-foreground/90'
+                      : 'text-[10px] font-semibold text-muted-foreground/50'
+                    }`}>
                     {tab.label}
                   </span>
                 </button>
