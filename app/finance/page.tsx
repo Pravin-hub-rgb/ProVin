@@ -177,7 +177,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
         }
       }
       // Fallback to old lecture list
-      else if (currentSubject.lectures.length > 0 && !selectedLecture) {
+      else if (currentSubject.lectures && currentSubject.lectures.length > 0 && !selectedLecture) {
         setSelectedLecture(currentSubject.lectures[0].id)
       }
     }
