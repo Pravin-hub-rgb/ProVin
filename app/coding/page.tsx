@@ -255,7 +255,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   }
 
   return (
-    <div className="h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 relative overflow-hidden">
+    <div className="h-[calc(100vh-3.5rem)] max-md:h-[calc(100dvh-7.5rem)] bg-background transition-colors duration-500 relative overflow-hidden">
       <button
         onClick={() => {
           setSelectedSubject(null)
