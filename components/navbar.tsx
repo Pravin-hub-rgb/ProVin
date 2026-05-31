@@ -67,28 +67,41 @@ export function Navbar({ activeTab, onTabChange }: NavbarProps) {
       </nav>
 
       {/* Bottom tab bar — mobile only */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50
-        bg-background/90 backdrop-blur-xl 
-        border-t border-border/50
-        safe-area-bottom">
-        <div className="flex items-center justify-around h-16 px-2">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              onClick={() => onTabChange(tab.id)}
-              className={`flex flex-col items-center justify-center gap-0.5 w-full h-full rounded-md transition-all duration-200
-                ${activeTab === tab.id 
-                  ? "text-primary" 
-                  : "text-muted-foreground hover:text-foreground"
-                }`}
-            >
-              {tab.icon}
-              <span className="text-[11px] font-medium leading-none">{tab.label}</span>
-              {activeTab === tab.id && (
-                <span className="absolute bottom-1 w-6 h-0.5 bg-primary rounded-full" />
-              )}
-            </button>
-          ))}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex justify-center pb-3 pointer-events-none">
+        <div className="pointer-events-auto mx-5 w-full max-w-sm">
+          <div className="relative flex items-center justify-around h-16 px-2
+            bg-background/80 backdrop-blur-2xl
+            rounded-2xl border border-border/40
+            shadow-[0_-4px_24px_rgba(0,0,0,0.06)] 
+            dark:shadow-[0_-4px_24px_rgba(0,0,0,0.25)]
+            before:absolute before:inset-0 before:rounded-2xl before:bg-gradient-to-b before:from-white/[0.04] before:to-transparent
+            before:pointer-events-none">
+            {tabs.map((tab) => {
+              const isActive = activeTab === tab.id
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => onTabChange(tab.id)}
+                  className="relative flex flex-col items-center justify-center gap-0.5 w-full h-full"
+                >
+                  {isActive && (
+                    <span className="absolute inset-y-2 inset-x-3 bg-primary/12 rounded-xl border border-primary/10 shadow-sm shadow-primary/5" />
+                  )}
+                  <span className={`relative z-10 transition-all duration-300
+                    ${isActive
+                      ? "text-primary scale-110 -translate-y-0.5"
+                      : "text-muted-foreground/50 scale-100 translate-y-0"
+                    }`}>
+                    {tab.icon}
+                  </span>
+                  <span className={`relative z-10 text-[10px] font-semibold leading-none transition-all duration-300
+                    ${isActive ? "text-primary opacity-100" : "text-muted-foreground/50 opacity-60"}`}>
+                    {tab.label}
+                  </span>
+                </button>
+              )
+            })}
+          </div>
         </div>
       </nav>
     </>

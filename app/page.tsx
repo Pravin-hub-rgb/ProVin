@@ -44,7 +44,7 @@ export default function Home() {
   return (
     <>
       <Navbar activeTab={activeTab} onTabChange={handleTabChange} />
-      <main className="min-h-[calc(100vh-3.5rem)] pb-16 md:pb-0">
+      <main className="min-h-[calc(100vh-3.5rem)] pb-20 md:pb-0">
         {activeTab === "Dashboard" && (
           <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 flex items-center justify-center">
             <div className="text-center px-4">
