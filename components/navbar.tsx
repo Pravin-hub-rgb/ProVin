@@ -67,47 +67,41 @@ export function Navbar({ activeTab, onTabChange }: NavbarProps) {
       </nav>
 
       {/* Bottom tab bar — mobile only */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50"
-        style={{ paddingBottom: 'env(safe-area-inset-bottom, 6px)' }}>
-        <div className="mx-4">
-          <div className="relative flex items-end justify-around h-[68px] px-2 pb-1.5
-            bg-background/80 backdrop-blur-2xl
-            rounded-2xl border border-border/40
-            shadow-[0_-4px_24px_rgba(0,0,0,0.06)]
-            dark:shadow-[0_-4px_24px_rgba(0,0,0,0.25)]">
-            {tabs.map((tab) => {
-              const isActive = activeTab === tab.id
-              return (
-                <button
-                  key={tab.id}
-                  onClick={() => onTabChange(tab.id)}
-                  className={`relative flex flex-col items-center justify-center transition-all duration-500 ease-out
-                    ${isActive ? '-translate-y-2' : 'translate-y-0'}`}
-                  style={{ width: '68px' }}
-                >
-                  {isActive && (
-                    <span className="absolute -inset-x-1 -inset-y-2 bg-gradient-to-b from-primary to-primary/85 
-                      rounded-2xl shadow-lg shadow-primary/30 border border-primary/20
-                      transition-all duration-500" />
-                  )}
-                  <span className={`relative z-10 transition-all duration-500
-                    ${isActive 
-                      ? 'text-primary-foreground scale-110' 
-                      : 'text-muted-foreground/50'
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50">
+        {/* Flat bar background */}
+        <div className="absolute bottom-0 left-0 right-0 h-14
+          bg-background/90 backdrop-blur-xl
+          border-t border-border/50" />
+        {/* Tabs */}
+        <div className="relative flex items-start justify-around"
+          style={{ height: '60px', paddingBottom: 'env(safe-area-inset-bottom, 4px)' }}>
+          {tabs.map((tab) => {
+            const isActive = activeTab === tab.id
+            return (
+              <button
+                key={tab.id}
+                onClick={() => onTabChange(tab.id)}
+                className="relative flex flex-col items-center"
+                style={{ width: '72px' }}
+              >
+                {/* Tab circle */}
+                <div className={`relative flex items-center justify-center transition-all duration-500 ease-out
+                  rounded-full
+                  ${isActive
+                    ? 'w-12 h-12 -translate-y-2 bg-gradient-to-br from-primary via-primary to-primary/90 shadow-lg shadow-primary/30 ring-2 ring-primary/20'
+                    : 'w-10 h-10 translate-y-1 bg-transparent'
+                  }`}>
+                  <div className={`transition-all duration-500
+                    ${isActive
+                      ? 'text-primary-foreground scale-110'
+                      : 'text-foreground/30'
                     }`}>
                     {tab.icon}
-                  </span>
-                  <span className={`relative z-10 transition-all duration-500 leading-none
-                    ${isActive
-                      ? 'text-[10px] font-bold text-primary-foreground/90'
-                      : 'text-[10px] font-semibold text-muted-foreground/50'
-                    }`}>
-                    {tab.label}
-                  </span>
-                </button>
-              )
-            })}
-          </div>
+                  </div>
+                </div>
+              </button>
+            )
+          })}
         </div>
       </nav>
     </>
