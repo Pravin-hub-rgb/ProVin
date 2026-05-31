@@ -97,7 +97,7 @@ export function SidebarLayout({ children, sidebarWidth, onSidebarWidthChange }: 
       <button
         onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
         className="absolute top-1/2 -translate-y-1/2 z-[102]
-          w-6 h-12 bg-background border border-border/50 rounded-r-lg
+          w-6 h-12 bg-background border border-black/20 dark:border-white/20 rounded-r-lg
           flex items-center justify-center
           hover:bg-accent hover:border-primary/30
           transition-all duration-300
