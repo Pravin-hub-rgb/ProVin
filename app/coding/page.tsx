@@ -1,8 +1,9 @@
 "use client"
 
-import { useState, useEffect, useRef, useCallback } from "react"
+import { useState, useEffect } from "react"
 import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
+import { SidebarLayout } from "@/components/sidebar-layout"
 import { subjects, loadMarkdownContent, type Subject, type Lecture, type LectureGroup } from "@/lib/coding-data"
 import styles from "./page.module.css"
 import ProgressChecklist from "@/components/progress-checklist"
@@ -55,96 +56,11 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     }
   }
   const [sidebarWidth, setSidebarWidth] = useState(300)
-  const [isResizing, setIsResizing] = useState(false)
   const [openPhases, setOpenPhases] = useState<Record<string, boolean>>({})
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({})
- 
+  
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
-  
-  // Refs for performance optimization
-  const rafRef = useRef<number | null>(null)
-  const isUpdatingRef = useRef(false)
-  const sidebarRef = useRef<HTMLDivElement>(null)
-
-
-  // Optimized resize handler with requestAnimationFrame
-  const handleResize = useCallback((e: MouseEvent) => {
-    if (!isResizing) return
-    const newWidth = e.clientX
-    const min = 251
-    const max = 600
-    
-    // Clamp width to bounds
-    const clampedWidth = Math.max(min, Math.min(max, newWidth))
-    
-    // Only update if width actually changed
-    if (clampedWidth !== sidebarWidth) {
-      // Use requestAnimationFrame for smooth 60fps updates
-      if (!isUpdatingRef.current) {
-        isUpdatingRef.current = true
-        rafRef.current = requestAnimationFrame(() => {
-          setSidebarWidth(clampedWidth)
-          isUpdatingRef.current = false
-        })
-      }
-    }
-  }, [isResizing, sidebarWidth])
-
-  // Handle mouse events for resizing
-  useEffect(() => {
-    const handleMouseUp = () => {
-      setIsResizing(false)
-      // Cancel any pending animation frame
-      if (rafRef.current) {
-        cancelAnimationFrame(rafRef.current)
-        rafRef.current = null
-      }
-      isUpdatingRef.current = false
-      // Remove body classes
-      document.body.classList.remove('resizing')
-    }
-
-    if (isResizing) {
-      // Use passive: false for mousemove to allow preventDefault if needed
-      document.addEventListener('mousemove', handleResize, { passive: false })
-      document.addEventListener('mouseup', handleMouseUp)
-      
-      // Add body classes for styling
-      document.body.classList.add('resizing')
-    }
-
-    return () => {
-      document.removeEventListener('mousemove', handleResize)
-      document.removeEventListener('mouseup', handleMouseUp)
-      document.body.classList.remove('resizing')
-    }
-  }, [isResizing, handleResize])
-
-  // Handle keyboard accessibility for resizing
-  const handleKeyDown = useCallback((e: KeyboardEvent) => {
-    if (e.target instanceof HTMLElement && e.target.tagName === 'INPUT') {
-      return // Don't interfere with text input
-    }
-
-    const step = e.shiftKey ? 20 : 5 // Shift for larger steps
-    
-    switch (e.key) {
-      case 'ArrowLeft':
-        e.preventDefault()
-        setSidebarWidth(prev => Math.max(251, prev - step))
-        break
-      case 'ArrowRight':
-        e.preventDefault()
-        setSidebarWidth(prev => Math.min(600, prev + step))
-        break
-    }
-  }, [])
-
-  useEffect(() => {
-    document.addEventListener('keydown', handleKeyDown)
-    return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [handleKeyDown])
 
   // Load first lecture by default when subject changes
   // Initialize open phases state when subject changes
@@ -269,27 +185,14 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
       
       <div className="flex h-full pt-12">
         {/* Sidebar */}
-        <div 
-          ref={sidebarRef}
-          className={`border-r border-border/50 bg-background/80 backdrop-blur-xl ${
-            styles.sidebar
-          } ${isResizing ? styles.isResizing : ''}`}
-          style={{ 
-            width: sidebarWidth,
-            willChange: isResizing ? 'width' : 'auto',
-            height: 'calc(100vh - 3.5rem)',
-            overflowY: 'auto'
-          }}
+        <SidebarLayout
+          sidebarWidth={sidebarWidth}
+          onSidebarWidthChange={setSidebarWidth}
         >
           <div className="p-6 pb-20">
             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <Book className="w-5 h-5 text-primary" />
               Theory Notes
-              {isResizing && (
-                <span className="ml-2 text-xs text-muted-foreground bg-muted/50 px-2 py-1 rounded">
-                  {sidebarWidth}px
-                </span>
-              )}
             </h2>
             
             <div className="space-y-3">
@@ -423,24 +326,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
 
             </div>
           </div>
-        </div>
-
-        {/* Draggable Divider - Full Height Overlay */}
-        <div
-          className={`${styles.resizeHandle} ${
-            isResizing ? styles.isResizing : ''
-          }`}
-          style={{ left: `${sidebarWidth}px` }}
-          onMouseDown={() => setIsResizing(true)}
-          title="Drag to resize"
-        >
-          {/* Accessibility label for screen readers */}
-          <span className="sr-only">Resize sidebar</span>
-          {/* Tooltip for better UX */}
-          <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 opacity-0 hover:opacity-100 transition-opacity bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none">
-            Drag to resize
-          </div>
-        </div>
+        </SidebarLayout>
 
         {/* Content Area */}
         <div className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
