@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 130" fill="none">
+  <rect x="10" y="30" width="100" height="60" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <rect x="20" y="38" width="80" height="35" rx="2" fill="#0f172a" />
+  <text x="60" y="60" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">LAPTOP</text>
+  <rect x="20" y="38" width="80" height="35" rx="2" fill="#38bdf8" opacity="0.1" />
+  <rect x="40" y="90" width="40" height="8" rx="2" fill="#334155" />
+  <rect x="25" y="98" width="70" height="6" rx="3" fill="#1e293b" />
+  <text x="60" y="115" text-anchor="middle" fill="#64748b" font-size="10" font-family="sans-serif">🗄️ Tum (Laptop)</text>
+  <line x1="110" y1="60" x2="148" y2="60" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,3" />
+  <polygon points="148,55 158,60 148,65" fill="#f59e0b" />
+  <rect x="160" y="25" width="110" height="70" rx="8" fill="#f0f9ff" stroke="#38bdf8" stroke-width="1.5" />
+  <rect x="175" y="38" width="35" height="20" rx="2" fill="#1e293b" />
+  <circle cx="192" cy="48" r="4" fill="#22c55e" />
+  <circle cx="185" cy="38" r="2" fill="#22c55e" />
+  <circle cx="192" cy="38" r="2" fill="#22c55e" />
+  <circle cx="199" cy="38" r="2" fill="#22c55e" />
+  <text x="192" y="72" text-anchor="middle" fill="#0369a1" font-size="9" font-weight="600" font-family="sans-serif">Server</text>
+  <text x="192" y="84" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">📍 India</text>
+  <line x1="270" y1="60" x2="308" y2="60" stroke="#f59e0b" stroke-width="2" stroke-dasharray="4,3" />
+  <polygon points="308,55 318,60 308,65" fill="#f59e0b" />
+  <rect x="320" y="25" width="100" height="70" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.5" />
+  <rect x="335" y="38" width="70" height="30" rx="4" fill="#0f172a" />
+  <text x="370" y="55" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">CONNECTED</text>
+  <text x="370" y="68" text-anchor="middle" fill="#f87171" font-size="7" font-family="sans-serif">🤝</text>
+  <text x="370" y="82" text-anchor="middle" fill="#991b1b" font-size="9" font-weight="600" font-family="sans-serif">Friend</text>
+  <text x="370" y="92" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">📍 USA</text>
+  <path d="M 420 60 A 15 15 0 0 0 420 40 L 160 40 A 15 15 0 0 0 160 60 Z" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3" opacity="0.4" />
+  <rect x="180" y="95" width="340" height="25" rx="6" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="350" y="112" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="monospace">🌐 Data Centers — duniya bhar mein</text>
+</svg>
