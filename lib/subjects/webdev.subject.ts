@@ -95,6 +95,16 @@ export const webdevSubject: Subject = {
       id: "interview",
       title: "🎯 Interview Preparation",
       openByDefault: false,
+      groups: [
+        {
+          id: "real-talk",
+          title: "💬 Real Talk - Interview Questions",
+          openByDefault: false,
+          lectures: [
+            { id: "rt-01", title: "React Interview Questions Extracted", path: "docs/coding/WEB-DEV/interview/Real Talk/React_Interview_Questions_Extracted.md" }
+          ]
+        }
+      ],
       lectures: [
         { id: "int-01", title: "01 - Browser Caching", path: "docs/coding/WEB-DEV/interview/01-browser-caching.md" },
         { id: "int-02", title: "02 - Cache Busting", path: "docs/coding/WEB-DEV/interview/02-cache-busting.md" },
@@ -110,7 +120,19 @@ export const webdevSubject: Subject = {
         { id: "int-12", title: "12 - React.memo", path: "docs/coding/WEB-DEV/interview/12-React.memo.md" },
         { id: "int-13", title: "13 - Virtual DOM & Reconciliation", path: "docs/coding/WEB-DEV/interview/13 virtual dom reconciliation.md" },
         { id: "int-14", title: "14 - Rendering Stages", path: "docs/coding/WEB-DEV/interview/14 rendering stages.md" },
-        { id: "int-15", title: "15 - React Server Components", path: "docs/coding/WEB-DEV/interview/15-react-server-components.md" }
+        { id: "int-15", title: "15 - React Server Components", path: "docs/coding/WEB-DEV/interview/15-react-server-components.md" },
+        { id: "int-16", title: "16 - Hydration", path: "docs/coding/WEB-DEV/interview/16-hydration.md" },
+        { id: "int-17", title: "17 - App Router vs Pages Router", path: "docs/coding/WEB-DEV/interview/17-app-router-vs-pages-router.md" },
+        { id: "int-18", title: "18 - Middleware & Edge Runtime", path: "docs/coding/WEB-DEV/interview/18-middleware-edge-runtime.md" },
+        { id: "int-19", title: "19 - API Design REST vs GraphQL", path: "docs/coding/WEB-DEV/interview/19-api-design-rest-vs-graphql.md" },
+        { id: "int-20", title: "20 - Authentication & Authorization", path: "docs/coding/WEB-DEV/interview/20-authentication-authorization.md" },
+        { id: "int-21", title: "21 - Database SQL vs NoSQL", path: "docs/coding/WEB-DEV/interview/21-database-sql-vs-nosql.md" },
+        { id: "int-22", title: "22 - Database Indexing", path: "docs/coding/WEB-DEV/interview/22-database-indexing.md" },
+        { id: "int-23", title: "23 - Handling Missing Data & Schema Migrations", path: "docs/coding/WEB-DEV/interview/23-missing-data-schema-migrations.md" },
+        { id: "int-24", title: "24 - Project Explanation STAR Method", path: "docs/coding/WEB-DEV/interview/24-project-explanation-star-method.md" },
+        { id: "int-25", title: "25 - Node.js Overview", path: "docs/coding/WEB-DEV/interview/nodejs.md" },
+        { id: "int-26", title: "26 - Interview Plan", path: "docs/coding/WEB-DEV/interview/plan.md" },
+        { id: "int-27", title: "27 - Demo Notes", path: "docs/coding/WEB-DEV/interview/demo.md" }
       ]
     },
     {
