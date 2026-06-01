@@ -4,7 +4,6 @@ import { useEffect, useState, startTransition } from "react";
 import { Navbar } from "@/components/navbar";
 import CodingPage from "./coding/page";
 import FinancePage from "./finance/page";
-import { subjects } from "@/lib/coding-data";
 
 type Tab = "Dashboard" | "Coding" | "Finance";
 type SubjectId = string | null;
@@ -35,16 +34,16 @@ export default function Home() {
     }
   }, [activeTab, selectedSubject, selectedLecture]);
 
-  const handleTabChange = (tab: Tab) => {
+  // ✅ FIX: Reset state when switching tabs between Coding / Finance
+  useEffect(() => {
     setSelectedSubject(null);
     setSelectedLecture(null);
-    setActiveTab(tab);
-  };
+  }, [activeTab]);
 
   return (
     <>
-      <Navbar activeTab={activeTab} onTabChange={handleTabChange} />
-      <main className="min-h-[calc(100vh-3.5rem)] pb-20 md:pb-0">
+      <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
+      <main className="min-h-[calc(100vh-3.5rem)]">
         {activeTab === "Dashboard" && (
           <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 flex items-center justify-center">
             <div className="text-center px-4">
