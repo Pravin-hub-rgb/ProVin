@@ -19,18 +19,18 @@ export const iknowcomputersSubject: Subject = {
       lectures: [
         {
           id: "ikc-0.1",
-          title: "0.1 Computer Ka Itihaas",
-          path: "docs/coding/i-know-computers/Module 0 - History & How Computers Work/0.1 Computer Ka Itihaas.md",
+          title: "0.1 Computer History",
+          path: "docs/coding/i-know-computers/Module 0 - History & How Computers Work/0.1 Computer History.md",
         },
         {
           id: "ikc-0.2",
-          title: "0.2 Computer Ke Parts — Hardware",
-          path: "docs/coding/i-know-computers/Module 0 - History & How Computers Work/0.2 Computer Ke Parts Hardware.md",
+          title: "0.2 Computer Parts — Hardware",
+          path: "docs/coding/i-know-computers/Module 0 - History & How Computers Work/0.2 Computer Parts - Hardware.md",
         },
         {
           id: "ikc-0.3",
-          title: "0.3 Software aur Operating System",
-          path: "docs/coding/i-know-computers/Module 0 - History & How Computers Work/0.3 Software aur Operating System.md",
+          title: "0.3 Software and Operating System",
+          path: "docs/coding/i-know-computers/Module 0 - History & How Computers Work/0.3 Software and Operating System.md",
         },
       ],
     },
@@ -41,8 +41,8 @@ export const iknowcomputersSubject: Subject = {
       lectures: [
         {
           id: "ikc-1.1",
-          title: "1.1 Files aur Folders",
-          path: "docs/coding/i-know-computers/Module 1 - OS, Files, Folders & Shortcuts/1.1 Files aur Folders.md",
+          title: "1.1 Files and Folders",
+          path: "docs/coding/i-know-computers/Module 1 - OS, Files, Folders & Shortcuts/1.1 Files and Folders.md",
         },
         {
           id: "ikc-1.2",
@@ -64,17 +64,17 @@ export const iknowcomputersSubject: Subject = {
         {
           id: "ikc-2.1",
           title: "2.1 Internet & Browser Basics",
-          path: "docs/coding/i-know-computers/Module 2 - Internet, Email & Browsers/2.1 Internet aur Browser Basics.md",
+          path: "docs/coding/i-know-computers/Module 2 - Internet, Email & Browsers/2.1 Internet and Browser Basics.md",
         },
         {
           id: "ikc-2.2",
           title: "2.2 Email — Gmail",
-          path: "docs/coding/i-know-computers/Module 2 - Internet, Email & Browsers/2.2 Email — Gmail.md",
+          path: "docs/coding/i-know-computers/Module 2 - Internet, Email & Browsers/2.2 Email - Gmail.md",
         },
         {
           id: "ikc-2.3",
           title: "2.3 Internet Safety & Best Practices",
-          path: "docs/coding/i-know-computers/Module 2 - Internet, Email & Browsers/2.3 Internet Safety aur Best Practices.md",
+          path: "docs/coding/i-know-computers/Module 2 - Internet, Email & Browsers/2.3 Internet Safety and Best Practices.md",
         },
       ],
     },
@@ -86,7 +86,7 @@ export const iknowcomputersSubject: Subject = {
         {
           id: "ikc-3.1",
           title: "3.1 Word Interface & Basic Typing",
-          path: "docs/coding/i-know-computers/Module 3 - MS Word/3.1 Word Interface aur Basic Typing.md",
+          path: "docs/coding/i-know-computers/Module 3 - MS Word/3.1 Word Interface and Basic Typing.md",
         },
         {
           id: "ikc-3.2",
@@ -101,7 +101,7 @@ export const iknowcomputersSubject: Subject = {
         {
           id: "ikc-3.4",
           title: "3.4 Page Layout, Headers/Footers & Save as PDF",
-          path: "docs/coding/i-know-computers/Module 3 - MS Word/3.4 Page Layout, Headers-Footers aur Save as PDF.md",
+          path: "docs/coding/i-know-computers/Module 3 - MS Word/3.4 Page Layout, Headers-Footers and Save as PDF.md",
         },
       ],
     },
@@ -113,27 +113,27 @@ export const iknowcomputersSubject: Subject = {
         {
           id: "ikc-4.1",
           title: "4.1 Excel Interface & Navigation",
-          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.1 Excel Interface aur Navigation.md",
+          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.1 Excel Interface and Navigation.md",
         },
         {
           id: "ikc-4.2",
           title: "4.2 Data Entry & Formatting",
-          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.2 Data Entry aur Formatting.md",
+          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.2 Data Entry and Formatting.md",
         },
         {
           id: "ikc-4.3",
           title: "4.3 Formulas & Functions",
-          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.3 Formulas aur Functions.md",
+          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.3 Formulas and Functions.md",
         },
         {
           id: "ikc-4.4",
           title: "4.4 VLOOKUP & HLOOKUP",
-          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.4 VLOOKUP aur HLOOKUP.md",
+          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.4 VLOOKUP and HLOOKUP.md",
         },
         {
           id: "ikc-4.5",
           title: "4.5 Sort, Filter & Data Cleanup",
-          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.5 Sort, Filter aur Data Cleanup.md",
+          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.5 Sort, Filter and Data Cleanup.md",
         },
         {
           id: "ikc-4.6",
@@ -143,12 +143,12 @@ export const iknowcomputersSubject: Subject = {
         {
           id: "ikc-4.7",
           title: "4.7 Charts & Graphs",
-          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.7 Charts aur Graphs.md",
+          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.7 Charts and Graphs.md",
         },
         {
           id: "ikc-4.8",
           title: "4.8 Print, Share & Protect",
-          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.8 Print, Share aur Protect.md",
+          path: "docs/coding/i-know-computers/Module 4 - MS Excel (Detailed)/4.8 Print, Share and Protect.md",
         },
       ],
     },
@@ -160,17 +160,17 @@ export const iknowcomputersSubject: Subject = {
         {
           id: "ikc-5.1",
           title: "5.1 PowerPoint Interface & Basic Slides",
-          path: "docs/coding/i-know-computers/Module 5 - PowerPoint Basics/5.1 PowerPoint Interface aur Basic Slides.md",
+          path: "docs/coding/i-know-computers/Module 5 - PowerPoint Basics/5.1 PowerPoint Interface and Basic Slides.md",
         },
         {
           id: "ikc-5.2",
           title: "5.2 Design, Images & Formatting",
-          path: "docs/coding/i-know-computers/Module 5 - PowerPoint Basics/5.2 Design, Images aur Formatting.md",
+          path: "docs/coding/i-know-computers/Module 5 - PowerPoint Basics/5.2 Design, Images and Formatting.md",
         },
         {
           id: "ikc-5.3",
           title: "5.3 Transitions, Animations & Presenting",
-          path: "docs/coding/i-know-computers/Module 5 - PowerPoint Basics/5.3 Transitions, Animations aur Present Karna.md",
+          path: "docs/coding/i-know-computers/Module 5 - PowerPoint Basics/5.3 Transitions, Animations and Presenting.md",
         },
       ],
     },
@@ -192,7 +192,7 @@ export const iknowcomputersSubject: Subject = {
         {
           id: "ikc-6.3",
           title: "6.3 Google Docs & Google Forms",
-          path: "docs/coding/i-know-computers/Module 6 - Google Workspace Basics/6.3 Google Docs aur Google Forms.md",
+          path: "docs/coding/i-know-computers/Module 6 - Google Workspace Basics/6.3 Google Docs and Google Forms.md",
         },
       ],
     },
@@ -204,17 +204,17 @@ export const iknowcomputersSubject: Subject = {
         {
           id: "ikc-7.1",
           title: "7.1 Typing Speed & Accuracy",
-          path: "docs/coding/i-know-computers/Module 7 - Job-Ready Office Skills/7.1 Typing Speed aur Accuracy.md",
+          path: "docs/coding/i-know-computers/Module 7 - Job-Ready Office Skills/7.1 Typing Speed and Accuracy.md",
         },
         {
           id: "ikc-7.2",
           title: "7.2 File Naming, Versioning & Folder Organization",
-          path: "docs/coding/i-know-computers/Module 7 - Job-Ready Office Skills/7.2 File Naming, Versioning aur Folder Organization.md",
+          path: "docs/coding/i-know-computers/Module 7 - Job-Ready Office Skills/7.2 File Naming, Versioning and Folder Organization.md",
         },
         {
           id: "ikc-7.3",
           title: "7.3 Professional Communication & Job Context",
-          path: "docs/coding/i-know-computers/Module 7 - Job-Ready Office Skills/7.3 Professional Communication aur Job Context.md",
+          path: "docs/coding/i-know-computers/Module 7 - Job-Ready Office Skills/7.3 Professional Communication and Job Context.md",
         },
       ],
     },
