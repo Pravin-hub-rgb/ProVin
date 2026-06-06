@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" fill="none">
+  <rect x="0" y="0" width="600" height="240" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5" />
+  <text x="300" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#0369a1">📽️ PowerPoint Window — Annotated</text>
+
+  <rect x="25" y="40" width="550" height="180" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+
+  <rect x="25" y="40" width="550" height="20" rx="6" fill="#334155" />
+  <text x="45" y="54" fill="#64748b" font-size="7" font-family="sans-serif">📄 Presentation1 - PowerPoint</text>
+
+  <rect x="28" y="62" width="544" height="10" rx="2" fill="#0f172a" />
+  <text x="300" y="70" text-anchor="middle" fill="#47658b" font-size="6" font-family="sans-serif">Home  Insert  Design  Transitions  Animations  Slide Show</text>
+
+  <rect x="28" y="74" width="100" height="138" rx="3" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <rect x="32" y="78" width="92" height="28" rx="3" fill="#334155" stroke="#2563eb" stroke-width="1" />
+  <rect x="36" y="82" width="84" height="8" rx="2" fill="#1e293b" />
+  <rect x="36" y="94" width="84" height="8" rx="2" fill="#1e293b" />
+  <rect x="32" y="110" width="92" height="28" rx="3" fill="#1e293b" stroke="#334155" stroke-width="0.5" />
+  <rect x="36" y="114" width="84" height="8" rx="2" fill="#1e293b" />
+  <rect x="36" y="126" width="60" height="6" rx="2" fill="#334155" />
+  <rect x="32" y="142" width="92" height="28" rx="3" fill="#1e293b" stroke="#334155" stroke-width="0.5" />
+  <rect x="36" y="146" width="84" height="8" rx="2" fill="#1e293b" />
+  <rect x="36" y="158" width="60" height="6" rx="2" fill="#334155" />
+  <rect x="32" y="174" width="92" height="28" rx="3" fill="#1e293b" stroke="#334155" stroke-width="0.5" />
+  <rect x="36" y="178" width="84" height="8" rx="2" fill="#1e293b" />
+  <rect x="36" y="190" width="60" height="6" rx="2" fill="#334155" />
+
+  <rect x="132" y="74" width="370" height="108" rx="4" fill="#fff" />
+  <text x="317" y="100" text-anchor="middle" fill="#1e293b" font-size="12" font-weight="600" font-family="sans-serif">My School Introduction</text>
+  <text x="317" y="120" text-anchor="middle" fill="#475569" font-size="8" font-family="sans-serif">By Rahul Sharma</text>
+  <text x="317" y="150" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="sans-serif">Delhi Public School</text>
+  <text x="317" y="165" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="sans-serif">October 2024</text>
+
+  <rect x="132" y="186" width="370" height="26" rx="3" fill="#1e293b" stroke="#334155" stroke-width="1" />
+  <text x="317" y="202" text-anchor="middle" fill="#94a3b8" font-size="6" font-style="italic" font-family="sans-serif">Click to add speaker notes</text>
+
+  <rect x="506" y="74" width="66" height="108" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <rect x="510" y="78" width="58" height="20" rx="3" fill="#334155" />
+  <text x="539" y="92" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">📐 Layout</text>
+  <rect x="510" y="102" width="58" height="20" rx="3" fill="#334155" />
+  <text x="539" y="116" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">🎨 Theme</text>
+  <rect x="510" y="126" width="58" height="20" rx="3" fill="#334155" />
+  <text x="539" y="140" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">✨ Transitions</text>
+  <rect x="510" y="150" width="58" height="20" rx="3" fill="#334155" />
+  <text x="539" y="164" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">🔄 Animations</text>
+
+  <rect x="500" y="60" width="90" height="14" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="545" y="70" text-anchor="middle" fill="#92400e" font-size="6" font-weight="600" font-family="sans-serif">📐 Ribbon (Tabs)</text>
+  <path d="M500,67 L485,67" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="485" cy="67" r="2" fill="#f59e0b" />
+
+  <rect x="80" y="205" width="100" height="14" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="130" y="215" text-anchor="middle" fill="#92400e" font-size="6" font-weight="600" font-family="sans-serif">📑 Slide Panel</text>
+  <path d="M130,205 L130,180" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="130" cy="180" r="2" fill="#f59e0b" />
+
+  <rect x="450" y="180" width="90" height="14" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="495" y="190" text-anchor="middle" fill="#92400e" font-size="6" font-weight="600" font-family="sans-serif">📝 Notes Panel</text>
+  <path d="M480,187 L450,187" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="450" cy="187" r="2" fill="#f59e0b" />
+</svg>

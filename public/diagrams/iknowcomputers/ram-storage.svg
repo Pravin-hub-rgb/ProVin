@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 210" fill="none">
+  <rect x="0" y="0" width="560" height="210" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5" />
+  <text x="20" y="28" font-size="14" font-weight="600" font-family="sans-serif" fill="#0369a1">💾 RAM vs Storage — Short-term vs Long-term Memory</text>
+  <rect x="20" y="45" width="240" height="145" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" />
+  <text x="140" y="70" text-anchor="middle" fill="#a78bfa" font-size="12" font-weight="600" font-family="sans-serif">⚡ RAM</text>
+  <text x="140" y="86" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">Short-term / Temporary</text>
+  <rect x="35" y="98" width="90" height="30" rx="4" fill="#334155" />
+  <text x="80" y="113" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">Chrome</text>
+  <rect x="35" y="98" width="90" height="30" rx="4" fill="#22c55e" opacity="0.1" />
+  <rect x="140" y="98" width="105" height="30" rx="4" fill="#334155" />
+  <text x="192" y="113" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">VS Code</text>
+  <rect x="140" y="98" width="105" height="30" rx="4" fill="#22c55e" opacity="0.1" />
+  <rect x="35" y="135" width="90" height="30" rx="4" fill="#334155" />
+  <text x="80" y="150" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">Spotify</text>
+  <rect x="35" y="135" width="90" height="30" rx="4" fill="#22c55e" opacity="0.1" />
+  <rect x="140" y="135" width="105" height="30" rx="4" fill="#334155" />
+  <text x="192" y="150" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">Terminal</text>
+  <rect x="140" y="135" width="105" height="30" rx="4" fill="#22c55e" opacity="0.1" />
+  <text x="140" y="185" text-anchor="middle" fill="#f87171" font-size="9" font-family="sans-serif">🔥 Power off → RAM empties (volatile)</text>
+
+  <text x="285" y="117" text-anchor="middle" fill="#94a3b8" font-size="18" font-weight="600" font-family="sans-serif">VS</text>
+
+  <rect x="300" y="45" width="240" height="145" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" />
+  <text x="420" y="70" text-anchor="middle" fill="#38bdf8" font-size="12" font-weight="600" font-family="sans-serif">💽 Storage</text>
+  <text x="420" y="86" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">Long-term / Permanent</text>
+  <rect x="315" y="98" width="210" height="25" rx="4" fill="#334155" />
+  <text x="420" y="115" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="sans-serif">📁 My Documents (2020 — 2025)</text>
+  <rect x="315" y="130" width="100" height="20" rx="4" fill="#334155" />
+  <text x="365" y="144" text-anchor="middle" fill="#fbbf24" font-size="8" font-family="sans-serif">🖼 Photos</text>
+  <rect x="425" y="130" width="100" height="20" rx="4" fill="#334155" />
+  <text x="475" y="144" text-anchor="middle" fill="#fbbf24" font-size="8" font-family="sans-serif">🎬 Videos</text>
+  <rect x="315" y="155" width="210" height="20" rx="4" fill="#334155" />
+  <text x="420" y="169" text-anchor="middle" fill="#fbbf24" font-size="8" font-family="sans-serif">💿 Windows / Software installed</text>
+  <text x="420" y="185" text-anchor="middle" fill="#22c55e" font-size="9" font-family="sans-serif">✅ Power off → Data stays safe (non-volatile)</text>
+
+  <rect x="20" y="195" width="520" height="10" rx="4" fill="#0f172a" />
+</svg>

@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" fill="none">
+  <rect x="0" y="0" width="600" height="240" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5" />
+  <text x="300" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#0369a1">🌐 Browser Window — Annotated</text>
+
+  <rect x="30" y="40" width="540" height="175" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <rect x="30" y="40" width="540" height="30" rx="6" fill="#334155" />
+  <rect x="30" y="56" width="540" height="14" fill="#334155" />
+
+  <circle cx="46" cy="55" r="5" fill="#ef4444" />
+  <circle cx="60" cy="55" r="5" fill="#f59e0b" />
+  <circle cx="74" cy="55" r="5" fill="#22c55e" />
+
+  <rect x="90" y="47" width="28" height="16" rx="3" fill="#0f172a" />
+  <polygon points="98,53 94,57 98,61" fill="#64748b" />
+  <polygon points="106,53 110,57 106,61" fill="#64748b" />
+  <rect x="120" y="47" width="28" height="16" rx="3" fill="#0f172a" />
+  <path d="M127,51 L140,51 L140,59 L127,59 Z" fill="none" stroke="#64748b" stroke-width="1.5" />
+  <text x="143" y="58" font-size="6" fill="#64748b" font-family="sans-serif">❌</text>
+
+  <rect x="170" y="47" width="280" height="16" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="310" y="58" text-anchor="middle" fill="#93c5fd" font-size="7" font-family="monospace">🔒 https://www.google.com</text>
+
+  <rect x="460" y="47" width="50" height="16" rx="3" fill="#0f172a" />
+  <text x="485" y="58" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">⭐</text>
+
+  <rect x="515" y="47" width="45" height="16" rx="3" fill="#0f172a" />
+  <text x="537" y="58" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">☰</text>
+
+  <rect x="35" y="75" width="130" height="130" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="100" y="92" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="sans-serif">Google</text>
+  <rect x="47" y="100" width="106" height="22" rx="4" fill="#334155" />
+  <text x="100" y="114" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">Google Search</text>
+  <rect x="47" y="128" width="106" height="22" rx="4" fill="#334155" />
+  <text x="100" y="142" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">Gmail</text>
+  <rect x="47" y="156" width="106" height="22" rx="4" fill="#334155" />
+  <text x="100" y="170" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">Images</text>
+  <rect x="47" y="184" width="106" height="14" rx="3" fill="#334155" />
+  <text x="100" y="194" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">Sign in</text>
+
+  <rect x="170" y="140" width="100" height="18" rx="3" fill="#312e81" />
+  <text x="220" y="153" text-anchor="middle" fill="#c7d2fe" font-size="7" font-family="monospace">📄 Search Result 1</text>
+  <rect x="280" y="140" width="100" height="18" rx="3" fill="#312e81" />
+  <text x="330" y="153" text-anchor="middle" fill="#c7d2fe" font-size="7" font-family="monospace">📄 Search Result 2</text>
+  <rect x="390" y="140" width="100" height="18" rx="3" fill="#312e81" />
+  <text x="440" y="153" text-anchor="middle" fill="#c7d2fe" font-size="7" font-family="monospace">📄 Search Result 3</text>
+
+  <rect x="170" y="168" width="100" height="18" rx="3" fill="#312e81" />
+  <text x="220" y="181" text-anchor="middle" fill="#c7d2fe" font-size="7" font-family="monospace">📄 Search Result 4</text>
+  <rect x="280" y="168" width="100" height="18" rx="3" fill="#312e81" />
+  <text x="330" y="181" text-anchor="middle" fill="#c7d2fe" font-size="7" font-family="monospace">📄 Search Result 5</text>
+  <rect x="390" y="168" width="100" height="18" rx="3" fill="#312e81" />
+  <text x="440" y="181" text-anchor="middle" fill="#c7d2fe" font-size="7" font-family="monospace">📄 Search Result 6</text>
+
+  <rect x="170" y="75" width="390" height="55" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="365" y="95" text-anchor="middle" fill="#22c55e" font-size="8" font-weight="600" font-family="sans-serif">Search Results Page</text>
+  <rect x="180" y="103" width="370" height="18" rx="3" fill="#334155" />
+  <text x="365" y="115" text-anchor="middle" fill="#93c5fd" font-size="6" font-family="sans-serif">https://www.example.com/page-title</text>
+
+  <rect x="490" y="45" width="95" height="14" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="537" y="55" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📍 Address Bar</text>
+  <path d="M490,52 L452,52 L452,55" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="452" cy="55" r="2.5" fill="#f59e0b" />
+
+  <rect x="510" y="70" width="75" height="14" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="547" y="80" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📑 Tabs</text>
+  <path d="M510,77 L382,77" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="382" cy="77" r="2.5" fill="#f59e0b" />
+
+  <rect x="510" y="130" width="80" height="14" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="550" y="140" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📄 Content Area</text>
+  <path d="M510,137 L490,137" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="490" cy="137" r="2.5" fill="#f59e0b" />
+</svg>

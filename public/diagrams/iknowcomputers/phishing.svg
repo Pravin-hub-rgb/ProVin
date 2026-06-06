@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" fill="none">
+  <rect x="0" y="0" width="600" height="240" rx="10" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.5" />
+  <text x="300" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#991b1b">🎣 Phishing Alert — Fake vs Real Email</text>
+
+  <rect x="30" y="42" width="260" height="180" rx="6" fill="#1e293b" stroke="#ef4444" stroke-width="1.5" />
+  <rect x="30" y="42" width="260" height="24" rx="6" fill="#dc2626" />
+  <rect x="30" y="54" width="260" height="12" fill="#dc2626" />
+  <text x="160" y="59" text-anchor="middle" fill="#fff" font-size="8" font-weight="600" font-family="sans-serif">❌ FAKE — Phishing Email</text>
+
+  <rect x="40" y="72" width="240" height="14" rx="3" fill="#0f172a" />
+  <text x="52" y="83" fill="#fca5a5" font-size="7" font-family="monospace">From: support@bankk-secure.com</text>
+
+  <rect x="40" y="90" width="240" height="14" rx="3" fill="#0f172a" />
+  <text x="52" y="101" fill="#fca5a5" font-size="7" font-family="monospace">Subject: ⚠️ Your account will be CLOSED!</text>
+
+  <rect x="40" y="110" width="240" height="50" rx="3" fill="#0f172a" />
+  <text x="52" y="122" fill="#fbbf24" font-size="7" font-weight="600" font-family="sans-serif">Dear Customer,</text>
+  <text x="52" y="134" fill="#fca5a5" font-size="7" font-family="sans-serif">Your bank account will be suspended.</text>
+  <text x="52" y="146" fill="#fca5a5" font-size="7" font-family="sans-serif">Click here to verify: <tspan fill="#ef4444">bit.ly/xyz123</tspan></text>
+  <text x="52" y="158" fill="#fca5a5" font-size="7" font-family="sans-serif">Failure to verify = permanent closure.</text>
+
+  <rect x="120" y="168" width="80" height="20" rx="4" fill="#dc2626" />
+  <text x="160" y="182" text-anchor="middle" fill="#fff" font-size="8" font-weight="600" font-family="sans-serif">⚠️ Click Here</text>
+
+  <rect x="310" y="42" width="260" height="180" rx="6" fill="#1e293b" stroke="#22c55e" stroke-width="1.5" />
+  <rect x="310" y="42" width="260" height="24" rx="6" fill="#15803d" />
+  <rect x="310" y="54" width="260" height="12" fill="#15803d" />
+  <text x="440" y="59" text-anchor="middle" fill="#fff" font-size="8" font-weight="600" font-family="sans-serif">✅ REAL — Legitimate Email</text>
+
+  <rect x="320" y="72" width="240" height="14" rx="3" fill="#0f172a" />
+  <text x="332" y="83" fill="#86efac" font-size="7" font-family="monospace">From: support@bankofindia.com</text>
+
+  <rect x="320" y="90" width="240" height="14" rx="3" fill="#0f172a" />
+  <text x="332" y="101" fill="#86efac" font-size="7" font-family="monospace">Subject: Your Monthly Statement — Oct 2024</text>
+
+  <rect x="320" y="110" width="240" height="50" rx="3" fill="#0f172a" />
+  <text x="332" y="122" fill="#22c55e" font-size="7" font-weight="600" font-family="sans-serif">Dear Rahul Sharma,</text>
+  <text x="332" y="134" fill="#86efac" font-size="7" font-family="sans-serif">Your account statement for Oct 2024 is ready.</text>
+  <text x="332" y="146" fill="#86efac" font-size="7" font-family="sans-serif">Download: bankofindia.com/statements</text>
+  <text x="332" y="158" fill="#86efac" font-size="7" font-family="sans-serif">If you have questions, call 1800-XXX-XXXX.</text>
+
+  <rect x="400" y="168" width="80" height="20" rx="4" fill="#15803d" />
+  <text x="440" y="182" text-anchor="middle" fill="#fff" font-size="8" font-weight="600" font-family="sans-serif">📄 View Statement</text>
+
+  <rect x="210" y="215" width="180" height="18" rx="4" fill="#fef2f2" stroke="#fca5a5" stroke-width="1" />
+  <text x="300" y="228" text-anchor="middle" fill="#991b1b" font-size="8" font-weight="600" font-family="sans-serif">🚩 Suspicious link — don't click!</text>
+
+  <polygon points="210,224 200,230 210,236" fill="#fca5a5" />
+</svg>

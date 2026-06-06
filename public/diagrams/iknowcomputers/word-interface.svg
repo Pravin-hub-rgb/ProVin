@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" fill="none">
+  <rect x="0" y="0" width="600" height="240" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5" />
+  <text x="300" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#0369a1">📝 MS Word Window — Annotated</text>
+
+  <rect x="25" y="40" width="550" height="180" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+
+  <rect x="25" y="40" width="550" height="24" rx="6" fill="#334155" />
+  <rect x="25" y="52" width="550" height="12" fill="#334155" />
+  <text x="45" y="55" fill="#64748b" font-size="7" font-family="sans-serif">📄 Document1 - Word</text>
+  <rect x="545" y="44" width="24" height="16" rx="3" fill="#0f172a" />
+  <text x="557" y="55" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">_ □ ✕</text>
+
+  <rect x="28" y="64" width="544" height="10" rx="2" fill="#0f172a" />
+  <text x="300" y="72" text-anchor="middle" fill="#47658b" font-size="6" font-family="sans-serif">Save  ✂  📋  🔄  🔍    Font: Calibri  ▾  11  ▾   B  I  U  ▾   📌  ≡</text>
+
+  <rect x="28" y="76" width="544" height="18" rx="2" fill="#0f172a" />
+  <rect x="35" y="78" width="50" height="14" rx="3" fill="#2563eb" />
+  <text x="60" y="88" text-anchor="middle" fill="#fff" font-size="6" font-weight="600" font-family="sans-serif">Home</text>
+  <rect x="88" y="78" width="50" height="14" rx="3" fill="#1e293b" />
+  <text x="113" y="88" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">Insert</text>
+  <rect x="141" y="78" width="50" height="14" rx="3" fill="#1e293b" />
+  <text x="166" y="88" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">Design</text>
+  <rect x="194" y="78" width="50" height="14" rx="3" fill="#1e293b" />
+  <text x="219" y="88" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">Layout</text>
+  <rect x="247" y="78" width="50" height="14" rx="3" fill="#1e293b" />
+  <text x="272" y="88" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">Review</text>
+  <rect x="300" y="78" width="50" height="14" rx="3" fill="#1e293b" />
+  <text x="325" y="88" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">View</text>
+
+  <rect x="28" y="96" width="544" height="110" rx="2" fill="#0f172a" stroke="#334155" stroke-width="1" />
+
+  <rect x="28" y="96" width="35" height="110" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="45" y="140" text-anchor="middle" fill="#334155" font-size="14" font-family="sans-serif">1</text>
+  <text x="45" y="155" text-anchor="middle" fill="#334155" font-size="14" font-family="sans-serif">2</text>
+  <text x="45" y="170" text-anchor="middle" fill="#334155" font-size="14" font-family="sans-serif">3</text>
+
+  <rect x="64" y="98" width="506" height="106" rx="2" fill="#fff" />
+  <text x="80" y="118" fill="#1e293b" font-size="10" font-weight="600" font-family="sans-serif">My Introduction</text>
+  <text x="80" y="135" fill="#334155" font-size="7" font-family="sans-serif">My name is Rahul Sharma. I am from Delhi. I am learning</text>
+  <text x="80" y="147" fill="#334155" font-size="7" font-family="sans-serif">computer skills so I can get an office job. I want to learn</text>
+  <text x="80" y="159" fill="#334155" font-size="7" font-family="sans-serif">MS Word, Excel, and email. After this course, I will be</text>
+  <text x="80" y="171" fill="#334155" font-size="7" font-family="sans-serif">ready for data entry and office assistant jobs.</text>
+
+  <rect x="64" y="206" width="506" height="12" rx="2" fill="#0f172a" />
+  <text x="80" y="215" fill="#64748b" font-size="6" font-family="sans-serif">Page 1 of 1  |  Words: 45  |  English (India)</text>
+
+  <rect x="520" y="95" width="68" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="554" y="106" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📐 Ribbon</text>
+  <path d="M520,103 L495,103 L495,85" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="495" cy="85" r="2.5" fill="#f59e0b" />
+
+  <rect x="520" y="130" width="68" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="554" y="141" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📄 Document Area</text>
+  <path d="M520,138 L430,138" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="430" cy="138" r="2.5" fill="#f59e0b" />
+
+  <rect x="520" y="200" width="68" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="554" y="211" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📊 Status Bar</text>
+  <path d="M520,208 L490,208" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="490" cy="208" r="2.5" fill="#f59e0b" />
+</svg>

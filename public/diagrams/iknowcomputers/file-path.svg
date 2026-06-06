@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 220" fill="none">
+  <rect x="0" y="0" width="600" height="220" rx="10" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5" />
+  <text x="300" y="28" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#7c3aed">📍 File Path — Every File Has an Address</text>
+
+  <rect x="60" y="50" width="480" height="24" rx="4" fill="#1e293b" stroke="#6366f1" stroke-width="1" />
+  <text x="300" y="67" text-anchor="middle" fill="#f8fafc" font-size="11" font-family="monospace">C:\Users\Rahul\Documents\Office\Report.xlsx</text>
+
+  <rect x="100" y="95" width="80" height="30" rx="4" fill="#312e81" />
+  <text x="140" y="114" text-anchor="middle" fill="#c7d2fe" font-size="9" font-weight="600" font-family="monospace">C:\</text>
+  <text x="140" y="125" text-anchor="middle" fill="#94a3b8" font-size="6" font-family="sans-serif">Drive</text>
+
+  <line x1="175" y1="110" x2="195" y2="110" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="195,107 201,110 195,113" fill="#f59e0b" />
+
+  <rect x="200" y="95" width="90" height="30" rx="4" fill="#312e81" />
+  <text x="245" y="114" text-anchor="middle" fill="#c7d2fe" font-size="9" font-weight="600" font-family="monospace">Users\</text>
+  <text x="245" y="125" text-anchor="middle" fill="#94a3b8" font-size="6" font-family="sans-serif">Users folder</text>
+
+  <line x1="285" y1="110" x2="305" y2="110" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="305,107 311,110 305,113" fill="#f59e0b" />
+
+  <rect x="310" y="95" width="100" height="30" rx="4" fill="#312e81" />
+  <text x="360" y="114" text-anchor="middle" fill="#c7d2fe" font-size="9" font-weight="600" font-family="monospace">Rahul\</text>
+  <text x="360" y="125" text-anchor="middle" fill="#94a3b8" font-size="6" font-family="sans-serif">Your account</text>
+
+  <rect x="100" y="145" width="100" height="30" rx="4" fill="#1e1b4b" />
+  <text x="150" y="164" text-anchor="middle" fill="#a78bfa" font-size="9" font-weight="600" font-family="monospace">Documents\</text>
+
+  <line x1="195" y1="160" x2="215" y2="160" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="215,157 221,160 215,163" fill="#f59e0b" />
+
+  <rect x="220" y="145" width="90" height="30" rx="4" fill="#1e1b4b" />
+  <text x="265" y="164" text-anchor="middle" fill="#a78bfa" font-size="9" font-weight="600" font-family="monospace">Office\</text>
+
+  <line x1="305" y1="160" x2="325" y2="160" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="325,157 331,160 325,163" fill="#f59e0b" />
+
+  <rect x="330" y="145" width="120" height="30" rx="4" fill="#1e1b4b" stroke="#22c55e" stroke-width="1.5" />
+  <text x="390" y="164" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="600" font-family="monospace">Report.xlsx</text>
+  <text x="390" y="175" text-anchor="middle" fill="#94a3b8" font-size="6" font-family="sans-serif">⭐ File</text>
+
+  <line x1="140" y1="125" x2="150" y2="145" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2" />
+  <line x1="245" y1="125" x2="265" y2="145" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2" />
+  <line x1="360" y1="125" x2="390" y2="145" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,2" />
+
+  <text x="300" y="205" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">💡 Each \ (backslash) means going one folder deeper — the path grows</text>
+</svg>

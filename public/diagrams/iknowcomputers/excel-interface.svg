@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" fill="none">
+  <rect x="0" y="0" width="600" height="240" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5" />
+  <text x="300" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#0369a1">📊 Excel Window — Annotated</text>
+
+  <rect x="25" y="40" width="550" height="180" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+
+  <rect x="25" y="40" width="550" height="20" rx="6" fill="#334155" />
+  <rect x="25" y="50" width="550" height="10" fill="#334155" />
+  <text x="45" y="53" fill="#64748b" font-size="7" font-family="sans-serif">📄 Book1 - Excel</text>
+
+  <rect x="28" y="60" width="544" height="10" rx="2" fill="#0f172a" />
+  <text x="300" y="68" text-anchor="middle" fill="#47658b" font-size="6" font-family="sans-serif">Home  Insert  Formulas  Data  Review  View  |  Calibri  ▾  11  ▾   B  I  U  ▾</text>
+
+  <rect x="28" y="72" width="544" height="80" rx="2" fill="#0f172a" stroke="#334155" stroke-width="1" />
+
+  <rect x="28" y="72" width="100" height="18" rx="2" fill="#1e293b" stroke="#334155" stroke-width="0.5" />
+  <text x="78" y="84" text-anchor="middle" fill="#fbbf24" font-size="7" font-weight="600" font-family="monospace">Name Box: A1</text>
+
+  <rect x="130" y="72" width="440" height="18" rx="2" fill="#1e293b" stroke="#334155" stroke-width="0.5" />
+  <text x="350" y="84" text-anchor="middle" fill="#93c5fd" font-size="7" font-family="monospace">fx  |  Student Name</text>
+
+  <rect x="28" y="90" width="544" height="62" rx="2" fill="#0f172a" />
+
+  <rect x="28" y="90" width="35" height="62" fill="#1e293b" stroke="#334155" stroke-width="0.5" />
+  <rect x="28" y="90" width="35" height="16" fill="#334155" />
+  <text x="45" y="102" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">A</text>
+  <text x="45" y="115" text-anchor="middle" fill="#334155" font-size="6" font-family="sans-serif">B</text>
+  <text x="45" y="125" text-anchor="middle" fill="#334155" font-size="6" font-family="sans-serif">C</text>
+
+  <rect x="63" y="90" width="35" height="16" fill="#334155" />
+  <text x="80" y="102" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">1</text>
+  <rect x="63" y="106" width="35" height="16" fill="#334155" />
+  <text x="80" y="118" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">2</text>
+  <rect x="63" y="122" width="35" height="16" fill="#334155" />
+  <text x="80" y="134" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">3</text>
+  <rect x="63" y="138" width="35" height="14" fill="#334155" />
+  <text x="80" y="149" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">4</text>
+
+  <rect x="98" y="90" width="90" height="16" fill="#1e293b" stroke="#2563eb" stroke-width="1" />
+  <text x="143" y="102" text-anchor="middle" fill="#f8fafc" font-size="6" font-weight="600" font-family="sans-serif">Rahul</text>
+  <rect x="98" y="106" width="90" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="143" y="118" text-anchor="middle" fill="#f8fafc" font-size="6" font-family="sans-serif">Priya</text>
+  <rect x="98" y="122" width="90" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="143" y="134" text-anchor="middle" fill="#f8fafc" font-size="6" font-family="sans-serif">Amit</text>
+  <rect x="98" y="138" width="90" height="14" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="143" y="149" text-anchor="middle" fill="#f8fafc" font-size="6" font-family="sans-serif">Sunita</text>
+
+  <rect x="188" y="90" width="60" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="218" y="102" text-anchor="middle" fill="#93c5fd" font-size="6" font-family="monospace">85</text>
+  <rect x="188" y="106" width="60" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="218" y="118" text-anchor="middle" fill="#93c5fd" font-size="6" font-family="monospace">92</text>
+  <rect x="188" y="122" width="60" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="218" y="134" text-anchor="middle" fill="#93c5fd" font-size="6" font-family="monospace">78</text>
+  <rect x="188" y="138" width="60" height="14" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="218" y="149" text-anchor="middle" fill="#93c5fd" font-size="6" font-family="monospace">95</text>
+
+  <rect x="248" y="90" width="60" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="278" y="102" text-anchor="middle" fill="#86efac" font-size="6" font-family="monospace">78</text>
+  <rect x="248" y="106" width="60" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="278" y="118" text-anchor="middle" fill="#86efac" font-size="6" font-family="monospace">88</text>
+  <rect x="248" y="122" width="60" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="278" y="134" text-anchor="middle" fill="#86efac" font-size="6" font-family="monospace">91</text>
+  <rect x="248" y="138" width="60" height="14" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="278" y="149" text-anchor="middle" fill="#86efac" font-size="6" font-family="monospace">67</text>
+
+  <rect x="308" y="90" width="60" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="338" y="102" text-anchor="middle" fill="#fca5a5" font-size="6" font-family="monospace">88</text>
+  <rect x="308" y="106" width="60" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="338" y="118" text-anchor="middle" fill="#fca5a5" font-size="6" font-family="monospace">76</text>
+  <rect x="308" y="122" width="60" height="16" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="338" y="134" text-anchor="middle" fill="#fca5a5" font-size="6" font-family="monospace">82</text>
+  <rect x="308" y="138" width="60" height="14" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <text x="338" y="149" text-anchor="middle" fill="#fca5a5" font-size="6" font-family="monospace">90</text>
+
+  <rect x="28" y="152" width="544" height="16" rx="2" fill="#0f172a" />
+  <rect x="28" y="152" width="60" height="16" fill="#334155" />
+  <text x="58" y="163" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="600" font-family="sans-serif">Sheet1</text>
+  <rect x="88" y="152" width="60" height="16" fill="#0f172a" />
+  <text x="118" y="163" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Sheet2</text>
+  <rect x="148" y="152" width="60" height="16" fill="#0f172a" />
+  <text x="178" y="163" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Sheet3</text>
+
+  <rect x="28" y="168" width="544" height="12" fill="#0f172a" />
+  <text x="45" y="177" fill="#64748b" font-size="6" font-family="sans-serif">Average: 85.5  |  Count: 4  |  Sum: 342</text>
+
+  <rect x="510" y="65" width="80" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="550" y="76" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📐 Ribbon</text>
+  <path d="M510,73 L480,73" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="480" cy="73" r="2.5" fill="#f59e0b" />
+
+  <rect x="470" y="80" width="120" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="530" y="91" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📝 Formula Bar</text>
+  <path d="M470,88 L455,88" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="455" cy="88" r="2.5" fill="#f59e0b" />
+
+  <rect x="470" y="145" width="120" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="530" y="156" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📑 Sheet Tabs</text>
+  <path d="M470,153 L300,153" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="300" cy="153" r="2.5" fill="#f59e0b" />
+
+  <rect x="510" y="160" width="80" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="550" y="171" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📊 Status Bar</text>
+  <path d="M510,168 L485,168" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="485" cy="168" r="2.5" fill="#f59e0b" />
+</svg>

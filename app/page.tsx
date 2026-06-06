@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, startTransition } from "react";
+import { useEffect, useState, startTransition, useCallback } from "react";
 import { Navbar } from "@/components/navbar";
 import CodingPage from "./coding/page";
 import FinancePage from "./finance/page";
@@ -34,15 +34,15 @@ export default function Home() {
     }
   }, [activeTab, selectedSubject, selectedLecture]);
 
-  // ✅ FIX: Reset state when switching tabs between Coding / Finance
-  useEffect(() => {
+  const handleTabChange = useCallback((tab: Tab) => {
+    setActiveTab(tab);
     setSelectedSubject(null);
     setSelectedLecture(null);
-  }, [activeTab]);
+  }, []);
 
   return (
     <>
-      <Navbar activeTab={activeTab} onTabChange={setActiveTab} />
+      <Navbar activeTab={activeTab} onTabChange={handleTabChange} />
       <main className="min-h-[calc(100vh-3.5rem)]">
         {activeTab === "Dashboard" && (
           <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 flex items-center justify-center">

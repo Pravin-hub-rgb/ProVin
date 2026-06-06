@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 200" fill="none">
+  <rect x="0" y="0" width="560" height="200" rx="10" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5" />
+  <text x="280" y="28" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#92400e">📁 Files vs Folders — Container and Items</text>
+
+  <rect x="30" y="50" width="180" height="130" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="2" />
+  <rect x="45" y="60" width="150" height="20" rx="3" fill="#312e81" />
+  <text x="120" y="74" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600" font-family="sans-serif">📁 Office Work</text>
+
+  <rect x="50" y="90" width="140" height="20" rx="3" fill="#334155" />
+  <text x="120" y="104" text-anchor="middle" fill="#93c5fd" font-size="8" font-family="monospace">📄 report.docx</text>
+
+  <rect x="50" y="114" width="140" height="20" rx="3" fill="#334155" />
+  <text x="120" y="128" text-anchor="middle" fill="#fca5a5" font-size="8" font-family="monospace">🖼 photo.jpg</text>
+
+  <rect x="50" y="138" width="140" height="20" rx="3" fill="#334155" />
+  <text x="120" y="152" text-anchor="middle" fill="#86efac" font-size="8" font-family="monospace">📊 data.xlsx</text>
+
+  <text x="280" y="118" text-anchor="middle" fill="#94a3b8" font-size="20" font-weight="600" font-family="sans-serif">=</text>
+
+  <rect x="320" y="55" width="100" height="120" rx="6" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" />
+  <text x="370" y="80" text-anchor="middle" fill="#a78bfa" font-size="10" font-weight="600" font-family="sans-serif">📁 Folder</text>
+  <text x="370" y="100" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif">Container</text>
+  <text x="370" y="120" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif">(Directory)</text>
+
+  <rect x="440" y="55" width="100" height="120" rx="6" fill="#1e293b" stroke="#22c55e" stroke-width="1.5" />
+  <text x="490" y="80" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="600" font-family="sans-serif">📄 File</text>
+  <text x="490" y="100" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif">Data / Document</text>
+  <text x="490" y="120" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif">(Single Unit)</text>
+
+  <text x="280" y="188" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">💡 A folder can hold any number of files and folders inside it</text>
+</svg>

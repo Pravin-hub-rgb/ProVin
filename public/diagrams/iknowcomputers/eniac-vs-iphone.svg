@@ -23,7 +23,7 @@
   <path d="M30,85 C20,90 20,102 30,102" stroke="#f59e0b" stroke-width="0.8" />
   <path d="M75,85 C85,90 85,102 75,102" stroke="#3b82f6" stroke-width="0.8" />
   <text x="110" y="125" text-anchor="middle" fill="#7c3aed" font-size="11" font-weight="600" font-family="sans-serif">ENIAC (1945)</text>
-  <text x="110" y="140" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">🏢 Kamra bhar — 30 tons</text>
+  <text x="110" y="140" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">🏢 Filled a room — 30 tons</text>
 
   <text x="235" y="75" text-anchor="middle" fill="#94a3b8" font-size="18" font-weight="700" font-family="sans-serif">VS</text>
 
@@ -47,5 +47,5 @@
   <rect x="362" y="145" width="14" height="10" rx="3" fill="#f59e0b" />
   <rect x="340" y="203" width="30" height="4" rx="2" fill="#334155" />
   <text x="355" y="220" text-anchor="middle" fill="#0ea5e9" font-size="11" font-weight="600" font-family="sans-serif">iPhone (2007)</text>
-  <text x="355" y="235" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">📱 Pocket mein computer</text>
+  <text x="355" y="235" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">📱 A computer in your pocket</text>
 </svg>

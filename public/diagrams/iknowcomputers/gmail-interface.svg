@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" fill="none">
+  <rect x="0" y="0" width="600" height="240" rx="10" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5" />
+  <text x="300" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#0369a1">📧 Gmail — Inbox View</text>
+
+  <rect x="25" y="40" width="550" height="180" rx="6" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+
+  <rect x="25" y="40" width="550" height="32" rx="6" fill="#334155" />
+  <rect x="25" y="58" width="550" height="14" fill="#334155" />
+
+  <rect x="35" y="48" width="80" height="18" rx="4" fill="#d93025" />
+  <text x="75" y="60" text-anchor="middle" fill="#fff" font-size="8" font-weight="600" font-family="sans-serif">Compose</text>
+
+  <rect x="130" y="48" width="200" height="18" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="230" y="60" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">🔍 Search mail</text>
+
+  <rect x="40" y="80" width="110" height="130" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+  <text x="95" y="96" text-anchor="middle" fill="#fbbf24" font-size="8" font-weight="600" font-family="sans-serif">📬</text>
+  <rect x="48" y="104" width="94" height="16" rx="3" fill="#2563eb" />
+  <text x="95" y="115" text-anchor="middle" fill="#fff" font-size="7" font-weight="600" font-family="sans-serif">Inbox</text>
+  <rect x="48" y="124" width="94" height="16" rx="3" fill="#334155" />
+  <text x="95" y="135" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Sent</text>
+  <rect x="48" y="144" width="94" height="16" rx="3" fill="#334155" />
+  <text x="95" y="155" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Drafts</text>
+  <rect x="48" y="164" width="94" height="16" rx="3" fill="#334155" />
+  <text x="95" y="175" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Spam</text>
+  <rect x="48" y="184" width="94" height="16" rx="3" fill="#334155" />
+  <text x="95" y="195" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Trash</text>
+
+  <rect x="158" y="80" width="405" height="130" rx="4" fill="#0f172a" stroke="#334155" stroke-width="1" />
+
+  <rect x="168" y="90" width="385" height="18" rx="3" fill="#334155" />
+  <text x="360" y="103" text-anchor="middle" fill="#c7d2fe" font-size="7" font-family="sans-serif">Select all  ▢  ▸  ⋮</text>
+
+  <rect x="168" y="114" width="385" height="20" rx="3" fill="#1e293b" stroke="#334155" stroke-width="0.5" />
+  <circle cx="180" cy="124" r="3" fill="#334155" />
+  <circle cx="192" cy="124" r="3" fill="#f59e0b" />
+  <text x="205" y="128" fill="#f8fafc" font-size="7" font-weight="600" font-family="sans-serif">HR Department</text>
+  <text x="290" y="128" fill="#93c5fd" font-size="7" font-family="sans-serif">Interview Confirmation — Monday 10 AM</text>
+  <text x="530" y="128" fill="#64748b" font-size="6" font-family="sans-serif">10:15 AM</text>
+
+  <rect x="168" y="136" width="385" height="20" rx="3" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <circle cx="180" cy="146" r="3" fill="#334155" />
+  <circle cx="192" cy="146" r="3" fill="#3b82f6" />
+  <text x="205" y="150" fill="#f8fafc" font-size="7" font-weight="600" font-family="sans-serif">Rahul Sharma</text>
+  <text x="290" y="150" fill="#94a3b8" font-size="7" font-family="sans-serif">Project Report — Please Review by Friday</text>
+  <text x="530" y="150" fill="#64748b" font-size="6" font-family="sans-serif">Yesterday</text>
+
+  <rect x="168" y="158" width="385" height="20" rx="3" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <circle cx="180" cy="168" r="3" fill="#334155" />
+  <circle cx="192" cy="168" r="3" fill="#22c55e" />
+  <text x="205" y="172" fill="#f8fafc" font-size="7" font-weight="600" font-family="sans-serif">Google</text>
+  <text x="290" y="172" fill="#94a3b8" font-size="7" font-family="sans-serif">Security Alert — New sign-in from Chrome</text>
+  <text x="530" y="172" fill="#64748b" font-size="6" font-family="sans-serif">2 days ago</text>
+
+  <rect x="168" y="180" width="385" height="20" rx="3" fill="#0f172a" stroke="#334155" stroke-width="0.5" />
+  <circle cx="180" cy="190" r="3" fill="#334155" />
+  <circle cx="192" cy="190" r="3" fill="#a855f7" />
+  <text x="205" y="194" fill="#f8fafc" font-size="7" font-weight="600" font-family="sans-serif">Amazon</text>
+  <text x="290" y="194" fill="#94a3b8" font-size="7" font-family="sans-serif">Your order has been shipped — Track now</text>
+  <text x="530" y="194" fill="#64748b" font-size="6" font-family="sans-serif">3 days ago</text>
+
+  <rect x="490" y="75" width="100" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="540" y="86" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📥 Inbox</text>
+  <path d="M490,83 L468,83" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="468" cy="83" r="2.5" fill="#f59e0b" />
+
+  <rect x="490" y="105" width="100" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="540" y="116" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📁 Left Sidebar</text>
+  <path d="M490,113 L152,113 L152,145" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="152" cy="145" r="2.5" fill="#f59e0b" />
+
+  <rect x="510" y="155" width="80" height="16" rx="3" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="550" y="166" text-anchor="middle" fill="#92400e" font-size="7" font-weight="600" font-family="sans-serif">📬 Email List</text>
+  <path d="M510,163 L490,163" stroke="#f59e0b" stroke-width="1.5" fill="none" />
+  <circle cx="490" cy="163" r="2.5" fill="#f59e0b" />
+</svg>
