@@ -4,8 +4,9 @@ import { useEffect, useState, startTransition, useCallback } from "react";
 import { Navbar } from "@/components/navbar";
 import CodingPage from "./coding/page";
 import FinancePage from "./finance/page";
+import GeneralPage from "./general/page";
 
-type Tab = "Dashboard" | "Coding" | "Finance";
+type Tab = "Dashboard" | "Coding" | "Finance" | "General";
 type SubjectId = string | null;
 type LectureId = string | null;
 
@@ -100,6 +101,13 @@ export default function Home() {
         />}
 
         {activeTab === "Finance" && <FinancePage
+        selectedSubject={selectedSubject}
+        setSelectedSubject={setSelectedSubject}
+        selectedLecture={selectedLecture}
+        setSelectedLecture={setSelectedLecture}
+        />}
+
+        {activeTab === "General" && <GeneralPage
         selectedSubject={selectedSubject}
         setSelectedSubject={setSelectedSubject}
         selectedLecture={selectedLecture}

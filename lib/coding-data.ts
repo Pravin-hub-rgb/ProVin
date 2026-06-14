@@ -46,12 +46,14 @@ import { pythonSubject } from "./subjects/python.subject";
 import { javascriptSubject } from "./subjects/javascript.subject";
 import { webdevSubject } from "./subjects/webdev.subject";
 import { iknowcomputersSubject } from "./subjects/iknowcomputers.subject";
+import { agenticaiSubject } from "./subjects/agenticai.subject";
 
 export const subjects: Subject[] = [
   pythonSubject,
   javascriptSubject,
   webdevSubject,
   iknowcomputersSubject,
+  agenticaiSubject,
   {
     id: "typescript",
     title: "TypeScript",

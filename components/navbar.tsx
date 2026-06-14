@@ -1,9 +1,9 @@
 "use client"
 
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Zap, LayoutDashboard, Code2, Wallet } from "lucide-react"
+import { Zap, LayoutDashboard, Code2, Wallet, LayoutGrid } from "lucide-react"
 
-type Tab = "Dashboard" | "Coding" | "Finance"
+type Tab = "Dashboard" | "Coding" | "Finance" | "General"
 
 interface NavbarProps {
   activeTab: Tab
@@ -14,6 +14,7 @@ const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
   { id: "Dashboard", label: "Dashboard", icon: <LayoutDashboard className="w-5 h-5" /> },
   { id: "Coding", label: "Coding", icon: <Code2 className="w-5 h-5" /> },
   { id: "Finance", label: "Finance", icon: <Wallet className="w-5 h-5" /> },
+  { id: "General", label: "General", icon: <LayoutGrid className="w-5 h-5" /> },
 ]
 
 export function Navbar({ activeTab, onTabChange }: NavbarProps) {
