@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 240" fill="none">
+  <rect x="0" y="0" width="580" height="240" rx="10" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5" />
+  <text x="290" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#7c3aed">📦 The Raw Response Object — What the API Returns</text>
+
+  <!-- JSON structure -->
+  <rect x="15" y="40" width="550" height="190" rx="6" fill="#0f172a" />
+  <text x="30" y="58" fill="#cbd5e1" font-size="8" font-family="monospace">{</text>
+
+  <!-- id -->
+  <rect x="30" y="65" width="240" height="22" rx="3" fill="#312e81" />
+  <text x="45" y="80" fill="#c7d2fe" font-size="7" font-family="monospace">"id": "msg_01ABC123DEF456"</text>
+  <text x="280" y="80" fill="#94a3b8" font-size="7" font-family="sans-serif">🔑 Unique identifier for debugging</text>
+
+  <!-- type -->
+  <rect x="30" y="92" width="240" height="22" rx="3" fill="#312e81" />
+  <text x="45" y="107" fill="#c7d2fe" font-size="7" font-family="monospace">"type": "message"</text>
+  <text x="280" y="107" fill="#94a3b8" font-size="7" font-family="sans-serif">📋 Always "message" for this endpoint</text>
+
+  <!-- role -->
+  <rect x="30" y="119" width="240" height="22" rx="3" fill="#312e81" />
+  <text x="45" y="134" fill="#c7d2fe" font-size="7" font-family="monospace">"role": "assistant"</text>
+  <text x="280" y="134" fill="#94a3b8" font-size="7" font-family="sans-serif">🎭 Who produced this — always "assistant"</text>
+
+  <!-- content -->
+  <rect x="30" y="146" width="240" height="32" rx="3" fill="#312e81" />
+  <text x="45" y="161" fill="#c7d2fe" font-size="7" font-family="monospace">"content": [ { "type": "text",</text>
+  <text x="45" y="173" fill="#c7d2fe" font-size="7" font-family="monospace">  "text": "Here are three colors..." } ]</text>
+  <text x="280" y="154" fill="#94a3b8" font-size="7" font-family="sans-serif">📝 Array of content blocks</text>
+  <text x="280" y="168" fill="#94a3b8" font-size="7" font-family="sans-serif">Could be text, tool_use, etc.</text>
+
+  <!-- model -->
+  <rect x="30" y="183" width="240" height="22" rx="3" fill="#312e81" />
+  <text x="45" y="198" fill="#c7d2fe" font-size="7" font-family="monospace">"model": "claude-sonnet-4-..."</text>
+  <text x="280" y="198" fill="#94a3b8" font-size="7" font-family="sans-serif">🧠 Confirms which model responded</text>
+
+  <!-- stop_reason -->
+  <rect x="310" y="65" width="240" height="38" rx="3" fill="#991b1b" />
+  <text x="430" y="80" text-anchor="middle" fill="#fca5a5" font-size="7" font-weight="600" font-family="sans-serif">🛑 Why the model stopped</text>
+  <text x="430" y="95" text-anchor="middle" fill="#fca5a5" font-size="6" font-family="monospace">"end_turn" | "max_tokens" | "tool_use"</text>
+
+  <!-- usage -->
+  <rect x="310" y="108" width="240" height="38" rx="3" fill="#166534" />
+  <text x="430" y="123" text-anchor="middle" fill="#86efac" font-size="7" font-weight="600" font-family="sans-serif">💰 Your bill — token counts</text>
+  <text x="430" y="138" text-anchor="middle" fill="#86efac" font-size="6" font-family="monospace">"input_tokens": 10, "output_tokens": 24</text>
+
+  <!-- stop_sequence -->
+  <rect x="310" y="151" width="240" height="22" rx="3" fill="#78350f" />
+  <text x="430" y="166" text-anchor="middle" fill="#fde68a" font-size="7" font-family="sans-serif">⏹️ Which stop sequence was hit (or null)</text>
+
+  <!-- key insight -->
+  <rect x="310" y="183" width="240" height="22" rx="3" fill="#1e3a5f" />
+  <text x="430" y="198" text-anchor="middle" fill="#93c5fd" font-size="7" font-family="sans-serif">💡 Cline & opencode get the same JSON. No secret sauce.</text>
+
+  <text x="290" y="232" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">The response isn't magic — it's structured JSON with metadata. Understanding it demystifies how AI tools work.</text>
+</svg>

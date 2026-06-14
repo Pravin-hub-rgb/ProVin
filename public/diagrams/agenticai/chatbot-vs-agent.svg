@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 240" fill="none">
+  <rect x="0" y="0" width="580" height="240" rx="10" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5" />
+  <text x="290" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#7c3aed">🤖 Chatbot vs Agent — The Core Difference</text>
+
+  <!-- Chatbot side -->
+  <rect x="15" y="40" width="260" height="185" rx="8" fill="#fef2f2" stroke="#f87171" stroke-width="1.5" />
+  <text x="145" y="62" text-anchor="middle" fill="#991b1b" font-size="12" font-weight="600" font-family="sans-serif">💬 Chatbot (Passive)</text>
+  <text x="145" y="78" text-anchor="middle" fill="#b91c1c" font-size="8" font-family="sans-serif">"Tells you how to do it"</text>
+
+  <!-- Chatbot flow -->
+  <rect x="30" y="92" width="100" height="35" rx="6" fill="#0f172a" />
+  <text x="80" y="107" text-anchor="middle" fill="#fca5a5" font-size="8" font-weight="600" font-family="monospace">You ask a</text>
+  <text x="80" y="120" text-anchor="middle" fill="#fca5a5" font-size="8" font-weight="600" font-family="monospace">question</text>
+  <path d="M130,110 L150,110" stroke="#f87171" stroke-width="1.5" />
+  <polygon points="150,107 157,110 150,113" fill="#f87171" />
+  <rect x="158" y="92" width="100" height="35" rx="6" fill="#0f172a" />
+  <text x="208" y="107" text-anchor="middle" fill="#fca5a5" font-size="8" font-weight="600" font-family="monospace">Model gives</text>
+  <text x="208" y="120" text-anchor="middle" fill="#fca5a5" font-size="8" font-weight="600" font-family="monospace">an answer</text>
+
+  <text x="145" y="160" text-anchor="middle" fill="#b91c1c" font-size="8" font-family="sans-serif">One input → One output. Then it stops.</text>
+  <text x="145" y="175" text-anchor="middle" fill="#b91c1c" font-size="8" font-family="sans-serif">You still have to edit files, run commands,</text>
+  <text x="145" y="190" text-anchor="middle" fill="#b91c1c" font-size="8" font-family="sans-serif">and do all the actual work yourself.</text>
+  <text x="145" y="210" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">🍎 Analogy: A vending machine</text>
+
+  <!-- Agent side -->
+  <rect x="305" y="40" width="260" height="185" rx="8" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5" />
+  <text x="435" y="62" text-anchor="middle" fill="#166534" font-size="12" font-weight="600" font-family="sans-serif">🤖 Agent (Active)</text>
+  <text x="435" y="78" text-anchor="middle" fill="#15803d" font-size="8" font-family="sans-serif">"Does it for you"</text>
+
+  <!-- Agent flow -->
+  <rect x="320" y="92" width="230" height="20" rx="4" fill="#0f172a" />
+  <text x="435" y="106" text-anchor="middle" fill="#86efac" font-size="8" font-weight="600" font-family="monospace">🎯 You give a goal: "Create a dark/light theme"</text>
+
+  <rect x="320" y="118" width="230" height="20" rx="4" fill="#0f172a" />
+  <text x="435" y="132" text-anchor="middle" fill="#86efac" font-size="8" font-weight="600" font-family="monospace">🔄 Agent loops: Think → Act → Observe → Think...</text>
+
+  <rect x="320" y="144" width="75" height="20" rx="4" fill="#1e293b" />
+  <text x="357" y="158" text-anchor="middle" fill="#86efac" font-size="7" font-family="monospace">📂 Read CSS</text>
+  <rect x="400" y="144" width="75" height="20" rx="4" fill="#1e293b" />
+  <text x="437" y="158" text-anchor="middle" fill="#86efac" font-size="7" font-family="monospace">✏️ Write code</text>
+  <rect x="480" y="144" width="70" height="20" rx="4" fill="#1e293b" />
+  <text x="515" y="158" text-anchor="middle" fill="#86efac" font-size="7" font-family="monospace">⚡ Run test</text>
+
+  <text x="435" y="185" text-anchor="middle" fill="#15803d" font-size="8" font-family="sans-serif">One goal → Many steps → Real actions → Done.</text>
+  <text x="435" y="200" text-anchor="middle" fill="#15803d" font-size="8" font-family="sans-serif">It reads, writes, runs commands, tests,</text>
+  <text x="435" y="215" text-anchor="middle" fill="#15803d" font-size="8" font-family="sans-serif">and comes back with the finished result.</text>
+  <text x="435" y="210" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif" opacity="0">placeholder</text>
+  <text x="435" y="220" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">🍎 Analogy: An intern you trust</text>
+</svg>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
@@ -61,6 +61,31 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const [progress, setProgress] = useState<Record<string, boolean>>({})
+
+  const saveProgress = useCallback(async (lectureId: string, completed: boolean) => {
+    setProgress(prev => ({ ...prev, [lectureId]: completed }))
+    try {
+      await fetch("/api/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subjectId: currentSubject?.id, lectureId, completed }),
+      })
+    } catch (err) {
+      console.error("Failed to save progress", err)
+    }
+  }, [currentSubject?.id])
+
+  useEffect(() => {
+    if (currentSubject) {
+      fetch(`/api/progress?subjectId=${currentSubject.id}`)
+        .then(res => res.json())
+        .then(data => setProgress(data))
+        .catch(() => {})
+    } else {
+      setProgress({})
+    }
+  }, [currentSubject])
 
   // Load first lecture by default when subject changes
   // Initialize open phases state when subject changes
@@ -211,6 +236,13 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                             : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
+                        <input
+                          type="checkbox"
+                          checked={progress[lecture.id] ?? false}
+                          onChange={(e) => saveProgress(lecture.id, e.target.checked)}
+                          onClick={(e) => e.stopPropagation()}
+                          className="accent-primary"
+                        />
                         <FileText className="w-4 h-4" />
                         {lecture.title}
                       </button>
@@ -263,20 +295,27 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                           
                           {openGroups[subGroup.id] && (
                             <div className="ml-3 border-l border-border/30 pl-2">
-                              {subGroup.lectures.map((lecture: any) => (
-                                <button
-                                  key={lecture.id}
-                                  onClick={() => setSelectedLecture(lecture.id)}
-                                  className={`w-full px-4 py-2 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                                    selectedLecture === lecture.id 
-                                      ? "bg-primary/15 text-primary" 
-                                      : "text-muted-foreground hover:text-foreground"
-                                  }`}
-                                >
-                                  <FileText className="w-3 h-3" />
-                                  {lecture.title}
-                                </button>
-                              ))}
+                                  {subGroup.lectures.map((lecture: any) => (
+                                    <button
+                                      key={lecture.id}
+                                      onClick={() => setSelectedLecture(lecture.id)}
+                                      className={`w-full px-4 py-2 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
+                                        selectedLecture === lecture.id 
+                                          ? "bg-primary/15 text-primary" 
+                                          : "text-muted-foreground hover:text-foreground"
+                                      }`}
+                                    >
+                                      <input
+                                        type="checkbox"
+                                        checked={progress[lecture.id] ?? false}
+                                        onChange={(e) => saveProgress(lecture.id, e.target.checked)}
+                                        onClick={(e) => e.stopPropagation()}
+                                        className="accent-primary"
+                                      />
+                                      <FileText className="w-3 h-3" />
+                                      {lecture.title}
+                                    </button>
+                                  ))}
                             </div>
                           )}
                         </div>
@@ -293,6 +332,13 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                               : "text-muted-foreground hover:text-foreground"
                           }`}
                         >
+                          <input
+                            type="checkbox"
+                            checked={progress[lecture.id] ?? false}
+                            onChange={(e) => saveProgress(lecture.id, e.target.checked)}
+                            onClick={(e) => e.stopPropagation()}
+                            className="accent-primary"
+                          />
                           <FileText className="w-3.5 h-3.5" />
                           {lecture.title}
                         </button>
@@ -316,6 +362,13 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                             : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
+                        <input
+                          type="checkbox"
+                          checked={progress[lecture.id] ?? false}
+                          onChange={(e) => saveProgress(lecture.id, e.target.checked)}
+                          onClick={(e) => e.stopPropagation()}
+                          className="accent-primary"
+                        />
                         <FileText className="w-4 h-4" />
                         {lecture.title}
                       </button>
@@ -331,7 +384,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
         {/* Content Area */}
         <div className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
           {currentLecture ? (  
-            <div className="max-w-4xl">
+            <div className="max-w-4xl pb-12">
               <div className="mb-6">
                 <h1 className="text-3xl font-bold text-foreground mb-2">
                   {currentLecture.title}

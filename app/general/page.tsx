@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
@@ -47,6 +47,31 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
 
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const [progress, setProgress] = useState<Record<string, boolean>>({})
+
+  const saveProgress = useCallback(async (lectureId: string, completed: boolean) => {
+    setProgress(prev => ({ ...prev, [lectureId]: completed }))
+    try {
+      await fetch("/api/progress", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ subjectId: currentSubject?.id, lectureId, completed }),
+      })
+    } catch (err) {
+      console.error("Failed to save progress", err)
+    }
+  }, [currentSubject?.id])
+
+  useEffect(() => {
+    if (currentSubject) {
+      fetch(`/api/progress?subjectId=${currentSubject.id}`)
+        .then(res => res.json())
+        .then(data => setProgress(data))
+        .catch(() => {})
+    } else {
+      setProgress({})
+    }
+  }, [currentSubject])
 
   useEffect(() => {
     if (currentSubject?.phases) {
@@ -170,6 +195,13 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
                             : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
+                        <input
+                          type="checkbox"
+                          checked={progress[lecture.id] ?? false}
+                          onChange={(e) => saveProgress(lecture.id, e.target.checked)}
+                          onClick={(e) => e.stopPropagation()}
+                          className="accent-primary"
+                        />
                         <FileText className="w-4 h-4" />
                         {lecture.title}
                       </button>
@@ -211,6 +243,13 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
                               : "text-muted-foreground hover:text-foreground"
                           }`}
                         >
+                          <input
+                            type="checkbox"
+                            checked={progress[lecture.id] ?? false}
+                            onChange={(e) => saveProgress(lecture.id, e.target.checked)}
+                            onClick={(e) => e.stopPropagation()}
+                            className="accent-primary"
+                          />
                           <FileText className="w-3.5 h-3.5" />
                           {lecture.title}
                         </button>
@@ -227,7 +266,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
         {/* Content Area */}
         <div className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
           {currentLecture ? (
-            <div className="max-w-4xl">
+            <div className="max-w-4xl pb-12">
               <div className="mb-6">
                 <h1 className="text-3xl font-bold text-foreground mb-2">
                   {currentLecture.title}

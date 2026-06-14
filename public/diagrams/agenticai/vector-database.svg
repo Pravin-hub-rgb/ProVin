@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 230" fill="none">
+  <rect x="0" y="0" width="580" height="230" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5" />
+  <text x="290" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#1e293b">🗄️ Vector Databases — Search by Meaning, Not Keywords</text>
+
+  <!-- Text → Embedding arrows -->
+  <rect x="15" y="42" width="130" height="40" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" />
+  <text x="80" y="58" text-anchor="middle" fill="#1e40af" font-size="8" font-weight="600" font-family="sans-serif">"Dogs playing"</text>
+  <text x="80" y="72" text-anchor="middle" fill="#2563eb" font-size="7" font-family="sans-serif">(text)</text>
+
+  <path d="M145,62 L170,62" stroke="#f59e0b" stroke-width="1.5" />
+  <text x="158" y="54" text-anchor="middle" fill="#d97706" font-size="6" font-family="sans-serif">embed</text>
+
+  <rect x="175" y="42" width="130" height="40" rx="6" fill="#0f172a" />
+  <text x="240" y="58" text-anchor="middle" fill="#a5b4fc" font-size="7" font-family="monospace">[0.12, 0.89,</text>
+  <text x="240" y="72" text-anchor="middle" fill="#a5b4fc" font-size="7" font-family="monospace">0.34, 0.76...]</text>
+
+  <text x="320" y="58" fill="#64748b" font-size="7" font-family="sans-serif">Similar texts →</text>
+  <text x="320" y="72" fill="#64748b" font-size="7" font-family="sans-serif">similar vectors</text>
+
+  <!-- Distance visualization -->
+  <rect x="15" y="95" width="550" height="55" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1" />
+
+  <text x="30" y="113" fill="#334155" font-size="8" font-weight="600" font-family="sans-serif">Vector Space (simplified):</text>
+
+  <!-- Three dots representing vectors in space -->
+  <circle cx="120" cy="135" r="5" fill="#3b82f6" />
+  <text x="130" y="139" fill="#2563eb" font-size="6.5" font-family="sans-serif">"Dogs playing in park"</text>
+
+  <circle cx="200" cy="132" r="5" fill="#22c55e" />
+  <text x="210" y="136" fill="#16a34a" font-size="6.5" font-family="sans-serif">"Puppies running"</text>
+
+  <circle cx="380" cy="138" r="5" fill="#ef4444" />
+  <text x="390" y="142" fill="#dc2626" font-size="6.5" font-family="sans-serif">"Quantum physics"</text>
+
+  <text x="290" y="148" text-anchor="middle" fill="#64748b" font-size="6" font-family="sans-serif">← Close together (similar meaning) →                  ← Far apart →</text>
+
+  <!-- Popular vector DBs -->
+  <rect x="15" y="160" width="550" height="62" rx="6" fill="#0f172a" />
+
+  <text x="30" y="180" fill="#fcd34d" font-size="8" font-weight="600" font-family="sans-serif">Popular Vector Databases:</text>
+
+  <rect x="30" y="190" width="85" height="22" rx="4" fill="#1e293b" />
+  <text x="72" y="205" text-anchor="middle" fill="#93c5fd" font-size="6.5" font-family="monospace">🌲 Pinecone</text>
+  <text x="120" y="205" fill="#64748b" font-size="6" font-family="sans-serif">— Managed, easy start, paid</text>
+
+  <rect x="240" y="190" width="70" height="22" rx="4" fill="#1e293b" />
+  <text x="275" y="205" text-anchor="middle" fill="#86efac" font-size="6.5" font-family="monospace">🔶 Chroma</text>
+  <text x="315" y="205" fill="#64748b" font-size="6" font-family="sans-serif">— Open source, local, prototyping</text>
+
+  <rect x="30" y="216" width="75" height="22" rx="4" fill="#1e293b" />
+  <text x="67" y="231" text-anchor="middle" fill="#fca5a5" font-size="6.5" font-family="monospace">🔬 Weaviate</text>
+  <text x="110" y="231" fill="#64748b" font-size="6" font-family="sans-serif">— Open source, hybrid search</text>
+
+  <rect x="240" y="216" width="65" height="22" rx="4" fill="#1e293b" />
+  <text x="272" y="231" text-anchor="middle" fill="#fca5a5" font-size="6.5" font-family="monospace">⚡ Qdrant</text>
+  <text x="310" y="231" fill="#64748b" font-size="6" font-family="sans-serif">— Open source, fast (Rust)</text>
+</svg>

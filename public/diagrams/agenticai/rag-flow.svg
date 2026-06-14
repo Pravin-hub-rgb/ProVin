@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 240" fill="none">
+  <rect x="0" y="0" width="580" height="240" rx="10" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.5" />
+  <text x="290" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#3730a3">📚 RAG — Retrieval Augmented Generation</text>
+
+  <!-- The diagram: left side query, middle DB, right side response -->
+  <!-- Query -->
+  <rect x="15" y="45" width="120" height="50" rx="6" fill="#fff" stroke="#6366f1" stroke-width="1.5" />
+  <text x="75" y="62" text-anchor="middle" fill="#4338ca" font-size="8" font-weight="600" font-family="sans-serif">🔍 User Query</text>
+  <text x="75" y="77" text-anchor="middle" fill="#6366f1" font-size="7" font-family="sans-serif">"How do I handle</text>
+  <text x="75" y="87" text-anchor="middle" fill="#6366f1" font-size="7" font-family="sans-serif">rate limiting?"</text>
+
+  <path d="M135,70 L165,70" stroke="#f59e0b" stroke-width="2" />
+  <polygon points="165,66 173,70 165,74" fill="#f59e0b" />
+  <text x="150" y="62" text-anchor="middle" fill="#d97706" font-size="6" font-family="sans-serif">embed</text>
+
+  <!-- Vector DB -->
+  <rect x="175" y="45" width="120" height="80" rx="6" fill="#0f172a" />
+  <text x="235" y="60" text-anchor="middle" fill="#a5b4fc" font-size="8" font-weight="600" font-family="sans-serif">🗄️ Vector Database</text>
+  <text x="235" y="75" text-anchor="middle" fill="#c7d2fe" font-size="6" font-family="monospace">[0.12, 0.89, 0.34...]</text>
+  <text x="235" y="85" text-anchor="middle" fill="#c7d2fe" font-size="6" font-family="monospace">[0.45, 0.22, 0.77...]</text>
+  <text x="235" y="95" text-anchor="middle" fill="#c7d2fe" font-size="6" font-family="monospace">[0.91, 0.03, 0.56...]</text>
+  <text x="235" y="108" text-anchor="middle" fill="#a5b4fc" font-size="6" font-family="sans-serif">Stores embeddings of docs</text>
+
+  <path d="M295,70 L320,70" stroke="#22c55e" stroke-width="2" />
+  <polygon points="320,66 328,70 320,74" fill="#22c55e" />
+  <text x="308" y="62" text-anchor="middle" fill="#16a34a" font-size="6" font-family="sans-serif">retrieve</text>
+
+  <!-- Relevant chunks -->
+  <rect x="330" y="45" width="120" height="50" rx="6" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5" />
+  <text x="390" y="60" text-anchor="middle" fill="#166534" font-size="8" font-weight="600" font-family="sans-serif">📄 Relevant Chunks</text>
+  <text x="390" y="75" text-anchor="middle" fill="#15803d" font-size="7" font-family="sans-serif">"Rate limits in Express...</text>
+  <text x="390" y="87" text-anchor="middle" fill="#15803d" font-size="7" font-family="sans-serif">use express-rate-limit..."</text>
+
+  <path d="M450,70 L475,70" stroke="#f59e0b" stroke-width="2" />
+  <polygon points="475,66 483,70 475,74" fill="#f59e0b" />
+  <text x="464" y="62" text-anchor="middle" fill="#d97706" font-size="6" font-family="sans-serif">inject</text>
+
+  <!-- LLM -->
+  <rect x="485" y="45" width="85" height="50" rx="6" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5" />
+  <text x="527" y="60" text-anchor="middle" fill="#92400e" font-size="8" font-weight="600" font-family="sans-serif">🧠 LLM</text>
+  <text x="527" y="75" text-anchor="middle" fill="#b45309" font-size="7" font-family="sans-serif">Query + chunks</text>
+  <text x="527" y="87" text-anchor="middle" fill="#b45309" font-size="7" font-family="sans-serif">→ Answer</text>
+
+  <!-- Dots background explanation -->
+  <rect x="15" y="145" width="550" height="85" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1" />
+
+  <text x="30" y="162" fill="#334155" font-size="9" font-weight="600" font-family="sans-serif">How it works step by step:</text>
+
+  <circle cx="35" cy="178" r="3" fill="#6366f1" />
+  <text x="45" y="182" fill="#475569" font-size="8" font-family="sans-serif">Split documents into chunks and convert each to an embedding (a list of numbers)</text>
+
+  <circle cx="35" cy="195" r="3" fill="#6366f1" />
+  <text x="45" y="199" fill="#475569" font-size="8" font-family="sans-serif">When a question comes in, convert the question to an embedding too</text>
+
+  <circle cx="35" cy="212" r="3" fill="#6366f1" />
+  <text x="45" y="216" fill="#475569" font-size="8" font-family="sans-serif">Search the DB for chunks with the most similar embeddings (nearest neighbors)</text>
+
+  <circle cx="35" cy="225" r="3" fill="#6366f1" />
+  <text x="45" y="225" fill="#475569" font-size="8" font-family="sans-serif">Inject those chunks into the prompt — the model answers based on real docs, not just memory</text>
+</svg>

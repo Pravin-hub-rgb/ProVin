@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 240" fill="none">
+  <rect x="0" y="0" width="580" height="240" rx="10" fill="#faf5ff" stroke="#c084fc" stroke-width="1.5" />
+  <text x="290" y="28" text-anchor="middle" font-size="14" font-weight="600" font-family="sans-serif" fill="#7c3aed">🔤 How Text Gets Split into Tokens</text>
+
+  <!-- Human view -->
+  <rect x="15" y="45" width="550" height="40" rx="6" fill="#fff" stroke="#cbd5e1" stroke-width="1" />
+  <text x="290" y="70" text-anchor="middle" fill="#1e293b" font-size="13" font-weight="600" font-family="sans-serif">"Create a dark theme and a light theme for this website"</text>
+  <text x="15" y="38" fill="#64748b" font-size="9" font-family="sans-serif">👁️ Human sees: one sentence</text>
+
+  <!-- Arrow down -->
+  <path d="M290,85 L290,100" stroke="#f59e0b" stroke-width="2" />
+  <polygon points="286,100 290,108 294,100" fill="#f59e0b" />
+  <text x="305" y="98" fill="#d97706" font-size="8" font-family="sans-serif">Tokenizer splits into 11 tokens 👉</text>
+
+  <!-- Model view - tokens as blocks -->
+  <text x="15" y="122" fill="#64748b" font-size="9" font-family="sans-serif">🤖 Model sees: individual token blocks</text>
+
+  <rect x="15" y="130" width="58" height="28" rx="4" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="44" y="148" text-anchor="middle" fill="#92400e" font-size="8" font-family="monospace">Create</text>
+  <rect x="77" y="130" width="35" height="28" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+  <text x="94" y="148" text-anchor="middle" fill="#1e40af" font-size="8" font-family="monospace"> a</text>
+  <rect x="116" y="130" width="50" height="28" rx="4" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1" />
+  <text x="141" y="148" text-anchor="middle" fill="#9d174d" font-size="8" font-family="monospace"> dark</text>
+  <rect x="170" y="130" width="58" height="28" rx="4" fill="#f0fdf4" stroke="#86efac" stroke-width="1" />
+  <text x="199" y="148" text-anchor="middle" fill="#166534" font-size="8" font-family="monospace"> theme</text>
+  <rect x="232" y="130" width="45" height="28" rx="4" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="254" y="148" text-anchor="middle" fill="#92400e" font-size="8" font-family="monospace"> and</text>
+  <rect x="281" y="130" width="35" height="28" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+  <text x="298" y="148" text-anchor="middle" fill="#1e40af" font-size="8" font-family="monospace"> a</text>
+  <rect x="320" y="130" width="50" height="28" rx="4" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1" />
+  <text x="345" y="148" text-anchor="middle" fill="#9d174d" font-size="8" font-family="monospace"> light</text>
+  <rect x="374" y="130" width="58" height="28" rx="4" fill="#f0fdf4" stroke="#86efac" stroke-width="1" />
+  <text x="403" y="148" text-anchor="middle" fill="#166534" font-size="8" font-family="monospace"> theme</text>
+  <rect x="436" y="130" width="35" height="28" rx="4" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="453" y="148" text-anchor="middle" fill="#92400e" font-size="8" font-family="monospace"> for</text>
+  <rect x="475" y="130" width="45" height="28" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+  <text x="497" y="148" text-anchor="middle" fill="#1e40af" font-size="8" font-family="monospace"> this</text>
+  <rect x="524" y="130" width="41" height="28" rx="4" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1" />
+  <text x="544" y="148" text-anchor="middle" fill="#9d174d" font-size="8" font-family="monospace"> web</text>
+
+  <rect x="15" y="162" width="41" height="14" rx="3" fill="#7c3aed" />
+  <text x="35" y="172" text-anchor="middle" fill="#fff" font-size="7" font-family="monospace">site</text>
+
+  <text x="60" y="172" fill="#64748b" font-size="7" font-family="sans-serif">← "website" split as "web" + "site"</text>
+
+  <!-- Sub-word example -->
+  <rect x="15" y="195" width="550" height="35" rx="6" fill="#0f172a" />
+  <text x="30" y="212" fill="#94a3b8" font-size="9" font-family="sans-serif">Another example:</text>
+  <rect x="130" y="200" width="90" height="20" rx="4" fill="#312e81" />
+  <text x="175" y="214" text-anchor="middle" fill="#c7d2fe" font-size="9" font-family="monospace">"unbelievable"</text>
+  <text x="228" y="214" fill="#94a3b8" font-size="9" font-family="sans-serif">→ is split as</text>
+  <rect x="300" y="200" width="35" height="20" rx="4" fill="#fef3c7" stroke="#fbbf24" stroke-width="1" />
+  <text x="317" y="214" text-anchor="middle" fill="#92400e" font-size="9" font-family="monospace">un</text>
+  <text x="340" y="214" fill="#94a3b8" font-size="9" font-family="sans-serif">+</text>
+  <rect x="350" y="200" width="80" height="20" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+  <text x="390" y="214" text-anchor="middle" fill="#1e40af" font-size="9" font-family="monospace">believable</text>
+  <text x="440" y="214" fill="#94a3b8" font-size="9" font-family="sans-serif">(2 tokens, not 1)</text>
+</svg>

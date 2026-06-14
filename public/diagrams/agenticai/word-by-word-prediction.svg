@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 280" fill="none">
+  <rect x="0" y="0" width="580" height="280" rx="10" fill="#fef3c7" stroke="#fbbf24" stroke-width="1.5" />
+  <text x="290" y="28" text-anchor="middle" font-size="14" font-weight="600" font-family="sans-serif" fill="#92400e">🔁 Word-by-Word Prediction Loop</text>
+
+  <!-- Arrow from output looping back to input -->
+  <path d="M500,230 Q290,270 80,230" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="4,3" fill="none" />
+  <polygon points="80,226 70,230 80,234" fill="#f59e0b" />
+  <text x="290" y="268" text-anchor="middle" fill="#d97706" font-size="8" font-family="sans-serif">← Predicted token joins the context for the next round ←</text>
+
+  <!-- Input Context box -->
+  <rect x="15" y="45" width="170" height="175" rx="8" fill="#0f172a" stroke="#6366f1" stroke-width="1.5" />
+  <text x="100" y="65" text-anchor="middle" fill="#c7d2fe" font-size="10" font-weight="600" font-family="sans-serif">📄 Input Context</text>
+  <rect x="25" y="78" width="150" height="22" rx="4" fill="#1e293b" />
+  <text x="100" y="93" text-anchor="middle" fill="#93c5fd" font-size="7.5" font-family="monospace">System prompt (~500 tokens)</text>
+  <rect x="25" y="105" width="150" height="22" rx="4" fill="#1e293b" />
+  <text x="100" y="120" text-anchor="middle" fill="#a78bfa" font-size="7.5" font-family="monospace">User message (~15 tokens)</text>
+  <rect x="25" y="132" width="150" height="22" rx="4" fill="#1e293b" />
+  <text x="100" y="147" text-anchor="middle" fill="#22c55e" font-size="7.5" font-family="monospace">styles.css (~900 tokens)</text>
+  <rect x="25" y="159" width="150" height="22" rx="4" fill="#1e293b" />
+  <text x="100" y="174" text-anchor="middle" fill="#fbbf24" font-size="7.5" font-family="monospace">Previous output (~400 tokens)</text>
+  <rect x="25" y="186" width="150" height="22" rx="4" fill="#312e81" />
+  <text x="100" y="201" text-anchor="middle" fill="#c7d2fe" font-size="7.5" font-family="monospace">⋮ Growing with each round</text>
+
+  <!-- Arrow from context to model -->
+  <path d="M185,130 L215,130" stroke="#f59e0b" stroke-width="2" />
+  <polygon points="215,126 225,130 215,134" fill="#f59e0b" />
+
+  <!-- Model box -->
+  <rect x="225" y="55" width="130" height="155" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="1.5" />
+  <text x="290" y="75" text-anchor="middle" fill="#22c55e" font-size="10" font-weight="600" font-family="monospace">🧠 Model</text>
+  <text x="290" y="90" text-anchor="middle" fill="#94a3b8" font-size="7" font-family="sans-serif">Neural Network</text>
+  <!-- Neural network dots -->
+  <g fill="#6366f1" opacity="0.6">
+    <circle cx="260" cy="108" r="4" />
+    <circle cx="280" cy="108" r="4" />
+    <circle cx="300" cy="108" r="4" />
+    <circle cx="320" cy="108" r="4" />
+  </g>
+  <g fill="#6366f1" opacity="0.4">
+    <circle cx="270" cy="128" r="3" />
+    <circle cx="290" cy="128" r="3" />
+    <circle cx="310" cy="128" r="3" />
+  </g>
+  <g fill="#6366f1" opacity="0.2">
+    <circle cx="280" cy="148" r="2" />
+    <circle cx="300" cy="148" r="2" />
+  </g>
+  <rect x="245" y="165" width="90" height="20" rx="4" fill="#064e3b" />
+  <text x="290" y="179" text-anchor="middle" fill="#22c55e" font-size="8" font-weight="600" font-family="monospace">Predicts next token</text>
+  <text x="290" y="195" text-anchor="middle" fill="#94a3b8" font-size="6.5" font-family="sans-serif">"Given this text, what</text>
+  <text x="290" y="203" text-anchor="middle" fill="#94a3b8" font-size="6.5" font-family="sans-serif">token comes next?"</text>
+
+  <!-- Arrow from model to output -->
+  <path d="M355,130 L385,130" stroke="#f59e0b" stroke-width="2" />
+  <polygon points="385,126 395,130 385,134" fill="#f59e0b" />
+
+  <!-- Output tokens -->
+  <rect x="395" y="45" width="170" height="175" rx="8" fill="#0f172a" stroke="#6366f1" stroke-width="1.5" />
+  <text x="480" y="65" text-anchor="middle" fill="#c7d2fe" font-size="10" font-weight="600" font-family="sans-serif">📝 Output Token by Token</text>
+
+  <rect x="410" y="78" width="70" height="18" rx="3" fill="#312e81" />
+  <text x="445" y="90" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">Round 1: ╱*</text>
+  <rect x="490" y="78" width="60" height="18" rx="3" fill="#312e81" />
+  <text x="520" y="90" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">Round 2: Dark</text>
+
+  <rect x="410" y="102" width="70" height="18" rx="3" fill="#312e81" />
+  <text x="445" y="114" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">Round 3: Theme</text>
+  <rect x="490" y="102" width="60" height="18" rx="3" fill="#312e81" />
+  <text x="520" y="114" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">Round 4: ╱*</text>
+
+  <rect x="410" y="126" width="70" height="18" rx="3" fill="#064e3b" />
+  <text x="445" y="138" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">Round 5: .dark</text>
+  <rect x="490" y="126" width="60" height="18" rx="3" fill="#064e3b" />
+  <text x="520" y="138" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">Round 6: -theme</text>
+
+  <rect x="410" y="150" width="70" height="18" rx="3" fill="#312e81" />
+  <text x="445" y="162" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">Round 7: {</text>
+  <rect x="490" y="150" width="60" height="18" rx="3" fill="#312e81" />
+  <text x="520" y="162" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">Round 8: bg</text>
+
+  <rect x="410" y="174" width="70" height="18" rx="3" fill="#312e81" />
+  <text x="445" y="186" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">Round 9: #1a</text>
+  <rect x="490" y="174" width="60" height="18" rx="3" fill="#312e81" />
+  <text x="520" y="186" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">Round 10: 1a4e</text>
+
+  <text x="480" y="210" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Each round: model predicts the single most probable next token,</text>
+  <text x="480" y="218" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">appends it to context, then predicts again — until done.</text>
+</svg>

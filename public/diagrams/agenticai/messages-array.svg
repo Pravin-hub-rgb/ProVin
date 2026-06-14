@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 260" fill="none">
+  <rect x="0" y="0" width="580" height="260" rx="10" fill="#eef2ff" stroke="#a5b4fc" stroke-width="1.5" />
+  <text x="290" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#3730a3">💬 The Messages Array — Growing Conversation</text>
+
+  <!-- Turn 1 -->
+  <text x="20" y="50" fill="#64748b" font-size="8" font-weight="600" font-family="sans-serif">Turn 1:</text>
+  <rect x="80" y="38" width="200" height="22" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+  <text x="180" y="53" text-anchor="middle" fill="#1e40af" font-size="7" font-family="monospace">👤 user: "Create dark/light theme"</text>
+  <path d="M280,49 L295,49" stroke="#6366f1" stroke-width="1.5" />
+  <polygon points="295,46 302,49 295,52" fill="#6366f1" />
+  <rect x="305" y="38" width="200" height="22" rx="4" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1" />
+  <text x="405" y="53" text-anchor="middle" fill="#9d174d" font-size="7" font-family="monospace">🤖 assistant: "Here's the CSS..."</text>
+
+  <!-- Turn 2 -->
+  <text x="20" y="85" fill="#64748b" font-size="8" font-weight="600" font-family="sans-serif">Turn 2:</text>
+  <rect x="80" y="73" width="200" height="22" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+  <text x="180" y="88" text-anchor="middle" fill="#1e40af" font-size="7" font-family="monospace">👤 user: "Create dark/light theme"</text>
+  <rect x="80" y="99" width="200" height="22" rx="4" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1" />
+  <text x="180" y="114" text-anchor="middle" fill="#9d174d" font-size="7" font-family="monospace">🤖 assistant: "Here's the CSS"</text>
+  <rect x="80" y="125" width="200" height="22" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+  <text x="180" y="140" text-anchor="middle" fill="#1e40af" font-size="7" font-family="monospace">👤 user: "Make it lighter"</text>
+
+  <path d="M280,120 L295,120" stroke="#6366f1" stroke-width="1.5" />
+  <polygon points="295,117 302,120 295,123" fill="#6366f1" />
+  <rect x="305" y="108" width="200" height="22" rx="4" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1" />
+  <text x="405" y="123" text-anchor="middle" fill="#9d174d" font-size="7" font-family="monospace">🤖 assistant: "Updated to #1a1a3e"</text>
+
+  <!-- Turn 3 -->
+  <text x="20" y="162" fill="#64748b" font-size="8" font-weight="600" font-family="sans-serif">Turn 3:</text>
+  <rect x="80" y="150" width="200" height="22" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+  <text x="180" y="165" text-anchor="middle" fill="#1e40af" font-size="7" font-family="monospace">👤 user: "Create dark/light theme"</text>
+  <rect x="80" y="176" width="200" height="22" rx="4" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1" />
+  <text x="180" y="191" text-anchor="middle" fill="#9d174d" font-size="7" font-family="monospace">🤖 assistant: "Here's the CSS"</text>
+  <rect x="80" y="202" width="200" height="22" rx="4" fill="#dbeafe" stroke="#93c5fd" stroke-width="1" />
+  <text x="180" y="217" text-anchor="middle" fill="#1e40af" font-size="7" font-family="monospace">👤 user: "Make it lighter"</text>
+  <rect x="80" y="228" width="200" height="22" rx="4" fill="#fce7f3" stroke="#f9a8d4" stroke-width="1" />
+  <text x="180" y="243" text-anchor="middle" fill="#9d174d" font-size="7" font-family="monospace">🤖 assistant: "Updated to #1a1a3e"</text>
+
+  <!-- Explanation side -->
+  <rect x="315" y="150" width="250" height="100" rx="6" fill="#0f172a" />
+  <text x="440" y="170" text-anchor="middle" fill="#fcd34d" font-size="9" font-weight="600" font-family="sans-serif">Key Insight</text>
+  <text x="330" y="188" fill="#94a3b8" font-size="7" font-family="sans-serif">The API is stateless — the model forgets</text>
+  <text x="330" y="203" fill="#94a3b8" font-size="7" font-family="sans-serif">everything between calls. YOU must send</text>
+  <text x="330" y="218" fill="#94a3b8" font-size="7" font-family="sans-serif">the full conversation history every time.</text>
+  <text x="330" y="233" fill="#94a3b8" font-size="7" font-family="sans-serif">Each new turn appends to the array.</text>
+  <text x="330" y="248" fill="#94a3b8" font-size="7" font-family="sans-serif">The model only sees what you include.</text>
+</svg>

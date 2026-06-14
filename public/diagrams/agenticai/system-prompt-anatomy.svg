@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 230" fill="none">
+  <rect x="0" y="0" width="580" height="230" rx="10" fill="#f8fafc" stroke="#64748b" stroke-width="1.5" />
+  <text x="290" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#1e293b">📋 System Prompt Anatomy — The Agent's Job Description</text>
+
+  <!-- The system prompt box -->
+  <rect x="15" y="42" width="350" height="175" rx="6" fill="#0f172a" />
+  <text x="30" y="60" fill="#fcd34d" font-size="8" font-weight="600" font-family="monospace">System Prompt — sent with every request</text>
+
+  <!-- Role -->
+  <rect x="30" y="73" width="320" height="24" rx="3" fill="#312e81" />
+  <text x="40" y="89" fill="#c7d2fe" font-size="7" font-family="monospace">🎭 Role: "You are a senior software engineer..."</text>
+
+  <!-- Tools -->
+  <rect x="30" y="101" width="320" height="24" rx="3" fill="#166534" />
+  <text x="40" y="117" fill="#86efac" font-size="7" font-family="monospace">🔧 Tools: "You have access to: read_file, write_file..."</text>
+
+  <!-- Output format -->
+  <rect x="30" y="129" width="320" height="24" rx="3" fill="#991b1b" />
+  <text x="40" y="145" fill="#fca5a5" font-size="7" font-family="monospace">📝 Format: "Show code diffs in markdown blocks"</text>
+
+  <!-- Constraints -->
+  <rect x="30" y="157" width="320" height="24" rx="3" fill="#78350f" />
+  <text x="40" y="173" fill="#fde68a" font-size="7" font-family="monospace">⛔ Constraints: "Never run commands without approval"</text>
+
+  <!-- Behaviors -->
+  <rect x="30" y="185" width="320" height="24" rx="3" fill="#1e40af" />
+  <text x="40" y="201" fill="#93c5fd" font-size="7" font-family="monospace">💡 Guidelines: "Think step by step. Ask clarifying questions."</text>
+
+  <!-- Explanation side -->
+  <rect x="380" y="42" width="185" height="175" rx="6" fill="#fff" stroke="#e2e8f0" stroke-width="1" />
+
+  <text x="472" y="62" text-anchor="middle" fill="#1e293b" font-size="9" font-weight="600" font-family="sans-serif">Why it matters</text>
+
+  <text x="395" y="82" fill="#475569" font-size="7" font-family="sans-serif">The system prompt is the FIRST thing in</text>
+  <text x="395" y="95" fill="#475569" font-size="7" font-family="sans-serif">context. It frames everything the model</text>
+  <text x="395" y="108" fill="#475569" font-size="7" font-family="sans-serif">does. Change it → completely different</text>
+  <text x="395" y="121" fill="#475569" font-size="7" font-family="sans-serif">behavior.</text>
+
+  <text x="395" y="141" fill="#475569" font-size="7" font-family="sans-serif">Think of it as the employee handbook.</text>
+  <text x="395" y="154" fill="#475569" font-size="7" font-family="sans-serif">It sets: who you are, what tools you</text>
+  <text x="395" y="167" fill="#475569" font-size="7" font-family="sans-serif">have, how to behave, what format to</text>
+  <text x="395" y="180" fill="#475569" font-size="7" font-family="sans-serif">use, and what to never do.</text>
+
+  <text x="395" y="200" fill="#64748b" font-size="7" font-family="sans-serif">💡 Cline and opencode both have</text>
+  <text x="395" y="213" fill="#64748b" font-size="7" font-family="sans-serif">"Custom Instructions" — that's your</text>
+  <text x="395" y="226" fill="#64748b" font-size="7" font-family="sans-serif">system prompt. Use it.</text>
+</svg>

@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 580 230" fill="none">
+  <rect x="0" y="0" width="580" height="230" rx="10" fill="#fffbeb" stroke="#fbbf24" stroke-width="1.5" />
+  <text x="290" y="25" text-anchor="middle" font-size="13" font-weight="600" font-family="sans-serif" fill="#92400e">📜 Three Strategies for Managing Conversation History</text>
+
+  <!-- Strategy 1: Sliding Window -->
+  <rect x="15" y="42" width="175" height="85" rx="6" fill="#eff6ff" stroke="#93c5fd" stroke-width="1" />
+  <text x="102" y="60" text-anchor="middle" fill="#1e40af" font-size="9" font-weight="600" font-family="sans-serif">1️⃣ Sliding Window</text>
+  <text x="102" y="78" text-anchor="middle" fill="#2563eb" font-size="7" font-family="sans-serif">Keep last N messages</text>
+  <text x="102" y="93" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Drop oldest when limit hit</text>
+  <text x="102" y="108" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Simple. Crude. Effective.</text>
+  <text x="102" y="122" text-anchor="middle" fill="#16a34a" font-size="7" font-weight="600" font-family="sans-serif">✅ Easiest to implement</text>
+
+  <!-- Strategy 2: Summarization -->
+  <rect x="200" y="42" width="180" height="85" rx="6" fill="#f0fdf4" stroke="#86efac" stroke-width="1" />
+  <text x="290" y="60" text-anchor="middle" fill="#166534" font-size="9" font-weight="600" font-family="sans-serif">2️⃣ Summarization</text>
+  <text x="290" y="78" text-anchor="middle" fill="#15803d" font-size="7" font-family="sans-serif">Ask model to summarize old</text>
+  <text x="290" y="93" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">turns. Replace with summary.</text>
+  <text x="290" y="108" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Loses detail. Keeps gist.</text>
+  <text x="290" y="122" text-anchor="middle" fill="#f59e0b" font-size="7" font-weight="600" font-family="sans-serif">⚠️ Costs 1 extra API call</text>
+
+  <!-- Strategy 3: Relevance Filtering -->
+  <rect x="390" y="42" width="175" height="85" rx="6" fill="#fdf4ff" stroke="#d8b4fe" stroke-width="1" />
+  <text x="477" y="60" text-anchor="middle" fill="#6b21a8" font-size="9" font-weight="600" font-family="sans-serif">3️⃣ Relevance Filtering</text>
+  <text x="477" y="78" text-anchor="middle" fill="#7c3aed" font-size="7" font-family="sans-serif">Keep only relevant turns</text>
+  <text x="477" y="93" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Drop unrelated context</text>
+  <text x="477" y="108" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Best token efficiency</text>
+  <text x="477" y="122" text-anchor="middle" fill="#16a34a" font-size="7" font-weight="600" font-family="sans-serif">✅ Most efficient</text>
+
+  <!-- Comparison table -->
+  <rect x="15" y="142" width="550" height="80" rx="6" fill="#0f172a" />
+  <text x="290" y="162" text-anchor="middle" fill="#fcd34d" font-size="9" font-weight="600" font-family="sans-serif">Comparison</text>
+
+  <!-- Table header -->
+  <text x="80" y="180" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="600" font-family="sans-serif">Strategy</text>
+  <text x="200" y="180" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="600" font-family="sans-serif">Complexity</text>
+  <text x="320" y="180" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="600" font-family="sans-serif">Loss of context</text>
+  <text x="440" y="180" text-anchor="middle" fill="#94a3b8" font-size="7" font-weight="600" font-family="sans-serif">Best for</text>
+
+  <text x="80" y="200" text-anchor="middle" fill="#93c5fd" font-size="7" font-family="sans-serif">Sliding Window</text>
+  <text x="200" y="200" text-anchor="middle" fill="#86efac" font-size="7" font-family="sans-serif">Very Low</text>
+  <text x="320" y="200" text-anchor="middle" fill="#fca5a5" font-size="7" font-family="sans-serif">High</text>
+  <text x="440" y="200" text-anchor="middle" fill="#fca5a5" font-size="7" font-family="sans-serif">Short sessions</text>
+
+  <text x="80" y="217" text-anchor="middle" fill="#93c5fd" font-size="7" font-family="sans-serif">Summarization</text>
+  <text x="200" y="217" text-anchor="middle" fill="#f59e0b" font-size="7" font-family="sans-serif">Medium</text>
+  <text x="320" y="217" text-anchor="middle" fill="#f59e0b" font-size="7" font-family="sans-serif">Medium</text>
+  <text x="440" y="217" text-anchor="middle" fill="#f59e0b" font-size="7" font-family="sans-serif">Long conversations</text>
+
+  <text x="80" y="234" text-anchor="middle" fill="#93c5fd" font-size="7" font-family="sans-serif">Relevance Filtering</text>
+  <text x="200" y="234" text-anchor="middle" fill="#fca5a5" font-size="7" font-family="sans-serif">High</text>
+  <text x="320" y="234" text-anchor="middle" fill="#86efac" font-size="7" font-family="sans-serif">Low</text>
+  <text x="440" y="234" text-anchor="middle" fill="#86efac" font-size="7" font-family="sans-serif">Complex workflows</text>
+</svg>
