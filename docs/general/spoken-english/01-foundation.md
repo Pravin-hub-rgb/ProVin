@@ -1,4 +1,3 @@
-# Phase 1 — Foundation
 ### Goal: Understand how this course works. Start shadowing. Make your first recording.
 
 ---
@@ -20,6 +19,7 @@ Your brain already knows a lot of English. You just need to unlock it by speakin
 Shadowing is the single most powerful technique to improve spoken English fast.
 
 **How it works:**
+
 1. You play a short clip of a native English speaker — 30 to 60 seconds
 2. You listen to the whole thing once without doing anything
 3. You play it again — and this time you repeat every word immediately after hearing it
@@ -48,13 +48,14 @@ Shadowing requires full focus. You hear it, you immediately repeat it, out loud,
 
 Read this paragraph once silently. Then read it out loud slowly. Then read it again at normal conversational speed. Then record yourself reading it and listen back.
 
-> *"Hi, my name is Vin. I work in tech and I also do freelance projects. I enjoy building things — websites, tools, and dashboards. I'm working on improving my English so I can communicate more confidently with clients and in professional settings. I'm committed to practicing every day."*
+> _"Hi, my name is Vin. I work in tech and I also do freelance projects. I enjoy building things — websites, tools, and dashboards. I'm working on improving my English so I can communicate more confidently with clients and in professional settings. I'm committed to practicing every day."_
 
 **Do this 5 times.**
 
 On the 5th time, hit record on your phone and say it naturally — as if you're actually introducing yourself to someone.
 
 Listen back. Ask yourself:
+
 - Where did I pause too long?
 - Where did my voice drop or go quiet?
 - Did it sound natural or stiff?
@@ -72,6 +73,7 @@ Watch these in order. For each video — watch it once, then shadow the speaker 
 - 📺 Search on YouTube: **"improve spoken English fast shadowing - English with Lucy"**
 
 **How to shadow a YouTube video:**
+
 1. Put on subtitles
 2. Watch the full video once
 3. Replay it — pause after every 1-2 sentences and repeat what they said
@@ -85,11 +87,13 @@ Watch these in order. For each video — watch it once, then shadow the speaker 
 Based on how you speak right now, here are some things to be aware of:
 
 **What you're doing well:**
+
 - You can express complex ideas
 - You don't freeze mid-conversation
 - Your vocabulary is better than you think
 
 **What to work on:**
+
 - Too many filler words — "uh", "right?", "like", "stuff like that"
 - Sentences sometimes trail off without a clear ending
 - Confidence dips mid-sentence — your voice goes quieter
@@ -105,6 +109,7 @@ From today, you will record yourself speaking English at least once every practi
 Most people hate listening to their own voice. Do it anyway. It is the fastest feedback loop you have.
 
 **What to do with your recordings:**
+
 - Listen back within the same session
 - Note 2-3 specific things to fix
 - Record again with those fixes
@@ -131,6 +136,7 @@ That's it. Simple. Consistent.
 ## Before Moving to Phase 2
 
 You are ready for Phase 2 when:
+
 - You have done at least 3 shadowing sessions
 - You have recorded yourself and listened back at least 3 times
 - You feel slightly more comfortable speaking out loud than when you started

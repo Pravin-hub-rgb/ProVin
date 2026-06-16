@@ -91,17 +91,19 @@ Write your answers in a notebook or notes app. Keep them. You will use them agai
 
 Ask a friend or family member to ask you any random question in English. Anything. You have to answer using PREP on the spot — no preparation.
 
-If you don't have someone to practice with, use this list. Cover the answers below, read the question, and speak your PREP answer out loud before uncovering the sample:
+If you don't have someone to practice with, use this list. Read the question, speak your PREP answer out loud, then click to reveal the sample:
 
-**Question:** "What did you do last weekend?"
+<details>
+<summary>Question: "What did you do last weekend?"</summary>
 
-> **Sample PREP:**
-> "Last weekend I mostly worked on a client project. I was building a data tool that exports to Excel and I hit a tricky bug that took most of Saturday. I finally fixed it by Sunday afternoon by switching to a different library. So it was a productive weekend even though it wasn't planned that way."
+**Sample PREP:** "Last weekend I mostly worked on a client project. I was building a data tool that exports to Excel and I hit a tricky bug that took most of Saturday. I finally fixed it by Sunday afternoon by switching to a different library. So it was a productive weekend even though it wasn't planned that way."
+</details>
 
-**Question:** "What's one skill you wish you had?"
+<details>
+<summary>Question: "What's one skill you wish you had?"</summary>
 
-> **Sample PREP:**
-> "I wish I was better at public speaking. Right now I'm comfortable in one-on-one conversations but in front of a group I lose some confidence. For example, when I have to present something on a call with multiple people, I notice I speak faster and use more filler words. That's actually why I'm doing this course — to fix exactly that."
+**Sample PREP:** "I wish I was better at public speaking. Right now I'm comfortable in one-on-one conversations but in front of a group I lose some confidence. For example, when I have to present something on a call with multiple people, I notice I speak faster and use more filler words. That's actually why I'm doing this course — to fix exactly that."
+</details>
 
 ---
 
