@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 240">
+  <rect width="550" height="240" fill="#faf5ff" rx="8" stroke="#e9d5ff" stroke-width="1.5"/>
+  
+  <text x="275" y="28" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">BIOS Beep Codes — What Do They Mean?</text>
+  
+  <text x="275" y="48" font-family="sans-serif" font-size="9" fill="#64748b" text-anchor="middle">When you turn on the PC, it runs POST (Power On Self Test). Beeps = error messages.</text>
+  
+  <!-- Common codes -->
+  <rect x="20" y="60" width="510" height="30" rx="6" fill="#1e293b"/>
+  <text x="30" y="79" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f8fafc">Code</text>
+  <text x="160" y="79" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f8fafc">Meaning</text>
+  <text x="340" y="79" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f8fafc">What to Do</text>
+  
+  <rect x="20" y="94" width="510" height="25" rx="4" fill="#334155"/>
+  <text x="30" y="111" font-family="monospace" font-size="9" fill="#22c55e">1 short beep</text>
+  <text x="160" y="111" font-family="monospace" font-size="9" fill="#f8fafc">✅ System OK</text>
+  <text x="340" y="111" font-family="monospace" font-size="9" fill="#94a3b8">Nothing — boot continues normally</text>
+  
+  <rect x="20" y="123" width="510" height="25" rx="4" fill="#334155"/>
+  <text x="30" y="140" font-family="monospace" font-size="9" fill="#fbbf24">1 long + 2 short</text>
+  <text x="160" y="140" font-family="monospace" font-size="9" fill="#f8fafc">⚠️ GPU / Display error</text>
+  <text x="340" y="140" font-family="monospace" font-size="9" fill="#94a3b8">Reseat graphics card, check cable</text>
+  
+  <rect x="20" y="152" width="510" height="25" rx="4" fill="#334155"/>
+  <text x="30" y="169" font-family="monospace" font-size="9" fill="#fbbf24">Continuous long beeps</text>
+  <text x="160" y="169" font-family="monospace" font-size="9" fill="#f8fafc">⚠️ RAM not detected</text>
+  <text x="340" y="169" font-family="monospace" font-size="9" fill="#94a3b8">Remove RAM, clean contacts, reinsert</text>
+  
+  <rect x="20" y="181" width="510" height="25" rx="4" fill="#334155"/>
+  <text x="30" y="198" font-family="monospace" font-size="9" fill="#fbbf24">Continuous short beeps</text>
+  <text x="160" y="198" font-family="monospace" font-size="9" fill="#f8fafc">⚠️ Power supply issue</text>
+  <text x="340" y="198" font-family="monospace" font-size="9" fill="#94a3b8">Check SMPS connections, replace PSU</text>
+  
+  <rect x="20" y="210" width="510" height="25" rx="4" fill="#334155"/>
+  <text x="30" y="227" font-family="monospace" font-size="9" fill="#fbbf24">No beep at all</text>
+  <text x="160" y="227" font-family="monospace" font-size="9" fill="#f8fafc">⚠️ Motherboard / CPU dead</text>
+  <text x="340" y="227" font-family="monospace" font-size="9" fill="#94a3b8">Check power, motherboard, or CPU</text>
+</svg>

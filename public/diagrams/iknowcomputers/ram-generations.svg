@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 240">
+  <rect width="550" height="240" fill="#f0f9ff" rx="8" stroke="#bae6fd" stroke-width="1.5"/>
+  
+  <text x="275" y="28" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">RAM Generations — DDR3 vs DDR4 vs DDR5</text>
+  
+  <!-- DDR3 -->
+  <rect x="20" y="45" width="160" height="170" rx="6" fill="#1e293b"/>
+  <text x="100" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#93c5fd" text-anchor="middle">DDR3</text>
+  
+  <rect x="30" y="80" width="140" height="30" rx="4" fill="#334155"/>
+  <text x="100" y="99" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Speed: 800-2133 MT/s</text>
+  
+  <rect x="30" y="118" width="140" height="30" rx="4" fill="#334155"/>
+  <text x="100" y="137" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Voltage: 1.5V</text>
+  
+  <rect x="30" y="156" width="140" height="30" rx="4" fill="#334155"/>
+  <text x="100" y="175" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Max: 16GB per stick</text>
+  
+  <text x="100" y="205" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Old — found in PCs before 2014</text>
+  
+  <!-- DDR4 -->
+  <rect x="195" y="45" width="160" height="170" rx="6" fill="#1e293b"/>
+  <text x="275" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#22c55e" text-anchor="middle">DDR4</text>
+  
+  <rect x="205" y="80" width="140" height="30" rx="4" fill="#334155"/>
+  <text x="275" y="99" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Speed: 2133-3200 MT/s</text>
+  
+  <rect x="205" y="118" width="140" height="30" rx="4" fill="#334155"/>
+  <text x="275" y="137" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Voltage: 1.2V</text>
+  
+  <rect x="205" y="156" width="140" height="30" rx="4" fill="#334155"/>
+  <text x="275" y="175" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Max: 64GB per stick</text>
+  
+  <text x="275" y="205" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Current standard — most PCs use this</text>
+  
+  <!-- DDR5 -->
+  <rect x="370" y="45" width="160" height="170" rx="6" fill="#1e293b"/>
+  <text x="450" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">DDR5</text>
+  
+  <rect x="380" y="80" width="140" height="30" rx="4" fill="#334155"/>
+  <text x="450" y="99" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Speed: 4800-6400+ MT/s</text>
+  
+  <rect x="380" y="118" width="140" height="30" rx="4" fill="#334155"/>
+  <text x="450" y="137" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Voltage: 1.1V</text>
+  
+  <rect x="380" y="156" width="140" height="30" rx="4" fill="#334155"/>
+  <text x="450" y="175" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Max: 128GB+ per stick</text>
+  
+  <text x="450" y="205" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Newest — for high-performance PCs</text>
+  
+  <text x="275" y="233" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Notch position differs — you CANNOT put DDR4 in a DDR3 slot</text>
+</svg>

@@ -35,6 +35,28 @@ export const iknowcomputersSubject: Subject = {
       ],
     },
     {
+      id: "computer-hardware",
+      title: "🔧 Computer Hardware",
+      openByDefault: true,
+      lectures: [
+        {
+          id: "ikc-ch1",
+          title: "CH1 Internal Components",
+          path: "docs/coding/i-know-computers/Computer Hardware/1 Internal Components.md",
+        },
+        {
+          id: "ikc-ch2",
+          title: "CH2 External Components & Peripherals",
+          path: "docs/coding/i-know-computers/Computer Hardware/2 External Components and Peripherals.md",
+        },
+        {
+          id: "ikc-ch3",
+          title: "CH3 Hardware Troubleshooting & Diagnosis",
+          path: "docs/coding/i-know-computers/Computer Hardware/3 Hardware Troubleshooting and Diagnosis.md",
+        },
+      ],
+    },
+    {
       id: "module1",
       title: "Module 1 — OS, Files, Folders & Shortcuts",
       openByDefault: true,
@@ -53,6 +75,11 @@ export const iknowcomputersSubject: Subject = {
           id: "ikc-1.3",
           title: "1.3 Keyboard Shortcuts",
           path: "docs/coding/i-know-computers/Module 1 - OS, Files, Folders & Shortcuts/1.3 Keyboard Shortcuts.md",
+        },
+        {
+          id: "ikc-1.4",
+          title: "1.4 Windows System Management",
+          path: "docs/coding/i-know-computers/Module 1 - OS, Files, Folders & Shortcuts/1.4 Windows System Management.md",
         },
       ],
     },
@@ -102,6 +129,11 @@ export const iknowcomputersSubject: Subject = {
           id: "ikc-3.4",
           title: "3.4 Page Layout, Headers/Footers & Save as PDF",
           path: "docs/coding/i-know-computers/Module 3 - MS Word/3.4 Page Layout, Headers-Footers and Save as PDF.md",
+        },
+        {
+          id: "ikc-3.5",
+          title: "3.5 Advanced Word Features",
+          path: "docs/coding/i-know-computers/Module 3 - MS Word/3.5 Advanced Word Features.md",
         },
       ],
     },

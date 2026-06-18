@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 240">
+  <rect width="550" height="240" fill="#faf5ff" rx="8" stroke="#e9d5ff" stroke-width="1.5"/>
+  
+  <text x="275" y="28" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">Keyboard & Mouse — Connection Types</text>
+  
+  <!-- PS/2 -->
+  <rect x="20" y="45" width="155" height="120" rx="6" fill="#1e293b"/>
+  <text x="97" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#93c5fd" text-anchor="middle">PS/2</text>
+  
+  <rect x="30" y="78" width="135" height="25" rx="4" fill="#334155"/>
+  <text x="97" y="95" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Round, 6-pin connector</text>
+  
+  <text x="97" y="125" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Old technology</text>
+  <text x="97" y="140" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Green = mouse</text>
+  <text x="97" y="155" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Purple = keyboard</text>
+  
+  <!-- USB -->
+  <rect x="195" y="45" width="155" height="120" rx="6" fill="#1e293b"/>
+  <text x="272" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#22c55e" text-anchor="middle">USB</text>
+  
+  <rect x="205" y="78" width="135" height="25" rx="4" fill="#334155"/>
+  <text x="272" y="95" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Rectangular, plug & play</text>
+  
+  <text x="272" y="125" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Current standard</text>
+  <text x="272" y="140" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Works with any computer</text>
+  <text x="272" y="155" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Hot-swappable</text>
+  
+  <!-- Wireless -->
+  <rect x="370" y="45" width="160" height="120" rx="6" fill="#1e293b"/>
+  <text x="450" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">Wireless (Bluetooth / RF)</text>
+  
+  <rect x="380" y="78" width="140" height="25" rx="4" fill="#334155"/>
+  <text x="450" y="95" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">No wire — uses batteries</text>
+  
+  <text x="450" y="125" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Clean desk setup</text>
+  <text x="450" y="140" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Requires batteries/charging</text>
+  <text x="450" y="155" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Slight input delay</text>
+
+  <!-- F-keys -->
+  <rect x="50" y="180" width="450" height="40" rx="6" fill="#1e293b"/>
+  <text x="275" y="198" font-family="sans-serif" font-size="10" font-weight="bold" fill="#f8fafc" text-anchor="middle">Function Keys (F1 - F12)</text>
+  <text x="275" y="214" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">F1=Help · F2=Rename · F5=Refresh · F7=Spell Check · F11=Full Screen · F12=Save As</text>
+</svg>

@@ -6,5 +6,10 @@
     "ai-1.4": true,
     "ai-1.5": true,
     "course-structure": true
+  },
+  "iknowcomputers": {
+    "ikc-ch1": true,
+    "ikc-ch2": true,
+    "ikc-ch3": true
   }
 }

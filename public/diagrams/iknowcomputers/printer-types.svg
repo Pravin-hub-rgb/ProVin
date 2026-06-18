@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 240">
+  <rect width="550" height="240" fill="#f0f9ff" rx="8" stroke="#bae6fd" stroke-width="1.5"/>
+  
+  <text x="275" y="28" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">Printer Types — Inkjet vs Laser</text>
+  
+  <!-- Inkjet -->
+  <rect x="20" y="45" width="245" height="145" rx="6" fill="#1e293b"/>
+  <text x="142" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#93c5fd" text-anchor="middle">Inkjet Printer</text>
+  
+  <rect x="30" y="80" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="142" y="97" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Sprays liquid ink on paper</text>
+  
+  <rect x="30" y="112" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="142" y="129" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Cheap printer (~Rs 3,000)</text>
+  
+  <rect x="30" y="144" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="142" y="161" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Ink is expensive (refills cost more)</text>
+
+  <text x="142" y="185" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Best for: Photos, color documents,</text>
+  <text x="142" y="198" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">low-volume printing</text>
+
+  <!-- Laser -->
+  <rect x="285" y="45" width="245" height="145" rx="6" fill="#1e293b"/>
+  <text x="407" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#22c55e" text-anchor="middle">Laser Printer</text>
+  
+  <rect x="295" y="80" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="407" y="97" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Uses toner powder + heat</text>
+  
+  <rect x="295" y="112" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="407" y="129" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Expensive printer (~Rs 15,000)</text>
+  
+  <rect x="295" y="144" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="407" y="161" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Toner lasts long (5000+ pages)</text>
+
+  <text x="407" y="185" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Best for: High-volume, fast,</text>
+  <text x="407" y="198" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">black & white office printing</text>
+
+  <!-- Common issues -->
+  <rect x="90" y="205" width="370" height="28" rx="6" fill="#1e293b"/>
+  <text x="275" y="224" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f8fafc" text-anchor="middle">Common issues: Paper jam · Driver not installed · Ink/toner empty · Offline status</text>
+</svg>

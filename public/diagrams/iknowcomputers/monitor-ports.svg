@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 240">
+  <rect width="550" height="240" fill="#f0f9ff" rx="8" stroke="#bae6fd" stroke-width="1.5"/>
+  
+  <text x="275" y="28" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">Monitor Ports — VGA vs HDMI vs DisplayPort</text>
+  
+  <!-- VGA -->
+  <rect x="20" y="45" width="160" height="120" rx="6" fill="#1e293b"/>
+  <text x="100" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#93c5fd" text-anchor="middle">VGA</text>
+  <text x="100" y="85" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">Blue connector, 15 pins</text>
+  
+  <rect x="30" y="95" width="140" height="25" rx="4" fill="#334155"/>
+  <text x="100" y="112" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Max: 1920x1080 @ 60Hz</text>
+  
+  <text x="100" y="140" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Old — analog signal</text>
+  <text x="100" y="154" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Found on old monitors</text>
+  
+  <!-- HDMI -->
+  <rect x="195" y="45" width="160" height="120" rx="6" fill="#1e293b"/>
+  <text x="275" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#22c55e" text-anchor="middle">HDMI</text>
+  <text x="275" y="85" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">Standard in TVs & monitors</text>
+  
+  <rect x="205" y="95" width="140" height="25" rx="4" fill="#334155"/>
+  <text x="275" y="112" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Max: 3840x2160 @ 60Hz</text>
+  
+  <text x="275" y="140" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Most common port today</text>
+  <text x="275" y="154" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Carries audio + video</text>
+  
+  <!-- DisplayPort -->
+  <rect x="370" y="45" width="160" height="120" rx="6" fill="#1e293b"/>
+  <text x="450" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#fbbf24" text-anchor="middle">DisplayPort</text>
+  <text x="450" y="85" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">PC enthusiast standard</text>
+  
+  <rect x="380" y="95" width="140" height="25" rx="4" fill="#334155"/>
+  <text x="450" y="112" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Max: 7680x4320 @ 60Hz</text>
+  
+  <text x="450" y="140" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Best quality — high res</text>
+  <text x="450" y="154" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Monitors can be daisy-chained</text>
+
+  <!-- Resolution info -->
+  <rect x="50" y="180" width="450" height="40" rx="6" fill="#1e293b"/>
+  <text x="275" y="198" font-family="sans-serif" font-size="10" font-weight="bold" fill="#f8fafc" text-anchor="middle">Resolution Quick Guide</text>
+  <text x="275" y="214" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">HD (1280x720) → Full HD / 1080p (1920x1080) → 2K → 4K (3840x2160) → 8K</text>
+</svg>

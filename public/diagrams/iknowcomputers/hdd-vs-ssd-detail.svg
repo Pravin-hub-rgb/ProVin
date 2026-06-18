@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 240">
+  <rect width="550" height="240" fill="#f0f9ff" rx="8" stroke="#bae6fd" stroke-width="1.5"/>
+  
+  <text x="275" y="28" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">HDD vs SSD — Which One to Choose?</text>
+  
+  <!-- HDD -->
+  <rect x="20" y="45" width="245" height="175" rx="6" fill="#1e293b"/>
+  <text x="142" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#93c5fd" text-anchor="middle">HDD (Hard Disk Drive)</text>
+  
+  <rect x="30" y="80" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="142" y="97" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Speed: 80-160 MB/s (slow)</text>
+  
+  <rect x="30" y="112" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="142" y="129" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Technology: Magnetic spinning disk</text>
+  
+  <rect x="30" y="144" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="142" y="161" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Price: Cheap (~$0.03/GB)</text>
+  
+  <rect x="30" y="176" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="142" y="193" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Best for: Bulk storage, backups</text>
+
+  <text x="142" y="215" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Spinning platters — fragile if dropped while running</text>
+  
+  <!-- SSD -->
+  <rect x="285" y="45" width="245" height="175" rx="6" fill="#1e293b"/>
+  <text x="407" y="68" font-family="sans-serif" font-size="12" font-weight="bold" fill="#22c55e" text-anchor="middle">SSD (Solid State Drive)</text>
+  
+  <rect x="295" y="80" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="407" y="97" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Speed: 500-3500 MB/s (fast)</text>
+  
+  <rect x="295" y="112" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="407" y="129" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Technology: Flash memory (no moving parts)</text>
+  
+  <rect x="295" y="144" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="407" y="161" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Price: Expensive (~$0.10/GB)</text>
+  
+  <rect x="295" y="176" width="225" height="25" rx="4" fill="#334155"/>
+  <text x="407" y="193" font-family="monospace" font-size="9" fill="#f8fafc" text-anchor="middle">Best for: OS, programs, games</text>
+
+  <text x="407" y="215" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">No moving parts — silent, fast, durable</text>
+
+  <text x="275" y="233" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">Best setup: SSD for Windows + HDD for files. Or just SSD for laptops.</text>
+</svg>

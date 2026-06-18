@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 240">
+  <rect width="550" height="240" fill="#fef3c7" rx="8" stroke="#fde68a" stroke-width="1.5"/>
+  
+  <text x="275" y="28" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">Motherboard — Key Parts to Identify</text>
+  
+  <!-- Motherboard outline -->
+  <rect x="25" y="42" width="500" height="175" rx="6" fill="#1e293b"/>
+  
+  <!-- CPU Socket -->
+  <rect x="50" y="55" width="100" height="70" rx="4" fill="#334155" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="100" y="80" font-family="sans-serif" font-size="10" font-weight="bold" fill="#c7d2fe" text-anchor="middle">CPU Socket</text>
+  <text x="100" y="96" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">Processor sits here</text>
+  <text x="100" y="110" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">LGA / PGA type</text>
+  
+  <!-- RAM Slots -->
+  <rect x="170" y="55" width="130" height="50" rx="4" fill="#334155" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="235" y="75" font-family="sans-serif" font-size="10" font-weight="bold" fill="#93c5fd" text-anchor="middle">RAM Slots (DIMM)</text>
+  <text x="235" y="93" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">2 or 4 slots</text>
+  
+  <!-- SATA Ports -->
+  <rect x="170" y="115" width="130" height="40" rx="4" fill="#334155" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="235" y="133" font-family="sans-serif" font-size="10" font-weight="bold" fill="#f8fafc" text-anchor="middle">SATA Ports</text>
+  <text x="235" y="148" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">For HDD / SSD / DVD</text>
+  
+  <!-- PCIe Slots -->
+  <rect x="320" y="55" width="100" height="60" rx="4" fill="#334155" stroke="#f59e0b" stroke-width="1.5"/>
+  <text x="370" y="75" font-family="sans-serif" font-size="10" font-weight="bold" fill="#fbbf24" text-anchor="middle">PCIe Slots</text>
+  <text x="370" y="93" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">For GPU / WiFi card</text>
+  
+  <!-- Power Connector -->
+  <rect x="320" y="128" width="100" height="40" rx="4" fill="#334155" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="370" y="146" font-family="sans-serif" font-size="10" font-weight="bold" fill="#c7d2fe" text-anchor="middle">Power Connector</text>
+  <text x="370" y="161" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">24-pin ATX power</text>
+  
+  <!-- I/O Ports -->
+  <rect x="440" y="55" width="70" height="100" rx="4" fill="#334155" stroke="#6366f1" stroke-width="1.5"/>
+  <text x="475" y="75" font-family="sans-serif" font-size="9" font-weight="bold" fill="#c7d2fe" text-anchor="middle">I/O Ports</text>
+  <text x="475" y="93" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">USB</text>
+  <text x="475" y="105" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">HDMI</text>
+  <text x="475" y="117" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">Ethernet</text>
+  <text x="475" y="129" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">Audio</text>
+  
+  <!-- Chipset -->
+  <rect x="50" y="140" width="100" height="35" rx="4" fill="#334155" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="100" y="158" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f8fafc" text-anchor="middle">Chipset</text>
+  <text x="100" y="170" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">Controls communication</text>
+
+  <text x="275" y="233" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">The motherboard connects every component — nothing works without it</text>
+</svg>

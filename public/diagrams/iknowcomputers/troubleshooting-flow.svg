@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 550 240">
+  <rect width="550" height="240" fill="#fef3c7" rx="8" stroke="#fde68a" stroke-width="1.5"/>
+  
+  <text x="275" y="24" font-family="sans-serif" font-size="13" font-weight="bold" fill="#1e293b" text-anchor="middle">Troubleshooting Flow — "No Display" Problem</text>
+  
+  <!-- Step 1 -->
+  <rect x="20" y="36" width="120" height="35" rx="6" fill="#1e293b"/>
+  <text x="80" y="50" font-family="sans-serif" font-size="9" font-weight="bold" fill="#93c5fd" text-anchor="middle">1. Check Power</text>
+  <text x="80" y="64" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">Monitor light ON?</text>
+  
+  <line x1="140" y1="53" x2="160" y2="53" stroke="#6366f1" stroke-width="1.5"/>
+  
+  <!-- Step 2 -->
+  <rect x="160" y="36" width="120" height="35" rx="6" fill="#1e293b"/>
+  <text x="220" y="50" font-family="sans-serif" font-size="9" font-weight="bold" fill="#93c5fd" text-anchor="middle">2. Check Cable</text>
+  <text x="220" y="64" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">VGA/HDMI tight?</text>
+  
+  <line x1="280" y1="53" x2="300" y2="53" stroke="#6366f1" stroke-width="1.5"/>
+  
+  <!-- Step 3 -->
+  <rect x="300" y="36" width="120" height="35" rx="6" fill="#1e293b"/>
+  <text x="360" y="50" font-family="sans-serif" font-size="9" font-weight="bold" fill="#93c5fd" text-anchor="middle">3. Check CPU</text>
+  <text x="360" y="64" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">Fans spinning?</text>
+  
+  <line x1="420" y1="53" x2="440" y2="53" stroke="#6366f1" stroke-width="1.5"/>
+  
+  <!-- Step 4 -->
+  <rect x="440" y="36" width="100" height="35" rx="6" fill="#1e293b"/>
+  <text x="490" y="50" font-family="sans-serif" font-size="9" font-weight="bold" fill="#fbbf24" text-anchor="middle">4. Reseat RAM</text>
+  <text x="490" y="64" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">Remove & reinsert</text>
+  
+  <!-- Down arrow -->
+  <line x1="490" y1="71" x2="490" y2="95" stroke="#6366f1" stroke-width="2"/>
+  <polygon points="485,90 490,100 495,90" fill="#6366f1"/>
+  
+  <!-- Step 5 -->
+  <rect x="150" y="100" width="340" height="40" rx="6" fill="#334155" stroke="#22c55e" stroke-width="1.5"/>
+  <text x="320" y="118" font-family="sans-serif" font-size="10" font-weight="bold" fill="#22c55e" text-anchor="middle">Still no display? → Internal hardware issue</text>
+  <text x="320" y="133" font-family="monospace" font-size="8" fill="#94a3b8" text-anchor="middle">Could be: Dead GPU, fried motherboard, faulty PSU</text>
+  
+  <!-- Beep codes -->
+  <rect x="20" y="95" width="115" height="95" rx="6" fill="#1e293b"/>
+  <text x="77" y="113" font-family="sans-serif" font-size="9" font-weight="bold" fill="#fbbf24" text-anchor="middle">Beep Codes</text>
+  
+  <rect x="28" y="122" width="100" height="20" rx="4" fill="#334155"/>
+  <text x="78" y="136" font-family="monospace" font-size="7" fill="#f8fafc" text-anchor="middle">1 short = OK</text>
+  
+  <rect x="28" y="146" width="100" height="20" rx="4" fill="#334155"/>
+  <text x="78" y="160" font-family="monospace" font-size="7" fill="#f8fafc" text-anchor="middle">3 long = RAM error</text>
+  
+  <rect x="28" y="170" width="100" height="16" rx="4" fill="#334155"/>
+  <text x="78" y="182" font-family="monospace" font-size="7" fill="#f8fafc" text-anchor="middle">1 long+2 short = GPU</text>
+  
+  <!-- Side tips -->
+  <rect x="390" y="155" width="150" height="40" rx="6" fill="#1e293b"/>
+  <text x="465" y="173" font-family="sans-serif" font-size="9" font-weight="bold" fill="#f8fafc" text-anchor="middle">Pro tips</text>
+  <text x="465" y="188" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">Clear CMOS battery</text>
+  <text x="465" y="198" font-family="monospace" font-size="7" fill="#94a3b8" text-anchor="middle">Test with 1 RAM stick</text>
+</svg>

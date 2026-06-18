@@ -12,15 +12,16 @@
 | Module | Topic | Chapters |
 |---|---|---|
 | 0 | History & How Computers Work | 3 |
-| 1 | OS, Files, Folders & Shortcuts | 3 |
+| — | [Computer Hardware](/docs/coding/i-know-computers/Computer%20Hardware/1%20Internal%20Components.md) (Internal Components, External Components, Troubleshooting) | 3 |
+| 1 | OS, Files, Folders & Shortcuts | 4 |
 | 2 | Internet, Email & Browsers | 3 |
-| 3 | MS Word | 4 |
+| 3 | MS Word | 5 |
 | 4 | MS Excel (Detailed) | 8 |
 | 5 | PowerPoint Basics | 3 |
 | 6 | Google Workspace Basics | 3 |
 | 7 | Job-Ready Office Skills | 3 |
 
-**Total: 8 modules · 30 chapters · 25+ real tasks**
+**Total: 8 modules + Computer Hardware section · 35 chapters · 25+ real tasks**
 
 ---
 
