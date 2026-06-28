@@ -1,0 +1,70 @@
+i want to switch to main branch
+and also keeting this branch safe 
+so that i can come back and work on it
++ Thought: 580ms
+$ git branch --show-current
+UI-side-navbar-modification
+$ git status --short
+M src/app/globals.css
+ M src/components/PageHeader.tsx
+ M src/components/sidebar-layout.tsx
+?? docs/sidebar-border-problem-v2.md
+?? docs/sidebar-border-prompt.md
++ Thought: 921ms
+You have uncommitted changes on UI-side-navbar-modification. I'll stash them so you can return later, then switch to main.
+$ git stash push -m "WIP: UI-side-navbar-modification - sidebar border and globals changes"
+warning: in the working copy of 'src/app/globals.css', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/components/sidebar-layout.tsx', LF will be replaced by CRLF the next time Git touches it
+Saved working directory and index state On UI-side-navbar-modification: WIP: UI-side-navbar-modification - sidebar border and globals changes
++ Thought: 309ms
+$ git checkout main
+Your branch is up to date with 'origin/main'.
+Switched to branch 'main'
++ Thought: 214ms
+Done. Here's what happened:
+- Stashed your uncommitted changes with message: "WIP: UI-side-navbar-modification - sidebar border and globals changes"
+- Switched to main branch
+To come back and restore your work later:
+git checkout UI-side-navbar-modification
+git stash pop
+▣  Build · DeepSeek V4 Flash Free · 19.1s
+wait wait mujhe samjhana toh kya kiya yeh??
+achi se
++ Thought: 581ms
+Bilkul, sorry! Chaliye step-by-step samajhta hoon:
+1. Pehle aap kis branch pe the?
+UI-side-navbar-modification — yani aap ek alag branch pe kaam kar rahe the jo main se alag hai.
+2. Aapne kya bola?
+Aapne kaha: "main pe switch karo, lekin current branch safe rahe taaki baad mein wapas aa sakoon."
+3. Maine kya kiya — do cheezein:
+Step 1 — Stash kiya (git stash)
+- Jab aap branch switch karte hain, agar aapne kuch changes kiya hai (jo abhi commit nahi kiye), toh woh changes saath nahi jaate. Git aapko branch switch karne nahi dega agar unsaved changes hain.
+- Isliye maine woh unsaved changes utha kar ek temporary safe jagah rakh di. Isse kehte hain stash.
+- Stash ka matlab: "apne kaam ko side rakh do, baad mein wapas laaunga."
+- Maine stash ko ek naam diya: "WIP: UI-side-navbar-modification - sidebar border and globals changes" — taaki aapko pata ho yeh kis branch ka kaam hai.
+Step 2 — main pe switch kiya (git checkout main)
+- Ab jab saare changes safe stash ho gaye, toh maine main branch pe switch kar diya.
+4. Wapas kaise aaoge?
+Jab wapas us branch pe kaam karna ho:
+git checkout UI-side-navbar-modification
+git stash pop
+- git checkout — aap wapas apni branch pe chale jaaoge.
+- git stash pop — jo kaam temporary rakhwaya tha, woh wapas laakar files mein daal dega.
+Short me: Aapke adhoore kaam ko utha kar almari mein rakh diya, branch change kiya, aur jab wapas aaoge toh almari se nikaal kar wapas table pe rakh dunga.
+▣  Build · DeepSeek V4 Flash Free · 10.1s
+toh tumne git stash run kiya phir
+WIP: UI-side...
+yeh run kiya???
+WIP command??
++ Thought: 498ms
+Nahi, WIP koi alag command nahi hai. Do cheezein ek saath hui:
+git stash push -m "WIP: UI-side-navbar-modification - sidebar border and globals changes"
+Yeh ek hi command hai jisme:
+- git stash push — stash create karta hai (unsaved changes safe rakhta hai)
+- -m "message..." — stash ko ek label/naam deta hai, taaki pata rahe yeh kis cheez ka stash hai
+- WIP ka matlab Work In Progress — ek common convention hai, koi command nahi
+Toh uss time bas ek hi command chali — git stash push -m "..." baaki sab sirf uss command ka description/label tha.
+▣  Build · DeepSeek V4 Flash Free · 5.9s
+acha acha ab smjha
++ Thought: 719ms
+Cool, glad it's clear ab 😊

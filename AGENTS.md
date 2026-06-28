@@ -34,7 +34,6 @@ This file contains the rules and conventions for creating and editing course con
 - Use analogies generously
 - Technical explanation first, then analogy to reinforce
 - Include a "What It Is NOT" section to clarify misconceptions
-- Keep paragraphs short (3-5 sentences max)
 
 ### 6. Code Examples
 - JavaScript (Node.js) for concepts, Next.js for projects

@@ -2,6 +2,7 @@
 
 import { useEffect, useState, startTransition, useCallback } from "react";
 import { Navbar } from "@/components/navbar";
+import { RetroGrid } from "@/components/ui/retro-grid";
 import CodingPage from "./coding/page";
 import FinancePage from "./finance/page";
 import GeneralPage from "./general/page";
@@ -46,8 +47,9 @@ export default function Home() {
       <Navbar activeTab={activeTab} onTabChange={handleTabChange} />
       <main className="min-h-[calc(100vh-3.5rem)]">
         {activeTab === "Dashboard" && (
-          <div className="min-h-[calc(100vh-3.5rem)] bg-background transition-colors duration-500 flex items-center justify-center">
-            <div className="text-center px-4">
+          <div className="relative min-h-[calc(100vh-3.5rem)] overflow-hidden bg-background transition-colors duration-500 flex items-center justify-center">
+            <RetroGrid />
+            <div className="relative z-10 text-center px-4">
               {/* Main Title */}
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight">
                 <span className="block text-muted-foreground text-lg sm:text-xl md:text-2xl font-medium mb-2 sm:mb-4">
