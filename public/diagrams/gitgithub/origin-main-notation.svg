@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 230" fill="none">
+  <rect x="0" y="0" width="600" height="230" rx="10" fill="#0f172a" />
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" fill="#f8fafc" font-size="13" font-family="sans-serif" font-weight="600">Understanding "origin/main" Notation</text>
+
+  <!-- Local side -->
+  <rect x="30" y="55" width="250" height="110" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" />
+  <text x="155" y="80" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="sans-serif" font-weight="600">🖥️ Your Local Repo</text>
+
+  <!-- local main -->
+  <rect x="50" y="95" width="90" height="25" rx="4" fill="#0f172a" stroke="#3b82f6" stroke-width="1" />
+  <text x="95" y="112" text-anchor="middle" fill="#93c5fd" font-size="10" font-family="monospace">main</text>
+  <text x="95" y="140" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">⬅ your local main branch</text>
+
+  <!-- remote tracking origin/main -->
+  <rect x="170" y="95" width="90" height="25" rx="4" fill="#0f172a" stroke="#f59e0b" stroke-width="1" />
+  <text x="215" y="112" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="monospace">origin/main</text>
+  <text x="215" y="140" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">⬅ your memory of remote</text>
+
+  <!-- Arrow: local → remote -->
+  <line x1="280" y1="110" x2="320" y2="110" stroke="#22c55e" stroke-width="2" stroke-dasharray="6,3" />
+  <polygon points="320,105 335,110 320,115" fill="#22c55e" />
+  <text x="308" y="102" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">git push</text>
+
+  <!-- GitHub side -->
+  <rect x="340" y="55" width="230" height="95" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" />
+  <text x="455" y="80" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="sans-serif" font-weight="600">☁️ GitHub Remote</text>
+
+  <!-- Remote main -->
+  <rect x="400" y="95" width="110" height="25" rx="4" fill="#0f172a" stroke="#3b82f6" stroke-width="1" />
+  <text x="455" y="112" text-anchor="middle" fill="#93c5fd" font-size="10" font-family="monospace">main</text>
+  <text x="455" y="140" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">⬅ the actual remote (source of truth)</text>
+
+  <!-- Explanation at bottom -->
+  <line x1="30" y1="170" x2="570" y2="170" stroke="#334155" stroke-width="1" />
+
+  <text x="300" y="192" text-anchor="middle" fill="#f8fafc" font-size="10" font-family="sans-serif">
+    <tspan fill="#fbbf24" font-family="monospace">origin/main</tspan> = "what the <tspan fill="#93c5fd" font-family="monospace">main</tspan> branch looks like on the remote called <tspan fill="#fbbf24" font-family="monospace">origin</tspan>"
+  </text>
+
+  <text x="300" y="218" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">
+    It's your LOCAL copy of what the remote had LAST TIME you fetched. It updates only when you fetch or pull.
+  </text>
+</svg>

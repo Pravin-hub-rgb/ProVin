@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" fill="none">
+  <rect x="0" y="0" width="600" height="260" rx="10" fill="#0f172a" />
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" fill="#f8fafc" font-size="13" font-family="sans-serif" font-weight="600">Branch Naming Convention: &lt;type&gt;/&lt;short-description&gt;</text>
+
+  <!-- Good examples -->
+  <text x="150" y="58" text-anchor="middle" fill="#22c55e" font-size="11" font-family="sans-serif" font-weight="600">✅ Good names</text>
+
+  <rect x="30" y="72" width="240" height="22" rx="4" fill="#1e293b" stroke="#22c55e" stroke-width="1" />
+  <text x="150" y="87" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">feature/user-authentication</text>
+
+  <rect x="30" y="100" width="240" height="22" rx="4" fill="#1e293b" stroke="#22c55e" stroke-width="1" />
+  <text x="150" y="115" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">fix/login-button-not-clickable</text>
+
+  <rect x="30" y="128" width="240" height="22" rx="4" fill="#1e293b" stroke="#22c55e" stroke-width="1" />
+  <text x="150" y="143" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">chore/update-dependencies</text>
+
+  <rect x="30" y="156" width="240" height="22" rx="4" fill="#1e293b" stroke="#22c55e" stroke-width="1" />
+  <text x="150" y="171" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace">refactor/api-error-handling</text>
+
+  <!-- Bad examples -->
+  <text x="450" y="58" text-anchor="middle" fill="#ef4444" font-size="11" font-family="sans-serif" font-weight="600">❌ Bad names</text>
+
+  <rect x="330" y="72" width="240" height="22" rx="4" fill="#1e293b" stroke="#ef4444" stroke-width="1" />
+  <text x="450" y="87" text-anchor="middle" fill="#ef4444" font-size="10" font-family="monospace">my-branch</text>
+
+  <rect x="330" y="100" width="240" height="22" rx="4" fill="#1e293b" stroke="#ef4444" stroke-width="1" />
+  <text x="450" y="115" text-anchor="middle" fill="#ef4444" font-size="10" font-family="monospace">vin-test-42</text>
+
+  <rect x="330" y="128" width="240" height="22" rx="4" fill="#1e293b" stroke="#ef4444" stroke-width="1" />
+  <text x="450" y="143" text-anchor="middle" fill="#ef4444" font-size="10" font-family="monospace">fix</text>
+
+  <rect x="330" y="156" width="240" height="22" rx="4" fill="#1e293b" stroke="#ef4444" stroke-width="1" />
+  <text x="450" y="171" text-anchor="middle" fill="#ef4444" font-size="10" font-family="monospace">asdfgh</text>
+
+  <!-- Type legend at bottom -->
+  <line x1="30" y1="190" x2="570" y2="190" stroke="#334155" stroke-width="1" />
+  
+  <text x="50" y="208" fill="#94a3b8" font-size="8" font-family="sans-serif">feature/ = new functionality</text>
+  <text x="250" y="208" fill="#94a3b8" font-size="8" font-family="sans-serif">fix/ = bug fix</text>
+  <text x="380" y="208" fill="#94a3b8" font-size="8" font-family="sans-serif">chore/ = maintenance</text>
+  
+  <text x="50" y="225" fill="#94a3b8" font-size="8" font-family="sans-serif">refactor/ = restructure code</text>
+  <text x="250" y="225" fill="#94a3b8" font-size="8" font-family="sans-serif">docs/ = documentation</text>
+  <text x="380" y="225" fill="#94a3b8" font-size="8" font-family="sans-serif">test/ = adding tests</text>
+
+  <!-- Use hyphens, not spaces -->
+  <text x="300" y="250" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">
+    ✏️ Use hyphens between words. No spaces. No special characters. All lowercase.
+  </text>
+</svg>

@@ -1,7 +1,7 @@
 "use client"
 
 import { ThemeToggle } from "@/components/theme-toggle"
-import { Zap, LayoutDashboard, Code2, Wallet, LayoutGrid } from "lucide-react"
+import { Zap, LayoutDashboard, Code2, Wallet, LayoutGrid, FlaskConical } from "lucide-react"
 
 type Tab = "Dashboard" | "Coding" | "Finance" | "General"
 
@@ -59,8 +59,16 @@ export function Navbar({ activeTab, onTabChange }: NavbarProps) {
               ))}
             </div>
 
-            {/* Right Section: Theme Toggle */}
-            <div className="flex items-center">
+            {/* Right Section: Git Lab + Theme Toggle */}
+            <div className="flex items-center gap-2">
+              <a
+                href="/lab"
+                className="flex items-center gap-1 px-2 py-1.5 text-sm font-medium rounded-md transition-all duration-200
+                  text-muted-foreground hover:text-foreground hover:bg-accent/50"
+              >
+                <FlaskConical className="w-4 h-4" />
+                <span className="hidden sm:inline">Lab</span>
+              </a>
               <ThemeToggle />
             </div>
           </div>
@@ -103,6 +111,16 @@ export function Navbar({ activeTab, onTabChange }: NavbarProps) {
               </button>
             )
           })}
+          {/* Lab link */}
+          <a
+            href="/lab"
+            className="relative flex flex-col items-center"
+            style={{ width: '72px' }}
+          >
+            <div className="relative flex items-center justify-center w-10 h-10 translate-y-1 rounded-full bg-transparent text-foreground/30 hover:text-foreground/60 transition-colors">
+              <FlaskConical className="w-5 h-5" />
+            </div>
+          </a>
         </div>
       </nav>
     </>

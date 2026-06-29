@@ -109,25 +109,21 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
 
   // Load first lecture by default when subject changes
   useEffect(() => {
-    if (currentSubject) {
-      // If we have phases, load first lecture from first phase
-      if (currentSubject.phases && currentSubject.phases.length > 0 && !selectedLecture) {
-        const firstPhaseLectures = currentSubject.phases[0].lectures
-        if (firstPhaseLectures.length > 0) {
-          setSelectedLecture(firstPhaseLectures[0].id)
-        }
+    if (!selectedSubject) {
+      if (typeof setSelectedLecture === "function") {
+        setSelectedLecture(null)
       }
-      // Fallback to old lecture list
-      else if (currentSubject.lectures && currentSubject.lectures.length > 0 && !selectedLecture) {
+      return
+    }
+    if (currentSubject && !selectedLecture) {
+      if (currentSubject.phases?.length) {
+        const first = currentSubject.phases[0].lectures[0]
+        if (first) setSelectedLecture(first.id)
+      } else if (currentSubject.lectures?.length) {
         setSelectedLecture(currentSubject.lectures[0].id)
       }
     }
-    
-    // Reset selected lecture when switching subjects
-    if (!selectedSubject) {
-      setSelectedLecture(null)
-    }
-  }, [selectedSubject, selectedLecture, currentSubject])
+  }, [selectedSubject, selectedLecture, currentSubject, setSelectedLecture])
 
   // Load markdown content when lecture changes
   useEffect(() => {

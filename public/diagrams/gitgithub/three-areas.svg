@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 240" fill="none">
+  <rect x="0" y="0" width="600" height="240" rx="10" fill="#0f172a" />
+
+  <!-- Working Directory -->
+  <rect x="25" y="50" width="160" height="130" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" />
+  <text x="105" y="80" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="sans-serif" font-weight="600">📝 Working</text>
+  <text x="105" y="97" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="sans-serif" font-weight="600">Directory</text>
+  
+  <rect x="40" y="110" width="130" height="20" rx="4" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
+  <text x="105" y="124" text-anchor="middle" fill="#c7d2fe" font-size="9" font-family="monospace">index.html (edited)</text>
+  <rect x="40" y="135" width="130" height="20" rx="4" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
+  <text x="105" y="149" text-anchor="middle" fill="#c7d2fe" font-size="9" font-family="monospace">style.css (edited)</text>
+  <text x="105" y="173" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">your files on disk</text>
+
+  <!-- Arrow 1: git add -->
+  <line x1="185" y1="90" x2="215" y2="90" stroke="#f59e0b" stroke-width="2" />
+  <polygon points="215,85 227,90 215,95" fill="#f59e0b" />
+  <text x="206" y="80" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="monospace">git add</text>
+
+  <!-- Staging Area -->
+  <rect x="230" y="50" width="140" height="130" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" />
+  <text x="300" y="80" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="sans-serif" font-weight="600">📋 Staging</text>
+  <text x="300" y="97" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="sans-serif" font-weight="600">Area</text>
+  
+  <rect x="245" y="110" width="110" height="20" rx="4" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
+  <text x="300" y="124" text-anchor="middle" fill="#c7d2fe" font-size="9" font-family="monospace">index.html ✓</text>
+  <rect x="245" y="135" width="110" height="20" rx="4" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
+  <text x="300" y="149" text-anchor="middle" fill="#c7d2fe" font-size="9" font-family="monospace">style.css ✓</text>
+  <text x="300" y="173" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">ready for commit</text>
+
+  <!-- Arrow 2: git commit -->
+  <line x1="370" y1="90" x2="400" y2="90" stroke="#22c55e" stroke-width="2" />
+  <polygon points="400,85 412,90 400,95" fill="#22c55e" />
+  <text x="391" y="80" text-anchor="middle" fill="#22c55e" font-size="9" font-family="monospace">git commit</text>
+
+  <!-- Repository -->
+  <rect x="415" y="50" width="155" height="130" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" />
+  <text x="493" y="80" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="sans-serif" font-weight="600">🗄️ Repository</text>
+  <text x="493" y="97" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="sans-serif" font-weight="600">(Local History)</text>
+
+  <!-- Commits inside repo -->
+  <circle cx="453" cy="120" r="7" fill="#6366f1" />
+  <circle cx="475" cy="120" r="7" fill="#6366f1" />
+  <circle cx="497" cy="120" r="7" fill="#6366f1" />
+  <circle cx="519" cy="120" r="7" fill="#22c55e" />
+  
+  <line x1="460" y1="120" x2="468" y2="120" stroke="#64748b" stroke-width="1" />
+  <line x1="482" y1="120" x2="490" y2="120" stroke="#64748b" stroke-width="1" />
+  <line x1="504" y1="120" x2="512" y2="120" stroke="#64748b" stroke-width="1" />
+
+  <text x="493" y="173" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">permanent history</text>
+
+  <!-- Caption -->
+  <text x="300" y="225" text-anchor="middle" fill="#64748b" font-size="10" font-family="sans-serif">
+    Working Directory → edit files. Staging Area → pick which changes to commit. Repository → saved forever.
+  </text>
+</svg>

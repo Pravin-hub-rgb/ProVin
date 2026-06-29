@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 280" fill="none">
+  <rect x="0" y="0" width="600" height="280" rx="10" fill="#0f172a" />
+
+  <!-- Title -->
+  <text x="300" y="30" text-anchor="middle" fill="#f8fafc" font-size="13" font-family="sans-serif" font-weight="600">Without Branches vs With Branches</text>
+
+  <!-- LEFT SIDE: Without branches (chaos) -->
+  <rect x="25" y="50" width="260" height="190" rx="8" fill="#1e293b" stroke="#ef4444" stroke-width="1.5" />
+  <rect x="55" y="60" width="200" height="22" rx="4" fill="#ef4444" opacity="0.2" />
+  <text x="155" y="75" text-anchor="middle" fill="#ef4444" font-size="10" font-family="sans-serif" font-weight="600">❌ Without Branches</text>
+
+  <text x="155" y="106" text-anchor="middle" fill="#f8fafc" font-size="13" font-family="sans-serif" font-weight="600">main</text>
+  
+  <!-- 5 messy arrows to main -->
+  <line x1="155" y1="115" x2="120" y2="140" stroke="#ef4444" stroke-width="1.5" opacity="0.6" />
+  <line x1="155" y1="115" x2="155" y2="140" stroke="#ef4444" stroke-width="1.5" opacity="0.6" />
+  <line x1="155" y1="115" x2="190" y2="140" stroke="#ef4444" stroke-width="1.5" opacity="0.6" />
+  <line x1="155" y1="115" x2="135" y2="155" stroke="#ef4444" stroke-width="1.5" opacity="0.6" />
+  <line x1="155" y1="115" x2="175" y2="155" stroke="#ef4444" stroke-width="1.5" opacity="0.6" />
+
+  <text x="100" y="148" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif">Alice (half-done)</text>
+  <text x="155" y="148" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif">Bob</text>
+  <text x="215" y="148" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif">Charlie</text>
+  <text x="120" y="165" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif">Diana</text>
+  <text x="190" y="165" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="sans-serif">Eric (WIP)</text>
+
+  <text x="155" y="195" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">❌ Always broken</text>
+  <text x="155" y="210" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">❌ Can't deploy</text>
+  <text x="155" y="225" text-anchor="middle" fill="#ef4444" font-size="9" font-family="sans-serif">❌ Nobody knows what works</text>
+
+  <!-- RIGHT SIDE: With branches -->
+  <rect x="310" y="50" width="265" height="190" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="1.5" />
+  <rect x="335" y="60" width="215" height="22" rx="4" fill="#22c55e" opacity="0.2" />
+  <text x="443" y="75" text-anchor="middle" fill="#22c55e" font-size="10" font-family="sans-serif" font-weight="600">✅ With Branches</text>
+
+  <!-- main vertical -->
+  <rect x="410" y="90" width="70" height="25" rx="4" fill="#3b82f6" opacity="0.3" />
+  <text x="445" y="107" text-anchor="middle" fill="#93c5fd" font-size="11" font-family="monospace" font-weight="600">main</text>
+  
+  <line x1="445" y1="115" x2="445" y2="145" stroke="#3b82f6" stroke-width="1" />
+
+  <!-- branches splitting off -->
+  <line x1="350" y1="130" x2="440" y2="120" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,2" />
+  <rect x="325" y="124" width="55" height="16" rx="3" fill="#22c55e" opacity="0.2" />
+  <text x="353" y="135" text-anchor="middle" fill="#22c55e" font-size="7" font-family="monospace">feature/login</text>
+
+  <line x1="395" y1="140" x2="440" y2="125" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,2" />
+  <rect x="365" y="138" width="60" height="16" rx="3" fill="#22c55e" opacity="0.2" />
+  <text x="395" y="149" text-anchor="middle" fill="#22c55e" font-size="7" font-family="monospace">fix/css-button</text>
+
+  <line x1="480" y1="130" x2="450" y2="120" stroke="#22c55e" stroke-width="1.5" stroke-dasharray="4,2" />
+  <rect x="475" y="124" width="75" height="16" rx="3" fill="#22c55e" opacity="0.2" />
+  <text x="513" y="135" text-anchor="middle" fill="#22c55e" font-size="7" font-family="monospace">refactor/database</text>
+
+  <text x="443" y="170" text-anchor="middle" fill="#22c55e" font-size="9" font-family="sans-serif">✅ main stays stable</text>
+  <text x="443" y="185" text-anchor="middle" fill="#22c55e" font-size="9" font-family="sans-serif">✅ All work in parallel</text>
+  <text x="443" y="200" text-anchor="middle" fill="#22c55e" font-size="9" font-family="sans-serif">✅ Merge only when done</text>
+  <text x="443" y="215" text-anchor="middle" fill="#22c55e" font-size="9" font-family="sans-serif">✅ Always deployable</text>
+
+  <!-- Caption -->
+  <text x="300" y="270" text-anchor="middle" fill="#64748b" font-size="10" font-family="sans-serif">
+    Branches let everyone work in isolation. main stays clean. Merge only when your work is ready.
+  </text>
+</svg>

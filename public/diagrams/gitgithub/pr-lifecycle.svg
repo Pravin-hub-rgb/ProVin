@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420" fill="none">
+  <rect x="0" y="0" width="700" height="420" rx="10" fill="#0f172a" />
+
+  <!-- Title -->
+  <text x="350" y="28" text-anchor="middle" fill="#f8fafc" font-size="13" font-family="sans-serif" font-weight="600">The Full PR Lifecycle — Terminal + GitHub.com</text>
+
+  <!-- Column headers -->
+  <rect x="20" y="42" width="310" height="24" rx="6" fill="#1e293b" />
+  <text x="175" y="57" text-anchor="middle" fill="#3b82f6" font-size="10" font-family="sans-serif" font-weight="600">🖥️  Your Machine (Terminal)</text>
+
+  <rect x="370" y="42" width="310" height="24" rx="6" fill="#1e293b" />
+  <text x="525" y="57" text-anchor="middle" fill="#22c55e" font-size="10" font-family="sans-serif" font-weight="600">🌐  GitHub.com</text>
+
+  <!-- Divider line -->
+  <line x1="345" y1="42" x2="345" y2="385" stroke="#334155" stroke-width="1.5" stroke-dasharray="4,4" />
+
+  <!-- ===== LEFT COLUMN - Terminal ===== -->
+
+  <!-- Step 1: Branch off main -->
+  <rect x="30" y="80" width="290" height="55" rx="8" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" />
+  <text x="175" y="97" text-anchor="middle" fill="#6366f1" font-size="10" font-family="monospace" font-weight="600">Step 1: Branch off latest main</text>
+  <text x="175" y="114" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="monospace">git switch main &amp;&amp; git pull</text>
+  <text x="175" y="128" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="monospace">git switch -c feature/navbar</text>
+
+  <!-- Arrow 1→2 (down) -->
+  <line x1="175" y1="135" x2="175" y2="155" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="170,155 175,167 180,155" fill="#f59e0b" />
+
+  <!-- Step 2: Work and commit -->
+  <rect x="30" y="170" width="290" height="55" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="1.5" />
+  <text x="175" y="187" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace" font-weight="600">Step 2: Work + Commit</text>
+  <text x="175" y="204" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="monospace">git add -p &amp;&amp; git commit -m "Add navbar"</text>
+  <text x="175" y="218" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">Edit → stage → commit (repeat as needed)</text>
+
+  <!-- Arrow 2→3 (down) -->
+  <line x1="175" y1="225" x2="175" y2="245" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="170,245 175,257 180,245" fill="#f59e0b" />
+
+  <!-- Step 3: Push to GitHub -->
+  <rect x="30" y="260" width="290" height="55" rx="8" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" />
+  <text x="175" y="277" text-anchor="middle" fill="#f59e0b" font-size="10" font-family="monospace" font-weight="600">Step 3: Push to GitHub</text>
+  <text x="175" y="294" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="monospace">git push -u origin feature/navbar</text>
+  <text x="175" y="308" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">-u flag sets tracking (first time only)</text>
+
+  <!-- Arrow 3→4 (right, crossing divider) -->
+  <line x1="320" y1="287" x2="360" y2="287" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="360,282 372,287 360,292" fill="#f59e0b" />
+  <text x="340" y="277" text-anchor="middle" fill="#f59e0b" font-size="7" font-family="sans-serif">push</text>
+
+  <!-- ===== RIGHT COLUMN - GitHub.com ===== -->
+
+  <!-- Step 4: Open PR -->
+  <rect x="380" y="80" width="290" height="55" rx="8" fill="#1e293b" stroke="#3b82f6" stroke-width="1.5" />
+  <text x="525" y="97" text-anchor="middle" fill="#3b82f6" font-size="10" font-family="monospace" font-weight="600">Step 4: Open Pull Request</text>
+  <text x="525" y="114" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="sans-serif">Click "Compare &amp; pull request"</text>
+  <text x="525" y="128" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="sans-serif">Write title + description → Create</text>
+
+  <!-- Arrow 4→5 (down) -->
+  <line x1="525" y1="135" x2="525" y2="155" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="520,155 525,167 530,155" fill="#f59e0b" />
+
+  <!-- Step 5: Review -->
+  <rect x="380" y="170" width="290" height="55" rx="8" fill="#1e293b" stroke="#a855f7" stroke-width="1.5" />
+  <text x="525" y="187" text-anchor="middle" fill="#a855f7" font-size="10" font-family="monospace" font-weight="600">Step 5: Code Review</text>
+  <text x="525" y="204" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="sans-serif">Reviewer checks "Files changed" tab</text>
+  <text x="525" y="218" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="sans-serif">Leaves comments → Approve ✓</text>
+
+  <!-- Arrow 5→6 (down) -->
+  <line x1="525" y1="225" x2="525" y2="245" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="520,245 525,257 530,245" fill="#f59e0b" />
+
+  <!-- Step 6: Merge + Delete -->
+  <rect x="380" y="260" width="290" height="55" rx="8" fill="#1e293b" stroke="#22c55e" stroke-width="1.5" />
+  <text x="525" y="277" text-anchor="middle" fill="#22c55e" font-size="10" font-family="monospace" font-weight="600">Step 6: Merge + Clean Up</text>
+  <text x="525" y="294" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="sans-serif">Click "Merge pull request" → Confirm</text>
+  <text x="525" y="308" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="sans-serif">Click "Delete branch" (cleanup)</text>
+
+  <!-- Arrow 6 → back to terminal cleanup (left) -->
+  <line x1="380" y1="340" x2="175" y2="355" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="175,348 163,358 181,363" fill="#f59e0b" />
+  <text x="265" y="350" text-anchor="middle" fill="#f59e0b" font-size="7" font-family="sans-serif">switch back + cleanup</text>
+
+  <!-- Local cleanup box -->
+  <rect x="30" y="340" width="290" height="40" rx="6" fill="#1e293b" stroke="#64748b" stroke-width="1" />
+  <text x="175" y="355" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="monospace">git switch main &amp;&amp; git pull</text>
+  <text x="175" y="370" text-anchor="middle" fill="#94a3b8" font-size="8" font-family="monospace">git branch -d feature/navbar</text>
+
+  <!-- Caption -->
+  <text x="350" y="410" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">
+    Steps 1-3 happen in your terminal. Steps 4-6 happen on GitHub.com.
+  </text>
+</svg>

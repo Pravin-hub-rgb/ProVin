@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" fill="none">
+  <rect x="0" y="0" width="600" height="260" rx="10" fill="#0f172a" />
+
+  <!-- Title -->
+  <text x="300" y="35" text-anchor="middle" fill="#f8fafc" font-size="13" font-family="sans-serif" font-weight="600">How Commits Form a Chain</text>
+
+  <!-- Commit 1 -->
+  <rect x="40" y="65" width="110" height="65" rx="6" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" />
+  <text x="95" y="85" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">a1b2c3d</text>
+  <text x="95" y="100" text-anchor="middle" fill="#f8fafc" font-size="9" font-family="sans-serif">"First commit"</text>
+  <text x="95" y="115" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">parent: none</text>
+  <text x="95" y="125" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">(root commit)</text>
+
+  <!-- Arrow 1→2 -->
+  <line x1="150" y1="97" x2="180" y2="97" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="180,92 192,97 180,102" fill="#f59e0b" />
+  <text x="171" y="90" text-anchor="middle" fill="#fbbf24" font-size="8" font-family="monospace">points to</text>
+
+  <!-- Commit 2 -->
+  <rect x="195" y="65" width="110" height="65" rx="6" fill="#1e293b" stroke="#6366f1" stroke-width="1.5" />
+  <text x="250" y="85" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">f5e6d7c</text>
+  <text x="250" y="100" text-anchor="middle" fill="#f8fafc" font-size="9" font-family="sans-serif">"Add login"</text>
+  <text x="250" y="115" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">parent: a1b2c3d</text>
+  <text x="250" y="125" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">author: Alice</text>
+
+  <!-- Arrow 2→3 -->
+  <line x1="305" y1="97" x2="335" y2="97" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="335,92 347,97 335,102" fill="#f59e0b" />
+
+  <!-- Commit 3 -->
+  <rect x="350" y="65" width="110" height="65" rx="6" fill="#1e293b" stroke="#22c55e" stroke-width="1.5" />
+  <text x="405" y="85" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">8a9b0c1</text>
+  <text x="405" y="100" text-anchor="middle" fill="#f8fafc" font-size="9" font-family="sans-serif">"Add search"</text>
+  <text x="405" y="115" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">parent: f5e6d7c</text>
+  <text x="405" y="125" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">author: Bob</text>
+
+  <!-- Arrow 3→4 -->
+  <line x1="460" y1="97" x2="490" y2="97" stroke="#f59e0b" stroke-width="1.5" />
+  <polygon points="490,92 502,97 490,102" fill="#f59e0b" />
+
+  <!-- Commit 4 (latest) with branch label -->
+  <rect x="505" y="65" width="75" height="65" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="2" />
+  <text x="543" y="85" text-anchor="middle" fill="#c7d2fe" font-size="8" font-family="monospace">9f8e7d6</text>
+  <text x="543" y="100" text-anchor="middle" fill="#f8fafc" font-size="9" font-family="sans-serif">"Fix css"</text>
+  <text x="543" y="115" text-anchor="middle" fill="#64748b" font-size="8" font-family="sans-serif">parent: ...</text>
+
+  <!-- Branch label on commit 4 -->
+  <rect x="535" y="50" width="50" height="16" rx="4" fill="#3b82f6" />
+  <text x="560" y="61" text-anchor="middle" fill="#f8fafc" font-size="8" font-family="monospace" font-weight="600">main</text>
+
+  <!-- Branch label on commit 3 -->
+  <rect x="375" y="48" width="70" height="16" rx="4" fill="#22c55e" />
+  <text x="410" y="61" text-anchor="middle" fill="#0f172a" font-size="8" font-family="monospace" font-weight="600">feature/search</text>
+
+  <!-- Merge example section -->
+  <text x="300" y="160" text-anchor="middle" fill="#f8fafc" font-size="12" font-family="sans-serif" font-weight="600">A Merge Commit Has Two Parents</text>
+
+  <!-- Main branch chain -->
+  <rect x="40" y="175" width="75" height="40" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="1" />
+  <text x="78" y="193" text-anchor="middle" fill="#93c5fd" font-size="8" font-family="monospace">main: D</text>
+  <text x="78" y="207" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">(parent: C)</text>
+
+  <line x1="115" y1="195" x2="145" y2="195" stroke="#3b82f6" stroke-width="1" />
+  
+  <rect x="148" y="175" width="75" height="40" rx="4" fill="#1e293b" stroke="#3b82f6" stroke-width="1" />
+  <text x="186" y="193" text-anchor="middle" fill="#93c5fd" font-size="8" font-family="monospace">main: E</text>
+  <text x="186" y="207" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">(parent: D)</text>
+
+  <!-- Feature branch chain -->
+  <rect x="40" y="218" width="75" height="32" rx="4" fill="#1e293b" stroke="#22c55e" stroke-width="1" />
+  <text x="78" y="235" text-anchor="middle" fill="#22c55e" font-size="8" font-family="monospace">feat: X</text>
+  <text x="78" y="245" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">(parent: D)</text>
+
+  <!-- Merge commit -->
+  <rect x="280" y="193" width="100" height="40" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1.5" />
+  <text x="330" y="212" text-anchor="middle" fill="#fbbf24" font-size="8" font-family="monospace">Merge Commit M</text>
+  <text x="330" y="226" text-anchor="middle" fill="#64748b" font-size="7" font-family="sans-serif">parents: E, X</text>
+
+  <!-- Arrows to merge commit -->
+  <line x1="223" y1="195" x2="278" y2="213" stroke="#3b82f6" stroke-width="1.5" />
+  <line x1="115" y1="235" x2="278" y2="215" stroke="#22c55e" stroke-width="1.5" />
+
+  <!-- Caption -->
+  <text x="300" y="255" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">
+    Each commit has a unique hash, message, author, and parent pointer. Branches are just labels on commits.
+  </text>
+</svg>

@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 260" fill="none">
+  <rect x="0" y="0" width="600" height="260" rx="10" fill="#0f172a" />
+
+  <!-- Local Computer box -->
+  <rect x="30" y="50" width="220" height="160" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" />
+  <text x="140" y="80" text-anchor="middle" fill="#f8fafc" font-size="13" font-family="sans-serif" font-weight="600">🖥️ Your Computer</text>
+  
+  <!-- .git folder inside -->
+  <rect x="55" y="95" width="170" height="45" rx="6" fill="#0f172a" stroke="#6366f1" stroke-width="1" />
+  <text x="140" y="113" text-anchor="middle" fill="#c7d2fe" font-size="11" font-family="monospace">.git folder</text>
+  <text x="140" y="130" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">(full history — offline)</text>
+
+  <!-- Local commits inside -->
+  <circle cx="80" cy="163" r="8" fill="#22c55e" opacity="0.8" />
+  <circle cx="105" cy="163" r="8" fill="#22c55e" opacity="0.8" />
+  <circle cx="130" cy="163" r="8" fill="#22c55e" opacity="0.8" />
+  <circle cx="155" cy="163" r="8" fill="#22c55e" opacity="0.8" />
+  <circle cx="180" cy="163" r="8" fill="#6366f1" stroke="#4f46e5" stroke-width="1" />
+  <text x="140" y="188" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">commits (snapshots)</text>
+
+  <!-- Arrow between -->
+  <line x1="250" y1="130" x2="340" y2="130" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6,3" />
+  <polygon points="340,125 355,130 340,135" fill="#f59e0b" />
+  <text x="295" y="120" text-anchor="middle" fill="#fbbf24" font-size="9" font-family="monospace">push / pull</text>
+
+  <!-- GitHub box -->
+  <rect x="360" y="50" width="210" height="160" rx="8" fill="#1e293b" stroke="#334155" stroke-width="1.5" />
+  <text x="465" y="80" text-anchor="middle" fill="#f8fafc" font-size="13" font-family="sans-serif" font-weight="600">☁️ GitHub</text>
+  
+  <!-- Remote repo inside -->
+  <rect x="380" y="95" width="170" height="45" rx="6" fill="#0f172a" stroke="#3b82f6" stroke-width="1" />
+  <text x="465" y="113" text-anchor="middle" fill="#93c5fd" font-size="11" font-family="monospace">remote repo (copy)</text>
+  <text x="465" y="130" text-anchor="middle" fill="#64748b" font-size="9" font-family="sans-serif">(shared — needs internet)</text>
+
+  <!-- GitHub features -->
+  <text x="465" y="158" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">🔀 Pull Requests</text>
+  <text x="465" y="173" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">👁️ Code Review</text>
+  <text x="465" y="188" text-anchor="middle" fill="#94a3b8" font-size="9" font-family="sans-serif">📋 Issues</text>
+
+  <!-- Caption -->
+  <text x="300" y="240" text-anchor="middle" fill="#64748b" font-size="10" font-family="sans-serif">
+    Git runs locally and saves versions. GitHub hosts a copy online with team features.
+  </text>
+</svg>
