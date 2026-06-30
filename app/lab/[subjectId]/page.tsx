@@ -113,10 +113,22 @@ export default function SubjectLabPage() {
             forceUpdate((n) => n + 1)
             return
           }
-          // Same scenario (or no query param) → restore saved progress
-          scenarioRef.current = scenario
-          setState(data.state)
-          freshLines(scenario)
+          // Same scenario (or no query param) → re-apply setup for correct
+          // branch structure, then merge in saved in-flight state
+          const { state: freshState, scenario: freshScenario } = applySetup(data.scenarioId)
+          const saved = data.state
+          freshState.scenario.currentStep = saved.scenario.currentStep
+          freshState.localA.workingDirChanges = saved.localA.workingDirChanges
+          freshState.localA.staged = saved.localA.staged
+          freshState.localA.currentBranch = saved.localA.currentBranch
+          freshState.localB.workingDirChanges = saved.localB.workingDirChanges
+          freshState.localB.staged = saved.localB.staged
+          freshState.localB.currentBranch = saved.localB.currentBranch
+          freshState.mergeInProgress = saved.mergeInProgress
+          freshState.conflictType = saved.conflictType
+          scenarioRef.current = freshScenario
+          setState(freshState)
+          freshLines(freshScenario)
           forceUpdate((n) => n + 1)
           return
         }
@@ -180,13 +192,21 @@ export default function SubjectLabPage() {
             newState.localA.workingDirChanges = ["README.md"]
             addLine("A", { text: "You've edited README.md differently on main — stage it to create the conflict.", type: "info" })
           }
-        } else if (state.scenario.id === "conflict-drill") {
+        } else if (state.scenario.id === "conflict-drill-same-line" || state.scenario.id === "conflict-drill-whitespace") {
           if (currentStep === 0) {
             newState.localA.workingDirChanges = ["style.css"]
             addLine("A", { text: "You've edited style.css on this branch — stage it with git add.", type: "info" })
           } else if (currentStep === 3) {
             newState.localA.workingDirChanges = ["style.css"]
             addLine("A", { text: "You've edited style.css differently on main — stage it to create the conflict.", type: "info" })
+          }
+        } else if (state.scenario.id === "conflict-drill-modify-delete") {
+          if (currentStep === 0) {
+            newState.localA.workingDirChanges = ["about.md"]
+            addLine("A", { text: "about.md has been deleted on this branch — stage the removal with git add.", type: "info" })
+          } else if (currentStep === 3) {
+            newState.localA.workingDirChanges = ["about.md"]
+            addLine("A", { text: "about.md still exists on main — edit and stage it to create the conflict.", type: "info" })
           }
         } else if (state.scenario.id === "gitignore-practice") {
           if (currentStep === 1) {
@@ -214,7 +234,7 @@ export default function SubjectLabPage() {
         }
       } else if (parsedWell) {
         addLine(who, {
-          text: "That command worked but didn't match this step. Check the instruction above or use the hint button.",
+          text: "Command recognized, but not the expected one for this step. Check the instruction above or use the hint button.",
           type: "info",
         })
       }
@@ -271,7 +291,7 @@ export default function SubjectLabPage() {
 
   return (
     <div
-      className="min-h-screen flex flex-col"
+      className="h-screen overflow-hidden flex flex-col"
       style={{ background: "#010409", color: "#e6edf3" }}
     >
       <style>{`
@@ -327,8 +347,7 @@ export default function SubjectLabPage() {
 
       {/* Terminal panels */}
       <div
-        className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 p-3 relative overflow-hidden"
-        style={{ minHeight: 0, height: "calc(100vh - 185px)" }}
+        className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 gap-3 p-3 relative overflow-hidden"
       >
         {/* GitHub modal */}
         {showGithubModal && step?.githubAction && !done && (

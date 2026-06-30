@@ -217,19 +217,40 @@ function ReviewPRForm({ pr, actor, color, isFirstReview, onSubmit }: {
 
 // ─── Merge PR ───────────────────────────────────────────────
 
+type MergeStrategy = "merge-commit" | "squash" | "rebase"
+
+const STRATEGY_INFO: Record<MergeStrategy, { label: string; desc: string }> = {
+  "merge-commit": {
+    label: "Create a merge commit",
+    desc: "Keeps every commit from your branch, plus adds a merge commit. All history is preserved.",
+  },
+  squash: {
+    label: "Squash and merge",
+    desc: "Combines ALL your branch's commits into one clean commit. Main history stays tidy.",
+  },
+  rebase: {
+    label: "Rebase and merge",
+    desc: "Replays your commits one by one onto main with new hashes. No merge commit — linear history.",
+  },
+}
+
 function MergePRForm({ pr, actor, color, onSubmit }: {
   pr: GitHubModalProps["state"]["prs"][number] | undefined
   actor: "A" | "B"
   color: string
   onSubmit: (who: "A" | "B", cmd: string) => void
 }) {
+  const [strategy, setStrategy] = useState<MergeStrategy>("merge-commit")
   const [confirming, setConfirming] = useState(false)
 
   if (!pr) return <p className="text-xs text-[#f85149]">No pull request found.</p>
 
   function handleMerge() {
     if (!confirming) { setConfirming(true); return }
-    onSubmit(actor, "gh pr merge")
+    const cmd = strategy === "merge-commit"
+      ? "gh pr merge"
+      : `gh pr merge --strategy ${strategy}`
+    onSubmit(actor, cmd)
   }
 
   return (
@@ -258,29 +279,54 @@ function MergePRForm({ pr, actor, color, onSubmit }: {
       </div>
 
       {!confirming ? (
-        <button
-          onClick={handleMerge}
-          className="w-full py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110"
-          style={{ background: "#8957e5", color: "#fff" }}
-        >
-          Merge Pull Request
-        </button>
-      ) : (
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setConfirming(false)}
-            className="flex-1 py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110"
-            style={{ background: "#21262d", color: "#c9d1d9", border: "1px solid #30363d" }}
-          >
-            Cancel
-          </button>
+        <div className="flex flex-col gap-2">
+          <p className="text-[11px] text-[#8b949e] font-medium">Merge strategy</p>
+          {(Object.entries(STRATEGY_INFO) as [MergeStrategy, typeof STRATEGY_INFO["merge-commit"]][]).map(([key, info]) => (
+            <button
+              key={key}
+              onClick={() => setStrategy(key)}
+              className="flex flex-col gap-0.5 px-3 py-2 rounded-md border text-left transition-all"
+              style={{
+                background: strategy === key ? `${color}15` : "#0d1117",
+                borderColor: strategy === key ? `${color}66` : "#21262d",
+              }}
+            >
+              <span className="text-xs font-semibold" style={{ color: strategy === key ? color : "#e6edf3" }}>
+                {strategy === key && "▸ "}{info.label}
+              </span>
+              <span className="text-[11px] text-[#8b949e]">{info.desc}</span>
+            </button>
+          ))}
           <button
             onClick={handleMerge}
-            className="flex-1 py-2 rounded-md text-xs font-semibold text-white transition-all hover:brightness-110"
-            style={{ background: "#8957e5" }}
+            className="w-full py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110 mt-1"
+            style={{ background: "#8957e5", color: "#fff" }}
           >
-            Confirm Merge
+            Merge Pull Request
           </button>
+        </div>
+      ) : (
+        <div className="flex flex-col gap-3">
+          <div className="bg-[#0d1117] border border-[#21262d] rounded-md p-3 text-xs">
+            <span className="text-[#8b949e]">Strategy: </span>
+            <span className="text-[#e6edf3] font-semibold">{STRATEGY_INFO[strategy].label}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={() => setConfirming(false)}
+              className="flex-1 py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110"
+              style={{ background: "#21262d", color: "#c9d1d9", border: "1px solid #30363d" }}
+            >
+              Cancel
+            </button>
+            <button
+              onClick={handleMerge}
+              className="flex-1 py-2 rounded-md text-xs font-semibold text-white transition-all hover:brightness-110"
+              style={{ background: "#8957e5" }}
+            >
+              Confirm Merge
+            </button>
+          </div>
         </div>
       )}
     </div>
@@ -295,11 +341,15 @@ function ResolveConflictForm({ state, actor, color, onSubmit }: {
   color: string
   onSubmit: (who: "A" | "B", cmd: string) => void
 }) {
-  const conflictedFile = state.localA.workingDirChanges[0] ?? "file.txt"
-  const [resolution, setResolution] = useState<"mine" | "theirs" | null>(null)
+  const conflictedFile = state.localA.workingDirChanges[0] ?? state.localA.existingFiles[0] ?? "file.txt"
+  const mergeSource = state.mergeInProgress?.source ?? "feature/update-readme"
+  const fileLabel = conflictedFile.replace(/\.[^.]+$/, "")
+  const conflictType = state.conflictType ?? "content"
+  const [resolution, setResolution] = useState<"mine" | "theirs" | "delete" | "custom" | null>(null)
+  const [customText, setCustomText] = useState("")
 
   function handleResolve() {
-    onSubmit(actor, `git add ${conflictedFile}`)
+    onSubmit(actor, "git add .")
   }
 
   return (
@@ -314,55 +364,132 @@ function ResolveConflictForm({ state, actor, color, onSubmit }: {
           <h2 className="text-sm font-semibold text-[#e6edf3]">Resolve Conflict</h2>
           <p className="text-[11px] text-[#8b949e]">
             Merge conflict in <span className="text-[#e6edf3]">{conflictedFile}</span>
+            {conflictType === "modify-delete" && <span className="text-[#d29922]"> (modify/delete)</span>}
+            {conflictType === "whitespace" && <span className="text-[#d29922]"> (whitespace)</span>}
           </p>
         </div>
       </div>
 
-      <div className="bg-[#0d1117] border border-[#21262d] rounded-md p-3 text-xs font-mono leading-relaxed whitespace-pre overflow-x-auto">
-        <span className="text-[#f85149]">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (main)</span>
-        {"\n"}README content from main branch
-        {"\n"}<span className="text-[#3fb950]">=======</span>
-        {"\n"}README content from feature branch
-        {"\n"}<span className="text-[#f85149]">&gt;&gt;&gt;&gt;&gt;&gt;&gt; feature/update-readme</span>
-      </div>
+      {/* Conflict content area — varies by type */}
+      {conflictType === "modify-delete" ? (
+        <div className="bg-[#0d1117] border border-[#21262d] rounded-md p-3 text-xs font-mono leading-relaxed whitespace-pre overflow-x-auto">
+          <span className="text-[#f85149]">{conflictedFile} was deleted</span>
+          {"\n"}  in HEAD ({state.localA.currentBranch})
+          {"\n\n"}
+          <span className="text-[#3fb950]">{conflictedFile} was modified</span>
+          {"\n"}  in {mergeSource}
+        </div>
+      ) : conflictType === "whitespace" ? (
+        <div className="bg-[#0d1117] border border-[#21262d] rounded-md p-3 text-xs font-mono leading-relaxed whitespace-pre overflow-x-auto">
+          <span className="text-[#f85149]">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (main)</span>
+          {"\n"}    .header {'{'} background: #fff; {'}'}
+          {"\n"}    .content {'{'} padding: 1rem; {'}'}
+          {"\n"}<span className="text-[#3fb950]">=======</span>
+          {"\n"}  .header {'{'}
+          {"\n"}    background: #fff;
+          {"\n"}  {'}'}
+          {"\n"}  .content {'{'}
+          {"\n"}    padding: 1rem;
+          {"\n"}  {'}'}
+          {"\n"}<span className="text-[#f85149]">&gt;&gt;&gt;&gt;&gt;&gt;&gt; {mergeSource}</span>
+        </div>
+      ) : (
+        <div className="bg-[#0d1117] border border-[#21262d] rounded-md p-3 text-xs font-mono leading-relaxed whitespace-pre overflow-x-auto">
+          <span className="text-[#f85149]">&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD (main)</span>
+          {"\n"}{fileLabel} content from main branch
+          {"\n"}<span className="text-[#3fb950]">=======</span>
+          {"\n"}{fileLabel} content from {mergeSource}
+          {"\n"}<span className="text-[#f85149]">&gt;&gt;&gt;&gt;&gt;&gt;&gt; {mergeSource}</span>
+        </div>
+      )}
 
+      {/* Resolution controls — varies by type */}
       {!resolution ? (
         <div className="flex flex-col gap-2">
-          <p className="text-[11px] text-[#8b949e]">
-            In the GitHub web editor, you can edit the file directly to resolve the conflict.
-            Choose which version to keep, or edit manually.
-          </p>
-          <div className="flex items-center gap-2">
-            <button
-              onClick={() => setResolution("mine")}
-              className="flex-1 py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110"
-              style={{ background: "#1f6feb22", color: "#58a6ff", border: "1px solid #1f6feb44" }}
-            >
-              Keep mine (main)
-            </button>
-            <button
-              onClick={() => setResolution("theirs")}
-              className="flex-1 py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110"
-              style={{ background: "#8957e522", color: "#a371f7", border: "1px solid #8957e544" }}
-            >
-              Keep theirs (feature)
-            </button>
-          </div>
+          {conflictType === "modify-delete" ? (
+            <>
+              <p className="text-[11px] text-[#8b949e]">
+                This file was deleted on one branch and modified on the other.
+                Choose which action to keep.
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setResolution("theirs")}
+                  className="flex-1 py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110"
+                  style={{ background: "#1f6feb22", color: "#58a6ff", border: "1px solid #1f6feb44" }}
+                >
+                  Keep this file ({mergeSource}'s version)
+                </button>
+                <button
+                  onClick={() => setResolution("delete")}
+                  className="flex-1 py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110"
+                  style={{ background: "#da363322", color: "#f85149", border: "1px solid #da363344" }}
+                >
+                  Accept deletion (keep HEAD)
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <p className="text-[11px] text-[#8b949e]">
+                Choose which version to keep, or combine both manually.
+              </p>
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={() => setResolution("mine")}
+                  className="flex-1 py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110"
+                  style={{ background: "#1f6feb22", color: "#58a6ff", border: "1px solid #1f6feb44" }}
+                >
+                  Keep mine (main)
+                </button>
+                <button
+                  onClick={() => setResolution("theirs")}
+                  className="flex-1 py-2 rounded-md text-xs font-semibold transition-all hover:brightness-110"
+                  style={{ background: "#8957e522", color: "#a371f7", border: "1px solid #8957e544" }}
+                >
+                  Keep theirs ({mergeSource})
+                </button>
+              </div>
+              <button
+                onClick={() => setResolution("custom")}
+                className="w-full py-1.5 rounded-md text-xs font-semibold transition-all hover:brightness-110"
+                style={{ background: "#21262d", color: "#c9d1d9", border: "1px solid #30363d" }}
+              >
+                Combine both manually
+              </button>
+            </>
+          )}
         </div>
       ) : (
         <div className="flex flex-col gap-2">
-          <div className="bg-[#0d1117] border border-[#21262d] rounded-md p-3 text-xs text-[#c9d1d9] font-mono">
-            {resolution === "mine"
-              ? "README content from main branch"
-              : "README content from feature branch"}
-          </div>
+          {conflictType === "modify-delete" && resolution === "delete" ? (
+            <div className="bg-[#0d1117] border border-[#21262d] rounded-md p-3 text-xs text-[#c9d1d9] font-mono">
+              (file deleted — accepting removal)
+            </div>
+          ) : resolution === "custom" ? (
+            <textarea
+              value={customText}
+              onChange={(e) => setCustomText(e.target.value)}
+              className="bg-[#0d1117] border border-[#21262d] rounded-md p-3 text-xs font-mono text-[#c9d1d9] min-h-[80px] resize-y w-full focus:outline-none focus:border-[#58a6ff]"
+              placeholder={`Type your combined version of ${conflictedFile}...`}
+            />
+          ) : (
+            <div className="bg-[#0d1117] border border-[#21262d] rounded-md p-3 text-xs text-[#c9d1d9] font-mono">
+              {conflictType === "modify-delete"
+                ? `${conflictedFile} content from ${mergeSource}`
+                : resolution === "mine"
+                  ? `${fileLabel} content from main branch`
+                  : `${fileLabel} content from ${mergeSource}`}
+            </div>
+          )}
           <p className="text-[11px] text-[#3fb950]">
-            ✓ Conflict resolved — {resolution === "mine" ? "kept main's version" : "kept feature branch's version"}
+            ✓ Conflict resolved — {resolution === "mine" ? "kept main's version" : resolution === "theirs" ? `kept ${mergeSource}'s version` : resolution === "delete" ? "accepted deletion" : "combined manually"}
           </p>
           <button
             onClick={handleResolve}
             className="w-full py-2 rounded-md text-xs font-semibold text-white transition-all hover:brightness-110"
             style={{ background: "#238636" }}
+            disabled={resolution === "custom" && !customText.trim()}
           >
             Mark as Resolved
           </button>

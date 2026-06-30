@@ -26,6 +26,13 @@
     "git-2.1": true,
     "git-2.2": true,
     "git-2.3": true,
-    "git-2.4": true
+    "git-2.4": true,
+    "git-2.5": true,
+    "git-2.6": true,
+    "git-3.1": true,
+    "git-3.2": true,
+    "git-3.3": true,
+    "git-3.4": true,
+    "git-3.5": true
   }
 }

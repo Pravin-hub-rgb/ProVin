@@ -49,6 +49,38 @@ function currentBranchCommits(local: LocalRepo): Commit[] {
   return hashes.map((h) => local.allCommits[h]).filter(Boolean)
 }
 
+const KNOWN_GIT_COMMANDS = [
+  "add", "commit", "push", "pull", "branch", "switch", "checkout",
+  "merge", "status", "log", "diff", "revert", "reset", "stash",
+  "fetch", "clone", "init", "remote", "config", "tag", "rebase",
+]
+
+function levenshtein(a: string, b: string): number {
+  const m = a.length, n = b.length
+  const dp: number[][] = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0))
+  for (let i = 0; i <= m; i++) dp[i][0] = i
+  for (let j = 0; j <= n; j++) dp[0][j] = j
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i - 1] === b[j - 1]
+        ? dp[i - 1][j - 1]
+        : 1 + Math.min(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1])
+    }
+  }
+  return dp[m][n]
+}
+
+function suggestGitCommand(input: string): string[] {
+  const match = input.match(/^git\s+(\S+)/)
+  if (!match) return []
+  const sub = match[1]
+  const scored = KNOWN_GIT_COMMANDS
+    .map((cmd) => ({ cmd, dist: levenshtein(sub, cmd) }))
+    .filter(({ dist }) => dist <= 3 && dist > 0)
+    .sort((a, b) => a.dist - b.dist)
+  return scored.slice(0, scored.length > 1 && scored[1].dist <= scored[0].dist + 1 ? 3 : 1).map((s) => s.cmd)
+}
+
 export function executeCommand(
   state: GitLabState,
   who: "A" | "B",
@@ -69,6 +101,7 @@ export function executeCommand(
       newLocal.staged = [...newLocal.staged, ...changes]
       if (newState.mergeInProgress) {
         delete newState.mergeInProgress
+        delete newState.conflictType
         return {
           newState,
           result: {
@@ -241,6 +274,25 @@ export function executeCommand(
       }
     }
 
+    case "delete-remote": {
+      const branchName = parsed.branch
+      if (!newState.origin.branches[branchName]) {
+        return { newState, result: { lines: [`fatal: remote branch '${branchName}' not found.`] } }
+      }
+      newState.origin = cloneOrigin(newState.origin)
+      delete newState.origin.branches[branchName]
+      return {
+        newState,
+        result: {
+          lines: [
+            `To https://github.com/dev-A/team-practice.git`,
+            ` - [deleted]         ${branchName}`,
+          ],
+          advance: true,
+        },
+      }
+    }
+
     case "pull": {
       const branchName = parsed.branch || newLocal.currentBranch
       const originCommits = newState.origin.branches[branchName] ?? []
@@ -283,6 +335,36 @@ export function executeCommand(
         )
         return { newState, result: { lines } }
       }
+      // git branch -a (list all including remote tracking)
+      if (parsed.flag === "-a") {
+        const lines = Object.keys(newLocal.branches).map((b) =>
+          b === newLocal.currentBranch ? `* ${b}` : `  ${b}`
+        )
+        for (const b of Object.keys(newState.origin.branches).sort()) {
+          lines.push(`  remotes/origin/${b}`)
+        }
+        return { newState, result: { lines } }
+      }
+      // git branch -r (list remote branches)
+      if (parsed.flag === "-r") {
+        let lines: string[]
+        if (parsed.mergedBase) {
+          if (!newState.origin.branches[parsed.mergedBase]) {
+            return { newState, result: { lines: [`fatal: malformed object name '${parsed.mergedBase}'`], advance: true } }
+          }
+          const base = newState.origin.branches[parsed.mergedBase]
+          const baseHashes = new Set(base.map((c) => c.hash))
+          lines = Object.keys(newState.origin.branches)
+            .filter((b) => {
+              const commits = newState.origin.branches[b] ?? []
+              return commits.every((c) => baseHashes.has(c.hash))
+            })
+            .map((b) => `  origin/${b}`)
+        } else {
+          lines = Object.keys(newState.origin.branches).map((b) => `  origin/${b}`)
+        }
+        return { newState, result: { lines } }
+      }
       // git branch -d <name>
       if (parsed.flag === "-d" || parsed.flag === "-D") {
         if (!parsed.name || !newLocal.branches[parsed.name]) {
@@ -308,6 +390,28 @@ export function executeCommand(
         }
         delete newLocal.branches[parsed.name]
         return { newState, result: { lines: [`Deleted branch ${parsed.name}.`], advance: true } }
+      }
+      // git branch --merged <branch> (list local branches merged into <branch>)
+      if (parsed.flag === "--merged") {
+        if (!parsed.name || !newLocal.branches[parsed.name]) {
+          return { newState, result: { lines: [`fatal: malformed object name '${parsed.name}'`], advance: true } }
+        }
+        const baseHashes = new Set(newLocal.branches[parsed.name])
+        const lines = Object.keys(newLocal.branches)
+          .filter((b) => (newLocal.branches[b] ?? []).every((h) => baseHashes.has(h)))
+          .map((b) => (b === newLocal.currentBranch ? `* ${b}` : `  ${b}`))
+        return { newState, result: { lines } }
+      }
+      // git branch --no-merged <branch> (list local branches NOT merged into <branch>)
+      if (parsed.flag === "--no-merged") {
+        if (!parsed.name || !newLocal.branches[parsed.name]) {
+          return { newState, result: { lines: [`fatal: malformed object name '${parsed.name}'`], advance: true } }
+        }
+        const baseHashes = new Set(newLocal.branches[parsed.name])
+        const lines = Object.keys(newLocal.branches)
+          .filter((b) => !(newLocal.branches[b] ?? []).every((h) => baseHashes.has(h)))
+          .map((b) => (b === newLocal.currentBranch ? `* ${b}` : `  ${b}`))
+        return { newState, result: { lines } }
       }
       return { newState, result: { lines: [`git: unknown branch option '${parsed.flag}'`] } }
     }
@@ -340,6 +444,7 @@ export function executeCommand(
 
     case "merge": {
       const source = parsed.source
+      const strategy = parsed.strategy || "merge-commit"
       if (!newLocal.branches[source]) {
         return { newState, result: { lines: [`merge: ${source} - not something we can merge`] } }
       }
@@ -359,11 +464,39 @@ export function executeCommand(
 
       if (sourceDiverged.length > 0 && targetDiverged.length > 0) {
         const conflictedFile = newLocal.existingFiles[0] ?? "file.txt"
+        const scenarioId = newState.scenario.id
         newState.mergeInProgress = { source }
         newLocal.workingDirChanges = [
           ...newLocal.workingDirChanges.filter((f) => f !== conflictedFile),
           conflictedFile,
         ]
+        if (scenarioId === "conflict-drill-modify-delete") {
+          newState.conflictType = "modify-delete"
+          return {
+            newState,
+            result: {
+              lines: [
+                `CONFLICT (modify/delete): ${conflictedFile} deleted in ${source} and modified in HEAD (${newLocal.currentBranch})`,
+                `Automatic merge failed; fix conflicts and then commit the result.`,
+              ],
+            },
+          }
+        }
+        if (scenarioId === "conflict-drill-whitespace") {
+          newState.conflictType = "whitespace"
+          return {
+            newState,
+            result: {
+              lines: [
+                `Auto-merging ${conflictedFile}`,
+                `CONFLICT (content): Merge conflict in ${conflictedFile}`,
+                `(whitespace/formatting differences)`,
+                `Automatic merge failed; fix conflicts and then commit the result.`,
+              ],
+            },
+          }
+        }
+        newState.conflictType = "content"
         return {
           newState,
           result: {
@@ -376,12 +509,62 @@ export function executeCommand(
         }
       }
 
-      // Fast-forward or simple merge
       const newHashes = sourceHashes.filter((h) => !targetSet.has(h))
       if (newHashes.length === 0) {
         return { newState, result: { lines: ["Already up to date."] } }
       }
 
+      if (strategy === "squash") {
+        const squashCommit = makeCommit(
+          `Squash merge: feature '${source}'`,
+          author,
+          [targetHashes[targetHashes.length - 1] || ""],
+        )
+        newLocal.allCommits[squashCommit.hash] = squashCommit
+        newLocal.branches[newLocal.currentBranch] = [...targetHashes, squashCommit.hash]
+        return {
+          newState,
+          result: {
+            lines: [
+              "Squash merge completed.",
+              ` 1 squashed commit: ${squashCommit.hash}`,
+              `   ${squashCommit.message}`,
+              `${newHashes.length} original commit(s) combined into 1.`,
+            ],
+            advance: true,
+          },
+        }
+      }
+
+      if (strategy === "rebase") {
+        const rebaseOutput: string[] = []
+        const rebasedHashes: string[] = []
+        for (let i = 0; i < newHashes.length; i++) {
+          const original = newLocal.allCommits[newHashes[i]]
+          if (!original) continue
+          const parent = i === 0
+            ? (targetHashes[targetHashes.length - 1] || "")
+            : (rebasedHashes[i - 1])
+          const rebased = makeCommit(original.message, original.author, [parent])
+          newLocal.allCommits[rebased.hash] = rebased
+          rebasedHashes.push(rebased.hash)
+          rebaseOutput.push(`  ${rebased.hash} ${original.message}`)
+        }
+        newLocal.branches[newLocal.currentBranch] = [...targetHashes, ...rebasedHashes]
+        return {
+          newState,
+          result: {
+            lines: [
+              "Rebase merge completed. Commits reapplied on main:",
+              ...rebaseOutput,
+              `Successfully rebased ${newHashes.length} commit(s).`,
+            ],
+            advance: true,
+          },
+        }
+      }
+
+      // Default: merge-commit (preserves all commits + merge commit)
       const mergeCommit = makeCommit(
         `Merge branch '${source}' into ${newLocal.currentBranch}`,
         author,
@@ -399,6 +582,7 @@ export function executeCommand(
           lines: [
             `Merge made by the 'ort' strategy.`,
             ` ${newHashes.length} file(s) changed.`,
+            `Merge commit: ${mergeCommit.hash}`,
           ],
           advance: true,
         },
@@ -473,6 +657,26 @@ export function executeCommand(
         lines.push("")
         lines.push(`    ${c.message}`)
         lines.push("")
+      }
+      return { newState, result: { lines } }
+    }
+
+    case "tree": {
+      const commits = currentBranchCommits(newLocal)
+      if (commits.length === 0) {
+        return { newState, result: { lines: ["No commits yet."] } }
+      }
+      const lines: string[] = []
+      for (let i = commits.length - 1; i >= 0; i--) {
+        const c = commits[i]
+        const isHead = c.hash === (newLocal.branches[newLocal.currentBranch] ?? []).slice(-1)[0]
+        const ref = isHead ? ` (HEAD -> ${newLocal.currentBranch})` : ""
+        const isMerge = c.parents.length > 1
+        if (isMerge) {
+          lines.push(`*   ${c.hash}${ref}  ${c.message}`)
+        } else {
+          lines.push(`* ${c.hash}${ref}  ${c.message}`)
+        }
       }
       return { newState, result: { lines } }
     }
@@ -657,12 +861,81 @@ export function executeCommand(
       const newCommits = compareCommits.filter((c) => !baseHashes.has(c.hash))
 
       newState.origin = cloneOrigin(newState.origin)
+
+      const strategy = parsed.strategy || "merge-commit"
+
+      if (strategy === "squash") {
+        const squashCommit = makeCommit(
+          `Squash merge: ${pr.title} (#${pr.id})`,
+          author,
+          [baseCommits.length > 0 ? baseCommits[baseCommits.length - 1].hash : ""],
+        )
+        newState.origin.branches[pr.baseBranch] = [...baseCommits, squashCommit]
+        delete newState.origin.branches[pr.compareBranch]
+        pr.status = "merged"
+
+        if (newState.localA.currentBranch === pr.baseBranch) {
+          const localHashes = newState.localA.branches[pr.baseBranch] ?? []
+          newState.localA.allCommits[squashCommit.hash] = squashCommit
+          newState.localA = cloneLocal(newState.localA)
+          newState.localA.branches[pr.baseBranch] = [...localHashes, squashCommit.hash]
+        }
+
+        return {
+          newState,
+          result: {
+            lines: [
+              `Squash merged PR #${pr.id}: ${pr.title}`,
+              `  ${newCommits.length} commit(s) combined into 1.`,
+              `Branch \`${pr.compareBranch}\` has been squashed into \`${pr.baseBranch}\`.`,
+            ],
+          },
+        }
+      }
+
+      if (strategy === "rebase") {
+        const rebaseOutput: string[] = []
+        const rebasedOriginCommits: typeof baseCommits = []
+        for (let i = 0; i < newCommits.length; i++) {
+          const original = newCommits[i]
+          const parent = i === 0
+            ? (baseCommits.length > 0 ? baseCommits[baseCommits.length - 1].hash : "")
+            : (rebasedOriginCommits[i - 1].hash)
+          const rebased = makeCommit(original.message, original.author, [parent])
+          rebasedOriginCommits.push(rebased)
+          rebaseOutput.push(`  ${rebased.hash} ${original.message}`)
+        }
+        newState.origin.branches[pr.baseBranch] = [...baseCommits, ...rebasedOriginCommits]
+        delete newState.origin.branches[pr.compareBranch]
+        pr.status = "merged"
+
+        if (newState.localA.currentBranch === pr.baseBranch) {
+          const localHashes = newState.localA.branches[pr.baseBranch] ?? []
+          newState.localA = cloneLocal(newState.localA)
+          const rebasedHashes = rebasedOriginCommits.map((c) => {
+            newState.localA.allCommits[c.hash] = c
+            return c.hash
+          })
+          newState.localA.branches[pr.baseBranch] = [...localHashes, ...rebasedHashes.filter((h) => !localHashes.includes(h))]
+        }
+
+        return {
+          newState,
+          result: {
+            lines: [
+              `Rebase merged PR #${pr.id}: ${pr.title}`,
+              ...rebaseOutput,
+              `Branch \`${pr.compareBranch}\` has been rebased into \`${pr.baseBranch}\`.`,
+            ],
+          },
+        }
+      }
+
+      // Default: merge-commit (preserves all commits + merge commit)
       newState.origin.branches[pr.baseBranch] = [...baseCommits, ...newCommits]
       delete newState.origin.branches[pr.compareBranch]
-
       pr.status = "merged"
 
-      // Sync Senior Dev's local main if they were on it
       if (newState.localA.currentBranch === pr.baseBranch) {
         const localHashes = newState.localA.branches[pr.baseBranch] ?? []
         const newLocalHashes = newCommits.map((c) => {
@@ -704,6 +977,24 @@ export function executeCommand(
     }
 
     default: {
+      if (parsed.type === "unknown" && parsed.raw.startsWith("git ")) {
+        const suggestions = suggestGitCommand(parsed.raw)
+        if (suggestions.length > 0) {
+          return {
+            newState,
+            result: {
+              lines: [
+                `git: '${parsed.raw.replace(/^git /, "")}' is not a git command. See 'git --help'.`,
+                "",
+                suggestions.length === 1
+                  ? "The most similar command is"
+                  : "The most similar commands are",
+                ...suggestions.map((s) => `\t${s}`),
+              ],
+            },
+          }
+        }
+      }
       return {
         newState,
         result: { lines: ["Unknown command. Type 'git status' to see the current state."] },

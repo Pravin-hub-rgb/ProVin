@@ -50,6 +50,7 @@ export interface GitLabState {
   nextPrId: number
   scenario: ScenarioState
   mergeInProgress?: { source: string }
+  conflictType?: "content" | "modify-delete" | "whitespace"
 }
 
 export type ParsedCommand =
@@ -60,17 +61,19 @@ export type ParsedCommand =
   | { type: "reset"; mode: "soft" | "mixed" | "hard"; ref: string }
   | { type: "push"; remote: string; branch: string; setUpstream?: boolean }
   | { type: "pull"; remote: string; branch: string }
-  | { type: "branch"; name?: string; flag?: string }
+  | { type: "branch"; name?: string; flag?: string; mergedBase?: string }
   | { type: "switch"; branch: string; create?: boolean }
   | { type: "checkout"; branch: string; create?: boolean }
-  | { type: "merge"; source: string }
+  | { type: "delete-remote"; remote: string; branch: string }
+  | { type: "merge"; source: string; strategy: "merge-commit" | "squash" | "rebase" }
   | { type: "status" }
   | { type: "log" }
+  | { type: "tree" }
   | { type: "diff"; staged?: boolean }
   | { type: "clear" }
   | { type: "pr-create"; title: string; description: string }
   | { type: "pr-review"; action: "approve" | "request-changes"; body: string }
-  | { type: "pr-merge" }
+  | { type: "pr-merge"; strategy?: "merge-commit" | "squash" | "rebase" }
   | { type: "unknown"; raw: string }
   | { type: "error"; raw: string }
   | { type: "ignore" }

@@ -35,6 +35,14 @@ export function parseCommand(input: string): ParsedCommand {
   const pushOriginU = trimmed.match(/^git push origin -u (.+)$/)
   if (pushOriginU) return { type: "push", remote: "origin", branch: pushOriginU[1], setUpstream: true }
 
+  // git push origin --delete <branch> (remote branch deletion)
+  const pushDelete = trimmed.match(/^git push origin --delete (.+)$/)
+  if (pushDelete) return { type: "delete-remote", remote: "origin", branch: pushDelete[1] }
+
+  // git push origin -d <branch> (shorthand for --delete)
+  const pushDeleteShort = trimmed.match(/^git push origin -d (.+)$/)
+  if (pushDeleteShort) return { type: "delete-remote", remote: "origin", branch: pushDeleteShort[1] }
+
   // git push origin <branch>
   const pushMatch = trimmed.match(/^git push origin (.+)$/)
   if (pushMatch) return { type: "push", remote: "origin", branch: pushMatch[1] }
@@ -68,6 +76,18 @@ export function parseCommand(input: string): ParsedCommand {
   const branchNoMergedMatch = trimmed.match(/^git branch --no-merged (.+)$/)
   if (branchNoMergedMatch) return { type: "branch", flag: "--no-merged", name: branchNoMergedMatch[1] }
 
+  // git branch -a (list all branches including remote tracking)
+  const branchAllMatch = trimmed.match(/^git branch -a$/)
+  if (branchAllMatch) return { type: "branch", flag: "-a" }
+
+  // git branch -r --merged <branch> (list remote branches merged into <branch>)
+  const branchRMergedMatch = trimmed.match(/^git branch -r --merged (.+)$/)
+  if (branchRMergedMatch) return { type: "branch", flag: "-r", mergedBase: branchRMergedMatch[1] }
+
+  // git branch -r (list remote branches)
+  const branchRemoteMatch = trimmed.match(/^git branch -r$/)
+  if (branchRemoteMatch) return { type: "branch", flag: "-r" }
+
   // git branch <name> (create)
   const branchCreateMatch = trimmed.match(/^git branch (\S+)$/)
   if (branchCreateMatch) return { type: "branch", name: branchCreateMatch[1] }
@@ -92,15 +112,25 @@ export function parseCommand(input: string): ParsedCommand {
   const checkoutMatch = trimmed.match(/^git checkout (\S+)$/)
   if (checkoutMatch) return { type: "checkout", branch: checkoutMatch[1].replace(/^["']|["']$/g, "") }
 
+  // git merge --strategy <branch>
+  const mergeStrategyMatch = trimmed.match(/^git merge --(no-ff|squash|rebase) (\S+)$/)
+  if (mergeStrategyMatch) {
+    const strategy = mergeStrategyMatch[1] === "no-ff" ? "merge-commit" : mergeStrategyMatch[1] as "squash" | "rebase"
+    return { type: "merge", source: mergeStrategyMatch[2], strategy }
+  }
+
   // git merge <branch>
   const mergeMatch = trimmed.match(/^git merge (\S+)$/)
-  if (mergeMatch) return { type: "merge", source: mergeMatch[1] }
+  if (mergeMatch) return { type: "merge", source: mergeMatch[1], strategy: "merge-commit" }
 
   // git status
   if (/^git status$/.test(trimmed)) return { type: "status" }
 
   // git log
   if (/^git log$/.test(trimmed)) return { type: "log" }
+
+  // git tree
+  if (/^git tree$/.test(trimmed)) return { type: "tree" }
 
   // git diff
   if (/^git diff$/.test(trimmed)) return { type: "diff" }
@@ -132,8 +162,12 @@ export function parseCommand(input: string): ParsedCommand {
   const prReviewRequest = trimmed.match(/^gh pr review --request-changes(?: --body "([^"]*)")?$/)
   if (prReviewRequest) return { type: "pr-review", action: "request-changes", body: prReviewRequest[1] ?? "" }
 
+  // gh pr merge --strategy <type>
+  const prMergeStrategyMatch = trimmed.match(/^gh pr merge --strategy (merge-commit|squash|rebase)$/)
+  if (prMergeStrategyMatch) return { type: "pr-merge", strategy: prMergeStrategyMatch[1] as "merge-commit" | "squash" | "rebase" }
+
   // gh pr merge
-  if (/^gh pr merge$/.test(trimmed)) return { type: "pr-merge" }
+  if (/^gh pr merge$/.test(trimmed)) return { type: "pr-merge", strategy: "merge-commit" }
 
   // clear
   if (/^clear$/.test(trimmed)) return { type: "clear" }
