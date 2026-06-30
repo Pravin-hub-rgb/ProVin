@@ -1,13 +1,20 @@
 "use client"
 
-import { scenarios } from "@/lib/git-lab"
+import { useMemo } from "react"
+import { getLabModule } from "@/lib/lab-registry"
 
 interface ScenarioSelectorProps {
+  subjectId: string
   selectedId: string
   onSelect: (id: string) => void
 }
 
-export function ScenarioSelector({ selectedId, onSelect }: ScenarioSelectorProps) {
+export function ScenarioSelector({ subjectId, selectedId, onSelect }: ScenarioSelectorProps) {
+  const scenarios = useMemo(() => {
+    const mod = getLabModule(subjectId)
+    return mod?.scenarios ?? []
+  }, [subjectId])
+
   return (
     <div className="flex items-center gap-2">
       <label className="text-[#c9d1d9] text-xs font-medium" htmlFor="scenario-select">

@@ -1,14 +1,16 @@
 "use client"
 
-import type { Scenario } from "@/lib/git-lab"
+import type { Scenario } from "@/lib/lab-registry"
 
 interface StepProgressProps {
   scenario: Scenario
   currentStep: number
+  actorLabels?: { A: string; B: string }
 }
 
-export function StepProgress({ scenario, currentStep }: StepProgressProps) {
+export function StepProgress({ scenario, currentStep, actorLabels }: StepProgressProps) {
   const done = currentStep >= scenario.steps.length
+  const labels = actorLabels ?? { A: "Sr", B: "Jr" }
 
   return (
     <div className="flex flex-wrap items-center gap-1.5">
@@ -51,7 +53,7 @@ export function StepProgress({ scenario, currentStep }: StepProgressProps) {
                   color: s.actor === "A" ? "#58a6ff" : "#bc8cff",
                 }}
               >
-                {s.actor === "A" ? "Sr" : "Jr"}
+                {s.actor === "A" ? labels.A : labels.B}
               </span>
             </span>
             {i < scenario.steps.length - 1 && (

@@ -3,39 +3,16 @@
 import { useState, useCallback, useRef, useEffect } from "react"
 import Link from "next/link"
 import { useParams, useSearchParams } from "next/navigation"
-import {
-  createInitialState,
-  executeCommand,
-  parseCommand,
-  getScenario,
-  scenarios,
-  type GitLabState,
-  type TerminalLine,
-} from "@/lib/git-lab"
-import { getLabSubject } from "@/lib/lab-data"
+import { getLabModule, getLabSubject } from "@/lib/lab-registry"
+import type { TerminalLine, Scenario, LabModule } from "@/lib/lab-registry"
 import { TerminalPanel } from "@/components/git-lab/terminal-panel"
-import { OriginPanel } from "@/components/git-lab/origin-panel"
 import { StepProgress } from "@/components/git-lab/step-progress"
 import { ScenarioSelector } from "@/components/git-lab/scenario-selector"
-import { GitHubModal } from "@/components/git-lab/github-modal"
 import Celebration from "@/components/git-lab/celebration"
 
-interface LabPersistence {
-  scenarioId: string
-  state: GitLabState
-}
-
-function applySetup(id: string): { state: GitLabState; scenario: ReturnType<typeof getScenario> } {
-  const scenario = getScenario(id)!
-  const initial = createInitialState()
-  initial.scenario.id = id
-  if (scenario?.setup) {
-    scenario.setup(initial)
-  }
-  return { state: initial, scenario }
-}
-
-const defaultId = scenarios[0]?.id ?? "two-collaborators"
+// Trigger module registration
+import "@/lib/git-lab"
+import "@/lib/ai-lab"
 
 export default function SubjectLabPage() {
   const params = useParams()
@@ -44,90 +21,130 @@ export default function SubjectLabPage() {
   const scenarioParam = searchParams.get("scenario")
 
   const subject = getLabSubject(subjectId)
-  const storageKey = `lab:${subjectId}`
+  const lab = getLabModule(subjectId)
 
-  const initialScenarioId = scenarioParam && getScenario(scenarioParam) ? scenarioParam : defaultId
-  const [state, setState] = useState<GitLabState>(() => applySetup(initialScenarioId).state)
-  const scenarioRef = useRef(applySetup(initialScenarioId).scenario)
+  if (!subject || !lab) {
+    return (
+      <div className="min-h-screen bg-[#010409] text-[#e6edf3] flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-[#8b949e] mb-4">Lab not found for &quot;{subjectId}&quot;</p>
+          <Link href="/lab" className="text-[#58a6ff] hover:underline text-sm">
+            &larr; Back to Lab Dashboard
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  if (lab.scenarios.length === 0) {
+    return (
+      <div className="min-h-screen bg-[#010409] text-[#e6edf3] flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-[#8b949e] text-lg mb-2">Coming Soon</p>
+          <p className="text-[#8b949e] mb-4">
+            Interactive scenarios for {subject.title} are being built.
+          </p>
+          <Link href="/lab" className="text-[#58a6ff] hover:underline text-sm">
+            &larr; Back to Lab Dashboard
+          </Link>
+        </div>
+      </div>
+    )
+  }
+
+  return <SubjectLabPageInner subjectId={subjectId} lab={lab} scenarioParam={scenarioParam ?? null} />
+}
+
+function applySetup(lab: LabModule, id: string): { state: unknown; scenario: Scenario } {
+  const scenario = lab.getScenario(id)
+  if (!scenario) {
+    throw new Error(`Scenario "${id}" not found in lab "${lab.id}"`)
+  }
+  const state = lab.createInitialState() as { scenario: { id: string; currentStep: number } }
+  state.scenario.id = id
+  if (scenario.setup) {
+    scenario.setup(state)
+  }
+  return { state, scenario }
+}
+
+function SubjectLabPageInner({
+  subjectId,
+  lab,
+  scenarioParam,
+}: {
+  subjectId: string
+  lab: LabModule
+  scenarioParam: string | null
+}) {
+  const storageKey = `lab:${subjectId}`
+  const initialScenarioId: string = scenarioParam && lab.getScenario(scenarioParam) ? scenarioParam : lab.defaultScenarioId
+
+  const [state, setState] = useState<unknown>(() => applySetup(lab, initialScenarioId).state)
+  const scenarioRef = useRef<Scenario>(applySetup(lab, initialScenarioId).scenario)
   const initializedRef = useRef(false)
 
   const terminalALinesRef = useRef<TerminalLine[]>([
-    { text: `Cloned into 'team-practice/' — logged in as Senior Dev`, type: "info" },
-    { text: `Scenario: [${scenarioRef.current!.phase}] ${scenarioRef.current!.title}`, type: "info" },
+    ...lab.getInitialLines("A", scenarioRef.current!),
+    {
+      text: `Scenario: [${scenarioRef.current!.phase}] ${scenarioRef.current!.title}`,
+      type: "info",
+    },
     { text: scenarioRef.current!.description, type: "info" },
   ])
-  const terminalBLinesRef = useRef<TerminalLine[]>([
-    { text: `Cloned into 'team-practice/' — logged in as Junior Dev`, type: "info" },
-  ])
+  const terminalBLinesRef = useRef<TerminalLine[]>([...lab.getInitialLines("B", scenarioRef.current!)])
 
   const [, forceUpdate] = useState(0)
-  const [showGithubModal, setShowGithubModal] = useState(false)
+  const [showActionModal, setShowActionModal] = useState(false)
   const [showCelebration, setShowCelebration] = useState(false)
+  const [canGoForward, setCanGoForward] = useState(false)
+
+  const historyRef = useRef<Record<number, { state: unknown; linesA: TerminalLine[]; linesB: TerminalLine[] }>>({})
 
   const scenario = scenarioRef.current!
-  const currentStep = state.scenario.currentStep
+  const currentStep = (state as { scenario: { currentStep: number } }).scenario.currentStep
   const step = scenario.steps[currentStep]
   const done = currentStep >= scenario.steps.length
 
-  function persist(newState: GitLabState) {
+  function persist(newState: unknown) {
     try {
-      localStorage.setItem(
-        storageKey,
-        JSON.stringify({
-          scenarioId: newState.scenario.id,
-          state: newState,
-        } satisfies LabPersistence),
-      )
+      localStorage.setItem(storageKey, JSON.stringify({ scenarioId: scenario.id, state: newState }))
     } catch {}
   }
 
-  function freshLines(scenario: ReturnType<typeof getScenario>) {
+  function freshLines(s: Scenario) {
     terminalALinesRef.current = [
-      { text: `Cloned into 'team-practice/' — logged in as Senior Dev`, type: "info" },
-      { text: `Scenario: [${scenario!.phase}] ${scenario!.title}`, type: "info" },
-      { text: scenario!.description, type: "info" },
+      ...lab.getInitialLines("A", s),
+      { text: `Scenario: [${s.phase}] ${s.title}`, type: "info" },
+      { text: s.description, type: "info" },
     ]
-    terminalBLinesRef.current = [
-      { text: `Cloned into 'team-practice/' — logged in as Junior Dev`, type: "info" },
-    ]
+    terminalBLinesRef.current = [...lab.getInitialLines("B", s)]
   }
 
-  // Initialize: localStorage > query param (chapter link) > default
+  // Initialize: localStorage > query param > default
   useEffect(() => {
     if (initializedRef.current) return
     initializedRef.current = true
 
-    // 1. Try to restore saved state
     try {
       const raw = localStorage.getItem(storageKey)
       if (raw) {
-        const data = JSON.parse(raw) as LabPersistence
-        const scenario = getScenario(data.scenarioId)
-        if (scenario) {
-          // Query param for a different scenario? Fresh start for that one.
-          if (scenarioParam && getScenario(scenarioParam) && scenarioParam !== data.scenarioId) {
-            const { state: newState, scenario: newScenario } = applySetup(scenarioParam)
+        const data = JSON.parse(raw) as { scenarioId: string; state: Record<string, unknown> }
+        const savedScenario = lab.getScenario(data.scenarioId)
+        if (savedScenario) {
+          if (scenarioParam && lab.getScenario(scenarioParam) && scenarioParam !== data.scenarioId) {
+            const { state: newState, scenario: newScenario } = applySetup(lab, scenarioParam)
             scenarioRef.current = newScenario
             setState(newState)
             freshLines(newScenario)
             forceUpdate((n) => n + 1)
             return
           }
-          // Same scenario (or no query param) → re-apply setup for correct
-          // branch structure, then merge in saved in-flight state
-          const { state: freshState, scenario: freshScenario } = applySetup(data.scenarioId)
-          const saved = data.state
-          freshState.scenario.currentStep = saved.scenario.currentStep
-          freshState.localA.workingDirChanges = saved.localA.workingDirChanges
-          freshState.localA.staged = saved.localA.staged
-          freshState.localA.currentBranch = saved.localA.currentBranch
-          freshState.localB.workingDirChanges = saved.localB.workingDirChanges
-          freshState.localB.staged = saved.localB.staged
-          freshState.localB.currentBranch = saved.localB.currentBranch
-          freshState.mergeInProgress = saved.mergeInProgress
-          freshState.conflictType = saved.conflictType
+
+          const { state: freshState, scenario: freshScenario } = applySetup(lab, data.scenarioId)
+          const merged = lab.mergeSavedState?.(freshState, data.state) ?? freshState
           scenarioRef.current = freshScenario
-          setState(freshState)
+          setState(merged)
           freshLines(freshScenario)
           forceUpdate((n) => n + 1)
           return
@@ -135,9 +152,8 @@ export default function SubjectLabPage() {
       }
     } catch {}
 
-    // 2. Query param scenario — fresh start (no saved state found)
-    if (scenarioParam && getScenario(scenarioParam)) {
-      const { state: newState, scenario: newScenario } = applySetup(scenarioParam)
+    if (scenarioParam && lab.getScenario(scenarioParam)) {
+      const { state: newState, scenario: newScenario } = applySetup(lab, scenarioParam)
       scenarioRef.current = newScenario
       setState(newState)
       freshLines(newScenario)
@@ -145,9 +161,8 @@ export default function SubjectLabPage() {
       return
     }
 
-    // 3. Default — already rendered correctly
     forceUpdate((n) => n + 1)
-  }, [scenarioParam, storageKey])
+  }, [scenarioParam, storageKey, lab])
 
   function addLine(who: "A" | "B", line: TerminalLine) {
     const ref = who === "A" ? terminalALinesRef : terminalBLinesRef
@@ -156,82 +171,51 @@ export default function SubjectLabPage() {
 
   const handleCommand = useCallback(
     (who: "A" | "B", raw: string) => {
-      const parsed = parseCommand(raw)
+      const parsed = lab.parseCommand(raw)
       if (parsed.type === "ignore") return
 
       addLine(who, { text: `$ ${raw}`, type: "cmd" })
 
-      const { newState, result } = executeCommand(state, who, parsed)
+      const { newState, result } = lab.executeCommand(state, who, parsed)
 
       const matched = step && step.actor === who && step.match(parsed)
 
       const parsedWell = parsed.type !== "unknown" && parsed.type !== "error"
 
+      if (matched && lab.onStepMatch) {
+        lab.onStepMatch((state as { scenario: { id: string } }).scenario.id, currentStep, newState, addLine)
+      }
+
       if (matched) {
-        // Step-specific effects
-        if (state.scenario.id === "branch-and-pr") {
-          if (currentStep === 1) {
-            newState.localB.workingDirChanges = ["index.html"]
-            addLine("B", { text: "You've made edits to index.html — stage them with git add.", type: "info" })
-          } else if (currentStep === 6) {
-            const pr = newState.prs[newState.prs.length - 1]
-            if (pr?.status === "changes-requested") {
-              newState.localB.workingDirChanges = ["index.html"]
-              const lastReview = pr.reviews[pr.reviews.length - 1]
-              if (lastReview?.body) {
-                addLine("B", { text: `Senior Dev requested changes: "${lastReview.body}"`, type: "info" })
-              }
-              addLine("B", { text: "Fix the issues, stage, commit, and push to update the PR.", type: "info" })
-            }
-          }
-        } else if (state.scenario.id === "conflict-local" || state.scenario.id === "conflict-github") {
-          if (currentStep === 0) {
-            newState.localA.workingDirChanges = ["README.md"]
-            addLine("A", { text: "You've edited README.md on this branch — stage it with git add.", type: "info" })
-          } else if (currentStep === 3) {
-            newState.localA.workingDirChanges = ["README.md"]
-            addLine("A", { text: "You've edited README.md differently on main — stage it to create the conflict.", type: "info" })
-          }
-        } else if (state.scenario.id === "conflict-drill-same-line" || state.scenario.id === "conflict-drill-whitespace") {
-          if (currentStep === 0) {
-            newState.localA.workingDirChanges = ["style.css"]
-            addLine("A", { text: "You've edited style.css on this branch — stage it with git add.", type: "info" })
-          } else if (currentStep === 3) {
-            newState.localA.workingDirChanges = ["style.css"]
-            addLine("A", { text: "You've edited style.css differently on main — stage it to create the conflict.", type: "info" })
-          }
-        } else if (state.scenario.id === "conflict-drill-modify-delete") {
-          if (currentStep === 0) {
-            newState.localA.workingDirChanges = ["about.md"]
-            addLine("A", { text: "about.md has been deleted on this branch — stage the removal with git add.", type: "info" })
-          } else if (currentStep === 3) {
-            newState.localA.workingDirChanges = ["about.md"]
-            addLine("A", { text: "about.md still exists on main — edit and stage it to create the conflict.", type: "info" })
-          }
-        } else if (state.scenario.id === "gitignore-practice") {
-          if (currentStep === 1) {
-            newState.localA.ignoredPatterns = ["*.log", "*.tmp"]
-            addLine("A", { text: ".gitignore patterns activated — debug.log and app.tmp are now ignored.", type: "info" })
-          }
-        } else if (state.scenario.id === "capstone-parallel") {
-          if (currentStep === 0) {
-            newState.localB.workingDirChanges = ["index.html", "style.css"]
-            addLine("B", { text: "You've edited index.html and style.css on this branch — stage them.", type: "info" })
-          } else if (currentStep === 7) {
-            newState.localA.workingDirChanges = ["index.html", "style.css"]
-            addLine("A", { text: "You've edited index.html and style.css for the hero section — stage them.", type: "info" })
+        // Save initial history snapshot if not yet saved
+        if (!historyRef.current[0]) {
+          historyRef.current[0] = {
+            state: JSON.parse(JSON.stringify(state)),
+            linesA: [...terminalALinesRef.current],
+            linesB: [...terminalBLinesRef.current],
           }
         }
-
-        const nextStep = step.getNextStep?.(newState) ?? newState.scenario.currentStep + 1
-        newState.scenario = {
-          ...newState.scenario,
+        const nextStep = step.getNextStep?.(newState) ?? (state as { scenario: { currentStep: number } }).scenario.currentStep + 1
+        ;(newState as { scenario: { currentStep: number } }).scenario = {
+          ...(newState as { scenario: { id: string; currentStep: number } }).scenario,
           currentStep: nextStep,
         }
+
+        // Save snapshot for the next step
+        historyRef.current[nextStep] = {
+          state: JSON.parse(JSON.stringify(newState)),
+          linesA: [...terminalALinesRef.current],
+          linesB: [...terminalBLinesRef.current],
+        }
+        // Trim any forward history beyond this point
+        Object.keys(historyRef.current).forEach((k) => {
+          if (Number(k) > nextStep) delete historyRef.current[Number(k)]
+        })
 
         if (nextStep >= scenario.steps.length) {
           setShowCelebration(true)
         }
+        setCanGoForward(false)
       } else if (parsedWell) {
         addLine(who, {
           text: "Command recognized, but not the expected one for this step. Check the instruction above or use the hint button.",
@@ -247,47 +231,65 @@ export default function SubjectLabPage() {
       }
 
       if (matched) {
-        addLine(who, { text: `\u2713 Step completed!`, type: "info" })
-        if (step.githubAction) setShowGithubModal(false)
+        addLine(who, { text: "\u2713 Step completed!", type: "info" })
+        if (step.actionType || step.githubAction) setShowActionModal(false)
       }
 
       forceUpdate((n) => n + 1)
     },
-    [state, step]
+    [state, step, lab, currentStep, scenario.steps.length],
   )
 
   function handleScenarioChange(id: string) {
     try { localStorage.removeItem(storageKey) } catch {}
-    const { state: newState, scenario: newScenario } = applySetup(id)
+    const { state: newState, scenario: newScenario } = applySetup(lab, id)
     scenarioRef.current = newScenario
     setState(newState)
     persist(newState)
     freshLines(newScenario)
+    historyRef.current = {}
+    setShowCelebration(false)
+    setCanGoForward(false)
     forceUpdate((n) => n + 1)
   }
 
   function handleReset() {
     try { localStorage.removeItem(storageKey) } catch {}
-    const { state: newState, scenario: newScenario } = applySetup(state.scenario.id)
+    const { state: newState, scenario: newScenario } = applySetup(lab, (state as { scenario: { id: string } }).scenario.id)
     scenarioRef.current = newScenario
     setState(newState)
     persist(newState)
     freshLines(newScenario)
+    historyRef.current = {}
+    setShowCelebration(false)
+    setCanGoForward(false)
     forceUpdate((n) => n + 1)
   }
 
-  if (!subject) {
-    return (
-      <div className="min-h-screen bg-[#010409] text-[#e6edf3] flex items-center justify-center">
-        <div className="text-center">
-          <p className="text-[#8b949e] mb-4">Lab not found for &quot;{subjectId}&quot;</p>
-          <Link href="/lab" className="text-[#58a6ff] hover:underline text-sm">
-            &larr; Back to Lab Dashboard
-          </Link>
-        </div>
-      </div>
-    )
+  function handleBack() {
+    const prev = currentStep - 1
+    const snapshot = historyRef.current[prev]
+    if (!snapshot) return
+    setState(snapshot.state)
+    terminalALinesRef.current = [...snapshot.linesA]
+    terminalBLinesRef.current = [...snapshot.linesB]
+    setCanGoForward(!!historyRef.current[currentStep])
+    forceUpdate((n) => n + 1)
   }
+
+  function handleForward() {
+    const next = currentStep + 1
+    const snapshot = historyRef.current[next]
+    if (!snapshot) return
+    setState(snapshot.state)
+    terminalALinesRef.current = [...snapshot.linesA]
+    terminalBLinesRef.current = [...snapshot.linesB]
+    setCanGoForward(!!historyRef.current[next + 1])
+    forceUpdate((n) => n + 1)
+  }
+
+  const headerA = lab.getTerminalHeader(state, "A")
+  const headerB = lab.getTerminalHeader(state, "B")
 
   return (
     <div
@@ -314,12 +316,45 @@ export default function SubjectLabPage() {
             &larr; Lab
           </Link>
           <span className="text-[#484f58]">|</span>
-          <span className="text-xs font-semibold text-[#e6edf3]">{subject.title}</span>
+          <span className="text-xs font-semibold text-[#e6edf3]">
+            {subjectId === "github" ? "Git & GitHub" : subjectId === "agenticai" ? "Agentic AI" : subjectId}
+          </span>
           <span className="text-[#484f58]">{">"}</span>
           <ScenarioSelector
-            selectedId={state.scenario.id}
+            subjectId={subjectId}
+            selectedId={(state as { scenario: { id: string } }).scenario.id}
             onSelect={handleScenarioChange}
           />
+          <button
+            onClick={handleBack}
+            disabled={currentStep === 0}
+            className="flex items-center gap-1 text-[11px] px-2 py-1 rounded-md border transition-all hover:brightness-110 disabled:opacity-30 disabled:cursor-not-allowed"
+            style={{
+              borderColor: "#30363d",
+              color: "#c9d1d9",
+              background: "#161b22",
+            }}
+            title="Go back one step"
+          >
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          <button
+            onClick={handleForward}
+            disabled={!canGoForward || done}
+            className="flex items-center gap-1 text-[11px] px-2 py-1 rounded-md border transition-all hover:brightness-110 disabled:opacity-30 disabled:cursor-not-allowed"
+            style={{
+              borderColor: "#30363d",
+              color: "#c9d1d9",
+              background: "#161b22",
+            }}
+            title="Go forward to the next completed step"
+          >
+            <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
           <button
             onClick={handleReset}
             className="ml-auto flex items-center gap-1 text-[11px] px-2 py-1 rounded-md border transition-all hover:brightness-110"
@@ -337,81 +372,91 @@ export default function SubjectLabPage() {
           </button>
           {done && (
             <span className="bg-[#3fb95022] border border-[#3fb950] text-[#3fb950] text-[11px] px-2.5 py-1 rounded-md">
-              \u2713 Scenario complete
+              {"\u2713"} Scenario complete
             </span>
           )}
         </div>
-        <OriginPanel origin={state.origin} />
-        <StepProgress scenario={scenario} currentStep={currentStep} />
+        {lab.RemotePanel && <lab.RemotePanel state={state} />}
+        <StepProgress scenario={scenario} currentStep={currentStep} actorLabels={lab.actorLabels} />
       </div>
 
-      {/* Terminal panels */}
-      <div
-        className="flex-1 min-h-0 grid grid-cols-1 md:grid-cols-2 gap-3 p-3 relative overflow-hidden"
-      >
-        {/* GitHub modal */}
-        {showGithubModal && step?.githubAction && !done && (
-          <div className="absolute inset-0 z-40 flex items-center justify-center" style={{ background: "rgba(1,4,9,0.75)" }}>
-            <div
-              className="w-full max-w-lg rounded-xl border p-5 shadow-2xl relative"
-              style={{
-                background: "#161b22",
-                borderColor: "#30363d",
-                animation: "fadeIn 0.15s ease",
-              }}
-            >
-              <button
-                onClick={() => setShowGithubModal(false)}
-                className="absolute top-3 right-3 text-[#484f58] hover:text-[#8b949e] transition-colors z-50"
-              >
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-              <GitHubModal
-                action={step.githubAction as "create-pr" | "review-pr" | "merge-pr" | "resolve-conflict"}
-                state={state}
-                actor={step.actor as "A" | "B"}
-                color={step.actor === "A" ? "#58a6ff" : "#bc8cff"}
-                isFirstReview={currentStep === 6}
-                onSubmit={(who, cmd) => {
-                  handleCommand(who, cmd)
-                }}
-              />
-            </div>
+      {/* Content area */}
+      <div className="flex-1 min-h-0 relative">
+        {lab.Layout ? (
+          <lab.Layout
+            state={state}
+            onCommand={handleCommand}
+            step={step}
+            done={done}
+            terminalALines={terminalALinesRef.current}
+            terminalBLines={terminalBLinesRef.current}
+            headerA={headerA}
+            headerB={headerB}
+            showActionModal={showActionModal}
+            setShowActionModal={setShowActionModal}
+          />
+        ) : (
+          <div className="absolute inset-0 grid grid-cols-1 md:grid-cols-2 gap-3 p-3 overflow-hidden">
+            {/* Action modal */}
+            {showActionModal && (step?.actionType || step?.githubAction) && !done && lab.ActionModal && (
+              <div className="absolute inset-0 z-40 flex items-center justify-center" style={{ background: "rgba(1,4,9,0.75)" }}>
+                <div
+                  className="w-full max-w-lg rounded-xl border p-5 shadow-2xl relative"
+                  style={{
+                    background: "#161b22",
+                    borderColor: "#30363d",
+                    animation: "fadeIn 0.15s ease",
+                  }}
+                >
+                  <button
+                    onClick={() => setShowActionModal(false)}
+                    className="absolute top-3 right-3 text-[#484f58] hover:text-[#8b949e] transition-colors z-50"
+                  >
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                  <lab.ActionModal
+                    action={step.actionType ?? step.githubAction ?? ""}
+                    state={state}
+                    actor={step.actor}
+                    color={step.actor === "A" ? "#58a6ff" : "#bc8cff"}
+                    onCommand={handleCommand}
+                  />
+                </div>
+              </div>
+            )}
+
+            <TerminalPanel
+              who="A"
+              label="Senior Dev"
+              color="#58a6ff"
+              lines={terminalALinesRef.current}
+              onCommand={handleCommand}
+              isMyTurn={done || showActionModal ? false : step?.actor === "A"}
+              instruction={done ? "" : step?.instruction ?? ""}
+              hints={step?.hints}
+              repo={headerA.repo}
+              branch={headerA.branch}
+              headerItems={headerA.contextItems}
+              onActionClick={!showActionModal && (step?.actionType || step?.githubAction) && step?.actor === "A" ? () => setShowActionModal(true) : undefined}
+            />
+            <TerminalPanel
+              who="B"
+              label="Junior Dev"
+              color="#bc8cff"
+              lines={terminalBLinesRef.current}
+              onCommand={handleCommand}
+              isMyTurn={done || showActionModal ? false : step?.actor === "B"}
+              instruction={done ? "" : step?.instruction ?? ""}
+              hints={step?.hints}
+              repo={headerB.repo}
+              branch={headerB.branch}
+              headerItems={headerB.contextItems}
+              onActionClick={!showActionModal && (step?.actionType || step?.githubAction) && step?.actor === "B" ? () => setShowActionModal(true) : undefined}
+            />
           </div>
         )}
-
-        {/* GitHub button inside instruction bar */}
-
-        <TerminalPanel
-          who="A"
-          label="Senior Dev"
-          color="#58a6ff"
-          lines={terminalALinesRef.current}
-          onCommand={handleCommand}
-          isMyTurn={done || showGithubModal ? false : step?.actor === "A"}
-          instruction={done ? "" : step?.instruction ?? ""}
-          hints={step?.hints}
-          branch={state.localA.currentBranch}
-          stagedCount={state.localA.staged.length}
-          commitCount={Object.keys(state.localA.allCommits).length}
-          onGithubClick={!showGithubModal && step?.githubAction && step?.actor === "A" ? () => setShowGithubModal(true) : undefined}
-        />
-        <TerminalPanel
-          who="B"
-          label="Junior Dev"
-          color="#bc8cff"
-          lines={terminalBLinesRef.current}
-          onCommand={handleCommand}
-          isMyTurn={done || showGithubModal ? false : step?.actor === "B"}
-          instruction={done ? "" : step?.instruction ?? ""}
-          hints={step?.hints}
-          branch={state.localB.currentBranch}
-          stagedCount={state.localB.staged.length}
-          commitCount={Object.keys(state.localB.allCommits).length}
-          onGithubClick={!showGithubModal && step?.githubAction && step?.actor === "B" ? () => setShowGithubModal(true) : undefined}
-        />
       </div>
       {showCelebration && <Celebration />}
     </div>

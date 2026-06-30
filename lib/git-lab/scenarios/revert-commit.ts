@@ -4,7 +4,7 @@ export const REVERT_COMMIT: Scenario = {
   id: "revert-commit",
   phase: "4.2",
   title: "git revert",
-  description: "Revert a commit safely — creates a new commit that undoes the specified commit's changes.",
+  description: "Revert a commit safely — creates a new undo commit automatically. No manual staging or committing needed.",
   setup: (state) => {
     const initCommit = {
       hash: "a1b2c3d",
@@ -52,28 +52,28 @@ export const REVERT_COMMIT: Scenario = {
       instruction: "Revert the 'Add debug logging' commit (hash: e5f6g7h)",
       match: (p) => p.type === "revert" && p.hash === "e5f6g7h",
       hints: [
-        "git revert <hash> creates a NEW commit that undoes the changes from the specified commit. Unlike reset, the history stays intact.",
-        "This is the SAFE way to undo a commit — especially on shared branches where rewriting history would break your teammates' repos.",
+        "git revert creates a NEW commit that undoes the broken commit. Unlike reset, history stays intact.",
+        "Revert creates the undo commit AUTOMATICALLY. No git add or git commit needed. It's one step.",
         "Run: git revert e5f6g7h",
       ],
     },
     {
       actor: "A",
-      instruction: "View the log again to see the new revert commit",
+      instruction: "View the log to see the revert commit that revert auto-created",
       match: (p) => p.type === "log",
       hints: [
-        "After revert, the log should show a third commit that says 'Revert \"Add debug logging\"'.",
-        "The original commit is still there — we didn't delete it. We added a new commit that undoes its changes. This is why revert is safe for shared branches.",
+        "Revert already created the commit — you didn't need to stage or commit manually. The new commit says 'Revert \"Add debug logging\"' and undoes all the changes from the bad commit.",
+        "The original commit is still in history. Nothing was erased. Revert is safe for shared branches because it adds, never deletes.",
         "Run: git log",
       ],
     },
     {
       actor: "A",
-      instruction: "Push the revert commit to the shared repository so the team gets the fix",
+      instruction: "Revert already committed locally. Push the commit so the team gets the fix",
       match: (p) => p.type === "push" && (!p.branch || p.branch === "main"),
       hints: [
-        "The revert commit is only local. Push it to origin so Junior Dev and the rest of the team get the fix.",
-        "Use git push to upload your commits to the remote repository.",
+        "Revert created the commit automatically, but it's only on YOUR machine. Push it to origin so Junior Dev can pull it. git push is still your job — revert only saves you from typing git add + git commit.",
+        "Think of it as: revert = git add + git commit (automatic). Push = still manual. Two separate things.",
         "Run: git push origin main",
       ],
     },
@@ -82,7 +82,7 @@ export const REVERT_COMMIT: Scenario = {
       instruction: "Pull the latest changes to get the reverted code",
       match: (p) => p.type === "pull" && (!p.branch || p.branch === "main"),
       hints: [
-        "Senior Dev reverted the bad commit and pushed. Pull to get the fix.",
+        "Senior Dev reverted the bad commit and pushed. Pull to get the clean code.",
         "Use git pull to fetch and merge the latest commits from origin.",
         "Run: git pull origin main",
       ],

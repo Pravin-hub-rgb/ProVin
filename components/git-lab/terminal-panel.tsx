@@ -1,7 +1,7 @@
 "use client"
 
 import { useRef, useEffect, useState, type KeyboardEvent } from "react"
-import type { TerminalLine } from "@/lib/git-lab"
+import type { TerminalLine } from "@/lib/lab-registry"
 import { HintButton } from "./hint-button"
 
 interface TerminalPanelProps {
@@ -13,10 +13,11 @@ interface TerminalPanelProps {
   isMyTurn: boolean
   instruction: string
   hints?: [string, string, string]
+  repo: string
   branch: string
-  stagedCount: number
-  commitCount: number
-  onGithubClick?: () => void
+  headerItems?: { label: string; value: string }[]
+  onActionClick?: () => void
+  waitingLabel?: string
 }
 
 export function TerminalPanel({
@@ -28,10 +29,11 @@ export function TerminalPanel({
   isMyTurn,
   instruction,
   hints,
+  repo,
   branch,
-  stagedCount,
-  commitCount,
-  onGithubClick,
+  headerItems,
+  onActionClick,
+  waitingLabel,
 }: TerminalPanelProps) {
   const [input, setInput] = useState("")
   const [cmdHistory, setCmdHistory] = useState<string[]>([])
@@ -92,17 +94,16 @@ export function TerminalPanel({
           {label}
         </span>
         <span className="text-[#c9d1d9]" style={{ fontFamily: "'JetBrains Mono', monospace" }}>
-          team-practice
+          {repo}
         </span>
         <span className="text-[#484f58]">/</span>
         <span style={{ color, fontFamily: "'JetBrains Mono', monospace" }}>{branch}</span>
         <span className="ml-auto flex items-center gap-3">
-          {stagedCount > 0 && (
-            <span className="text-[#f0b72f] text-[11px]">{stagedCount} staged</span>
-          )}
-          <span className="text-[#3fb950] text-[11px]">
-            {commitCount} commit{commitCount !== 1 ? "s" : ""}
-          </span>
+          {headerItems?.map((item) => (
+            <span key={item.label} className="text-[#f0b72f] text-[11px]">
+              {item.value} {item.label}
+            </span>
+          ))}
         </span>
         {isMyTurn && (
           <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#3fb950" }} />
@@ -127,11 +128,11 @@ export function TerminalPanel({
             className="text-xs flex-1"
             style={{ color: isMyTurn ? color : "#484f58" }}
           >
-            {isMyTurn ? instruction : `Waiting for ${who === "A" ? "Junior Dev" : "Senior Dev"} to finish...`}
+            {isMyTurn ? instruction : waitingLabel ?? `Waiting for ${who === "A" ? "Junior Dev" : "Senior Dev"} to finish...`}
           </span>
-          {isMyTurn && onGithubClick && (
+          {isMyTurn && onActionClick && (
             <button
-              onClick={onGithubClick}
+              onClick={onActionClick}
               className="flex items-center gap-1 text-[11px] px-2 py-1 rounded-md border transition-all hover:brightness-110"
               style={{
                 borderColor: `${color}44`,
@@ -142,7 +143,7 @@ export function TerminalPanel({
               <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22" />
               </svg>
-              GitHub
+              Action
             </button>
           )}
           {isMyTurn && hints && <HintButton hints={hints} color={color} />}
@@ -163,7 +164,7 @@ export function TerminalPanel({
             <span className="w-1.5 h-1.5 rounded-full bg-[#484f58] animate-pulse" />
             <span>
               {isMyTurn
-                ? "Type a git command to begin..."
+                ? "Type a command to begin..."
                 : "Waiting for connection..."}
             </span>
           </div>
@@ -213,7 +214,7 @@ export function TerminalPanel({
           onKeyDown={handleKey}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          placeholder={isMyTurn ? "type a git command..." : ""}
+          placeholder={isMyTurn ? "type a command..." : ""}
           disabled={!isMyTurn}
           className="flex-1 bg-transparent border-none outline-none text-xs"
           style={{

@@ -10,25 +10,27 @@ interface GitHubModalProps {
   color: string
   isFirstReview?: boolean
   onSubmit: (who: "A" | "B", cmd: string) => void
+  onCommand?: (who: "A" | "B", cmd: string) => void
 }
 
-export function GitHubModal({ action, state, actor, color, isFirstReview, onSubmit }: GitHubModalProps) {
+export function GitHubModal({ action, state, actor, color, isFirstReview, onSubmit, onCommand }: GitHubModalProps) {
+  const handleSubmit = onSubmit ?? onCommand ?? (() => {})
   const pr = state.prs[state.prs.length - 1]
 
   if (action === "create-pr") {
-    return <CreatePRForm state={state} actor={actor} color={color} onSubmit={onSubmit} />
+    return <CreatePRForm state={state} actor={actor} color={color} onSubmit={handleSubmit} />
   }
 
   if (action === "review-pr") {
-    return <ReviewPRForm pr={pr} actor={actor} color={color} isFirstReview={isFirstReview} onSubmit={onSubmit} />
+    return <ReviewPRForm pr={pr} actor={actor} color={color} isFirstReview={isFirstReview} onSubmit={handleSubmit} />
   }
 
   if (action === "merge-pr") {
-    return <MergePRForm pr={pr} actor={actor} color={color} onSubmit={onSubmit} />
+    return <MergePRForm pr={pr} actor={actor} color={color} onSubmit={handleSubmit} />
   }
 
   if (action === "resolve-conflict") {
-    return <ResolveConflictForm state={state} actor={actor} color={color} onSubmit={onSubmit} />
+    return <ResolveConflictForm state={state} actor={actor} color={color} onSubmit={handleSubmit} />
   }
 
   return null

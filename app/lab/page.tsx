@@ -2,11 +2,17 @@
 
 import Link from "next/link"
 import { labSubjects } from "@/lib/lab-data"
-import { FlaskConical, GitBranch, ArrowRight } from "lucide-react"
+import { getLabModule } from "@/lib/lab-registry"
+import { FlaskConical, GitBranch, BrainCircuit, ArrowRight } from "lucide-react"
+
+// Trigger module registration for dynamic scenario counts
+import "@/lib/git-lab"
+import "@/lib/ai-lab"
 
 export default function LabDashboard() {
   const icons: Record<string, React.ReactNode> = {
     github: <GitBranch className="w-6 h-6" />,
+    agenticai: <BrainCircuit className="w-6 h-6" />,
   }
 
   return (
@@ -27,35 +33,39 @@ export default function LabDashboard() {
 
         {/* Subject cards */}
         <div className="grid gap-4 md:grid-cols-2">
-          {labSubjects.map((subject) => (
-            <Link
-              key={subject.id}
-              href={`/lab/${subject.id}`}
-              className="group block bg-[#161b22] border border-[#30363d] rounded-xl p-5 hover:border-[#58a6ff]/50 transition-all duration-200 hover:shadow-lg hover:shadow-[#58a6ff]/5"
-            >
-              <div className="flex items-start gap-4">
-                <div className="w-12 h-12 rounded-xl bg-[#0d1117] border border-[#30363d] flex items-center justify-center text-[#58a6ff] shrink-0 group-hover:border-[#58a6ff]/30 transition-colors">
-                  {icons[subject.id] ?? <GitBranch className="w-6 h-6" />}
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h2 className="font-semibold text-base group-hover:text-[#58a6ff] transition-colors">
-                    {subject.title}
-                  </h2>
-                  <p className="text-[#8b949e] text-sm mt-1 leading-relaxed">
-                    {subject.description}
-                  </p>
-                  <div className="flex items-center gap-3 mt-3">
-                    <span className="text-[#3fb950] text-xs bg-[#3fb95022] px-2 py-0.5 rounded-full">
-                      {subject.scenarioCount} scenario{subject.scenarioCount !== 1 ? "s" : ""}
-                    </span>
-                    <span className="text-[#58a6ff] text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
-                      Open Lab <ArrowRight className="w-3 h-3" />
-                    </span>
+          {labSubjects.map((subject) => {
+            const mod = getLabModule(subject.id)
+            const count = mod?.scenarios.length ?? subject.scenarioCount
+            return (
+              <Link
+                key={subject.id}
+                href={`/lab/${subject.id}`}
+                className="group block bg-[#161b22] border border-[#30363d] rounded-xl p-5 hover:border-[#58a6ff]/50 transition-all duration-200 hover:shadow-lg hover:shadow-[#58a6ff]/5"
+              >
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 rounded-xl bg-[#0d1117] border border-[#30363d] flex items-center justify-center text-[#58a6ff] shrink-0 group-hover:border-[#58a6ff]/30 transition-colors">
+                    {icons[subject.id] ?? <GitBranch className="w-6 h-6" />}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <h2 className="font-semibold text-base group-hover:text-[#58a6ff] transition-colors">
+                      {subject.title}
+                    </h2>
+                    <p className="text-[#8b949e] text-sm mt-1 leading-relaxed">
+                      {subject.description}
+                    </p>
+                    <div className="flex items-center gap-3 mt-3">
+                      <span className="text-[#3fb950] text-xs bg-[#3fb95022] px-2 py-0.5 rounded-full">
+                        {count} scenario{count !== 1 ? "s" : ""}
+                      </span>
+                      <span className="text-[#58a6ff] text-xs font-medium opacity-0 group-hover:opacity-100 transition-opacity flex items-center gap-1">
+                        Open Lab <ArrowRight className="w-3 h-3" />
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          ))}
+              </Link>
+            )
+          })}
         </div>
 
         {labSubjects.length === 0 && (

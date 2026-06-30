@@ -33,6 +33,10 @@
     "git-3.2": true,
     "git-3.3": true,
     "git-3.4": true,
-    "git-3.5": true
+    "git-3.5": true,
+    "git-4.1": true,
+    "git-4.2": true,
+    "git-4.3": true,
+    "git-4.4": true
   }
 }

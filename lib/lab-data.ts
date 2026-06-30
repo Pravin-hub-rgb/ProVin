@@ -12,7 +12,14 @@ export const labSubjects: LabSubject[] = [
     title: "Git & GitHub",
     description: "Practice branching, PRs, merges, and team workflows in a simulated environment.",
     icon: "",
-    scenarioCount: 3,
+    scenarioCount: 16,
+  },
+  {
+    id: "agenticai",
+    title: "Agentic AI",
+    description: "Practice API calls, tool calling, and building AI agents in a simulated environment.",
+    icon: "🤖",
+    scenarioCount: 1,
   },
 ]
 
