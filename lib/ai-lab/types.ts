@@ -22,6 +22,7 @@ export interface AiLabState {
   scenario: {
     id: string
     currentStep: number
+    completedMask?: number
   }
   lastResponse?: {
     id: string

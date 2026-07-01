@@ -6,13 +6,6 @@ import { LectureViewer } from "@/components/lecture-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { subjects, loadMarkdownContent, type Subject, type Lecture, type LectureGroup } from "@/lib/coding-data"
 import styles from "./page.module.css"
-import ProgressChecklist from "@/components/progress-checklist"
-
-// ✅ Proper TypeScript Type Narrowing (No `any`)
-const isComponentLecture = (lecture: Lecture | null): lecture is Lecture & { isComponent: true } => {
-  return lecture !== null && 'isComponent' in lecture && lecture.isComponent === true
-}
-
 import type { Dispatch, SetStateAction } from "react"
 
 type CodingPageProps = {
@@ -395,11 +388,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                   <p className="mt-4 text-muted-foreground">Loading notes...</p>
                 </div>
                ) : (
-                 isComponentLecture(currentLecture) ? (
-                   <ProgressChecklist subject={currentSubject!} />
-                 ) : (
-                   <LectureViewer content={markdownContent} />
-                 )
+                 <LectureViewer content={markdownContent} />
               )}
             </div>
           ) : (

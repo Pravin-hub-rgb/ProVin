@@ -716,3 +716,12 @@ You're done with this course not when you've read every section, but when:
 - You can look at `git tree` output on a real repo and tell its story.
 
 Good luck, and genuinely — most working developers never deliberately practiced conflicts like this. You'll walk into team Git situations more prepared than a lot of people with actual "experience" on their resume.
+
+---
+
+## Phase 7 — Real World Git (Troubleshooting, Licenses, & More)
+
+When things break — and they will — here's a quick reference for fixing the most common Git errors: corrupted `ORIG_HEAD`, detached HEAD, lock files, rejected pushes, and more. Plus a guide to open source licenses so you understand what you're agreeing to when you use someone else's code.
+
+**[7.1 — Troubleshooting Common Git Problems →](./Phase%207%20-%20Real%20World%20Git/7.1%20Troubleshooting%20Common%20Git%20Problems.md)**
+**[7.2 — Open Source Licenses →](./Phase%207%20-%20Real%20World%20Git/7.2%20Open%20Source%20Licenses.md)**

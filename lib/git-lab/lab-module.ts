@@ -102,6 +102,7 @@ export const GIT_LAB_MODULE: LabModule = {
     const fresh = asGitState(freshState)
     const savedState = saved as unknown as GitLabState
     fresh.scenario.currentStep = savedState.scenario.currentStep
+    fresh.scenario.completedMask = savedState.scenario.completedMask
     fresh.localA.workingDirChanges = savedState.localA.workingDirChanges
     fresh.localA.staged = savedState.localA.staged
     fresh.localA.currentBranch = savedState.localA.currentBranch

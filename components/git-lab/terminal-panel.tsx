@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState, type KeyboardEvent } from "react"
 import type { TerminalLine } from "@/lib/lab-registry"
 import { HintButton } from "./hint-button"
+import { SolutionButton } from "./solution-button"
 
 interface TerminalPanelProps {
   who: "A" | "B"
@@ -13,11 +14,17 @@ interface TerminalPanelProps {
   isMyTurn: boolean
   instruction: string
   hints?: [string, string, string]
+  solution?: string
   repo: string
   branch: string
   headerItems?: { label: string; value: string }[]
   onActionClick?: () => void
   waitingLabel?: string
+  onStepBack?: () => void
+  onStepForward?: () => void
+  canGoForward?: boolean
+  currentStep?: number
+  totalSteps?: number
 }
 
 export function TerminalPanel({
@@ -29,11 +36,17 @@ export function TerminalPanel({
   isMyTurn,
   instruction,
   hints,
+  solution,
   repo,
   branch,
   headerItems,
   onActionClick,
   waitingLabel,
+  onStepBack,
+  onStepForward,
+  canGoForward,
+  currentStep = 0,
+  totalSteps = 0,
 }: TerminalPanelProps) {
   const [input, setInput] = useState("")
   const [cmdHistory, setCmdHistory] = useState<string[]>([])
@@ -71,6 +84,9 @@ export function TerminalPanel({
       setHistIdx(next)
       setInput(next === -1 ? "" : cmdHistory[next] ?? "")
       e.preventDefault()
+    } else if (e.key === "Tab") {
+      e.preventDefault()
+      setInput((prev) => prev + "    ")
     }
   }
 
@@ -105,6 +121,35 @@ export function TerminalPanel({
             </span>
           ))}
         </span>
+        {who === "A" && (
+          <>
+            <button
+              onClick={onStepBack}
+              disabled={currentStep === 0}
+              className="flex items-center gap-1 text-[11px] px-1.5 py-1 rounded border transition-all hover:brightness-110 disabled:opacity-30 disabled:cursor-not-allowed"
+              style={{ borderColor: "#30363d", color: "#c9d1d9", background: "#161b22" }}
+              title="Go back one step"
+            >
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            <button
+              onClick={onStepForward}
+              disabled={currentStep >= totalSteps - 1}
+              className="flex items-center gap-1 text-[11px] px-1.5 py-1 rounded border transition-all hover:brightness-110 disabled:opacity-30 disabled:cursor-not-allowed"
+              style={{ borderColor: "#30363d", color: "#c9d1d9", background: "#161b22" }}
+              title="Go to next step"
+            >
+              <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            <span className="text-[#8b949e] text-sm tabular-nums select-none mr-1 font-semibold">
+              {currentStep + 1}/{totalSteps}
+            </span>
+          </>
+        )}
         {isMyTurn && (
           <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: "#3fb950" }} />
         )}
@@ -146,6 +191,7 @@ export function TerminalPanel({
               Action
             </button>
           )}
+          {isMyTurn && solution && <SolutionButton solution={solution} color="#2ea043" />}
           {isMyTurn && hints && <HintButton hints={hints} color={color} />}
         </div>
       )}

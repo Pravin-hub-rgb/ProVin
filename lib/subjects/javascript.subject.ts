@@ -10,12 +10,6 @@ export const javascriptSubject: Subject = {
       title: "📋 Complete JS Course Roadmap",
       path: "docs/coding/JS/js-course-roadmap.md",
     },
-    {
-      id: "checklist",
-      title: "✅ Progress Checklist",
-      path: "checklist",
-      isComponent: true,
-    },
   ],
   phases: [
     {
@@ -260,22 +254,5 @@ export const javascriptSubject: Subject = {
         }
       ]
     }
-  ],
-  progress: [
-    {
-      phase: "Phase 1 - Foundations",
-      topics: [
-        { id: "var-let-const", title: "var / let / const", completed: true },
-        { id: "data-types", title: "Data Types", completed: true },
-        { id: "scope", title: "Scope", completed: true },
-        { id: "hoisting", title: "Hoisting", completed: false },
-        {
-          id: "type-coercion",
-          title: "Type Coercion & Equality",
-          completed: false,
-        },
-        { id: "functions", title: "Functions — All Forms", completed: false },
-      ],
-    },
   ],
 };

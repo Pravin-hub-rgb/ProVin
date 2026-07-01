@@ -256,5 +256,22 @@ export const gitgithubSubject: Subject = {
         },
       ],
     },
+    {
+      id: "phase7",
+      title: "Phase 7 — Real World Git (Troubleshooting, Licenses, & More)",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "git-7.1",
+          title: "7.1 Troubleshooting Common Git Problems",
+          path: "docs/coding/Git & Github/Phase 7 - Real World Git/7.1 Troubleshooting Common Git Problems.md",
+        },
+        {
+          id: "git-7.2",
+          title: "7.2 Open Source Licenses (MIT, GPL, Apache, etc.)",
+          path: "docs/coding/Git & Github/Phase 7 - Real World Git/7.2 Open Source Licenses.md",
+        },
+      ],
+    },
   ],
 };

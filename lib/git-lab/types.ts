@@ -40,6 +40,7 @@ export interface PR {
 export interface ScenarioState {
   currentStep: number
   id: string
+  completedMask?: number
 }
 
 export interface GitLabState {

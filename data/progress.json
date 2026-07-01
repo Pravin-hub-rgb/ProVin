@@ -37,6 +37,26 @@
     "git-4.1": true,
     "git-4.2": true,
     "git-4.3": true,
-    "git-4.4": true
+    "git-4.4": true,
+    "git-5.1": true,
+    "git-5.2": true,
+    "git-5.3": true,
+    "git-5.4": true,
+    "git-5.5": true,
+    "git-7.2": false
+  },
+  "javascript": {
+    "js-lec0": true,
+    "js-lec1": true,
+    "js-lec2": true,
+    "js-lec3": true,
+    "js-lec4": true,
+    "js-lec5": true,
+    "js-lec6": true,
+    "js-lec7": true,
+    "js-lec8": true,
+    "js-lec9": true,
+    "js-lec12": true,
+    "js-lec13": true
   }
 }

@@ -42,6 +42,7 @@ export const AI_LAB_MODULE: LabModule = {
     const fresh = freshState as AiLabState
     const savedState = saved as unknown as AiLabState
     fresh.scenario.currentStep = savedState.scenario.currentStep
+    fresh.scenario.completedMask = savedState.scenario.completedMask
     fresh.messages = savedState.messages
     fresh.tools = savedState.tools
     fresh.temperature = savedState.temperature

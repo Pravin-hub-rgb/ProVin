@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useRef, useEffect, type ReactNode } from "react"
-import { Lightbulb, ChevronRight, X } from "lucide-react"
+import { useState, useRef, useEffect } from "react"
+import { ChevronRight } from "lucide-react"
 
 interface HintButtonProps {
   hints: [string, string, string]
@@ -37,7 +37,9 @@ export function HintButton({ hints, color }: HintButtonProps) {
         }}
         title="Get a hint"
       >
-        <Lightbulb className="w-3 h-3" />
+        <svg className="w-3 h-3" viewBox="0 0 24 24" fill="#e3b341">
+          <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7zM9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1z" />
+        </svg>
         Hint
       </button>
 
@@ -51,7 +53,9 @@ export function HintButton({ hints, color }: HintButtonProps) {
           }}
         >
           <div className="flex items-start gap-2">
-            <Lightbulb className="w-3.5 h-3.5 mt-0.5 shrink-0" style={{ color }} />
+            <svg className="w-3.5 h-3.5 mt-0.5 shrink-0" viewBox="0 0 24 24" fill="#e3b341">
+              <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7zM9 21a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1v-1H9v1z" />
+            </svg>
             <div className="flex-1 min-w-0">
               <div className="text-[#e6edf3]">{hints[level - 1]}</div>
               <div className="flex items-center gap-2 mt-2">

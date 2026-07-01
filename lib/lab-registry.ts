@@ -30,6 +30,12 @@ export interface LabLayoutProps {
   showActionModal: boolean
   setShowActionModal: (v: boolean) => void
   className?: string
+  /** Step undo/redo navigation — layout decides where to render */
+  onStepBack?: () => void
+  onStepForward?: () => void
+  canGoForward?: boolean
+  currentStep?: number
+  totalSteps?: number
 }
 
 export interface CommandResult {
@@ -40,8 +46,9 @@ export interface CommandResult {
 export interface ScenarioStep {
   actor: "A" | "B"
   instruction: string
-  match: (parsed: unknown) => boolean
+  match: (parsed: unknown) => boolean | Promise<boolean>
   hints: [string, string, string]
+  solution?: string
   actionType?: string
   githubAction?: "create-pr" | "review-pr" | "merge-pr" | "resolve-conflict"
   getNextStep?: (state: unknown) => number
