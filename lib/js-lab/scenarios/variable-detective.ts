@@ -20,7 +20,9 @@ export const VARIABLE_DETECTIVE: Scenario = {
         return output === "Hello, World!"
       },
       solution: `const greeting = "Hello, World!"
-console.log(greeting)`,
+console.log(greeting)
+`,
+      solutionOutput: "Hello, World!",
       hints: [
         'Use `const greeting = "Hello, World!"` to declare the variable.',
         "Use `console.log(greeting)` to print it.",
@@ -42,7 +44,9 @@ console.log(greeting)`,
       solution: `let count = 0
 console.log(count)
 count = 1
-console.log(count)`,
+console.log(count)
+`,
+      solutionOutput: "0\\n1",
       hints: [
         "Start with `let count = 0; console.log(count);`",
         "Then reassign: `count = 1; console.log(count);`",
@@ -62,7 +66,9 @@ console.log(count)`,
       },
       solution: `for (let i = 0; i < 3; i++) {
   console.log(i)
-}`,
+}
+`,
+      solutionOutput: "0\\n1\\n2",
       hints: [
         "A for loop looks like: `for (initialization; condition; increment) { ... }`",
         "Use `for (let i = 0; i < 3; i++)`",

@@ -4,75 +4,78 @@ import { executeCode } from "../engine"
 export const HOISTING_HIJINKS: Scenario = {
   id: "hoisting-hijinks",
   phase: "1.4",
-  title: "Hoisting & the TDZ",
+  title: "Hoisting",
   description:
-    "Explore JavaScript's two-pass execution: hoisting, the Temporal Dead Zone, and how function declarations vs expressions behave.",
+    "Learn how JavaScript moves declarations to the top of their scope before execution — and how var, let, const, and functions are hoisted differently.",
   steps: [
     {
       actor: "A",
       instruction:
-        'Write code that accesses a variable declared with var before its declaration line, then log it again after. Use a variable with the string value I\'m hoisted! and log it both before and after the declaration. The first log should be undefined, the second should be I\'m hoisted!.',
+        'Write code that demonstrates var hoisting: log a variable x before declaring it with var, then assign it the value "hoisted" and log it again.',
       match: (p) => {
         const parsed = p as { type: string; code: string }
         if (parsed.type !== "run") return false
         const { output, error } = executeCode(parsed.code)
         if (error) return false
-        return output === "undefined\nI'm hoisted!"
+        return output === "undefined\nhoisted"
       },
+      hints: [
+        'Start with `console.log(x)` BEFORE declaring `var x = "hoisted"`.',
+        'Then `console.log(x)` AFTER the declaration.',
+        "With var, the declaration is hoisted but the assignment stays — so the first log is undefined.",
+      ],
       solution: `// var is hoisted to the top (but not its assignment)
 console.log(x)           // undefined — declared but not yet assigned
-var x = "I'm hoisted!"
-console.log(x)           // "I'm hoisted!"`,
-      hints: [
-        'First call `console.log(x);` before declaring... `var x = "I\'m hoisted!";`',
-        "Then log it again after: `console.log(x);`",
-        "The first log shows `undefined`, the second shows the actual value.",
-      ],
+var x = "hoisted"
+console.log(x)           // "hoisted" — now assigned
+`,
+      solutionOutput: "undefined\\nhoisted",
     },
     {
       actor: "A",
       instruction:
-        'Fix the Temporal Dead Zone error. The broken version tries to log a variable declared with let before declaring it. Write the correct version where the declaration with value Tesla comes before the log.',
+        'Write code that demonstrates the Temporal Dead Zone with let: try to log a variable named car with the value "Tesla" before declaring it with let. Then fix it by logging after declaration.',
       match: (p) => {
         const parsed = p as { type: string; code: string }
         if (parsed.type !== "run") return false
         const { output, error } = executeCode(parsed.code)
         if (error) return false
-        return output === "Tesla"
+        return output === "Tesla" && parsed.code.includes("let")
       },
+      hints: [
+        "First demonstrate the error (log car before declaration), then fix it.",
+        'Correct version: `let car = "Tesla"; console.log(car);`',
+        "let IS hoisted, but you can't access it before the declaration line (TDZ).",
+      ],
       solution: `// With let, declaration must come before access (no TDZ)
 let car = "Tesla"        // Declare first
-console.log(car)          // Then log`,
-      hints: [
-        'Declare `let car = "Tesla";` first.',
-        "Then call `console.log(car);` after the declaration.",
-        "With let/const, you must declare before using — no TDZ violation.",
-      ],
+console.log(car)         // "Tesla"
+`,
+      solutionOutput: "Tesla",
     },
     {
       actor: "A",
       instruction:
-        'Write a function declaration that logs the string hoisted and call it before its definition line. Then write a function expression assigned to a constant that logs the string expression and call it after its definition. This shows hoisting works for declarations but not expressions.',
+        "Write code that demonstrates function declaration hoisting. Call a function called sayHi before declaring it with the value 'Hi!'.",
       match: (p) => {
         const parsed = p as { type: string; code: string }
         if (parsed.type !== "run") return false
         const { output, error } = executeCode(parsed.code)
         if (error) return false
-        const lines = output.split("\n").filter(Boolean)
-        return lines.includes("hoisted") && lines.includes("expression")
+        return output === "Hi!"
       },
+      hints: [
+        "Call `sayHi()` BEFORE the function declaration.",
+        'Create: `function sayHi() { console.log("Hi!"); }`',
+        "Function declarations are fully hoisted — you can call them from anywhere in their scope.",
+      ],
       solution: `// Function declaration is hoisted — can call before definition
 sayHi()
-function sayHi() { console.log("hoisted") }
-
-// Function expression is NOT hoisted — must define first
-const greet = function() { console.log("expression") }
-greet()`,
-      hints: [
-        "First call a function before it's defined: `sayHi();`",
-        'Then define it as: `function sayHi() { console.log("hoisted"); }`',
-        'For the expression: `const greet = function() { console.log("expression"); }; greet();`',
-      ],
+function sayHi() {
+  console.log("Hi!")
+}
+`,
+      solutionOutput: "Hi!",
     },
   ],
 }

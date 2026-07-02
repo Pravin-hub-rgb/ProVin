@@ -32,7 +32,9 @@ const fns = createFuncs()
 // All three log 3 — var i is shared across closures
 console.log(fns[0]())
 console.log(fns[1]())
-console.log(fns[2]())`,
+console.log(fns[2]())
+`,
+      solutionOutput: "3\\n3\\n3",
       hints: [
         "Create an empty array, loop with `for (var i = 0; i < 3; i++)`, push `function() { return i; }`",
         "Return the array from the function, then call each function: `fns[0]()`, `fns[1]()`, `fns[2]()`",
@@ -63,7 +65,9 @@ const fns = createFuncs()
 // Each call returns its own index: 0, 1, 2
 console.log(fns[0]())
 console.log(fns[1]())
-console.log(fns[2]())`,
+console.log(fns[2]())
+`,
+      solutionOutput: "0\\n1\\n2",
       hints: [
         "Just change `var i` to `let i` in the for loop — nothing else changes.",
         "let creates a new binding for each iteration, so each closure gets its own `i`.",
@@ -94,7 +98,9 @@ const c = createCounter()
 c.increment()
 console.log(c.getCount())  // 1
 c.increment()
-console.log(c.getCount())  // 2`,
+console.log(c.getCount())  // 2
+`,
+      solutionOutput: "1\\n2",
       hints: [
         "Create a function that has a local `let count = 0;` variable.",
         "Return an object with `increment() { count++; }` and `getCount() { return count; }`.",

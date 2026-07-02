@@ -14,7 +14,7 @@ export const JS_LAB_MODULE: LabModule = {
   id: "javascript",
   name: "JavaScript",
 
-  actorLabels: { A: "You", B: "" },
+  actorLabels: { A: "", B: "" },
 
   createInitialState() {
     return createInitialState()

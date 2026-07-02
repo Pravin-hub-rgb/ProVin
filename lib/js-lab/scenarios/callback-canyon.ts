@@ -24,7 +24,9 @@ export const CALLBACK_CANYON: Scenario = {
   arr.forEach(item => console.log(callback(item)))
 }
 
-processArray([1, 2, 3], function(n) { return n * 2 })`,
+processArray([1, 2, 3], function(n) { return n * 2 })
+`,
+      solutionOutput: "2\\n4\\n6",
       hints: [
         "Define: `function processArray(arr, callback) { arr.forEach(item => console.log(callback(item))); }`",
         "Call: `processArray([1, 2, 3], function(n) { return n * 2; });`",
@@ -51,7 +53,9 @@ processArray([1, 2, 3], function(n) { return n * 2 })`,
 const double = createMultiplier(2)
 const triple = createMultiplier(3)
 console.log(double(5))
-console.log(triple(5))`,
+console.log(triple(5))
+`,
+      solutionOutput: "10\\n15",
       hints: [
         "Define: `function createMultiplier(factor) { return function(n) { return n * factor; }; }`",
         "Create: `const double = createMultiplier(2); const triple = createMultiplier(3);`",
@@ -73,7 +77,9 @@ console.log(triple(5))`,
   return arr.filter(callback)
 }
 
-console.log(filterStrings(["hi", "hello", "hey", "greetings"], function(s) { return s.length > 3 }))`,
+console.log(filterStrings(["hi", "hello", "hey", "greetings"], function(s) { return s.length > 3 }))
+`,
+      solutionOutput: "[\\n  \"hello\",\\n  \"greetings\"\\n]",
       hints: [
         "Define: `function filterStrings(arr, callback) { return arr.filter(callback); }`",
         "Call with inline callback: `filterStrings([\"hi\", \"hello\", \"hey\", \"greetings\"], function(s) { return s.length > 3; })`",

@@ -27,7 +27,9 @@ export const REGEX_RIDDLE: Scenario = {
       ],
       solution: `const emailRegex = /\\S+@\\S+\\.\\S+/
 console.log(emailRegex.test("user@example.com"))  // true
-console.log(emailRegex.test("not-an-email"))       // false`,
+console.log(emailRegex.test("not-an-email"))       // false
+`,
+      solutionOutput: "false\\nfalse",
     },
     {
       actor: "A",
@@ -47,7 +49,9 @@ console.log(emailRegex.test("not-an-email"))       // false`,
       ],
       solution: `const sentence = "The rain in Spain falls mainly on the plain"
 const matches = sentence.match(/\\b\\w+ain\\b/gi)
-console.log(matches)`,
+console.log(matches)
+`,
+      solutionOutput: "null",
     },
     {
       actor: "A",
@@ -67,6 +71,9 @@ console.log(matches)`,
       ],
       solution: `const phone = "My number is 987-654-3210 and office is 123-456-7890"
 const censored = phone.replace(/\\d{3}-\\d{3}-\\d{4}/g, "[REDACTED]")
-console.log(censored)`,    },
+console.log(censored)
+`,
+      solutionOutput: "My number is 987-654-3210 and office is 123-456-7890",
+    },
   ],
 }

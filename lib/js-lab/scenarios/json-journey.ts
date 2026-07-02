@@ -29,7 +29,9 @@ export const JSON_JOURNEY: Scenario = {
   age: 25,
   skills: ["JS", "React"]
 }
-console.log(JSON.stringify(user))`,
+console.log(JSON.stringify(user))
+`,
+      solutionOutput: "{\"name\":\"Arjun\",\"age\":25,\"skills\":[\"JS\",\"React\"]}",
     },
     {
       actor: "A",
@@ -51,7 +53,9 @@ console.log(JSON.stringify(user))`,
       solution: `const json = '{"product":"Laptop","price":75000,"inStock":true}'
 const obj = JSON.parse(json)
 console.log(obj.product)
-console.log(obj.inStock)`,
+console.log(obj.inStock)
+`,
+      solutionOutput: "Laptop\\ntrue",
     },
     {
       actor: "A",
@@ -82,6 +86,9 @@ console.log(obj.inStock)`,
   address: { city: "Delhi", zip: 110001 },
   hobbies: ["reading", "coding"]
 }
-console.log(JSON.stringify(data, null, 2))`,    },
+console.log(JSON.stringify(data, null, 2))
+`,
+      solutionOutput: "{\\n  \"name\": \"Neha\",\\n  \"address\": {\\n    \"city\": \"Delhi\",\\n    \"zip\": 110001\\n  },\\n  \"hobbies\": [\\n    \"reading\",\\n    \"coding\"\\n  ]\\n}",
+    },
   ],
 }

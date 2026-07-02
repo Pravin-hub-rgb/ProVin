@@ -4,10 +4,11 @@ import { useState, useRef, useEffect } from "react"
 
 interface SolutionButtonProps {
   solution: string
+  solutionOutput?: string
   color: string
 }
 
-export function SolutionButton({ solution, color }: SolutionButtonProps) {
+export function SolutionButton({ solution, solutionOutput, color }: SolutionButtonProps) {
   const [open, setOpen] = useState(false)
   const popoverRef = useRef<HTMLDivElement>(null)
 
@@ -64,10 +65,28 @@ export function SolutionButton({ solution, color }: SolutionButtonProps) {
               fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
               whiteSpace: "pre-wrap",
               wordBreak: "break-word",
+              margin: 0,
             }}
           >
             {solution}
           </pre>
+          {solutionOutput && (
+            <div
+              className="px-3 py-2 border-t text-[12px] leading-relaxed"
+              style={{
+                borderColor: `${color}22`,
+                color: "#8b949e",
+                fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
+                whiteSpace: "pre-wrap",
+                wordBreak: "break-word",
+              }}
+            >
+              <span style={{ color: `${color}99`, fontWeight: 600, fontSize: 11 }}>
+                Output
+              </span>
+              <div style={{ marginTop: 4, color: "#e6edf3" }}>{solutionOutput}</div>
+            </div>
+          )}
         </div>
       )}
     </div>

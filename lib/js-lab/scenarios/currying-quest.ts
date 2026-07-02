@@ -22,7 +22,9 @@ export const CURRYING_QUEST: Scenario = {
       solution: `// Curried arrow: outer arrow takes a, inner arrow takes b
 const add = (a) => (b) => a + b
 
-console.log(add(5)(3))`,
+console.log(add(5)(3))
+`,
+      solutionOutput: "8",
       hints: [
         "Curried arrow: `const add = (a) => (b) => a + b;`",
         "Call: `console.log(add(5)(3));` — first call returns a function, second call computes.",
@@ -48,7 +50,9 @@ const sayHello = greet("Hello")
 const sayHi = greet("Hi")
 
 console.log(sayHello("Arjun"))
-console.log(sayHi("Arjun"))`,
+console.log(sayHi("Arjun"))
+`,
+      solutionOutput: "Hello, Arjun!\\nHi, Arjun!",
       hints: [
         "Define: `const greet = (greeting) => (name) => greeting + \", \" + name + \"!\";`",
         "Create partials: `const sayHello = greet(\"Hello\"); const sayHi = greet(\"Hi\");`",
@@ -70,7 +74,9 @@ console.log(sayHi("Arjun"))`,
 const format = (prefix) => (separator) => (suffix) => (word) =>
   prefix + separator + word + suffix
 
-console.log(format("<<")("-")(">>")("curried"))`,
+console.log(format("<<")("-")(">>")("curried"))
+`,
+      solutionOutput: "<<-curried>>",
       hints: [
         "Triple curried arrow: `const format = (prefix) => (separator) => (suffix) => (word) => prefix + separator + word + suffix;`",
         "Call all at once: `console.log(format(\"<<\")(\"-\")(\">>\")(\"curried\"));`",

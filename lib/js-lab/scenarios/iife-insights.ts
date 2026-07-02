@@ -26,7 +26,9 @@ export const IIFE_INSIGHTS: Scenario = {
       ],
       solution: `(function() {
   console.log("IIFE ran!")
-})()`,
+})()
+`,
+      solutionOutput: "IIFE ran!",
     },
     {
       actor: "A",
@@ -53,7 +55,9 @@ export const IIFE_INSIGHTS: Scenario = {
 })()
 counter.increment()
 counter.increment()
-console.log(counter.getCount())  // 2`,
+console.log(counter.getCount())  // 2
+`,
+      solutionOutput: "2",
     },
     {
       actor: "A",
@@ -73,6 +77,9 @@ console.log(counter.getCount())  // 2`,
       ],
       solution: `(function(language) {
   console.log("I love " + language + "!")
-})("JavaScript")`,    },
+})("JavaScript")
+`,
+      solutionOutput: "I love JavaScript!",
+    },
   ],
 }

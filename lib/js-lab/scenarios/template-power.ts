@@ -26,7 +26,9 @@ export const TEMPLATE_POWER: Scenario = {
       ],
       solution: `let name = "Arjun"
 let age = 22
-console.log(\`Hello, \${name}! You are \${age} years old.\`)`,
+console.log(\`Hello, \${name}! You are \${age} years old.\`)
+`,
+      solutionOutput: "Hello, Arjun! You are 22 years old.",
     },
     {
       actor: "A",
@@ -45,7 +47,9 @@ console.log(\`Hello, \${name}! You are \${age} years old.\`)`,
         "Set `let age = 20;` first.",
       ],
       solution: `let age = 20
-console.log(\`You are \${age >= 18 ? "adult" : "minor"}\`)`,
+console.log(\`You are \${age >= 18 ? "adult" : "minor"}\`)
+`,
+      solutionOutput: "You are adult",
     },
     {
       actor: "A",
@@ -65,7 +69,9 @@ console.log(\`You are \${age >= 18 ? "adult" : "minor"}\`)`,
         'Example: `` `line 1\nline 2\nline 3` `` — but with real line breaks.',
         "Try: `` `Hello\nWorld\n!` `` and log it.",
       ],
-      solution: "console.log(`Hello\nWorld\n!`)",
+      solution: `console.log(\`Hello\nWorld\n!\`)
+`,
+      solutionOutput: "Hello\\nWorld\\n!",
     },
   ],
 }

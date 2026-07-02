@@ -49,6 +49,7 @@ export interface ScenarioStep {
   match: (parsed: unknown) => boolean | Promise<boolean>
   hints: [string, string, string]
   solution?: string
+  solutionOutput?: string
   actionType?: string
   githubAction?: "create-pr" | "review-pr" | "merge-pr" | "resolve-conflict"
   getNextStep?: (state: unknown) => number

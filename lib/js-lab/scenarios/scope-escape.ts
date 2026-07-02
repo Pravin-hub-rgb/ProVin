@@ -27,7 +27,9 @@ export const SCOPE_ESCAPE: Scenario = {
       solution: `let outer = "accessible"
 if (true) {
   console.log(outer)
-}`,
+}
+`,
+      solutionOutput: "accessible",
     },
     {
       actor: "A",
@@ -55,7 +57,9 @@ if (true) {
   }
   console.log(inner)  // ReferenceError — inner is not defined here
 }
-test()`,
+test()
+`,
+      solutionOutput: "Error: ReferenceError: inner is not defined",
     },
     {
       actor: "A",
@@ -79,7 +83,9 @@ test()`,
     console.log(inner)  // Works — accessing inside the same block
   }
 }
-test()`,
+test()
+`,
+      solutionOutput: "blocked",
     },
     {
       actor: "A",
@@ -100,6 +106,9 @@ test()`,
       solution: `if (true) {
   var leaked = "I escaped!"
 }
-console.log(leaked)  // "I escaped!" — var ignores block scope`,    },
+console.log(leaked)  // "I escaped!" — var ignores block scope
+`,
+      solutionOutput: "I escaped!",
+    },
   ],
 }

@@ -31,7 +31,9 @@ export const THIS_OR_THAT: Scenario = {
 }
 console.log(obj.getValue())
 const fn = obj.getValue
-console.log(fn())`,
+console.log(fn())
+`,
+      solutionOutput: "42\\nundefined",
     },
     {
       actor: "A",
@@ -54,7 +56,9 @@ console.log(fn())`,
   getValue: function() { return this.value }
 }
 const boundFn = obj.getValue.bind(obj)
-console.log(boundFn())`,
+console.log(boundFn())
+`,
+      solutionOutput: "42",
     },
     {
       actor: "A",
@@ -74,7 +78,9 @@ console.log(boundFn())`,
   arrow: () => this.value
 }
 console.log(obj.regular())  // 42 — regular function gets this from object
-console.log(obj.arrow())    // undefined — arrow inherits this from outer scope`,
+console.log(obj.arrow())    // undefined — arrow inherits this from outer scope
+`,
+      solutionOutput: "42\\nundefined",
       hints: [
         "Create: `const obj = { value: 42, regular: function() { return this.value; }, arrow: () => this.value }`",
         "Call both: `console.log(obj.regular()); console.log(obj.arrow());`",

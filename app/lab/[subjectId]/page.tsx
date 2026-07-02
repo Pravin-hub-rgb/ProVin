@@ -486,6 +486,7 @@ function SubjectLabPageInner({
               instruction={done ? "" : step?.instruction ?? ""}
               hints={step?.hints}
               solution={step?.solution}
+              solutionOutput={step?.solutionOutput}
               repo={headerA.repo}
               branch={headerA.branch}
               headerItems={headerA.contextItems}
@@ -506,6 +507,7 @@ function SubjectLabPageInner({
               instruction={done ? "" : step?.instruction ?? ""}
               hints={step?.hints}
               solution={step?.solution}
+              solutionOutput={step?.solutionOutput}
               repo={headerB.repo}
               branch={headerB.branch}
               headerItems={headerB.contextItems}

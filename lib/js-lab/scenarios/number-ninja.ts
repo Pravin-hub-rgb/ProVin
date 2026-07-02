@@ -25,7 +25,8 @@ export const NUMBER_NINJA: Scenario = {
         "Expected: `\"43.0\"`",
       ],
       solution: `const price = "42.99"
-console.log(parseFloat(price).toFixed(1))`
+console.log(parseFloat(price).toFixed(1))`,
+      solutionOutput: "43.0",
     },
     {
       actor: "A",
@@ -49,7 +50,9 @@ console.log(parseFloat(price).toFixed(1))`
 }
 console.log(safeNumber("hello"))    // 0 — NaN
 console.log(safeNumber(Infinity))   // 0
-console.log(safeNumber(42))         // 42`,
+console.log(safeNumber(42))         // 42
+`,
+      solutionOutput: "0\\n0\\n42",
     },
     {
       actor: "A",
@@ -74,6 +77,9 @@ console.log(safeNumber(42))         // 42`,
 }
 for (let i = 0; i < 5; i++) {
   console.log(randomInRange(1, 10))
-}`,    },
+}
+`,
+      solutionOutput: "6\\n7\\n7\\n8\\n10",
+    },
   ],
 }

@@ -16,7 +16,9 @@ export const HELLO_LAB: Scenario = {
         const { output } = executeCode(parsed.code)
         return output === "Hello, Lab!"
       },
-      solution: `console.log("Hello, Lab!")`,
+      solution: `console.log("Hello, Lab!")
+`,
+      solutionOutput: "Hello, Lab!",
       hints: [
         "Use console.log() to print to the console.",
         "console.log() can take strings, numbers, variables — anything.",
@@ -34,7 +36,9 @@ export const HELLO_LAB: Scenario = {
         return output.length > 0 && !output.includes("undefined")
       },
       solution: `let name = "Arjun"
-console.log(name)`,
+console.log(name)
+`,
+      solutionOutput: "Arjun",
       hints: [
         "Use let or const to declare a variable.",
         'let name = "your name"; console.log(name);',
@@ -52,7 +56,9 @@ console.log(name)`,
         return output.startsWith("Hello, my name is ")
       },
       solution: `let name = "Arjun"
-console.log(\`Hello, my name is \${name}\`)`,
+console.log(\`Hello, my name is \${name}\`)
+`,
+      solutionOutput: "Hello, my name is Arjun",
       hints: [
         "Template literals use backticks (`) and ${} syntax.",
         "First create a name variable, then use it in the template literal.",

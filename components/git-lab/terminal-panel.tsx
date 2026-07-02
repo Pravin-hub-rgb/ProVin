@@ -15,6 +15,7 @@ interface TerminalPanelProps {
   instruction: string
   hints?: [string, string, string]
   solution?: string
+  solutionOutput?: string
   repo: string
   branch: string
   headerItems?: { label: string; value: string }[]
@@ -37,6 +38,7 @@ export function TerminalPanel({
   instruction,
   hints,
   solution,
+  solutionOutput,
   repo,
   branch,
   headerItems,
@@ -191,7 +193,7 @@ export function TerminalPanel({
               Action
             </button>
           )}
-          {isMyTurn && solution && <SolutionButton solution={solution} color="#2ea043" />}
+          {isMyTurn && solution && <SolutionButton solution={solution} solutionOutput={solutionOutput} color="#2ea043" />}
           {isMyTurn && hints && <HintButton hints={hints} color={color} />}
         </div>
       )}

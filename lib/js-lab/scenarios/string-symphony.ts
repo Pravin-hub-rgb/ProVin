@@ -28,7 +28,9 @@ export const STRING_SYMPHONY: Scenario = {
       solution: `const text = "JavaScript is awesome"
 console.log(text.slice(-7))            // "awesome"
 console.log(text.includes("Script"))  // true
-console.log(text.split(" ").join("-")) // "JavaScript-is-awesome"`,
+console.log(text.split(" ").join("-")) // "JavaScript-is-awesome"
+`,
+      solutionOutput: "awesome\\ntrue\\nJavaScript-is-awesome",
     },
     {
       actor: "A",
@@ -47,7 +49,9 @@ console.log(text.split(" ").join("-")) // "JavaScript-is-awesome"`,
         "replace() only replaces the first occurrence by default.",
       ],
       solution: `const messy = "  Hello, World!  "
-console.log(messy.trim().toLowerCase().replace("world", "javascript"))`,
+console.log(messy.trim().toLowerCase().replace("world", "javascript"))
+`,
+      solutionOutput: "hello, javascript!",
     },
     {
       actor: "A",
@@ -70,6 +74,9 @@ console.log(messy.trim().toLowerCase().replace("world", "javascript"))`,
   return char.repeat(size)
 }
 console.log(createBox("*", 10))
-console.log("*".repeat(5))`,    },
+console.log("*".repeat(5))
+`,
+      solutionOutput: "**********\\n*****",
+    },
   ],
 }

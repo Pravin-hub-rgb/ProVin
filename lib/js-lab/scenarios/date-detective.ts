@@ -23,7 +23,9 @@ export const DATE_DETECTIVE: Scenario = {
       solution: `const d = new Date(2026, 6, 1)  // Month is 0-indexed, so 6 = July
 console.log(d.getFullYear())
 console.log(d.getMonth())    // 6 (July)
-console.log(d.getDate())     // 1`,
+console.log(d.getDate())     // 1
+`,
+      solutionOutput: "2026\\n6\\n1",
       hints: [
         "Create: `const d = new Date(2026, 6, 1)` — month 6 is July (0-indexed: 0=Jan).",
         "Extract: `d.getFullYear()`, `d.getMonth()`, `d.getDate()`",
@@ -45,7 +47,9 @@ console.log(d.getDate())     // 1`,
 const d2 = new Date(2026, 11, 31)  // Dec 31
 const diffMs = d2 - d1             // Milliseconds between dates
 const diffDays = diffMs / (1000 * 60 * 60 * 24)
-console.log(diffDays)`,
+console.log(diffDays)
+`,
+      solutionOutput: "364",
       hints: [
         "Subtracting dates gives milliseconds: `d2 - d1`",
         "Convert to days: divide by `1000 * 60 * 60 * 24`",
@@ -72,7 +76,9 @@ function formatDate(date) {
   return months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear()
 }
 
-console.log(formatDate(new Date(2026, 6, 1)))`,
+console.log(formatDate(new Date(2026, 6, 1)))
+`,
+      solutionOutput: "July 1, 2026",
       hints: [
         "Create `const months = [\"January\", \"February\", ..., \"December\"]`",
         "Access: `months[date.getMonth()]` gives the month name.",

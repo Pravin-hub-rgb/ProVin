@@ -32,7 +32,9 @@ export const CALL_APPLY_BIND: Scenario = {
   }
 }
 person.greet("Hello")
-person.greet.call({ name: "Bob" }, "Hello")`,
+person.greet.call({ name: "Bob" }, "Hello")
+`,
+      solutionOutput: "Hello, Alice\\nHello, Bob",
     },
     {
       actor: "A",
@@ -58,7 +60,9 @@ person.greet.call({ name: "Bob" }, "Hello")`,
   }
 }
 person.greet.apply({ name: "Charlie" }, ["Hello"])
-console.log(Math.max.apply(null, [4, 9, 2, 11, 6]))`,
+console.log(Math.max.apply(null, [4, 9, 2, 11, 6]))
+`,
+      solutionOutput: "Hello, Charlie\\n11",
     },
     {
       actor: "A",
@@ -83,7 +87,9 @@ console.log(Math.max.apply(null, [4, 9, 2, 11, 6]))`,
   }
 }
 const boundFn = product.applyDiscount.bind(product)
-console.log(boundFn(100))`,
+console.log(boundFn(100))
+`,
+      solutionOutput: "90",
     },
   ],
 }

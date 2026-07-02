@@ -22,7 +22,9 @@ export const FUNCTION_FORMS: Scenario = {
       solution: `function add(a, b) {
   return a + b
 }
-console.log(add(2, 3))`,
+console.log(add(2, 3))
+`,
+      solutionOutput: "5",
       hints: [
         "Use `function add(a, b) { return a + b; }`",
         "Call it: `console.log(add(2, 3));`",
@@ -42,7 +44,9 @@ console.log(add(2, 3))`,
       },
       solution: `// Arrow function with implicit return (no curly braces, no return)
 const add = (a, b) => a + b
-console.log(add(4, 6))`,
+console.log(add(4, 6))
+`,
+      solutionOutput: "10",
       hints: [
         "Arrow function syntax: `const add = (a, b) => a + b;`",
         "No curly braces needed for a single expression — it returns automatically.",
@@ -65,7 +69,9 @@ console.log(add(4, 6))`,
   return "Hello, " + name
 }
 console.log(greet())      // Uses default: stranger
-console.log(greet("Alex"))`,
+console.log(greet("Alex"))
+`,
+      solutionOutput: "Hello, stranger\\nHello, Alex",
       hints: [
         'Function with default: `function greet(name = "stranger") { return `Hello, ${name}`; }`',
         "Call with no arg: `console.log(greet());`",

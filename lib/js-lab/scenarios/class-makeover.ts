@@ -28,7 +28,9 @@ export const CLASS_MAKEOVER: Scenario = {
   }
 }
 
-console.log(new Car("Toyota").honk())`,
+console.log(new Car("Toyota").honk())
+`,
+      solutionOutput: "Toyota says beep",
       hints: [
         "Use: `class Car { constructor(brand) { this.brand = brand; } honk() { return this.brand + \" says beep\"; } }`",
         'Create instance: `const c = new Car("Toyota"); console.log(c.honk());`',
@@ -60,7 +62,9 @@ class Dog extends Animal {
 }
 
 const d = new Dog("Rex", "brown")
-console.log(d.name + " is " + d.color)`,
+console.log(d.name + " is " + d.color)
+`,
+      solutionOutput: "Rex is brown",
       hints: [
         "Parent: `class Animal { constructor(name) { this.name = name; } }`",
         "Child: `class Dog extends Animal { constructor(name, color) { super(name); this.color = color; } }`",
@@ -87,7 +91,9 @@ console.log(d.name + " is " + d.color)`,
 const arr = new MyArray()
 arr.push(10, 20, 30)
 console.log(arr.first())
-console.log(arr.last())`,
+console.log(arr.last())
+`,
+      solutionOutput: "10\\n30",
       hints: [
         "Extend Array: `class MyArray extends Array { first() { return this[0]; } last() { return this[this.length - 1]; } }`",
         "No constructor needed — Array's constructor works automatically.",

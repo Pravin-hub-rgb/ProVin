@@ -28,7 +28,9 @@ export const MATH_MAGICIAN: Scenario = {
       solution: `console.log(Math.round(4.7))   // 5
 console.log(Math.floor(4.7))   // 4
 console.log(Math.ceil(4.7))    // 5
-console.log(Math.trunc(-3.8))  // -3`,
+console.log(Math.trunc(-3.8))  // -3
+`,
+      solutionOutput: "5\\n4\\n5\\n-3",
     },
     {
       actor: "A",
@@ -49,7 +51,9 @@ console.log(Math.trunc(-3.8))  // -3`,
       ],
       solution: `const numbers = [23, 45, 12, 67, 34, 89, 5]
 console.log(Math.max(...numbers))  // 89
-console.log(Math.min(...numbers))  // 5`,
+console.log(Math.min(...numbers))  // 5
+`,
+      solutionOutput: "89\\n5",
     },
     {
       actor: "A",
@@ -70,6 +74,9 @@ console.log(Math.min(...numbers))  // 5`,
       solution: `function calculateCircleArea(radius) {
   return Math.PI * radius ** 2
 }
-console.log(calculateCircleArea(5).toFixed(2))  // "78.54"`,    },
+console.log(calculateCircleArea(5).toFixed(2))  // "78.54"
+`,
+      solutionOutput: "78.54",
+    },
   ],
 }

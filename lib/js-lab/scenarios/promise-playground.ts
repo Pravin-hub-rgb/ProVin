@@ -3,7 +3,7 @@ import { executeCodeAsync } from "../engine"
 
 export const PROMISE_PLAYGROUND: Scenario = {
   id: "promise-playground",
-  phase: "3.1",
+  phase: "3.4",
   title: "Promise Playground",
   description:
     "Understand Promises — create them, chain `.then()` calls, and combine multiple promises with `Promise.all`.",
@@ -25,7 +25,9 @@ export const PROMISE_PLAYGROUND: Scenario = {
         "Expected output: Hello, Promise!",
       ],
       solution: `new Promise((resolve) => resolve("Hello, Promise!"))
-  .then(value => console.log(value))`,
+  .then(value => console.log(value))
+`,
+      solutionOutput: "Hello, Promise!",
     },
     {
       actor: "A",
@@ -45,7 +47,9 @@ export const PROMISE_PLAYGROUND: Scenario = {
       ],
       solution: `Promise.resolve(5)
   .then(val => val * 2)
-  .then(result => console.log(result))`,
+  .then(result => console.log(result))
+`,
+      solutionOutput: "10",
     },
     {
       actor: "A",
@@ -65,6 +69,9 @@ export const PROMISE_PLAYGROUND: Scenario = {
       ],
       solution: `const p1 = Promise.resolve("First")
 const p2 = Promise.resolve("Second")
-Promise.all([p1, p2]).then(results => console.log(results))`,    },
+Promise.all([p1, p2]).then(results => console.log(results))
+`,
+      solutionOutput: "[\"First\",\"Second\"]",
+    },
   ],
 }

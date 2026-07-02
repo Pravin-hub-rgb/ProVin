@@ -34,7 +34,9 @@ export const TYPE_OF_TROUBLE: Scenario = {
       solution: `console.log(typeof "hello")
 console.log(typeof 42)
 console.log(typeof true)
-console.log(typeof null)`,
+console.log(typeof null)
+`,
+      solutionOutput: "string\\nnumber\\nboolean\\nobject",
     },
     {
       actor: "A",
@@ -56,7 +58,9 @@ console.log(typeof null)`,
       solution: `let thing = "hello"
 console.log(typeof thing)
 thing = 42
-console.log(typeof thing)`,
+console.log(typeof thing)
+`,
+      solutionOutput: "string\\nnumber",
     },
     {
       actor: "A",
@@ -73,7 +77,9 @@ console.log(typeof thing)`,
       solution: `let username
 console.log(username)
 username = null
-console.log(username)`,
+console.log(username)
+`,
+      solutionOutput: "undefined\\nnull",
       hints: [
         "Start with `let username; console.log(username);` — this logs `undefined`.",
         "Then set `username = null; console.log(username);`",

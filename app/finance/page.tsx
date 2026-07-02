@@ -6,6 +6,8 @@ import { LectureViewer } from "@/components/lecture-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { cfoSubject } from "@/lib/finance-subjects/cfo.subject"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/finance-data"
+import { getSubjectProgress } from "@/lib/progress-utils"
+import SubjectCard from "@/components/subject-card"
 import styles from "../coding/page.module.css"
 
 // ✅ Proper TypeScript Type Narrowing (No `any`)
@@ -54,6 +56,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState<Record<string, boolean>>({})
+  const [allProgress, setAllProgress] = useState<Record<string, Record<string, boolean>>>({})
 
   const saveProgress = useCallback(async (lectureId: string, completed: boolean) => {
     setProgress(prev => ({ ...prev, [lectureId]: completed }))
@@ -78,6 +81,15 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
       setProgress({})
     }
   }, [currentSubject])
+
+  const financeSubjects: Subject[] = [cfoSubject]
+
+  useEffect(() => {
+    fetch("/api/progress")
+      .then((res) => res.json())
+      .then((data) => setAllProgress(data))
+      .catch(() => {})
+  }, [])
 
   // Handle open phases state when subject changes
   useEffect(() => {
@@ -154,17 +166,23 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <button
-              onClick={() => setSelectedSubject('cfo')}
-              className="group text-left bg-background/50 border border-border/50 rounded-lg overflow-hidden hover:border-primary/50 hover:bg-accent/30 transition-all duration-200"
-            >
-              <div className="p-5">
-                <h3 className="text-base font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
-                  CFO Mindset
-                </h3>
-                <p className="text-xs text-muted-foreground">Complete financial literacy, accounting and business finance for developers</p>
-              </div>
-            </button>
+            {financeSubjects.map((subject) => {
+              const { completed, total, percent } = getSubjectProgress(
+                subject,
+                allProgress[subject.id] ?? {},
+              )
+              return (
+                <SubjectCard
+                  key={subject.id}
+                  title={subject.title}
+                  description={subject.description}
+                  completed={completed}
+                  total={total}
+                  percent={percent}
+                  onClick={() => setSelectedSubject(subject.id)}
+                />
+              )
+            })}
           </div>
         </div>
       </div>

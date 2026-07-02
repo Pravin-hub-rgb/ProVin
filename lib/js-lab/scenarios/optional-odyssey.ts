@@ -27,7 +27,9 @@ export const OPTIONAL_ODYSSEY: Scenario = {
       ],
       solution: `const user = { profile: { name: "Arjun" } }
 console.log(user?.profile?.name)             // "Arjun"
-console.log(user?.profile?.address?.city)     // undefined — no error`,
+console.log(user?.profile?.address?.city)     // undefined — no error
+`,
+      solutionOutput: "Arjun\\nundefined",
     },
     {
       actor: "A",
@@ -49,7 +51,9 @@ console.log(user?.profile?.address?.city)     // undefined — no error`,
       solution: `const input = { value: null, text: "hello", count: 0 }
 console.log(input.value ?? "default")  // "default" — null
 console.log(input.text ?? "default")   // "hello" — not nullish
-console.log(input.count ?? 99)         // 0 — 0 is not nullish`,
+console.log(input.count ?? 99)         // 0 — 0 is not nullish
+`,
+      solutionOutput: "default\\nhello\\n0",
     },
     {
       actor: "A",
@@ -68,6 +72,9 @@ console.log(input.count ?? 99)         // 0 — 0 is not nullish`,
         "Log the result.",
       ],
       solution: `const data = { user: null }
-console.log(data?.user?.name ?? "Guest")  // "Guest" — safely handles null user`,    },
+console.log(data?.user?.name ?? "Guest")  // "Guest" — safely handles null user
+`,
+      solutionOutput: "Guest",
+    },
   ],
 }

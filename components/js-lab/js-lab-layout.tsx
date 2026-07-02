@@ -22,13 +22,13 @@ export function JsLabLayout({
   const s = state as JsLabState
   const [code, setCode] = useState(s.userCode || "// Write your JavaScript here...\n")
 
-  const displayFeedback = done ? "All steps complete!" : s.feedback ?? null
+  const displayFeedback = s.feedback ?? null
 
   function handleRun() {
     onCommand("A", code)
   }
 
-  const instruction = done ? "" : step?.instruction ?? ""
+  const instruction = step?.instruction ?? ""
 
   return (
     <div className="flex-1 min-h-0 flex flex-col p-3 gap-3 overflow-hidden">
@@ -42,13 +42,6 @@ export function JsLabLayout({
             <span className="text-[#3fb950] text-xs font-bold mt-0.5 shrink-0">&#9654;</span>
             <div className="flex-1 min-w-0">
               <p className="text-sm text-[#e6edf3] whitespace-pre-wrap leading-relaxed">{instruction}</p>
-            </div>
-          </>
-        ) : done ? (
-          <>
-            <span className="text-[#3fb950] text-xs font-bold mt-0.5 shrink-0">&#10003;</span>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm text-[#3fb950]">All steps complete!</p>
             </div>
           </>
         ) : null}
@@ -78,7 +71,7 @@ export function JsLabLayout({
               <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
             </svg>
           </button>
-          {step?.solution && <SolutionButton solution={step.solution} color="#2ea043" />}
+          {step?.solution && <SolutionButton solution={step.solution} solutionOutput={step.solutionOutput} color="#2ea043" />}
           {step?.hints && <HintButton hints={step.hints} color="#58a6ff" />}
         </div>
       </div>

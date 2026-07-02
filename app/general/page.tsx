@@ -6,6 +6,8 @@ import { LectureViewer } from "@/components/lecture-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { spokenEnglishSubject } from "@/lib/general-subjects/spoken-english.subject"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/general-data"
+import { getSubjectProgress } from "@/lib/progress-utils"
+import SubjectCard from "@/components/subject-card"
 import styles from "../coding/page.module.css"
 
 const isComponentLecture = (lecture: Lecture | null): lecture is Lecture & { isComponent: true } => {
@@ -48,6 +50,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState<Record<string, boolean>>({})
+  const [allProgress, setAllProgress] = useState<Record<string, Record<string, boolean>>>({})
 
   const saveProgress = useCallback(async (lectureId: string, completed: boolean) => {
     setProgress(prev => ({ ...prev, [lectureId]: completed }))
@@ -72,6 +75,13 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
       setProgress({})
     }
   }, [currentSubject])
+
+  useEffect(() => {
+    fetch("/api/progress")
+      .then((res) => res.json())
+      .then((data) => setAllProgress(data))
+      .catch(() => {})
+  }, [])
 
   useEffect(() => {
     if (currentSubject?.phases) {
@@ -127,20 +137,23 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {subjects.map((subject) => (
-              <button
-                key={subject.id}
-                onClick={() => setSelectedSubject(subject.id)}
-                className="group text-left bg-background/50 border border-border/50 rounded-lg overflow-hidden hover:border-primary/50 hover:bg-accent/30 transition-all duration-200"
-              >
-                <div className="p-5">
-                  <h3 className="text-base font-medium text-foreground mb-1 group-hover:text-primary transition-colors">
-                    {subject.title}
-                  </h3>
-                  <p className="text-xs text-muted-foreground">{subject.description}</p>
-                </div>
-              </button>
-            ))}
+            {subjects.map((subject) => {
+              const { completed, total, percent } = getSubjectProgress(
+                subject,
+                allProgress[subject.id] ?? {},
+              )
+              return (
+                <SubjectCard
+                  key={subject.id}
+                  title={subject.title}
+                  description={subject.description}
+                  completed={completed}
+                  total={total}
+                  percent={percent}
+                  onClick={() => setSelectedSubject(subject.id)}
+                />
+              )
+            })}
           </div>
         </div>
       </div>

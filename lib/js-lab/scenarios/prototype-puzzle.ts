@@ -33,7 +33,9 @@ const dog = {
 }
 Object.setPrototypeOf(dog, animal)
 console.log(dog.bark())      // own method
-console.log(dog.breathe())   // inherited from prototype`,
+console.log(dog.breathe())   // inherited from prototype
+`,
+      solutionOutput: "woof\\nbreathing",
     },
     {
       actor: "A",
@@ -58,7 +60,9 @@ Person.prototype.greet = function() {
   return "Hi, I'm " + this.name
 }
 const p = new Person("Arjun")
-console.log(p.greet())`,
+console.log(p.greet())
+`,
+      solutionOutput: "Hi, I'm Arjun",
     },
     {
       actor: "A",
@@ -89,6 +93,9 @@ c1.increment()
 c1.increment()
 c2.increment()
 console.log(c1.count)  // 2
-console.log(c2.count)  // 1`,    },
+console.log(c2.count)  // 1
+`,
+      solutionOutput: "2\\n1",
+    },
   ],
 }

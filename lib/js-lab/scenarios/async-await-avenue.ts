@@ -3,7 +3,7 @@ import { executeCodeAsync } from "../engine"
 
 export const ASYNC_AWAIT_AVENUE: Scenario = {
   id: "async-await-avenue",
-  phase: "3.2",
+  phase: "3.5",
   title: "Async Await Avenue",
   description:
     "Learn async/await — write asynchronous code that reads like synchronous code, and handle errors gracefully.",
@@ -26,7 +26,9 @@ export const ASYNC_AWAIT_AVENUE: Scenario = {
 // Must use await inside an async context
 ;(async () => {
   console.log(await getGreeting())
-})()`,
+})()
+`,
+      solutionOutput: "Hello, Async!",
       hints: [
         "Define: `async function getGreeting() { return \"Hello, Async!\"; }`",
         "Use an async IIFE to call and await: `;(async () => { const msg = await getGreeting(); console.log(msg); })()`",
@@ -57,7 +59,9 @@ export const ASYNC_AWAIT_AVENUE: Scenario = {
   } catch (e) {
     console.log(e.message)
   }
-})()`,
+})()
+`,
+      solutionOutput: "Cannot divide by zero",
       hints: [
         "Inside the async function: `if (b === 0) throw new Error(\"Cannot divide by zero\");`",
         "Call with try/catch: `try { await safeDivide(10, 0); } catch (e) { console.log(e.message); }`",
@@ -90,7 +94,9 @@ async function countdown() {
   console.log(1)
 }
 
-countdown()`,
+countdown()
+`,
+      solutionOutput: "3\\n2\\n1",
       hints: [
         "Create delay: `function delay(ms) { return new Promise(resolve => setTimeout(resolve, ms)); }`",
         "Countdown: `async function countdown() { console.log(3); await delay(1000); console.log(2); await delay(1000); console.log(1); }`",

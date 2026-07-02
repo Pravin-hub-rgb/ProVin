@@ -27,7 +27,9 @@ export const SET_SPOTLIGHT: Scenario = {
       solution: `const numbers = [1, 2, 2, 3, 4, 4, 5, 5, 5]
 const unique = new Set(numbers)
 const result = [...unique]
-console.log(result)`,
+console.log(result)
+`,
+      solutionOutput: "[\\n  1,\\n  2,\\n  3,\\n  4,\\n  5\\n]",
     },
     {
       actor: "A",
@@ -49,7 +51,9 @@ console.log(result)`,
 const b = [4, 5, 6, 7, 8]
 const setB = new Set(b)
 const intersection = a.filter(item => setB.has(item))
-console.log(intersection)`,
+console.log(intersection)
+`,
+      solutionOutput: "[\\n  4,\\n  5\\n]",
     },
     {
       actor: "A",
@@ -71,6 +75,9 @@ console.log(intersection)`,
 const exclude = [2, 4, 6, 8]
 const excludeSet = new Set(exclude)
 const difference = all.filter(item => !excludeSet.has(item))
-console.log(difference)`,    },
+console.log(difference)
+`,
+      solutionOutput: "[\\n  1,\\n  3,\\n  5,\\n  7\\n]",
+    },
   ],
 }

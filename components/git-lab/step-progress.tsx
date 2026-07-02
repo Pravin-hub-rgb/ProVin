@@ -55,21 +55,23 @@ export function StepProgress({ scenario, currentStep, completedMask = 0, actorLa
                 </svg>
               )}
             </span>
-            <span
-              className="px-1.5 py-0.5 rounded text-xs"
-              style={{
-                background: s.actor === "A" ? "#1f6feb11" : "#3d1f6f11",
-              }}
-            >
+            {(s.actor === "A" ? labels.A : labels.B) && (
               <span
-                className="mr-1"
+                className="px-1.5 py-0.5 rounded text-xs"
                 style={{
-                  color: s.actor === "A" ? "#58a6ff" : "#bc8cff",
+                  background: s.actor === "A" ? "#1f6feb11" : "#3d1f6f11",
                 }}
               >
-                {s.actor === "A" ? labels.A : labels.B}
+                <span
+                  className="mr-1"
+                  style={{
+                    color: s.actor === "A" ? "#58a6ff" : "#bc8cff",
+                  }}
+                >
+                  {s.actor === "A" ? labels.A : labels.B}
+                </span>
               </span>
-            </span>
+            )}
             {i < scenario.steps.length - 1 && (
               <span className="text-[#8b949e] mx-1 text-sm font-semibold">{">"}</span>
             )}

@@ -27,7 +27,9 @@ export const EQUALITY_CRASH_COURSE: Scenario = {
       ],
       solution: `// Strict equality checks value AND type - no coercion
 console.log("5" === 5)    // string vs number => false
-console.log(0 === false)  // number vs boolean => false`,
+console.log(0 === false)  // number vs boolean => false
+`,
+      solutionOutput: "false\\nfalse",
     },
     {
       actor: "A",
@@ -48,7 +50,9 @@ console.log(0 === false)  // number vs boolean => false`,
       ],
       solution: `// Loose equality converts types before comparing
 console.log("5" == 5)     // "5" becomes 5 => true
-console.log(0 == false)   // false becomes 0 => true`,
+console.log(0 == false)   // false becomes 0 => true
+`,
+      solutionOutput: "true\\ntrue",
     },
     {
       actor: "A",
@@ -64,7 +68,9 @@ console.log(0 == false)   // false becomes 0 => true`,
       },
       solution: `// Special case: null and undefined are only == to each other
 console.log(null == undefined)   // true (special rule)
-console.log(null === undefined)  // false (different types)`,
+console.log(null === undefined)  // false (different types)
+`,
+      solutionOutput: "true\\nfalse",
       hints: [
         "First compare with ==: `console.log(null == undefined)`",
         "Then with ===: `console.log(null === undefined)`",

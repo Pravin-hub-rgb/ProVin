@@ -15,6 +15,9 @@ import { ARRAY_ARSENAL } from "./array-arsenal"
 import { DESTRUCTURE_DECISION } from "./destructure-decision"
 import { SPREAD_SPOTLIGHT } from "./spread-spotlight"
 import { OPTIONAL_ODYSSEY } from "./optional-odyssey"
+import { SYNC_VS_ASYNC } from "./sync-vs-async"
+import { EVENT_LOOP_EXPLORER } from "./event-loop-explorer"
+import { CALLBACK_CANYON } from "./callback-canyon"
 import { PROMISE_PLAYGROUND } from "./promise-playground"
 import { ASYNC_AWAIT_AVENUE } from "./async-await-avenue"
 import { NUMBER_NINJA } from "./number-ninja"
@@ -25,7 +28,6 @@ import { SET_SPOTLIGHT } from "./set-spotlight"
 import { JSON_JOURNEY } from "./json-journey"
 import { STRING_SYMPHONY } from "./string-symphony"
 import { REGEX_RIDDLE } from "./regex-riddle"
-import { CALLBACK_CANYON } from "./callback-canyon"
 import { IIFE_INSIGHTS } from "./iife-insights"
 import { CURRYING_QUEST } from "./currying-quest"
 
@@ -45,9 +47,11 @@ export const scenarios: Scenario[] = [
   PROTOTYPE_PUZZLE,
   CLASS_MAKEOVER,
   // Phase 3 — Async
+  SYNC_VS_ASYNC,
+  EVENT_LOOP_EXPLORER,
+  CALLBACK_CANYON,
   PROMISE_PLAYGROUND,
   ASYNC_AWAIT_AVENUE,
-  CALLBACK_CANYON,
   // Phase 4 — Arrays & Functional
   ARRAY_ARSENAL,
   DESTRUCTURE_DECISION,

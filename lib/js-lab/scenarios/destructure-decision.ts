@@ -24,7 +24,9 @@ export const DESTRUCTURE_DECISION: Scenario = {
 // Swap using array destructuring — no temp variable needed
 ;[a, b] = [b, a]
 console.log(a)
-console.log(b)`,
+console.log(b)
+`,
+      solutionOutput: "10\\n5",
       hints: [
         "Use `[a, b] = [b, a]` — this creates a temporary array and destructures it back.",
         "No need for a temp variable like `let temp = a; a = b; b = temp;`",
@@ -47,7 +49,9 @@ console.log(b)`,
 // Rename name to fullName during destructuring
 const { name: fullName, city } = user
 console.log(fullName)
-console.log(city)`,
+console.log(city)
+`,
+      solutionOutput: "Arjun\\nMumbai",
       hints: [
         "Destructure with renaming: `const { name: fullName, city } = user`",
         "Now `fullName` holds the value of `user.name`.",
@@ -70,7 +74,9 @@ console.log(city)`,
 // Nested destructuring pulls firstName and lastName from 3 levels deep
 const { user: { profile: { firstName, lastName } } } = data
 console.log(firstName)
-console.log(lastName)`,
+console.log(lastName)
+`,
+      solutionOutput: "Neha\\nShah",
       hints: [
         "Nested destructuring: `const { user: { profile: { firstName, lastName } } } = data`",
         "This extracts firstName and lastName from three levels deep.",

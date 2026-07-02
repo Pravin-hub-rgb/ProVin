@@ -27,7 +27,9 @@ export const SPREAD_SPOTLIGHT: Scenario = {
       solution: `const arr1 = [1, 2, 3]
 const arr2 = [4, 5, 6]
 const combined = [...arr1, ...arr2]
-console.log(combined)`,
+console.log(combined)
+`,
+      solutionOutput: "[\\n  1,\\n  2,\\n  3,\\n  4,\\n  5,\\n  6\\n]",
     },
     {
       actor: "A",
@@ -53,7 +55,9 @@ console.log(combined)`,
       solution: `const defaults = { theme: "light", fontSize: 14 }
 const overrides = { theme: "dark", showSidebar: true }
 const config = { ...defaults, ...overrides }
-console.log(config)`,
+console.log(config)
+`,
+      solutionOutput: "{\\n  \"theme\": \"dark\",\\n  \"fontSize\": 14,\\n  \"showSidebar\": true\\n}",
     },
     {
       actor: "A",
@@ -74,6 +78,9 @@ console.log(config)`,
       solution: `function sumAll(...nums) {
   return nums.reduce((a, b) => a + b, 0)
 }
-console.log(sumAll(1, 2, 3, 4, 5))`,    },
+console.log(sumAll(1, 2, 3, 4, 5))
+`,
+      solutionOutput: "15",
+    },
   ],
 }

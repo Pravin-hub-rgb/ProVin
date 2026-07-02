@@ -30,7 +30,9 @@ scores.set("Alice", 95)
 scores.set("Bob", 82)
 scores.set("Charlie", 73)
 console.log(scores.get("Alice"))  // 95
-console.log(scores.size)          // 3`,
+console.log(scores.size)          // 3
+`,
+      solutionOutput: "95\\n3",
     },
     {
       actor: "A",
@@ -53,7 +55,9 @@ const key1 = { id: 1 }
 const key2 = { id: 2 }
 m.set(key1, "object-value-1")
 m.set(key2, "object-value-2")
-console.log(m.get(key1))  // "object-value-1"`,
+console.log(m.get(key1))  // "object-value-1"
+`,
+      solutionOutput: "object-value-1",
     },
     {
       actor: "A",
@@ -84,6 +88,9 @@ console.log(m.get(key1))  // "object-value-1"`,
   ["charlie", 35]
 ])
 users.forEach((age, name) => console.log(name + " is " + age + " years old"))
-console.log(users.size)  // 3`,    },
+console.log(users.size)  // 3
+`,
+      solutionOutput: "alice is 25 years old\\nbob is 30 years old\\ncharlie is 35 years old\\n3",
+    },
   ],
 }
