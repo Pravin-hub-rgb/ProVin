@@ -74,7 +74,7 @@ export interface LabModule {
     state: unknown,
     who: "A" | "B",
     parsed: { type: string } & Record<string, unknown>
-  ) => { newState: unknown; result: CommandResult }
+  ) => { newState: unknown; result: CommandResult } | Promise<{ newState: unknown; result: CommandResult }>
   getScenario: (id: string) => Scenario | undefined
   scenarios: Scenario[]
   defaultScenarioId: string

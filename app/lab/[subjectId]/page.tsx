@@ -180,7 +180,7 @@ function SubjectLabPageInner({
 
       addLine(who, { text: `$ ${raw}`, type: "cmd" })
 
-      const { newState, result } = lab.executeCommand(state, who, parsed)
+      const { newState, result } = await lab.executeCommand(state, who, parsed)
 
       const matched = step && step.actor === who && (await step.match(parsed))
 

@@ -20,7 +20,7 @@ function createMockConsole(
 ): { log: (...args: unknown[]) => void; error: (...args: unknown[]) => void } {
   return {
     log: (...args: unknown[]) => {
-      output.current += args.map((a) => (typeof a === "object" ? JSON.stringify(a, null, 2) : String(a))).join(" ") + "\n"
+      output.current += args.map((a) => (typeof a === "object" ? JSON.stringify(a) : String(a))).join(" ") + "\n"
     },
     error: (...args: unknown[]) => {
       output.current += "Error: " + args.map(String).join(" ") + "\n"
@@ -80,18 +80,18 @@ export async function executeCodeAsync(code: string): Promise<{ output: string; 
   }
 }
 
-export function executeCommand(
+export async function executeCommand(
   state: JsLabState,
   _who: "A" | "B",
   parsed: { type: string } & Record<string, unknown>,
-): { newState: JsLabState; result: CommandResult } {
+): Promise<{ newState: JsLabState; result: CommandResult }> {
   const newState = cloneState(state)
 
   switch (parsed.type) {
     case "run": {
       const code = parsed.code as string
       newState.userCode = code
-      const { output, error } = executeCode(code)
+      const { output, error } = await executeCodeAsync(code)
       newState.lastOutput = output
       newState.lastError = error
       newState.runCount++
