@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 85" fill="none">
+  <rect x="40" y="4" width="40" height="16" rx="3" fill="#1e3a5f" stroke="#60a5fa" stroke-width="1"/>
+  <text x="60" y="15" text-anchor="middle" font-size="9" font-weight="700" font-family="monospace" fill="#e2e8f0">div</text>
+  <line x1="60" y1="20" x2="30" y2="34" stroke="#475569" stroke-width="1"/>
+  <line x1="60" y1="20" x2="90" y2="34" stroke="#475569" stroke-width="1"/>
+  <rect x="12" y="34" width="36" height="16" rx="3" fill="#1e3a5f" stroke="#60a5fa" stroke-width="1"/>
+  <text x="30" y="45" text-anchor="middle" font-size="9" font-weight="700" font-family="monospace" fill="#e2e8f0">h1</text>
+  <rect x="72" y="34" width="36" height="16" rx="3" fill="#1e3a5f" stroke="#60a5fa" stroke-width="1"/>
+  <text x="90" y="45" text-anchor="middle" font-size="9" font-weight="700" font-family="monospace" fill="#e2e8f0">p</text>
+  <line x1="30" y1="50" x2="30" y2="64" stroke="#475569" stroke-width="1"/>
+  <line x1="90" y1="50" x2="90" y2="64" stroke="#475569" stroke-width="1"/>
+  <rect x="12" y="64" width="36" height="16" rx="3" fill="#0f2440" stroke="#475569" stroke-width="1"/>
+  <text x="30" y="75" text-anchor="middle" font-size="8" font-weight="600" font-family="monospace" fill="#fbbf24">Hello</text>
+  <rect x="72" y="64" width="36" height="16" rx="3" fill="#0f2440" stroke="#475569" stroke-width="1"/>
+  <text x="90" y="75" text-anchor="middle" font-size="8" font-weight="600" font-family="monospace" fill="#fbbf24">World</text>
+</svg>

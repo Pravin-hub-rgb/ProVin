@@ -58,6 +58,18 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.7 TypeScript Warm-up Plus Vite Setup.md",
         },
       ],
+      quizzes: [
+        {
+          id: "quiz-0.0",
+          title: "❓ 0.0 Quiz",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.0 Quiz.md",
+        },
+        {
+          id: "quiz-0.1",
+          title: "❓ 0.1 Quiz",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.1 Quiz.md",
+        },
+      ],
     },
   ],
 };

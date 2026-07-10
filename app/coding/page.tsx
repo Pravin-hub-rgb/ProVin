@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
+import { ChevronDown, ChevronRight, Book, FileText, HelpCircle } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
+import { QuizViewer } from "@/components/quiz-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { subjects, loadMarkdownContent, type Subject, type Lecture, type LectureGroup } from "@/lib/coding-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
@@ -36,6 +37,12 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
           currentLecture = found
           break
         }
+        // Check quizzes inside phase
+        const foundQuiz = (phase as any).quizzes?.find((q: Lecture) => q.id === selectedLecture)
+        if (foundQuiz) {
+          currentLecture = foundQuiz
+          break
+        }
         // Also check nested groups inside phase
         if (!currentLecture && (phase as any).groups) {
           for (const subGroup of (phase as any).groups) {
@@ -50,6 +57,18 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
       }
     }
   }
+  
+  // Check if current selection is a quiz
+  let isQuiz = false
+  if (currentSubject?.phases && currentLecture) {
+    for (const phase of currentSubject.phases) {
+      if ((phase as any).quizzes?.find((q: Lecture) => q.id === selectedLecture)) {
+        isQuiz = true
+        break
+      }
+    }
+  }
+
   const [sidebarWidth, setSidebarWidth] = useState(300)
   const [openPhases, setOpenPhases] = useState<Record<string, boolean>>({})
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({})
@@ -97,11 +116,13 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     if (currentSubject?.phases) {
       const initialState: Record<string, boolean> = {}
       
-      // Find which phase contains the currently selected lecture
+      // Find which phase contains the currently selected lecture/quiz
       let activePhaseId: string | null = null
       if (selectedLecture) {
         for (const phase of currentSubject.phases) {
-          if (phase.lectures.some(l => l.id === selectedLecture)) {
+          const inLectures = phase.lectures.some(l => l.id === selectedLecture)
+          const inQuizzes = (phase as any).quizzes?.some((q: any) => q.id === selectedLecture)
+          if (inLectures || inQuizzes) {
             activePhaseId = phase.id
             break
           }
@@ -324,27 +345,57 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                       ))}
                       
                       {/* Main lectures after groups */}
-                      {phase.lectures.map((lecture) => (
-                        <button
-                          key={lecture.id}
-                          onClick={() => setSelectedLecture(lecture.id)}
-                          className={`w-full px-6 py-2.5 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                            selectedLecture === lecture.id 
-                              ? "bg-primary/15 text-primary" 
-                              : "text-muted-foreground hover:text-foreground"
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={progress[lecture.id] ?? false}
-                            onChange={(e) => saveProgress(lecture.id, e.target.checked)}
-                            onClick={(e) => e.stopPropagation()}
-                            className="accent-primary"
-                          />
-                          <FileText className="w-3.5 h-3.5" />
-                          {lecture.title}
-                        </button>
-                      ))}
+                      {phase.lectures.map((lecture) => {
+                        const lectureSuffix = lecture.id.replace(/^[^-]+-/, "")
+                        const relatedQuizzes = (phase as any).quizzes?.filter(
+                          (q: Lecture) => q.id.replace(/^[^-]+-/, "") === lectureSuffix
+                        )
+                        return (
+                          <div key={lecture.id}>
+                            <button
+                              onClick={() => setSelectedLecture(lecture.id)}
+                              className={`w-full px-6 py-2.5 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
+                                selectedLecture === lecture.id 
+                                  ? "bg-primary/15 text-primary" 
+                                  : "text-muted-foreground hover:text-foreground"
+                              }`}
+                            >
+                              <input
+                                type="checkbox"
+                                checked={progress[lecture.id] ?? false}
+                                onChange={(e) => saveProgress(lecture.id, e.target.checked)}
+                                onClick={(e) => e.stopPropagation()}
+                                className="accent-primary"
+                              />
+                              <FileText className="w-3.5 h-3.5" />
+                              {lecture.title}
+                            </button>
+
+                            {/* Quiz nested under lecture */}
+                            {relatedQuizzes?.map((quiz: Lecture) => (
+                              <button
+                                key={quiz.id}
+                                onClick={() => setSelectedLecture(quiz.id)}
+                                className={`w-full pl-14 pr-6 py-1.5 text-left text-xs hover:bg-accent/50 transition-colors flex items-center gap-2.5 border-l-2 border-border/40 ml-8 ${
+                                  selectedLecture === quiz.id
+                                    ? "bg-primary/10 text-primary border-primary/40"
+                                    : "text-muted-foreground hover:text-foreground border-border/30"
+                                }`}
+                              >
+                                <input
+                                  type="checkbox"
+                                  checked={progress[quiz.id] ?? false}
+                                  onChange={(e) => saveProgress(quiz.id, e.target.checked)}
+                                  onClick={(e) => e.stopPropagation()}
+                                  className="accent-primary scale-75"
+                                />
+                                <HelpCircle className="w-3 h-3" />
+                                {quiz.title}
+                              </button>
+                            ))}
+                          </div>
+                        )
+                      })}
                     </div>
                   )}
                 </div>
@@ -400,9 +451,11 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
                   <p className="mt-4 text-muted-foreground">Loading notes...</p>
                 </div>
+               ) : isQuiz ? (
+                  <QuizViewer content={markdownContent} />
                ) : (
-                 <LectureViewer content={markdownContent} />
-              )}
+                  <LectureViewer content={markdownContent} />
+               )}
             </div>
           ) : (
             <div className="max-w-4xl mx-auto text-center py-16">

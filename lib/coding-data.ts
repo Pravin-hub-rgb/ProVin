@@ -34,6 +34,7 @@ export type LectureGroup = {
   id: string;
   title: string;
   lectures: Lecture[];
+  quizzes?: Lecture[];
   openByDefault?: boolean;
   groups?: LectureGroup[];
 };

@@ -64,5 +64,11 @@
     "js-lec15": true,
     "js-lec16": true,
     "js-lec17": false
+  },
+  "react": {
+    "react-0.0": true,
+    "quiz-0.0": true,
+    "react-0.1": true,
+    "quiz-0.1": true
   }
 }
