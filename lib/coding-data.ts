@@ -48,6 +48,7 @@ import { webdevSubject } from "./subjects/webdev.subject";
 import { iknowcomputersSubject } from "./subjects/iknowcomputers.subject";
 import { agenticaiSubject } from "./subjects/agenticai.subject";
 import { gitgithubSubject } from "./subjects/gitgithub.subject";
+import { reactSubject } from "./subjects/react.subject";
 
 export const subjects: Subject[] = [
   pythonSubject,
@@ -56,13 +57,14 @@ export const subjects: Subject[] = [
   iknowcomputersSubject,
   agenticaiSubject,
   gitgithubSubject,
+  reactSubject,
   {
     id: "typescript",
     title: "TypeScript",
     description: "Type safe JavaScript",
     lectures: [],
   },
-] as const;
+];
 
 /**
  * Helper function to load markdown content from API endpoint

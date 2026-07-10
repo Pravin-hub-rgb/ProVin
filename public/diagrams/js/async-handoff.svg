@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 690" fill="none">
+  <defs>
+    <marker id="arrow-right" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrow-right-orange" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#fb923c"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.25"/>
+    </filter>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="stackBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e3a5f"/>
+      <stop offset="100%" stop-color="#0f2440"/>
+    </linearGradient>
+    <linearGradient id="apiBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e40af"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="queueBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#166534"/>
+      <stop offset="100%" stop-color="#14532d"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="690" fill="url(#bgGrad)" rx="10"/>
+
+  <!-- TITLE -->
+  <text x="500" y="35" text-anchor="middle" font-size="18" font-weight="700" font-family="sans-serif" fill="#f8fafc">Phase 2 — The Async Handoff</text>
+  <text x="500" y="55" text-anchor="middle" font-size="13" font-family="sans-serif" fill="#cbd5e1">How <tspan fill="#fbbf24" font-family="monospace" font-weight="600">setTimeout</tspan> leaves JavaScript and goes to the browser</text>
+
+  <!-- =============== STEP C: setTimeout enters Stack =============== -->
+  <g transform="translate(0, 80)">
+    <rect x="20" y="0" width="960" height="260" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+
+    <rect x="20" y="0" width="6" height="260" rx="3" fill="#f59e0b"/>
+
+    <circle cx="44" cy="30" r="16" fill="#f59e0b" stroke="#fbbf24" stroke-width="2"/>
+    <text x="44" y="35" text-anchor="middle" font-size="15" font-weight="700" font-family="sans-serif" fill="#fff">C</text>
+
+    <text x="70" y="26" font-size="14" font-weight="600" font-family="sans-serif" fill="#fde68a">Line 2: setTimeout(...) enters the Call Stack</text>
+    <text x="70" y="46" font-size="12" font-family="sans-serif" fill="#cbd5e1">JS reads setTimeout, pushes it onto the Call Stack. Browser is ready to receive the timer.</text>
+
+    <!-- Call Stack -->
+    <rect x="210" y="10" width="200" height="105" rx="8" fill="url(#stackBg)" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+    <text x="310" y="28" text-anchor="middle" font-size="14" font-weight="700" font-family="sans-serif" fill="#fde68a">✦ Call Stack</text>
+    <text x="310" y="44" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">(2 items on stack)</text>
+
+    <rect x="230" y="56" width="160" height="26" rx="5" fill="#1e3a5f" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="310" y="74" text-anchor="middle" font-size="12" font-family="monospace" fill="#f8fafc">setTimeout(3000)</text>
+
+    <rect x="230" y="84" width="160" height="26" rx="5" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="310" y="102" text-anchor="middle" font-size="12" font-family="monospace" fill="#f8fafc">(global context)</text>
+
+    <!-- Arrow from stack to Web APIs -->
+    <path d="M410,80 L440,80" stroke="#fbbf24" stroke-width="2.5" marker-end="url(#arrow-right)"/>
+    <text x="425" y="72" text-anchor="middle" font-size="11" font-weight="600" font-family="sans-serif" fill="#fbbf24">ready to handoff</text>
+
+    <!-- Web APIs -->
+    <rect x="450" y="10" width="200" height="105" rx="8" fill="url(#apiBg)" stroke="#1e3a8a" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="470" y="67" width="160" height="30" rx="5" fill="#0f2440" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,3"/>
+    <text x="530" y="86" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(waiting)</text>
+
+    <!-- Queue -->
+    <rect x="650" y="10" width="200" height="105" rx="8" fill="url(#queueBg)" stroke="#14532d" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="670" y="67" width="160" height="30" rx="5" fill="#0f2440" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,3"/>
+    <text x="750" y="86" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(empty)</text>
+
+    <!-- Event Loop -->
+    <rect x="870" y="25" width="100" height="55" rx="6" fill="#1e293b" stroke="#f59e0b" stroke-width="1"/>
+    <text x="920" y="45" text-anchor="middle" font-size="10" font-weight="600" font-family="sans-serif" fill="#fde68a">Event Loop</text>
+    <text x="920" y="63" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#fbbf24">stack not empty</text>
+
+    <text x="920" y="120" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">Output:</text>
+    <text x="920" y="137" text-anchor="middle" font-size="12" font-family="monospace" fill="#60a5fa">1</text>
+
+    <!-- Code -->
+    <rect x="20" y="155" width="960" height="85" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <rect x="20" y="155" width="6" height="35" rx="3" fill="#f59e0b"/>
+    <text x="35" y="175" font-size="12" font-weight="600" font-family="sans-serif" fill="#cbd5e1">Now executing:</text>
+    <text x="35" y="197" font-size="13" font-family="monospace" fill="#cbd5e1">1: console.log("1")</text>
+    <text x="280" y="197" font-size="13" font-family="monospace" fill="#f8fafc" font-weight="600">2: setTimeout(() =&gt; console.log(<tspan fill="#fbbf24">"2"</tspan>), 3000);</text>
+    <text x="690" y="197" font-size="13" font-family="monospace" fill="#cbd5e1">3: console.log("3")</text>
+    <text x="35" y="230" font-size="11" font-family="sans-serif" fill="#cbd5e1">⏳ setTimeout is on the stack. JS is about to hand it off to the browser...</text>
+  </g>
+
+  <!-- =============== STEP D: Handoff to Web APIs =============== -->
+  <g transform="translate(0, 355)">
+    <rect x="20" y="0" width="960" height="300" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+
+    <rect x="20" y="0" width="6" height="300" rx="3" fill="#fb923c"/>
+
+    <circle cx="44" cy="30" r="16" fill="#fb923c" stroke="#fdba74" stroke-width="2"/>
+    <text x="44" y="35" text-anchor="middle" font-size="15" font-weight="700" font-family="sans-serif" fill="#fff">D</text>
+
+    <text x="70" y="26" font-size="14" font-weight="600" font-family="sans-serif" fill="#fdba74">Handoff Complete: setTimeout → Web APIs</text>
+    <text x="70" y="46" font-size="12" font-family="sans-serif" fill="#cbd5e1">JS hands the timer to the browser. The browser manages the 3-second countdown. Stack is now free.</text>
+
+    <!-- Stack empty -->
+    <rect x="210" y="10" width="200" height="105" rx="8" fill="url(#stackBg)" stroke="#1e3a5f" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="230" y="67" width="160" height="30" rx="5" fill="#0f2440" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,3"/>
+    <text x="310" y="86" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(empty — stack clear)</text>
+
+    <!-- Handoff arrow -->
+    <path d="M380,75 L440,75" stroke="#fb923c" stroke-width="3" marker-end="url(#arrow-right-orange)"/>
+    <text x="410" y="65" text-anchor="middle" font-size="12" font-weight="700" font-family="sans-serif" fill="#fb923c">① Handoff</text>
+    <text x="410" y="128" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">"You handle it, browser!"</text>
+
+    <!-- Web APIs: timer active -->
+    <rect x="450" y="10" width="200" height="105" rx="8" fill="url(#apiBg)" stroke="#fb923c" stroke-width="2" filter="url(#shadow)"/>
+    <text x="550" y="28" text-anchor="middle" font-size="14" font-weight="700" font-family="sans-serif" fill="#fdba74">⚡ Web APIs</text>
+    <text x="550" y="48" text-anchor="middle" font-size="12" font-weight="600" font-family="monospace" fill="#fbbf24">setTimeout(callback, 3000)</text>
+    <text x="550" y="68" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">callback: () =&gt; console.log("2")</text>
+    <rect x="470" y="85" width="160" height="8" rx="4" fill="#1e3a8a"/>
+    <rect x="470" y="85" width="160" height="8" rx="4" fill="#fb923c" opacity="0.9"/>
+    <text x="550" y="105" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">⏳ 3s timer counting down...</text>
+
+    <!-- Queue -->
+    <rect x="650" y="10" width="200" height="105" rx="8" fill="url(#queueBg)" stroke="#14532d" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="670" y="67" width="160" height="30" rx="5" fill="#0f2440" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,3"/>
+    <text x="750" y="86" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(empty)</text>
+
+    <!-- Event Loop -->
+    <rect x="870" y="25" width="100" height="55" rx="6" fill="#1e293b" stroke="#fb923c" stroke-width="1"/>
+    <text x="920" y="45" text-anchor="middle" font-size="10" font-weight="600" font-family="sans-serif" fill="#fdba74">Event Loop</text>
+    <text x="920" y="63" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#fbbf24">⏳ waiting...</text>
+
+    <text x="920" y="120" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">Output:</text>
+    <text x="920" y="138" text-anchor="middle" font-size="12" font-family="monospace" fill="#60a5fa">1</text>
+
+    <!-- Code -->
+    <rect x="20" y="160" width="960" height="120" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <rect x="20" y="160" width="6" height="35" rx="3" fill="#fb923c"/>
+    <text x="35" y="182" font-size="12" font-weight="600" font-family="sans-serif" fill="#cbd5e1">Handoff complete:</text>
+    <text x="35" y="205" font-size="13" font-family="monospace" fill="#cbd5e1">1: console.log("1")</text>
+    <text x="280" y="205" font-size="13" font-family="monospace" fill="#f8fafc" font-weight="600">2: setTimeout(...) <tspan fill="#fb923c">→ handed off to browser ✓</tspan></text>
+    <text x="690" y="205" font-size="13" font-family="monospace" fill="#cbd5e1">3: console.log("3")</text>
+    <text x="35" y="240" font-size="12" font-family="sans-serif" fill="#cbd5e1">⏳ Timer is now running in the browser. The Call Stack is free. JS will continue to line 3 next.</text>
+    <text x="35" y="260" font-size="12" font-family="sans-serif" fill="#cbd5e1">👉 The key moment: <tspan fill="#fbbf24" font-weight="600">JS is not waiting for the timer.</tspan> It handed it off and moved on.</text>
+  </g>
+</svg>

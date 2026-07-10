@@ -219,7 +219,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
           <div className="p-6 pb-20">
             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <Book className="w-5 h-5 text-primary" />
-              Theory Notes
+              {currentSubject.title}
             </h2>
             
             <div className="space-y-3">

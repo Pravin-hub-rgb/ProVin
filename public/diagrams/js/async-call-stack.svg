@@ -1,0 +1,142 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" fill="none">
+  <defs>
+    <marker id="arrow-up" markerWidth="8" markerHeight="6" refX="4" refY="6" orient="auto">
+      <polygon points="0,6 4,0 8,6" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrow-right" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0,0 10,3.5 0,7" fill="#fbbf24"/>
+    </marker>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.25"/>
+    </filter>
+    <linearGradient id="bgGrad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+    <linearGradient id="stackBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e3a5f"/>
+      <stop offset="100%" stop-color="#0f2440"/>
+    </linearGradient>
+    <linearGradient id="apiBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e40af"/>
+      <stop offset="100%" stop-color="#1e3a8a"/>
+    </linearGradient>
+    <linearGradient id="queueBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#166534"/>
+      <stop offset="100%" stop-color="#14532d"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1000" height="680" fill="url(#bgGrad)" rx="10"/>
+
+  <!-- TITLE -->
+  <text x="500" y="35" text-anchor="middle" font-size="18" font-weight="700" font-family="sans-serif" fill="#f8fafc">Phase 1 — The Call Stack in Action</text>
+  <text x="500" y="55" text-anchor="middle" font-size="13" font-family="sans-serif" fill="#cbd5e1">Tracing code: <tspan fill="#fbbf24" font-family="monospace" font-weight="600">console.log("1")</tspan> then <tspan fill="#fbbf24" font-family="monospace" font-weight="600">setTimeout(...)</tspan></text>
+
+  <!-- =============== STEP A: Initial State =============== -->
+  <g transform="translate(0, 80)">
+    <rect x="20" y="0" width="960" height="260" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="1"/>
+
+    <!-- Step badge -->
+    <circle cx="44" cy="30" r="16" fill="#334155" stroke="#cbd5e1" stroke-width="2"/>
+    <text x="44" y="35" text-anchor="middle" font-size="15" font-weight="700" font-family="sans-serif" fill="#e2e8f0">A</text>
+
+    <text x="70" y="26" font-size="14" font-weight="600" font-family="sans-serif" fill="#e2e8f0">Initial State</text>
+    <text x="70" y="46" font-size="12" font-family="sans-serif" fill="#cbd5e1">Code loaded. All components empty and ready.</text>
+
+    <!-- Call Stack -->
+    <rect x="210" y="10" width="200" height="105" rx="8" fill="url(#stackBg)" stroke="#1e3a5f" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="310" y="32" text-anchor="middle" font-size="14" font-weight="700" font-family="sans-serif" fill="#60a5fa">✦ Call Stack</text>
+    <text x="310" y="50" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">where JS runs code</text>
+    <rect x="230" y="67" width="160" height="30" rx="5" fill="#0f2440" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,3"/>
+    <text x="310" y="86" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(empty)</text>
+
+    <!-- Web APIs -->
+    <rect x="430" y="10" width="200" height="105" rx="8" fill="url(#apiBg)" stroke="#1e3a8a" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="530" y="32" text-anchor="middle" font-size="14" font-weight="700" font-family="sans-serif" fill="#60a5fa">⚡ Web APIs</text>
+    <text x="530" y="50" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">browser handles async work</text>
+    <rect x="450" y="67" width="160" height="30" rx="5" fill="#0f2440" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,3"/>
+    <text x="530" y="86" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(idle)</text>
+
+    <!-- Callback Queue -->
+    <rect x="650" y="10" width="200" height="105" rx="8" fill="url(#queueBg)" stroke="#14532d" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="750" y="32" text-anchor="middle" font-size="14" font-weight="700" font-family="sans-serif" fill="#4ade80">📋 Callback Queue</text>
+    <text x="750" y="50" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">completed callbacks wait here</text>
+    <rect x="670" y="67" width="160" height="30" rx="5" fill="#0f2440" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,3"/>
+    <text x="750" y="86" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(empty)</text>
+
+    <!-- Event Loop status -->
+    <rect x="870" y="25" width="100" height="55" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="920" y="45" text-anchor="middle" font-size="10" font-weight="600" font-family="sans-serif" fill="#cbd5e1">Event Loop</text>
+    <text x="920" y="63" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#fbbf24">⏸ waiting...</text>
+
+    <!-- Output -->
+    <text x="920" y="115" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#cbd5e1">Output:</text>
+    <text x="920" y="135" text-anchor="middle" font-size="11" font-family="monospace" fill="#cbd5e1">(none)</text>
+
+    <!-- Code on bottom -->
+    <rect x="20" y="155" width="960" height="85" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="35" y="175" font-size="12" font-weight="600" font-family="sans-serif" fill="#cbd5e1">Code to execute:</text>
+    <text x="35" y="197" font-size="12" font-family="monospace" fill="#cbd5e1">1:</text>
+    <text x="60" y="197" font-size="13" font-family="monospace" fill="#e2e8f0">console.log(<tspan fill="#fbbf24">"1"</tspan>);</text>
+    <text x="280" y="197" font-size="13" font-family="monospace" fill="#e2e8f0">2: setTimeout(() =&gt; console.log(<tspan fill="#fbbf24">"2"</tspan>), 3000);</text>
+    <text x="690" y="197" font-size="13" font-family="monospace" fill="#e2e8f0">3: console.log(<tspan fill="#fbbf24">"3"</tspan>);</text>
+
+    <text x="35" y="230" font-size="11" font-family="sans-serif" fill="#cbd5e1">⏳ No line is executing yet. Everything is clean.</text>
+  </g>
+
+  <!-- =============== STEP B: console.log("1") runs =============== -->
+  <g transform="translate(0, 355)">
+    <rect x="20" y="0" width="960" height="310" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1"/>
+
+    <!-- Blue highlight bar -->
+    <rect x="20" y="0" width="6" height="310" rx="3" fill="#3b82f6"/>
+
+    <circle cx="44" cy="30" r="16" fill="#3b82f6" stroke="#60a5fa" stroke-width="2"/>
+    <text x="44" y="35" text-anchor="middle" font-size="15" font-weight="700" font-family="sans-serif" fill="#fff">B</text>
+
+    <text x="70" y="26" font-size="14" font-weight="600" font-family="sans-serif" fill="#93c5fd">Line 1 Executes: console.log(<tspan fill="#fbbf24">"1"</tspan>)</text>
+    <text x="70" y="46" font-size="12" font-family="sans-serif" fill="#cbd5e1">JavaScript pushes console.log onto the Call Stack → runs it → pops it off. Output: <tspan fill="#fbbf24" font-weight="600">1</tspan></text>
+
+    <!-- Call Stack -->
+    <rect x="210" y="10" width="200" height="105" rx="8" fill="url(#stackBg)" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+    <text x="310" y="32" text-anchor="middle" font-size="14" font-weight="700" font-family="sans-serif" fill="#60a5fa">✦ Call Stack</text>
+
+    <rect x="230" y="55" width="160" height="30" rx="5" fill="#1e3a5f" stroke="#3b82f6" stroke-width="1.5"/>
+    <text x="310" y="74" text-anchor="middle" font-size="12" font-family="monospace" fill="#f8fafc" font-weight="600">▶ console.log("1")</text>
+
+    <path d="M230,70 C200,70 190,82 205,95 C215,105 230,95 230,95" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrow-up)"/>
+    <text x="185" y="97" text-anchor="end" font-size="12" font-family="sans-serif" fill="#fbbf24">runs &amp; pops</text>
+
+    <!-- Web APIs idle -->
+    <rect x="430" y="10" width="200" height="105" rx="8" fill="url(#apiBg)" stroke="#1e3a8a" stroke-width="1.5" filter="url(#shadow)"/>
+    <text x="530" y="50" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(idle)</text>
+    <rect x="450" y="67" width="160" height="30" rx="5" fill="#0f2440" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,3"/>
+    <text x="530" y="86" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(no timers yet)</text>
+
+    <!-- Queue -->
+    <rect x="650" y="10" width="200" height="105" rx="8" fill="url(#queueBg)" stroke="#14532d" stroke-width="1.5" filter="url(#shadow)"/>
+    <rect x="670" y="67" width="160" height="30" rx="5" fill="#0f2440" stroke="#1e293b" stroke-width="1" stroke-dasharray="5,3"/>
+    <text x="750" y="86" text-anchor="middle" font-size="12" font-family="sans-serif" fill="#cbd5e1">(empty)</text>
+
+    <!-- Event Loop -->
+    <rect x="870" y="25" width="100" height="55" rx="6" fill="#1e293b" stroke="#3b82f6" stroke-width="1"/>
+    <text x="920" y="45" text-anchor="middle" font-size="10" font-weight="600" font-family="sans-serif" fill="#60a5fa">Event Loop</text>
+    <text x="920" y="63" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#fbbf24">⏳ stack busy</text>
+
+    <!-- Output -->
+    <rect x="890" y="135" width="70" height="22" rx="4" fill="#0f172a" stroke="#3b82f6" stroke-width="1"/>
+    <text x="925" y="150" text-anchor="middle" font-size="13" font-family="monospace" fill="#60a5fa" font-weight="700">1</text>
+
+    <!-- Code highlight -->
+    <rect x="20" y="170" width="6" height="35" rx="3" fill="#3b82f6"/>
+    <rect x="20" y="170" width="960" height="120" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+    <text x="35" y="192" font-size="12" font-weight="600" font-family="sans-serif" fill="#cbd5e1">Now executing:</text>
+    <text x="35" y="215" font-size="13" font-family="monospace" fill="#f8fafc" font-weight="600">1: console.log(<tspan fill="#fbbf24">"1"</tspan>);</text>
+    <text x="280" y="215" font-size="13" font-family="monospace" fill="#cbd5e1">2: setTimeout(...)</text>
+    <text x="690" y="215" font-size="13" font-family="monospace" fill="#cbd5e1">3: console.log("3")</text>
+
+    <text x="35" y="250" font-size="12" font-family="sans-serif" fill="#cbd5e1">✅ console.log(<tspan fill="#fbbf24">"1"</tspan>) runs on the stack and is removed. Output: <tspan fill="#fbbf24" font-weight="600">1</tspan></text>
+    <text x="35" y="275" font-size="12" font-family="sans-serif" fill="#cbd5e1">👉 Next: JS reads line 2 — setTimeout(...)</text>
+  </g>
+</svg>
