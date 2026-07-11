@@ -22,8 +22,8 @@ Ye module isliye pehle hai taaki aage jo bhi seekho, uske peeche ka "why" pata h
 - **Batching of State Updates** — ek event handler ke andar multiple `setState` calls ek hi re-render mein kaise batch hote hain
 - **Synthetic Events** — React apne events kyun banata hai, browser ke native events ke upar wrap karke
 
-**TypeScript warm-up (revision-level):** basic types, `type` vs `interface`, function typing, `any` vs `unknown`.
-**Tooling setup:** Vite + `react-ts` template, ESLint + Prettier configure karna.
+**0.7 TypeScript warm-up (slim):** basic types, arrays (`number[]`), objects, functions, optional props, union types, interface — only what React needs *right now*, Generics deferred to later modules
+**0.8 Tooling setup:** Node.js/npm vs Bun introduction, Vite + `react-ts` template, folder structure walkthrough, HMR explained, first component (no Generics), ESLint + Prettier
 
 *(Koi project nahi is module mein — sirf foundation. Aage har relevant phase mein isi module ka reference wapas aayega: jaise "yaad hai diffing mein humne keys ki baat ki thi? Ab practically dekhte hain.")*
 

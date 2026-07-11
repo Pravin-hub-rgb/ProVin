@@ -54,8 +54,13 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-0.7",
-          title: "0.7 TypeScript Warm-up + Vite Setup",
-          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.7 TypeScript Warm-up Plus Vite Setup.md",
+          title: "0.7 TypeScript Warm-up",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.7 TypeScript Warm-up.md",
+        },
+        {
+          id: "react-0.8",
+          title: "0.8 Project Setup",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.8 Project Setup.md",
         },
       ],
       quizzes: [
@@ -68,6 +73,26 @@ export const reactSubject: Subject = {
           id: "quiz-0.1",
           title: "❓ 0.1 Quiz",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.1 Quiz.md",
+        },
+        {
+          id: "quiz-0.3",
+          title: "❓ 0.3 Quiz",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.3 Quiz.md",
+        },
+        {
+          id: "quiz-0.4",
+          title: "❓ 0.4 Quiz",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.4 Quiz.md",
+        },
+        {
+          id: "quiz-0.5",
+          title: "❓ 0.5 Quiz",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.5 Quiz.md",
+        },
+        {
+          id: "quiz-0.6",
+          title: "❓ 0.6 Quiz",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.6 Quiz.md",
         },
         {
           id: "quiz-0.2",

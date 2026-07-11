@@ -71,6 +71,13 @@
     "react-0.1": true,
     "quiz-0.1": true,
     "react-0.2": true,
-    "quiz-0.2": false
+    "quiz-0.2": true,
+    "react-0.3": true,
+    "quiz-0.3": true,
+    "react-0.4": true,
+    "quiz-0.4": true,
+    "react-0.5": true,
+    "react-0.6": true,
+    "quiz-0.5": true
   }
 }

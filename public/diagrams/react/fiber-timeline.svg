@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200" fill="none">
+  <defs>
+    <filter id="shadow" x="-5%" y="-5%" width="115%" height="115%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.25"/>
+    </filter>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="900" height="200" fill="url(#bg)" rx="8"/>
+
+  <text x="450" y="30" text-anchor="middle" font-size="15" font-weight="700" font-family="sans-serif" fill="#f8fafc">Browser Main Thread — Synchronous Reconciliation (React 15)</text>
+
+  <!-- The problem statement -->
+  <text x="450" y="50" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#f87171">50ms lag raha hai? Itna time browser kisi aur kaam ke liye de sakta hai nahi.</text>
+
+  <!-- Timeline bar background track -->
+  <rect x="40" y="80" width="820" height="8" rx="4" fill="#1e293b"/>
+
+  <!-- Block 1: User Click -->
+  <rect x="40" y="68" width="140" height="32" rx="6" fill="#1e3a5f" stroke="#60a5fa" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="110" y="88" text-anchor="middle" font-size="12" font-weight="600" font-family="sans-serif" fill="#60a5fa">🟦 User Click</text>
+
+  <!-- Arrow -->
+  <text x="190" y="90" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#475569">→</text>
+
+  <!-- Block 2: Reconciliation 50ms -->
+  <rect x="210" y="68" width="300" height="32" rx="6" fill="#166534" stroke="#22c55e" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="360" y="88" text-anchor="middle" font-size="12" font-weight="600" font-family="sans-serif" fill="#4ade80">🟩 React Reconciliation — 50ms</text>
+
+  <!-- Arrow -->
+  <text x="520" y="90" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#475569">→</text>
+
+  <!-- Block 3: Browser Freeze -->
+  <rect x="540" y="68" width="160" height="32" rx="6" fill="#7f1d1d" stroke="#ef4444" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="620" y="88" text-anchor="middle" font-size="12" font-weight="600" font-family="sans-serif" fill="#fca5a5">🟥 Browser Freeze ❌</text>
+
+  <!-- Arrow -->
+  <text x="710" y="90" text-anchor="middle" font-size="14" font-family="sans-serif" fill="#475569">→</text>
+
+  <!-- Block 4: Animation Lag -->
+  <rect x="730" y="68" width="130" height="32" rx="6" fill="#854d0e" stroke="#facc15" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="795" y="88" text-anchor="middle" font-size="12" font-weight="600" font-family="sans-serif" fill="#fde047">🟨 Animation Lag</text>
+
+  <!-- Consequences section -->
+  <rect x="40" y="120" width="820" height="65" rx="6" fill="#1e293b" stroke="#334155" stroke-width="1"/>
+  <text x="60" y="142" font-size="12" font-weight="600" font-family="sans-serif" fill="#f87171">Consequences:</text>
+  <rect x="60" y="152" width="240" height="22" rx="4" fill="#7f1d1d" opacity="0.3"/>
+  <text x="180" y="167" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#fca5a5">Animations ruk jaati hain (laggy feel)</text>
+  <rect x="320" y="152" width="220" height="22" rx="4" fill="#7f1d1d" opacity="0.3"/>
+  <text x="430" y="167" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#fca5a5">Typing delay ho jata hai (input slow)</text>
+  <rect x="560" y="152" width="240" height="22" rx="4" fill="#7f1d1d" opacity="0.3"/>
+  <text x="680" y="167" text-anchor="middle" font-size="11" font-family="sans-serif" fill="#fca5a5">Scroll smooth nahi hota</text>
+</svg>
