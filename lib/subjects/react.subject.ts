@@ -69,6 +69,11 @@ export const reactSubject: Subject = {
           title: "❓ 0.1 Quiz",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.1 Quiz.md",
         },
+        {
+          id: "quiz-0.2",
+          title: "❓ 0.2 Quiz",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.2 Quiz.md",
+        },
       ],
     },
   ],
