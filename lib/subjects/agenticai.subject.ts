@@ -153,7 +153,7 @@ export const agenticaiSubject: Subject = {
         {
           id: "ai-5.2",
           title: "5.2 Four Types of Memory in Agents",
-          path: "docs/coding/Agentic AI/Phase 5 - Memory and Context Management/5.2 Four Types of Memory.md",
+          path: "docs/coding/Agentic AI/Phase 5 - Memory and Context Management/5.2 Four Types of Memory in Agents.md",
         },
         {
           id: "ai-5.3",
