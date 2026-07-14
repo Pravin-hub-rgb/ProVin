@@ -1,8 +1,8 @@
 import type { ReactScenario } from "../types"
 
 export const CONDITIONAL_LAB: ReactScenario = {
-  id: "1.7-conditional",
-  title: "1.7: Conditional Rendering aur Filter",
+  id: "1.9-conditional",
+  title: "1.9: Conditional Rendering aur Filter",
   description: "Practice conditional rendering with toggle and filter patterns",
   instructions: `## Task Toggle & Filter
 

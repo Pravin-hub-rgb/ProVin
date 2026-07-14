@@ -1,6 +1,6 @@
 "use client"
 
-import { useMemo, useState, useCallback, useEffect } from "react"
+import { useMemo, useState, useCallback, useEffect, useRef } from "react"
 import type { LabLayoutProps } from "@/lib/lab-registry"
 import { getReactScenario } from "@/lib/react-lab/scenarios"
 import {
@@ -102,11 +102,24 @@ function CheckAnswer({ check }: { check: (files: Record<string, string>) => Chec
 function ShowSolution({ solutionFiles }: { solutionFiles: SandpackFiles }) {
   const { sandpack } = useSandpack()
   const [showingSolution, setShowingSolution] = useState(false)
+  const userCodeRef = useRef<Record<string, string> | null>(null)
 
   const handleToggle = useCallback(() => {
     if (showingSolution) {
-      sandpack.resetAllFiles()
+      if (userCodeRef.current) {
+        sandpack.resetAllFiles()
+        for (const [path, code] of Object.entries(userCodeRef.current)) {
+          sandpack.updateFile(path, code)
+        }
+        userCodeRef.current = null
+      }
     } else {
+      const snapshot: Record<string, string> = {}
+      for (const [path, f] of Object.entries(sandpack.files)) {
+        const code = typeof f === "string" ? f : (f as { code: string }).code
+        if (code) snapshot[path] = code
+      }
+      userCodeRef.current = snapshot
       for (const [path, f] of Object.entries(solutionFiles)) {
         const code = typeof f === "string" ? f : (f as { code: string }).code
         sandpack.updateFile(path, code)
@@ -165,6 +178,7 @@ export function ReactLabLayout({
         options={{
           visibleFiles: fileKeys as any,
           activeFile: "/App.tsx",
+
           classes: {
             "sp-wrapper": "h-full",
             "sp-layout": "h-full",
@@ -307,7 +321,7 @@ export function ReactLabLayout({
         <SandpackLayout>
           <SandpackFileExplorer
             autoHiddenFiles
-            style={{ height: "100%", minWidth: "140px" }}
+            style={{ height: "100%", minWidth: "200px" }}
           />
           <SandpackCodeEditor
             showTabs

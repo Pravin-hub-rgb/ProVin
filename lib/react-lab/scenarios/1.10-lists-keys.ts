@@ -1,8 +1,8 @@
 import type { ReactScenario } from "../types"
 
 export const LISTS_LAB: ReactScenario = {
-  id: "1.8-lists-keys",
-  title: "1.8: Lists, Keys aur TypeScript Arrays",
+  id: "1.10-lists-keys",
+  title: "1.10: Lists, Keys aur TypeScript Arrays",
   description: "Practice rendering lists, using keys, and typed arrays",
   instructions: `## Shopping List
 
@@ -35,7 +35,7 @@ Build a shopping list app that demonstrates list rendering and array operations.
   starterFiles: {
     "/App.tsx": `import { useState } from "react";
 
-// TODO: Create Item interface with bought? optional
+// TODO: Item interface banao jisme id, name, quantity ho aur bought optional ho
 
 export default function App() {
   const [items, setItems] = useState</* TODO */>([]);

@@ -1,8 +1,8 @@
 import type { ReactScenario } from "../types"
 
 export const TODO_POLISH_LAB: ReactScenario = {
-  id: "1.9-todo-polish",
-  title: "1.9: To-Do App Complete Polish",
+  id: "1.11-todo-polish",
+  title: "1.11: To-Do App Complete Polish",
   description: "Build the complete polished To-Do app with all features",
   instructions: `## Complete To-Do App
 

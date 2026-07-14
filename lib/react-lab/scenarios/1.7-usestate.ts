@@ -1,8 +1,8 @@
 import type { ReactScenario } from "../types"
 
 export const USESTATE_LAB: ReactScenario = {
-  id: "1.5-usestate",
-  title: "1.5: useState aur Event Handling",
+  id: "1.7-usestate",
+  title: "1.7: useState aur Event Handling",
   description: "Practice useState hook with a counter component",
   instructions: `## Counter with useState
 

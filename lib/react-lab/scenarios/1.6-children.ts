@@ -1,8 +1,8 @@
 import type { ReactScenario } from "../types"
 
 export const CHILDREN_LAB: ReactScenario = {
-  id: "1.4-children",
-  title: "1.4: Children aur Composition Pattern",
+  id: "1.6-children",
+  title: "1.6: Children aur Composition Pattern",
   description: "Learn the children prop and component composition patterns",
   instructions: `## Card Layout Component
 

@@ -1,8 +1,8 @@
 import type { ReactScenario } from "../types"
 
 export const TODO_BASIC_LAB: ReactScenario = {
-  id: "1.6-todo-basic",
-  title: "1.6: To-Do App v1 — Tasks Add, Show, Delete",
+  id: "1.8-todo-basic",
+  title: "1.8: To-Do App v1 — Tasks Add, Show, Delete",
   description: "Build a basic to-do list with add and delete functionality",
   instructions: `## To-Do App v1: Add & Delete Tasks
 

@@ -33,7 +33,7 @@ export const labSubjects: LabSubject[] = [
     title: "React.js",
     description: "Build React components, manage state, handle events, and compose UIs in a live sandbox.",
     icon: "⚛️",
-    scenarioCount: 9,
+    scenarioCount: 16,
   },
 ]
 
