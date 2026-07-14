@@ -43,3 +43,4 @@ next-env.d.ts
 
 # Build output / cache
 /dist/
+prompts/Master Teaching Prompt.md
