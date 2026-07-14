@@ -81,6 +81,8 @@
     "quiz-0.5": true,
     "quiz-0.6": true,
     "quiz-0.7": true,
-    "react-0.7": true
+    "react-0.7": true,
+    "react-0.8": true,
+    "quiz-0.8": true
   }
 }
