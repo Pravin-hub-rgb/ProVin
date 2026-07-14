@@ -14,6 +14,7 @@ import Celebration from "@/components/git-lab/celebration"
 import "@/lib/git-lab"
 import "@/lib/ai-lab"
 import "@/lib/js-lab"
+import "@/lib/react-lab"
 
 export default function SubjectLabPage() {
   const params = useParams()
@@ -414,14 +415,16 @@ function SubjectLabPageInner({
             </svg>
             Reset
           </button>
-          {done && (
+          {!lab.Layout && done && (
             <span className="bg-[#3fb95022] border border-[#3fb950] text-[#3fb950] text-[11px] px-2.5 py-1 rounded-md">
               {"\u2713"} Scenario complete
             </span>
           )}
         </div>
         {lab.RemotePanel && <lab.RemotePanel state={state} />}
-        <StepProgress scenario={scenario} currentStep={currentStep} completedMask={completedMask} actorLabels={lab.actorLabels} onStepClick={handleStepClick} />
+        {!lab.Layout && (
+          <StepProgress scenario={scenario} currentStep={currentStep} completedMask={completedMask} actorLabels={lab.actorLabels} onStepClick={handleStepClick} />
+        )}
       </div>
 
       {/* Content area */}

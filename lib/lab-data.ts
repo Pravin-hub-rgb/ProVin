@@ -28,6 +28,13 @@ export const labSubjects: LabSubject[] = [
     icon: "</>",
     scenarioCount: 1,
   },
+  {
+    id: "react",
+    title: "React.js",
+    description: "Build React components, manage state, handle events, and compose UIs in a live sandbox.",
+    icon: "⚛️",
+    scenarioCount: 9,
+  },
 ]
 
 export function getLabSubject(id: string): LabSubject | undefined {

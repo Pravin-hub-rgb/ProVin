@@ -28,7 +28,7 @@ export function ScenarioSelector({ subjectId, selectedId, onSelect }: ScenarioSe
       >
         {scenarios.map((s) => (
           <option key={s.id} value={s.id}>
-            [{s.phase}] {s.title}
+            {s.phase ? `[${s.phase}] ` : ""}{s.title}
           </option>
         ))}
       </select>
