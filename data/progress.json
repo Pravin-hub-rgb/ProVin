@@ -96,6 +96,10 @@
     "react-1.5.2": true,
     "react-1.5.3": true,
     "react-1.5.4": true,
-    "quiz-1.5.4": true
+    "quiz-1.5.4": true,
+    "quiz-1.6": true,
+    "react-1.6": true,
+    "react-1.7": true,
+    "quiz-1.7": true
   }
 }

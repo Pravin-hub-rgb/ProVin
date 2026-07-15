@@ -9,15 +9,12 @@ export const CALLBACK_BASIC_LAB: ReactScenario = {
 Ek \`ClickButton\` component banana hai. Sirf ek prop leta hai: \`onClick\` jo ek function hai. Button ka text hardcoded hai "Click Me".
 
 ### Requirements:
-1. \`function ClickButton({ onClick }: { onClick: () => void })\` — inline type, no interface
-2. Button render karo with \`onClick={onClick}\`
+1. ClickButton function banao jo ek hi prop le — onClick jo ek function hai, inline type se (no interface)
+2. Button render karo, click par onClick call karo
 3. App mein **2 ClickButtons** render karo — alag-alag callbacks ke saath
 
-### Expected:
-\`\`\`tsx
-<ClickButton onClick={() => alert("First!")} />
-<ClickButton onClick={() => alert("Second!")} />
-\`\`\`
+### Expected Output:
+Do buttons dikhenge "Click Me" aur "Click Me". Pehle par click → "First!", doosre par → "Second!" alert.
   `,
 
   hints: [
@@ -28,7 +25,7 @@ Ek \`ClickButton\` component banana hai. Sirf ek prop leta hai: \`onClick\` jo e
 
   starterFiles: {
     "/App.tsx": `// TODO: ClickButton component — inline type, no interface
-function ClickButton(/* destructure onClick here */) {
+function ClickButton(props: { onClick: () => void }) {
   return (
     <div>
       {/* TODO: Render button with onClick */}

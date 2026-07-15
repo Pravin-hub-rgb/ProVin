@@ -9,15 +9,15 @@ export const OPTIONAL_PROPS_LAB: ReactScenario = {
 \`GreetingCard\` component banana hai jo props leta hai — \`recipient\`, \`message\` required, \`sender\` optional.
 
 ### Requirements:
-1. \`interface GreetingCardProps\` — \`recipient: string\`, \`message: string\`, \`sender?: string\`
-2. **Destructuring** use karo params mein — \`{ recipient, message, sender }\`
-3. Agar \`sender\` provided hai toh "— senderName" show karo
-4. Agar \`sender\` nahi hai toh kuch mat dikhao
-5. **2 GreetingCards** render karo — ek bina sender ke, ek sender ke saath
+1. GreetingCardProps interface banao — recipient (string), message (string) required, sender (optional string)
+2. Props ko destructure karo function params mein hi
+3. Agar sender diya hai toh "— senderName" dikhao
+4. Agar sender nahi diya toh kuch mat dikhao
+5. **2 GreetingCards** render karo — ek sender ke saath, ek bina sender ke
 
-### Tips:
-- Conditional render: \`{sender && <p>— {sender}</p>}\`
-- Interface: \`interface GreetingCardProps { recipient: string; message: string; sender?: string; }\`
+### Expected Output:
+Pehla card: "Hello, Vin! Happy Birthday! — Priya"
+Doosra card: "Hello, Team! Great work this week!" (bina sender ke)
   `,
 
   hints: [
@@ -29,11 +29,11 @@ export const OPTIONAL_PROPS_LAB: ReactScenario = {
   starterFiles: {
     "/App.tsx": `// TODO: Define GreetingCardProps interface
 
-function GreetingCard(/* destructure props here */) {
+function GreetingCard(props: GreetingCardProps) {
   return (
     <div className="card">
-      <h2>Hello, {/* recipient */}!</h2>
-      <p>{/* message */}</p>
+      <h2>Hello, {/* TODO: recipient yahan dikhao */}!</h2>
+      <p>{/* TODO: message yahan dikhao */}</p>
       {/* TODO: Show sender if provided */}
     </div>
   );

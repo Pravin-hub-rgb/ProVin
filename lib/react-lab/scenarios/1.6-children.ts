@@ -9,18 +9,14 @@ export const CHILDREN_LAB: ReactScenario = {
 Create a reusable \`Card\` component that wraps content using the \`children\` prop.
 
 ### Requirements:
-1. \`interface CardProps\` with \`children: React.ReactNode\` and optional \`title?: string\`
-2. Card should render a styled box with the children inside
-3. If title is provided, show it as \`<h3>\` at the top
-4. Use the Card to wrap different content (text, lists, other components)
+1. CardProps interface banao — children (React.ReactNode) required, title optional
+2. Card component ek styled box render kare, children andar dikhe
+3. Agar title diya hai toh h3 ke andar show karo
+4. Card ko different content ke saath reuse karo
 
-### Expected:
-You should be able to write:
-\`\`\`tsx
-<Card title="Info">
-  <p>Some content here</p>
-</Card>
-\`\`\`
+### Expected Output:
+Ek Card title ke saath — "Notes" heading + content andar
+Doosra Card bina title ke — sirf content andar
   `,
 
   hints: [
@@ -32,23 +28,18 @@ You should be able to write:
   starterFiles: {
     "/App.tsx": `import React from "react";
 
-// Create CardProps interface here
+// TODO: CardProps interface banao
+// TODO: CardProps mein children required hai, title optional hai
 
-function Card({ children, title }: CardProps) {
-  return (
-    <div className="card">
-      {/* TODO: Show title if provided */}
-      {children}
-    </div>
-  );
-}
+// TODO: Card component banao — <div className="card"> ke andar children render karo
+// Agar title diya hai toh <h3> mein show karo
 
 export default function App() {
   return (
     <div>
       <h1>Composition Demo</h1>
-      {/* Use Card with title and content */}
-      {/* Use Card without title */}
+      {/* TODO: Card with title and content */}
+      {/* TODO: Card without title */}
     </div>
   );
 }`,

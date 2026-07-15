@@ -9,14 +9,14 @@ export const JSX_LAB: ReactScenario = {
 Write JSX directly inside App() to display a user's profile.
 
 ### Requirements:
-1. Create variables inside \`App()\`: \`name\` (string), \`age\` (number), \`isStudent\` (boolean)
-2. Display name inside an \`<h2>\` tag using JSX expression
-3. Display age inside a \`<p>\` tag using JSX expression
-4. Use a ternary to show "Student" or "Working" based on \`isStudent\`
-5. Wrap everything in a \`<div>\` with \`className="profile"\`
+1. App() ke andar teen variables banao — name (string), age (number), isStudent (boolean)
+2. Name h2 tag mein dikhao JSX expression se
+3. Age p tag mein dikhao
+4. Ternary operator use karo — isStudent true hai toh "Student" dikhao, nahi toh "Working"
+5. Sab kuch ek div mein wrap karo jiska className "profile" ho
 
 ### Example Output:
-The browser should show something like:
+Browser mein kuch aisa dikhna chahiye:
 - **Vin**
 - Age: 25
 - Status: Student

@@ -9,12 +9,12 @@ export const COMPONENTS_LAB: ReactScenario = {
 Create a component called \`ProfileCard\` inside \`App.tsx\` and use it multiple times.
 
 ### Requirements:
-1. Define a \`function ProfileCard()\` that returns JSX
-2. Inside, create two variables: \`const name = "Vin"\` and \`const role = "React Developer"\`
-3. Display \`{name}\` in an \`<h2>\` and \`{role}\` in a \`<p>\`
-4. Add \`: JSX.Element\` return type to the function
-5. Render \`<ProfileCard />\` **three times** inside \`<App>\`
-6. All code must be in \`App.tsx\` — no separate files
+1. ProfileCard nam ka component function banao jo JSX return kare
+2. Andar do variables banao — name string, role string
+3. Name h2 ke andar dikhao, role p ke andar dikhao
+4. Component par JSX.Element return type lagao
+5. <ProfileCard /> ko **teen baar** render karo App ke andar
+6. Saara code App.tsx mein hi likho — alag file nahi
 
 ### Example Output:
 **My Team**  

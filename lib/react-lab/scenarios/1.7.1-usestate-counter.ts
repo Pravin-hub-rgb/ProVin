@@ -1,30 +1,31 @@
 import type { ReactScenario } from "../types"
 
-export const USESTATE_LAB: ReactScenario = {
-  id: "1.7-usestate",
-  title: "1.7: useState aur Event Handling",
-  description: "Practice useState hook with a counter component",
+export const USESTATE_COUNTER_LAB: ReactScenario = {
+  id: "1.7.1-usestate-counter",
+  title: "1.7.1: Simple Counter — useState Basics",
+  description: "Practice useState hook — create state, display it, update with buttons",
   instructions: `## Counter with useState
 
-Build a counter component that uses the \`useState\` hook.
+Build a counter component using the \`useState\` hook.
 
 ### Requirements:
 1. Import \`useState\` from \`"react"\`
 2. Create a state variable \`count\` with initial value \`0\`
-3. Display the count in an \`<h2>\`
+3. Display the count in an \`<h2>\` — use \`{count}\`
 4. Add three buttons:
-   - **+1** — increments count
-   - **-1** — decrements count (don't go below 0)
-   - **Reset** — resets to 0
+   - **+1** — increments count by 1
+   - **-1** — decrements count by 1 (don't go below 0)
+   - **Reset** — resets count to 0
+5. Export App as default — use \`export default function App\`
 
-### Stretch Goal (optional):
-Add an input field to set the count to a specific value.
+### Expected Output:
+Teeno buttons kaam karte hain. Count display update hota hai. -1 button 0 se neeche nahi jaata.
   `,
 
   hints: [
-    "`const [count, setCount] = useState<number>(0)`",
+    "`const [count, setCount] = useState(0)` — TypeScript automatically infers number",
     "`onClick={() => setCount(count + 1)}` for +1 button",
-    "For -1: `setCount(count > 0 ? count - 1 : 0)` to stay above 0",
+    "For -1: `setCount(count > 0 ? count - 1 : 0)` — prevent going below 0",
   ],
 
   starterFiles: {
@@ -36,7 +37,9 @@ export default function App() {
   return (
     <div className="counter">
       <h2>Count: {/* TODO: Show count here */}</h2>
-      {/* TODO: Add buttons */}
+      {/* TODO: Add +1 button */}
+      {/* TODO: Add -1 button */}
+      {/* TODO: Add Reset button */}
     </div>
   );
 }`,
@@ -75,7 +78,7 @@ button:hover {
     "/App.tsx": `import { useState } from "react";
 
 export default function App() {
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState(0);
 
   return (
     <div className="counter">
@@ -122,10 +125,10 @@ button:hover {
     const app = files["/App.tsx"] ?? ""
     return [
       { label: "useState imported from react", passed: /import\s+\{\s*useState\s*\}\s+from/.test(app) },
-      { label: "count state variable declared", passed: /useState\s*<.*>\s*\(\s*0\s*\)|useState\s*\(\s*0\s*\)/.test(app) },
+      { label: "count state declared with initial value 0", passed: /useState\s*\(\s*0\s*\)/.test(app) },
       { label: "Count displayed in JSX", passed: /\{count\}/.test(app) },
       { label: "+1 button with onClick", passed: /onClick\s*=\s*\{[\s\S]*count\s*\+\s*1[\s\S]*\}/.test(app) },
-      { label: "-1 button with onClick", passed: /onClick\s*=\s*\{[\s\S]*count\s*-\s*1[\s\S]*\}/.test(app) || /onClick\s*=\s*\{[\s\S]*count\s*>\s*0/.test(app) },
+      { label: "-1 button with onClick (no negative)", passed: /onClick\s*=\s*\{[\s\S]*count\s*>\s*0[\s\S]*\}/.test(app) || /onClick\s*=\s*\{[\s\S]*count\s*-\s*1[\s\S]*\}[\s\S]*setCount\s*\(\s*0\s*\)/.test(app) },
       { label: "Reset button with onClick", passed: /onClick\s*=\s*\{[\s\S]*setCount\s*\(\s*0\s*\)[\s\S]*\}/.test(app) },
       { label: "App component exported", passed: /export\s+default\s+function\s+App/.test(app) },
     ]

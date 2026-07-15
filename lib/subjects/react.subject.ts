@@ -168,23 +168,28 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-1.8",
-          title: "1.8 To-Do App v1: Tasks Add, Show, Delete",
-          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.8 To-Do App v1 Tasks Add Show Delete.md",
+          title: "1.8 TypeScript Generics",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.8 TypeScript Generics.md",
         },
         {
           id: "react-1.9",
-          title: "1.9 Conditional Rendering aur Filter",
-          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.9 Conditional Rendering aur Filter.md",
+          title: "1.9 Array State aur List Rendering",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.9 Array State aur List Rendering.md",
         },
         {
           id: "react-1.10",
-          title: "1.10 Lists, Keys aur TypeScript Arrays",
-          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.10 Lists Keys aur TypeScript Arrays.md",
+          title: "1.10 Conditional Rendering aur Filter",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.10 Conditional Rendering aur Filter.md",
         },
         {
           id: "react-1.11",
-          title: "1.11 To-Do App Complete Polish",
-          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.11 To-Do App Complete Polish.md",
+          title: "1.11 Lists, Keys aur TypeScript Arrays",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.11 Lists Keys aur TypeScript Arrays.md",
+        },
+        {
+          id: "react-1.12",
+          title: "1.12 Final Project — To-Do App",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12 Final Project - To-Do App.md",
         },
       ],
       quizzes: [
@@ -212,6 +217,16 @@ export const reactSubject: Subject = {
           id: "quiz-1.5.4",
           title: "❓ 1.5 Quiz",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.5 Quiz — Interface, Props, Callbacks.md",
+        },
+        {
+          id: "quiz-1.6",
+          title: "❓ 1.6 Quiz",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.6 Quiz — Children aur Composition.md",
+        },
+        {
+          id: "quiz-1.7",
+          title: "❓ 1.7 Quiz",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.7 Quiz — useState aur Events.md",
         },
       ],
     },

@@ -9,19 +9,16 @@ export const INTERFACE_LAB: ReactScenario = {
 Teen files hain — \`types.ts\`, \`App.tsx\`, \`helpers.ts\`. Tumhe interfaces define karni hain, export karni hain, aur use karni hain.
 
 ### types.ts — Interfaces Define Karo
-\`\`\`ts
-// User interface: name (string), age (number), email (string)
-// Product interface: id (number), title (string), price (number), inStock (optional boolean)
-\`\`\`
+User interface banao — name (string), age (number), email (string)
+Product interface banao — id (number), title (string), price (number), inStock (optional boolean)
+Dono ko export karo
 
 ### helpers.ts — Interfaces Use Karo
-\`\`\`ts
-// createUser(name, age, email): User return kare
-// formatProduct(product: Product): string return kare
-\`\`\`
+createUser function banao jo name, age, email le aur User return kare
+formatProduct function banao jo Product le aur formatted string return kare ("title — $price")
 
 ### App.tsx — Import Karke Use Karo
-Dono files se import karo, users aur products banakar console.log karo.
+Dono files se import karo, createUser aur formatProduct call karo, console.log karo
 
 ### Expected Output:
 Name: Vin, Age: 25  
@@ -40,9 +37,11 @@ Product: Laptop — $999
 // TODO: helpers.ts se createUser aur formatProduct import karo
 
 export default function App() {
-  // TODO: createUser call karo with name, age, email
-  // TODO: formatProduct call karo with product data
-  // console.log karo results
+  // TODO: createUser ko call karo — name, age, email arguments do
+  // TODO: console.log "Name: Vin, Age: 25" jaisa format mein
+
+  // TODO: formatProduct ko call karo — ek Product object do
+  // TODO: console.log "Product: Laptop — $999" jaisa format mein
 
   return <div>Check the browser console!</div>;
 }`,
@@ -56,7 +55,7 @@ export default function App() {
 
 // TODO: createUser function banao jo name, age, email le aur User return kare
 
-// TODO: formatProduct function banao jo Product le aur string return kare`,
+// TODO: formatProduct function banao jo Product le aur "title — $price" return kare`,
     "/styles.css": `body {
   font-family: system-ui, sans-serif;
   padding: 2rem;
@@ -71,10 +70,10 @@ import { createUser, formatProduct } from "./helpers";
 
 export default function App() {
   const user = createUser("Vin", 25, "vin@dev.com");
-  console.log("Name:", user.name, "Age:", user.age);
+  console.log(\`Name: \${user.name}, Age: \${user.age}\`);
 
   const laptop: Product = { id: 1, title: "Laptop", price: 999, inStock: true };
-  console.log(formatProduct(laptop));
+  console.log("Product:", formatProduct(laptop));
 
   return <div>Check the browser console!</div>;
 }`,

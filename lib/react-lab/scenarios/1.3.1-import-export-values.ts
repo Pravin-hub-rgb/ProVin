@@ -9,19 +9,13 @@ export const IMPORT_EXPORT_VALUES_LAB: ReactScenario = {
 Teen files hain: \`data.ts\`, \`config.ts\`, \`utils.ts\`. Har file mein tumhe variables/functions likhne hain **aur export** karne hain. Phir \`App.tsx\` mein sab import karke \`console.log()\` se print karna hai.
 
 ### data.ts — Named Export (Variables)
-\`\`\`ts
-// TODO: name = "Vin", age = 25, isStudent = true teen variables export karo
-\`\`\`
+name = "Vin", age = 25, isStudent = true — teen variables banao aur sabko named export karo
 
 ### config.ts — Default Export (String)
-\`\`\`ts
-// TODO: appTitle = "ProVin" variable banao, iska default export karo
-\`\`\`
+appTitle = "ProVin" variable banao aur iska default export karo
 
 ### utils.ts — Named Export (Functions)
-\`\`\`ts
-// TODO: greet(person: string) aur add(a: number, b: number) functions export karo
-\`\`\`
+greet(person: string) aur add(a: number, b: number) functions banao aur named export karo
 
 ### App.tsx — Import karo aur console.log karo
 \`\`\`ts

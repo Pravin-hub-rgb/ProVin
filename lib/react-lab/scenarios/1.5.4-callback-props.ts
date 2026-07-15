@@ -9,23 +9,16 @@ export const CALLBACK_PROPS_LAB: ReactScenario = {
 \`AlertButton\` component banana hai jo callback prop \`onAlert\` leta hai. Jab user button click kare, component parent ko notify karta hai.
 
 ### Requirements:
-1. \`interface AlertButtonProps\` — \`label: string\`, \`onAlert: () => void\`
-2. \`AlertButton\` component me button render karo, \`onClick\` pe \`onAlert\` call karo
+1. AlertButtonProps interface banao — label string, onAlert ek function jo kuch return na kare
+2. AlertButton mein button render karo, click par onAlert call karo
 3. App mein **3 AlertButtons** render karo — har ek alag label ke saath
-4. Har button click par console.log ya alert dikhe
+4. Har button click par alert ya console.log dikhe
 
-### Expected:
-\`\`\`tsx
-<AlertButton label="Save" onAlert={() => alert("Save clicked!")} />
-<AlertButton label="Delete" onAlert={() => alert("Delete clicked!")} />
-<AlertButton label="Edit" onAlert={() => alert("Edit clicked!")} />
-\`\`\`
+### Expected Output:
+Teen buttons dikhenge — "Save", "Delete", "Edit". Har button ka alag alert.
 
 ### Stretch:
-Callback ke saath parameter pass karo — \`onAlert: (msg: string) => void\`
-\`\`\`tsx
-<AlertButton label="Save" onAlert={(msg) => console.log(msg)} />
-\`\`\`
+Callback ke saath parameter pass karo — onAlert ek string parameter le
   `,
 
   hints: [
@@ -37,7 +30,7 @@ Callback ke saath parameter pass karo — \`onAlert: (msg: string) => void\`
   starterFiles: {
     "/App.tsx": `// TODO: Define AlertButtonProps interface
 
-function AlertButton(/* destructure props here */) {
+function AlertButton(props: AlertButtonProps) {
   return (
     <div>
       {/* TODO: Render button with label and onClick */}
