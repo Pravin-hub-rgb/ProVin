@@ -418,7 +418,14 @@ research-agent/
 - The shift: from AI as a chatbot to AI as a co-worker
 - What this means for someone like Vin: the ability to build *with* agents (not just use them) is a real, marketable skill right now
 
-**7.6 — What to Write on LinkedIn / Resume**
+**7.6 — Encoder-Free Architecture**
+- Traditional multimodal architecture (separate encoders for vision, audio, text)
+- Encoder-free: one unified transformer processes everything
+- Benefits: simpler architecture, better cross-modal reasoning, end-to-end training, lower latency
+- Real-world example: Gemma 4
+- Why this matters for agent builders — future models will natively understand images, audio, and video
+
+**7.7 — What to Write on LinkedIn / Resume**
 - Terms you can now use with confidence and explain:
   - Agentic AI / AI Agents
   - Tool Calling / Function Calling

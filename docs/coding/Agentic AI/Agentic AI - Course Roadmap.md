@@ -78,6 +78,7 @@ Connect everything to the broader ecosystem.
 - MCP servers — the universal plug for AI tools
 - Multi-agent systems
 - Vector databases and memory at scale
+- Encoder-free architecture — how models are evolving
 - Where Agentic AI is headed
 - What to write on LinkedIn and your resume
 

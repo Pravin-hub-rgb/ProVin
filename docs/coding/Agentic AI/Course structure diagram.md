@@ -126,5 +126,6 @@ graph TD
     P7 --> P7L3["Multi-Agent Systems"]
     P7 --> P7L4["Vector Databases"]
     P7 --> P7L5["Future Trends"]
-    P7 --> P7L6["LinkedIn & Resume"]
+    P7 --> P7L6["Encoder-Free Architecture"]
+    P7 --> P7L7["LinkedIn & Resume"]
 ```
