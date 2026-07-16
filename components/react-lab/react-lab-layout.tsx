@@ -13,6 +13,9 @@ import {
 } from "@codesandbox/sandpack-react"
 import type { SandpackFiles } from "@codesandbox/sandpack-react"
 import type { CheckResult } from "@/lib/react-lab/types"
+import { MarkdownHooks } from "react-markdown"
+import remarkGfm from "remark-gfm"
+import rehypeRaw from "rehype-raw"
 
 const reactTheme = {
   colors: {
@@ -206,56 +209,97 @@ export function ReactLabLayout({
           <h2 className="text-base font-semibold text-[#e6edf3] mb-3">
             {scenario.title}
           </h2>
-          <div className="prose prose-invert prose-sm max-w-none">
-            {scenario.instructions.split("\n").map((line, i) => {
-              if (line.startsWith("## ")) {
-                return (
-                  <h3 key={i} className="text-sm font-semibold text-[#e6edf3] mt-4 mb-2">
-                    {line.replace("## ", "")}
-                  </h3>
-                )
-              }
-              if (line.startsWith("### ")) {
-                return (
-                  <h4 key={i} className="text-xs font-semibold text-[#e6edf3] mt-3 mb-1">
-                    {line.replace("### ", "")}
-                  </h4>
-                )
-              }
-              if (line.startsWith("- **")) {
-                return (
-                  <li key={i} className="text-xs text-[#c9d1d9] ml-4">
-                    {line.replace("- **", "").replace("**", "")}
-                  </li>
-                )
-              }
-              if (line.startsWith("- ")) {
-                return (
-                  <li key={i} className="text-xs text-[#c9d1d9] ml-4">
-                    {line.replace("- ", "")}
-                  </li>
-                )
-              }
-              if (line.trim() === "") return <br key={i} />
-
-              const isCode = line.startsWith("  ") || line.startsWith("`")
-              if (isCode) {
-                return (
-                  <code
-                    key={i}
-                    className="block text-xs bg-[#161b22] px-2 py-0.5 rounded"
-                    style={{ color: "#e6edf3" }}
-                  >
-                    {line.trim()}
-                  </code>
-                )
-              }
-              return (
-                <p key={i} className="text-xs text-[#c9d1d9] leading-relaxed">
-                  {line}
-                </p>
-              )
-            })}
+          <div>
+            <MarkdownHooks
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeRaw]}
+              components={{
+                h2({ children }) {
+                  return <h3 className="text-sm font-semibold text-[#e6edf3] mt-4 mb-2">{children}</h3>
+                },
+                h3({ children }) {
+                  return <h4 className="text-xs font-semibold text-[#e6edf3] mt-3 mb-1">{children}</h4>
+                },
+                h4({ children }) {
+                  return <h5 className="text-xs font-semibold text-[#e6edf3] mt-2 mb-1">{children}</h5>
+                },
+                p({ children }) {
+                  return <p className="text-xs text-[#c9d1d9] leading-relaxed mb-2">{children}</p>
+                },
+                ul({ children }) {
+                  return <ul className="text-xs text-[#c9d1d9] ml-4 mb-2 space-y-1 list-disc">{children}</ul>
+                },
+                ol({ children }) {
+                  return <ol className="text-xs text-[#c9d1d9] ml-4 mb-2 space-y-1 list-decimal">{children}</ol>
+                },
+                li({ children }) {
+                  return <li>{children}</li>
+                },
+                code({ className, children, ...props }) {
+                  const match = /language-(\w+)/.exec(className || "")
+                  if (match) {
+                    return (
+                      <pre className="text-xs bg-[#161b22] p-2 rounded overflow-x-auto mb-2">
+                        <code style={{ color: "#e6edf3" }} {...props}>{children}</code>
+                      </pre>
+                    )
+                  }
+                  return (
+                    <code className="text-xs bg-[#161b22] px-1 py-0.5 rounded" style={{ color: "#e6edf3" }} {...props}>
+                      {children}
+                    </code>
+                  )
+                },
+                pre({ children }) {
+                  return <>{children}</>
+                },
+                table({ children }) {
+                  return (
+                    <div className="overflow-x-auto mb-2">
+                      <table className="text-xs w-full border-collapse border border-[#30363d]">
+                        {children}
+                      </table>
+                    </div>
+                  )
+                },
+                th({ children }) {
+                  return (
+                    <th className="border border-[#30363d] px-2 py-1 text-left bg-[#161b22] font-semibold text-[#e6edf3]">
+                      {children}
+                    </th>
+                  )
+                },
+                td({ children }) {
+                  return (
+                    <td className="border border-[#30363d] px-2 py-1 text-[#c9d1d9]">
+                      {children}
+                    </td>
+                  )
+                },
+                strong({ children }) {
+                  return <strong className="text-[#e6edf3]">{children}</strong>
+                },
+                a({ href, children }) {
+                  return (
+                    <a href={href} className="text-[#58a6ff] hover:underline" target="_blank" rel="noopener noreferrer">
+                      {children}
+                    </a>
+                  )
+                },
+                blockquote({ children }) {
+                  return (
+                    <blockquote className="border-l-2 border-[#30363d] pl-3 my-2 text-xs text-[#8b949e] italic">
+                      {children}
+                    </blockquote>
+                  )
+                },
+                hr() {
+                  return <hr className="border-[#21262d] my-3" />
+                },
+              }}
+            >
+              {scenario.instructions}
+            </MarkdownHooks>
           </div>
 
           {/* Hints toggle */}
