@@ -240,5 +240,46 @@ export const reactSubject: Subject = {
         },
       ],
     },
+    {
+      id: "batch2",
+      title: "Batch 2 — Effects, Data & Refs",
+      lectures: [
+        {
+          id: "react-2.1",
+          title: "2.1 useEffect Basics",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.1 useEffect Basics.md",
+        },
+        {
+          id: "react-2.2",
+          title: "2.2 API Fetching with useEffect",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.2 API Fetching with useEffect.md",
+        },
+        {
+          id: "react-2.3",
+          title: "2.3 TanStack React Query",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.3 TanStack React Query.md",
+        },
+        {
+          id: "react-2.4",
+          title: "2.4 useRef",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.4 useRef.md",
+        },
+        {
+          id: "react-2.5",
+          title: "2.5 Lifting State Up",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.5 Lifting State Up.md",
+        },
+        {
+          id: "react-2.6",
+          title: "2.6 Context API",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.6 Context API.md",
+        },
+        {
+          id: "react-2.7",
+          title: "2.7 Combined Project — To-Do App v2",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.7 Combined Project - To-Do App v2.md",
+        },
+      ],
+    },
   ],
 };
