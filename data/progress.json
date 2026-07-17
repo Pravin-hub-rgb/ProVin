@@ -100,6 +100,10 @@
     "quiz-1.6": true,
     "react-1.6": true,
     "react-1.7": true,
-    "quiz-1.7": true
+    "quiz-1.7": true,
+    "react-1.8": true,
+    "react-1.9": true,
+    "react-1.10": true,
+    "react-1.11": true
   }
 }

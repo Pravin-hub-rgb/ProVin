@@ -2,33 +2,37 @@ import type { ReactScenario } from "../types"
 
 export const TYPED_EVENTS_LAB: ReactScenario = {
   id: "1.8.3-typed-events",
-  title: "1.8.3: Mini-Project 2 — Typed Event Handlers",
-  description: "Practice ChangeEvent<T> with input, textarea, and select elements — based on 1.8 doc Mini-Project 2",
-  instructions: `## Practice: ChangeEvent Type for Different DOM Elements
+  title: "1.8.3: Mini-Project 2 — Recognizing the Generic Pattern",
+  description: "Practice inline → extracted pattern: inline onChange infers, extracted needs explicit ChangeEvent<T> — based on 1.8 doc Mini-Project 2",
+  instructions: `## Practice: Inline vs Extracted — ChangeEvent Type
 
-\`handleChange\` mein \`(e) => ...\` likhte ho — lekin \`e\` ka type kya hai? \`React.ChangeEvent<HTMLInputElement>\` — generic type hai. \`<T>\` ki jagah DOM element ka type aata hai.
+Is lab mein inline \`onChange\` already likha hua hai — TypeScript auto-infer kar raha hai \`e\` ka type. Aapka kaam: har inline handler ko alag function mein extract karo + explicit \`ChangeEvent<T>\` type do.
 
-Is lab mein teen DOM elements ke event handlers banayenge — teeno ka \`ChangeEvent<T>\` type alag hai.
+### Flow:
+1. **Inline approach (already given)** — \`onChange={(e) => setText(e.target.value)}\` — TypeScript infer kar raha hai \`e: ChangeEvent<HTMLInputElement>\`
+2. **Extract karo** — Har inline handler ko ek named function mein nikaalo (e.g., \`handleInput\`)
+3. **Explicit type do** — Extracted function ko \`ChangeEvent<T>\` type dena padega kyunki ab context lost hai
 
 ### Requirements:
-1. **Input field** — \`React.ChangeEvent<HTMLInputElement>\` ke saath \`setText\`
-2. **Textarea** — \`React.ChangeEvent<HTMLTextAreaElement>\` ke saath \`setBio\`
-3. **Select dropdown** — \`React.ChangeEvent<HTMLSelectElement>\` ke saath \`setRole\`
-4. Har element ke neeche current value display karo
-5. Har handler ka type alag hai — lekin sab same \`ChangeEvent<T>\` pattern use karte hain
+1. \`handleInput\` banao — \`ChangeEvent<HTMLInputElement>\` type ke saath
+2. \`handleTextarea\` banao — \`ChangeEvent<HTMLTextAreaElement>\` type ke saath
+3. \`handleSelect\` banao — \`ChangeEvent<HTMLSelectElement>\` type ke saath
+4. JSX mein \`onChange\` ko inline se extracted handler mein replace karo
+5. Sab same \`ChangeEvent<T>\` pattern hain — bas \`T\` badalta hai
 
 ### Hints:
 - Input: \`(e: React.ChangeEvent<HTMLInputElement>) => setText(e.target.value)\`
 - Textarea: \`(e: React.ChangeEvent<HTMLTextAreaElement>) => setBio(e.target.value)\`
 - Select: \`(e: React.ChangeEvent<HTMLSelectElement>) => setRole(e.target.value)\`
-- \`<T>\` ki value DOM element ke hisaab se badalti hai — \`HTMLInputElement\`, \`HTMLTextAreaElement\`, \`HTMLSelectElement\`
+- Inline mein TypeScript auto-infer karta hai, extracted mein explicit dena padta hai — kyunki function declaration pe usage ka pata nahi hota
   `,
 
   hints: [
     "Input → ChangeEvent<HTMLInputElement>",
     "Textarea → ChangeEvent<HTMLTextAreaElement>",
     "Select → ChangeEvent<HTMLSelectElement>",
-    "Teno ka `.value` same hai — lekin TypeScript exact type enforce karta hai",
+    "Inline onChange mein auto-infer hota hai — extracted mein explicit type do",
+    "Extract karte waqt function parameter mein type daalo, JSX mein sirf function reference",
   ],
 
   starterFiles: {
@@ -39,9 +43,12 @@ export default function App() {
   const [bio, setBio] = useState("");
   const [role, setRole] = useState("user");
 
-  // TODO 1: handleInput banao — ChangeEvent type ke saath (input field ke liye)
-  // TODO 2: handleTextarea banao — ChangeEvent type ke saath (textarea ke liye)
-  // TODO 3: handleSelect banao — ChangeEvent type ke saath (select dropdown ke liye)
+  // TODO: Inline onChange kaam kar raha hai (TypeScript auto-infer kar raha hai).
+  //       Ab teeno inline handlers ko alag functions mein extract karo +
+  //       explicit ChangeEvent<T> type do:
+  //       - handleInput — ChangeEvent<HTMLInputElement>
+  //       - handleTextarea — ChangeEvent<HTMLTextAreaElement>
+  //       - handleSelect — ChangeEvent<HTMLSelectElement>
 
   return (
     <div>
@@ -49,17 +56,36 @@ export default function App() {
 
       <div>
         <h3>Input (ChangeEvent&lt;HTMLInputElement&gt;)</h3>
-        {/* TODO: Input field with value + onChange */}
+        <input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Type here..."
+        />
+        <p>Text: {text}</p>
       </div>
 
       <div>
         <h3>Textarea (ChangeEvent&lt;HTMLTextAreaElement&gt;)</h3>
-        {/* TODO: Textarea with value + onChange + rows */}
+        <textarea
+          value={bio}
+          onChange={(e) => setBio(e.target.value)}
+          placeholder="Your bio..."
+          rows={3}
+        />
+        <p>Bio: {bio}</p>
       </div>
 
       <div>
         <h3>Select (ChangeEvent&lt;HTMLSelectElement&gt;)</h3>
-        {/* TODO: Select dropdown with value + onChange */}
+        <select
+          value={role}
+          onChange={(e) => setRole(e.target.value)}
+        >
+          <option value="user">User</option>
+          <option value="admin">Admin</option>
+          <option value="moderator">Moderator</option>
+        </select>
+        <p>Role: {role}</p>
       </div>
     </div>
   );

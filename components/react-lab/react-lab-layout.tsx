@@ -148,6 +148,83 @@ function ShowSolution({ solutionFiles }: { solutionFiles: SandpackFiles }) {
   )
 }
 
+function PlaygroundFileManager() {
+  const { sandpack } = useSandpack()
+  const [showInput, setShowInput] = useState(false)
+  const [fileName, setFileName] = useState("")
+
+  const handleAdd = () => {
+    const name = fileName.trim()
+    if (!name) return
+    const path = name.startsWith("/") ? name : "/" + name
+    const finalPath = path.includes(".") ? path : path + ".tsx"
+    sandpack.addFile(finalPath, "")
+    sandpack.openFile(finalPath)
+    setFileName("")
+    setShowInput(false)
+  }
+
+  if (!showInput) {
+    return (
+      <button
+        onClick={() => setShowInput(true)}
+        className="w-full text-xs py-1.5 px-3 rounded-md border transition-all hover:brightness-110 cursor-pointer"
+        style={{
+          borderColor: "#30363d",
+          color: "#c9d1d9",
+          background: "#161b22",
+          marginTop: "4px",
+        }}
+      >
+        + New File
+      </button>
+    )
+  }
+
+  return (
+    <div className="flex gap-1" style={{ marginTop: "4px" }}>
+      <input
+        value={fileName}
+        onChange={(e) => setFileName(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && handleAdd()}
+        placeholder="components/MyComp.tsx"
+        autoFocus
+        className="flex-1 text-xs px-2 py-1 rounded border"
+        style={{
+          borderColor: "#30363d",
+          background: "#0d1117",
+          color: "#c9d1d9",
+          outline: "none",
+          width: 0,
+          minWidth: 0,
+        }}
+      />
+      <button
+        onClick={handleAdd}
+        className="text-xs px-2 py-1 rounded-md border transition-all hover:brightness-110 cursor-pointer"
+        style={{
+          borderColor: "#30363d",
+          color: "#c9d1d9",
+          background: "#161b22",
+        }}
+      >
+        Add
+      </button>
+      <button
+        onClick={() => { setShowInput(false); setFileName("") }}
+        className="text-xs px-2 py-1 rounded-md border transition-all hover:brightness-110 cursor-pointer"
+        style={{
+          borderColor: "#30363d",
+          color: "#8b949e",
+          background: "transparent",
+        }}
+      >
+        ✕
+      </button>
+    </div>
+  )
+}
+
 export function ReactLabLayout({
   state,
   currentStep,
@@ -157,6 +234,7 @@ export function ReactLabLayout({
   const sc = (state as { currentScenario?: { id: string } }).currentScenario
   const scenarioId = sc?.id ?? ((state as { scenario: { id: string } }).scenario?.id ?? "")
   const scenario = useMemo(() => getReactScenario(scenarioId), [scenarioId])
+  const isPlayground = scenarioId === "0.0-playground"
 
   useEffect(() => { setHintsOpen(false) }, [scenarioId])
 
@@ -170,6 +248,7 @@ export function ReactLabLayout({
 
   const files = scenario.starterFiles
   const fileKeys = Object.keys(files)
+  const playgroundVisibleFiles = ["/src/App.tsx", "/src/styles.css", "/index.tsx"]
 
   return (
     <div className="flex-1 flex overflow-hidden">
@@ -179,8 +258,8 @@ export function ReactLabLayout({
         theme={reactTheme as any}
         style={{ display: "contents" }}
         options={{
-          visibleFiles: fileKeys as any,
-          activeFile: "/App.tsx",
+          visibleFiles: isPlayground ? (playgroundVisibleFiles as any) : (fileKeys as any),
+          activeFile: isPlayground ? "/src/App.tsx" : "/App.tsx",
 
           classes: {
             "sp-wrapper": "h-full",
@@ -337,8 +416,8 @@ export function ReactLabLayout({
             </div>
           )}
 
-          <CheckAnswer key={scenario.id} check={scenario.check} />
-          <ShowSolution key={`sol-${scenario.id}`} solutionFiles={scenario.solutionFiles} />
+          {!isPlayground && <CheckAnswer key={scenario.id} check={scenario.check} />}
+          {!isPlayground && <ShowSolution key={`sol-${scenario.id}`} solutionFiles={scenario.solutionFiles} />}
         </div>
       </div>
 
@@ -363,10 +442,20 @@ export function ReactLabLayout({
       {/* Right: Sandpack */}
       <div className="flex-1 flex flex-col min-h-0">
         <SandpackLayout>
-          <SandpackFileExplorer
-            autoHiddenFiles
-            style={{ height: "100%", minWidth: "200px" }}
-          />
+          {isPlayground ? (
+            <div style={{ display: "flex", flexDirection: "column", height: "100%", minWidth: "200px" }}>
+              <SandpackFileExplorer
+                autoHiddenFiles={false}
+                style={{ flex: 1, minHeight: 0 }}
+              />
+              <PlaygroundFileManager />
+            </div>
+          ) : (
+            <SandpackFileExplorer
+              autoHiddenFiles
+              style={{ height: "100%", minWidth: "200px" }}
+            />
+          )}
           <SandpackCodeEditor
             showTabs
             showInlineErrors

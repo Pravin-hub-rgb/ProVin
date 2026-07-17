@@ -6,57 +6,56 @@ export const TODO_BASIC_LAB: ReactScenario = {
   description: "Practice array state with add and delete items",
   instructions: `## List App: Add & Delete Items
 
-Create an app that lets users add and remove list items using \`useState<string[]>\`.
+Ek app banayenge jisme user items add aur delete kar sake — using \`useState<string[]>\`.
+
+### Kya Banayenge?
+
+- Input field + "Add" button → naya item list mein add ho
+- Items neeche list mein dikhe — har item ke saath "Delete" button
+- Empty state: "No items yet" jab koi item na ho
 
 ### Requirements:
-1. \`useState<string[]>([])\` — array of strings, initially empty
-2. Controlled input with \`useState("")\` for the text field
-3. Render items using \`.map()\` with \`key={index}\`
-4. Each item should have a "Delete" button
-5. Show "No items yet" when the list is empty
-6. Use spread operator \`[...items]\` to add — never \`.push()\`
+1. \`useState<string[]>([])\` — array state with explicit generic
+2. \`useState("")\` — controlled input ke liye
+3. \`addItem\` function — spread operator se add karo, \`.push()\` kabhi nahi
+4. \`deleteItem\` function — \`.filter()\` se remove karo
+5. \`.map()\` se items render karo — har item pe Delete button
+6. Empty state dikhao jab list khali ho
 
 ### Tips:
-- Empty state hamesha conditional rendering se dikhao
 - Immutability rule: naya array reference do, purane ko mutate mat karo
+- \`setItems([...items, newItem])\` — spread to add
+- \`setItems(items.filter((_, i) => i !== index))\` — filter to remove
+- Conditional rendering: \`items.length === 0 ? ... : ...\`
   `,
 
   hints: [
-    "Use spread: `setItems([...items, newItem])` — never `.push()`",
-    "For delete: `setItems(items.filter((_, i) => i !== index))`",
-    "Empty state: `items.length === 0 && <p>No items...</p>`",
+    "State: `useState<string[]>([])` + `useState(\"\")`",
+    "Add: `setItems([...items, input.trim()])` — never `.push()`",
+    "Delete: `setItems(items.filter((_, i) => i !== index))`",
+    "Empty state: `items.length === 0 ? <p>No items...</p> : items.map(...)`",
   ],
 
   starterFiles: {
     "/App.tsx": `import { useState } from "react";
 
 export default function App() {
-  const [items, setItems] = useState<string[]>([]);
-  const [input, setInput] = useState("");
+  // TODO 1: items state banao — useState<string[]>([]) — explicit generic do
 
-  const addItem = () => {
-    if (input.trim() === "") return;
-    // TODO: Add new item using spread
-    setInput("");
-  };
+  // TODO 2: input state banao — useState("") — controlled input ke liye
 
-  const deleteItem = (index: number) => {
-    // TODO: Remove item at this index using filter
-  };
+  // TODO 3: addItem function banao — input.trim() check karo,
+  //          spread se items mein add karo, input clear karo
+
+  // TODO 4: deleteItem function banao — (index: number) parameter lo,
+  //          filter se index wala item remove karo
 
   return (
     <div>
       <h1>List App</h1>
-      <div>
-        <input
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          placeholder="Enter an item..."
-        />
-        <button onClick={addItem}>Add</button>
-      </div>
-      {/* TODO: Render items with .map() + Delete button */}
-      {/* TODO: Show empty state when no items */}
+      {/* TODO 5: Input field + Add button — input state ke saath controlled */}
+      {/* TODO 6: .map() se items render karo — har item ke saath Delete button */}
+      {/* TODO 7: Empty state — items.length === 0 ? "No items yet" : items.map(...) */}
     </div>
   );
 }`,

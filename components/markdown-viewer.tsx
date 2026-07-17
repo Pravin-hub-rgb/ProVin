@@ -3,6 +3,7 @@
 import { MarkdownHooks } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
+import { ToDoDemo } from './todo-demo'
 
 interface MarkdownViewerProps {
   content: string
@@ -15,7 +16,7 @@ export function MarkdownViewer({ content, theme = 'light' }: MarkdownViewerProps
       <MarkdownHooks
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[rehypeRaw]}
-        components={{
+        components={{ ...{
           code({ node, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || '')
             return match ? (
@@ -83,9 +84,9 @@ export function MarkdownViewer({ content, theme = 'light' }: MarkdownViewerProps
           },
           p({ children }) {
             return (
-              <p className="text-foreground/80 leading-relaxed mb-4">
+              <div className="text-foreground/80 leading-relaxed mb-4">
                 {children}
-              </p>
+              </div>
             )
           },
           ul({ children }) {
@@ -127,8 +128,9 @@ export function MarkdownViewer({ content, theme = 'light' }: MarkdownViewerProps
                 {children}
               </a>
             )
-          }
-        }}
+          },
+          "todo-demo": ToDoDemo,
+        } as Record<string, any>}}
       >
         {content}
       </MarkdownHooks>

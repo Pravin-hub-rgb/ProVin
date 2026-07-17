@@ -1,4 +1,5 @@
 import type { ReactScenario } from "../types"
+import { PLAYGROUND_LAB } from "./0.0-playground"
 import { JSX_LAB } from "./1.1-jsx"
 import { COMPONENTS_LAB } from "./1.2-components"
 import { IMPORT_EXPORT_VALUES_LAB } from "./1.3.1-import-export-values"
@@ -23,6 +24,7 @@ import { LISTS_LAB } from "./1.11-lists-keys"
 import { TODO_POLISH_LAB } from "./1.12-todo-polish"
 
 export const reactScenarios: ReactScenario[] = [
+  PLAYGROUND_LAB,
   JSX_LAB,
   COMPONENTS_LAB,
   IMPORT_EXPORT_VALUES_LAB,
