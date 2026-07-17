@@ -117,6 +117,11 @@ export const reactSubject: Subject = {
       openByDefault: true,
       lectures: [
         {
+          id: "react-1.0",
+          title: "1.0 React Project Structure",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.0 React Project Structure.md",
+        },
+        {
           id: "react-1.1",
           title: "1.1 JSX Kya Hai",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.1 JSX Kya Hai.md",
@@ -193,6 +198,11 @@ export const reactSubject: Subject = {
         },
       ],
       quizzes: [
+        {
+          id: "quiz-1.0",
+          title: "❓ 1.0 Quiz",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.0 Quiz — React Project Structure.md",
+        },
         {
           id: "quiz-1.1",
           title: "❓ 1.1 Quiz",

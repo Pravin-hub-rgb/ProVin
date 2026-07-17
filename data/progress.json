@@ -104,6 +104,8 @@
     "react-1.8": true,
     "react-1.9": true,
     "react-1.10": true,
-    "react-1.11": true
+    "react-1.11": true,
+    "quiz-1.0": true,
+    "react-1.0": true
   }
 }
