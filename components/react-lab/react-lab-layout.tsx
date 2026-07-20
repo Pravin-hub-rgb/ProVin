@@ -5,7 +5,6 @@ import type { LabLayoutProps } from "@/lib/lab-registry"
 import { getReactScenario } from "@/lib/react-lab/scenarios"
 import {
   SandpackProvider,
-  SandpackLayout,
   SandpackCodeEditor,
   SandpackPreview,
   SandpackFileExplorer,
@@ -231,6 +230,39 @@ export function ReactLabLayout({
 }: LabLayoutProps) {
   const [panelOpen, setPanelOpen] = useState(true)
   const [hintsOpen, setHintsOpen] = useState(false)
+  const splitContainerRef = useRef<HTMLDivElement>(null)
+  const [editorPercent, setEditorPercent] = useState(50)
+  const [isDragging, setIsDragging] = useState(false)
+  const dragStartRef = useRef({ startX: 0, startPct: 0 })
+
+  const handleSplitMouseDown = useCallback((e: React.MouseEvent) => {
+    e.preventDefault()
+    dragStartRef.current = { startX: e.clientX, startPct: editorPercent }
+    setIsDragging(true)
+  }, [editorPercent])
+
+  useEffect(() => {
+    if (!isDragging) return
+    const container = splitContainerRef.current
+    if (!container) return
+    const handleMouseMove = (e: MouseEvent) => {
+      const rect = container.getBoundingClientRect()
+      const deltaPx = e.clientX - dragStartRef.current.startX
+      const deltaPct = (deltaPx / rect.width) * 100
+      setEditorPercent(Math.max(20, Math.min(75, dragStartRef.current.startPct + deltaPct)))
+    }
+    const handleMouseUp = () => setIsDragging(false)
+    document.addEventListener("mousemove", handleMouseMove)
+    document.addEventListener("mouseup", handleMouseUp)
+    document.body.style.cursor = "col-resize"
+    document.body.style.userSelect = "none"
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove)
+      document.removeEventListener("mouseup", handleMouseUp)
+      document.body.style.cursor = ""
+      document.body.style.userSelect = ""
+    }
+  }, [isDragging])
   const sc = (state as { currentScenario?: { id: string } }).currentScenario
   const scenarioId = sc?.id ?? ((state as { scenario: { id: string } }).scenario?.id ?? "")
   const scenario = useMemo(() => getReactScenario(scenarioId), [scenarioId])
@@ -441,9 +473,21 @@ export function ReactLabLayout({
 
       {/* Right: Sandpack */}
       <div className="flex-1 flex flex-col min-h-0">
-        <SandpackLayout>
+        <div
+          ref={splitContainerRef}
+          style={{
+            display: "flex",
+            flexDirection: "row",
+            alignItems: "stretch",
+            height: "100%",
+            background: "#0d1117",
+            border: "1px solid #30363d",
+            borderRadius: "4px",
+            overflow: "hidden",
+          }}
+        >
           {isPlayground ? (
-            <div style={{ display: "flex", flexDirection: "column", height: "100%", minWidth: "200px" }}>
+            <div style={{ display: "flex", flexDirection: "column", height: "100%", minWidth: "200px", width: 200, flexShrink: 0 }}>
               <SandpackFileExplorer
                 autoHiddenFiles={false}
                 style={{ flex: 1, minHeight: 0 }}
@@ -453,7 +497,7 @@ export function ReactLabLayout({
           ) : (
             <SandpackFileExplorer
               autoHiddenFiles
-              style={{ height: "100%", minWidth: "200px" }}
+              style={{ height: "100%", minWidth: "200px", width: 200, flexShrink: 0 }}
             />
           )}
           <SandpackCodeEditor
@@ -461,14 +505,38 @@ export function ReactLabLayout({
             showInlineErrors
             showRunButton
             wrapContent
-            style={{ height: "100%" }}
+            style={{ height: "100%", minWidth: "200px", width: `${editorPercent}%` }}
           />
+          <div
+            onMouseDown={handleSplitMouseDown}
+            className="flex-shrink-0 relative z-10"
+            style={{
+              width: 8,
+              cursor: "col-resize",
+              background: isDragging ? "rgba(88,166,255,0.15)" : "transparent",
+              transition: "background 0.15s",
+            }}
+            onMouseEnter={(e) => {
+              if (!isDragging) e.currentTarget.style.background = "rgba(88,166,255,0.08)"
+            }}
+            onMouseLeave={(e) => {
+              if (!isDragging) e.currentTarget.style.background = "transparent"
+            }}
+          >
+            <div
+              className="absolute inset-y-0 left-1/2 -translate-x-1/2 rounded-full transition-all duration-150"
+              style={{
+                width: 3,
+                background: isDragging ? "#58a6ff" : "#30363d",
+              }}
+            />
+          </div>
           <SandpackPreview
             showNavigator
             showRefreshButton
-            style={{ height: "100%", minWidth: "300px" }}
+            style={{ height: "100%", flex: 1, minWidth: "300px" }}
           />
-        </SandpackLayout>
+        </div>
       </div>
       </SandpackProvider>
     </div>

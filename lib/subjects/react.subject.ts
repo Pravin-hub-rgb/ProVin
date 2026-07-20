@@ -266,8 +266,18 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-2.5",
-          title: "2.5 Lifting State Up",
-          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.5 Lifting State Up.md",
+          title: "2.5.0 Lifting State Up",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.5.0 Lifting State Up.md",
+        },
+        {
+          id: "react-2.5.1",
+          title: "2.5.1 Accordion Mini Project Code",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.5.1 Accordion Mini Project Code.md",
+        },
+        {
+          id: "react-2.5.2",
+          title: "2.5.2 Shopping Cart Mini Project Code",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.5.2 Shopping Cart Mini Project Code.md",
         },
         {
           id: "react-2.6",
@@ -278,6 +288,33 @@ export const reactSubject: Subject = {
           id: "react-2.7",
           title: "2.7 Combined Project — To-Do App v2",
           path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.7 Combined Project - To-Do App v2.md",
+        },
+      ],
+      quizzes: [
+        {
+          id: "quiz-2.1",
+          title: "❓ 2.1 Quiz",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.1 Quiz — useEffect Basics.md",
+        },
+        {
+          id: "quiz-2.2",
+          title: "❓ 2.2 Quiz",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.2 Quiz — API Fetching with useEffect.md",
+        },
+        {
+          id: "quiz-2.3",
+          title: "❓ 2.3 Quiz",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.3 Quiz — TanStack React Query.md",
+        },
+        {
+          id: "quiz-2.4",
+          title: "❓ 2.4 Quiz",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.4 Quiz — useRef.md",
+        },
+        {
+          id: "quiz-2.5",
+          title: "❓ 2.5 Quiz",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.5 Quiz — Lifting State Up.md",
         },
       ],
     },

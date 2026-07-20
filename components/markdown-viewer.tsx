@@ -128,6 +128,26 @@ const markdownComponents: Record<string, ComponentType<any> | string> = {
   "todo-demo": ToDoDemo,
 }
 
+function escapeNonHtmlAngleBrackets(markdown: string): string {
+  const codeBlocks: string[] = [];
+  const noCodeBlocks = markdown.replace(/(```[\s\S]*?```)/g, (m) => {
+    codeBlocks.push(m);
+    return `\x00CB_${codeBlocks.length - 1}\x00`;
+  });
+  const inlines: string[] = [];
+  const noInline = noCodeBlocks.replace(/(`[^`]*`)/g, (m) => {
+    inlines.push(m);
+    return `\x00IC_${inlines.length - 1}\x00`;
+  });
+  const escaped = noInline.replace(/<([^>]+)>/g, (match, inner) => {
+    const tagName = inner.split(/\s+/)[0].replace(/^\//, '');
+    if (/^[a-z][a-z0-9]*$/.test(tagName) && !/[\[\]|<>]/.test(inner)) return match;
+    return `&lt;${inner}&gt;`;
+  });
+  const withInline = escaped.replace(/\x00IC_(\d+)\x00/g, (_, i) => inlines[+i]);
+  return withInline.replace(/\x00CB_(\d+)\x00/g, (_, i) => codeBlocks[+i]);
+}
+
 export function MarkdownViewer({ content, theme = 'light' }: MarkdownViewerProps) {
   return (
     <div className="prose prose-lg dark:prose-invert max-w-none">
@@ -136,7 +156,7 @@ export function MarkdownViewer({ content, theme = 'light' }: MarkdownViewerProps
         rehypePlugins={[rehypeRaw]}
         components={markdownComponents}
       >
-        {content}
+        {escapeNonHtmlAngleBrackets(content)}
       </MarkdownHooks>
     </div>
   )

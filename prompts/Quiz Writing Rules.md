@@ -167,7 +167,41 @@ Examples:
 
 ---
 
-## 13. Pre-Submission Checklist
+## 14. No Lecture-Specific References in Questions
+
+Question kabhi bhi lecture ke example code ki **specific details** ko reference nahi karna chahiye — chahe woh variable names ho, example names ho (jaise "Stopwatch", "Recipe Finder"), component names ho, ya project-specific koi bhi context.
+
+❌ **Galat (variable names):**
+```
+Do states pattern mein `searchInput` aur `query` mein kya fark hai?
+```
+
+❌ **Galat (example name):**
+```
+Stopwatch example mein interval ID store karne ke liye `useState` ki jagah `useRef` kyun use kiya?
+```
+
+Jo student ne lecture nahi pada, woh nahi jaan sakta ki `searchInput`, `query`, ya "Stopwatch example" kya hain. Yeh lecture-specific details hain, concept nahi.
+
+✅ **Sahi:**
+```
+Agar API fetch trigger ko directly input field ke saath bind kar diya jaye
+(har keystroke pe queryKey change ho), toh kya problem hogi?
+```
+
+✅ **Sahi:**
+```
+Agar timer ID (setInterval se milne wali ID) ko `useState` mein store karein,
+toh kya problem hogi?
+```
+
+Question CONCEPT test kar raha hai (variable/example names memorize karna nahi).
+
+**Rule of thumb:** Question ko independently khada hona chahiye — lecture ka example padhe bina bhi samajh aaye ki pucha kya ja raha hai. Agar question mein lecture ke example ki koi specific detail hai (variable name, example name, component name, project reference), to woh galat hai. Use generic descriptions instead.
+
+---
+
+## 15. Pre-Submission Checklist
 
 ```
 [ ] Har concept covered hai? (lecture ke saare subsections check)

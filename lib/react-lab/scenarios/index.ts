@@ -22,6 +22,8 @@ import { TODO_BASIC_LAB } from "./1.9-array-state"
 import { CONDITIONAL_LAB } from "./1.10-conditional"
 import { LISTS_LAB } from "./1.11-lists-keys"
 import { TODO_POLISH_LAB } from "./1.12-todo-polish"
+import { ACCORDION_LAB } from "./2.5.1-accordion"
+import { SHOPPING_CART_LAB } from "./2.5.2-shopping-cart"
 
 export const reactScenarios: ReactScenario[] = [
   PLAYGROUND_LAB,
@@ -47,6 +49,8 @@ export const reactScenarios: ReactScenario[] = [
   CONDITIONAL_LAB,
   LISTS_LAB,
   TODO_POLISH_LAB,
+  ACCORDION_LAB,
+  SHOPPING_CART_LAB,
 ]
 
 export function getReactScenario(id: string): ReactScenario | undefined {
