@@ -3,8 +3,9 @@
 import { MarkdownHooks } from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
+import { visit } from 'unist-util-visit'
 import { ToDoDemo } from './todo-demo'
-import type { Element } from 'hast'
+import type { Element, Root } from 'hast'
 import type { ComponentType } from 'react'
 
 interface MarkdownViewerProps {
@@ -128,6 +129,17 @@ const markdownComponents: Record<string, ComponentType<any> | string> = {
   "todo-demo": ToDoDemo,
 }
 
+function stripReactProps() {
+  return (tree: Root) => {
+    visit(tree, 'element', (node: Element) => {
+      if (node.properties) {
+        delete node.properties.ref
+        delete node.properties.key
+      }
+    })
+  }
+}
+
 function escapeNonHtmlAngleBrackets(markdown: string): string {
   const codeBlocks: string[] = [];
   const noCodeBlocks = markdown.replace(/(```[\s\S]*?```)/g, (m) => {
@@ -141,7 +153,7 @@ function escapeNonHtmlAngleBrackets(markdown: string): string {
   });
   const escaped = noInline.replace(/<([^>]+)>/g, (match, inner) => {
     const tagName = inner.split(/\s+/)[0].replace(/^\//, '');
-    if (/^[a-z][a-z0-9]*$/.test(tagName) && !/[\[\]|<>]/.test(inner)) return match;
+    if (/^[a-z][a-z0-9-]*$/.test(tagName) && !/[\[\]|<>]/.test(inner) && !/=\s*\{[^}]*\}/.test(inner)) return match;
     return `&lt;${inner}&gt;`;
   });
   const withInline = escaped.replace(/\x00IC_(\d+)\x00/g, (_, i) => inlines[+i]);
@@ -153,7 +165,7 @@ export function MarkdownViewer({ content, theme = 'light' }: MarkdownViewerProps
     <div className="prose prose-lg dark:prose-invert max-w-none">
       <MarkdownHooks
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw]}
+        rehypePlugins={[rehypeRaw, stripReactProps]}
         components={markdownComponents}
       >
         {escapeNonHtmlAngleBrackets(content)}
