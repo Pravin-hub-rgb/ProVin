@@ -147,6 +147,56 @@ function ShowSolution({ solutionFiles }: { solutionFiles: SandpackFiles }) {
   )
 }
 
+function CodePersistence({ scenarioId }: { scenarioId: string }) {
+  const { sandpack } = useSandpack()
+  const restoredScenario = useRef<string | null>(null)
+
+  useEffect(() => {
+    const saved = localStorage.getItem(`react-lab-code-${scenarioId}`)
+    if (saved && restoredScenario.current !== scenarioId) {
+      restoredScenario.current = scenarioId
+      try {
+        const raw = JSON.parse(saved) as Record<string, string>
+        const batch: Record<string, string> = {}
+        for (const [path, code] of Object.entries(raw)) {
+          if (typeof code === "string") batch[path] = code
+        }
+        sandpack.updateFile(batch)
+      } catch { }
+    }
+
+    const plain: Record<string, string> = {}
+    for (const [path, f] of Object.entries(sandpack.files)) {
+      const code = typeof f === "string" ? f : (f as any).code
+      if (code != null) plain[path] = code
+    }
+    try { localStorage.setItem(`react-lab-code-${scenarioId}`, JSON.stringify(plain)) } catch { }
+  }, [scenarioId, sandpack.files])
+
+  return null
+}
+
+function ResetHandler({ resetKey, starterFiles }: { resetKey: number; starterFiles: SandpackFiles }) {
+  const { sandpack } = useSandpack()
+  const prevKey = useRef(resetKey)
+  const filesRef = useRef(starterFiles)
+  filesRef.current = starterFiles
+
+  useEffect(() => {
+    if (resetKey !== prevKey.current) {
+      prevKey.current = resetKey
+      const files = filesRef.current
+      sandpack.resetAllFiles()
+      for (const [path, f] of Object.entries(files)) {
+        const code = typeof f === "string" ? f : (f as { code: string }).code
+        sandpack.updateFile(path, code)
+      }
+    }
+  }, [resetKey])
+
+  return null
+}
+
 function PlaygroundFileManager() {
   const { sandpack } = useSandpack()
   const [showInput, setShowInput] = useState(false)
@@ -225,6 +275,7 @@ function PlaygroundFileManager() {
 }
 
 export function ReactLabLayout({
+  resetKey,
   state,
   currentStep,
 }: LabLayoutProps) {
@@ -279,8 +330,11 @@ export function ReactLabLayout({
   }
 
   const files = scenario.starterFiles
-  const fileKeys = Object.keys(files)
-  const playgroundVisibleFiles = ["/src/App.tsx", "/src/styles.css", "/index.tsx"]
+  const sourceExtensions = [".tsx", ".ts", ".css", ".js", ".jsx"]
+  const visibleFileKeys = Object.keys(files).filter(f =>
+    sourceExtensions.some(ext => f.endsWith(ext))
+  )
+  const playgroundVisibleFiles = ["/index.tsx", "/App.tsx", "/styles.css"]
 
   return (
     <div className="flex-1 flex overflow-hidden">
@@ -290,8 +344,8 @@ export function ReactLabLayout({
         theme={reactTheme as any}
         style={{ display: "contents" }}
         options={{
-          visibleFiles: isPlayground ? (playgroundVisibleFiles as any) : (fileKeys as any),
-          activeFile: isPlayground ? "/src/App.tsx" : "/App.tsx",
+          visibleFiles: isPlayground ? (playgroundVisibleFiles as any) : (visibleFileKeys as any),
+          activeFile: isPlayground ? "/App.tsx" : "/App.tsx",
 
           classes: {
             "sp-wrapper": "h-full",
@@ -300,6 +354,11 @@ export function ReactLabLayout({
           },
         }}
       >
+
+      <CodePersistence scenarioId={scenarioId} />
+      {resetKey !== undefined && (
+        <ResetHandler resetKey={resetKey} starterFiles={files} />
+      )}
 
       {/* Left: Instructions panel */}
       <div

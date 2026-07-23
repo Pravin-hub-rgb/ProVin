@@ -45,23 +45,10 @@ Jo man kare karo — files banao, code likho, preview dekho.
     "typescript": "^5.0.0"
   }
 }`,
-    "/tsconfig.json": `{
-  "compilerOptions": {
-    "target": "ES2020",
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "jsx": "react-jsx",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
-  },
-  "include": ["src"]
-}`,
     "/index.tsx": `import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./src/App";
-import "./src/styles.css";
+import App from "./App";
+import "./styles.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root")!
@@ -71,7 +58,7 @@ root.render(
     <App />
   </React.StrictMode>
 );`,
-    "/src/App.tsx": `import { useState } from "react";
+    "/App.tsx": `import { useState } from "react";
 
 export default function App() {
   const [count, setCount] = useState(0);
@@ -84,7 +71,7 @@ export default function App() {
     </div>
   );
 }`,
-    "/src/styles.css": `body {
+    "/styles.css": `body {
   font-family: system-ui, sans-serif;
   padding: 2rem;
   max-width: 600px;

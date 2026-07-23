@@ -50,6 +50,7 @@ import { iknowcomputersSubject } from "./subjects/iknowcomputers.subject";
 import { agenticaiSubject } from "./subjects/agenticai.subject";
 import { gitgithubSubject } from "./subjects/gitgithub.subject";
 import { reactSubject } from "./subjects/react.subject";
+import { typescriptSubject } from "./subjects/typescript.subject";
 
 export const subjects: Subject[] = [
   pythonSubject,
@@ -59,12 +60,7 @@ export const subjects: Subject[] = [
   agenticaiSubject,
   gitgithubSubject,
   reactSubject,
-  {
-    id: "typescript",
-    title: "TypeScript",
-    description: "Type safe JavaScript",
-    lectures: [],
-  },
+  typescriptSubject,
 ];
 
 /**

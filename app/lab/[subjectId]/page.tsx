@@ -84,6 +84,7 @@ function SubjectLabPageInner({
   const initialScenarioId: string = scenarioParam && lab.getScenario(scenarioParam) ? scenarioParam : lab.defaultScenarioId
 
   const [state, setState] = useState<unknown>(() => applySetup(lab, initialScenarioId).state)
+  const [resetKey, setResetKey] = useState(0)
   const scenarioRef = useRef<Scenario>(applySetup(lab, initialScenarioId).scenario)
   const initializedRef = useRef(false)
 
@@ -267,7 +268,9 @@ function SubjectLabPageInner({
 
   function handleReset() {
     try { localStorage.removeItem(storageKey) } catch {}
-    const { state: newState, scenario: newScenario } = applySetup(lab, (state as { scenario: { id: string } }).scenario.id)
+    const currentId = (state as { scenario: { id: string } }).scenario.id
+    try { localStorage.removeItem(`react-lab-code-${currentId}`) } catch {}
+    const { state: newState, scenario: newScenario } = applySetup(lab, currentId)
     scenarioRef.current = newScenario
     setState(newState)
     persist(newState)
@@ -275,6 +278,7 @@ function SubjectLabPageInner({
     historyRef.current = {}
     setShowCelebration(false)
     setCanGoForward(false)
+    setResetKey(k => k + 1)
     forceUpdate((n) => n + 1)
   }
 
@@ -431,6 +435,7 @@ function SubjectLabPageInner({
       <div className="flex-1 min-h-0 flex flex-col">
         {lab.Layout ? (
           <lab.Layout
+            resetKey={resetKey}
             state={state}
             onCommand={handleCommand}
             step={step}

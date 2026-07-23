@@ -19,6 +19,8 @@ export interface TerminalHeader {
 }
 
 export interface LabLayoutProps {
+  /** Increment to signal sandpack etc should reset to defaults */
+  resetKey?: number
   state: unknown
   onCommand: (who: "A" | "B", cmd: string) => void
   step: ScenarioStep | undefined

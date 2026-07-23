@@ -279,10 +279,10 @@ export const reactSubject: Subject = {
           title: "2.5.2 Shopping Cart Mini Project Code",
           path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.5.2 Shopping Cart Mini Project Code.md",
         },
-        {
+{
           id: "react-2.6",
           title: "2.6 Context API",
-          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.6 Context API.md",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.6-context-api.md",
         },
         {
           id: "react-2.7",
@@ -316,7 +316,39 @@ export const reactSubject: Subject = {
           title: "❓ 2.5 Quiz",
           path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.5 Quiz — Lifting State Up.md",
         },
+        {
+          id: "quiz-2.6",
+          title: "❓ 2.6 Quiz",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.6 Quiz — Context API.md",
+        },
       ],
+    },
+    {
+      id: "batch3",
+      title: "Batch 3 — Navigation & Access Control",
+      lectures: [
+        {
+          id: "react-3.1",
+          title: "3.1 React Router Basics",
+          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.1 React Router Basics.md",
+        },
+        {
+          id: "react-3.2",
+          title: "3.2 Dynamic Routes & Nested Routes",
+          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.2 Dynamic Routes & Nested Routes.md",
+        },
+        {
+          id: "react-3.3",
+          title: "3.3 Protected Routes",
+          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.3 Protected Routes.md",
+        },
+        {
+          id: "react-3.4",
+          title: "3.4 Combined Project — To-Do App v3",
+          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.4 Combined Project - To-Do App v3.md",
+        },
+      ],
+      quizzes: [],
     },
   ],
 };

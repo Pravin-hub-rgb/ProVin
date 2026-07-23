@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { visit } from 'unist-util-visit'
 import { ToDoDemo } from './todo-demo'
+import { ShoppingCartDemo } from './shopping-cart-demo'
 import type { Element, Root } from 'hast'
 import type { ComponentType } from 'react'
 
@@ -116,8 +117,8 @@ const markdownComponents: Record<string, ComponentType<any> | string> = {
   },
   a({ href, children }: { href?: string; children?: React.ReactNode }) {
     return (
-      <a 
-        href={href} 
+      <a
+        href={href}
         className="text-primary hover:text-primary/80 underline underline-offset-4"
         target="_blank"
         rel="noopener noreferrer"
@@ -127,6 +128,7 @@ const markdownComponents: Record<string, ComponentType<any> | string> = {
     )
   },
   "todo-demo": ToDoDemo,
+  "shopping-cart-demo": ShoppingCartDemo,
 }
 
 function stripReactProps() {
@@ -140,24 +142,28 @@ function stripReactProps() {
   }
 }
 
+const ALLOWED_HTML_TAGS = new Set([
+  'a','abbr','blockquote','br','button','code','div','h1','h2','h3','h4','h5','h6','hr','i','img','input','li','ol','p','pre','span','strong','table','tbody','td','th','thead','tr','ul',
+])
+
 function escapeNonHtmlAngleBrackets(markdown: string): string {
-  const codeBlocks: string[] = [];
-  const noCodeBlocks = markdown.replace(/(```[\s\S]*?```)/g, (m) => {
-    codeBlocks.push(m);
-    return `\x00CB_${codeBlocks.length - 1}\x00`;
-  });
-  const inlines: string[] = [];
-  const noInline = noCodeBlocks.replace(/(`[^`]*`)/g, (m) => {
-    inlines.push(m);
-    return `\x00IC_${inlines.length - 1}\x00`;
-  });
+  const codeBlocks: string[] = []
+  const noCodeBlocks = markdown.replace(/(```(?:[a-z]*)\r?\n[\s\S]*?\r?\n```)/g, (m) => {
+    const idx = codeBlocks.push(m) - 1
+    return `QQCODEBLOCKQQ${idx}QQENDQQ`
+  })
+  const inlines: string[] = []
+  const noInline = noCodeBlocks.replace(/(`[^`\n]*`)/g, (m) => {
+    const idx = inlines.push(m) - 1
+    return `QQINLINEQQ${idx}QQENDQQ`
+  })
   const escaped = noInline.replace(/<([^>]+)>/g, (match, inner) => {
-    const tagName = inner.split(/\s+/)[0].replace(/^\//, '');
-    if (/^[a-z][a-z0-9-]*$/.test(tagName) && !/[\[\]|<>]/.test(inner) && !/=\s*\{[^}]*\}/.test(inner)) return match;
-    return `&lt;${inner}&gt;`;
-  });
-  const withInline = escaped.replace(/\x00IC_(\d+)\x00/g, (_, i) => inlines[+i]);
-  return withInline.replace(/\x00CB_(\d+)\x00/g, (_, i) => codeBlocks[+i]);
+    const tagName = inner.split(/\s+/)[0].replace(/^\//, '').toLowerCase()
+    if (ALLOWED_HTML_TAGS.has(tagName)) return match
+    return `&lt;${inner}&gt;`
+  })
+  const withInline = escaped.replace(/QQINLINEQQ(\d+)QQENDQQ/g, (_, i) => inlines[+i])
+  return withInline.replace(/QQCODEBLOCKQQ(\d+)QQENDQQ/g, (_, i) => codeBlocks[+i])
 }
 
 export function MarkdownViewer({ content, theme = 'light' }: MarkdownViewerProps) {
