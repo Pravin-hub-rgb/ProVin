@@ -150,6 +150,8 @@ function ShowSolution({ solutionFiles }: { solutionFiles: SandpackFiles }) {
 function CodePersistence({ scenarioId }: { scenarioId: string }) {
   const { sandpack } = useSandpack()
   const restoredScenario = useRef<string | null>(null)
+  const filesRef = useRef(sandpack.files)
+  filesRef.current = sandpack.files
 
   useEffect(() => {
     const saved = localStorage.getItem(`react-lab-code-${scenarioId}`)
@@ -164,14 +166,21 @@ function CodePersistence({ scenarioId }: { scenarioId: string }) {
         sandpack.updateFile(batch)
       } catch { }
     }
+  }, [scenarioId, sandpack])
 
-    const plain: Record<string, string> = {}
-    for (const [path, f] of Object.entries(sandpack.files)) {
-      const code = typeof f === "string" ? f : (f as any).code
-      if (code != null) plain[path] = code
+  useEffect(() => {
+    const save = () => {
+      const plain: Record<string, string> = {}
+      for (const [path, f] of Object.entries(filesRef.current)) {
+        const code = typeof f === "string" ? f : (f as any).code
+        if (code != null) plain[path] = code
+      }
+      try { localStorage.setItem(`react-lab-code-${scenarioId}`, JSON.stringify(plain)) } catch { }
     }
-    try { localStorage.setItem(`react-lab-code-${scenarioId}`, JSON.stringify(plain)) } catch { }
-  }, [scenarioId, sandpack.files])
+    save()
+    const timer = setInterval(save, 3000)
+    return () => clearInterval(timer)
+  }, [scenarioId])
 
   return null
 }
