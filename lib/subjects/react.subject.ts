@@ -348,7 +348,13 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.4 Combined Project - To-Do App v3.md",
         },
       ],
-      quizzes: [],
+      quizzes: [
+        {
+          id: "quiz-3.1",
+          title: "❓ 3.1 Quiz",
+          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.1 Quiz — React Router Basics.md",
+        },
+      ],
     },
   ],
 };
