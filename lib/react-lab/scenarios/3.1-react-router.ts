@@ -3,7 +3,7 @@ import type { ReactScenario } from "../types"
 export const ROUTER_LAB: ReactScenario = {
   id: "3.1-react-router",
   title: "3.1: React Router Basics",
-  description: "BrowserRouter, Routes, Route, Link, NavLink, useNavigate",
+  description: "HashRouter, Routes, Route, Link, NavLink, useNavigate",
   instructions: `## 🧭 React Router Basics
 
 Is lab mein tum ek simple multi-page navigation app banaoge — Home, About, Contact, aur 404 page.
@@ -51,16 +51,17 @@ Har link \`<NavLink>\` se replace karo aur \`isActive\` ke according class \`"na
   starterFiles: {
     "/package.json": `{
   "dependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-router-dom": "^6.20.0",
-    "react-scripts": "5.0.1"
+    "react-scripts": "^4.0.0"
   },
   "devDependencies": {
-    "@types/react": "^18.2.0",
-    "@types/react-dom": "^18.2.0",
-    "typescript": "^5.0.0"
-  }
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "typescript": "^4.0.0"
+  },
+  "main": "/index.tsx"
 }`,
     "/public/index.html": `<!DOCTYPE html>
 <html lang="en">
@@ -75,15 +76,15 @@ Har link \`<NavLink>\` se replace karo aur \`isActive\` ke according class \`"na
 </html>`,
     "/index.tsx": `import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import App from "./App";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );`,
     "/App.tsx": `import { Routes, Route } from "react-router-dom";
@@ -201,15 +202,15 @@ h1 { margin-top: 0; }`,
   solutionFiles: {
     "/index.tsx": `import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import App from "./App";
 import "./styles.css";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </React.StrictMode>
 );`,
     "/App.tsx": `import { Routes, Route } from "react-router-dom";

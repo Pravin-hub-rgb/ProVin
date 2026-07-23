@@ -13,7 +13,7 @@ Create a component called \`ProfileCard\` inside \`App.tsx\` and use it multiple
 2. Andar do variables banao — name string, role string
 3. Name h2 ke andar dikhao, role p ke andar dikhao
 4. Component par JSX.Element return type lagao
-5. <ProfileCard /> ko **teen baar** render karo App ke andar
+5. \`<ProfileCard />\` ko **teen baar** render karo App ke andar
 6. Saara code App.tsx mein hi likho — alag file nahi
 
 ### Example Output:
