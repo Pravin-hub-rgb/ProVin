@@ -48,21 +48,11 @@ Har link \`<NavLink>\` se replace karo aur \`isActive\` ke according class \`"na
     "NotFound mein Link to=\"/\" — \"Go to Home\"",
   ],
 
-  starterFiles: {
-    "/package.json": `{
-  "dependencies": {
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+  dependencies: {
     "react-router-dom": "^6.20.0",
-    "react-scripts": "^4.0.0"
   },
-  "devDependencies": {
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "typescript": "^4.0.0"
-  },
-  "main": "/index.tsx"
-}`,
+
+  starterFiles: {
     "/public/index.html": `<!DOCTYPE html>
 <html lang="en">
   <head>

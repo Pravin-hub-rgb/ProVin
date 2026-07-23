@@ -330,6 +330,7 @@ export function ReactLabLayout({
   }
 
   const files = scenario.starterFiles
+  const customSetup = scenario.dependencies ? { dependencies: scenario.dependencies } : undefined
   const sourceExtensions = [".tsx", ".ts", ".css", ".js", ".jsx"]
   const visibleFileKeys = Object.keys(files).filter(f =>
     sourceExtensions.some(ext => f.endsWith(ext))
@@ -341,6 +342,7 @@ export function ReactLabLayout({
       <SandpackProvider
         template="react-ts"
         files={files}
+        customSetup={customSetup}
         theme={reactTheme as any}
         style={{ display: "contents" }}
         options={{
