@@ -150,4 +150,94 @@ This file (`Dost-to-Dost Style.md`) controls the **tone** only. Both must be use
 ```
 Structure: Master Teaching Prompt
 Tone:      Dost-to-Dost Style (sections 2-7)
+
+---
+
+## 9. Coder's Perspective Flow — Concept Pehle, Phir Syntax, Phir Code
+
+> **Extends Section 3 (Section Opening Patterns).**  
+> Yeh rule tab lagao jab koi naya API / hook / feature introduce kar rahe ho. Seedha code dump mat karo — coder ko pehle concept samjho, phir syntax dikhao, phir flow dikhao, phir build up karo.
+
+### 9.1 Core Rule
+
+**Kabhi bhi directly full component mat dikhao jisme ek saath 5 cheezein ho rahi hoon** (hook + data + logic + guard + render). Isse reader overwhelmed hota hai. Code samajhne ke bajaye woh "yeh sab kya hai" mein phans jaata hai.
+
+Isko follow karo:
+
+```
+CONCEPT → SYNTAX → VISUAL MAPPING → MINIMAL CODE → FLOW EXPLANATION → BUILD UP
+```
+
+### 9.2 Step-by-Step Template
+
+| Step | Kya hai | Example (useParams ke saath) |
+|------|---------|------------------------------|
+| **1. Concept** | Feature kya karta hai simple words mein. Problem kya solve karta hai | "useParams ek hook hai jo current URL se route variables extract karta hai" |
+| **2. Syntax** | Kaise likhte hain? Rule/variable kya hai? | "Route path mein `:variable` se define karte hain — `:id`, `:slug`, etc." |
+| **3. Visual Mapping** | URL → Route → Extraction ka diagram dikhao | `/movies/:id` maps `/movies/tt1375666` → `{ id: "tt1375666" }` |
+| **4. Minimal Code** | Sirf woh feature isolation mein. Kuch aur nahi | Sirf `useParams` import + call + render. Koi data lookup nahi, guard nahi |
+| **5. Flow Explanation** | Step-by-step kya hota hai execute hote waqt | Jab URL change → React Router match → `:id` capture → component render → `useParams` returns value |
+| **6. Build Up** | Ab full real example. Har part explain karte hue | Full component with data + lookup + guard + render — har line ka purpose clear |
+
+### 9.3 Before & After Example
+
+**❌ Before — Code Dump (mat karo):**
+```
+## Step 1 — Dynamic Routes aur useParams
+
+Dynamic route ka matlab hai — route path mein ek `:` prefix...
+useParams hook se URL se actual value nikaalte hain.
+
+<Route path="/movies/:id" element={<MovieDetail />} />
+
+const movieData = { ... };
+export default function MovieDetail() {
+  const { id } = useParams<{ id: string }>();
+  const movie = movieData[id ?? ""];
+  if (!movie) return <h2>Movie not found</h2>;
+  return ( ... );
+}
+```
+
+Problem: MovieDetail component mein ek saath 5 cheezein dikh rahi hain — useParams, data lookup, null guard, TypeScript generic, render. Reader pehli baar useParams dekh raha hai, uske liye yeh sab overwhelming hai.
+
+**✅ After — Coder's Perspective Flow (karo):**
+```
+## Step 1 — Dynamic Routes aur useParams
+
+### 1.1 Concept — URL Mein Variable
+Socho — static routes the. Ab `/movies/tt1375666` mein `tt1375666` variable hai.
+React Router mein variable capture karne ka tareeka hai — `useParams` hook.
+URL mein variable define karne ka tareeka hai — `:` prefix.
+
+### 1.2 Syntax — `:` Se Variable Define Karna
+<Route path="/movies/:id" element={<MovieDetail />} />
+
+Visual mapping:
+  URL:        /movies/tt1375666
+  Route Path: /movies/:id   →  :id = "tt1375666"
+
+### 1.3 Minimal Example — Sirf useParams
+function MovieDetail() {
+  const { id } = useParams();
+  return <h2>Movie ID: {id}</h2>;
+}
+
+### 1.4 Flow — Jab User /movies/tt1375666 Pe Jata Hai
+1. URL change → React Router match → :id capture → component render → useParams returns value
+
+### 1.5 Build Up — Full MovieDetail with Data Lookup
+Ab data add karte hain, guard add karte hain, render add karte hain — har step explain.
+```
+
+Notice: har step mein reader sirf ek nayi cheez absorb karta hai. Pehle concept, phir syntax, phir visual, phir minimal code, phir flow, phir build up. Overwhelm nahi hota.
+
+### 9.4 Checklist for Coder's Perspective Writing
+
+- [ ] Concept pehle diya — "yeh kya hai aur kyun chahiye" — ya code seedha dikhaya?
+- [ ] Syntax rule alag se highlighted hai? (`:variable` pattern, `useParams` signature, etc.)
+- [ ] Visual mapping hai? (URL → Route → Variable capture)
+- [ ] Minimal example hai jisme sirf woh feature ho, kuch aur nahi?
+- [ ] Flow step-by-step explained hai? ("jab user X URL pe jata hai tab kya hota hai")
+- [ ] Build-up version mein har line ka purpose clear hai? (comments ya explanation se)
 ```
