@@ -115,6 +115,7 @@
     "react-2.5": true,
     "react-2.4": true,
     "react-2.5.1": true,
-    "react-3.1": true
+    "react-3.1": true,
+    "react-3.2": true
   }
 }

@@ -354,6 +354,11 @@ export const reactSubject: Subject = {
           title: "❓ 3.1 Quiz",
           path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.1 Quiz — React Router Basics.md",
         },
+        {
+          id: "quiz-3.2",
+          title: "❓ 3.2 Quiz",
+          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.2 Quiz — Dynamic Routes & Nested Routes.md",
+        },
       ],
     },
   ],
