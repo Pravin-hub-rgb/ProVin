@@ -359,7 +359,44 @@ export const reactSubject: Subject = {
           title: "❓ 3.2 Quiz",
           path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.2 Quiz — Dynamic Routes & Nested Routes.md",
         },
+        {
+          id: "quiz-3.3",
+          title: "❓ 3.3 Quiz",
+          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.3 Quiz — Protected Routes.md",
+        },
       ],
+    },
+    {
+      id: "batch4",
+      title: "Batch 4 — Styling, Forms & Accessibility",
+      lectures: [
+        {
+          id: "react-4.1",
+          title: "4.1 Tailwind CSS aur Responsive Design",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1 Tailwind CSS aur Responsive Design.md",
+        },
+        {
+          id: "react-4.2",
+          title: "4.2 Accessibility (ARIA, Keyboard, Focus)",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.2 Accessibility (ARIA, Keyboard, Focus).md",
+        },
+        {
+          id: "react-4.3",
+          title: "4.3 Forms — Manual Controlled Inputs aur Validation",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.3 Forms — Manual Controlled Inputs aur Validation.md",
+        },
+        {
+          id: "react-4.4",
+          title: "4.4 React Hook Form aur Zod",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4 React Hook Form aur Zod.md",
+        },
+        {
+          id: "react-4.5",
+          title: "4.5 Combined Project — To-Do App v4",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5 Combined Project - To-Do App v4.md",
+        },
+      ],
+      quizzes: [],
     },
   ],
 };
