@@ -6,6 +6,7 @@ import rehypeRaw from 'rehype-raw'
 import { visit } from 'unist-util-visit'
 import { ToDoDemo } from './todo-demo'
 import { ShoppingCartDemo } from './shopping-cart-demo'
+import { GymDemo } from './gym-demo'
 import type { Element, Root } from 'hast'
 import type { ComponentType } from 'react'
 
@@ -129,6 +130,7 @@ const markdownComponents: Record<string, ComponentType<any> | string> = {
   },
   "todo-demo": ToDoDemo,
   "shopping-cart-demo": ShoppingCartDemo,
+  "gym-demo": GymDemo,
 }
 
 function stripReactProps() {
@@ -142,11 +144,26 @@ function stripReactProps() {
   }
 }
 
-const ALLOWED_HTML_TAGS = new Set([
-  'a','abbr','blockquote','br','button','code','div','h1','h2','h3','h4','h5','h6','hr','i','img','input','li','ol','p','pre','span','strong','table','tbody','td','th','thead','tr','ul',
+const HTML5_TAGS = new Set([
+  'a','abbr','address','area','article','aside','audio','b','base','bdi','bdo',
+  'blockquote','body','br','button','canvas','caption','cite','code','col',
+  'colgroup','data','datalist','dd','del','details','dfn','dialog','div','dl',
+  'dt','em','embed','fieldset','figcaption','figure','footer','form','h1','h2',
+  'h3','h4','h5','h6','head','header','hgroup','hr','html','i','iframe','img',
+  'input','ins','kbd','label','legend','li','link','main','map','mark','menu',
+  'meta','meter','nav','noscript','object','ol','optgroup','option','output','p',
+  'picture','pre','progress','q','rp','rt','ruby','s','samp','script','section',
+  'select','slot','small','source','span','strong','style','sub','summary','sup',
+  'table','tbody','td','template','textarea','tfoot','th','thead','time','title',
+  'tr','track','u','ul','var','video','wbr',
 ])
 
+const CUSTOM_COMPONENT_TAGS = new Set(
+  Object.keys(markdownComponents).filter(k => /^[a-z][a-z0-9-]*$/.test(k))
+)
+
 function escapeNonHtmlAngleBrackets(markdown: string): string {
+  const ALLOWED_HTML_TAGS = new Set([...HTML5_TAGS, ...CUSTOM_COMPONENT_TAGS])
   const codeBlocks: string[] = []
   const noCodeBlocks = markdown.replace(/(```(?:[a-z]*)\r?\n[\s\S]*?\r?\n```)/g, (m) => {
     const idx = codeBlocks.push(m) - 1

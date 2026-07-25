@@ -73,12 +73,14 @@ Topic ka purpose → Example → Observe kya hua
 >
 > Chala ke dekh — console mein tick aa raha hai. Lekin ek problem aa gayi: React ko pata nahi ki kuch change ho raha hai. Kyun? Kyunki humne state use nahi ki...
 
-### 3.2 DON'T: Random / Out-of-the-blue opening
+### 3.2 DON'T: Labels jo conversation tod dein
 | ❌ Bad | Reason |
 |---|---|
 | "Yaar ek cheez dikh rahi hai na — timer chahiye..." | Kya cheez dikh rahi? Kyun timer chahiye? Connection missing |
 | "Socho aise: timer chahiye..." | "Socho aise" label feels like exercise, not conversation |
 | "Concept X is important because..." | Professor tone. Reader ko pata nahi kyun important hai |
+| `### 2.1 Dev ka soch: "Pehle content daalo."` | Label bekar hai — thought ko seedha likho, "Dev ka soch" mat likho. `### 2.1 "Pehle content daalo."` kaafi hai |
+| `### 4.4 Dev ka soch: "Mobile: 1 column."` | Same — quoted thought hi heading hai. Label sirf noise hai. Reader ko samajh aa jata hai yeh dev ka perspective hai |
 
 ### 3.3 Transition Pattern
 ```

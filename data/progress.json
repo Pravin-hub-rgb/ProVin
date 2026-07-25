@@ -116,6 +116,9 @@
     "react-2.4": true,
     "react-2.5.1": true,
     "react-3.1": true,
-    "react-3.2": true
+    "react-3.2": true,
+    "react-4.1.1": true,
+    "quiz-4.1.1": true,
+    "react-4.1.2": true
   }
 }

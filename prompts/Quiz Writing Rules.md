@@ -4,9 +4,9 @@ Yeh file un sab rules ki single source of truth hai jo quiz banate waqt follow k
 
 ---
 
-## 1. Three Question Types
+## 1. Two Question Types
 
-Har quiz mein teen sections hote hain:
+Har quiz mein do sections hote hain:
 
 ### MCQ (Multiple Choice)
 - 4 options: A, B, C, D
@@ -17,12 +17,6 @@ Har quiz mein teen sections hote hain:
 ### TrueFalse
 - Exactly two options: `- True` / `- False`
 - Correct answer ke aage `> ` with explanation
-
-### ShortAnswer
-- Open-ended conceptual question
-- Student khud soch ke likhta hai
-- Sample answer `<details>` accordion mein chhupa hota hai
-- `details` ke andar `summary` "Sample Answer" hona chahiye
 
 ---
 
@@ -72,7 +66,6 @@ Koi limit nahi. Jitne questions mein topic properly cover ho raha hai utne daalo
 General guidelines:
 - **MCQ**: 8-15 questions (topic complexity par depend karta hai)
 - **TrueFalse**: 4-8 questions
-- **ShortAnswer**: 1-3 questions
 
 Check: "Har important concept cover ho gaya?" → Agar haan, to count sufficient hai.
 
@@ -108,15 +101,7 @@ Jo bhi pattern chuno, ek hi quiz mein consistent rakho. Statement ke andar techn
 
 ---
 
-## 7. ShortAnswer Rules
-
-- Question open-ended ho — "kaise kaam karta hai", "explain karo", "compare karo"
-- Yes/No mein answer na ho paaye
-- Sample answer (in `<details>`) complete ho — poori explanation, example code (agar relevant ho)
-
----
-
-## 8. Content Coverage
+## 7. Content Coverage
 
 - Quiz sirf usi lecture ka content test kare — aage ya pichle topics nahi
 - "We'll explore in next topic" wali cheezein quiz mein mat daalo
@@ -125,7 +110,7 @@ Jo bhi pattern chuno, ek hi quiz mein consistent rakho. Statement ke andar techn
 
 ---
 
-## 9. Language & Tone
+## 8. Language & Tone
 
 - Quiz ka language bhi Hinglish mein, lecture jaisa hi
 - Explanations friendly ho — "kyun aisa hota hai" samjhao, sirf "yeh sahi hai" mat likho
@@ -133,7 +118,7 @@ Jo bhi pattern chuno, ek hi quiz mein consistent rakho. Statement ke andar techn
 
 ---
 
-## 10. Explanation Format (`> ` line)
+## 9. Explanation Format (`> ` line)
 
 ```
 > <Correct Option>. <Explanation of why correct>. <Brief note on why each wrong option is wrong>.
@@ -146,7 +131,7 @@ Example:
 
 ---
 
-## 11. Quiz File Naming Convention
+## 10. Quiz File Naming Convention
 
 ```
 <version> Quiz — <Short Title>.md
@@ -159,7 +144,7 @@ Examples:
 
 ---
 
-## 12. Quiz ID in Subject Config
+## 11. Quiz ID in Subject Config
 
 - Quiz ID pattern: `quiz-<version>`
 - Version lecture ke suffix se match karna chahiye (jaise `react-1.0` → `quiz-1.0`)
@@ -167,7 +152,7 @@ Examples:
 
 ---
 
-## 14. No Lecture-Specific References in Questions
+## 12. No Lecture-Specific References in Questions
 
 Question kabhi bhi lecture ke example code ki **specific details** ko reference nahi karna chahiye — chahe woh variable names ho, example names ho (jaise "Stopwatch", "Recipe Finder"), component names ho, ya project-specific koi bhi context.
 
@@ -201,7 +186,7 @@ Question CONCEPT test kar raha hai (variable/example names memorize karna nahi).
 
 ---
 
-## 15. Pre-Submission Checklist
+## 13. Pre-Submission Checklist
 
 ```
 [ ] Har concept covered hai? (lecture ke saare subsections check)
@@ -209,7 +194,6 @@ Question CONCEPT test kar raha hai (variable/example names memorize karna nahi).
 [ ] Distractors believable hain? (real-sounding galat options)
 [ ] Saare MCQ mein 4 options hain? (A, B, C, D — no missing)
 [ ] TrueFalse mein exactly 2 options hain? (True / False)
-[ ] ShortAnswer mein <details> accordion hai? (summary + answer)
 [ ] Explanation (>) mein kyun correct aur kyun wrong dono hai?
 [ ] Quiz file naming sahi hai? (<version> Quiz — <Title>.md)
 [ ] Subject config mein quiz ID lecture suffix se match karta hai?

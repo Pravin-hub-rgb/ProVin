@@ -371,9 +371,14 @@ export const reactSubject: Subject = {
       title: "Batch 4 — Styling, Forms & Accessibility",
       lectures: [
         {
-          id: "react-4.1",
-          title: "4.1 Tailwind CSS aur Responsive Design",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1 Tailwind CSS aur Responsive Design.md",
+          id: "react-4.1.1",
+          title: "4.1.1 Tailwind CSS aur Responsive Design (Theory)",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1.1 Tailwind CSS aur Responsive Design.md",
+        },
+        {
+          id: "react-4.1.2",
+          title: "4.1.2 Gym Landing Page Project",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1.2 Gym Landing Page Project.md",
         },
         {
           id: "react-4.2",
@@ -396,7 +401,13 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5 Combined Project - To-Do App v4.md",
         },
       ],
-      quizzes: [],
+      quizzes: [
+        {
+          id: "quiz-4.1.1",
+          title: "❓ 4.1.1 Quiz",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1.1 Quiz — Tailwind CSS aur Responsive Design.md",
+        },
+      ],
     },
   ],
 };
