@@ -78,7 +78,7 @@ export function ToDoDemo() {
             onClick={() => setFilter(f)}
             className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
               filter === f
-                ? "bg-primary/15 text-primary"
+                ? "bg-primary/15 text-foreground font-semibold"
                 : "text-muted-foreground hover:text-foreground hover:bg-muted/50"
             }`}
           >

@@ -381,19 +381,54 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1.2 Gym Landing Page Project.md",
         },
         {
-          id: "react-4.2",
-          title: "4.2 Accessibility (ARIA, Keyboard, Focus)",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.2 Accessibility (ARIA, Keyboard, Focus).md",
+          id: "react-4.2.1",
+          title: "4.2.1 Accessibility (ARIA, Keyboard, Focus)",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.2.1 Accessibility (ARIA, Keyboard, Focus).md",
+        },
+        {
+          id: "react-4.2.2",
+          title: "4.2.2 Focus-Trap Pattern",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.2.2 Focus-Trap Pattern.md",
+        },
+        {
+          id: "react-4.2.3",
+          title: "4.2.3 Accessible Contact Form",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.2.3 Accessible Contact Form.md",
         },
         {
           id: "react-4.3",
-          title: "4.3 Forms — Manual Controlled Inputs aur Validation",
+          title: "4.3 Forms — Manual Form aur Validation",
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.3 Forms — Manual Controlled Inputs aur Validation.md",
         },
         {
-          id: "react-4.4",
-          title: "4.4 React Hook Form aur Zod",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4 React Hook Form aur Zod.md",
+          id: "react-4.4.1",
+          title: "4.4.1 React Hook Form — Basics",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.1 React Hook Form — Basics.md",
+        },
+        {
+          id: "react-4.4.2",
+          title: "4.4.2 RHF — Complex Inputs",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.2 RHF — Complex Inputs (Select, Checkbox, Radio).md",
+        },
+        {
+          id: "react-4.4.3",
+          title: "4.4.3 RHF — Built-in Validation",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.3 RHF — Built-in Validation.md",
+        },
+        {
+          id: "react-4.4.4",
+          title: "4.4.4 Zod — Introduction",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.4 Zod — Introduction.md",
+        },
+        {
+          id: "react-4.4.5",
+          title: "4.4.5 Zod — Validation Rules",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.5 Zod — Validation Rules.md",
+        },
+        {
+          id: "react-4.4.6",
+          title: "4.4.6 RHF + Zod — Complete Form",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.6 RHF + Zod — Complete Form.md",
         },
         {
           id: "react-4.5",

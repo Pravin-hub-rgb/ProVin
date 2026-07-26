@@ -255,7 +255,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                         onClick={() => setSelectedLecture(lecture.id)}
                         className={`w-full px-4 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                           selectedLecture === lecture.id 
-                            ? "bg-primary/15 text-primary" 
+                            ? "bg-primary/15 text-foreground font-semibold" 
                             : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
@@ -324,7 +324,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                                       onClick={() => setSelectedLecture(lecture.id)}
                                       className={`w-full px-4 py-2 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                                         selectedLecture === lecture.id 
-                                          ? "bg-primary/15 text-primary" 
+                                          ? "bg-primary/15 text-foreground font-semibold" 
                                           : "text-muted-foreground hover:text-foreground"
                                       }`}
                                     >
@@ -356,7 +356,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                               onClick={() => setSelectedLecture(lecture.id)}
                               className={`w-full px-6 py-2.5 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                                 selectedLecture === lecture.id 
-                                  ? "bg-primary/15 text-primary" 
+                                  ? "bg-primary/15 text-foreground font-semibold" 
                                   : "text-muted-foreground hover:text-foreground"
                               }`}
                             >
@@ -378,7 +378,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                                 onClick={() => setSelectedLecture(quiz.id)}
                                 className={`w-full pl-14 pr-6 py-1.5 text-left text-xs hover:bg-accent/50 transition-colors flex items-center gap-2.5 border-l-2 border-border/40 ml-8 ${
                                   selectedLecture === quiz.id
-                                    ? "bg-primary/10 text-primary border-primary/40"
+                                    ? "bg-primary/10 text-foreground font-semibold border-primary/40"
                                     : "text-muted-foreground hover:text-foreground border-border/30"
                                 }`}
                               >
@@ -411,7 +411,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                         onClick={() => setSelectedLecture(lecture.id)}
                         className={`w-full px-6 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                           selectedLecture === lecture.id 
-                            ? "bg-primary/15 text-primary" 
+                            ? "bg-primary/15 text-foreground font-semibold" 
                             : "text-muted-foreground hover:text-foreground"
                         }`}
                       >

@@ -204,7 +204,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
                         onClick={() => setSelectedLecture(lecture.id)}
                         className={`w-full px-4 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                           selectedLecture === lecture.id
-                            ? "bg-primary/15 text-primary"
+                            ? "bg-primary/15 text-foreground font-semibold"
                             : "text-muted-foreground hover:text-foreground"
                         }`}
                       >
@@ -252,7 +252,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
                           onClick={() => setSelectedLecture(lecture.id)}
                           className={`w-full px-6 py-2.5 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                             selectedLecture === lecture.id
-                              ? "bg-primary/15 text-primary"
+                              ? "bg-primary/15 text-foreground font-semibold"
                               : "text-muted-foreground hover:text-foreground"
                           }`}
                         >

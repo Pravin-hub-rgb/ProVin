@@ -50,7 +50,7 @@ export function Navbar({ activeTab, onTabChange }: NavbarProps) {
                   onClick={() => onTabChange(tab.id)}
                   className={`px-3 py-1.5 text-sm font-medium rounded-md transition-all duration-200
                     ${activeTab === tab.id 
-                      ? "bg-primary/15 text-primary shadow-sm" 
+                      ? "bg-primary/15 text-foreground font-semibold shadow-sm" 
                       : "text-muted-foreground hover:text-foreground hover:bg-accent/50"
                     }`}
                 >
