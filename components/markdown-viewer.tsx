@@ -7,6 +7,7 @@ import { visit } from 'unist-util-visit'
 import { ToDoDemo } from './todo-demo'
 import { ShoppingCartDemo } from './shopping-cart-demo'
 import { GymDemo } from './gym-demo'
+import { EcommerceDemo } from './ecommerce-demo'
 import type { Element, Root } from 'hast'
 import type { ComponentType } from 'react'
 
@@ -131,6 +132,7 @@ const markdownComponents: Record<string, ComponentType<any> | string> = {
   "todo-demo": ToDoDemo,
   "shopping-cart-demo": ShoppingCartDemo,
   "gym-demo": GymDemo,
+  "ecommerce-demo": EcommerceDemo,
 }
 
 function stripReactProps() {
@@ -179,8 +181,12 @@ function escapeNonHtmlAngleBrackets(markdown: string): string {
     if (ALLOWED_HTML_TAGS.has(tagName)) return match
     return `&lt;${inner}&gt;`
   })
-  const withInline = escaped.replace(/QQINLINEQQ(\d+)QQENDQQ/g, (_, i) => inlines[+i])
-  return withInline.replace(/QQCODEBLOCKQQ(\d+)QQENDQQ/g, (_, i) => codeBlocks[+i])
+  const withInline = escaped.replace(/QQINLINEQQ(\d+)QQENDQQ/g, (_, i) =>
+    inlines[+i]
+  )
+  return withInline.replace(/QQCODEBLOCKQQ(\d+)QQENDQQ/g, (_, i) =>
+    codeBlocks[+i]
+  )
 }
 
 export function MarkdownViewer({ content, theme = 'light' }: MarkdownViewerProps) {

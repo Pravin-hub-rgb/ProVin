@@ -65,8 +65,8 @@ Purane Combined #1 ko upgrade karo: ab categories API se load hoti hain (E), inp
 | I | React Router — routes, dynamic routes, nested routes, `useNavigate` | `useParams<{id: string}>()` | **Movie Browser App** — home page + movie detail page (dynamic route), matches reference course's "Movie Website" idea |
 | J | Protected Routes | typed auth-check wrapper component | (isi Movie app mein ek dummy "My Watchlist" route add karo jo sirf "logged in" (dummy) state mein accessible ho) |
 
-### 🔗 Combined Project #3 — **To-Do App v3 (multi-page)**
-To-Do app ko multi-page banao: `/` dashboard, `/tasks/:id` detail (dynamic route), `/settings` (protected — dummy auth check), `/*` 404 page. Navbar ke saath proper navigation.
+### 🔗 Combined Project #3 — **Blog Platform**
+Multi-page blog banao: `/` home (post list), `/posts/:id` (dynamic route with post detail), `/create` (protected — new post form), `/dashboard` (protected — manage/edit your posts), `/*` 404 page. Router, AuthContext, NavLink, protected routes sab ka saath.
 
 ---
 
@@ -79,8 +79,8 @@ To-Do app ko multi-page banao: `/` dashboard, `/tasks/:id` detail (dynamic route
 | M | Forms — **Manual** controlled inputs + manual `if`-based validation (pehle) | typed form state `interface`, `React.FormEvent` | **Notes App v1** — form-heavy app (create/edit/delete note), poori validation manually likhi hui (empty fields, length checks) |
 | M2 | Forms — **Better**: React Hook Form + Zod (validation library) | Zod schema + `z.infer<typeof schema>` se automatic types | **Notes App v2** — same app, ab RHF (kam re-renders, less boilerplate) + Zod (schema-based, type-safe) se rebuild — dono versions comparison mein rakho taaki fark khud dikhe |
 
-### 🔗 Combined Project #4 — **To-Do App v4 (polished)**
-To-Do app ab fully Tailwind se responsive, accessible (keyboard + screen-reader tested), aur task-add form ab React Hook Form + Zod se (manual validation replace karke).
+### 🔗 Combined Project #4 — **E-Commerce Store**
+Product listing page (Tailwind responsive grid, accessible product cards), product detail page, shopping cart (lifted state + context), checkout form with React Hook Form + Zod validation, order confirmation. Poore app mein keyboard + screen-reader testing.
 
 ---
 
@@ -92,8 +92,8 @@ To-Do app ab fully Tailwind se responsive, accessible (keyboard + screen-reader 
 | O | `useReducer` | discriminated union action types (`{type:'add', payload:...}`) | (koi naya isolated project nahi — seedha combined project mein state ko migrate karenge) |
 | P | Lazy Loading, Suspense, Code Splitting | — | **Image Gallery** with `React.lazy()` — routes/components on-demand load (matches reference course's Gallery Project) |
 
-### 🔗 Combined Project #5 — **To-Do App v5 (optimized)**
-To-Do App ka poora state ab `useState` se `useReducer` mein migrate (typed actions). `TaskCard` ko `memo` + `useCallback` se optimize karo — Profiler khol ke pehle/baad compare karo. Routes ab `React.lazy()` + `Suspense` se lazy-load hoti hain.
+### 🔗 Combined Project #5 — **Analytics Dashboard**
+Dashboard with data tables, interactive charts (lazy-loaded with `React.lazy()` + `Suspense`), filter/sort/pagination state with `useReducer` (typed discriminated actions), derived data with `useMemo`, table row components with `React.memo` + `useCallback`. Profiler khol ke pehle/baad compare karo.
 
 ---
 
@@ -107,8 +107,8 @@ To-Do App ka poora state ab `useState` se `useReducer` mein migrate (typed actio
 | Q | Custom Hooks + Generics | `useFetch<T>`, `useLocalStorage<T>` | (Batch 2 ka `useEffect`/API logic aur localStorage logic ab generic custom hooks mein extract) |
 | R | Zustand (Context ki jagah, awareness + comparison) | typed Zustand store | (Recipe Finder aur To-Do app dono ka fetch-logic ab `useFetch<T>` reuse karta hai) |
 
-### 🔗 Combined Project #6 — **To-Do App v6 (refactored)**
-Purana Context-based theme (Batch 2, H) ab **Zustand se replace** — dono ka concept pata hai, lekin latest/better approach use ho raha hai (bilkul jaisa tumne bola — "seekha dono hai, drop karna padega purana"). LocalStorage aur API-fetch logic generic custom hooks mein clean extract.
+### 🔗 Combined Project #6 — **Kanban Board**
+Multi-column board (Todo, In Progress, Done) with drag-drop cards. Zustand store with normalized state, generic custom hooks (`useBoard`, `useLocalStorage<T>`), generic UI components (`<Card<T>>`, `<Column<T>>`). Undo/redo history, localStorage persistence. Poore app mein performance optimizations from Batch 5 carry forward.
 
 ---
 
@@ -143,7 +143,7 @@ Ye tumhara **resume + portfolio ka main project** banega.
 
 ## Best-combination logic (jo maine dono YouTube courses dekh ke decide kiya)
 
-- **To-Do List** — dono courses mein hai, aur isliye humara "spine" project ban raha hai jo Batch 1 se Batch 6 tak evolve hota hai (chhota shuru hota hai, dheere-dheere production-grade banta hai).
+- **To-Do List** — dono courses mein hai, aur isliye Batch 1 aur 2 ka "spine" project hai. Chhota shuru hota hai, dheere-dheere production-grade banta hai. Batch 3 se aage har batch ka apna naya combined project hai — Blog Platform, E-Commerce, Analytics Dashboard, Kanban Board — taaki har batch mein kuch fresh bane.
 - **Recipe Finder** aur **Gallery Project** — inhe standalone rakha hai kyunki inka focus specific hai (API fetching, lazy loading) — inko To-Do app mein zabardasti fit nahi karna, apna clean demo behtar hai.
 - **Movie Website** — routing/dynamic-routes ke liye best fit hai (movie list → movie detail page pattern naturally dynamic routes demonstrate karta hai).
 - **Gym Website** — pure styling/responsive/accessibility practice ke liye, jahan logic complexity nahi chahiye, sirf design muscle.

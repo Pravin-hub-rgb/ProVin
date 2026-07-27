@@ -344,8 +344,8 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-3.4",
-          title: "3.4 Combined Project — To-Do App v3",
-          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.4 Combined Project - To-Do App v3.md",
+          title: "3.4 Combined Project — Blog Platform",
+          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.4 Combined Project - Blog Platform.md",
         },
       ],
       quizzes: [
@@ -405,11 +405,7 @@ export const reactSubject: Subject = {
           title: "4.4.1 React Hook Form — Basics",
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.1 React Hook Form — Basics.md",
         },
-        {
-          id: "react-4.4.2",
-          title: "4.4.2 RHF — Complex Inputs",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.2 RHF — Complex Inputs (Select, Checkbox, Radio).md",
-        },
+
         {
           id: "react-4.4.3",
           title: "4.4.3 RHF — Built-in Validation",
@@ -431,9 +427,49 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.6 RHF + Zod — Complete Form.md",
         },
         {
-          id: "react-4.5",
-          title: "4.5 Combined Project — To-Do App v4",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5 Combined Project - To-Do App v4.md",
+          id: "react-4.5.1",
+          title: "4.5.1 Project Start — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.1 Project Start — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.2",
+          title: "4.5.2 Product List — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.2 Product List — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.3",
+          title: "4.5.3 Product Card — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.3 Product Card — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.4",
+          title: "4.5.4 Product Detail — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.4 Product Detail — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.5",
+          title: "4.5.5 Types aur Shared Data — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.5 Types aur Shared Data — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.6",
+          title: "4.5.6 Cart Context — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.6 Cart Context — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.7",
+          title: "4.5.7 Cart Drawer — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.7 Cart Drawer — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.8",
+          title: "4.5.8 Checkout — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.8 Checkout — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.9",
+          title: "4.5.9 Order Confirmation — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.9 Order Confirmation — E-Commerce Store.md",
         },
       ],
       quizzes: [
@@ -442,7 +478,64 @@ export const reactSubject: Subject = {
           title: "❓ 4.1.1 Quiz",
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1.1 Quiz — Tailwind CSS aur Responsive Design.md",
         },
+        {
+          id: "quiz-4.4.6",
+          title: "❓ 4.4.6 Quiz",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.6 Quiz — React Hook Form aur Zod.md",
+        },
       ],
+    },
+    {
+      id: "batch5",
+      title: "Batch 5 — Performance",
+      lectures: [
+        {
+          id: "react-5.1",
+          title: "5.1 React.memo — Unnecessary Re-renders Se Bachna",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.1 React.memo — Unnecessary Re-renders Se Bachna.md",
+        },
+        {
+          id: "react-5.2",
+          title: "5.2 useMemo — Expensive Calculations Cache Karna",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.2 useMemo — Expensive Calculations Cache Karna.md",
+        },
+        {
+          id: "react-5.3",
+          title: "5.3 useCallback — Function Reference Stability",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.3 useCallback — Function Reference Stability.md",
+        },
+        {
+          id: "react-5.4",
+          title: "5.4 Mini-Project — Re-render Visualizer",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.4 Mini-Project — Re-render Visualizer.md",
+        },
+        {
+          id: "react-5.5",
+          title: "5.5 useReducer — Complex State Management",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.5 useReducer — Complex State Management.md",
+        },
+        {
+          id: "react-5.6",
+          title: "5.6 Lazy Loading, Suspense aur Code Splitting",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.6 Lazy Loading, Suspense aur Code Splitting.md",
+        },
+        {
+          id: "react-5.7",
+          title: "5.7 Mini-Project — Image Gallery",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.7 Mini-Project — Image Gallery.md",
+        },
+        {
+          id: "react-5.8",
+          title: "5.8 Combined Project — Analytics Dashboard",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.8 Combined Project — Analytics Dashboard.md",
+        },
+        {
+          id: "react-5.9",
+          title: "5.9 Class Components — Side Note",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.9 Class Components — Side Note.md",
+        },
+      ],
+      quizzes: [],
     },
   ],
 };
