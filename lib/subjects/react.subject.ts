@@ -535,7 +535,13 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Batch 5 - Performance/5.9 Class Components — Side Note.md",
         },
       ],
-      quizzes: [],
+      quizzes: [
+        {
+          id: "quiz-5.1",
+          title: "❓ 5.1 Quiz",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.1 Quiz — React.memo.md",
+        },
+      ],
     },
   ],
 };
