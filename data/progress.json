@@ -129,7 +129,8 @@
     "react-4.4.4": true,
     "react-4.4.5": true,
     "react-4.4.6": true,
-    "quiz-5.1": false,
-    "react-5.1": true
+    "quiz-5.1": true,
+    "react-5.1": true,
+    "react-5.2": true
   }
 }
