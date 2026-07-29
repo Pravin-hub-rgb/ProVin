@@ -131,6 +131,8 @@
     "react-4.4.6": true,
     "quiz-5.1": true,
     "react-5.1": true,
-    "react-5.2": true
+    "react-5.2": true,
+    "react-5.3": true,
+    "react-5.4": true
   }
 }
