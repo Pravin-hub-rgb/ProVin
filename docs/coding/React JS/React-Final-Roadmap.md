@@ -34,6 +34,10 @@ Ye module isliye pehle hai taaki aage jo bhi seekho, uske peeche ka "why" pata h
 | # | Concept | TypeScript Layer | Mini-Project (isolated) |
 |---|---|---|---|
 | A | JSX + Functional Components | Component typing basics | **Profile Card** — ek static component, hardcoded data |
+
+### 📎 Conceptual side-note (no project, just recognition-level)
+**Class Components + Lifecycle Methods** (`componentDidMount`, `componentDidUpdate`, `componentWillUnmount`) — legacy React tareeka jo Hooks se pehle use hota tha. Isko hands-on practice nahi karni, bas itna samajhna hai ki Hooks ne exactly kya problem solve ki (logic reuse, less boilerplate) — kyunki legacy codebases aur interview questions dono mein ye aata hai. Ye side note 1.2 (Pehla Component) ke baad rakha gaya hai kyunki "component = function" seekhne ke baad curiosity naturally aati hai ki "koi aur tarika tha?"
+
 | B | Props + `children` | `interface` for props, `React.ReactNode` | **Greeting Card Generator** — same component, alag-alag props se reuse |
 | C | `useState` + Event Handling | `useState<T>`, `React.ChangeEvent<...>` | **Simple Counter** — bas increment/decrement/reset (chhota hi rakhna hai, jaisa tumne kaha) |
 | D | Conditional Rendering + Lists & Keys | typed arrays, union types (`status: 'idle' \| 'done'`) | **Show/Hide Toggle List** — chhoti list jisme filter/conditional display ho (yahin Module 0 ki diffing/keys wapas revisit hogi practically) |
@@ -96,9 +100,6 @@ Product listing page (Tailwind responsive grid, accessible product cards), produ
 Dashboard with data tables, interactive charts (lazy-loaded with `React.lazy()` + `Suspense`), filter/sort/pagination state with `useReducer` (typed discriminated actions), derived data with `useMemo`, table row components with `React.memo` + `useCallback`. Profiler khol ke pehle/baad compare karo.
 
 ---
-
-### 📎 Conceptual side-note (no project, just recognition-level)
-**Class Components + Lifecycle Methods** (`componentDidMount`, `componentDidUpdate`, `componentWillUnmount`) — legacy React tareeka jo Hooks se pehle use hota tha. Isko hands-on practice nahi karni, bas itna samajhna hai ki Hooks ne exactly kya problem solve ki (logic reuse, less boilerplate) — kyunki legacy codebases aur interview questions dono mein ye aata hai.
 
 # BATCH 6 — Reusability & State Management Maturity
 

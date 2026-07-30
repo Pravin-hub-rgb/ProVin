@@ -543,5 +543,41 @@ export const reactSubject: Subject = {
         },
       ],
     },
+    {
+      id: "batch6",
+      title: "Batch 6 — Reusability & State Management",
+      lectures: [
+        {
+          id: "react-6.1",
+          title: "6.1 Custom Hooks Basics",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.1 Custom Hooks Basics.md",
+        },
+        {
+          id: "react-6.2",
+          title: "6.2 Generic Custom Hooks (useFetch, useLocalStorage)",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.2 Generic Custom Hooks (useFetch, useLocalStorage).md",
+        },
+        {
+          id: "react-6.3",
+          title: "6.3 Mini-Project — Refactoring Recipe Finder with Custom Hooks",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.3 Mini-Project — Refactoring Recipe Finder with Custom Hooks.md",
+        },
+        {
+          id: "react-6.4",
+          title: "6.4 Zustand Introduction (with TypeScript)",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.4 Zustand Introduction (with TypeScript).md",
+        },
+        {
+          id: "react-6.5",
+          title: "6.5 Mini-Project — To-Do App with Zustand + Custom Hooks",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.5 Mini-Project — To-Do App with Zustand + Custom Hooks.md",
+        },
+        {
+          id: "react-6.6",
+          title: "6.6 Combined Project — Kanban Board",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.6 Combined Project — Kanban Board.md",
+        },
+      ],
+    },
   ],
 };
