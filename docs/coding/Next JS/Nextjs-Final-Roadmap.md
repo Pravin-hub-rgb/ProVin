@@ -12,6 +12,37 @@
 
 ---
 
+# 📋 Notes Banane Ka Workflow (Har Batch Isi Tarah Banega)
+
+Yeh roadmap sirf plan hai — asli notes isi workflow se banti hain. Naye chat mein is roadmap ko padhke koi bhi module/batch banane ka kaam **bilkul isi tarah** karna:
+
+1. **Ek module/batch at a time** — Module 0, phir Batch 1, phir Batch 2... kuch bhi ek saath nahi likhna. Har module/batch complete + reviewed hone ke baad hi agla.
+2. **Style sources (teeno hamesha saath):**
+   - `prompts/Master Teaching Prompt.md` — structure (Cheat Sheet, SOCH→CONCEPT→CODE→TEST, Nutshell, Common Mistakes, Khud Try Karo)
+   - `prompts/Dost-to-Dost Style.md` — tone (Hinglish, dost jaisa, vulnerability, cause-effect chain)
+   - `AGENTS.md` + `docs/coding/AGENTIC-AI-WRITING-RULES.md` — course writing rules
+3. **Har note file mein:** relatable cheez se open → pichli file se connect → SOCH/CONCEPT/CODE/TEST → Nutshell (naye concepts ke liye) → Common Mistakes → "In Your Own Words" (3-5 Q, `<details>` mein sample jawab) → "What It Is NOT" → end mein next-file bridge.
+4. **React comparisons hamesha generic:** "yaad hai React Router mein `useParams` tha" — kabhi kisi specific React course project ka naam nahi (jaise Blog Platform ya TrackIt). Generic concept hi yaad dilana hai.
+5. **Notes-only by default** — quiz files alag se baad mein add ki ja sakti hain.
+6. **Har batch ka apna distinct combined project** — niche summary table. v1→v2 upgrade sirf ek baar allowed hai (Batch 1-2 ka Portfolio/Blog spine); uske baad har batch ka fresh project, koi project repeat nahi.
+7. **Batch complete hone pe app mein register:** `lib/subjects/nextjs.subject.ts` mein naya phase append + `lib/coding-data.ts` ke `subjects` array mein subject ensure (roadmap lecture hamesha pehla rehta hai).
+8. **Roadmap order strictly follow** — har batch ke andar Manual → Better (pehle purana tareeka feel karo, phir Next.js ka better solution).
+
+### Combined Projects Summary — har batch ka apna project (repeat nahi)
+
+| Batch | Combined Project |
+|---|---|
+| 1 | **Portfolio/Blog Site** |
+| 2 | **Portfolio/Blog Site v2** (spine — sirf yahin upgrade) |
+| 3 | **Reviews & Ratings App** |
+| 4 | **Member Dashboard / "My Account" App** |
+| 5 | **Task Board App (Real DB)** |
+| 6 | **Photo Gallery / Media Showcase** |
+| 7 | *(koi naya nahi — security audit + deploy)* |
+| Capstone | **Inventory/Order Dashboard ya Blog/Job Board** (production-grade) |
+
+---
+
 # MODULE 0 — "Next.js Kaise Kaam Karta Hai" (No project, pure understanding)
 
 Ye sabse zaroori module hai kyunki yahi genuinely naya mental model hai jo React mein nahi tha.
@@ -66,8 +97,8 @@ Blog posts ab Server Components se fetch hote hain (real API/CMS-jaisa dummy dat
 | K | Server Actions + `useFormStatus` / `useFormState` (progressive enhancement) | typed form state | (comment system v2 ko upgrade — pending state, success/error feedback, sab bina extra client state ke) |
 | L | Revalidation after mutation (`revalidatePath`, `revalidateTag`) | — | (comment add hone ke baad page ka data automatically refresh ho, bina manual refetch ke) |
 
-### 🔗 Combined Project #3 — **Blog with Comments**
-Blog post pages pe ab live comment system hai — Server Actions se add, revalidation se auto-refresh. Route Handler wala v1 bhi kept as reference/comparison.
+### 🔗 Combined Project #3 — **Reviews & Ratings App**
+Har item (product/school/film) pe reviews feature — pehle Route Handler (v1, REST-style) se, phir Server Actions (v2) se, `useFormStatus`/`useFormState` se pending + error states, aur `revalidatePath`/`revalidateTag` se auto-refresh. Dono versions comparison mein rakho (Manual → Better). **Blog spine yahin khatam — naya project.**
 
 ---
 
@@ -80,8 +111,8 @@ Blog post pages pe ab live comment system hai — Server Actions se add, revalid
 | O | Middleware — route ko intercept karke auth-check/redirect | typed middleware function | (protected `/dashboard` route banao jo bina login redirect kare) |
 | P | Real Protected Routes (React course mein ye "dummy" tha — ab genuinely real hai) | — | (blog project mein "My Drafts" page sirf logged-in users ke liye) |
 
-### 🔗 Combined Project #4 — **Blog with Real Auth**
-Users login kar sakte hain (Auth.js), apne drafts bana sakte hain (protected route), middleware se unauthorized access blocked hai.
+### 🔗 Combined Project #4 — **Member Dashboard / "My Account" App**
+Users login karte hain (Auth.js), apna dashboard/profile dekhte hain (protected routes), middleware se unauthorized access blocked hai. Login Demo v1 (manual session/cookie) aur v2 (Auth.js) yahin combine ho kar real project ban jaate hain. **Fresh project — blog nahi.**
 
 ---
 
@@ -93,8 +124,8 @@ Users login kar sakte hain (Auth.js), apne drafts bana sakte hain (protected rou
 | R | Server Components + Database queries directly (no API layer needed for reads) | — | (task board ki list Server Component mein directly DB se) |
 | S | Server Actions + Database mutations (create/update/delete) | typed action + Prisma call | (task board ka add/edit/delete ab DB mein persist) |
 
-### 🔗 Combined Project #5 — **Blog + Auth + Database**
-Ab blog drafts, comments, sab real database mein store hote hain — koi dummy data nahi bacha.
+### 🔗 Combined Project #5 — **Task Board App (Real Database)**
+Batch 5 ka Task Board mini-project hi final combined version ban jaata hai — Prisma/Supabase se real CRUD, list Server Component mein seedha DB se (koi API layer nahi), add/edit/delete Server Actions se persist. Koi dummy data nahi bacha. **Fresh project — blog nahi.**
 
 ---
 
@@ -106,6 +137,9 @@ Ab blog drafts, comments, sab real database mein store hote hain — koi dummy d
 | U | `next/font` (font optimization, no layout shift) | — | (project-wide font setup) |
 | V | Parallel Routes + Intercepting Routes (halka-level awareness, advanced pattern) | — | (chhota demo — modal-in-route pattern, jaise Instagram ka photo-modal) |
 | W | Streaming with Suspense (server-rendered content progressively load karna) | — | (task board ki slow-loading section ko streaming se improve karo) |
+
+### 🔗 Combined Project #6 — **Photo Gallery / Media Showcase**
+`next/image` se optimized images (before/after size compare), `next/font` project-wide, parallel + intercepting routes se Instagram-style photo modal, aur Streaming with Suspense se slow-loading gallery grid progressive load. Is batch ka apna fresh project.
 
 ---
 

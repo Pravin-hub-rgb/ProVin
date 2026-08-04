@@ -579,5 +579,82 @@ export const reactSubject: Subject = {
         },
       ],
     },
+    {
+      id: "batch7",
+      title: "Batch 7 — Production-Readiness",
+      lectures: [
+        {
+          id: "react-7.1",
+          title: "7.1 Error Boundaries",
+          path: "docs/coding/React JS/Batch 7 - Production-Readiness/7.1 Error Boundaries.md",
+        },
+        {
+          id: "react-7.2",
+          title: "7.2 Security (XSS, env vars, safe rendering)",
+          path: "docs/coding/React JS/Batch 7 - Production-Readiness/7.2 Security (XSS, env vars, safe rendering).md",
+        },
+        {
+          id: "react-7.3",
+          title: "7.3 Testing Setup (Vitest + RTL)",
+          path: "docs/coding/React JS/Batch 7 - Production-Readiness/7.3 Testing Setup (Vitest + RTL).md",
+        },
+        {
+          id: "react-7.4",
+          title: "7.4 Mini-Project — Retroactive Tests",
+          path: "docs/coding/React JS/Batch 7 - Production-Readiness/7.4 Mini-Project - Retroactive Tests.md",
+        },
+        {
+          id: "react-7.5",
+          title: "7.5 Build & Deploy",
+          path: "docs/coding/React JS/Batch 7 - Production-Readiness/7.5 Build & Deploy.md",
+        },
+      ],
+    },
+    {
+      id: "capstone",
+      title: "Capstone — TrackIt (Habit Tracker + Dashboard)",
+      lectures: [
+        {
+          id: "react-t.1",
+          title: "T.1 Setup and Project Structure",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.1 Setup and Project Structure.md",
+        },
+        {
+          id: "react-t.2",
+          title: "T.2 Types and Zustand Stores",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.2 Types and Zustand Stores.md",
+        },
+        {
+          id: "react-t.3",
+          title: "T.3 useReducer and Custom Hooks",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.3 useReducer and Custom Hooks.md",
+        },
+        {
+          id: "react-t.4",
+          title: "T.4 Router and Protected Routes",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.4 Router and Protected Routes.md",
+        },
+        {
+          id: "react-t.5",
+          title: "T.5 Habits Feature — CRUD, Check-in, Streaks",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.5 Habits Feature - CRUD, Check-in, Streaks.md",
+        },
+        {
+          id: "react-t.6",
+          title: "T.6 Dashboard and Tailwind Styling",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.6 Dashboard and Tailwind Styling.md",
+        },
+        {
+          id: "react-t.7",
+          title: "T.7 Animations, Error Boundary and Security",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.7 Animations Error Boundary and Security.md",
+        },
+        {
+          id: "react-t.8",
+          title: "T.8 Tests, Build, Deploy and README",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.8 Tests Build Deploy and README.md",
+        },
+      ],
+    },
   ],
 };

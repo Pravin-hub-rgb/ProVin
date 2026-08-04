@@ -51,6 +51,7 @@ import { agenticaiSubject } from "./subjects/agenticai.subject";
 import { gitgithubSubject } from "./subjects/gitgithub.subject";
 import { reactSubject } from "./subjects/react.subject";
 import { typescriptSubject } from "./subjects/typescript.subject";
+import { nextjsSubject } from "./subjects/nextjs.subject";
 
 export const subjects: Subject[] = [
   pythonSubject,
@@ -61,6 +62,7 @@ export const subjects: Subject[] = [
   gitgithubSubject,
   reactSubject,
   typescriptSubject,
+  nextjsSubject,
 ];
 
 /**
