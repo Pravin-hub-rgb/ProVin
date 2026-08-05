@@ -32,6 +32,11 @@ export const dsaSubject: Subject = {
           title: "1.2 Space Complexity",
           path: "docs/coding/DSA/Phase 1 - Foundations/1.2 Space Complexity.md",
         },
+        {
+          id: "dsa-1.3",
+          title: "1.3 Arrays",
+          path: "docs/coding/DSA/Phase 1 - Foundations/1.3 Arrays.md",
+        },
       ],
     },
   ],

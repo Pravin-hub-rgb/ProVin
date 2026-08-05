@@ -11,6 +11,7 @@ import "@/lib/git-lab"
 import "@/lib/ai-lab"
 import "@/lib/js-lab"
 
+
 const FLOATING_SYMBOLS = ["</>", "{}", "//", "~", "$", "#", "&&", "=>"]
 const FLOOD_SYMBOLS = ["</>", "{}", "//", "~", "$", "#", "&&", "=>", "()", "[]", "**", "!!", "%%", "??", "::", "++"]
 
@@ -39,6 +40,7 @@ export default function LabDashboard() {
     github: <GitBranch className="w-6 h-6" />,
     agenticai: <BrainCircuit className="w-6 h-6" />,
     javascript: <Code2 className="w-6 h-6" />,
+
   }
 
   return (

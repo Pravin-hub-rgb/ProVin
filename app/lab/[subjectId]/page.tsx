@@ -16,6 +16,7 @@ import "@/lib/ai-lab"
 import "@/lib/js-lab"
 import "@/lib/react-lab"
 
+
 export default function SubjectLabPage() {
   const params = useParams()
   const searchParams = useSearchParams()

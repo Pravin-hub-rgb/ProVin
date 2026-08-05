@@ -35,6 +35,7 @@ export const labSubjects: LabSubject[] = [
     icon: "⚛️",
     scenarioCount: 22,
   },
+
 ]
 
 export function getLabSubject(id: string): LabSubject | undefined {

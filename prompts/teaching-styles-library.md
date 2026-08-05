@@ -176,3 +176,17 @@ Bas bol do:
 Kuch na bola toh **Dost-to-Dost** default rahega. Baaki Master Prompt ke
 saare rules (phase-wise docs, Nutshell, Cheat Sheet, Common Mistakes,
 Khud Try Karo, waghera) har style ke saath exactly waise hi lagu honge.
+
+
+
+----
+
+
+yaar best advise likhni hai waha like ki pehle toh basics cover kar liya haa
+ki array kya hota hai etc etc
+funcitn like arr.length etc etc .. 
+string array etc etc
+phir like questions solve karne ka mechanishm .. logic, brainstorming .. 
+karna kya hai karke .. wagera wagera . samjhe kaise sochte hai mindset wagera
+holy grail of the coding drp karo yaar
+beginner ke liye ..
