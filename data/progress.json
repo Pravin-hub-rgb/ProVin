@@ -139,5 +139,9 @@
     "react-6.1": true,
     "react-6.4": true
   },
-  "dsa": {}
+  "dsa": {},
+  "nextjs": {
+    "next-0.0": true,
+    "next-0.0.5": true
+  }
 }

@@ -146,6 +146,38 @@ function stripReactProps() {
   }
 }
 
+function escapeHtmlEntities(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+}
+
+function escapeRawHtmlString(raw: string): string {
+  const fenced: string[] = []
+  let s = raw.replace(/(`{3,})([a-zA-Z0-9_-]*)[ \t]*\r?\n([\s\S]*?)\r?\n\1[ \t]*/g, (m) => {
+    const idx = fenced.push(m) - 1
+    return `QQFENCEQQ${idx}QQENDQQ`
+  })
+  s = s.replace(/(`[^`\n]*`)/g, (m) => `<code>${escapeHtmlEntities(m.slice(1, -1))}</code>`)
+  s = s.replace(/<([^>]+)>/g, (m, inner) => {
+    const tagName = inner.split(/\s+/)[0].replace(/^\//, '').toLowerCase()
+    if (HTML5_TAGS.has(tagName) || CUSTOM_COMPONENT_TAGS.has(tagName)) return m
+    return `&lt;${inner}&gt;`
+  })
+  return s.replace(/QQFENCEQQ(\d+)QQENDQQ/g, (_, i) => {
+    const m = fenced[+i]
+    const mm = /^`{3,}([a-zA-Z0-9_-]*)[ \t]*\r?\n([\s\S]*?)\r?\n`{3,}[ \t]*$/.exec(m)
+    const code = escapeHtmlEntities(mm![2])
+    return mm![1] ? `<code class="language-${mm![1]}">${code}</code>` : `<code>${code}</code>`
+  })
+}
+
+function escapeRawHtml() {
+  return (tree: Root) => {
+    visit(tree, 'raw', (node: { value: string }) => {
+      node.value = escapeRawHtmlString(node.value)
+    })
+  }
+}
+
 const HTML5_TAGS = new Set([
   'a','abbr','address','area','article','aside','audio','b','base','bdi','bdo',
   'blockquote','body','br','button','canvas','caption','cite','code','col',
@@ -194,7 +226,7 @@ export function MarkdownViewer({ content, theme = 'light' }: MarkdownViewerProps
     <div className="prose prose-lg dark:prose-invert max-w-none">
       <MarkdownHooks
         remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeRaw, stripReactProps]}
+        rehypePlugins={[escapeRawHtml, rehypeRaw, stripReactProps]}
         components={markdownComponents}
       >
         {escapeNonHtmlAngleBrackets(content)}
