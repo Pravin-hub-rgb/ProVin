@@ -143,6 +143,7 @@
   "nextjs": {
     "next-0.0": true,
     "next-0.0.5": true,
-    "next-0.2": true
+    "next-0.2": true,
+    "next-0.3": true
   }
 }
