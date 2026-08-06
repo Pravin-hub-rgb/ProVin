@@ -18,6 +18,8 @@ This file contains the rules and conventions for creating and editing course con
 - Every file connects to the previous one
 - First sentence references something specific from the last file
 - Last file in a phase bridges to the next phase
+- **No out-of-the-blue structured blocks.** Every section must flow as connected prose: definition → process/steps → "yeh kis content ke liye sahi hai" (use-cases woven into sentences) → fayda/nuksaan derived naturally. Never drop a sudden `Kab:` / `Examples:` / `Pros:` / `Cons:` bullet list without transitional sentences connecting it to the paragraph above.
+- Concepts are explained one-by-one first; the compare/contrast table comes LAST, after each concept is already clear.
 
 ### 3. Handling Future Concepts
 - If you mention something not yet taught, say: "We'll explore this in detail in the next topic"
