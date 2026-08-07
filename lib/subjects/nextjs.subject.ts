@@ -102,7 +102,27 @@ export const nextjsSubject: Subject = {
         {
           id: "next-1.5",
           title: "1.5 Combined Project — Portfolio/Blog Site",
-          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5 Combined Project - Portfolio Blog Site.md",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.1 Planning — Code Likhne Se Pehle Sochna.md",
+        },
+        {
+          id: "next-1.5.2",
+          title: "1.5.2 Hardcoded UI — Pehle Dekho Kaise Dikhta Hai",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.2 Hardcoded UI — Pehle Dekho Kaise Dikhta Hai.md",
+        },
+        {
+          id: "next-1.5.3",
+          title: "1.5.3 Data Layer — post.ts, Type Aur Functions",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.3 Data Layer — post.ts, Type Aur Functions.md",
+        },
+        {
+          id: "next-1.5.4",
+          title: "1.5.4 Dynamic Blog — Data Layer Se UI Jodo",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.4 Dynamic Blog — Data Layer Se UI Jodo.md",
+        },
+        {
+          id: "next-1.5.5",
+          title: "1.5.5 States + Testing — Project Complete Karna",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.5 States + Testing — Project Complete Karna.md",
         },
       ],
     },
@@ -139,7 +159,22 @@ export const nextjsSubject: Subject = {
         {
           id: "next-2.5",
           title: "2.5 Combined Project — Portfolio/Blog Site v2",
-          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5 Combined Project - Portfolio Blog Site v2.md",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.1 Planning V2 — Kya Upgrade Karna Hai.md",
+        },
+        {
+          id: "next-2.5.2",
+          title: "2.5.2 Data Source — posts-api.ts Async Banana",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.2 Data Source — posts-api.ts Async Banana.md",
+        },
+        {
+          id: "next-2.5.3",
+          title: "2.5.3 Server Fetch + Metadata + Like Button",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.3 Server Fetch + Metadata + Like Button.md",
+        },
+        {
+          id: "next-2.5.4",
+          title: "2.5.4 States + ISR + Testing — V2 Complete",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.4 States + ISR + Testing — V2 Complete.md",
         },
       ],
     },
