@@ -69,5 +69,37 @@ export const nextjsSubject: Subject = {
         },
       ],
     },
+    {
+      id: "batch1",
+      title: "Batch 1 — Routing Fundamentals",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-1.0",
+          title: "1.0 Routing Fundamentals — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.0 Routing Fundamentals — Kya Seekhenge.md",
+        },
+        {
+          id: "next-1.1",
+          title: "1.1 File-based Routing Basics",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.1 File-based Routing Basics.md",
+        },
+        {
+          id: "next-1.2",
+          title: "1.2 Nested Layouts",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.2 Nested Layouts.md",
+        },
+        {
+          id: "next-1.3",
+          title: "1.3 Dynamic Routes + Params",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.3 Dynamic Routes + Params.md",
+        },
+        {
+          id: "next-1.4",
+          title: "1.4 Loading, Error, Not-Found States",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.4 Loading, Error, Not-Found States.md",
+        },
+      ],
+    },
   ],
 };
