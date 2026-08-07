@@ -72,7 +72,7 @@ export const nextjsSubject: Subject = {
     {
       id: "batch1",
       title: "Batch 1 — Routing Fundamentals",
-      openByDefault: false,
+      openByDefault: true,
       lectures: [
         {
           id: "next-1.0",
@@ -98,6 +98,11 @@ export const nextjsSubject: Subject = {
           id: "next-1.4",
           title: "1.4 Loading, Error, Not-Found States",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.4 Loading, Error, Not-Found States.md",
+        },
+        {
+          id: "next-1.5",
+          title: "1.5 Combined Project — Portfolio/Blog Site",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5 Combined Project - Portfolio Blog Site.md",
         },
       ],
     },

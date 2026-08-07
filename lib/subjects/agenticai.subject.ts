@@ -226,8 +226,60 @@ export const agenticaiSubject: Subject = {
         },
         {
           id: "ai-7.6",
-          title: "7.6 What to Write on LinkedIn / Resume",
-          path: "docs/coding/Agentic AI/Phase 7 - The Bigger Picture/7.6 LinkedIn and Resume.md",
+          title: "7.6 Encoder-Free Architecture",
+          path: "docs/coding/Agentic AI/Phase 7 - The Bigger Picture/7.6 Encoder-Free Architecture.md",
+        },
+        {
+          id: "ai-7.7",
+          title: "7.7 LinkedIn and Resume",
+          path: "docs/coding/Agentic AI/Phase 7 - The Bigger Picture/7.7 LinkedIn and Resume.md",
+        },
+      ],
+    },
+    {
+      id: "phase8",
+      title: "Phase 8 — Capstone: AI News Aggregator",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "ai-8.1",
+          title: "8.1 Capstone Overview & Setup",
+          path: "docs/coding/Agentic AI/Phase 8 - Capstone - AI News Aggregator/8.1 Capstone Overview & Setup.md",
+        },
+        {
+          id: "ai-8.2",
+          title: "8.2 Databases 101",
+          path: "docs/coding/Agentic AI/Phase 8 - Capstone - AI News Aggregator/8.2 Databases 101.md",
+        },
+        {
+          id: "ai-8.3",
+          title: "8.3 Scraping Pipeline",
+          path: "docs/coding/Agentic AI/Phase 8 - Capstone - AI News Aggregator/8.3 Scraping Pipeline.md",
+        },
+        {
+          id: "ai-8.4",
+          title: "8.4 Database Integration",
+          path: "docs/coding/Agentic AI/Phase 8 - Capstone - AI News Aggregator/8.4 Database Integration.md",
+        },
+        {
+          id: "ai-8.5",
+          title: "8.5 Aggregator Agent",
+          path: "docs/coding/Agentic AI/Phase 8 - Capstone - AI News Aggregator/8.5 Aggregator Agent.md",
+        },
+        {
+          id: "ai-8.6",
+          title: "8.6 Digest Agent",
+          path: "docs/coding/Agentic AI/Phase 8 - Capstone - AI News Aggregator/8.6 Digest Agent.md",
+        },
+        {
+          id: "ai-8.7",
+          title: "8.7 Deployment & Scheduling",
+          path: "docs/coding/Agentic AI/Phase 8 - Capstone - AI News Aggregator/8.7 Deployment & Scheduling.md",
+        },
+        {
+          id: "ai-8.8",
+          title: "8.8 Refactor & Ship",
+          path: "docs/coding/Agentic AI/Phase 8 - Capstone - AI News Aggregator/8.8 Refactor & Ship.md",
         },
       ],
     },
