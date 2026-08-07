@@ -106,5 +106,42 @@ export const nextjsSubject: Subject = {
         },
       ],
     },
+    {
+      id: "batch2",
+      title: "Batch 2 — Rendering & Data Fetching",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-2.0",
+          title: "2.0 Rendering & Data Fetching — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.0 Rendering & Data Fetching — Kya Seekhenge.md",
+        },
+        {
+          id: "next-2.1",
+          title: "2.1 Server Components — Direct Fetch",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.1 Server Components — Direct Fetch.md",
+        },
+        {
+          id: "next-2.2",
+          title: "2.2 Client Components — Kab Zaroorat Padti Hai",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.2 Client Components — Kab Zaroorat Padti Hai.md",
+        },
+        {
+          id: "next-2.3",
+          title: "2.3 Static vs Dynamic Rendering + Revalidate",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.3 Static vs Dynamic Rendering + Revalidate.md",
+        },
+        {
+          id: "next-2.4",
+          title: "2.4 Metadata API — SEO",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.4 Metadata API — SEO.md",
+        },
+        {
+          id: "next-2.5",
+          title: "2.5 Combined Project — Portfolio/Blog Site v2",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5 Combined Project - Portfolio Blog Site v2.md",
+        },
+      ],
+    },
   ],
 };
