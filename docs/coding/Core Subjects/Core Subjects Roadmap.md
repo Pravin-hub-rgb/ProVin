@@ -82,10 +82,10 @@
 
 ### Style Guide
 - **Tone:** Hinglish, dost-to-dost, senior dev explaining to junior
-- **Analogies:** Technical (TypeScript, Node.js, React — not real-life)
+- **Analogies:** DBMS, CN, OS — pure technical, no programming language analogies. OOP — TypeScript code examples allowed (it IS a programming concept).
 - **Context:** DukaanOS, Trading Bot, Trishul Insurance
 - **Sections:** "What It Is NOT" + "In Your Own Words" (3-5 Qs with `<details>` sample answers)
-- **Code:** TypeScript/JavaScript examples, complete and runnable
+- **Code:** SQL for DBMS, plain JS/fetch/curl for CN, JavaScript for OS, TypeScript for OOP
 - **Bridge:** Each file ends by referencing the next file
 
 ### When to Study
