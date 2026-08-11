@@ -88,17 +88,19 @@ Blog posts ab Server Components se fetch hote hain (real API/CMS-jaisa dummy dat
 
 ---
 
-# BATCH 3 — Mutations: Manual → Better
+# BATCH 3 — Mutations: REST API + Server Actions
 
-| # | Concept | Approach | Mini-Project |
+| # | Concept | Layer | Mini-Project |
 |---|---|---|---|
-| I | **Manual**: Route Handlers (`route.ts`) — traditional REST-style API banake fetch se call karna | typed request/response | **Comment System v1** — `/api/comments` route handler banake, client se `fetch(POST)` karke comment add karna (bilkul jaisa React mein karte the) |
-| J | **Better**: Server Actions — form seedha server function ko call kare, koi API layer nahi | typed action function, `'use server'` directive | **Comment System v2** — same feature, ab Server Action se — kitna kam boilerplate lagta hai, dono versions comparison mein rakho |
-| K | Server Actions + `useFormStatus` / `useFormState` (progressive enhancement) | typed form state | (comment system v2 ko upgrade — pending state, success/error feedback, sab bina extra client state ke) |
-| L | Revalidation after mutation (`revalidatePath`, `revalidateTag`) | — | (comment add hone ke baad page ka data automatically refresh ho, bina manual refetch ke) |
+| I | **Route Handlers** (`route.ts`) — REST API banana. Ye **fundamental** hai — har web developer ko aana chahiye. Third-party APIs, mobile apps, microservices — sab REST use karte hain. | typed request/response | **Comment System v1** — `/api/comments` route handler banake, client se `fetch(POST)` karke comment add karna |
+| J | **HTTP Methods** — GET vs POST vs PUT vs DELETE. REST samjho — jab API share karni ho, ya external client ho, toh REST use karo. | HTTP semantics | (comment system mein GET, POST, DELETE — teeno methods use karo) |
+| K | **Server Actions** — Next.js ka **shortcut** forms ke liye. Sirf Next.js mein kaam aata hai. Form seedha server function ko call kare, koi API layer nahi. | typed action function, `'use server'` directive | **Comment System v2** — same feature, ab Server Action se — kitna kam boilerplate |
+| L | **Route Handler vs Server Actions — Kab Kya?** Dono ke pros/cons samjho. REST universal hai, Server Actions Next.js specific hai. | comparison | (table + examples — kab kya use karein) |
+| M | Server Actions + `useFormStatus` / `useFormState` (progressive enhancement) | typed form state | (comment system v2 ko upgrade — pending state, success/error feedback) |
+| N | Revalidation after mutation (`revalidatePath`, `revalidateTag`) | — | (comment add hone ke baad page ka data automatically refresh ho) |
 
 ### 🔗 Combined Project #3 — **Reviews & Ratings App**
-Har item (product/school/film) pe reviews feature — pehle Route Handler (v1, REST-style) se, phir Server Actions (v2) se, `useFormStatus`/`useFormState` se pending + error states, aur `revalidatePath`/`revalidateTag` se auto-refresh. Dono versions comparison mein rakho (Manual → Better). **Blog spine yahin khatam — naya project.**
+Har item (product/school/film) pe reviews feature — pehle Route Handler (v1, REST-style) se, phir Server Actions (v2) se, `useFormStatus`/`useFormState` se pending + error states, aur `revalidatePath`/`revalidateTag` se auto-refresh. **Dono approaches seekho — kab kya use karna hai.** Blog spine yahin khatam — naya project.
 
 ---
 
@@ -172,9 +174,9 @@ Jo bhi choose karo, isme ye sab honge (production-grade, latest approaches):
 
 ## "Manual → Better" pairs — Next.js summary
 
-| Manual (pehle) | Better (phir) |
+| Pehle seekho (fundamental) | Phir Next.js shortcut |
 |---|---|
-| Route Handlers + client `fetch()` | Server Actions |
+| Route Handlers + client `fetch()` (REST — universal) | Server Actions (Next.js specific — forms ke liye) |
 | Manual session/cookie code | Auth.js (NextAuth) |
 | Manual `<img>` tags | `next/image` |
 | Manual refetch after mutation | `revalidatePath`/`revalidateTag` |

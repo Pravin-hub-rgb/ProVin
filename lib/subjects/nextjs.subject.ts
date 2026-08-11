@@ -100,8 +100,8 @@ export const nextjsSubject: Subject = {
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.4 Loading, Error, Not-Found States.md",
         },
         {
-          id: "next-1.5",
-          title: "1.5 Combined Project — Portfolio/Blog Site",
+          id: "next-1.5.1",
+          title: "1.5.1 Planning — Code Likhne Se Pehle Sochna",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.1 Planning — Code Likhne Se Pehle Sochna.md",
         },
         {
@@ -157,8 +157,8 @@ export const nextjsSubject: Subject = {
           path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.4 Metadata API — SEO.md",
         },
         {
-          id: "next-2.5",
-          title: "2.5 Combined Project — Portfolio/Blog Site v2",
+          id: "next-2.5.1",
+          title: "2.5.1 Planning V2 — Kya Upgrade Karna Hai",
           path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.1 Planning V2 — Kya Upgrade Karna Hai.md",
         },
         {
@@ -175,6 +175,63 @@ export const nextjsSubject: Subject = {
           id: "next-2.5.4",
           title: "2.5.4 States + ISR + Testing — V2 Complete",
           path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.4 States + ISR + Testing — V2 Complete.md",
+        },
+      ],
+    },
+    {
+      id: "batch3",
+      title: "Batch 3 — Mutations: REST API + Server Actions",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-3.0",
+          title: "3.0 Mutations — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.0 Mutations — Kya Seekhenge.md",
+        },
+        {
+          id: "next-3.1",
+          title: "3.1 Route Handlers — REST API banana",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.1 Route Handlers — REST API banana.md",
+        },
+        {
+          id: "next-3.2",
+          title: "3.2 Fetching vs Mutating — GET vs POST",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.2 Fetching vs Mutating — GET vs POST.md",
+        },
+        {
+          id: "next-3.3",
+          title: "3.3 Server Actions — Next.js ka Shortcut",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.3 Server Actions — Next.js ka Shortcut.md",
+        },
+        {
+          id: "next-3.4",
+          title: "3.4 Route Handler vs Server Actions — Kab Kya",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4 Route Handler vs Server Actions — Kab Kya.md",
+        },
+        {
+          id: "next-3.5",
+          title: "3.5 useFormStatus + useFormState",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.5 useFormStatus + useFormState.md",
+        },
+        {
+          id: "next-3.6",
+          title: "3.6 Revalidation After Mutation",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.6 Revalidation After Mutation.md",
+        },
+        {
+          id: "next-3.7.1",
+          title: "3.7.1 Planning — Reviews & Ratings App",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.7.1 Planning — Reviews & Ratings App.md",
+        },
+        {
+          id: "next-3.7.2",
+          title: "3.7.2 Route Handler Version (v1)",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.7.2 Route Handler Version (v1).md",
+        },
+        {
+          id: "next-3.7.3",
+          title: "3.7.3 Server Actions Version (v2)",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.7.3 Server Actions Version (v2).md",
         },
       ],
     },

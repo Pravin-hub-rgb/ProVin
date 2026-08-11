@@ -233,7 +233,7 @@ dono ek saath nahi rehte (duplicate content).
    → "data layer kyu alag", "agar X badlega toh kya hoga" — concept
      application, recall nahi
 
-❌ Registration done? (har part alag lecture)
+❌ Registration done? (har part alag lecture)acha ach
    → subject.ts mein har part ka id/title/path
 
 ❌ Purana single-file combined project delete kiya?

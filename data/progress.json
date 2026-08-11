@@ -154,6 +154,21 @@
     "next-1.1": true,
     "next-1.2": true,
     "next-1.3": true,
-    "next-1.4": true
+    "next-1.4": true,
+    "next-1.5.1": true,
+    "next-1.5.2": true,
+    "next-1.5.3": true,
+    "next-1.5.4": true,
+    "next-1.5.5": true,
+    "next-2.0": true,
+    "next-2.1": true,
+    "next-2.2": true,
+    "next-2.3": true,
+    "next-2.4": true,
+    "next-2.5.1": true,
+    "next-2.5.2": true,
+    "next-2.5.3": true,
+    "next-2.5.4": true,
+    "next-3.0": true
   }
 }
