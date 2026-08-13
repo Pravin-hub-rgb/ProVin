@@ -94,12 +94,9 @@ Blog posts ab Server Components se fetch hote hain (real API/CMS-jaisa dummy dat
 |---|---|---|---|
 | I | **Route Handlers** (`route.ts`) — REST API banana. Ye **fundamental** hai — har web developer ko aana chahiye. Third-party APIs, mobile apps, microservices — sab REST use karte hain. | typed request/response | **Comment System v1** — `/api/comments` route handler banake, client se `fetch(POST)` karke comment add karna |
 | J | **HTTP Methods** — GET vs POST vs PUT vs DELETE. REST samjho — jab API share karni ho, ya external client ho, toh REST use karo. | HTTP semantics | (comment system mein GET, POST, DELETE — teeno methods use karo) |
-| K | **Server Actions** — Next.js ka **shortcut** forms ke liye. Sirf Next.js mein kaam aata hai. Form seedha server function ko call kare, koi API layer nahi. | typed action function, `'use server'` directive | **Comment System v2** — same feature, ab Server Action se — kitna kam boilerplate |
-| L | **Route Handler vs Server Actions — Kab Kya?** Dono ke pros/cons samjho. REST universal hai, Server Actions Next.js specific hai. | comparison | (table + examples — kab kya use karein) |
-| M | Server Actions + `useFormStatus` / `useFormState` (progressive enhancement) | typed form state | (comment system v2 ko upgrade — pending state, success/error feedback) |
-| N | Revalidation after mutation (`revalidatePath`, `revalidateTag`) | — | (comment add hone ke baad page ka data automatically refresh ho) |
+| K | **Server Actions + Refactor series (3.3.x)** — Next.js ka **shortcut** forms ke liye. Sirf Next.js mein kaam aata hai. Form seedha server function ko call kare, koi API layer nahi. Is series ke andar hi integrate hain: `useFormStatus`/`useFormState` (pending/success/error feedback), revalidation (`revalidatePath`, `revalidateTag`), aur **Route Handler vs Server Actions — Kab Kya** comparison. | typed action function, `'use server'` directive, form hooks | **Comment System v2** — same feature ab Server Action se + 3.3.1 mein feedback hooks + revalidation concept — kitna kam boilerplate |
 
-### 🔗 Combined Project #3 — **Reviews & Ratings App**
+### 🔗 Combined Project #3 — **Reviews & Ratings App** (Batch 3 ka final — `3.4.1` Planning, `3.4.2` v1 Route Handler, `3.4.3` v2 Server Actions)
 Har item (product/school/film) pe reviews feature — pehle Route Handler (v1, REST-style) se, phir Server Actions (v2) se, `useFormStatus`/`useFormState` se pending + error states, aur `revalidatePath`/`revalidateTag` se auto-refresh. **Dono approaches seekho — kab kya use karna hai.** Blog spine yahin khatam — naya project.
 
 ---
