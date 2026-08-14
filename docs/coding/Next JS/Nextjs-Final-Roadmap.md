@@ -107,11 +107,11 @@ Har item (product/school/film) pe reviews feature — pehle Route Handler (v1, R
 |---|---|---|---|
 | M | **Manual**: Session/cookie handling khud samajhna (conceptual + chhota hands-on) | typed session shape | **Login Demo v1** — bahut basic, cookie-based session khud set/read karke (sirf samajhne ke liye, production mein use nahi karenge) |
 | N | **Better**: Auth.js (NextAuth) ya similar library | typed session/user | **Login Demo v2** — same feature, proper auth library se (OAuth provider ya credentials) |
-| O | Middleware — route ko intercept karke auth-check/redirect | typed middleware function | (protected `/dashboard` route banao jo bina login redirect kare) |
-| P | Real Protected Routes (React course mein ye "dummy" tha — ab genuinely real hai) | — | (blog project mein "My Drafts" page sirf logged-in users ke liye) |
+| O | Protection layer — layout mein `auth()` + redirect (main security), `proxy.ts` (Next 16 ka middleware successor) sirf routing ke liye. Kyun nahi middleware-proxy-only: CVE-2025-29927 bypass | layout-level `auth()` check | (protected `/dashboard` route banao jo bina login redirect kare) |
+| P | Real Protected Routes (React course mein ye "dummy" tha — ab genuinely real hai) | — | (Member Dashboard mein hi: dashboard + profile protected route group `(protected)` ke andar) |
 
 ### 🔗 Combined Project #4 — **Member Dashboard / "My Account" App**
-Users login karte hain (Auth.js), apna dashboard/profile dekhte hain (protected routes), middleware se unauthorized access blocked hai. Login Demo v1 (manual session/cookie) aur v2 (Auth.js) yahin combine ho kar real project ban jaate hain. **Fresh project — blog nahi.**
+Users login karte hain (Auth.js + GitHub OAuth), apna dashboard/profile dekhte hain (protected routes — route group `(protected)` ke layout mein `auth()` + redirect; `proxy.ts` sirf logged-in users ko `/login` se `/dashboard` route karta hai, security usme nahi). Login Demo v1 (manual session/cookie) aur v2 (Auth.js) yahin combine ho kar real project ban jaate hain. **Fresh project — blog nahi.**
 
 ---
 
@@ -161,7 +161,7 @@ Yahan tumhara pehle wala sawaal wapas aata hai — capstone domain choose karna 
 Jo bhi choose karo, isme ye sab honge (production-grade, latest approaches):
 - Server Components + Client Components properly split
 - Server Actions (not manual API+fetch) for mutations
-- Auth.js real authentication + Middleware-protected routes
+- Auth.js real authentication + Protected routes (layout-level `auth()` — proxy/middleware sirf routing, CVE-2025-29927 ke wajah se security wahan nahi)
 - Prisma/Supabase database
 - SEO metadata, `next/image`, `next/font`
 - Streaming + Suspense where useful

@@ -245,5 +245,82 @@ export const nextjsSubject: Subject = {
         },
       ],
     },
+    {
+      id: "batch4",
+      title: "Batch 4 — Authentication & Protected Access",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-4.0",
+          title: "4.0 Authentication — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.0 Authentication — Kya Seekhenge.md",
+        },
+        {
+          id: "next-4.1",
+          title: "4.1 Cookies aur Sessions — Auth ka Foundation",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.1 Cookies aur Sessions — Auth ka Foundation.md",
+        },
+        {
+          id: "next-4.2",
+          title: "4.2 Manual Login Demo v1 — Hashing + Session",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.2 Manual Login Demo v1 — Hashing + Session.md",
+        },
+        {
+          id: "next-4.3",
+          title: "4.3 Manual Session — Read + Protected + Logout",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.3 Manual Session — Read + Protected + Logout.md",
+        },
+        {
+          id: "next-4.4",
+          title: "4.4 Auth.js — Next.js ka Auth Shortcut",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.4 Auth.js — Next.js ka Auth Shortcut.md",
+        },
+        {
+          id: "next-4.4.1",
+          title: "4.4.1 Auth.js + GitHub OAuth — Login Demo v2",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.4.1 Auth.js + GitHub OAuth — Login Demo v2.md",
+        },
+        {
+          id: "next-4.4.2",
+          title: "4.4.2 Sessions — Server aur Client",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.4.2 Sessions — Server aur Client.md",
+        },
+        {
+          id: "next-4.4.3",
+          title: "4.4.3 Protected Routes — auth() + proxy.ts",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.4.3 Protected Routes — auth() + proxy.ts.md",
+        },
+        {
+          id: "next-4.4.4",
+          title: "4.4.4 Summary — Manual vs OAuth",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.4.4 Summary — Manual vs OAuth.md",
+        },
+        {
+          id: "next-4.5.1",
+          title: "4.5.1 Planning — Member Dashboard",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.5.1 Planning — Member Dashboard.md",
+        },
+        {
+          id: "next-4.5.2",
+          title: "4.5.2 Hardcoded UI + Auth Scaffold",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.5.2 Hardcoded UI + Auth Scaffold.md",
+        },
+        {
+          id: "next-4.5.3",
+          title: "4.5.3 GitHub OAuth Wiring",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.5.3 GitHub OAuth Wiring.md",
+        },
+        {
+          id: "next-4.5.4",
+          title: "4.5.4 Dynamic Dashboard — Profile + Update",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.5.4 Dynamic Dashboard — Profile + Update.md",
+        },
+        {
+          id: "next-4.5.5",
+          title: "4.5.5 Testing + States + Summary",
+          path: "docs/coding/Next JS/Batch 4 - Authentication & Protected Access/4.5.5 Testing + States + Summary.md",
+        },
+      ],
+    },
   ],
 };
