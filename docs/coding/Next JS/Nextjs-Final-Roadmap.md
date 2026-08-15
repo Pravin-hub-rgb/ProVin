@@ -36,6 +36,7 @@ Yeh roadmap sirf plan hai — asli notes isi workflow se banti hain. Naye chat m
 | 2 | **Portfolio/Blog Site v2** (spine — sirf yahin upgrade) |
 | 3 | **Reviews & Ratings App** |
 | 4 | **Member Dashboard / "My Account" App** |
+| 4.6 | **Proxy Playground** (deep-dive demo app — no combined project, series ke saath incrementally) |
 | 5 | **Task Board App (Real DB)** |
 | 6 | **Photo Gallery / Media Showcase** |
 | 7 | *(koi naya nahi — security audit + deploy)* |
@@ -107,11 +108,27 @@ Har item (product/school/film) pe reviews feature — pehle Route Handler (v1, R
 |---|---|---|---|
 | M | **Manual**: Session/cookie handling khud samajhna (conceptual + chhota hands-on) | typed session shape | **Login Demo v1** — bahut basic, cookie-based session khud set/read karke (sirf samajhne ke liye, production mein use nahi karenge) |
 | N | **Better**: Auth.js (NextAuth) ya similar library | typed session/user | **Login Demo v2** — same feature, proper auth library se (OAuth provider ya credentials) |
-| O | Protection layer — layout mein `auth()` + redirect (main security), `proxy.ts` (Next 16 ka middleware successor) sirf routing ke liye. Kyun nahi middleware-proxy-only: CVE-2025-29927 bypass | layout-level `auth()` check | (protected `/dashboard` route banao jo bina login redirect kare) |
+| O | Protection layer — layout mein `auth()` + redirect (main security), `proxy.ts` (Next 16 ka middleware successor) sirf routing ke liye. Kyun nahi middleware-proxy-only: CVE-2025-29927 bypass. Proxy ka **full deep-dive Batch 4.6 mein** (matcher, NextResponse, rate limiting, geo, edge) | layout-level `auth()` check | (protected `/dashboard` route banao jo bina login redirect kare) |
 | P | Real Protected Routes (React course mein ye "dummy" tha — ab genuinely real hai) | — | (Member Dashboard mein hi: dashboard + profile protected route group `(protected)` ke andar) |
 
 ### 🔗 Combined Project #4 — **Member Dashboard / "My Account" App**
 Users login karte hain (Auth.js + GitHub OAuth), apna dashboard/profile dekhte hain (protected routes — route group `(protected)` ke layout mein `auth()` + redirect; `proxy.ts` sirf logged-in users ko `/login` se `/dashboard` route karta hai, security usme nahi). Login Demo v1 (manual session/cookie) aur v2 (Auth.js) yahin combine ho kar real project ban jaate hain. **Fresh project — blog nahi.**
+
+---
+
+# BATCH 4.6 — Proxy (Middleware) Deep Dive
+
+Proxy ka poora course — request interception layer, `proxy.ts` (Next 16: middleware ka successor, **Node.js runtime default** — Edge nahi). 17 files: Foundation (proxy kya hai, setup, matcher) → Request padhna (URL/headers/cookies) → Response banana (NextResponse: next/redirect/rewrite, headers add) → Real scenarios (logging, protected routes demo, rate limiting, geo blocking) → Edge Runtime (concept + Next 16 change, limitations revised, golden rules, official stance + decision table).
+
+| # | Concept | Approach | Mini-Project |
+|---|---|---|---|
+| Q | Proxy kya hai + request lifecycle, `proxy.ts` setup, matcher (single/array/`:path*`/negative regex) | `proxy.ts` + `config.matcher` | (demo app pe setup + verify) |
+| R | Request padhna: URL (`pathname`/`searchParams`), headers (device/IP), cookies (session check) | `request.nextUrl` / `request.headers.get` / `request.cookies` | (login-check pattern log version) |
+| S | Response banana: `NextResponse` — `next()` vs `redirect()` vs `rewrite()`, headers/cookies set | `NextResponse.*` | (redirect protected list + loop analysis; rewrite A/B + maintenance) |
+| T | Real scenarios: logging, protected routes (**demo as demo** — why-not: CVE-2025-29927 + spoofable cookie), rate limiting (429, window, Redis limit), geo blocking (`x-vercel-ip-country`) | module-level store / Vercel header | (Proxy Playground — series ke saath incremental demo app, login-less) |
+| U | Edge Runtime: concept + **Next 16 = Node.js default** (fs verified, `runtime` export removed), limitations revised + golden rule, **kab use karein** (official stance "avoid relying on Middleware" + decision table) | — | (kyun-not: auth proxy mein nahi — layout/components) |
+
+**Proxy = request-level infra layer** (routing, rate limit, geo, logging) — security/auth nahi (CVE-2025-29927). Series 4.6.1–4.6.17, `docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/`. 4.6.x numbering isliye kyunki 4.5.x Member Dashboard pe already hai.
 
 ---
 

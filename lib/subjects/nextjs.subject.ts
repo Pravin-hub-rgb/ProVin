@@ -323,6 +323,98 @@ export const nextjsSubject: Subject = {
       ],
     },
     {
+      id: "batch46",
+      title: "Batch 4.6 — Proxy (Middleware) Deep Dive",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-4.6.1",
+          title: "4.6.1 Proxy Kya Hai — Request Lifecycle",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.1 Proxy Kya Hai — Request Lifecycle.md",
+        },
+        {
+          id: "next-4.6.2",
+          title: "4.6.2 proxy.ts Setup + NextResponse.next()",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.2 proxy.ts Setup + NextResponse.next().md",
+        },
+        {
+          id: "next-4.6.3",
+          title: "4.6.3 Matcher — Kaunse Routes Pe Chale",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.3 Matcher — Kaunse Routes Pe Chale.md",
+        },
+        {
+          id: "next-4.6.4",
+          title: "4.6.4 URL Padhna — Pathname + SearchParams",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.4 URL Padhna — Pathname + SearchParams.md",
+        },
+        {
+          id: "next-4.6.5",
+          title: "4.6.5 Headers Padhna — User-Agent, IP, Host",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.5 Headers Padhna — User-Agent, IP, Host.md",
+        },
+        {
+          id: "next-4.6.6",
+          title: "4.6.6 Cookies Padhna — Request Ke Andar",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.6 Cookies Padhna — Request Ke Andar.md",
+        },
+        {
+          id: "next-4.6.7",
+          title: "4.6.7 NextResponse — Next vs Redirect vs Rewrite",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.7 NextResponse — Next vs Redirect vs Rewrite.md",
+        },
+        {
+          id: "next-4.6.8",
+          title: "4.6.8 Redirect Karna — new URL + Loop + Protected List",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.8 Redirect Karna — new URL + Loop + Protected List.md",
+        },
+        {
+          id: "next-4.6.9",
+          title: "4.6.9 Rewrite Karna — A/B Testing + Maintenance Page",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.9 Rewrite Karna — A/B Testing + Maintenance Page.md",
+        },
+        {
+          id: "next-4.6.10",
+          title: "4.6.10 Headers Add Karna — Response Modify + Layout Read",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.10 Headers Add Karna — Response Modify + Layout Read.md",
+        },
+        {
+          id: "next-4.6.11",
+          title: "4.6.11 Logging — Har Request Ka Record",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.11 Logging — Har Request Ka Record.md",
+        },
+        {
+          id: "next-4.6.12",
+          title: "4.6.12 Protected Routes — Demo + Why Not (CVE)",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.12 Protected Routes — Demo + Why Not (CVE).md",
+        },
+        {
+          id: "next-4.6.13",
+          title: "4.6.13 Rate Limiting — 429 + Window Expiry + Redis Limit",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.13 Rate Limiting — 429 + Window Expiry + Redis Limit.md",
+        },
+        {
+          id: "next-4.6.14",
+          title: "4.6.14 Geo Blocking — Country Check + Vercel Header",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.14 Geo Blocking — Country Check + Vercel Header.md",
+        },
+        {
+          id: "next-4.6.15",
+          title: "4.6.15 Edge Runtime Kya Hai — Next 16 Ka Badla Hua Default",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.15 Edge Runtime Kya Hai — Next 16 Ka Badla Hua Default.md",
+        },
+        {
+          id: "next-4.6.16",
+          title: "4.6.16 Edge Limitations — Next 16 Revised + Golden Rule",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.16 Edge Limitations — Next 16 Revised + Golden Rule.md",
+        },
+        {
+          id: "next-4.6.17",
+          title: "4.6.17 Kab Use Karein — Official Stance + Decision Table",
+          path: "docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/4.6.17 Kab Use Karein — Official Stance + Decision Table.md",
+        },
+      ],
+    },
+    {
       id: "batch5",
       title: "Batch 5 — Database Integration",
       openByDefault: false,
