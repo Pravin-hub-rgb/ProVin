@@ -117,14 +117,24 @@ Users login karte hain (Auth.js + GitHub OAuth), apna dashboard/profile dekhte h
 
 # BATCH 5 — Database Integration
 
+Batch 5 ab **deep database course** hai (MongoDB + PostgreSQL dono hands-on), sirf CRUD nahi — API design, Postman testing, aur system design bhi. Do mini-projects do alag data-flow patterns sikhaate hain:
+
+- **MongoDB mini-project** → **REST (Route Handlers) + client fetch** — yahan API Design + Postman testing (REST + Postman natural pair hain)
+- **SQL (Neon + Drizzle) mini-project** → **Server Components + Server Actions** — yahan system design (relations, indexes)
+
+Task Board (combined project) **production pattern** pe — Server Components reads + Server Actions mutations, Prisma + Neon.
+
 | # | Concept | Layer | Mini-Project |
 |---|---|---|---|
-| Q | Prisma/Supabase setup with Next.js (tumhara DukaanOS experience yahan directly kaam aayega, ab structured tareeke se) | typed Prisma models | **Task Board App** — real database-backed CRUD (dummy se replace) |
-| R | Server Components + Database queries directly (no API layer needed for reads) | — | (task board ki list Server Component mein directly DB se) |
-| S | Server Actions + Database mutations (create/update/delete) | typed action + Prisma call | (task board ka add/edit/delete ab DB mein persist) |
+| Q1 | Database kya hoti hai + SQL vs NoSQL + ORM/Providers — **pure fundamentals** (Batch 4 ke `profiles.json` pain se shuru) | — | (koi DB nahi — sirf concept) |
+| Q2 | **MongoDB + Mongoose** — Atlas setup, schema/model, then **REST CRUD via Route Handlers** | Mongoose model + Route Handler | **Mongo Todo API** — `route.ts` mein GET/POST/DELETE, client fetch |
+| Q3 | **API Design + Postman testing** — resource naming, status codes, error shape, REST client se test | REST design + testing | (Mongo Todo API pe hi — Postman se saare cases) |
+| R | **PostgreSQL + Drizzle** — Neon setup, typed schema, **Server Components queries directly (no API layer)** | typed Drizzle schema | **SQL Todo** — list Server Component mein seedha DB se |
+| S | **Server Actions + Database mutations** + **system design** (relations, indexes) | typed action + Drizzle call | (SQL Todo ka add/edit/delete SA se persist) |
+| T | **Combined Project — Task Board (Prisma + Neon)** — production pattern: SC reads + SA mutations | Prisma models + actions | **Task Board App** — real database-backed CRUD (dummy se replace) |
 
 ### 🔗 Combined Project #5 — **Task Board App (Real Database)**
-Batch 5 ka Task Board mini-project hi final combined version ban jaata hai — Prisma/Supabase se real CRUD, list Server Component mein seedha DB se (koi API layer nahi), add/edit/delete Server Actions se persist. Koi dummy data nahi bacha. **Fresh project — blog nahi.**
+Task Board **Prisma + Neon** pe banta hai — real CRUD, list Server Component mein seedha DB se (koi API layer nahi), add/edit/delete Server Actions se persist. Koi dummy data nahi bacha. **Fresh project — blog nahi.** Batch 5 ki poori journey ka production-grade result: JSON file → MongoDB (REST) → SQL (Server Actions) → Prisma Task Board.
 
 ---
 

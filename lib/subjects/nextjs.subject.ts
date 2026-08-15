@@ -322,5 +322,102 @@ export const nextjsSubject: Subject = {
         },
       ],
     },
+    {
+      id: "batch5",
+      title: "Batch 5 — Database Integration",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-5.0",
+          title: "5.0 Database Integration — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.0 Database Integration — Kya Seekhenge.md",
+        },
+        {
+          id: "next-5.1",
+          title: "5.1 Database Kya Hoti Hai — File vs Database",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.1 Database Kya Hoti Hai — File vs Database.md",
+        },
+        {
+          id: "next-5.2",
+          title: "5.2 SQL vs NoSQL — Table vs Document",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.2 SQL vs NoSQL — Table vs Document.md",
+        },
+        {
+          id: "next-5.3",
+          title: "5.3 ORM aur Providers — Database Se Baat Karne Ke Tools",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.3 ORM aur Providers — Database Se Baat Karne Ke Tools.md",
+        },
+        {
+          id: "next-5.4",
+          title: "5.4 MongoDB Atlas + Connection — Pehli Baar Real DB",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.4 MongoDB Atlas + Connection — Pehli Baar Real DB.md",
+        },
+        {
+          id: "next-5.5",
+          title: "5.5 Mongoose Schema + Model — Data Ka Blueprint",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.5 Mongoose Schema + Model — Data Ka Blueprint.md",
+        },
+        {
+          id: "next-5.6",
+          title: "5.6 API Design — REST API Ka Structure Sochna",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.6 API Design — REST API Ka Structure Sochna.md",
+        },
+        {
+          id: "next-5.7",
+          title: "5.7 Mongo CRUD via Route Handlers — Real DB REST API",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.7 Mongo CRUD via Route Handlers — Real DB REST API.md",
+        },
+        {
+          id: "next-5.8",
+          title: "5.8 Postman Testing — REST API Ko Proper Test Karna",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.8 Postman Testing — REST API Ko Proper Test Karna.md",
+        },
+        {
+          id: "next-5.9",
+          title: "5.9 PostgreSQL + Neon Setup — SQL Database Banao",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.9 PostgreSQL + Neon Setup — SQL Database Banao.md",
+        },
+        {
+          id: "next-5.10",
+          title: "5.10 Drizzle Schema + Client — Data Ka Blueprint (SQL Version)",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.10 Drizzle Schema + Client — Data Ka Blueprint (SQL Version).md",
+        },
+        {
+          id: "next-5.11",
+          title: "5.11 SQL CRUD via Server Components + Server Actions",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.11 SQL CRUD via Server Components + Server Actions.md",
+        },
+        {
+          id: "next-5.12",
+          title: "5.12 System Design — Relations, Indexes, Performance Soch",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.12 System Design — Relations, Indexes, Performance Soch.md",
+        },
+        {
+          id: "next-5.13.1",
+          title: "5.13.1 Task Board — Planning",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.13.1 Task Board — Planning.md",
+        },
+        {
+          id: "next-5.13.2",
+          title: "5.13.2 Task Board — Hardcoded UI",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.13.2 Task Board — Hardcoded UI.md",
+        },
+        {
+          id: "next-5.13.3",
+          title: "5.13.3 Task Board — Data Layer (Prisma)",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.13.3 Task Board — Data Layer (Prisma).md",
+        },
+        {
+          id: "next-5.13.4",
+          title: "5.13.4 Task Board — Dynamic (SC Reads + SA Mutations)",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.13.4 Task Board — Dynamic (SC Reads + SA Mutations).md",
+        },
+        {
+          id: "next-5.13.5",
+          title: "5.13.5 Task Board — States + Testing + Summary",
+          path: "docs/coding/Next JS/Batch 5 - Database Integration/5.13.5 Task Board — States + Testing + Summary.md",
+        },
+      ],
+    },
   ],
 };
