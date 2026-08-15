@@ -10,6 +10,11 @@ export const nextjsSubject: Subject = {
       title: "📋 Next.js Final Roadmap",
       path: "docs/coding/Next JS/Nextjs-Final-Roadmap.md",
     },
+    {
+      id: "nextjs-interview",
+      title: "🎯 100 Next.js Interview Questions",
+      path: "docs/coding/Next JS/Interview Prep/100 Next.js Interview Questions.md",
+    },
   ],
   phases: [
     {

@@ -10,6 +10,11 @@ export const reactSubject: Subject = {
       title: "📋 React Final Roadmap",
       path: "docs/coding/React JS/React-Final-Roadmap.md",
     },
+    {
+      id: "react-interview",
+      title: "🎯 100 React Interview Questions",
+      path: "docs/coding/React JS/Interview Prep/100 React Interview Questions.md",
+    },
   ],
   phases: [
     {
