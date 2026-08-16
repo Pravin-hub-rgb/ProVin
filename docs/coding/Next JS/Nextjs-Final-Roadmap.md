@@ -35,11 +35,11 @@ Yeh roadmap sirf plan hai — asli notes isi workflow se banti hain. Naye chat m
 | 1 | **Portfolio/Blog Site** |
 | 2 | **Portfolio/Blog Site v2** (spine — sirf yahin upgrade) |
 | 3 | **Reviews & Ratings App** |
-| 4 | **Member Dashboard / "My Account" App** |
-| 4.6 | **Proxy Playground** (deep-dive demo app — no combined project, series ke saath incrementally) |
-| 5 | **Task Board App (Real DB)** |
-| 6 | **Photo Gallery / Media Showcase** |
-| 7 | *(koi naya nahi — security audit + deploy)* |
+| 4 | **Proxy Playground** (deep-dive demo app — no combined project, series ke saath incrementally) |
+| 5 | **Member Dashboard / "My Account" App** |
+| 6 | **Task Board App (Real DB)** |
+| 7 | **Photo Gallery / Media Showcase** |
+| 8 | *(koi naya nahi — security audit + deploy)* |
 | Capstone | **Inventory/Order Dashboard ya Blog/Job Board** (production-grade) |
 
 ---
@@ -102,21 +102,7 @@ Har item (product/school/film) pe reviews feature — pehle Route Handler (v1, R
 
 ---
 
-# BATCH 4 — Authentication & Protected Access
-
-| # | Concept | Approach | Mini-Project |
-|---|---|---|---|
-| M | **Manual**: Session/cookie handling khud samajhna (conceptual + chhota hands-on) | typed session shape | **Login Demo v1** — bahut basic, cookie-based session khud set/read karke (sirf samajhne ke liye, production mein use nahi karenge) |
-| N | **Better**: Auth.js (NextAuth) ya similar library | typed session/user | **Login Demo v2** — same feature, proper auth library se (OAuth provider ya credentials) |
-| O | Protection layer — layout mein `auth()` + redirect (main security), `proxy.ts` (Next 16 ka middleware successor) sirf routing ke liye. Kyun nahi middleware-proxy-only: CVE-2025-29927 bypass. Proxy ka **full deep-dive Batch 4.6 mein** (matcher, NextResponse, rate limiting, geo, edge) | layout-level `auth()` check | (protected `/dashboard` route banao jo bina login redirect kare) |
-| P | Real Protected Routes (React course mein ye "dummy" tha — ab genuinely real hai) | — | (Member Dashboard mein hi: dashboard + profile protected route group `(protected)` ke andar) |
-
-### 🔗 Combined Project #4 — **Member Dashboard / "My Account" App**
-Users login karte hain (Auth.js + GitHub OAuth), apna dashboard/profile dekhte hain (protected routes — route group `(protected)` ke layout mein `auth()` + redirect; `proxy.ts` sirf logged-in users ko `/login` se `/dashboard` route karta hai, security usme nahi). Login Demo v1 (manual session/cookie) aur v2 (Auth.js) yahin combine ho kar real project ban jaate hain. **Fresh project — blog nahi.**
-
----
-
-# BATCH 4.6 — Proxy (Middleware) Deep Dive
+# BATCH 4 — Proxy (Middleware) Deep Dive
 
 Proxy ka poora course — request interception layer, `proxy.ts` (Next 16: middleware ka successor, **Node.js runtime default** — Edge nahi). 17 files: Foundation (proxy kya hai, setup, matcher) → Request padhna (URL/headers/cookies) → Response banana (NextResponse: next/redirect/rewrite, headers add) → Real scenarios (logging, protected routes demo, rate limiting, geo blocking) → Edge Runtime (concept + Next 16 change, limitations revised, golden rules, official stance + decision table).
 
@@ -128,13 +114,27 @@ Proxy ka poora course — request interception layer, `proxy.ts` (Next 16: middl
 | T | Real scenarios: logging, protected routes (**demo as demo** — why-not: CVE-2025-29927 + spoofable cookie), rate limiting (429, window, Redis limit), geo blocking (`x-vercel-ip-country`) | module-level store / Vercel header | (Proxy Playground — series ke saath incremental demo app, login-less) |
 | U | Edge Runtime: concept + **Next 16 = Node.js default** (fs verified, `runtime` export removed), limitations revised + golden rule, **kab use karein** (official stance "avoid relying on Middleware" + decision table) | — | (kyun-not: auth proxy mein nahi — layout/components) |
 
-**Proxy = request-level infra layer** (routing, rate limit, geo, logging) — security/auth nahi (CVE-2025-29927). Series 4.6.1–4.6.17, `docs/coding/Next JS/Batch 4.6 - Proxy (Middleware) Deep Dive/`. 4.6.x numbering isliye kyunki 4.5.x Member Dashboard pe already hai.
+**Proxy = request-level infra layer** (routing, rate limit, geo, logging) — security/auth nahi (CVE-2025-29927). Series 4.1–4.17, `docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/`.
 
 ---
 
-# BATCH 5 — Database Integration
+# BATCH 5 — Authentication & Protected Access
 
-Batch 5 ab **deep database course** hai (MongoDB + PostgreSQL dono hands-on), sirf CRUD nahi — API design, Postman testing, aur system design bhi. Do mini-projects do alag data-flow patterns sikhaate hain:
+| # | Concept | Approach | Mini-Project |
+|---|---|---|---|
+| M | **Manual**: Session/cookie handling khud samajhna (conceptual + chhota hands-on) | typed session shape | **Login Demo v1** — bahut basic, cookie-based session khud set/read karke (sirf samajhne ke liye, production mein use nahi karenge) |
+| N | **Better**: Auth.js (NextAuth) ya similar library | typed session/user | **Login Demo v2** — same feature, proper auth library se (OAuth provider ya credentials) |
+| O | Protection layer — layout mein `auth()` + redirect (main security), `proxy.ts` (Next 16 ka middleware successor) sirf routing ke liye. Kyun nahi middleware-proxy-only: CVE-2025-29927 bypass. Proxy ka **full deep-dive Batch 4 mein** (matcher, NextResponse, rate limiting, geo, edge) | layout-level `auth()` check | (protected `/dashboard` route banao jo bina login redirect kare) |
+| P | Real Protected Routes (React course mein ye "dummy" tha — ab genuinely real hai) | — | (Member Dashboard mein hi: dashboard + profile protected route group `(protected)` ke andar) |
+
+### 🔗 Combined Project #5 — **Member Dashboard / "My Account" App**
+Users login karte hain (Auth.js + GitHub OAuth), apna dashboard/profile dekhte hain (protected routes — route group `(protected)` ke layout mein `auth()` + redirect; `proxy.ts` sirf logged-in users ko `/login` se `/dashboard` route karta hai, security usme nahi). Login Demo v1 (manual session/cookie) aur v2 (Auth.js) yahin combine ho kar real project ban jaate hain. **Fresh project — blog nahi.**
+
+---
+
+# BATCH 6 — Database Integration
+
+Batch 6 ab **deep database course** hai (MongoDB + PostgreSQL dono hands-on), sirf CRUD nahi — API design, Postman testing, aur system design bhi. Do mini-projects do alag data-flow patterns sikhaate hain:
 
 - **MongoDB mini-project** → **REST (Route Handlers) + client fetch** — yahan API Design + Postman testing (REST + Postman natural pair hain)
 - **SQL (Neon + Drizzle) mini-project** → **Server Components + Server Actions** — yahan system design (relations, indexes)
@@ -143,19 +143,19 @@ Task Board (combined project) **production pattern** pe — Server Components re
 
 | # | Concept | Layer | Mini-Project |
 |---|---|---|---|
-| Q1 | Database kya hoti hai + SQL vs NoSQL + ORM/Providers — **pure fundamentals** (Batch 4 ke `profiles.json` pain se shuru) | — | (koi DB nahi — sirf concept) |
+| Q1 | Database kya hoti hai + SQL vs NoSQL + ORM/Providers — **pure fundamentals** (Batch 5 ke `profiles.json` pain se shuru) | — | (koi DB nahi — sirf concept) |
 | Q2 | **MongoDB + Mongoose** — Atlas setup, schema/model, then **REST CRUD via Route Handlers** | Mongoose model + Route Handler | **Mongo Todo API** — `route.ts` mein GET/POST/DELETE, client fetch |
 | Q3 | **API Design + Postman testing** — resource naming, status codes, error shape, REST client se test | REST design + testing | (Mongo Todo API pe hi — Postman se saare cases) |
 | R | **PostgreSQL + Drizzle** — Neon setup, typed schema, **Server Components queries directly (no API layer)** | typed Drizzle schema | **SQL Todo** — list Server Component mein seedha DB se |
 | S | **Server Actions + Database mutations** + **system design** (relations, indexes) | typed action + Drizzle call | (SQL Todo ka add/edit/delete SA se persist) |
 | T | **Combined Project — Task Board (Prisma + Neon)** — production pattern: SC reads + SA mutations | Prisma models + actions | **Task Board App** — real database-backed CRUD (dummy se replace) |
 
-### 🔗 Combined Project #5 — **Task Board App (Real Database)**
-Task Board **Prisma + Neon** pe banta hai — real CRUD, list Server Component mein seedha DB se (koi API layer nahi), add/edit/delete Server Actions se persist. Koi dummy data nahi bacha. **Fresh project — blog nahi.** Batch 5 ki poori journey ka production-grade result: JSON file → MongoDB (REST) → SQL (Server Actions) → Prisma Task Board.
+### 🔗 Combined Project #6 — **Task Board App (Real Database)**
+Task Board **Prisma + Neon** pe banta hai — real CRUD, list Server Component mein seedha DB se (koi API layer nahi), add/edit/delete Server Actions se persist. Koi dummy data nahi bacha. **Fresh project — blog nahi.** Batch 6 ki poori journey ka production-grade result: JSON file → MongoDB (REST) → SQL (Server Actions) → Prisma Task Board.
 
 ---
 
-# BATCH 6 — Optimization & Production Concerns
+# BATCH 7 — Optimization & Production Concerns
 
 | # | Concept | Layer | Mini-Project |
 |---|---|---|---|
@@ -164,12 +164,12 @@ Task Board **Prisma + Neon** pe banta hai — real CRUD, list Server Component m
 | V | Parallel Routes + Intercepting Routes (halka-level awareness, advanced pattern) | — | (chhota demo — modal-in-route pattern, jaise Instagram ka photo-modal) |
 | W | Streaming with Suspense (server-rendered content progressively load karna) | — | (task board ki slow-loading section ko streaming se improve karo) |
 
-### 🔗 Combined Project #6 — **Photo Gallery / Media Showcase**
+### 🔗 Combined Project #7 — **Photo Gallery / Media Showcase**
 `next/image` se optimized images (before/after size compare), `next/font` project-wide, parallel + intercepting routes se Instagram-style photo modal, aur Streaming with Suspense se slow-loading gallery grid progressive load. Is batch ka apna fresh project.
 
 ---
 
-# BATCH 7 — Security & Deployment
+# BATCH 8 — Security & Deployment
 
 | # | Concept | Layer | Mini-Project |
 |---|---|---|---|
