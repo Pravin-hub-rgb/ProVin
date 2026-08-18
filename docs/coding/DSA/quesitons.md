@@ -1,22 +1,29 @@
 Chalo Phase 1 ki full list — pattern-wise organized, easy se medium tak progression ke saath. LeetCode pe search karo naam se, sab mil jayenge.
 
-## 1. Arrays — Basics (warm-up, jaldi nikal jayenge)
-1. Find Maximum/Minimum in Array
-2. Reverse an Array
-3. Move Zeroes to End
-4. Rotate Array (by k steps)
-5. Find Second Largest Element
-6. Remove Duplicates from Sorted Array
+> **Progress tracker:** ✅ wale problems course me solved files ke saath ho chuke hain — `1.3.x` files Arrays series, `1.4.x` files Two Pointers series. Solution file padh ke khud dobara likhna (bina dekhe), tabhi pakka hoga.
+
+## 1. Arrays — Basics (warm-up, jaldi nikal jayenge) — sirf non-two-pointer problems
+1. ✅ Find Maximum/Minimum in Array → `1.3.1`
+2. Rotate Array (by k steps)
+3. Find Second Largest Element
+4. Plus One (digits wala carry scene)
+5. Single Number (XOR trick — har number 2 baar, ek 1 baar)
+6. Missing Number (0 to n me se ek gayab)
+7. Valid Mountain Array (peak ke pehle badhta, baad ghatta)
+8. Monotonic Array (pura non-decreasing ya non-increasing)
 
 ## 2. Two Pointers
-7. Two Sum (sorted array version)
-8. Valid Palindrome
-9. Container With Most Water
-10. Sort Colors (Dutch National Flag)
-11. Remove Duplicates from Sorted Array II
-12. 3Sum
-13. 3Sum Closest
-14. Trapping Rain Water (thoda tough hai, Phase end pe try karna)
+9. ✅ Move Zeroes to End → `1.4.1` (fast/slow same-direction variant)
+10. ✅ Reverse an Array → `1.4.2` (left/right swap variant)
+11. Remove Duplicates from Sorted Array → `1.4.3` (fast/slow — Move Zeroes ka hi pattern)
+12. Two Sum (sorted array version)
+13. Valid Palindrome
+14. Container With Most Water
+15. Sort Colors (Dutch National Flag)
+16. Remove Duplicates from Sorted Array II
+17. 3Sum
+18. 3Sum Closest
+19. Trapping Rain Water (thoda tough hai, Phase end pe try karna)
 
 ## 3. Sliding Window
 15. Maximum Sum Subarray of Size K (fixed window)

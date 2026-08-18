@@ -37,6 +37,26 @@ export const dsaSubject: Subject = {
           title: "1.3 Arrays",
           path: "docs/coding/DSA/Phase 1 - Foundations/1.3 Arrays.md",
         },
+        {
+          id: "dsa-1.3.1",
+          title: "1.3.1 Arrays — Solved Problems: Find Max & Min",
+          path: "docs/coding/DSA/Phase 1 - Foundations/1.3.1 Find Maximum & Minimum.md",
+        },
+        {
+          id: "dsa-1.4",
+          title: "1.4 Two Pointers",
+          path: "docs/coding/DSA/Phase 1 - Foundations/1.4 Two Pointers.md",
+        },
+        {
+          id: "dsa-1.4.1",
+          title: "1.4.1 Two Pointers — Solved Problems: Move Zeroes",
+          path: "docs/coding/DSA/Phase 1 - Foundations/1.4.1 Move Zeroes to End.md",
+        },
+        {
+          id: "dsa-1.4.2",
+          title: "1.4.2 Two Pointers — Solved Problems: Reverse an Array",
+          path: "docs/coding/DSA/Phase 1 - Foundations/1.4.2 Reverse an Array.md",
+        },
       ],
     },
   ],
