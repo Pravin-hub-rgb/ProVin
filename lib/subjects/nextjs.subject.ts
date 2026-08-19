@@ -460,9 +460,24 @@ export const nextjsSubject: Subject = {
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.6 API Design — REST API Ka Structure Sochna.md",
         },
         {
-          id: "next-6.7",
-          title: "6.7 Mongo CRUD via Route Handlers — Real DB REST API",
-          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.7 Mongo CRUD via Route Handlers — Real DB REST API.md",
+          id: "next-6.7.1",
+          title: "6.7.1 GET /api/todos — List Route + TodoList UI",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.7.1 GET Todos — List Route + TodoList UI.md",
+        },
+        {
+          id: "next-6.7.2",
+          title: "6.7.2 POST /api/todos — Create Route + AddTodoForm UI",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.7.2 POST Todos — Create Route + AddTodoForm UI.md",
+        },
+        {
+          id: "next-6.7.3",
+          title: "6.7.3 DELETE /api/todos/[id] — Delete Route + TodoItem UI",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.7.3 DELETE Todo — Delete Route + TodoItem UI.md",
+        },
+        {
+          id: "next-6.7.4",
+          title: "6.7.4 PUT /api/todos/[id] — Update Route + Toggle UI",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.7.4 PUT Todo — Update Route + Toggle UI.md",
         },
         {
           id: "next-6.8",
@@ -480,9 +495,24 @@ export const nextjsSubject: Subject = {
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.10 Drizzle Schema + Client — Data Ka Blueprint (SQL Version).md",
         },
         {
-          id: "next-6.11",
-          title: "6.11 SQL CRUD via Server Components + Server Actions",
-          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.11 SQL CRUD via Server Components + Server Actions.md",
+          id: "next-6.11.1",
+          title: "6.11.1 SQL Todo — Read (Server Component)",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.11.1 SQL Todo — Read (Server Component).md",
+        },
+        {
+          id: "next-6.11.2",
+          title: "6.11.2 SQL Todo — Create (Server Action + Form)",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.11.2 SQL Todo — Create (Server Action + Form).md",
+        },
+        {
+          id: "next-6.11.3",
+          title: "6.11.3 SQL Todo — Toggle + Delete (Server Actions)",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.11.3 SQL Todo — Toggle + Delete (Server Actions).md",
+        },
+        {
+          id: "next-6.11.4",
+          title: "6.11.4 SQL Todo — Mongo vs SQL Compare",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.11.4 SQL Todo — Mongo vs SQL Compare.md",
         },
         {
           id: "next-6.12",

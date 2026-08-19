@@ -4,7 +4,7 @@ Chalo Phase 1 ki full list — pattern-wise organized, easy se medium tak progre
 
 ## 1. Arrays — Basics (warm-up, jaldi nikal jayenge) — sirf non-two-pointer problems
 1. ✅ Find Maximum/Minimum in Array → `1.3.1`
-2. Rotate Array (by k steps)
+2. ✅ Rotate Array (by k steps) → `1.3.2`
 3. Find Second Largest Element
 4. Plus One (digits wala carry scene)
 5. Single Number (XOR trick — har number 2 baar, ek 1 baar)

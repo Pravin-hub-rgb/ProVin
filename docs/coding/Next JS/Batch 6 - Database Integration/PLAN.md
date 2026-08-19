@@ -30,7 +30,7 @@ Do mini-projects = do alag data-flow pattern. **Kuch bhi force-fit nahi.**
 
 **Kyun postman/API-design Mongo pe?** Postman sirf REST URLs test kar sakta hai. Server Actions ko simple URL nahi hota. Toh REST wale mini-project pe hi API design + Postman testing banega — koi artificial REST layer Task Board pe nahi.
 
-## 4. File Structure (18 files)
+## 4. File Structure (21 files)
 
 ### Phase 1 — Fundamentals (concept, koi DB nahi)
 | File | Content | Source |
@@ -46,15 +46,21 @@ Do mini-projects = do alag data-flow pattern. **Kuch bhi force-fit nahi.**
 | **6.4** MongoDB Atlas + connection | Atlas account, cluster, connection string, env vars (`DATABASE_URL`), mongoose.connect | `doc-03` |
 | **6.5** Mongoose schema + model | Todo interface → schema → model, `_id` | `doc-05.x` |
 | **6.6** API Design | REST design: resource naming (`/api/todos`), method→semantics, status codes deep (200/201/204/400/404/500), error response shape, idempotency PUT vs POST | `doc-02` + Batch 3.1 expand |
-| **6.7** Mongo CRUD via Route Handlers | GET list, GET by id, POST create, DELETE — design ke hisaab se build (gradual) | `doc-07/08/09` |
+| **6.7.1** Mongo GET + list UI | GET list route, client fetch (useEffect), TodoApp/TodoList components | `doc-07/08/09` |
+| **6.7.2** Mongo POST + form UI | POST create route, request body, validation 400, AddTodoForm, re-fetch | `doc-07/08/09` |
+| **6.7.3** Mongo DELETE + button UI | dynamic route `[id]`, await params, 404, TodoItem delete button | `doc-07/08/09` |
+| **6.7.4** Mongo PUT + toggle UI | PUT update route, `{ new: true }`, checkbox toggle, full project summary | `doc-07/08/09` |
 | **6.8** Postman Testing | REST client/Postman se: status codes, headers, JSON body, error cases, CRUD flow | — |
 
-### Phase 3 — SQL Mini-Project: Neon + Drizzle + Server Actions (4 files)
+### Phase 3 — SQL Mini-Project: Neon + Drizzle + Server Actions (7 files)
 | File | Content | Source |
 |---|---|---|
 | **6.9** PostgreSQL + Neon setup | SQL kya hai (tables/rows/columns, primary key, SERIAL), Neon account, connection | `drizzle 1.1/1.2` |
 | **6.10** Drizzle schema + client | `pgTable`, `db/index.ts`, connection | `drizzle 2.x` |
-| **6.11** SQL CRUD via Server Components + Server Actions | reads SC, mutations SA, revalidatePath, **Mongo vs Postgres end-to-end compare table** | `drizzle 3.x` |
+| **6.11.1** SQL Todo — Read (Server Component) | SC `db.select()`, async page, direct render | `drizzle 3.x` |
+| **6.11.2** SQL Todo — Create (Server Action + Form) | `createTodo` SA, `<form action>`, `revalidatePath` | `drizzle 3.x` |
+| **6.11.3** SQL Todo — Toggle + Delete (Server Actions) | `toggleTodo`/`deleteTodo` SA, `eq`/`where`, `Number()`, hidden input | `drizzle 3.x` |
+| **6.11.4** SQL Todo — Mongo vs SQL Compare | **Mongo vs Postgres end-to-end compare table**, kab kya use karein | — |
 | **6.12** System Design | Relations (1:N foreign keys — users/todos), indexes/performance soch, read vs write patterns, when REST vs Server Actions | — |
 
 ### Phase 4 — Combined Project #5: Task Board (Prisma + Neon) — production pattern
@@ -92,11 +98,11 @@ Do mini-projects = do alag data-flow pattern. **Kuch bhi force-fit nahi.**
 
 1. `docs/coding/Next JS/Nextjs-Final-Roadmap.md` — Batch 6 section: add Mongo+REST mini-project + data-flow pattern per phase + Task Board Prisma/Neon (was: sirf Prisma/Supabase). Also update Combined Project summary table.
 2. `docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.0 Authentication — Kya Seekhenge.md` — line ~74 "Real DB (Prisma/Supabase) Batch 6 mein hai" → Drizzle/Neon + Prisma ke hisaab se update.
-3. `lib/subjects/nextjs.subject.ts` — `batch5` phase append (16 lectures: 6.0-6.12, 6.13.1-6.13.5). PLAN.md register nahi.
+3. `lib/subjects/nextjs.subject.ts` — `batch5` phase append (24 lectures: 6.0-6.12 with 6.7.x series = 4 files + 6.11.x series = 4 files = 19 files, 6.13.1-6.13.5 = 5 files). PLAN.md register nahi.
 
 ## 8. Execution Order
 
-6.0 → 6.1 → 6.2 → 6.3 → 6.4 → 6.5 → 6.6 → 6.7 → 6.8 → 6.9 → 6.10 → 6.11 → 6.12 → 6.13.1 → 6.13.2 → 6.13.3 → 6.13.4 → 6.13.5, har file ke baad user review. Phir roadmap + 5.0 + registration.
+6.0 → 6.1 → 6.2 → 6.3 → 6.4 → 6.5 → 6.6 → 6.7.1 → 6.7.2 → 6.7.3 → 6.7.4 → 6.8 → 6.9 → 6.10 → 6.11.1 → 6.11.2 → 6.11.3 → 6.11.4 → 6.12 → 6.13.1 → 6.13.2 → 6.13.3 → 6.13.4 → 6.13.5, har file ke baad user review. Phir roadmap + 5.0 + registration.
 
 ## 9. Verification Checklist (final pass ke liye)
 

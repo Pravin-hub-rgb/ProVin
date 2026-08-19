@@ -43,6 +43,11 @@ export const dsaSubject: Subject = {
           path: "docs/coding/DSA/Phase 1 - Foundations/1.3.1 Find Maximum & Minimum.md",
         },
         {
+          id: "dsa-1.3.2",
+          title: "1.3.2 Arrays — Solved Problems: Rotate Array",
+          path: "docs/coding/DSA/Phase 1 - Foundations/1.3.2 Rotate Array.md",
+        },
+        {
           id: "dsa-1.4",
           title: "1.4 Two Pointers",
           path: "docs/coding/DSA/Phase 1 - Foundations/1.4 Two Pointers.md",
