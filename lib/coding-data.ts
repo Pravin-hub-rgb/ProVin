@@ -44,6 +44,7 @@ export type LectureGroup = {
  * Add new subjects and lectures here only
  */
 import { pythonSubject } from "./subjects/python.subject";
+import { fastapiSubject } from "./subjects/fastapi.subject";
 import { javascriptSubject } from "./subjects/javascript.subject";
 import { webdevSubject } from "./subjects/webdev.subject";
 import { iknowcomputersSubject } from "./subjects/iknowcomputers.subject";
@@ -59,6 +60,7 @@ import { coreSubjectsSubject } from "./subjects/coresubjects.subject";
 
 export const subjects: Subject[] = [
   pythonSubject,
+  fastapiSubject,
   javascriptSubject,
   webdevSubject,
   iknowcomputersSubject,
