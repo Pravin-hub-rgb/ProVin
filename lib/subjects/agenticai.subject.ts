@@ -2,7 +2,7 @@ import type { Subject } from "../coding-data";
 
 export const agenticaiSubject: Subject = {
   id: "agenticai",
-  title: "Agentic AI",
+  title: "Agentic AI — Introduction",
   description: "From zero to building AI agents — understand, build, and deploy agentic systems",
   lectures: [
     {

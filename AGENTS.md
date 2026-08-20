@@ -42,4 +42,6 @@ This file contains the rules and conventions for creating and editing course con
 - Complete and runnable, not pseudocode
 - Explain every line
 
+> **Exception — Agentic AI Production course:** `docs/coding/Agentic AI Production/` uses **Python** (LangChain, LangGraph, RAG are Python-native). Same writing rules apply, but code is Python 3 — complete, runnable, with `pip`/`uv` install commands and every line explained. The ultra-simple "gadhe ko bhi samajh aa jaye" tone (zero assumed knowledge, short chunks, simple analogies, repetition) is mandatory there.
+
 For the complete detailed rules, read `docs/coding/AGENTIC-AI-WRITING-RULES.md`.

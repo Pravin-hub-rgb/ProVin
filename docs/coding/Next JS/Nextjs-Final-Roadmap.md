@@ -157,15 +157,19 @@ Task Board **Prisma + Neon** pe banta hai — real CRUD, list Server Component m
 
 # BATCH 7 — Optimization & Production Concerns
 
-| # | Concept | Layer | Mini-Project |
+Har concept **"Manual → Better"** pair mein likha hai — manual approach ki problem pehle (7.1/7.3), phir Next.js solution (7.2/7.4):
+
+| # | Concept | Layer | File |
 |---|---|---|---|
-| T | `next/image` (automatic image optimization) vs manual `<img>` | — | (blog/task board ke images optimize karo, before/after size compare) |
-| U | `next/font` (font optimization, no layout shift) | — | (project-wide font setup) |
-| V | Parallel Routes + Intercepting Routes (halka-level awareness, advanced pattern) | — | (chhota demo — modal-in-route pattern, jaise Instagram ka photo-modal) |
-| W | Streaming with Suspense (server-rendered content progressively load karna) | — | (task board ki slow-loading section ko streaming se improve karo) |
+| T | Manual `<img>` ke problems (no optimization, CLS, srcset, lazy limits) | — | 7.1 |
+| T | `next/image` — automatic optimization, srcset, `fill`, `remotePatterns` | — | 7.2 |
+| U | Manual Google Fonts (FOUC, CLS, network dependency) | — | 7.3 |
+| U | `next/font` — self-hosted, no layout shift (`adjustFontFallback`) | — | 7.4 |
+| W | Streaming with Suspense — sections progressive load (`<Suspense>` vs `loading.tsx`) | — | 7.5 |
+| V | Parallel Routes + Intercepting Routes — modal-in-route pattern (halka) | — | 7.6 |
 
 ### 🔗 Combined Project #7 — **Photo Gallery / Media Showcase**
-`next/image` se optimized images (before/after size compare), `next/font` project-wide, parallel + intercepting routes se Instagram-style photo modal, aur Streaming with Suspense se slow-loading gallery grid progressive load. Is batch ka apna fresh project.
+`next/image` se optimized images (before/after size compare), `next/font` project-wide, parallel + intercepting routes se Instagram-style photo modal, aur Streaming with Suspense se slow-loading gallery grid progressive load. Prisma + Neon reuse (Batch 6). Read-only showcase (koi mutations nahi). Files: `7.7.1 Planning → 7.7.2 Hardcoded UI → 7.7.3 Data Layer + Read + SEO → 7.7.4 next/image + next/font → 7.7.5 Photo Modal (parallel + intercepting) → 7.7.6 Streaming + States + Testing + Summary`.
 
 ---
 

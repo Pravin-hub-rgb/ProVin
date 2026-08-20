@@ -202,6 +202,12 @@
     "next-6.7.2": true,
     "next-6.7.3": true,
     "next-6.7.4": true,
-    "next-6.8": true
+    "next-6.8": true,
+    "next-6.9": true,
+    "next-6.11.1": true,
+    "next-6.11.2": true,
+    "next-6.11.3": true,
+    "next-7.1": true,
+    "next-7.0": true
   }
 }

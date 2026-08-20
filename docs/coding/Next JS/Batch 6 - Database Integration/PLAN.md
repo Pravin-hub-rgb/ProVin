@@ -59,7 +59,7 @@ Do mini-projects = do alag data-flow pattern. **Kuch bhi force-fit nahi.**
 | **6.10** Drizzle schema + client | `pgTable`, `db/index.ts`, connection | `drizzle 2.x` |
 | **6.11.1** SQL Todo — Read (Server Component) | SC `db.select()`, async page, direct render | `drizzle 3.x` |
 | **6.11.2** SQL Todo — Create (Server Action + Form) | `createTodo` SA, `<form action>`, `revalidatePath` | `drizzle 3.x` |
-| **6.11.3** SQL Todo — Toggle + Delete (Server Actions) | `toggleTodo`/`deleteTodo` SA, `eq`/`where`, `Number()`, hidden input | `drizzle 3.x` |
+| **6.11.3** SQL Todo — Toggle + Delete (Server Actions) | `toggleTodo`/`deleteTodo` SA, checkbox client comp, `eq`/`where`, `not()`, `Number()` | `drizzle 3.x` |
 | **6.11.4** SQL Todo — Mongo vs SQL Compare | **Mongo vs Postgres end-to-end compare table**, kab kya use karein | — |
 | **6.12** System Design | Relations (1:N foreign keys — users/todos), indexes/performance soch, read vs write patterns, when REST vs Server Actions | — |
 

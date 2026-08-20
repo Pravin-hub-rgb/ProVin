@@ -546,5 +546,77 @@ export const nextjsSubject: Subject = {
         },
       ],
     },
+    {
+      id: "batch7",
+      title: "Batch 7 — Optimization & Production Concerns",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-7.0",
+          title: "7.0 Optimization & Production — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.0 Optimization & Production — Kya Seekhenge.md",
+        },
+        {
+          id: "next-7.1",
+          title: "7.1 Manual Images — img Tag ke Problems",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.1 Manual Images — img Tag ke Problems.md",
+        },
+        {
+          id: "next-7.2",
+          title: "7.2 next/image — Automatic Optimization",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.2 next image — Automatic Optimization.md",
+        },
+        {
+          id: "next-7.3",
+          title: "7.3 Manual Fonts — FOUC/CLS Problem",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.3 Manual Fonts — FOUC CLS Problem.md",
+        },
+        {
+          id: "next-7.4",
+          title: "7.4 next/font — No Layout Shift",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.4 next font — No Layout Shift.md",
+        },
+        {
+          id: "next-7.5",
+          title: "7.5 Streaming with Suspense",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.5 Streaming with Suspense.md",
+        },
+        {
+          id: "next-7.6",
+          title: "7.6 Parallel + Intercepting Routes — Modal-in-Route Pattern",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.6 Parallel + Intercepting Routes — Modal-in-Route Pattern.md",
+        },
+        {
+          id: "next-7.7.1",
+          title: "7.7.1 Photo Gallery — Planning",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.7.1 Photo Gallery — Planning.md",
+        },
+        {
+          id: "next-7.7.2",
+          title: "7.7.2 Photo Gallery — Hardcoded UI",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.7.2 Photo Gallery — Hardcoded UI.md",
+        },
+        {
+          id: "next-7.7.3",
+          title: "7.7.3 Photo Gallery — Data Layer + Read + SEO",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.7.3 Photo Gallery — Data Layer + Read + SEO.md",
+        },
+        {
+          id: "next-7.7.4",
+          title: "7.7.4 Photo Gallery — next/image + next/font",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.7.4 Photo Gallery — next image + next font.md",
+        },
+        {
+          id: "next-7.7.5",
+          title: "7.7.5 Photo Gallery — Photo Modal (Parallel + Intercepting)",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.7.5 Photo Gallery — Photo Modal.md",
+        },
+        {
+          id: "next-7.7.6",
+          title: "7.7.6 Photo Gallery — Streaming + States + Testing + Summary",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.7.6 Photo Gallery — Streaming + States + Testing + Summary.md",
+        },
+      ],
+    },
   ],
 };
