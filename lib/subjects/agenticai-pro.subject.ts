@@ -2,20 +2,20 @@
 
 export const agenticaiProSubject: Subject = {
   id: "agenticai-pro",
-  title: "Agentic AI â€” Production & Frameworks",
+  title: "Agentic AI — Production & Frameworks",
   description:
-    "Python me production-grade agentic AI: LangChain, LangGraph, RAG, Guardrails, Evaluation, LLM Gateways â€” zero se production tak",
+    "Python me production-grade agentic AI: LangChain, LangGraph, RAG, Guardrails, Evaluation, LLM Gateways — zero se production tak",
   lectures: [
     {
       id: "course-structure",
-      title: "ðŸ“‹ Full Course Structure",
+      title: "📋 Full Course Structure",
       path: "docs/coding/Agentic AI Production/Agentic AI Production - Course Roadmap.md",
     },
   ],
   phases: [
     {
       id: "phase1",
-      title: "Phase 1 â€” LangChain",
+      title: "Phase 1 — LangChain",
       openByDefault: true,
       lectures: [
         {
@@ -58,11 +58,11 @@ export const agenticaiProSubject: Subject = {
           title: "1.8 Middleware",
           path: "docs/coding/Agentic AI Production/Phase 1 - LangChain/1.8 Middleware.md",
         },
-            ],
+      ],
     },
     {
       id: "phase2",
-      title: "Phase 2 â€” LangGraph",
+      title: "Phase 2 — LangGraph",
       lectures: [
         {
           id: "ai-2.1",
@@ -77,7 +77,7 @@ export const agenticaiProSubject: Subject = {
         {
           id: "ai-2.3",
           title: "2.3 Adding Tools & the ReAct Agent",
-                    path: "docs/coding/Agentic AI Production/Phase 2 - LangGraph/2.3 Adding Tools & the ReAct Agent.md",
+          path: "docs/coding/Agentic AI Production/Phase 2 - LangGraph/2.3 Adding Tools & the ReAct Agent.md",
         },
         {
           id: "ai-2.4",
@@ -118,6 +118,47 @@ export const agenticaiProSubject: Subject = {
           id: "ai-2.11",
           title: "2.11 Deployment & LLMOps",
           path: "docs/coding/Agentic AI Production/Phase 2 - LangGraph/2.11 Deployment & LLMOps.md",
+        },
+      ],
+    },
+    {
+      id: "phase3",
+      title: "Phase 3 — RAG Deep Dive",
+      lectures: [
+        {
+          id: "ai-3.1",
+          title: "3.1 RAG from the Ground Up",
+          path: "docs/coding/Agentic AI Production/Phase 3 - RAG Deep Dive/3.1 RAG from the Ground Up.md",
+        },
+        {
+          id: "ai-3.2",
+          title: "3.2 Chunking Strategies",
+          path: "docs/coding/Agentic AI Production/Phase 3 - RAG Deep Dive/3.2 Chunking Strategies.md",
+        },
+        {
+          id: "ai-3.3",
+          title: "3.3 Embeddings",
+          path: "docs/coding/Agentic AI Production/Phase 3 - RAG Deep Dive/3.3 Embeddings.md",
+        },
+        {
+          id: "ai-3.4",
+          title: "3.4 Vector Stores & Retrieval",
+          path: "docs/coding/Agentic AI Production/Phase 3 - RAG Deep Dive/3.4 Vector Stores & Retrieval.md",
+        },
+        {
+          id: "ai-3.5",
+          title: "3.5 The Full RAG Pipeline",
+          path: "docs/coding/Agentic AI Production/Phase 3 - RAG Deep Dive/3.5 The Full RAG Pipeline.md",
+        },
+        {
+          id: "ai-3.6",
+          title: "3.6 Modular RAG for Production",
+          path: "docs/coding/Agentic AI Production/Phase 3 - RAG Deep Dive/3.6 Modular RAG for Production.md",
+        },
+        {
+          id: "ai-3.7",
+          title: "3.7 Agentic RAG",
+          path: "docs/coding/Agentic AI Production/Phase 3 - RAG Deep Dive/3.7 Agentic RAG.md",
         },
       ],
     },

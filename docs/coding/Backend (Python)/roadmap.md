@@ -82,7 +82,7 @@ Yeh list **priority order** mein hai. Jo cheez project mein already use ho rahi 
 
 ---
 
-### 🗺️ Framework Mapping (sirf ek jagah — beginner confusion se bachaane ke liye)
+### Framework Mapping (sirf ek jagah — beginner confusion se bachaane ke liye)
 
 > **Beginner confusion rule:** Backend samajhte waqt sabse bada sawaal hota hai "Flask/FastAPI/Django/Express kya hai, kaunsa chunu?" Iska ek saaf jawab `FastAPI Course Roadmap.md` + `Phase 0/0.4` (jungle map) mein diya hai. Concept: sab frameworks wahi core cheezein karte hain — bas syntax alag. Course mein mapping **sirf wohi jagah** hai, uske baad seedha FastAPI.
 

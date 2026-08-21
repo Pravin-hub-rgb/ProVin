@@ -618,5 +618,57 @@ export const nextjsSubject: Subject = {
         },
       ],
     },
+    {
+      id: "batch8",
+      title: "Batch 8 — Security & Deployment",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-8.0",
+          title: "8.0 Security & Deployment — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.0 Security & Deployment — Kya Seekhenge.md",
+        },
+        {
+          id: "next-8.1",
+          title: "8.1 Env Vars Security — Server-Only vs NEXT_PUBLIC",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.1 Env Vars Security — Server-Only vs NEXT_PUBLIC.md",
+        },
+        {
+          id: "next-8.2",
+          title: "8.2 Input + CSRF Awareness",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.2 Input + CSRF Awareness.md",
+        },
+        {
+          id: "next-8.3",
+          title: "8.3 Error Boundaries at Scale",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.3 Error Boundaries at Scale.md",
+        },
+        {
+          id: "next-8.4",
+          title: "8.4 Deployment — Vercel",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.4 Deployment — Vercel.md",
+        },
+        {
+          id: "next-8.5.1",
+          title: "8.5.1 Security Audit — Planning",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.5.1 Security Audit — Planning.md",
+        },
+        {
+          id: "next-8.5.2",
+          title: "8.5.2 Audit — Env + Config",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.5.2 Audit — Env + Config.md",
+        },
+        {
+          id: "next-8.5.3",
+          title: "8.5.3 Audit — Error Boundaries",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.5.3 Audit — Error Boundaries.md",
+        },
+        {
+          id: "next-8.5.4",
+          title: "8.5.4 Deploy — Vercel",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.5.4 Deploy — Vercel.md",
+        },
+      ],
+    },
   ],
 };

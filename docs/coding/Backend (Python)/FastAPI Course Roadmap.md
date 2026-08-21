@@ -2,7 +2,7 @@
 
 ## Ye Course Kiske Liye Hai
 
-Socho tu ek restaurant mein jaata hai aur kitchen ke andar kabhi nahi gaya hai. Menu (frontend) pata hai, lekin kitchen (backend) mein order kaise banta hai, yeh pura naya hai. Tu khud bola — *"mujhe jhaat bhar bhi nahi aata backend, Flask kya hai nahi pata, FastAPI kuch nahi pata."*
+Socho tum ek restaurant mein jaate ho aur kitchen ke andar kabhi nahi gaye ho. Menu (frontend) pata hai, lekin kitchen (backend) mein order kaise banta hai, yeh pura naya hai. Tum khud bolo — *"mujhe backend ka koi idea nahi hai, Flask kya hai nahi pata, FastAPI kuch nahi pata."*
 
 Iska matlab sirf ek cheez hai: hamein kahin se **bilkul zero** se shuru karna hai. Is course ka poora focus hai — pehle **backend ka mental model** banao (kya hai, kyun chahiye, duniya ke kitne options hain), phir **FastAPI** ko simply seekho, phir **real-time** (chat) wali duniya mein jao.
 
@@ -15,7 +15,7 @@ Iska matlab sirf ek cheez hai: hamein kahin se **bilkul zero** se shuru karna ha
 
 Pehle ek chhoti si baat jo is pura course ka anchor banegi. Jab bhi backend ka naam aata hai, log itne saare naam sunte hain — Flask, FastAPI, Django, Express, NestJS. Pehli baar dar lagta hai: *"bhai yeh sab kya hain, kaunsa seekhu?"*
 
-Isliye ek hi jagah, poora **jungle ka map** bana deta hoon. Yeh map is course mein **sirf yahan** hai — iske baad hum seedha FastAPI full-detail mein seekhenge. Sirf ek baar dekhne ka hai, taaki tera mental picture clear ho.
+Isliye ek hi jagah, poora **jungle ka map** bana deta hoon. Yeh map is course mein **sirf yahan** hai — iske baad hum seedha FastAPI full-detail mein seekhenge. Sirf ek baar dekhne ka hai, taaki tumhara mental picture clear ho.
 
 ## Backend framework ka family tree
 
@@ -25,7 +25,7 @@ BACKEND BANANE KE LIYE FRAMEWORK (toolbox jo server sambhalta hai)
 ├── Python wali family
 │   ├── Flask    → 1. simple, purana — easy, lekin modern cheezein khud likhni padti hain
 │   ├── FastAPI  → 2. MODERN — auto docs + validation + real-time + TUMHARA PROJECT         YAHI HUM
-│   └── Django   → 3. bada "sab-kuch-shawal" — enterprise, powerful lekin beginner ke liye bhaari
+│   └── Django   → 3. bada "sab-kuch-shaamil" — enterprise, powerful lekin beginner ke liye bhaari
 │
 └── JavaScript wali family (Node.js ke andar) — bas context ke liye
     ├── Express  → 4. sabse famous legacy (React/Node stream mein milega)
@@ -37,7 +37,7 @@ BACKEND BANANE KE LIYE FRAMEWORK (toolbox jo server sambhalta hai)
 | Framework | Kya hai | Beginner ke liye | Hum kyun chun rahe / kyun nahi |
 |-----------|---------|------------------|-------------------------------|
 | **Flask** | Chhota, simple Python framework — purani style | Aasaan par purana | Seekhna easy, par auto `/docs`, built-in validation, async real-time yeh sab khud add karne padte. Aaj ke projects isse kam use karte hain. |
-| **FastAPI** | Modern Python framework | Modern + sahi starting | YAHI use karenge. Auto docs (`/docs`) free, built-in validation (galat data reject), async real-time (WebSocket) — aur aur sabse bada reason: **tera TradeStack bilkul isi pe bana hai** (`backend/server.py`). |
+| **FastAPI** | Modern Python framework | Modern + sahi starting | YAHI use karenge. Auto docs (`/docs`) free, built-in validation (galat data reject), async real-time (WebSocket) — aur sabse bada reason: **tumhara TradeStack bilkul isi pe bana hai** (`backend/server.py`). |
 | **Django** | Bada "batteries-included" framework | Powerful par bhaari | Beginner ke liye bahut zyada layered lagega. Baad mein explore kar sakta hai. |
 | **Express** | JavaScript framework | — | Backend Python mein seekh raha hai, isliye abhi nahi. |
 
@@ -45,19 +45,19 @@ BACKEND BANANE KE LIYE FRAMEWORK (toolbox jo server sambhalta hai)
 
 ## Aage explore karna ho toh (aage ka rasta clear)
 
-Ek khulasa: **saare backend frameworks same concepts use karte hain** — URL se data lena, data validate karna, database se baat karna, real-time. Sirf **syntax aur tools alag hain.** Ek baar tu FastAPI seekh lega toh:
+Ek khulasa: **saare backend frameworks same concepts use karte hain** — URL se data lena, data validate karna, database se baat karna, real-time. Sirf **syntax aur tools alag hain.** Ek baar tum FastAPI seekh loge toh:
 
 - **Flask explore karega toh:** wahi path params, wahi verbs (GET/POST), bas `@app.route('/user/<id>')` style. Same base, alag spelling.
 - **Django explore karega toh:** bada structure milega (models, admin, ORM), lekin REST ke wahi concepts honge.
 - **Node side (Express) explore karega toh:** wahi HTTP, wahi request/response — bas JavaScript mein.
 
-Toh tu FastAPI se jo seekhega, kabhi waste nahi jayega. Aur agge-ka-agge ka decision (kaunsa framework lena hai) bhi inh-concepts dekh kar hi le.
+Toh tum FastAPI se jo seekhega, kabhi waste nahi jayega. Aur aage-ka-aage ka decision (kaunsa framework lena hai) bhi in-concepts dekh kar hi le.
 
 
 
 # Course Ka Structure — Phases aur Projects
 
-Course ko 4 phases mein baanta hai. Har phase apna ek complete mini-project deta hai. Koi phase chho nai.
+Course ko 4 phases mein baanta hai. Har phase apna ek complete mini-project deta hai. Koi phase chhota nahi.
 
 ## PHASE 0 — Backend Mindset (koi project nahi, pure samajh)
 
@@ -66,7 +66,7 @@ Sabse important. Isse pehle ki hum FastAPI code likhein, hume samajhna hoga ki b
 | # | Topic | Kya seekhega |
 |---|-------|--------------|
 | 0.0 | Course kaise chalega + backend ki map | Puri journey ka overview, backend jungle-darshan |
-| 0.1 | Client–Server model | Kya hota hai jab tu URL kholta hai (restaurant analogy) |
+| 0.1 | Client–Server model | Kya hota hai jab tum URL kholte ho (restaurant analogy) |
 | 0.2 | HTTP ke basics | Request, Response, GET/POST, status codes |
 | 0.3 | API + JSON | Kya hai, kaise dikhta hai, kyon chahiye |
 | 0.4 | Flask vs FastAPI — jungle map + choice | Tera pehla sawaal ka jawab — sabse important note |
@@ -77,7 +77,7 @@ Sabse important. Isse pehle ki hum FastAPI code likhein, hume samajhna hoga ki b
 
 ## PHASE 1 — Simple Project: Todo/Notes API (CRUD + SQLite)
 
-Yeh tera woh "simple project" hai jo tune maanga tha — par yeh kaafi deep jaata hai, kyunki yahan FastAPI ke core features cover hote hain, aur data ko **save** karte hain (SQLite — wahi jo TradeStack use karta hai).
+Yeh tumhara woh "simple project" hai jo tumne maanga tha — par yeh kaafi deep jaata hai, kyunki yahan FastAPI ke core features cover hote hain, aur data ko **save** karte hain (SQLite — wahi jo TradeStack use karta hai).
 
 Har concept ek **"Manual → Better"** pair mein likha hoga — pehle seedha/purana tareeka (jo dard deta hai), phir FastAPI ka better solution. Isse "why" genuinely clear hota hai.
 
@@ -93,7 +93,7 @@ Har concept ek **"Manual → Better"** pair mein likha hoga — pehle seedha/pur
 
 ## PHASE 2 — Real-time: Chat App (WebSocket)
 
-Yeh tera "chating walla" hai. Yahan FastAPI ki asli power khulti hai — HTTP nahi, balki **persistent live connection** (WebSocket). Isi ka bada version TradeStack ke **Live Trader** mein hai jo Upstox se live market ticks laata hai.
+Yeh tumhara "chatting wala" hai. Yahan FastAPI ki asli power khulti hai — HTTP nahi, balki **persistent live connection** (WebSocket). Isi ka bada version TradeStack ke **Live Trader** mein hai jo Upstox se live market ticks laata hai.
 
 | # | Topic | File |
 |---|--------|------|

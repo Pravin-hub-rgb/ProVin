@@ -175,11 +175,15 @@ Har concept **"Manual → Better"** pair mein likha hai — manual approach ki p
 
 # BATCH 8 — Security & Deployment
 
-| # | Concept | Layer | Mini-Project |
+| # | Concept | Layer | File |
 |---|---|---|---|
-| X | Security: server-only env vars vs `NEXT_PUBLIC_` vars, input sanitization, CSRF awareness with Server Actions | — | (poore project ka security audit — kya galti se client-expose ho raha hai) |
-| Y | Error Boundaries + `error.tsx` at scale | — | — |
-| Z | Deployment on Vercel + environment config | — | Poora project deploy |
+| X | Env Vars Security — server-only vs `NEXT_PUBLIC_` vars | — | 8.1 |
+| X | Input + CSRF (awareness) — Server Actions built-in protection | — | 8.2 |
+| Y | Error Boundaries at Scale — `global-error.tsx` + hierarchy | — | 8.3 |
+| Z | Deployment on Vercel + env config | — | 8.4 |
+
+### 🔗 Combined Project #8 — **Security Audit + Deploy (Photo Gallery)**
+Naya project nahi — Batch 7 ka Photo Gallery audit + deploy. **8.5.1** Planning (audit checklist) → **8.5.2** Audit — Env + Config (`.env`, `.gitignore`, `remotePatterns`, build) → **8.5.3** Audit — Error Boundaries (`global-error.tsx`, hierarchy) → **8.5.4** Deploy — Vercel (live URL). Read-only showcase, koi mutations nahi.
 
 ---
 
