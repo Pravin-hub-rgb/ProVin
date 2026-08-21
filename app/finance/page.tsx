@@ -5,6 +5,7 @@ import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { cfoSubject } from "@/lib/finance-subjects/cfo.subject"
+import { algotradingSubject } from "@/lib/finance-subjects/algotrading.subject"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/finance-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
 import SubjectCard from "@/components/subject-card"
@@ -30,7 +31,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
   console.log("FINANCE PAGE RENDERED ✅", selectedSubject, selectedLecture);
   
   // Lookup actual objects from ids
-  const currentSubject = selectedSubject === 'cfo' ? cfoSubject : null
+  const currentSubject = selectedSubject === 'cfo' ? cfoSubject : selectedSubject === 'algotrading' ? algotradingSubject : null
   
   // Find lecture in both top level and inside phases
   let currentLecture: Lecture | null = null
@@ -82,7 +83,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
     }
   }, [currentSubject])
 
-  const financeSubjects: Subject[] = [cfoSubject]
+  const financeSubjects: Subject[] = [cfoSubject, algotradingSubject]
 
   useEffect(() => {
     fetch("/api/progress")

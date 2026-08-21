@@ -240,13 +240,73 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-3.4.2",
-          title: "3.4.2 Route Handler Version (v1)",
-          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.2 Route Handler Version (v1).md",
+          title: "3.4.2 Static UI — Review Cards + Layout",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.2 Static UI — Review Cards + Layout.md",
         },
         {
           id: "next-3.4.3",
-          title: "3.4.3 Server Actions Version (v2)",
-          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.3 Server Actions Version (v2).md",
+          title: "3.4.3 Data Layer — JSON File + fs Module",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.3 Data Layer — JSON File + fs Module.md",
+        },
+        {
+          id: "next-3.4.4",
+          title: "3.4.4 Client Fetch — Axios + useEffect",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.4 Client Fetch — Axios + useEffect.md",
+        },
+        {
+          id: "next-3.4.5",
+          title: "3.4.5 GET Route + Server Component",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.5 GET Route + Server Component.md",
+        },
+        {
+          id: "next-3.4.6",
+          title: "3.4.6 Detail Page — GET Single Route",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.6 Detail Page — GET Single Route.md",
+        },
+        {
+          id: "next-3.4.7",
+          title: "3.4.7 Create — Form UI + POST Route + Axios",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.7 Create — Form UI + POST Route + Axios.md",
+        },
+        {
+          id: "next-3.4.8",
+          title: "3.4.8 Edit + Delete — PUT + DELETE Routes",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.8 Edit + Delete — PUT + DELETE Routes.md",
+        },
+        {
+          id: "next-3.4.9",
+          title: "3.4.9 Server Actions — Planning",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.9 Server Actions — Planning.md",
+        },
+        {
+          id: "next-3.4.10",
+          title: "3.4.10 Static Form UI — Server Actions",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.10 Static Form UI — Server Actions.md",
+        },
+        {
+          id: "next-3.4.11",
+          title: "3.4.11 addReviewAction + Connect Form",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.11 addReviewAction + Connect Form.md",
+        },
+        {
+          id: "next-3.4.12",
+          title: "3.4.12 useActionState + Messages",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.12 useActionState + Messages.md",
+        },
+        {
+          id: "next-3.4.13",
+          title: "3.4.13 Delete Button — Server Action",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.13 Delete Button — Server Action.md",
+        },
+        {
+          id: "next-3.4.14",
+          title: "3.4.14 Edit Flow — Server Action",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.14 Edit Flow — Server Action.md",
+        },
+        {
+          id: "next-3.4.15",
+          title: "3.4.15 Comparison + Summary + Bridge",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.4.15 Comparison + Summary + Bridge.md",
         },
       ],
     },
