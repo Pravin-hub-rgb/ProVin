@@ -730,5 +730,77 @@ export const nextjsSubject: Subject = {
         },
       ],
     },
+    {
+      id: "capstone",
+      title: "🏁 Final Capstone — Hiring Platform",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-cap-0",
+          title: "C.0 Hiring Platform — Kya Banayenge (Course Ka Finale)",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.0 Hiring Platform — Kya Banayenge (Course Ka Finale).md",
+        },
+        {
+          id: "next-cap-1",
+          title: "C.1 Planning — Pages, Roles, Data Shape",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.1 Planning — Pages, Roles, Data Shape.md",
+        },
+        {
+          id: "next-cap-2",
+          title: "C.2 Project Setup + Prisma Schema + Seed",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.2 Project Setup + Prisma Schema + Seed.md",
+        },
+        {
+          id: "next-cap-3",
+          title: "C.3 Home — Job Listings + Search Filters",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.3 Home — Job Listings + Search Filters.md",
+        },
+        {
+          id: "next-cap-4",
+          title: "C.4 Job Detail — [slug] + SEO",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.4 Job Detail — [slug] + SEO.md",
+        },
+        {
+          id: "next-cap-5",
+          title: "C.5 Auth — Roles ke Saath (Auth.js)",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.5 Auth — Roles ke Saath (Auth.js).md",
+        },
+        {
+          id: "next-cap-6",
+          title: "C.6 Employer — Post Job + AI JD Generator",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.6 Employer — Post Job + AI JD Generator.md",
+        },
+        {
+          id: "next-cap-7",
+          title: "C.7 Employer — Manage Jobs + Featured Listing (Stripe)",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.7 Employer — Manage Jobs + Featured Listing (Stripe).md",
+        },
+        {
+          id: "next-cap-8",
+          title: "C.8 Candidate — Apply Flow + Resume Upload",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.8 Candidate — Apply Flow + Resume Upload.md",
+        },
+        {
+          id: "next-cap-9",
+          title: "C.9 AI Match Score — Apply Ke Waqt Scoring",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.9 AI Match Score — Apply Ke Waqt Scoring.md",
+        },
+        {
+          id: "next-cap-10",
+          title: "C.10 Employer Dashboard — Ranked Applicants + Streaming Stats",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.10 Employer Dashboard — Ranked Applicants + Streaming Stats.md",
+        },
+        {
+          id: "next-cap-11",
+          title: "C.11 Proxy Rate Limiting + Security Audit",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.11 Proxy Rate Limiting + Security Audit.md",
+        },
+        {
+          id: "next-cap-12",
+          title: "C.12 Deploy Vercel + Testing + Resume Guidance",
+          path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.12 Deploy Vercel + Testing + Resume Guidance.md",
+        },
+      ],
+    },
   ],
 };

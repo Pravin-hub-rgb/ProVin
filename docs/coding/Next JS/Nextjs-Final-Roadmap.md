@@ -40,7 +40,7 @@ Yeh roadmap sirf plan hai — asli notes isi workflow se banti hain. Naye chat m
 | 6 | **Task Board App (Real DB)** |
 | 7 | **Photo Gallery / Media Showcase** |
 | 8 | *(koi naya nahi — security audit + deploy)* |
-| Capstone | **Inventory/Order Dashboard ya Blog/Job Board** (production-grade) |
+| Capstone | **Hiring Platform** (production-grade) — `Final Capstone - Hiring Platform/` folder, 13 files (C.0–C.12): AI JD generator + match scoring (Gemini), Stripe featured listings, resume uploads (Vercel Blob), role-based auth, rate limiting, Vercel deploy |
 
 ---
 

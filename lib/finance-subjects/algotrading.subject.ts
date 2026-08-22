@@ -37,6 +37,7 @@ export const algotradingSubject: Subject = {
     {
       id: "module2",
       title: "Module 2 — Market Foundations & Quant Thinking",
+      openByDefault: false,
       lectures: [
         {
           id: "at-2.1",
@@ -53,6 +54,7 @@ export const algotradingSubject: Subject = {
     {
       id: "module3",
       title: "Module 3 — Python & Tools for Algo Trading",
+      openByDefault: false,
       lectures: [],
     },
   ],
