@@ -14,8 +14,8 @@ Manual trading se algorithmic trading tak — Python se automated strategies lik
 
 | # | Topic | Status |
 |---|-------|--------|
-| 1.1 | What is Algorithmic Trading? | ⏳ |
-| 1.2 | Evolution of Algo Trading in India & Crypto Markets | ⏳ |
+| 1.1 | What is Algorithmic Trading? | ✅ |
+| 1.2 | Evolution of Algo Trading in India & Crypto Markets | ✅ |
 | 1.3 | Manual vs Automated Trading | ✅ |
 | 1.4 | Overview of Exchanges, APIs & Data Providers | ✅ |
 | 1.5 | Legal & Regulatory Framework (SEBI & Global Guidelines) | ✅ |
@@ -26,19 +26,29 @@ Manual trading se algorithmic trading tak — Python se automated strategies lik
 |---|-------|--------|
 | 2.1 | Understanding Market Microstructure | ✅ |
 | 2.2 | Basics of Derivatives, Options & Futures | ✅ |
-| 2.3 | Crypto Market Structure (with Bitcoin Example) | ⏳ |
-| 2.4 | Position Sizing, Risk & Leverage | ⏳ |
-| 2.5 | Statistical Thinking: Mean, Variance, Correlation, and Distribution | ⏳ |
+| 2.3 | Crypto Market Structure (with Bitcoin Example) | ✅ |
+| 2.4 | Position Sizing, Risk & Leverage | ✅ |
+| 2.5 | Statistical Thinking: Mean, Variance, Correlation, and Distribution | ✅ |
 
 ### Module 3 — Python & Tools for Algo Trading
 
 | # | Topic | Status |
 |---|-------|--------|
-| 3.1 | Setting Up Your Trading Environment (Python, Jupyter, Broker APIs) | ⏳ |
-| 3.2 | Important Libraries: pandas, numpy, matplotlib, ta-lib, backtrader | ⏳ |
-| 3.3 | Fetching & Cleaning Market Data | ⏳ |
-| 3.4 | Creating Indicators & Signals | ⏳ |
-| 3.5 | Logging, Error Handling, and Execution Control | ⏳ |
+| 3.1 | Python Programming Fundamentals | ✅ |
+| 3.2 | Python Loops (while & for) | ✅ |
+| 3.3 | Python Functions | ✅ |
+| 3.4 | Python Errors & Debugging | ✅ |
+| 3.5 | Python Modules & pip | ✅ |
+| 3.6 | NumPy Library Basics | ✅ |
+| 3.7 | Pandas Library Basics | ✅ |
+| 3.8 | Data & API Overview (Historical Candlestick Data) | ✅ |
+| 3.9 | API Keys, Secrets & Access Tokens | ✅ |
+| 3.10 | Dhan API Historical Data Fetching | ✅ |
+| 3.11 | Zerodha Kite Connect API | ✅ |
+| 3.12 | Angel One SmartAPI Historical Data | ✅ |
+| 3.13 | Groww API Historical Data | ✅ |
+| 3.14 | Delta Exchange Crypto Data Fetching | ✅ |
+| 3.15 | Forex Data Fetching with MT5 | ✅ |
 
 ---
 
