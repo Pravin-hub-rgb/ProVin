@@ -50,6 +50,66 @@ Manual trading se algorithmic trading tak — Python se automated strategies lik
 | 3.14 | Delta Exchange Crypto Data Fetching | ✅ |
 | 3.15 | Forex Data Fetching with MT5 | ✅ |
 
+### Module 4 — Backtesting Foundations
+
+| # | Topic | Status |
+|---|-------|--------|
+| 4.1 | Backtesting vs Forward Testing | ✅ |
+| 4.2 | Technical Indicators Primer | ✅ |
+| 4.3 | Indicators in Python: TA-Lib & Pandas | ✅ |
+| 4.4 | First Backtest: EMA Crossover Strategy | ✅ |
+| 4.5 | Backtest Code Deep Dive: Entry Logic & PnL | ✅ |
+| 4.6 | Backtest Performance Metrics | ✅ |
+
+### Module 5 — Strategy Design & Validation
+
+| # | Topic | Status |
+|---|-------|--------|
+| 5.1 | Strategy Idea Generation & Hypothesis Building | ✅ |
+| 5.2 | Selecting Time Frame: Intraday vs Swing | ✅ |
+| 5.3 | Entry, Exit & Risk Rules | ✅ |
+| 5.4 | Optimization vs Curve Fitting & Walk Forward Testing | ✅ |
+| 5.5 | Portfolio of Strategies & Diversification | ✅ |
+
+### Module 6 — Backtest Case Studies
+
+| # | Topic | Status |
+|---|-------|--------|
+| 6.1 | Case Study Roadmap: Options, Forex, Crypto, Indian Stocks | ✅ |
+| 6.2 | Opening Range Breakout (ORB) Backtest — Zerodha | ✅ |
+| 6.3 | Traffic Light Price Action Backtest — Angel One | ✅ |
+
+### Module 7 — Live Trading Bridge
+
+| # | Topic | Status |
+|---|-------|--------|
+| 7.1 | Order Placement via APIs | ✅ |
+| 7.2 | Flask & Webhooks 101 | ✅ |
+| 7.3 | Git, GitHub & Secrets Management | ✅ |
+
+### Module 8 — Algo Projects
+
+| # | Topic | Status |
+|---|-------|--------|
+| 8.1 | Pine Script Basics for Options Algo | ✅ |
+| 8.2 | EMA Crossover Retest Strategy using AI | ✅ |
+| 8.3 | Crypto Algo Project: Delta Exchange | ✅ |
+| 8.4 | Reverse Trading System: MT5 + Flask | ✅ |
+| 8.5 | Local Algo Automation: Flask & Ngrok | ✅ |
+| 8.6 | Cloud Deployment: Render | ✅ |
+
+### Module 9 — Advanced Smart Money Concepts (SMC)
+
+| # | Topic | Status |
+|---|-------|--------|
+| 9.1 | SMC Intro: Institutional Soch | ✅ |
+| 9.2 | Liquidity: Stops Ka Khel | ✅ |
+| 9.3 | Market Structure: BOS & CHoCH | ✅ |
+| 9.4 | Order Blocks | ✅ |
+| 9.5 | Fair Value Gaps (FVG) | ✅ |
+| 9.6 | Premium/Discount Zones & OTE | ✅ |
+| 9.7 | Full SMC Strategy + Python Detection | ✅ |
+
 ---
 
 ## Prerequisites
