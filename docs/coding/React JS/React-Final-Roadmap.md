@@ -113,6 +113,22 @@ Multi-column board (Todo, In Progress, Done) with drag-drop cards. Zustand store
 
 ---
 
+# BATCH 6.7 — Redux Toolkit (Enterprise) — Optional, Back-to-Back with Zustand
+
+> **Kyun 6.7 alag batch?** RTK badi cheez hai — 1 lecture me dump karne se kuch samajh nahi aayega. Zustand (6.4) ke turant baad isliye rakha taaki compare fresh rahe — `Zustand = naya default (🟢)`, `RTK = enterprise/legacy (🟡)`. Lower batches shift nahi — Batch 7 Production as-is rahega, is batch ka Capstone se koi rewrite nahi (TrackIt abhi bhi Zustand).
+
+| # | Concept | TypeScript Layer | Mini-Project / Series |
+|---|---|---|---|
+| Q2 | Redux Core — Store, Action, Reducer (Manual dard) | `CounterState` interface, `CounterAction` union | **Manual Counter** — `switch` + `createStore` factory (40 lines, sirf samajhne ke liye) |
+| R2 | `createSlice` + `configureStore` (RTK ka better) | `PayloadAction<T>`, `RootState`/`AppDispatch` | Wahi Counter **RTK 15 lines** — Immer se `state.count++` safe |
+| S2 | `Provider` + Typed Hooks `useAppSelector/useAppDispatch` | `withTypes<RootState>` | **CounterRTK** — `Provider` wrap + typed selectors |
+| T2 | `createAsyncThunk` — Async Pending/Fulfilled/Rejected | `createAsyncThunk`, `extraReducers` | **Categories fetch** — `fetchCategories` thunk, `status`/`error` |
+| U2 | **Expense Tracker — 5-Part Series** | `Expense` type, `PayloadAction<Expense>` | **Planning (6.7.5.1) → Hardcoded UI (6.7.5.2) → Data Layer (6.7.5.3) → Dynamic (6.7.5.4) → States+Testing+Persist (6.7.5.5)** |
+
+**Series Pattern (Gold Standard):** `6.7.5.1 Planning → 6.7.5.2 Hardcoded UI → 6.7.5.3 Data Layer (types + expensesSlice + categoriesSlice + store) → 6.7.5.4 Dynamic (UI same, source store) → 6.7.5.5 States + Test Table + redux-persist optional + Zustand vs RTK compare` — koi dump nahi, har part ka ek teaching point.
+
+---
+
 # BATCH 7 — Production-Readiness
 
 | # | Concept | Layer | Mini-Project |

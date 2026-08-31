@@ -585,6 +585,62 @@ export const reactSubject: Subject = {
       ],
     },
     {
+      id: "batch6-rtk",
+      title: "Batch 6.7 — Redux Toolkit (Enterprise) — Optional",
+      lectures: [
+        {
+          id: "react-6.7.0",
+          title: "6.7.0 RTK Kya Hai aur Kyun — Zustand Ke Baad Kyun",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.0 RTK Kya Hai aur Kyun - Zustand Ke Baad Kyun.md",
+        },
+        {
+          id: "react-6.7.1",
+          title: "6.7.1 Redux Core — Store, Action, Reducer (Manual Wala Dard)",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.1 Redux Core - Store, Action, Reducer (Manual Wala Dard).md",
+        },
+        {
+          id: "react-6.7.2",
+          title: "6.7.2 createSlice + configureStore — Manual Ka Better Version",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.2 createSlice + configureStore - Manual Ka Better Version.md",
+        },
+        {
+          id: "react-6.7.3",
+          title: "6.7.3 Provider + Typed Hooks — Store Ko React Se Jodna",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.3 Provider + Typed Hooks - Store Ko React Se Jodna.md",
+        },
+        {
+          id: "react-6.7.4",
+          title: "6.7.4 Async — createAsyncThunk",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.4 Async - createAsyncThunk.md",
+        },
+        {
+          id: "react-6.7.5.1",
+          title: "6.7.5.1 Expense Tracker — Planning (Code Se Pehle Sochna)",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.1 Expense Tracker - Planning (Code Se Pehle Sochna).md",
+        },
+        {
+          id: "react-6.7.5.2",
+          title: "6.7.5.2 Expense Tracker — Hardcoded UI (Pehle Dekho Kaise Dikhta Hai)",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.2 Expense Tracker - Hardcoded UI (Pehle Dekho Kaise Dikhta Hai).md",
+        },
+        {
+          id: "react-6.7.5.3",
+          title: "6.7.5.3 Expense Tracker — Data Layer (Types + Slices + Store)",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.3 Expense Tracker - Data Layer (Types + Slices + Store).md",
+        },
+        {
+          id: "react-6.7.5.4",
+          title: "6.7.5.4 Expense Tracker — Dynamic (Data Layer Ko UI Se Jodna)",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.4 Expense Tracker - Dynamic (Data Layer Ko UI Se Jodna).md",
+        },
+        {
+          id: "react-6.7.5.5",
+          title: "6.7.5.5 Expense Tracker — States, Testing, Persist & Wrap-up",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.5 Expense Tracker - States, Testing, Persist & Wrap-up.md",
+        },
+      ],
+    },
+    {
       id: "batch7",
       title: "Batch 7 — Production-Readiness",
       lectures: [
