@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 560" role="img" aria-labelledby="title desc">
+  <title id="title">Phase 7 Capstone 5: White to move in a king and pawn position</title>
+  <desc id="desc">White-perspective chess board with a1 at bottom-left. Black king h8, White king f7, White pawn g6, and White pawns f2, g2, h2. Side to move: White. FEN: 7k/5K2/6P1/8/8/8/5PPP/8 w - - 0 1.</desc>
+  <style>
+    .coord { font-family: Arial, sans-serif; font-size: 12px; fill: #334155; }
+    .piece { font-family: Georgia, serif; font-size: 34px; font-weight: 700; text-anchor: middle; dominant-baseline: middle; paint-order: stroke; stroke-width: 2px; stroke-linejoin: round; }
+    .white-piece { fill: #f8fafc; stroke: #0f172a; }
+    .black-piece { fill: #0f172a; stroke: #f8fafc; }
+  </style>
+  <rect width="500" height="560" fill="#f8fafc" />
+  <text x="250" y="24" text-anchor="middle" font-family="Arial, sans-serif" font-size="15" font-weight="700" fill="#0f172a">White to move</text>
+  <defs>
+    <pattern id="checker" x="50" y="60" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="#f8fafc" />
+      <rect width="50" height="50" fill="#334155" />
+      <rect x="50" y="50" width="50" height="50" fill="#334155" />
+    </pattern>
+  </defs>
+  <rect x="50" y="60" width="400" height="400" fill="url(#checker)" stroke="#0f172a" stroke-width="2" />
+  <path d="M50 110H450 M50 160H450 M50 210H450 M50 260H450 M50 310H450 M50 360H450 M50 410H450 M100 60V460 M150 60V460 M200 60V460 M250 60V460 M300 60V460 M350 60V460 M400 60V460" fill="none" stroke="#64748b" stroke-width="0.7" />
+  <g class="coord" text-anchor="middle">
+    <text x="75" y="500">a</text><text x="125" y="500">b</text><text x="175" y="500">c</text><text x="225" y="500">d</text><text x="275" y="500">e</text><text x="325" y="500">f</text><text x="375" y="500">g</text><text x="425" y="500">h</text>
+  </g>
+  <g class="coord" text-anchor="middle">
+    <text x="30" y="90">8</text><text x="30" y="140">7</text><text x="30" y="190">6</text><text x="30" y="240">5</text><text x="30" y="290">4</text><text x="30" y="340">3</text><text x="30" y="390">2</text><text x="30" y="440">1</text>
+  </g>
+  <g>
+    <text class="piece black-piece" x="425" y="85">k</text>
+    <text class="piece white-piece" x="325" y="135">K</text>
+    <text class="piece white-piece" x="375" y="185">P</text>
+    <text class="piece white-piece" x="325" y="385">P</text><text class="piece white-piece" x="375" y="385">P</text><text class="piece white-piece" x="425" y="385">P</text>
+  </g>
+  <text x="250" y="535" text-anchor="middle" font-family="monospace" font-size="8" fill="#475569">7k/5K2/6P1/8/8/8/5PPP/8 w - - 0 1</text>
+</svg>

@@ -44,4 +44,6 @@ This file contains the rules and conventions for creating and editing course con
 
 > **Exception — Agentic AI Production course:** `docs/coding/Agentic AI Production/` uses **Python** (LangChain, LangGraph, RAG are Python-native). Same writing rules apply, but code is Python 3 — complete, runnable, with `pip`/`uv` install commands and every line explained. The ultra-simple "gadhe ko bhi samajh aa jaye" tone (zero assumed knowledge, short chunks, simple analogies, repetition) is mandatory there.
 
+> **Exception — C# & .NET course:** `docs/coding/C Sharp/` uses **C#** (the job is C#/.NET, JS doesn't apply). Same writing rules apply, but code examples are C# (.NET 8, ASP.NET Core Web API, EF Core) with `dotnet` CLI commands, and JS/Node/React concepts are referenced as familiar anchors throughout.
+
 For the complete detailed rules, read `docs/coding/AGENTIC-AI-WRITING-RULES.md`.

@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 650" role="img" aria-labelledby="title desc">
+<title id="title">Phase 1 tactic position 05</title>
+<desc id="desc">A White-perspective chess board with a1 at the bottom-left. White to move, with a white queen on d5 and bishop on c4 facing a black king on g8, rook on f8, and pawns on f7, g7, and h7. The exact position is FEN 5rk1/5ppp/8/3Q4/2B5/8/8/4K3 w - - 0 1.</desc>
+<rect width="640" height="650" rx="12" fill="#0f172a"/>
+<text x="320" y="28" text-anchor="middle" font-family="Arial, sans-serif" font-size="16" font-weight="700" fill="#f8fafc">Phase 1 • Tactic 05</text>
+<rect x="425" y="39" width="190" height="27" rx="13" fill="#1e293b" stroke="#facc15"/>
+<text x="520" y="57" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="700" fill="#facc15">White to move</text>
+<defs>
+<pattern id="checker" x="80" y="80" width="120" height="120" patternUnits="userSpaceOnUse">
+<rect width="60" height="60" fill="#f3ead3"/>
+<rect x="60" width="60" height="60" fill="#6f8f68"/>
+<rect y="60" width="60" height="60" fill="#6f8f68"/>
+<rect x="60" y="60" width="60" height="60" fill="#f3ead3"/>
+</pattern>
+</defs>
+<rect x="80" y="80" width="480" height="480" fill="url(#checker)" stroke="#e2e8f0" stroke-width="3"/>
+<path d="M140 80V560M200 80V560M260 80V560M320 80V560M380 80V560M440 80V560M500 80V560M80 140H560M80 200H560M80 260H560M80 320H560M80 380H560M80 440H560M80 500H560" fill="none" stroke="#334155" stroke-width="1" opacity="0.55"/>
+<g font-family="Arial, sans-serif" font-size="12" fill="#cbd5e1" text-anchor="middle">
+<text x="110" y="583">a</text><text x="170" y="583">b</text><text x="230" y="583">c</text><text x="290" y="583">d</text><text x="350" y="583">e</text><text x="410" y="583">f</text><text x="470" y="583">g</text><text x="530" y="583">h</text>
+</g>
+<g font-family="Arial, sans-serif" font-size="12" fill="#cbd5e1" text-anchor="end">
+<text x="68" y="116">8</text><text x="68" y="176">7</text><text x="68" y="236">6</text><text x="68" y="296">5</text><text x="68" y="356">4</text><text x="68" y="416">3</text><text x="68" y="476">2</text><text x="68" y="536">1</text>
+</g>
+<g font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle" dominant-baseline="middle" stroke-width="2" stroke-linejoin="round" paint-order="stroke">
+<text x="290" y="290" fill="#f3ead3" stroke="#0f172a">Q</text><text x="230" y="350" fill="#f3ead3" stroke="#0f172a">B</text><text x="350" y="530" fill="#f3ead3" stroke="#0f172a">K</text>
+<text x="410" y="110" fill="#0f172a" stroke="#f8fafc">r</text><text x="470" y="110" fill="#0f172a" stroke="#f8fafc">k</text>
+<text x="410" y="170" fill="#0f172a" stroke="#f8fafc">p</text><text x="470" y="170" fill="#0f172a" stroke="#f8fafc">p</text><text x="530" y="170" fill="#0f172a" stroke="#f8fafc">p</text>
+</g>
+<text x="320" y="614" text-anchor="middle" font-family="Courier New, monospace" font-size="9" fill="#cbd5e1" textLength="560" lengthAdjust="spacingAndGlyphs">FEN: 5rk1/5ppp/8/3Q4/2B5/8/8/4K3 w - - 0 1</text>
+<text x="320" y="638" text-anchor="middle" font-family="Arial, sans-serif" font-size="9" fill="#94a3b8">Light letters are White; dark letters are Black. a1 is bottom-left.</text>
+</svg>

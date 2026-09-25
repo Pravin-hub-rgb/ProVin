@@ -57,6 +57,7 @@ import { nextjsSubject } from "./subjects/nextjs.subject";
 import { nodejsSubject } from "./subjects/nodejs.subject";
 import { dsaSubject } from "./subjects/dsa.subject";
 import { coreSubjectsSubject } from "./subjects/coresubjects.subject";
+import { csharpSubject } from "./subjects/csharp.subject";
 
 export const subjects: Subject[] = [
   pythonSubject,
@@ -73,6 +74,7 @@ export const subjects: Subject[] = [
   nodejsSubject,
   dsaSubject,
   coreSubjectsSubject,
+  csharpSubject,
 ];
 
 /**
