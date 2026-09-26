@@ -10,6 +10,7 @@ export interface Phase {
   title: string;
   openByDefault: boolean;
   lectures: Lecture[];
+  quizzes?: Lecture[];
 }
 
 export interface Subject {

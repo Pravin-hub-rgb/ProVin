@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 608 680" role="img" aria-labelledby="title desc" focusable="false">
   <title id="title">Phase 3 opening position 2: castle before danger</title>
-  <desc id="desc">Accessible White-perspective chess board with a1 at bottom-left. Side to move: White. FEN: r1bqkbnr/pppp1ppp/2n5/4p3/2B5/5N2/PPPP1PPP/RNBQK2R w KQkq - 4 4. Uppercase letters are White pieces and lowercase letters are Black pieces.</desc>
+  <desc id="desc">Accessible White-perspective chess board with a1 at bottom-left. Side to move: White. FEN: r1bqkbnr/pppp1ppp/2n5/4p3/2B5/5N2/PPPP1PPP/RNBQK2R w KQkq - 3 4. Uppercase letters are White pieces and lowercase letters are Black pieces.</desc>
   <rect width="608" height="680" fill="#0f172a"/>
   <text x="304" y="25" text-anchor="middle" fill="#f8fafc" font-size="15" font-family="Arial, sans-serif" font-weight="700">Opening Position 2</text>
   <text x="304" y="48" text-anchor="middle" fill="#93c5fd" font-size="12" font-family="Arial, sans-serif">Side to move: White | White perspective | a1 bottom-left</text>

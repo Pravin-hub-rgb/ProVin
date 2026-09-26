@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 650" role="img" aria-labelledby="p401-title p401-desc" focusable="false">
   <title id="p401-title">Phase 4 exercise 1 — Central space</title>
-  <desc id="p401-desc">White to move. The FEN is r1bqkb1r/ppp2ppp/3p1n2/4p3/4P3/5N2/PPPP1PPP/R1BQ1RK1 w - - 0 5. White is to find a move that creates central space and opens an e-file plan.</desc>
+  <desc id="p401-desc">White to move. The FEN is r1bqkb1r/ppp2ppp/3p1n2/4p3/4P3/5N2/PPPP1PPP/R1BQ1RK1 w - - 0 5. White is to find a move that creates central space; the rook is on f1, so any exchange is a central trade rather than an e-file rook plan.</desc>
   <rect width="600" height="650" fill="#f8fafc" />
   <text x="300" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0f172a">Phase 4 Exercise 1 — Central Space</text>
   <text x="300" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#334155">White to move (W) | White perspective | a1 bottom-left</text>

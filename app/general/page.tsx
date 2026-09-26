@@ -1,18 +1,16 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
+import { ChevronDown, ChevronRight, Book, FileText, HelpCircle } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
+import { QuizViewer } from "@/components/quiz-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { spokenEnglishSubject } from "@/lib/general-subjects/spoken-english.subject"
+import { chessSubject } from "@/lib/general-subjects/chess-to-1000.subject"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/general-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
 import SubjectCard from "@/components/subject-card"
 import styles from "../coding/page.module.css"
-
-const isComponentLecture = (lecture: Lecture | null): lecture is Lecture & { isComponent: true } => {
-  return lecture !== null && 'isComponent' in lecture && lecture.isComponent === true
-}
 
 import type { Dispatch, SetStateAction } from "react"
 
@@ -23,7 +21,7 @@ type GeneralPageProps = {
   setSelectedLecture: Dispatch<SetStateAction<string | null>>
 }
 
-const subjects: Subject[] = [spokenEnglishSubject]
+const subjects: Subject[] = [spokenEnglishSubject, chessSubject]
 
 export default function GeneralPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: GeneralPageProps) {
 
@@ -41,9 +39,18 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
           currentLecture = found
           break
         }
+        const foundQuiz = phase.quizzes?.find(quiz => quiz.id === selectedLecture)
+        if (foundQuiz) {
+          currentLecture = foundQuiz
+          break
+        }
       }
     }
   }
+
+  const isQuiz = currentSubject?.phases?.some(phase =>
+    phase.quizzes?.some(quiz => quiz.id === selectedLecture)
+  ) ?? false
   const [sidebarWidth, setSidebarWidth] = useState(300)
   const [openPhases, setOpenPhases] = useState<Record<string, boolean>>({})
 
@@ -53,13 +60,25 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
   const [allProgress, setAllProgress] = useState<Record<string, Record<string, boolean>>>({})
 
   const saveProgress = useCallback(async (lectureId: string, completed: boolean) => {
-    setProgress(prev => ({ ...prev, [lectureId]: completed }))
+    const subjectId = currentSubject?.id
+    if (!subjectId) return
+
     try {
-      await fetch("/api/progress", {
+      const response = await fetch("/api/progress", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ subjectId: currentSubject?.id, lectureId, completed }),
+        body: JSON.stringify({ subjectId, lectureId, completed }),
       })
+      if (!response.ok) throw new Error("Failed to save progress")
+
+      setProgress(prev => ({ ...prev, [lectureId]: completed }))
+      setAllProgress(prev => ({
+        ...prev,
+        [subjectId]: {
+          ...(prev[subjectId] ?? {}),
+          [lectureId]: completed,
+        },
+      }))
     } catch (err) {
       console.error("Failed to save progress", err)
     }
@@ -90,7 +109,9 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
       let activePhaseId: string | null = null
       if (selectedLecture) {
         for (const phase of currentSubject.phases) {
-          if (phase.lectures.some(l => l.id === selectedLecture)) {
+          const containsSelectedLecture = phase.lectures.some(lecture => lecture.id === selectedLecture)
+            || phase.quizzes?.some(quiz => quiz.id === selectedLecture)
+          if (containsSelectedLecture) {
             activePhaseId = phase.id
             break
           }
@@ -106,25 +127,34 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
       })
       setOpenPhases(initialState)
     }
-  }, [currentSubject])
+  }, [currentSubject, selectedLecture])
 
   useEffect(() => {
-    if (currentLecture) {
-      setIsLoading(true)
-      const loadContent = async () => {
-        try {
-          const path = currentLecture.path
-          const content = await loadMarkdownContent(path)
-          setMarkdownContent(content)
-        } catch (error) {
-          setMarkdownContent('# Error loading content\n\nCould not load the lecture notes.')
-        } finally {
-          setIsLoading(false)
-        }
-      }
-      loadContent()
+    let cancelled = false
+
+    if (!currentLecture) {
+      setMarkdownContent("")
+      setIsLoading(false)
+      return
     }
-  }, [selectedLecture])
+
+    setIsLoading(true)
+    const loadContent = async () => {
+      try {
+        const content = await loadMarkdownContent(currentLecture.path)
+        if (!cancelled) setMarkdownContent(content)
+      } catch {
+        if (!cancelled) setMarkdownContent("# Error loading content\n\nCould not load the lecture notes.")
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    }
+    loadContent()
+
+    return () => {
+      cancelled = true
+    }
+  }, [currentLecture])
 
   // Render Dashboard View
   if (!selectedSubject) {
@@ -141,6 +171,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
               const { completed, total, percent } = getSubjectProgress(
                 subject,
                 allProgress[subject.id] ?? {},
+                true,
               )
               return (
                 <SubjectCard
@@ -199,25 +230,26 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
                 <div className="border border-border/50 rounded-lg overflow-hidden">
                   <div className="border-t border-border/50 bg-background/50">
                     {lectureList.map((lecture) => (
-                      <button
-                        key={lecture.id}
-                        onClick={() => setSelectedLecture(lecture.id)}
-                        className={`w-full px-4 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                          selectedLecture === lecture.id
-                            ? "bg-primary/15 text-foreground font-semibold"
-                            : "text-muted-foreground hover:text-foreground"
-                        }`}
-                      >
+                      <div key={lecture.id} className="flex items-center hover:bg-accent/50 transition-colors">
                         <input
                           type="checkbox"
+                          aria-label={`Mark ${lecture.title} complete`}
                           checked={progress[lecture.id] ?? false}
                           onChange={(e) => saveProgress(lecture.id, e.target.checked)}
-                          onClick={(e) => e.stopPropagation()}
-                          className="accent-primary"
+                          className="ml-4 accent-primary"
                         />
-                        <FileText className="w-4 h-4" />
-                        {lecture.title}
-                      </button>
+                        <button
+                          onClick={() => setSelectedLecture(lecture.id)}
+                          className={`flex flex-1 items-center gap-3 px-4 py-3 text-left text-sm ${
+                            selectedLecture === lecture.id
+                              ? "bg-primary/15 text-foreground font-semibold"
+                              : "text-muted-foreground hover:text-foreground"
+                          }`}
+                        >
+                          <FileText className="w-4 h-4 shrink-0" />
+                          {lecture.title}
+                        </button>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -246,27 +278,60 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
 
                   {openPhases[phase.id] && (
                     <div className="border-t border-border/50 bg-background/50">
-                      {phase.lectures.map((lecture) => (
-                        <button
-                          key={lecture.id}
-                          onClick={() => setSelectedLecture(lecture.id)}
-                          className={`w-full px-6 py-2.5 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                            selectedLecture === lecture.id
-                              ? "bg-primary/15 text-foreground font-semibold"
-                              : "text-muted-foreground hover:text-foreground"
-                          }`}
-                        >
-                          <input
-                            type="checkbox"
-                            checked={progress[lecture.id] ?? false}
-                            onChange={(e) => saveProgress(lecture.id, e.target.checked)}
-                            onClick={(e) => e.stopPropagation()}
-                            className="accent-primary"
-                          />
-                          <FileText className="w-3.5 h-3.5" />
-                          {lecture.title}
-                        </button>
-                      ))}
+                      {phase.lectures.map((lecture) => {
+                        const lectureSuffix = lecture.id.replace(/^[^-]+-/, "")
+                        const relatedQuizzes = phase.quizzes?.filter(
+                          quiz => quiz.id.replace(/^[^-]+-/, "") === lectureSuffix
+                        )
+
+                        return (
+                          <div key={lecture.id}>
+                            <div className="flex items-center hover:bg-accent/50 transition-colors">
+                              <input
+                                type="checkbox"
+                                aria-label={`Mark ${lecture.title} complete`}
+                                checked={progress[lecture.id] ?? false}
+                                onChange={(e) => saveProgress(lecture.id, e.target.checked)}
+                                className="ml-6 accent-primary"
+                              />
+                              <button
+                                onClick={() => setSelectedLecture(lecture.id)}
+                                className={`flex flex-1 items-center gap-3 px-4 py-2.5 text-left text-sm ${
+                                  selectedLecture === lecture.id
+                                    ? "bg-primary/15 text-foreground font-semibold"
+                                    : "text-muted-foreground hover:text-foreground"
+                                }`}
+                              >
+                                <FileText className="w-3.5 h-3.5 shrink-0" />
+                                {lecture.title}
+                              </button>
+                            </div>
+
+                            {relatedQuizzes?.map(quiz => (
+                              <div key={quiz.id} className="ml-8 flex items-center border-l-2 border-border/30 hover:bg-accent/50 transition-colors">
+                                <input
+                                  type="checkbox"
+                                  aria-label={`Mark ${quiz.title} complete`}
+                                  checked={progress[quiz.id] ?? false}
+                                  onChange={(e) => saveProgress(quiz.id, e.target.checked)}
+                                  className="ml-6 accent-primary scale-75"
+                                />
+                                <button
+                                  onClick={() => setSelectedLecture(quiz.id)}
+                                  className={`flex flex-1 items-center gap-2.5 py-1.5 pl-2 pr-6 text-left text-xs ${
+                                    selectedLecture === quiz.id
+                                      ? "bg-primary/10 text-foreground font-semibold"
+                                      : "text-muted-foreground hover:text-foreground"
+                                  }`}
+                                >
+                                  <HelpCircle className="w-3 h-3 shrink-0" />
+                                  {quiz.title}
+                                </button>
+                              </div>
+                            ))}
+                          </div>
+                        )
+                      })}
                     </div>
                   )}
                 </div>
@@ -293,8 +358,10 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
                   <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
                   <p className="mt-4 text-muted-foreground">Loading notes...</p>
                 </div>
+               ) : isQuiz ? (
+                 <QuizViewer key={currentLecture.id} content={markdownContent} />
                ) : (
-                  <LectureViewer content={markdownContent} />
+                 <LectureViewer content={markdownContent} />
                )}
             </div>
           ) : (

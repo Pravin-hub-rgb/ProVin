@@ -11,7 +11,8 @@ function extractSectionTitle(line: string): QuestionType | null {
 export function parseQuiz(markdown: string): QuizData {
   const lines = markdown.split("\n")
 
-  const title = lines[0]?.replace(/^#\s*/, "").trim() ?? "Quiz"
+  const titleLine = lines.find(line => /^#\s+/.test(line.trim()))
+  const title = titleLine?.replace(/^#\s*/, "").trim() ?? "Quiz"
 
   const questions: QuizQuestion[] = []
 
@@ -21,7 +22,6 @@ export function parseQuiz(markdown: string): QuizData {
   let currentAnswer: string | null = null
   let currentExplanation: string | null = null
   let inQuestion = false
-  let inOptions = false
   let inExplanation = false
 
   function flushQuestion() {
@@ -67,7 +67,6 @@ export function parseQuiz(markdown: string): QuizData {
     currentAnswer = null
     currentExplanation = null
     inQuestion = false
-    inOptions = false
     inExplanation = false
   }
 
@@ -93,7 +92,6 @@ export function parseQuiz(markdown: string): QuizData {
       flushQuestion()
       currentQuestion = qMatch[1].trim()
       inQuestion = true
-      inOptions = false
       inExplanation = false
       continue
     }
@@ -107,7 +105,6 @@ export function parseQuiz(markdown: string): QuizData {
     const optionMatch = line.match(/^([A-Z])\.\s*(.+)/)
     if (optionMatch && inQuestion && (currentType === "mcq" || currentType === "truefalse")) {
       currentOptions.push(optionMatch[2].trim())
-      inOptions = true
       continue
     }
 
@@ -115,7 +112,6 @@ export function parseQuiz(markdown: string): QuizData {
     const tfMatch = line.match(/^[-*]\s*(True|False)/i)
     if (tfMatch && currentType === "truefalse" && inQuestion) {
       currentOptions.push(tfMatch[1])
-      inOptions = true
       continue
     }
 

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 650" role="img" aria-labelledby="p406-title p406-desc" focusable="false">
   <title id="p406-title">Phase 4 exercise 6 — Supported attack</title>
-  <desc id="p406-desc">White to move. The FEN is 2bqk1n1/pppppppp/8/8/2B5/2N5/PPPPP1PP/3Q1RKR w - - 0 10. White is to find a supported attack on the f7 pawn.</desc>
+  <desc id="p406-desc">White to move. The FEN is 2bqk1n1/pppppppp/8/8/2B5/2N5/PPPPP1PP/3Q1RKR w - - 0 10. The f2 square is empty, so after Bxf7+ the rook on f1 protects the bishop on f7. White is to find this supported attack.</desc>
   <rect width="600" height="650" fill="#f8fafc" />
   <text x="300" y="25" text-anchor="middle" font-family="Arial, sans-serif" font-size="17" font-weight="700" fill="#0f172a">Phase 4 Exercise 6 — Supported Attack</text>
   <text x="300" y="50" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" fill="#334155">White to move (W) | White perspective | a1 bottom-left</text>

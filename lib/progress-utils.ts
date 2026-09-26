@@ -1,8 +1,8 @@
 type LectureLike = { id: string }
-type GroupLike = { lectures: LectureLike[]; groups?: GroupLike[] }
+type GroupLike = { lectures: LectureLike[]; quizzes?: LectureLike[]; groups?: GroupLike[] }
 type SubjectLike = { lectures?: LectureLike[]; phases?: GroupLike[] }
 
-function getAllLectureIds(subject: SubjectLike): string[] {
+function getAllLectureIds(subject: SubjectLike, includeQuizzes: boolean): string[] {
   const ids: string[] = []
 
   if (subject.lectures) {
@@ -16,15 +16,30 @@ function getAllLectureIds(subject: SubjectLike): string[] {
       for (const lecture of phase.lectures) {
         ids.push(lecture.id)
       }
+      if (includeQuizzes && phase.quizzes) {
+        for (const quiz of phase.quizzes) {
+          ids.push(quiz.id)
+        }
+      }
       if (phase.groups) {
         for (const group of phase.groups) {
           for (const lecture of group.lectures) {
             ids.push(lecture.id)
           }
+          if (includeQuizzes && group.quizzes) {
+            for (const quiz of group.quizzes) {
+              ids.push(quiz.id)
+            }
+          }
           if (group.groups) {
             for (const subGroup of group.groups) {
               for (const lecture of subGroup.lectures) {
                 ids.push(lecture.id)
+              }
+              if (includeQuizzes && subGroup.quizzes) {
+                for (const quiz of subGroup.quizzes) {
+                  ids.push(quiz.id)
+                }
               }
             }
           }
@@ -39,8 +54,9 @@ function getAllLectureIds(subject: SubjectLike): string[] {
 export function getSubjectProgress(
   subject: SubjectLike,
   progressData: Record<string, boolean>,
+  includeQuizzes = false,
 ): { completed: number; total: number; percent: number } {
-  const allIds = getAllLectureIds(subject)
+  const allIds = getAllLectureIds(subject, includeQuizzes)
   const total = allIds.length
   if (total === 0) return { completed: 0, total: 0, percent: 0 }
   const completed = allIds.filter((id) => progressData[id] === true).length

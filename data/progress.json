@@ -213,5 +213,8 @@
     "next-7.5": true,
     "next-7.6": true,
     "next-3.4.1": true
+  },
+  "csharp": {
+    "csharp-0.1": true
   }
 }
