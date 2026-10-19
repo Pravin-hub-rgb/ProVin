@@ -5,8 +5,10 @@ import { ChevronDown, ChevronRight, Book, FileText, HelpCircle } from "lucide-re
 import { LectureViewer } from "@/components/lecture-viewer"
 import { QuizViewer } from "@/components/quiz-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
+import { CourseSidebar } from "@/components/course-sidebar"
 import { spokenEnglishSubject } from "@/lib/general-subjects/spoken-english.subject"
 import { chessSubject } from "@/lib/general-subjects/chess-to-1000.subject"
+import { geopoliticsSubject } from "@/lib/general-subjects/geopolitics.subject"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/general-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
 import SubjectCard from "@/components/subject-card"
@@ -21,7 +23,7 @@ type GeneralPageProps = {
   setSelectedLecture: Dispatch<SetStateAction<string | null>>
 }
 
-const subjects: Subject[] = [spokenEnglishSubject, chessSubject]
+const subjects: Subject[] = [spokenEnglishSubject, chessSubject, geopoliticsSubject]
 
 export default function GeneralPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: GeneralPageProps) {
 
@@ -197,6 +199,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
   }
 
   const lectureList = currentSubject.lectures ?? []
+  const useUnifiedSidebar = currentSubject.id === "geopolitics"
 
   return (
     <div className="h-[calc(100vh-3.5rem)] max-md:h-[calc(100dvh-7.5rem)] bg-background transition-colors duration-500 relative overflow-hidden">
@@ -205,7 +208,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
           setSelectedSubject(null)
           setSelectedLecture(null)
         }}
-        className="absolute top-4 left-4 z-[101] flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-xl border border-border/50 rounded-md text-sm hover:bg-accent/50 transition-colors"
+        className="absolute top-4 left-4 z-[101] flex items-center gap-2 px-3 py-3 bg-background/80 backdrop-blur-xl border border-border/50 rounded-md text-sm hover:bg-accent/50 transition-colors"
       >
         <ChevronRight className="w-4 h-4 rotate-180" />
         Back to Dashboard
@@ -217,11 +220,27 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
           sidebarWidth={sidebarWidth}
           onSidebarWidthChange={setSidebarWidth}
         >
+          {useUnifiedSidebar ? (
+            <CourseSidebar
+              subjectTitle={currentSubject.title}
+              roadmapLectures={lectureList}
+              phases={currentSubject.phases ?? []}
+              openPhases={openPhases}
+              selectedLecture={selectedLecture}
+              progress={progress}
+              onTogglePhase={(phaseId) =>
+                setOpenPhases((prev) => ({ ...prev, [phaseId]: !prev[phaseId] }))
+              }
+              onSelect={setSelectedLecture}
+              onToggleProgress={saveProgress}
+            />
+          ) : (
           <div className="p-6 pb-20">
             <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
               <Book className="w-5 h-5 text-primary" />
               {currentSubject.title}
             </h2>
+
 
             <div className="space-y-3">
 
@@ -339,6 +358,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
 
             </div>
           </div>
+          )}
         </SidebarLayout>
 
         {/* Content Area */}

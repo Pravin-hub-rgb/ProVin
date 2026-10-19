@@ -8,6 +8,7 @@ import { ToDoDemo } from './todo-demo'
 import { ShoppingCartDemo } from './shopping-cart-demo'
 import { GymDemo } from './gym-demo'
 import { EcommerceDemo } from './ecommerce-demo'
+import { GeoMap } from './geo-map'
 import type { Element, Root } from 'hast'
 import type { ComponentType } from 'react'
 
@@ -133,6 +134,7 @@ const markdownComponents: Record<string, ComponentType<any> | string> = {
   "shopping-cart-demo": ShoppingCartDemo,
   "gym-demo": GymDemo,
   "ecommerce-demo": EcommerceDemo,
+  "geo-map": GeoMap,
 }
 
 function stripReactProps() {

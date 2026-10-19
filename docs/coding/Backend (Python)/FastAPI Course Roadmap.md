@@ -75,21 +75,38 @@ Sabse important. Isse pehle ki hum FastAPI code likhein, hume samajhna hoga ki b
 **Phase 0 ke end tak:** backend ka clear map, Flask vs FastAPI samajh, pehla FastAPI app browser mein chal raha (`/docs` Swagger wali duniya).
 ---
 
-## PHASE 1 — Simple Project: Todo/Notes API (CRUD + SQLite)
+## PHASE 1 — Simple Project: Trading Backend Basic (CRUD + SQLite)
 
-Yeh tumhara woh "simple project" hai jo tumne maanga tha — par yeh kaafi deep jaata hai, kyunki yahan FastAPI ke core features cover hote hain, aur data ko **save** karte hain (SQLite — wahi jo TradeStack use karta hai).
+Yeh woh "simple project" hai jisme FastAPI ke core features aate hain — aur data **save** hota hai (SQLite — wahi jo TradeStack use karta hai).
+
+**Project TradeStack ka basic shape hai — chhota, clean, no shortcuts.** Kyunki jab tum interview me TradeStack explain karoge, toh tumhe ye already pata hoga: ek Python service me stocks aate hain, settings save hoti hain, pandas indicators compute hote hain, aur ek scan endpoint result deta hai. Jo yahan banaoge, wo asli TradeStack ka **chhota bhai** hai — deep nahi, but shape ekdam wahi.
 
 Har concept ek **"Manual → Better"** pair mein likha hoga — pehle seedha/purana tareeka (jo dard deta hai), phir FastAPI ka better solution. Isse "why" genuinely clear hota hai.
 
 | # | Concept | File |
 |---|----------|------|
+| 1.0 | Phase kya seekhenge + project ka ek nazar | Roadmap |
 | 1.1 | Path & Query params | URL se data lena |
 | 1.2 | Pydantic + Request Body | Data validate karna, POST se data bhejna |
-| 1.3 | CRUD (Create/Read/Update/Delete) | Poora task lifecycle |
+| 1.3 | CRUD (Create/Read/Update/Delete) | Poora lifecycle |
 | 1.4 | SQLite se jodo | Data save karna (restart pe bhi rahe) |
-| 1.5 | **Combined Project: Todo API** | Sab ek saath — CRUD + SQLite + docs |
+| 1.5 | **Combined Project: Trading Backend Basic** | 5-part series (neeche dekho) |
 
-**Combined Project:** chhota lekin complete API. Tasks banao, list karo, update karo, delete karo. Data ek SQLite file mein save hota hai — server band karke dobara chalao, data wapas milta hai. Browser ke `/docs` se pura test karo — koi extra frontend nahi chahiye.
+### Combined Project — 5-part series (Trading Backend Basic)
+
+| # | Part | Kya banta hai |
+|---|------|---------------|
+| 1.5.1 | Planning | Kya banana hai, kaunse endpoints, data ka shape |
+| 1.5.2 | Server Khada | venv + FastAPI app + `/health` + `/docs` |
+| 1.5.3 | Data Layer | SQLite — stocks table + settings table + GET/POST endpoints |
+| 1.5.4 | Indicators | pandas se SMA + RSI, sample data se |
+| 1.5.5 | Scan + Wrap-up | `/scan` endpoint, Pydantic response, README, wrap-up |
+
+**Combined Project:** ek chhota lekin complete trading backend. Stocks list hoti hai, settings save hoti hain (restart pe bhi), pandas se SMA/RSI compute hote hain, aur ek `/scan` endpoint oversold stocks return karta hai. Browser ke `/docs` se pura test karo — koi extra frontend nahi chahiye.
+
+**Ye project kyun:** interview me jab koi poochhe *"FastAPI me kaise kaam karta hai, SQLite kyun, pandas kahan"* — tumhara jawab grounded hoga, kyunki tumne khud chhota wahi banaya hai. Phase 3 me jab asli `server.py` padhoge, toh bolega *"haan, ye toh same cheez hai bada version me."*
+
+**Out of scope (abhi nahi):** WebSocket, multiprocessing, real market data, indicators ke baaki 11. Wo Phase 2 aur Phase 3 me aayenge.
 
 ## PHASE 2 — Real-time: Chat App (WebSocket)
 
@@ -121,9 +138,9 @@ Jo seekha use apne asli project pe maaro:
 | Phase | Project |
 |-------|---------|
 | 0 | *(koi project nahi — pure foundation)* |
-| 1 | Todo API (CRUD + SQLite) |
+| 1 | Trading Backend Basic (CRUD + SQLite + pandas indicators) |
 | 2 | Chat Room App (WebSocket) |
-| 3 | TradeStream Backend Deep-Read |
+| 3 | TradeStack Backend Deep-Read |
 
 ## "Manual → Better" Pairs
 

@@ -133,9 +133,11 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
         // If this is the phase that has current lecture: open it
         if (phase.id === activePhaseId) {
           initialState[phase.id] = true
+        } else if (phase.openByDefault) {
+          // ✅ Phase explicitly marked to start open (e.g. new phases)
+          initialState[phase.id] = true
         } else {
-          // ✅ All other phases are FORCE CLOSED
-          // No defaults. Only active phase is open.
+          // All other phases are force closed
           initialState[phase.id] = false
         }
       })
@@ -245,8 +247,9 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
             
             <div className="space-y-3">
 
-              {/* Top Level Lectures (Roadmap / Checklist) */}
-              {currentSubject.lectures.length > 0 && (
+              {/* Top Level Lectures (Roadmap / Checklist) — only when subject HAS phases,
+                  otherwise the legacy list below renders them */}
+              {currentSubject.phases && currentSubject.lectures.length > 0 && (
                 <div className="border border-border/50 rounded-lg overflow-hidden">
                   <div className="border-t border-border/50 bg-background/50">
                     {currentSubject.lectures.map((lecture) => (
