@@ -33,9 +33,10 @@ function rowClasses(selected: boolean) {
 }
 
 /**
- * Sidebar used by the Geopolitics course. Every entry is a single full-width
- * button so the checkbox, icon and title behave as one click target, matching
- * the layout used by the Coding tab.
+ * Sidebar used by the Geopolitics course. Checkbox is a sibling of the
+ * lecture button (not nested inside it) so tapping it works on mobile
+ * touch devices — a checkbox nested in a <button> is invalid HTML and
+ * mobile browsers often swallow the tap.
  */
 export function CourseSidebar({
   subjectTitle,
@@ -60,14 +61,9 @@ export function CourseSidebar({
           <div className="border border-border/50 rounded-lg overflow-hidden">
             <div className="border-t border-border/50 bg-background/50">
               {roadmapLectures.map((lecture) => (
-                <button
+                <div
                   key={lecture.id}
-                  onClick={() => onSelect(lecture.id)}
-                  className={`w-full px-4 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                    selectedLecture === lecture.id
-                      ? "bg-primary/15 text-foreground font-semibold"
-                      : "text-muted-foreground hover:text-foreground"
-                  }`}
+                  className="flex items-center hover:bg-accent/50 transition-colors"
                 >
                   <input
                     type="checkbox"
@@ -75,11 +71,21 @@ export function CourseSidebar({
                     checked={progress[lecture.id] ?? false}
                     onChange={(e) => onToggleProgress(lecture.id, e.target.checked)}
                     onClick={(e) => e.stopPropagation()}
-                    className="accent-primary"
+                    onTouchEnd={(e) => e.stopPropagation()}
+                    className="ml-4 accent-primary shrink-0"
                   />
-                  <FileText className="w-4 h-4" />
-                  {lecture.title}
-                </button>
+                  <button
+                    onClick={() => onSelect(lecture.id)}
+                    className={`flex flex-1 items-center gap-3 px-4 py-3 text-left text-sm ${
+                      selectedLecture === lecture.id
+                        ? "bg-primary/15 text-foreground font-semibold"
+                        : "text-muted-foreground hover:text-foreground"
+                    }`}
+                  >
+                    <FileText className="w-4 h-4" />
+                    {lecture.title}
+                  </button>
+                </div>
               ))}
             </div>
           </div>
@@ -112,31 +118,29 @@ export function CourseSidebar({
 
                   return (
                     <div key={lecture.id}>
-                      <button
-                        onClick={() => onSelect(lecture.id)}
-                        className={rowClasses(selectedLecture === lecture.id)}
-                      >
+                      <div className="flex items-center hover:bg-accent/50 transition-colors">
                         <input
                           type="checkbox"
                           aria-label={`Mark ${lecture.title} complete`}
                           checked={progress[lecture.id] ?? false}
                           onChange={(e) => onToggleProgress(lecture.id, e.target.checked)}
                           onClick={(e) => e.stopPropagation()}
-                          className="accent-primary"
+                          onTouchEnd={(e) => e.stopPropagation()}
+                          className="ml-6 accent-primary shrink-0"
                         />
-                        <FileText className="w-3.5 h-3.5" />
-                        {lecture.title}
-                      </button>
+                        <button
+                          onClick={() => onSelect(lecture.id)}
+                          className={rowClasses(selectedLecture === lecture.id)}
+                        >
+                          <FileText className="w-3.5 h-3.5" />
+                          {lecture.title}
+                        </button>
+                      </div>
 
                       {relatedQuizzes?.map((quiz) => (
-                        <button
+                        <div
                           key={quiz.id}
-                          onClick={() => onSelect(quiz.id)}
-                          className={`w-full pl-14 pr-6 py-1.5 text-left text-xs hover:bg-accent/50 transition-colors flex items-center gap-2.5 border-l-2 border-border/40 ml-8 ${
-                            selectedLecture === quiz.id
-                              ? "bg-primary/10 text-foreground font-semibold border-primary/40"
-                              : "text-muted-foreground hover:text-foreground border-border/30"
-                          }`}
+                          className="ml-8 flex items-center border-l-2 border-border/30 hover:bg-accent/50 transition-colors"
                         >
                           <input
                             type="checkbox"
@@ -144,11 +148,21 @@ export function CourseSidebar({
                             checked={progress[quiz.id] ?? false}
                             onChange={(e) => onToggleProgress(quiz.id, e.target.checked)}
                             onClick={(e) => e.stopPropagation()}
-                            className="accent-primary scale-75"
+                            onTouchEnd={(e) => e.stopPropagation()}
+                            className="ml-6 accent-primary scale-75 shrink-0"
                           />
-                          <HelpCircle className="w-3 h-3" />
-                          {quiz.title}
-                        </button>
+                          <button
+                            onClick={() => onSelect(quiz.id)}
+                            className={`flex flex-1 items-center gap-2.5 py-1.5 pl-2 pr-6 text-left text-xs ${
+                              selectedLecture === quiz.id
+                                ? "bg-primary/10 text-foreground font-semibold border-primary/40"
+                                : "text-muted-foreground hover:text-foreground border-border/30"
+                            }`}
+                          >
+                            <HelpCircle className="w-3 h-3" />
+                            {quiz.title}
+                          </button>
+                        </div>
                       ))}
                     </div>
                   )
