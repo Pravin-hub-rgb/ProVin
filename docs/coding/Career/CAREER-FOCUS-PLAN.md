@@ -171,11 +171,11 @@ Order is fixed below; pace is not defined anywhere on purpose.
 
 **Teaches:** how to package a backend + SQLite as run-anywhere software so an interviewer can start it with one command. This is the real interview signal (not production deployment).
 
-**Follow your own notes first** — they now include Phase 2:
-1. `docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.0 Phase 2 - Kya Seekhenge.md`
-2. `docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.1 Dockerfile + .dockerignore.md`
-3. `docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.2 Docker Compose - Volumes + Service.md`
-4. `docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.3 Test Karo + TradeStack Bridge.md`
+**Follow your own notes first** — they include Appendix A (Docker) inside Phase 1:
+1. `docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.0 Docker Kya Hai + Overview.md`
+2. `docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.1 Dockerfile + .dockerignore.md`
+3. `docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.2 Docker Compose - Volumes + Service.md`
+4. `docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.3 Test Karo + TradeStack Bridge.md`
 
 **Build (in your Lab A folder):**
 - `.dockerignore` (exclude `venv/`, `__pycache__/`, `data/`, `*.md`)

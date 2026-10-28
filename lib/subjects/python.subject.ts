@@ -261,31 +261,32 @@ export const pythonSubject: Subject = {
           path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/1.5.5 Scan Endpoint + Wrap-up.md",
         },
       ],
-    },
-    {
-      id: "phase2",
-      title: "Docker Basics - Phase 2",
-      openByDefault: false,
-      lectures: [
+      groups: [
         {
-          id: "fp-2.0",
-          title: "2.0 Phase 2 - Kya Seekhenge",
-          path: "docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.0 Phase 2 - Kya Seekhenge.md",
-        },
-        {
-          id: "fp-2.1",
-          title: "2.1 Dockerfile + .dockerignore",
-          path: "docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.1 Dockerfile + .dockerignore.md",
-        },
-        {
-          id: "fp-2.2",
-          title: "2.2 Docker Compose - Volumes + Service",
-          path: "docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.2 Docker Compose - Volumes + Service.md",
-        },
-        {
-          id: "fp-2.3",
-          title: "2.3 Test Karo + TradeStack Bridge",
-          path: "docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.3 Test Karo + TradeStack Bridge.md",
+          id: "fp-1-appendix-a",
+          title: "Appendix A - Docker Basics",
+          lectures: [
+            {
+              id: "fp-2.0",
+              title: "A.0 Docker Kya Hai + Overview",
+              path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.0 Docker Kya Hai + Overview.md",
+            },
+            {
+              id: "fp-2.1",
+              title: "A.1 Dockerfile + .dockerignore",
+              path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.1 Dockerfile + .dockerignore.md",
+            },
+            {
+              id: "fp-2.2",
+              title: "A.2 Docker Compose - Volumes + Service",
+              path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.2 Docker Compose - Volumes + Service.md",
+            },
+            {
+              id: "fp-2.3",
+              title: "A.3 Test Karo + TradeStack Bridge",
+              path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.3 Test Karo + TradeStack Bridge.md",
+            },
+          ],
         },
       ],
     },

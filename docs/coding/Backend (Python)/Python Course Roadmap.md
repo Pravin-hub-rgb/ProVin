@@ -34,7 +34,8 @@ Course 4 phases mein hua. Har phase apna complete mini-project. Koi phase chhota
 |-------|-------|---------|
 | 0 | Python Basics | 7 lectures (no project — foundation) |
 | 1 | FastAPI + SQLite + pandas | Trading Backend Basic |
-| 2 | Docker | Containerize the trading backend |
+| — | Appendix A — Docker | Containerize the trading backend |
+| 2 | Real-time (WebSocket) | Chat app |
 | 3 | TradeStack Deep-Dive | Read the real backend |
 
 ---
@@ -81,22 +82,36 @@ Yeh woh mini-project hai jisme FastAPI ke core features aate hain — aur data s
 
 ---
 
-## PHASE 2 — Docker Basics
+## Appendix A — Docker Basics
 
 Phase 1 ka project containerize karo taaki koi bhi machine pe ek command mein chale. Interview ke room mein demo ke liye bhi kaam aayega.
 
 | # | Topic | File |
 |---|-------|------|
-| 2.0 | Docker kya hai + course overview | 2.0 Phase 2 - Kya Seekhenge.md |
-| 2.1 | Dockerfile + .dockerignore | Image banana |
-| 2.2 | docker-compose + volume mount | SQLite persist |
-| 2.3 | Test + TradeStack bridge | Deploy verification |
+| A.0 | Docker kya hai + overview | 2.0 Docker Kya Hai + Overview.md |
+| A.1 | Dockerfile + .dockerignore | Image banana |
+| A.2 | docker-compose + volume mount | SQLite persist |
+| A.3 | Test + TradeStack bridge | Deploy verification |
+
+---
+
+## PHASE 2 — Real-time (WebSocket)
+
+Jo Appendix A (Docker) + Phase 0, 1 mein seekha, usko real-time streaming mein lagao:
+- `~/Desktop/Main/TradeStack/backend/src/streaming.py` kholo
+- `WebSocket`, `ConnectionManager`, live market ticks
+
+**Dhyan:** Phase 2 mein production code change nahi — sirf reading + notes + chhota experiment.
+
+### Combined Project — Chat Room App
+
+WebSocket + ConnectionManager + chat rooms. Multiple browser tabs ek room mein connect hote hain, message turant sabko pahunchta hai.
 
 ---
 
 ## PHASE 3 — TradeStack Backend Deep-Dive
 
-Jo Phase 0, 1, 2 mein seekha, use real project pe lagao:
+Jo Phase 0, 1, Appendix A, 2 mein seekha, use real project pe lagao:
 - `~/Desktop/Main/TradeStack/backend/server.py` kholo
 - `backend/src/db.py`, `cache_manager.py` — SQLite production mein
 - Ek isolated experiment karo
@@ -107,12 +122,12 @@ Jo Phase 0, 1, 2 mein seekha, use real project pe lagao:
 
 ## "Manual → Better" Pairs
 
-| Pehle (dard) | Phir (FastAPI) |
+| Pehle (dard) | Phir (Better) |
 |---|---|
 | URL params khud parse karna | FastAPI path/query params |
 | Data khud validate if/else | Pydantic models (auto 422) |
 | Data memory mein (restart pe khatam) | SQLite persistence |
-| Docker se bhool jaana | Volume mount (data survives) |
+| Manual venv setup har machine pe | Docker volume mount (data survives) |
 
 ---
 
@@ -122,7 +137,7 @@ Jo Phase 0, 1, 2 mein seekha, use real project pe lagao:
 - ❌ **Django course** — sirf jungle map
 - ❌ **Advanced SQL** — sirf SQLite basics
 - ❌ **Frontend course** — sirf /docs Swagger
-- ❌ **Production deployment** — alag phase baad mein
+- ❌ **Production deployment** — alag phase baad mein (Docker basics sirf learn ke liye)
 
 ---
 
@@ -145,7 +160,7 @@ Jo Phase 0, 1, 2 mein seekha, use real project pe lagao:
 
 - Phase 0: `python/1 Lec variables & functions/notes.md` se shuru karo
 - Phase 1: `1.0 Phase 1 - Kya Seekhenge + Project Preview.md`
-- Phase 2: `Phase 2 - Docker Basics/2.0 Phase 2 - Kya Seekhenge.md`
+- Appendix A: `Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.0 Docker Kya Hai + Overview.md`
 
 ---
 
@@ -153,4 +168,4 @@ Jo Phase 0, 1, 2 mein seekha, use real project pe lagao:
 - `lib/subjects/python.subject.ts` (sidebar registration)
 - `Phase 0 - Backend Mindset/0.0 Course Kaise Chalega.md` (full backend journey)
 - `Phase 1 - FastAPI Basics (CRUD + SQLite)/1.0 Phase 1 - Kya Seekhenge.md`
-- `Phase 2 - Docker Basics/2.1 Dockerfile + .dockerignore.md`
+- `Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.1 Dockerfile + .dockerignore.md`
