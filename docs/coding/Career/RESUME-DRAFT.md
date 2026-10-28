@@ -1,8 +1,8 @@
 # RESUME DRAFT — DukaanOS + TradeStack
 
-> **Status:** DRAFT. Week 3 (Day 18) me finalize karna hai. Tab tak isko sirf draft ki tarah padhna, copy nahi karna.
+> **Status:** DRAFT. Finalized in Milestone M10 (`CAREER-FOCUS-PLAN.md`). Until then, treat it as a draft — do not send it anywhere.
 >
-> **Rules:** Har bullet FACT hai code se verified (audit ke baad). Koi bhi cheez add karna hai jo tumne code me nahi likhi — mat likhna. Interview me "ye maine kiya" bolna hoga, har bullet pe follow-up aayega.
+> **Rules:** Har bullet FACT hai code se verified (M0 Truth Audit ke baad). Koi bhi cheez add karna hai jo tumne code me nahi likhi — mat likhna. Interview me "ye maine kiya" bolna hoga, har bullet pe follow-up aayega.
 >
 > **Format:** Standard fresher resume — single page (ya max 1.5 page). 3 sections: Summary → Projects → Skills → Education.
 
@@ -64,7 +64,8 @@ A personal NSE swing-trading platform that scans 2,000+ stocks for
 continuation and reversal patterns and manages paper trades in real time.
 
 • Architected a polyglot system: a Python FastAPI microservice for
-  data-heavy computation (13 technical indicators, scanners, breadth),
+  data-heavy computation (technical indicators — SMA, MA angle, ADR,
+  price change, high-low distances — plus scanners and market breadth),
   and a Node-based live-trading engine for real-time event handling —
   sharing one SQLite database in WAL mode so readers and writers
   operate without blocking each other.
@@ -150,11 +151,11 @@ Computer Networks, Object-Oriented Programming
 
 ---
 
-## Project Links (Week 2 me fill karo)
+## Project Links (fill along with Milestones M9-M10)
 
 | Project | GitHub | Live link | Status |
 |---|---|---|---|
-| DukaanOS | `[repo-url]` | `[vercel-url]` | Deploy Day 11 ko hoga |
+| DukaanOS | `[repo-url]` | `[vercel-url]` | Deploy in Milestone M9 |
 | TradeStack | `[repo-url]` | `[local-only — interviewer pehle chalega]` | Docker bonus ho to remote demo |
 
 ---
@@ -166,7 +167,7 @@ Computer Networks, Object-Oriented Programming
 
 *Sabse interesting kaam do cheezein tha. Pehla — offline-first billing. Kirana stores me internet unreliable hota hai, isliye maine Dexie se IndexedDB me product data cache kiya, sales locally queue hoti hain, aur jab internet aata hai woh ek sync endpoint se replay hoti hain — Prisma transaction ke saath, taaki stock decrement, audit trail, aur invoice number teeno atomic rahein. Doosra — Hinglish voice billing. Kirana wale customer ko Hindi-English me baat karne mein aasan hota hai, isliye maine Whisper speech-to-text se audio transcribe karke LLM se structured product data parse karwaaya, aur jab API available na ho tab regex-based fallback hai jo Hindi number words aur Devanagari conversions handle karta hai."*
 
-**3 war stories ready rakho (Day 15):**
+**3 war stories ready rakho (rehearsed in Milestone M5):**
 1. Offline queue sync — atomic replay + conflict handling
 2. Multi-tenant scoping — shopId enforcement across 162 points
 3. Voice parser — fallback design jab AI unavailable ho
@@ -174,11 +175,11 @@ Computer Networks, Object-Oriented Programming
 ### TradeStack — 2 minute
 *"TradeStack ek personal NSE swing-trading platform hai jo 2,000 se zyada stocks me continuation aur reversal patterns scan karta hai aur real-time paper trading manage karta hai. Ye maine trading ke interest ke liye banaya tha.*
 
-*Architecture polyglot hai — Python FastAPI data-heavy computation ke liye (13 technical indicators, stock scanners, market breadth), aur Node real-time event handling ke liye (Upstox WebSocket feed, state machines). Dono ek SQLite database share karte hain WAL mode me, jisse ek process likhta hai aur doosra padhta hai bina block kiye.*
+*Architecture polyglot hai — Python FastAPI data-heavy computation ke liye (technical indicators — SMA, MA angle, ADR, price-change, high-low distances — plus scanners aur market breadth), aur Node real-time event handling ke liye (Upstox WebSocket feed, state machines). Dono ek SQLite database share karte hain WAL mode me, jisse ek process likhta hai aur doosra padhta hai bina block kiye.*
 
 *Sabse interesting technical dard Upstox WebSocket SDK ka tha — wo internally apne tarike se reconnect karta tha aur kabhi kabhi stuck ho jata. Us pe debug karna pada, custom reconnect-with-backoff logic add kiya. Aur scanners me ProcessPoolExecutor use kiya kyunki indicator math CPU-bound hai — Python ke GIL ko bypass karna tha parallel compute ke liye."*
 
-**3 war stories ready rakho (Day 16):**
+**3 war stories ready rakho (rehearsed in Milestone M6):**
 1. Upstox WebSocket reconnect — SDK prototype patching + backoff
 2. State machine position cap — standby candidates staying subscribed
 3. SQLite WAL — polyglot concurrent access design
@@ -201,7 +202,7 @@ Computer Networks, Object-Oriented Programming
 
 ---
 
-## Week 3 Checklist — Resume Finalize (Day 18)
+## Milestone M10 Checklist — Resume Finalize
 
 - [ ] Dono bullet lists apne actual implementation se verify karo (koi bhi point jhooth mat rakhna)
 - [ ] Skills list se jo nahi aata hata do
@@ -214,4 +215,4 @@ Computer Networks, Object-Oriented Programming
 
 ---
 
-**Related:** `COMEBACK-SPRINT-3-WEEKS.md` Day 18 · `TRADESTACK-DEFENSE-KIT.md` Section 2 (2-min pitch)
+**Related:** `CAREER-FOCUS-PLAN.md` (M0 truth audit · M10 finalize) · `TRADESTACK-DEFENSE-KIT.md` Section 2 (2-min pitch) · `DUKAANOS-AI-DEFENSE-KIT.md` (AI bullet defense)

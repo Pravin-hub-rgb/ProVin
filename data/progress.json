@@ -216,5 +216,8 @@
   },
   "csharp": {
     "csharp-0.1": true
+  },
+  "geopolitics": {
+    "geo-0.1": true
   }
 }

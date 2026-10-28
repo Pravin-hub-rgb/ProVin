@@ -158,7 +158,8 @@ Every file must end with this section — 3-5 open-ended questions for self-chec
 - ❌ No starting a file with a heading. Always lead in with conversational context.
 - ❌ No assuming prior knowledge. Vin may have partial knowledge — complete and solidify it.
 - ❌ No skipping basics even if they seem obvious. Treat every concept as needing a clear, fresh explanation.
-- ❌ No jargon without immediate explanation.
+- ❌ No jargon without immediate explanation — define new terms inline with `(...)`.
+- ❌ No reader-specific framing (e.g., "you mentioned", "we started"); keep tone general but explanatory.
 - ❌ No "out of the blue" concepts. Every topic must be introduced with context.
 - ❌ No mentioning a future concept without saying "we'll cover this in the next section."
 - ❌ No questions in "In Your Own Words" that ask about things not taught in that file.

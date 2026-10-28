@@ -7,9 +7,9 @@ export const pythonSubject: Subject = {
     "Python basics se backend tak — fundamentals (7 lectures + practice + solutions), backend mindset, phir FastAPI + SQLite + pandas se apna trading backend. TradeStack backend pe apply.",
   lectures: [
     {
-      id: "fp-roadmap",
-      title: "FastAPI Course Roadmap",
-      path: "docs/coding/Backend (Python)/FastAPI Course Roadmap.md",
+      id: "py-roadmap",
+      title: "Python Course Roadmap",
+      path: "docs/coding/Backend (Python)/Python Course Roadmap.md",
     },
   ],
   phases: [
@@ -17,13 +17,7 @@ export const pythonSubject: Subject = {
       id: "python-basics",
       title: "Python Basics - Lec 1 to 7",
       openByDefault: true,
-      lectures: [
-        {
-          id: "py-lec-overview",
-          title: "Python Basics - Course Overview (Kya Cover Hoga)",
-          path: "docs/coding/python/COURSE-OVERVIEW.md",
-        },
-      ],
+      lectures: [],
       groups: [
         {
           id: "py-basics-lec1",
@@ -265,6 +259,33 @@ export const pythonSubject: Subject = {
           id: "fp-1.5.5",
           title: "1.5.5 Scan Endpoint + Wrap-up",
           path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/1.5.5 Scan Endpoint + Wrap-up.md",
+        },
+      ],
+    },
+    {
+      id: "phase2",
+      title: "Docker Basics - Phase 2",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "fp-2.0",
+          title: "2.0 Phase 2 - Kya Seekhenge",
+          path: "docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.0 Phase 2 - Kya Seekhenge.md",
+        },
+        {
+          id: "fp-2.1",
+          title: "2.1 Dockerfile + .dockerignore",
+          path: "docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.1 Dockerfile + .dockerignore.md",
+        },
+        {
+          id: "fp-2.2",
+          title: "2.2 Docker Compose - Volumes + Service",
+          path: "docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.2 Docker Compose - Volumes + Service.md",
+        },
+        {
+          id: "fp-2.3",
+          title: "2.3 Test Karo + TradeStack Bridge",
+          path: "docs/coding/Backend (Python)/Phase 2 - Docker Basics/2.3 Test Karo + TradeStack Bridge.md",
         },
       ],
     },

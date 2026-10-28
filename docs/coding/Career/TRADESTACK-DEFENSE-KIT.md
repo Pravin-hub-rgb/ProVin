@@ -1,10 +1,10 @@
-# TRADESTACK DEFENSE KIT — Python Backend Ko 3 Hafte Me Explain Karna
+# TRADESTACK DEFENSE KIT — Explaining the Python Backend
 
-> **Ye file kya hai:** Interview defense material. TradeStack ka Python backend (~930 lines `server.py`, 14 modules, 48 endpoints) tumne khud banaya hai — ab tumhe sirf **explain** karna hai, naya Python seekhna nahi.
+> **What this file is:** interview defense material. The TradeStack Python backend (a 1,240-line `server.py`, 15 source modules, 49 REST endpoints) is code you wrote yourself — now the only job is to **explain** it, not to re-learn Python.
 >
-> **Target:** Fullstack (React+Next+Node) role. Python yahan tumhari **depth ka signal** hai, weakness nahi. Interviewer poochega *"FastAPI kya hai, SQLite kyun, pandas kahan use hota"* — tum confidently 30-second answers denge. Bas itna kaafi hai.
+> **Target:** Fullstack (React+Next+Node) role. Python here is your **depth signal**, not your weakness. The interviewer asks *"what is FastAPI, why SQLite, where do you use pandas"* — you answer confidently in 30 seconds each. That's enough.
 >
-> **Time budget:** Roz 1-1.5h × 15 din = ~15 ghante. Isse zyada mat lagao.
+> **Pace:** this is a reading-and-rehearsal kit, not a study course. One concept card or a few Q&As per sitting is a complete sitting — it runs inside Milestone M6 of `CAREER-FOCUS-PLAN.md`. No clocks, no quotas.
 
 ---
 
@@ -22,10 +22,10 @@ TradeStack **teen hisson** se bana hai, aur har hissa alag kaam karta hai:
                ▼                          ▼
 ┌────────────────────────────┐  ┌──────────────────────────┐
 │  Python FastAPI (port 8001)│  │  Node Live-Trader        │
-│  • 48 REST endpoints       │  │  (Next.js route handler  │
+│  • 49 REST endpoints       │  │  (Next.js route handler  │
 │  • pandas/numpy indicators │  │   ke andar, process me)  │
 │  • NSE bhavcopy ingestion  │  │  • Upstox WebSocket V3   │
-│  • 13 technical indicators│  │  • protobuf decode        │
+│  • custom indicator set   │  │  • protobuf decode        │
 │  • continuation + reversal │  │  • state machines        │
 │    scanners (multiprocess)│  │  • paper trader + P&L    │
 │  • market breadth engine   │  └───────────┬──────────────┘
@@ -60,7 +60,7 @@ TradeStack **teen hisson** se bana hai, aur har hissa alag kaam karta hai:
 >
 > *Architecture tri-partite hai: ek Next.js frontend, ek Python FastAPI microservice, aur ek Node-based live trading engine. Data-heavy kaam — technical indicators, stock scanning, market breadth — Python me hai, kyunki pandas/numpy uske liye best hai. Real-time market data streaming Node me hai, kyunki WebSocket event handling JavaScript me natural hai. Dono ek SQLite database share karte hain, WAL mode me — isse ek process likhe aur doosra padhe, bina server ke.*
 >
-> *Data pipeline NSE bhavcopy download karke har stock ka pickle cache banata hai — 2000+ stocks ke liye. Usi cache se 13 custom indicators compute hote hain. Scanners multiprocessing pool use karte hain kyunki ek stock ka scan 2000 stocks me parallel chalana CPU-bound kaam hai.*
+> *Data pipeline NSE bhavcopy download karke har stock ka pickle cache banata hai — 2000+ stocks ke liye. Usi cache se custom indicators compute hote hain — SMA (20/50), MA angle, ADR, price-change, high-low distances. Scanners multiprocessing pool use karte hain kyunki 2000 stocks ka indicator math CPU-bound hai, aur processes hi Python me true parallelism deta hai.*
 >
 > *Live side pe Upstox WebSocket V3 se 5-minute candles stream hoti hain, protobuf decode hoke har stock ke liye state machine chalata hai — 11 states, jaise entry signal aaya, stock standby me gaya; entry fill hui, to position. Position management, paper trading, aur P&L tracking sab automated hai. Trade log SQLite me persist hota hai.*
 >
@@ -68,7 +68,7 @@ TradeStack **teen hisson** se bana hai, aur har hissa alag kaam karta hai:
 
 ---
 
-## 3. Concept Cards (har ek 1-2 min me padhna, Week 2-3 me)
+## 3. Concept Cards (one card per sitting, unhurried)
 
 ### Card 1 — FastAPI: kya hai aur route kya hota hai
 
@@ -92,7 +92,7 @@ def set_setting(key: str, value: str):
 
 **Bonus:** FastAPI automatically **Swagger docs** banata hai — `http://localhost:8001/docs`. Saare endpoints wahan dikhte hain with example requests. Isliye `47 endpoints` likhne me time nahi lagta — pattern hi ek jaisa hai.
 
-**Interview answer:** *"FastAPI Python ka modern async web framework hai. Isme route ek function hai jo URL se map hota hai — woh function request leta hai aur JSON response deta hai. FastAPI Pydantic models se automatic validation aur documentation banata hai, isliye meri 48 endpoints ka Swagger docs auto-generated hai."*
+**Interview answer:** *"FastAPI Python ka modern async web framework hai. Isme route ek function hai jo URL se map hota hai — woh function request leta hai aur JSON response deta hai. FastAPI Pydantic models se automatic validation aur documentation banata hai, isliye meri 49 endpoints ka Swagger docs auto-generated hai."*
 
 ### Card 2 — Pydantic: response ka shape
 
@@ -126,14 +126,26 @@ Ye classes batati hain ki *"is endpoint ka input aisa dikhna chahiye"*. FastAPI 
 
 **Interview answer:** *"SQLite file-based embedded database hai — zero configuration, no server. Main WAL mode use kar raha hoon kyunki ye read aur write ko parallel kar deta hai, jo zaroori tha kyunki Python service aur Node live-trader dono ek hi file pe kaam karte hain — ek likhta hai, doosra padhta hai, bina block kiye."*
 
-### Card 4 — pandas/numpy: indicators ka kaam
+### Card 4 — pandas/numpy: the real indicator set
 
-Tumhare `indicators.py` me 13 custom indicators hain (SMA, RSI, EMA, MACD, Bollinger, etc.). Har indicator ek **rows pe mathematical operation** hai — closing price ka moving average, ya gain/loss ka ratio.
+The resume's indicator claims come from `src/indicators.py`. The **actual set** (get these right — an interviewer will probe exactly here):
 
-**pandas ka asli kaam: vectorization.** Matlab ek hi line me 2000 stocks ke saare rows pe math ho jata hai, C-level pe — manual Python loop se 100x faster.
+| Indicator | What it computes | How |
+|---|---|---|
+| **SMA 20 / SMA 50** | simple moving averages of close | `data["close"].rolling(window=period).mean()` |
+| **MA angle** | slope of SMA-20 as degrees, via regression over last N points | `np.correlate` — vectorized, "~100x faster than the original polyfit loop" (your own code comment!) |
+| **ADR % / ADR absolute** | average daily range, as % of close and in rupees | rolling mean of `(high − low)` |
+| **Price change** | % change over 1, 5, 20 days | `close.pct_change(p)` |
+| **High-low distances** | how far close sits from the 20-day high/low | rolling max/min + normalized distance |
+
+Plus three **scanner filters**: price-range check (default ₹100-₹2000), minimum ADR% threshold (3.0), and a liquidity check (volume ≥ 1,000,000 with ≥5% price movement on ≥2 of the last 30 days).
+
+**Note what is NOT in the file:** RSI, EMA, MACD, Bollinger. Never claim them — follow-up questions die right there.
+
+**pandas' real role: vectorization.** Whole columns of math run at C level in one expression — a manual Python loop would be ~100x slower on the same rows:
 
 ```python
-# Manual (slow)
+# manual (slow)
 for i in range(20, len(prices)):
     sma_values.append(sum(prices[i-20:i]) / 20)
 
@@ -141,9 +153,9 @@ for i in range(20, len(prices)):
 sma = prices.rolling(window=20).mean()
 ```
 
-**bhavcopy ingestion** bhi pandas ka kaam hai — NSE se daily CSV download hota hai, wo DataFrame me read hota hai, cache me store hota hai.
+**bhavcopy ingestion** is the other pandas job — daily NSE CSV read into a DataFrame, cached per-stock as pickles.
 
-**Interview answer:** *"Python me data processing ke liye pandas use kiya kyunki uska vectorized operations C-level pe chalti hain — 2000 stocks ke saare indicators seconds me compute ho jaate hain, jo manual loop me minutes lega. NSE bhavcopy ka CSV bhi pandas DataFrame me aata hai, aur uska pickle cache per-stock store hota hai taaki baar me load fast ho."*
+**Interview answer:** *"My indicator layer has five groups — simple moving averages, an MA-angle slope computed with np.correlate, ADR in percent and absolute rupees, multi-day price changes, and distance from period highs/lows — plus scanner filters for price range, ADR floor and liquidity. I leaned on pandas' vectorized rolling operations so the math runs at C speed across 2,000+ stocks, with each stock's OHLCV cached as a pickle for fast reload."*
 
 ### Card 5 — Multiprocessing: scanners me kyun
 
@@ -211,6 +223,24 @@ Tumhare live-trader me har stock ka apna **finite state machine** hai (11 states
 
 ---
 
+### Card 9 — Why the live side is Node: concurrent I/O, NOT parallelism (the memory-fix card)
+
+The old fuzzy memory said *"JS is better at parallelism than Python."* **Never say that sentence** — Node is single-threaded, so it has literally zero parallelism, and an interviewer will light a candle and probe.
+
+The correct story has three clean parts:
+1. **Tooling fit:** the Upstox SDK and protobuf decoding are JavaScript-native. The live trader runs *inside the Next.js app itself* (route handlers) — no second service to deploy, no inter-process plumbing.
+2. **The workload is concurrent I/O:** one process holds ONE WebSocket connection; the broker *pushes* candle frames for all subscribed symbols; every pushed tick fires a callback routed to that symbol's state machine. Ten stocks "monitored simultaneously" = ten callbacks awaiting pushes on an event loop — waiting on I/O concurrently, never computing side-by-side.
+3. **Python owns the real parallelism:** the scanners do CPU-bound math across 2,000+ stocks with `ProcessPoolExecutor` (the GIL blocks thread parallelism there).
+
+**The two sentences that always pass:**
+> *"Both halves use the concurrency model that fits their workload — the realtime feed is event-loop I/O in Node, and the heavy math is process-based parallelism in Python."*
+
+> *"The live side isn't about parallelism at all — it's a single process subscribing to a push feed; the state machines ensure each stock is in exactly one phase at a time."*
+
+**Bonus war story this card unlocks (you wrote it yourselves, `streamer.ts`):** the Upstox SDK loaded its protobuf schema from a disk path that broke under Turbopack/Next bundling — so you patched the SDK's `MarketDataFeederV3.prototype.initProtobuf` to share one pre-loaded root, and wrapped the connection with reconnect-with-backoff. A genuinely rare, hands-dirty story — use it.
+
+---
+
 ## 4. Top 15 Python-Backend Interview Questions (model answers)
 
 Yeh wahi hain jo fullstack interviews me TradeStack ke baare me poochhe jaate hain. Inka jawab **bol ke** practice karo.
@@ -219,7 +249,7 @@ Yeh wahi hain jo fullstack interviews me TradeStack ke baare me poochhe jaate ha
 **A:** Data-heavy computation (indicators, scanners) Python me hai kyunki pandas/numpy best-in-class hai iske liye — vectorized operations C-level pe chalti hain. Real-time streaming aur UI Node/Next me hai kyunki WebSocket event handling aur SSR JS me natural hai. Ye separation of concerns hai — har layer apne strength me.
 
 ### Q2. FastAPI vs Flask — kyun FastAPI?
-**A:** FastAPI async support deta hai (Flask sync hai by default), Pydantic se automatic request/response validation aur type hints, aur auto-generated Swagger/OpenAPI docs. 48 endpoints likhne me Swagger free mil gaya — Flask me manually document karna padta.
+**A:** FastAPI async support deta hai (Flask sync hai by default), Pydantic se automatic request/response validation aur type hints, aur auto-generated Swagger/OpenAPI docs. 49 endpoints likhne me Swagger free mil gaya — Flask me manually document karna padta.
 
 ### Q3. SQLite me kaise concurrent reads/writes handle karte ho?
 **A:** WAL (Write-Ahead Logging) mode use kiya. Ye writer aur reader ko parallelize karta hai — writer changes pehle `-wal` file me likhta hai, main DB file readers ke liye consistent rehti hai. Isse Python service (writer) aur Node live-trader (reader) ek hi file pe kaam kar sakte hain bina block kiye.
@@ -227,8 +257,8 @@ Yeh wahi hain jo fullstack interviews me TradeStack ke baare me poochhe jaate ha
 ### Q4. Kya SQLite production ke liye sahi hai?
 **A:** TradeStack ek personal, single-user tool hai — isliye SQLite perfect hai (zero-config, no server). Multi-user ya high-write production system me Postgres jaata. Maine isliye `db.py` me DB path centralized rakha aur abstraction rakhi, taaki baad me Postgres pe migrate karna simple ho.
 
-### Q5. pandas me indicators vectorize kaise karte ho?
-**A:** `rolling(window=20).mean()` jaise operations use kiye. Pandas internally C-level pe loops chalata hai, isliye 2000 stocks ke saare rows pe math seconds me hota hai. Manual Python loop me wahi kaam minutes lega. RSI jaise complex indicators bhi `ewm()` ya manual vectorized formulas se banaye.
+### Q5. How do you vectorize indicators in pandas?
+**A:** Every rolling-window computation — SMA 20/50, ADR, high-low distances — is a single pandas expression that runs at C level. The best example is MA angle: the original code computed the regression slope with a polyfit loop in Python; I replaced it with a vectorized `np.correlate` — my own code comment says ~100x faster. Replacing manual loops with rolling windows is the core of vectorization. (Truth-check note: TradeStack has no RSI/EMA/MACD — claiming them dies on follow-up; the honest set is SMA, MA angle, ADR, price change, high-low distances.)
 
 ### Q6. Multiprocessing vs threading vs async — kab kya?
 **A:** Rule of thumb:
@@ -274,24 +304,24 @@ Yeh wahi hain jo fullstack interviews me TradeStack ke baare me poochhe jaate ha
 
 Ye tumhara **deep-dive plan** hai. Poora code padhne ki zaroorat nahi — structure samajhna hai.
 
-### Day 1 — Skeleton + routes (1.5h)
+### Sitting 1 — Skeleton + routes
 - Top 60 lines padho: imports, `lifespan` (startup pe cache rebuild), `app = FastAPI(...)`, CORS middleware
-- **Kaam:** Sab 48 route signatures ek baar list karo (path + method). Bas dekhna hai kaunsa endpoint kya karta hai — implementation nahi.
+- **Kaam:** Sab 49 route signatures ek baar list karo (path + method). Bas dekhna hai kaunsa endpoint kya karta hai — implementation nahi.
 - Command: `grep '^@app\.' backend/server.py`
 
-### Day 2 — Data layer (1.5h)
+### Sitting 2 — Data layer
 - `src/db.py` — SQLite schema (`cache_index`, `settings`, `upstox_config`, `stock_list_items`, trade log tables), thread-local connections
 - `src/cache_manager.py` — pickle save/load, SQLite index fallback to glob
 - `src/settings.py` — key-value settings with types/categories/validation
 - **Samajhne ka point:** Data kahaan aata hai, kaise store hota hai, kaise retrieve hota hai.
 
-### Day 3 — Scanners + breadth (1.5h)
-- `src/indicators.py` — 13 indicators (SMA, RSI, EMA, MACD...)
+### Sitting 3 — Scanners + breadth
+- `src/indicators.py` — the real indicator set (SMA 20/50, MA angle via `np.correlate`, ADR % / absolute, price change 1/5/20d, distance from period high/low) + the three scanner filters (price range, ADR threshold, liquidity). **No RSI/EMA/MACD — don't claim them.**
 - `src/scanner.py` — ContinuationScanner, ReversalScanner, `ProcessPoolExecutor` usage
 - `src/market_breadth.py` — breadth calculation, `ProcessPoolExecutor`
 - **Samajhne ka point:** Pure computation kaise parallel hota hai, indicators ka output kaise use hota hai.
 
-### Bonus — Live trader (agar time bache, 1h)
+### Bonus — Live trader (short optional read)
 - `frontend/src/app/api/live/route.ts` + `events/route.ts` — SSE broadcast
 - `frontend/src/lib/` — Upstox WebSocket client, state machines
 - **Samajhne ka point:** Python se Node side real-time data kaise jaati hai.
@@ -309,11 +339,11 @@ Ye 3 hafte me **zarurat nahi hai** — resume/interview ke liye:
 - ❌ Celery/RQ task queues
 - ❌ Kubernetes, cloud deployment (Docker bhi bonus hai, must nahi)
 
-**Kyun:** Interview me "ye maine kiya, yeh seekha" bolne ka confidence chahiye — wo 15 ghante ke Defense Kit + TradeStack-Mini se aa jayega. Ye "out of scope" cheezein bolne se zyada risk hain (follow-up me atak jaoge).
+**Kyun:** Interview me "ye maine kiya, yeh seekha" bolne ka confidence chahiye — wo Defense Kit rehearse karne se aata hai. Ye "out of scope" cheezein bolne se zyada risk hain (follow-up me atak jaoge). Also note: TradeStack-Mini ab nahi banega — uski jagah CAREER-FOCUS-PLAN ke Labs A/B hain (already-built ground floor).
 
 ---
 
-## 7. Rehearsal Checklist (Week 3 se roz 15 min)
+## 7. Rehearsal Checklist (one question spoken + recorded per sitting)
 
 Har raat 19:30 slot me — ek question bol ke record karo:
 
@@ -324,8 +354,24 @@ Har raat 19:30 slot me — ek question bol ke record karo:
 - [ ] Q12: 47 URL refactor
 - [ ] Q15: Sabse bada technical dard
 
-Baaki concept cards Week 2 me ek baar padh lena kaafi hai.
+Reading the remaining cards once is enough — that part is passive; speaking them is the active proof.
 
 ---
 
-**Related:** `COMEBACK-SPRINT-3-WEEKS.md` (din 13, 15-17 me ye file padhni hai) · TradeStack-Mini spec usi file me Section F.
+---
+
+## 8. Bridge to the Hands-On Labs (CAREER-FOCUS-PLAN M1–M4)
+
+Reading explains; the labs make you *feel* the same shapes on the ground floor. Connect each lab to its part right after finishing it:
+
+| Lab (in `hands-on-gym/`) | Trains the ground floor of | Bridge sentence to use in interviews |
+|---|---|---|
+| Lab A — FastAPI + SQLite CRUD | **Part 2** (server shape, validation, `/docs`, status codes) | *"My TradeStack server is this exact shape at scale — 49 endpoints of it, sharing one WAL-mode file."* |
+| Lab B — CSV → DB → SMA → scan (+B2 `ProcessPoolExecutor`) | **Part 2 data side + Part 3** (ingestion, indicator layer, scanner) | *"The production scanners are this pattern scaled: pickled per-stock caches, 5 indicator groups, process pool instead of a loop."* |
+| Lab C — simulated feed → callbacks → mini state machine (TS) | **Part 4** (event-driven intake, per-symbol FSM, reconnect) | *"Before reading the real `streamer.ts`, I rebuilt its skeleton on a simulated feed — same routing, same state machine discipline."* |
+
+Labs are a private gym — never resume items, never "projects". Speaking about them in interviews is fine as *learning evidence* ("I rebuilt a mini version to keep my understanding sharp"), which is a credibility booster, not a dilution.
+
+---
+
+**Related:** `CAREER-FOCUS-PLAN.md` (this kit runs inside M6; Labs A/B are the hands-on ground floors for Parts 2-3) · `Career/README.md` (master map).

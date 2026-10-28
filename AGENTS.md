@@ -32,7 +32,8 @@ This file contains the rules and conventions for creating and editing course con
 
 ### 5. Writing Style
 - Conversational, like a senior dev to a junior
-- No jargon without immediate explanation
+- No jargon without immediate explanation — define new terms inline with `(...)` on first use
+- Keep tone general, never addressing the reader as a known individual (no "you mentioned", "we started"); be explanatory without targeting a specific person
 - Use analogies generously
 - Technical explanation first, then analogy to reinforce
 - Include a "What It Is NOT" section to clarify misconceptions

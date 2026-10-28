@@ -2,7 +2,7 @@
 
 Yeh list **priority order** mein hai. Jo cheez project mein already use ho rahi hai, usko deep samajh + uske aage ki cheezein.
 
-> **📋 Asli course yahan hai:** `FastAPI Course Roadmap.md` (phase-wise chapters + projects) + `Phase 0 - Backend Mindset/` (pehla module). Yeh file sirf "kya seekhna hai" ki priority list hai.
+> **📋 Asli course yahan hai:** >`Python Course Roadmap.md` (phase-wise chapters + projects) + `Phase 0 - Backend Mindset/` (pehla module). Yeh file sirf "kya seekhna hai" ki priority list hai.
 
 ### 1. Python Backend (Sabse Important)
 
@@ -84,7 +84,7 @@ Yeh list **priority order** mein hai. Jo cheez project mein already use ho rahi 
 
 ### Framework Mapping (sirf ek jagah — beginner confusion se bachaane ke liye)
 
-> **Beginner confusion rule:** Backend samajhte waqt sabse bada sawaal hota hai "Flask/FastAPI/Django/Express kya hai, kaunsa chunu?" Iska ek saaf jawab `FastAPI Course Roadmap.md` + `Phase 0/0.4` (jungle map) mein diya hai. Concept: sab frameworks wahi core cheezein karte hain — bas syntax alag. Course mein mapping **sirf wohi jagah** hai, uske baad seedha FastAPI.
+> **Beginner confusion rule:** Backend samajhte waqt sabse bada sawaal hota hai "Flask/FastAPI/Django/Express kya hai, kaunsa chunu?" Iska ek saaf jawab >`Python Course Roadmap.md` + `Phase 0/0.4` (jungle map) mein diya hai. Concept: sab frameworks wahi core cheezein karte hain — bas syntax alag. Course mein mapping **sirf wohi jagah** hai, uske baad seedha FastAPI.
 
 Bata — kis area se start karna hai pehle?  
 FastAPI deep dive, Database, Real-time (WebSocket/SSE), ya State Machines?
