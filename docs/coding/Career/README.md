@@ -17,10 +17,10 @@
 - [ ] Appendix A (Docker) — optional, only if you want to containerize
 
 ### Step 4 — Labs (Ground-Floor Practice)
-- [ ] **Lab A:** FastAPI + SQLite CRUD → run your backend locally
-- [ ] **Lab B:** CSV → DB → SMA/RSI → scan endpoint → test it works
-- [ ] **Lab C:** Simulated feed → mini state machine (TypeScript) → understand real-time
-- [ ] **Lab D:** Your own AI parse lab (TypeScript) → understand DukaanOS pipeline
+- [ ] **Lab A:** FastAPI + SQLite CRUD (source: `Backend (Python)/Phase 1/1.1-1.4`)
+- [ ] **Lab B:** CSV → SMA/RSI → scan endpoint (source: `Backend (Python)/Phase 1/1.5.4-1.5.5`)
+- [ ] **Lab C:** Simulated feed → state machine (TypeScript) (ground-floor practice, no course file — build spec in focus plan)
+- [ ] **Lab D:** AI parse lab (TypeScript) (ground-floor practice, no course file — build spec in focus plan)
 
 ### Step 5 — Prepare Interview Explanations
 - [ ] **TradeStack Defense Kit:** Read `CAREER/TRADESTACK-DEFENSE-KIT.md` → know 4 parts, 9 concept cards, 15 Q&As

@@ -42,10 +42,11 @@
 - [ ] M3.5 — Appendix A Docker: Optional, only if you want to containerize
 
 **Step 4 — Labs (Ground-Floor Practice)**
-- [ ] Lab A — FastAPI + SQLite CRUD (run backend locally)
-- [ ] Lab B — CSV → DB → SMA/RSI → scan endpoint (plus B2 multiprocessing)
-- [ ] Lab C — Simulated feed → state machine (TypeScript)
-- [ ] Lab D — Your own AI parse lab (TypeScript)
+*Where to learn each lab:*
+- [ ] **Lab A** → `Backend (Python)/Phase 1/1.1-1.4` (Path Params, Pydantic, CRUD, SQLite)
+- [ ] **Lab B** → `Backend (Python)/Phase 1/1.5.4-1.5.5` (Indicators, SMA, Scan Endpoint) + B2 from Lab C concepts
+- [ ] **Lab C** → no dedicated course file — ground-floor practice. Uses Next.js `Batch 8.4` (deployment/WebSocket awareness) as loose anchor, but really just follow the 150-line build spec in the lab itself
+- [ ] **Lab D** → no dedicated course file — ground-floor practice. Uses `Agentic AI/Phase 3` (API calls + prompts) as conceptual anchor, but follows the lab build spec directly. The real pipeline details live in `DukaanOS-AI-DEFENSE-KIT.md`
 
 **Step 5 — Prepare Interview Explanations**
 - [ ] M5 — Remember DukaanOS: defense kit + operate drill
@@ -96,10 +97,11 @@
 
 ---
 
-## D. Labs (M1–M4) — ground rules first
+## D. Labs (A-D) — ground rules first
 
 - Location: `C:\Users\Pravin\Desktop\main\hands-on-gym\<lab-name>\` — one folder per lab, one git repo or plain folder, both fine.
 - Cost cap: ~150 lines each (B2 is ~10 more). If a lab is outgrowing that, you're overbuilding — cut features, keep the concept.
+- **Labs A & B come from the Python course.** Labs **C & D are ground-floor practice only** — they have no dedicated course files. Follow the build specs in this plan directly. The conceptual anchors are listed in Step 4 above.
 - Every lab ends the same way: run the demo, then **explain it out loud in 90 seconds** (record it). If you can't explain it, the lab isn't done — reread, compress the explanation, retry once, then move on regardless.
 - The practice used to fill the labs: your own course notes `docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/` (files listed per lab).
 
