@@ -48,7 +48,7 @@ export const careerSubject: Subject = {
         {
           id: "career-lab-c-group",
           title: "Lab C — Simulated Feed + State Machine (TypeScript)",
-          openByDefault: false,
+          openByDefault: true,
           lectures: [
             {
               id: "career-lab-c",
