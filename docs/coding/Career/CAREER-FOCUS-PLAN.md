@@ -17,42 +17,46 @@
 3. **Skip-licenses are legitimate tool, not failure.** Every milestone lists a skip condition. Walking away from a heavy item keeps the plan alive; grinding a bad item kills it.
 4. **Labs are a private gym.** All hands-on labs live in one folder (`C:\Users\Pravin\Desktop\main\hands-on-gym\`), each under ~150 lines, and **never** go on the resume. They exist so your hands have touched each concept ground floor, nothing more.
 5. **Language identity: TypeScript/JavaScript only.** Your headline is *Fullstack — React · Next.js · Node · TypeScript*. Python never appears in your headline, summary, or skills column. It appears only as the language of TradeStack's backend bullets — because it's already shipped there, and real work doesn't get un-declared.
-6. **Truth rule.** Never write or say any claim your code can't back up. M0 exists because of this rule — it caught real fiction already (see below).
+6. **Truth Rule.** Never write or say any claim your code can't back up. Step 0 (M0) exists because of this rule — it caught real fiction already (see below).
 7. **Post-offer parking lot.** `Agentic AI Production` (LangChain/LangGraph/RAG), the `Agentic AI` intro course Phases 2-8, and all new one-day AI-assisted projects are for **after the first offer**. Your build-fast skill is a growth-track superpower, not a pre-interview distraction.
 8. **One DSA problem ends every session.** From `docs/coding/DSA/roadmap.md` Phase 1 order, in sequence, unaided. No daily quota — but never let two sessions pass without one. This matters: at the fresher level, DSA is the gate most interviews actually decide on.
 9. **When uncertain between options:** default to the option that touches fewer things at once.
 
 ---
 
-## B. The 7 Steps (do in order)
+## B. The 7 Steps (do in order — one active at a time)
 
-**Step 1 — Learn React by Building:**
-- [ ] M1 — React Capstone → Finish `React JS/Capstone - TrackIt/` (T.1 → T.8) → Rebuild TrackIt app
+**Step 0 — Truth Audit**
+- [ ] M0 — Verify every resume claim against real code (TRADESTACK facts, DukaanOS schema, indicators, etc.)
 
-**Step 2 — Learn Next.js by Building:**
-- [ ] M2 — Next.js Capstone → Finish `Next JS/Final Capstone - Hiring Platform/` (C.0 → C.12) → Rebuild Hiring Platform app
+**Step 1 — Learn React by Building**
+- [ ] M1 — React Capstone: Finish `React JS/Capstone - TrackIt/` (T.1 → T.8) → Rebuild TrackIt app
+- [ ] M7 — React 100-Q: Answer all 100 aloud, mark GREEN/YELLOW/RED, patch RED using course batches
 
-**Step 3 — Learn Python FastAPI by Building:**
-- [ ] M3 — FastAPI Backend → Finish `Backend (Python)/Phase 1/1.0 → 1.5.5` → Rebuild Trading Backend (SQLite + pandas + SMA/RSI)
-- [ ] M3.5 — Appendix A Docker → Optional, only if you want to containerize your backend
+**Step 2 — Learn Next.js by Building**
+- [ ] M2 — Next.js Capstone: Finish `Next JS/Final Capstone - Hiring Platform/` (C.0 → C.12) → Rebuild Hiring Platform app
+- [ ] M8 — Next.js 100-Q: Same diagnostic method, patch REDs with course batches
 
-**Step 4 — Labs (Ground-Floor Practice):**
-- [ ] Lab A — FastAPI + SQLite CRUD → run your backend locally
-- [ ] Lab B — CSV → DB → SMA/RSI → scan endpoint → test it works
-- [ ] Lab C — Simulated feed → mini state machine (TypeScript) → understand real-time
-- [ ] Lab D — Your own AI parse lab (TypeScript) → understand DukaanOS pipeline
+**Step 3 — Learn Python FastAPI by Building**
+- [ ] M3 — FastAPI Backend: Finish `Backend (Python)/Phase 1/1.0 → 1.5.5` → Rebuild Trading Backend (SQLite + pandas + SMA/RSI)
+- [ ] M3.5 — Appendix A Docker: Optional, only if you want to containerize
 
-**Step 5 — Prepare Interview Explanations:**
-- [ ] M5 — Remember DukaanOS → Read `DUKAANOS-AI-DEFENSE-KIT.md` → know 6 pieces + 8 concept cards
-- [ ] M6 — Remember TradeStack → Read `TRADESTACK-DEFENSE-KIT.md` → know 4 parts + 9 concept cards
-- [ ] M7 — Core subjects gap-scan → `Core Subjects/` (OS, OOP, DBMS, CN) + one DSA problem every session
-- [ ] M0 — Truth Audit (done first or anytime — make sure every resume claim has real code behind it)
+**Step 4 — Labs (Ground-Floor Practice)**
+- [ ] Lab A — FastAPI + SQLite CRUD (run backend locally)
+- [ ] Lab B — CSV → DB → SMA/RSI → scan endpoint (plus B2 multiprocessing)
+- [ ] Lab C — Simulated feed → state machine (TypeScript)
+- [ ] Lab D — Your own AI parse lab (TypeScript)
 
-**Step 6 — Polish Yourself:**
-- [ ] M9 — Make it real → Deploy DukaanOS live, real READMEs, screenshots
-- [ ] M10 — Resume + LinkedIn → Read `RESUME-DRAFT.md` → truth-check → finalize two projects
+**Step 5 — Prepare Interview Explanations**
+- [ ] M5 — Remember DukaanOS: defense kit + operate drill
+- [ ] M6 — Remember TradeStack: defense kit + 4-part map rehearsal
+- [ ] M11 — Core subjects gap-scan (OS, OOP, DBMS, CN, web internals)
 
-**Step 7 — Apply:**
+**Step 6 — Polish Yourself**
+- [ ] M9 — Make it real: deploy DukaanOS + rewrite TradeStack README
+- [ ] M10 — Resume + LinkedIn: fill RESUME-DRAFT.md, final truth check
+
+**Step 7 — Apply**
 - [ ] M12 — One recorded mock interview
 - [ ] M13 — Send 1 application
 
@@ -60,7 +64,7 @@
 
 ---
 
-## C. M0 — Truth Audit (do this anytime in Step 5, or before M10)
+## C. M0 — Truth Audit (Step 0 — do before or alongside any other step)
 
 **Goal:** every resume bullet and every defense-kit claim is either verified against your real code, or corrected. Interviews die on follow-up questions probing a bullet you wrote but can't trace.
 
@@ -88,7 +92,7 @@
 - [ ] Anything untraceable is rewritten or removed
 - [ ] You can name the real TradeStack indicators and your real model names from memory
 
-**Skip-license:** none — this milestone is Step 5's foundation. If a sub-item stalls, mark it and come back inside M0; don't move to resume finalization with unknown fiction on the resume.
+**Skip-license:** none — this milestone (Step 0) is the plan's foundation. If a sub-item stalls, mark it and come back; don't move to Step 1 with unknown fiction on the resume.
 
 ---
 
@@ -263,7 +267,7 @@
 
 ---
 
-## G. M7 — React Diagnostic, M8 — Next.js Diagnostic
+## G. M7 — React Diagnostic (Step 1), M8 — Next.js Diagnostic (Step 2)
 
 **Method (both milestones, one before the other):**
 1. Open the 100-question file: `docs/coding/React JS/Interview Prep/100 React Interview Questions.md` for M7; `docs/coding/Next JS/Interview Prep/100 Next.js Interview Questions.md` for M8.
