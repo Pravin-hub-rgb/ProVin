@@ -106,6 +106,11 @@ export const agenticaiSubject: Subject = {
           title: "3.5 Handling Errors",
           path: "docs/coding/Agentic AI/Phase 3 - Your First Real API Call/3.5 Handling Errors.md",
         },
+        {
+          id: "ai-3.6",
+          title: "3.6 AI Parse Lab — Hinglish Order Parser",
+          path: "docs/coding/Agentic AI/Phase 3 - Your First Real API Call/3.6 AI Parse Lab — Hinglish Order Parser.md",
+        },
       ],
     },
     {
