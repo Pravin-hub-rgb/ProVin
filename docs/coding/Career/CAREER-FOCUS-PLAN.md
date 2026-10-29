@@ -1,6 +1,8 @@
 # CAREER FOCUS PLAN — Fullstack (React · Next.js · Node · TypeScript)
 
-> **What this file is:** the single plan for getting interview-ready and applying. It replaced the old 21-day, 12-hour-per-day sprint — because that format piled pressure on you and pressure kills recovery. This version has **zero time references**: no days, no weeks, no hours, no deadlines.
+> **Simplified roadmap:** See `Career/README.md` for a plain checklist version.
+>
+> **What this file is:** the full plan with all standing rules and milestone detail. Use `Career/README.md` if you just want the simple checklist.
 >
 > **The one rule when confused:** open `Career/README.md`, look for the topmost unchecked milestone in this file, and do only that. Nothing else exists while a milestone is active.
 >
