@@ -138,12 +138,12 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-1.1",
-          title: "1.1 JSX Kya Hai",
+          title: "1.1 JSX Explained",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.1 JSX Kya Hai.md",
         },
         {
           id: "react-1.2",
-          title: "1.2 Pehla Component",
+          title: "1.2 First Component",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.2 Pehla Component.md",
         },
         {
@@ -168,22 +168,22 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-1.5.3",
-          title: "1.5.3 Optional Props aur Destructuring",
+          title: "1.5.3 Optional Props + Destructuring",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.5.3 Optional Props aur Destructuring.md",
         },
         {
           id: "react-1.5.4",
-          title: "1.5.4 Callback Props aur Event Handling",
+          title: "1.5.4 Callback Props + Event Handling",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.5.4 Callback Props aur Event Handling.md",
         },
         {
           id: "react-1.6",
-          title: "1.6 Children aur Composition Pattern",
+          title: "1.6 Children + Composition Pattern",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.6 Children aur Composition Pattern.md",
         },
         {
           id: "react-1.7",
-          title: "1.7 useState aur Event Handling",
+          title: "1.7 useState + Event Handling",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.7 useState aur Event Handling.md",
         },
         {
@@ -193,17 +193,17 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-1.9",
-          title: "1.9 Array State aur List Rendering",
+          title: "1.9 Array State + List Rendering",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.9 Array State aur List Rendering.md",
         },
         {
           id: "react-1.10",
-          title: "1.10 Conditional Rendering aur Filter",
+          title: "1.10 Conditional Rendering + Filter",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.10 Conditional Rendering aur Filter.md",
         },
         {
           id: "react-1.11",
-          title: "1.11 Lists, Keys aur TypeScript Arrays",
+          title: "1.11 Lists, Keys + TypeScript Arrays",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.11 Lists Keys aur TypeScript Arrays.md",
         },
         {
