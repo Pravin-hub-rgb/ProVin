@@ -42,16 +42,16 @@ export const careerSubject: Subject = {
     {
       id: "career-ground-floor-labs",
       title: "Ground-Floor Labs",
-      openByDefault: false,
+      openByDefault: true,
       lectures: [],
       groups: [
         {
-          id: "career-lab-c-group",
+          id: "career-lab-c",
           title: "Lab C — Simulated Feed + State Machine (TypeScript)",
           openByDefault: true,
           lectures: [
             {
-              id: "career-lab-c",
+              id: "career-lab-c-readme",
               title: "Read Me First",
               path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/README.md",
             },
