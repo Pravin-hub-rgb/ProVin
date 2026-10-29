@@ -39,5 +39,17 @@ export const careerSubject: Subject = {
         },
       ],
     },
+    {
+      id: "career-ground-floor-labs",
+      title: "Ground-Floor Labs",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "career-lab-c",
+          title: "Lab C — Simulated Feed + State Machine (TypeScript)",
+          path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/README.md",
+        },
+      ],
+    },
   ],
 };
