@@ -25,8 +25,6 @@
 |---|---|---|
 | Target role | **Fullstack — React · Next.js · Node · TypeScript** | Both projects are fullstack; fresher AI-engineer roles need depths you don't carry; every existing asset points here |
 | Resume projects | **DukaanOS + TradeStack only** | Two deep projects beat four thin ones; both are real and explainable |
-| ProVin on resume? | **No** | It's your notes platform, not a project |
-| AT_Trading | **Confidential — never on resume, pitch, or chat** | Personal project, permanently out of scope for interviews |
 | Python's job | **Explain-only + ground-floor labs** | Python never appears in your headline/summary/skills; it exists where TradeStack already shipped it |
 | AI's job | **Same — explain-only + Lab D** | AI is your depth signal inside DukaanOS, done in TypeScript |
 | New projects | **Post-offer only** | You can build in a day with AI — so building is not the bottleneck; explaining is. New builds come where they compound |
@@ -108,7 +106,7 @@ This README tracks high-level phase completion. Live in `CAREER-FOCUS-PLAN.md`:
 
 - [ ] Phase 0 — Backend mindset
 - [ ] Phase 1 — FastAPI basics + Trading Backend project
-- [ ] Phase 2 — Docker basics (on Phase 1 project)
+- [ ] Appendix A — Docker basics (on Phase 1 project)
 - [ ] Phase 3 — WebSocket (future, post-offer)
 - [ ] M0 — Resume truth audit
 - [ ] M5 — DukaanOS AI defense kit
