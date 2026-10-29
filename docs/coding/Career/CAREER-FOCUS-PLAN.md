@@ -24,29 +24,43 @@
 
 ---
 
-## B. The Milestone Ladder
+## B. The 7 Steps (do in order)
 
-Order is fixed below; pace is not defined anywhere on purpose.
+**Step 1 — Learn React by Building:**
+- [ ] M1 — React Capstone → Finish `React JS/Capstone - TrackIt/` (T.1 → T.8) → Rebuild TrackIt app
 
-- [ ] **M0 — Truth Audit** (finds every claim your code can't support)
-- [ ] **M1 — Lab A: FastAPI + SQLite CRUD** (server basics, ground floor of TradeStack's Python side)
-- [ ] **M2 — Lab B: CSV → DB → SMA → scan filter** (scanning ground floor, + B2 parallel extension)
-- [ ] **M3 — Lab C: parallel data intake + mini state machine** (TypeScript, ground floor of the live side)
-- [ ] **M4 — Lab D: your own AI parse lab** (prompt → structured parse → regex fallback, TypeScript)
-- [ ] **M4.5 — Lab E: Dockerize the Phase 1 project** (Dockerfile + compose + volume mount, persist SQLite across restart)
-- [ ] **M5 — Remember DukaanOS** (AI kit + operate-your-own-machine drill)
-- [ ] **M6 — Remember TradeStack** (4-part map + defense kit rehearsal)
-- [ ] **M7 — React 100-question diagnostic** → patch RED topics
-- [ ] **M8 — Next.js 100-question diagnostic** → patch RED topics
-- [ ] **M9 — Make it real** (DukaanOS deployed live, real READMEs, screenshots)
-- [ ] **M10 — Resume + LinkedIn** (fill from real code, ATS PDF)
-- [ ] **M11 — Core subjects gap-scan** (OS · OOP · DBMS · CN · web internals)
-- [ ] **M12 — One recorded mock interview** → patch weak spots
-- [ ] **M13 — Applications** (startable any time after M10)
+**Step 2 — Learn Next.js by Building:**
+- [ ] M2 — Next.js Capstone → Finish `Next JS/Final Capstone - Hiring Platform/` (C.0 → C.12) → Rebuild Hiring Platform app
+
+**Step 3 — Learn Python FastAPI by Building:**
+- [ ] M3 — FastAPI Backend → Finish `Backend (Python)/Phase 1/1.0 → 1.5.5` → Rebuild Trading Backend (SQLite + pandas + SMA/RSI)
+- [ ] M3.5 — Appendix A Docker → Optional, only if you want to containerize your backend
+
+**Step 4 — Labs (Ground-Floor Practice):**
+- [ ] Lab A — FastAPI + SQLite CRUD → run your backend locally
+- [ ] Lab B — CSV → DB → SMA/RSI → scan endpoint → test it works
+- [ ] Lab C — Simulated feed → mini state machine (TypeScript) → understand real-time
+- [ ] Lab D — Your own AI parse lab (TypeScript) → understand DukaanOS pipeline
+
+**Step 5 — Prepare Interview Explanations:**
+- [ ] M5 — Remember DukaanOS → Read `DUKAANOS-AI-DEFENSE-KIT.md` → know 6 pieces + 8 concept cards
+- [ ] M6 — Remember TradeStack → Read `TRADESTACK-DEFENSE-KIT.md` → know 4 parts + 9 concept cards
+- [ ] M7 — Core subjects gap-scan → `Core Subjects/` (OS, OOP, DBMS, CN) + one DSA problem every session
+- [ ] M0 — Truth Audit (done first or anytime — make sure every resume claim has real code behind it)
+
+**Step 6 — Polish Yourself:**
+- [ ] M9 — Make it real → Deploy DukaanOS live, real READMEs, screenshots
+- [ ] M10 — Resume + LinkedIn → Read `RESUME-DRAFT.md` → truth-check → finalize two projects
+
+**Step 7 — Apply:**
+- [ ] M12 — One recorded mock interview
+- [ ] M13 — Send 1 application
+
+**One DSA problem ends every session** from `docs/coding/DSA/roadmap.md` in order, unaided.
 
 ---
 
-## C. M0 — Truth Audit
+## C. M0 — Truth Audit (do this anytime in Step 5, or before M10)
 
 **Goal:** every resume bullet and every defense-kit claim is either verified against your real code, or corrected. Interviews die on follow-up questions probing a bullet you wrote but can't trace.
 
@@ -74,7 +88,7 @@ Order is fixed below; pace is not defined anywhere on purpose.
 - [ ] Anything untraceable is rewritten or removed
 - [ ] You can name the real TradeStack indicators and your real model names from memory
 
-**Skip-license:** none — this milestone is the whole plan's foundation. If a sub-item stalls, mark it and come back inside M0; don't move to M1 with unknown fiction on the resume.
+**Skip-license:** none — this milestone is Step 5's foundation. If a sub-item stalls, mark it and come back inside M0; don't move to resume finalization with unknown fiction on the resume.
 
 ---
 
