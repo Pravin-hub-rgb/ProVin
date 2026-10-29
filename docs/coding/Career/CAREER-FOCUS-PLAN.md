@@ -44,9 +44,9 @@
 **Step 4 — Labs (Ground-Floor Practice)**
 *Where to learn each lab:*
 - [ ] **Lab A** → `Backend (Python)/Phase 1/1.1-1.4` (Path Params, Pydantic, CRUD, SQLite)
-- [ ] **Lab B** → `Backend (Python)/Phase 1/1.5.4-1.5.5` (Indicators, SMA, Scan Endpoint) + B2 from Lab C concepts
-- [ ] **Lab C** → no dedicated course file — ground-floor practice. Uses Next.js `Batch 8.4` (deployment/WebSocket awareness) as loose anchor, but really just follow the 150-line build spec in the lab itself
-- [ ] **Lab D** → no dedicated course file — ground-floor practice. Uses `Agentic AI/Phase 3` (API calls + prompts) as conceptual anchor, but follows the lab build spec directly. The real pipeline details live in `DukaanOS-AI-DEFENSE-KIT.md`
+- [ ] **Lab B** → `Backend (Python)/Phase 1/1.5.4-1.5.5` (Indicators, SMA, Scan Endpoint) + B2 multiprocessing
+- [ ] **Lab C** → `Career/Labs/Lab C — Simulated Feed + State Machine (TS)/` (no course file — ground-floor practice; anchors: React `2.1 useEffect` + `5.5 useReducer`)
+- [ ] **Lab D** → `Agentic AI/Phase 3/3.6 AI Parse Lab — Hinglish Order Parser.md` (new file — builds on 3.1–3.5 API call concepts)
 
 **Step 5 — Prepare Interview Explanations**
 - [ ] M5 — Remember DukaanOS: defense kit + operate drill
@@ -99,9 +99,11 @@
 
 ## D. Labs (A-D) — ground rules first
 
-- Location: `C:\Users\Pravin\Desktop\main\hands-on-gym\<lab-name>\` — one folder per lab, one git repo or plain folder, both fine.
+- Location: `C:\Users\Pravin\Desktop\main\hands-on-gym\<lab-name>\` for Lab A and Lab B — one folder per lab, one git repo or plain folder, both fine.
 - Cost cap: ~150 lines each (B2 is ~10 more). If a lab is outgrowing that, you're overbuilding — cut features, keep the concept.
-- **Labs A & B come from the Python course.** Labs **C & D are ground-floor practice only** — they have no dedicated course files. Follow the build specs in this plan directly. The conceptual anchors are listed in Step 4 above.
+- **Labs A & B** come from the Python course (`Backend (Python)/Phase 1`).
+- **Lab C** lives at `docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/` — TypeScript practice, no course file. Concept anchors: `React JS/Batch 2/2.1` (timers+cleanup) + `Batch 5/5.5` (useReducer=state machine).
+- **Lab D** lives at `Agentic AI/Phase 3/3.6 AI Parse Lab` — new course module building on 3.1–3.5.
 - Every lab ends the same way: run the demo, then **explain it out loud in 90 seconds** (record it). If you can't explain it, the lab isn't done — reread, compress the explanation, retry once, then move on regardless.
 - The practice used to fill the labs: your own course notes `docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/` (files listed per lab).
 
@@ -152,7 +154,10 @@
 
 ### M3 — Lab C: simulated feed → per-symbol callbacks → mini state machine (TypeScript)
 
+> **Full build specs:** `docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/README.md`
+
 **Teaches:** the live-trading side's ground floor: event-driven I/O, per-symbol routing, finite state machines. Uses a **simulated** feed — no Upstox, no tokens, no network.
+**Learn prerequisites first:** `React JS/Batch 2/2.1` (setInterval + cleanup) + `React JS/Batch 5/5.5` (useReducer as state machine)
 
 **Build (~150 lines, any tiny Node/TS setup, `npx tsx` runs it):**
 - `feed.ts` — for 3-5 symbols, a looping timer pushes fake OHLC ticks (random walk is fine). Once per N ticks, a symbol emits a "signal" event. Add one intentional pause-and-resume of the whole feed so you feel a disconnect/reconnect cycle.
@@ -170,6 +175,9 @@
 **Bridge:** this is the shape of `TradeStack/frontend/src/lib/live-trader/` — `streamer.ts` (real WebSocket + protobuf + reconnect-with-backoff) and `continuation/state-machine.ts` / `reversal/state-machine.ts` (your real 11-state machines). When you later read those in M6, you'll recognize everything.
 
 ### M4 — Lab D: your own AI parse lab (TypeScript)
+
+> **Full build specs:** `docs/coding/Agentic AI/Phase 3/3.6 AI Parse Lab — Hinglish Order Parser.md`
+> **Learn prerequisites:** `Agentic AI/Phase 3/3.1-3.5` (API calls, messages array, raw response, errors)
 
 **Teaches:** the DukaanOS voice-AI ground floor — prompt → structured parse → fallback — in your hands, minus the microphone part.
 
@@ -364,3 +372,5 @@ Rejections come. They are data, not a verdict. The mock from M12 should be repea
 - `RESUME-DRAFT.md` — truth-checked resume to fill in (M0, M10)
 - `docs/coding/DSA/roadmap.md` + `quesitons.md` — the daily ritual source of DSA problems
 - `docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/` — Lab A/B source notes
+- `docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/` — Lab C build specs
+- `docs/coding/Agentic AI/Phase 3/3.6 AI Parse Lab — Hinglish Order Parser.md` — Lab D teaching module

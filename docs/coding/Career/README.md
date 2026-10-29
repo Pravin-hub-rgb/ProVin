@@ -17,10 +17,10 @@
 - [ ] Appendix A (Docker) — optional, only if you want to containerize
 
 ### Step 4 — Labs (Ground-Floor Practice)
-- [ ] **Lab A:** FastAPI + SQLite CRUD (source: `Backend (Python)/Phase 1/1.1-1.4`)
-- [ ] **Lab B:** CSV → SMA/RSI → scan endpoint (source: `Backend (Python)/Phase 1/1.5.4-1.5.5`)
-- [ ] **Lab C:** Simulated feed → state machine (TypeScript) (ground-floor practice, no course file — build spec in focus plan)
-- [ ] **Lab D:** AI parse lab (TypeScript) (ground-floor practice, no course file — build spec in focus plan)
+- [ ] **Lab A:** FastAPI + SQLite CRUD — `Backend (Python)/Phase 1/1.1-1.4`
+- [ ] **Lab B:** CSV → SMA/RSI → scan endpoint — `Backend (Python)/Phase 1/1.5.4-1.5.5`
+- [ ] **Lab C:** Simulated feed → state machine (TypeScript) — `Career/Labs/Lab C — Simulated Feed + State Machine (TS)/README.md`
+- [ ] **Lab D:** AI parse lab (TypeScript) — `Agentic AI/Phase 3/3.6 AI Parse Lab — Hinglish Order Parser.md`
 
 ### Step 5 — Prepare Interview Explanations
 - [ ] **TradeStack Defense Kit:** Read `CAREER/TRADESTACK-DEFENSE-KIT.md` → know 4 parts, 9 concept cards, 15 Q&As
