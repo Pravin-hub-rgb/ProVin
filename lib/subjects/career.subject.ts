@@ -43,11 +43,49 @@ export const careerSubject: Subject = {
       id: "career-ground-floor-labs",
       title: "Ground-Floor Labs",
       openByDefault: false,
-      lectures: [
+      lectures: [],
+      groups: [
         {
-          id: "career-lab-c",
+          id: "career-lab-c-group",
           title: "Lab C — Simulated Feed + State Machine (TypeScript)",
-          path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/README.md",
+          openByDefault: false,
+          lectures: [
+            {
+              id: "career-lab-c",
+              title: "Read Me First",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/README.md",
+            },
+            {
+              id: "career-lab-c-1",
+              title: "1.0 TypeScript Basics",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/1.0 TypeScript Basics.md",
+            },
+            {
+              id: "career-lab-c-2",
+              title: "2.0 Timers & Event Loop",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/2.0 Timers and Event Loop.md",
+            },
+            {
+              id: "career-lab-c-3",
+              title: "3.0 useReducer = State Machine",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/3.0 useReducer equals State Machine.md",
+            },
+            {
+              id: "career-lab-c-4",
+              title: "4.0 Build feed.ts",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/4.0 Build feed.ts.md",
+            },
+            {
+              id: "career-lab-c-5",
+              title: "5.0 Build machine.ts",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/5.0 Build machine.ts.md",
+            },
+            {
+              id: "career-lab-c-6",
+              title: "6.0 Build index.ts + Explain",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/6.0 Build index.ts + Explain.md",
+            },
+          ],
         },
       ],
     },
