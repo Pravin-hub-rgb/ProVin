@@ -33,6 +33,11 @@ export const nextjsSubject: Subject = {
           path: "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.0.5 React Essentials - Generic Revision.md",
         },
         {
+          id: "next-0.0.6",
+          title: "0.0.6 React Versions — Next.js Ke Saath Compatibility",
+          path: "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.0.6 React Versions - Next.js Ke Saath Compatibility.md",
+        },
+        {
           id: "next-0.1",
           title: "0.1 Client-Side Rendering — React Ki Duniya",
           path: "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.1 Client-Side Rendering - React Ki Duniya.md",

@@ -19,12 +19,12 @@ export const reactSubject: Subject = {
   phases: [
     {
       id: "module0",
-      title: "Module 0 — React Kaise Kaam Karta Hai",
+      title: "Module 0 — How React Works Internally",
       openByDefault: true,
       lectures: [
         {
           id: "react-0.0",
-          title: "0.0 React Kya Hai aur Ye Course Kaise Chalega",
+           title: "0.0 What is React and How This Course Works",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.0 React Kya Hai aur Ye Course Kaise Chalega.md",
         },
         {
@@ -39,12 +39,12 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-0.3",
-          title: "0.3 Reconciliation, Diffing aur key Prop",
+           title: "0.3 Reconciliation, Diffing, and the key Prop",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.3 Reconciliation, Diffing aur key Prop.md",
         },
         {
           id: "react-0.4",
-          title: "0.4 Fiber Architecture (Halka Level)",
+           title: "0.4 Fiber Architecture (Light Level)",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.4 Fiber Architecture (Halka Level).md",
         },
         {
@@ -61,6 +61,11 @@ export const reactSubject: Subject = {
           id: "react-0.7",
           title: "0.7 TypeScript Warm-up",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.7 TypeScript Warm-up.md",
+        },
+        {
+          id: "react-0.7.5",
+           title: "0.7.5 React Versions — React 19, 18, 17, 16",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.7.5 React Versions - React 19, 18, 17, 16 Ka Kya Naya Hai.md",
         },
         {
           id: "react-0.8",
@@ -103,6 +108,11 @@ export const reactSubject: Subject = {
           id: "quiz-0.7",
           title: "❓ 0.7 Quiz",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.7 Quiz.md",
+        },
+        {
+          id: "quiz-0.7.5",
+          title: "❓ 0.7.5 Quiz",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.7.5 Quiz.md",
         },
         {
           id: "quiz-0.8",

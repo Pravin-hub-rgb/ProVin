@@ -42,13 +42,13 @@ export const careerSubject: Subject = {
     {
       id: "career-ground-floor-labs",
       title: "Ground-Floor Labs",
-      openByDefault: true,
+      openByDefault: false,
       lectures: [],
       groups: [
-        {
+         {
           id: "career-lab-c",
           title: "Lab C — Simulated Feed + State Machine (TypeScript)",
-          openByDefault: true,
+          openByDefault: false,
           lectures: [
             {
               id: "career-lab-c-readme",
@@ -56,34 +56,124 @@ export const careerSubject: Subject = {
               path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/README.md",
             },
             {
-              id: "career-lab-c-1",
-              title: "1.0 TypeScript Basics",
-              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/1.0 TypeScript Basics.md",
+              id: "career-lab-c-0",
+              title: "0.0 Planning — What We're Building",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/0.0 Planning — What We Building.md",
             },
             {
-              id: "career-lab-c-2",
-              title: "2.0 Timers & Event Loop",
-              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/2.0 Timers and Event Loop.md",
+              id: "career-lab-c-1-0",
+              title: "1.0 Concept — Timers and setInterval",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/1.0 Concept — Timers and setInterval.md",
             },
             {
-              id: "career-lab-c-3",
-              title: "3.0 useReducer = State Machine",
-              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/3.0 useReducer equals State Machine.md",
+              id: "career-lab-c-1-1",
+              title: "1.1 Syntax — Timer Setup",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/1.1 Syntax — Timer Setup.md",
             },
             {
-              id: "career-lab-c-4",
-              title: "4.0 Build feed.ts",
-              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/4.0 Build feed.ts.md",
+              id: "career-lab-c-1-2",
+              title: "1.2 Minimal Code — Basic Interval",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/1.2 Minimal Code — Basic Interval.md",
             },
             {
-              id: "career-lab-c-5",
-              title: "5.0 Build machine.ts",
-              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/5.0 Build machine.ts.md",
+              id: "career-lab-c-1-3",
+              title: "1.3 Build Up — Typed Feed Module",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/1.3 Build Up — Typed Feed Module.md",
             },
             {
-              id: "career-lab-c-6",
-              title: "6.0 Build index.ts + Explain",
-              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/6.0 Build index.ts + Explain.md",
+              id: "career-lab-c-1-4",
+              title: "1.4 Finalize — Pause Stop Controls",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/1.4 Finalize — Pause Stop Controls.md",
+            },
+            {
+              id: "career-lab-c-2-0",
+              title: "2.0 Concept — State Machines",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/2.0 Concept — State Machines.md",
+            },
+            {
+              id: "career-lab-c-2-1",
+              title: "2.1 Syntax — Transition Tables",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/2.1 Syntax — Transition Tables.md",
+            },
+            {
+              id: "career-lab-c-2-2",
+              title: "2.2 Minimal Code — Simple State Machine",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/2.2 Minimal Code — Simple State Machine.md",
+            },
+            {
+              id: "career-lab-c-2-3",
+              title: "2.3 Build Up — 4-State Position Machine",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/2.3 Build Up — 4-State Position Machine.md",
+            },
+            {
+              id: "career-lab-c-2-4",
+              title: "2.4 Testing — Verify Transitions",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/2.4 Testing — Verify Transitions.md",
+            },
+            {
+              id: "career-lab-c-3-0",
+              title: "3.0 Concept — Event Emitters",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/3.0 Concept — Event Emitters.md",
+            },
+            {
+              id: "career-lab-c-3-1",
+              title: "3.1 Syntax — EventEmitter TypeScript",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/3.1 Syntax — EventEmitter TypeScript.md",
+            },
+            {
+              id: "career-lab-c-3-2",
+              title: "3.2 Minimal Code — Basic EventEmitter",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/3.2 Minimal Code — Basic EventEmitter.md",
+            },
+            {
+              id: "career-lab-c-3-3",
+              title: "3.3 Build Up — Typed Feed Emitter",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/3.3 Build Up — Typed Feed Emitter.md",
+            },
+            {
+              id: "career-lab-c-4-0",
+              title: "4.0 Concept — Per-Symbol Routing",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/4.0 Concept — Per-Symbol Routing.md",
+            },
+            {
+              id: "career-lab-c-4-1",
+              title: "4.1 Syntax — Map-Based Subscription",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/4.1 Syntax — Map-Based Subscription.md",
+            },
+            {
+              id: "career-lab-c-4-2",
+              title: "4.2 Minimal Code — Route Ticks to Machines",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/4.2 Minimal Code — Route Ticks to Machines.md",
+            },
+            {
+              id: "career-lab-c-5-0",
+              title: "5.0 Concept — Disconnect and Reconnect",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/5.0 Concept — Disconnect and Reconnect.md",
+            },
+            {
+              id: "career-lab-c-5-1",
+              title: "5.1 Syntax — Pause Resume Implementation",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/5.1 Syntax — Pause Resume Implementation.md",
+            },
+            {
+              id: "career-lab-c-5-2",
+              title: "5.2 Build Up — Full Pause Resume Demo",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/5.2 Build Up — Full Pause Resume Demo.md",
+            },
+            {
+              id: "career-lab-c-6-0",
+              title: "6.0 Final Assembly — index.ts",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/6.0 Final Assembly — index.ts.md",
+            },
+            {
+              id: "career-lab-c-7-0",
+              title: "7.0 Testing — Verify Everything",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/7.0 Testing — Verify Everything.md",
+            },
+            {
+              id: "career-lab-c-8-0",
+              title: "8.0 Explain Out Loud — 90 Seconds",
+              path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/8.0 Explain Out Loud — 90 Seconds.md",
             },
           ],
         },
