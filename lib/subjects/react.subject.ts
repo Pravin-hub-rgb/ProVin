@@ -387,7 +387,7 @@ export const reactSubject: Subject = {
       lectures: [
         {
           id: "react-4.1.1",
-          title: "4.1.1 Tailwind CSS aur Responsive Design (Theory)",
+          title: "4.1.1 Tailwind CSS and Responsive Design (Theory)",
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1.1 Tailwind CSS aur Responsive Design.md",
         },
         {
@@ -412,7 +412,7 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-4.3",
-          title: "4.3 Forms — Manual Form aur Validation",
+          title: "4.3 Forms — Manual Controlled Inputs and Validation",
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.3 Forms — Manual Controlled Inputs aur Validation.md",
         },
         {
@@ -463,7 +463,7 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-4.5.5",
-          title: "4.5.5 Types aur Shared Data — E-Commerce Store",
+          title: "4.5.5 Types and Shared Data — E-Commerce Store",
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.5 Types aur Shared Data — E-Commerce Store.md",
         },
         {
