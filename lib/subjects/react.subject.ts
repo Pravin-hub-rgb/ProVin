@@ -600,22 +600,22 @@ export const reactSubject: Subject = {
       lectures: [
         {
           id: "react-6.7.0",
-          title: "6.7.0 RTK Kya Hai aur Kyun — Zustand Ke Baad Kyun",
+          title: "6.7.0 What is RTK and Why — Why After Zustand",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.0 RTK Kya Hai aur Kyun — Zustand Ke Baad Kyun.md",
         },
         {
           id: "react-6.7.1",
-          title: "6.7.1 Redux Core — Store, Action, Reducer (Manual Wala Dard)",
+          title: "6.7.1 Redux Core — Store, Action, Reducer (The Manual Pain)",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.1 Redux Core — Store, Action, Reducer (Manual Wala Dard).md",
         },
         {
           id: "react-6.7.2",
-          title: "6.7.2 createSlice + configureStore — Manual Ka Better Version",
+          title: "6.7.2 createSlice + configureStore — Better Than Manual",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.2 createSlice + configureStore — Manual Ka Better Version.md",
         },
         {
           id: "react-6.7.3",
-          title: "6.7.3 Provider + Typed Hooks — Store Ko React Se Jodna",
+          title: "6.7.3 Provider + Typed Hooks — Connecting Store to React",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.3 Provider + Typed Hooks — Store Ko React Se Jodna.md",
         },
         {
@@ -625,12 +625,12 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-6.7.5.1",
-          title: "6.7.5.1 Expense Tracker — Planning (Code Se Pehle Sochna)",
+          title: "6.7.5.1 Expense Tracker — Planning (Think Before Code)",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.1 Expense Tracker — Planning (Code Se Pehle Sochna).md",
         },
         {
           id: "react-6.7.5.2",
-          title: "6.7.5.2 Expense Tracker — Hardcoded UI (Pehle Dekho Kaise Dikhta Hai)",
+          title: "6.7.5.2 Expense Tracker — Hardcoded UI (See How It Looks First)",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.2 Expense Tracker — Hardcoded UI (Pehle Dekho Kaise Dikhta Hai).md",
         },
         {
@@ -640,7 +640,7 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-6.7.5.4",
-          title: "6.7.5.4 Expense Tracker — Dynamic (Data Layer Ko UI Se Jodna)",
+          title: "6.7.5.4 Expense Tracker — Dynamic (Connecting Data Layer to UI)",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.4 Expense Tracker — Dynamic (Data Layer Ko UI Se Jodna).md",
         },
         {

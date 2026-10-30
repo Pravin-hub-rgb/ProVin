@@ -19,12 +19,12 @@ export const nextjsSubject: Subject = {
   phases: [
     {
       id: "module0",
-      title: "Module 0 — Next.js Kaise Kaam Karta Hai",
+      title: "Module 0 — How Next.js Works",
       openByDefault: true,
       lectures: [
         {
           id: "next-0.0",
-          title: "0.0 Next.js Kya Hai aur Ye Course Kaise Chalega",
+          title: "0.0 What is Next.js & How This Course Works",
           path: "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.0 Next.js Kya Hai aur Ye Course Kaise Chalega.md",
         },
         {
@@ -34,7 +34,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-0.0.6",
-          title: "0.0.6 React Versions — Next.js Ke Saath Compatibility",
+          title: "0.0.6 React Versions — Compatibility with Next.js",
           path: "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.0.6 React Versions - Next.js Ke Saath Compatibility.md",
         },
         {
@@ -86,8 +86,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-1.0",
-          title: "1.0 Routing Fundamentals — Kya Seekhenge",
-          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.0 Routing Fundamentals — Kya Seekhenge.md",
+          title: "1.0 Routing Fundamentals — What to Learn",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.0 Routing Fundamentals — What to Learn.md",
         },
         {
           id: "next-1.1",
@@ -111,27 +111,27 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-1.5.1",
-          title: "1.5.1 Planning — Code Likhne Se Pehle Sochna",
+          title: "1.5.1 Planning — Thinking Before Writing Code",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.1 Planning — Code Likhne Se Pehle Sochna.md",
         },
         {
           id: "next-1.5.2",
-          title: "1.5.2 Hardcoded UI — Pehle Dekho Kaise Dikhta Hai",
+          title: "1.5.2 Hardcoded UI — See How It Looks First",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.2 Hardcoded UI — Pehle Dekho Kaise Dikhta Hai.md",
         },
         {
           id: "next-1.5.3",
-          title: "1.5.3 Data Layer — post.ts, Type Aur Functions",
+          title: "1.5.3 Data Layer — post.ts, Types & Functions",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.3 Data Layer — post.ts, Type Aur Functions.md",
         },
         {
           id: "next-1.5.4",
-          title: "1.5.4 Dynamic Blog — Data Layer Se UI Jodo",
+          title: "1.5.4 Dynamic Blog — Connecting Data Layer to UI",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.4 Dynamic Blog — Data Layer Se UI Jodo.md",
         },
         {
           id: "next-1.5.5",
-          title: "1.5.5 States + Testing — Project Complete Karna",
+          title: "1.5.5 States + Testing — Completing the Project",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.5 States + Testing — Project Complete Karna.md",
         },
       ],
@@ -143,8 +143,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-2.0",
-          title: "2.0 Rendering & Data Fetching — Kya Seekhenge",
-          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.0 Rendering & Data Fetching — Kya Seekhenge.md",
+          title: "2.0 Rendering & Data Fetching — What to Learn",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.0 Rendering & Data Fetching — What to Learn.md",
         },
         {
           id: "next-2.1",
@@ -153,7 +153,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-2.2",
-          title: "2.2 Client Components — Kab Zaroorat Padti Hai",
+          title: "2.2 Client Components — When It's Necessary",
           path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.2 Client Components — Kab Zaroorat Padti Hai.md",
         },
         {
@@ -168,12 +168,12 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-2.5.1",
-          title: "2.5.1 Planning V2 — Kya Upgrade Karna Hai",
+          title: "2.5.1 Planning V2 — What to Upgrade",
           path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.1 Planning V2 — Kya Upgrade Karna Hai.md",
         },
         {
           id: "next-2.5.2",
-          title: "2.5.2 Data Source — posts-api.ts Async Banana",
+          title: "2.5.2 Data Source — posts-api.ts + Async/Await",
           path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.2 Data Source — posts-api.ts Async Banana.md",
         },
         {
@@ -195,12 +195,12 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-3.0",
-          title: "3.0 Mutations — Kya Seekhenge",
-          path: "docs/coding/Next JS/Batch 3 - Mutations/3.0 Mutations — Kya Seekhenge.md",
+          title: "3.0 Mutations — What to Learn",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.0 Mutations — What to Learn.md",
         },
         {
           id: "next-3.1",
-          title: "3.1 Route Handlers — REST API banana",
+          title: "3.1 Route Handlers — Creating a REST API",
           path: "docs/coding/Next JS/Batch 3 - Mutations/3.1 Route Handlers — REST API banana.md",
         },
         {
@@ -210,7 +210,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-3.3",
-          title: "3.3 Server Actions — Next.js ka Shortcut",
+          title: "3.3 Server Actions — Next.js's Shortcut",
           path: "docs/coding/Next JS/Batch 3 - Mutations/3.3 Server Actions — Next.js ka Shortcut.md",
         },
         {
@@ -322,7 +322,7 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-4.1",
-          title: "4.1 Proxy Kya Hai — Request Lifecycle",
+          title: "4.1 What Is a Proxy — Request Lifecycle",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.1 Proxy Kya Hai — Request Lifecycle.md",
         },
         {
@@ -332,22 +332,22 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-4.3",
-          title: "4.3 Matcher — Kaunse Routes Pe Chale",
+          title: "4.3 Matcher — Which Routes to Apply To",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.3 Matcher — Kaunse Routes Pe Chale.md",
         },
         {
           id: "next-4.4",
-          title: "4.4 URL Padhna — Pathname + SearchParams",
+          title: "4.4 Reading URLs — Pathname + SearchParams",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.4 URL Padhna — Pathname + SearchParams.md",
         },
         {
           id: "next-4.5",
-          title: "4.5 Headers Padhna — User-Agent, IP, Host",
+          title: "4.5 Reading Headers — User-Agent, IP, Host",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.5 Headers Padhna — User-Agent, IP, Host.md",
         },
         {
           id: "next-4.6",
-          title: "4.6 Cookies Padhna — Request Ke Andar",
+          title: "4.6 Reading Cookies — Inside the Request",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.6 Cookies Padhna — Request Ke Andar.md",
         },
         {
@@ -357,22 +357,22 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-4.8",
-          title: "4.8 Redirect Karna — new URL + Loop + Protected List",
+          title: "4.8 Redirecting — new URL + Loop + Protected List",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.8 Redirect Karna — new URL + Loop + Protected List.md",
         },
         {
           id: "next-4.9",
-          title: "4.9 Rewrite Karna — A B Testing + Maintenance Page",
+          title: "4.9 Rewriting — A/B Testing + Maintenance Page",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.9 Rewrite Karna — A B Testing + Maintenance Page.md",
         },
         {
           id: "next-4.10",
-          title: "4.10 Headers Add Karna — Response Modify + Layout Read",
+          title: "4.10 Adding Headers — Response Modify + Layout Read",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.10 Headers Add Karna — Response Modify + Layout Read.md",
         },
         {
           id: "next-4.11",
-          title: "4.11 Logging — Har Request Ka Record",
+          title: "4.11 Logging — Recording Every Request",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.11 Logging — Har Request Ka Record.md",
         },
         {
@@ -392,7 +392,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-4.15",
-          title: "4.15 Edge Runtime Kya Hai — Next 16 Ka Badla Hua Default",
+          title: "4.15 What Is Edge Runtime — Next 16's New Default",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.15 Edge Runtime Kya Hai — Next 16 Ka Badla Hua Default.md",
         },
         {
@@ -402,7 +402,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-4.17",
-          title: "4.17 Kab Use Karein — Official Stance + Decision Table",
+          title: "4.17 When to Use — Official Stance + Decision Table",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.17 Kab Use Karein — Official Stance + Decision Table.md",
         },
       ],
@@ -414,12 +414,12 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-5.0",
-          title: "5.0 Authentication — Kya Seekhenge",
-          path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.0 Authentication — Kya Seekhenge.md",
+          title: "5.0 Authentication — What to Learn",
+          path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.0 Authentication — What to Learn.md",
         },
         {
           id: "next-5.1",
-          title: "5.1 Cookies aur Sessions — Auth ka Foundation",
+          title: "5.1 Cookies and Sessions — Auth's Foundation",
           path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.1 Cookies aur Sessions — Auth ka Foundation.md",
         },
         {
@@ -434,7 +434,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-5.4",
-          title: "5.4 Auth.js — Next.js ka Auth Shortcut",
+          title: "5.4 Auth.js — Next.js's Auth Shortcut",
           path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.4 Auth.js — Next.js ka Auth Shortcut.md",
         },
         {
@@ -444,7 +444,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-5.4.2",
-          title: "5.4.2 Sessions — Server aur Client",
+          title: "5.4.2 Sessions — Server and Client",
           path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.4.2 Sessions — Server aur Client.md",
         },
         {
@@ -491,12 +491,12 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-6.0",
-          title: "6.0 Database Integration — Kya Seekhenge",
-          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.0 Database Integration — Kya Seekhenge.md",
+          title: "6.0 Database Integration — What to Learn",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.0 Database Integration — What to Learn.md",
         },
         {
           id: "next-6.1",
-          title: "6.1 Database Kya Hoti Hai — File vs Database",
+          title: "6.1 What Is a Database — File vs Database",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.1 Database Kya Hoti Hai — File vs Database.md",
         },
         {
@@ -506,22 +506,22 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-6.3",
-          title: "6.3 ORM aur Providers — Database Se Baat Karne Ke Tools",
+          title: "6.3 ORM & Providers — Tools to Talk to the Database",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.3 ORM aur Providers — Database Se Baat Karne Ke Tools.md",
         },
         {
           id: "next-6.4",
-          title: "6.4 MongoDB Atlas + Connection — Pehli Baar Real DB",
+          title: "6.4 MongoDB Atlas + Connection — First Real Database",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.4 MongoDB Atlas + Connection — Pehli Baar Real DB.md",
         },
         {
           id: "next-6.5",
-          title: "6.5 Mongoose Schema + Model — Data Ka Blueprint",
+          title: "6.5 Mongoose Schema + Model — Data Blueprint",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.5 Mongoose Schema + Model — Data Ka Blueprint.md",
         },
         {
           id: "next-6.6",
-          title: "6.6 API Design — REST API Ka Structure Sochna",
+          title: "6.6 API Design — Structuring a REST API",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.6 API Design — REST API Ka Structure Sochna.md",
         },
         {
@@ -546,17 +546,17 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-6.8",
-          title: "6.8 Postman Testing — REST API Ko Proper Test Karna",
+          title: "6.8 Postman Testing — Testing REST APIs Properly",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.8 Postman Testing — REST API Ko Proper Test Karna.md",
         },
         {
           id: "next-6.9",
-          title: "6.9 PostgreSQL + Neon Setup — SQL Database Banao",
+          title: "6.9 PostgreSQL + Neon Setup — Create an SQL Database",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.9 PostgreSQL + Neon Setup — SQL Database Banao.md",
         },
         {
           id: "next-6.10",
-          title: "6.10 Drizzle Schema + Client — Data Ka Blueprint (SQL Version)",
+          title: "6.10 Drizzle Schema + Client — Data Blueprint (SQL Version)",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.10 Drizzle Schema + Client — Data Ka Blueprint (SQL Version).md",
         },
         {
@@ -576,12 +576,12 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-6.11.4",
-          title: "6.11.4 SQL Todo — Mongo vs SQL Compare",
+          title: "6.11.4 SQL Todo — Comparing Mongo vs SQL",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.11.4 SQL Todo — Mongo vs SQL Compare.md",
         },
         {
           id: "next-6.12",
-          title: "6.12 System Design — Relations, Indexes, Performance Soch",
+          title: "6.12 System Design — Relations, Indexes, Performance Thinking",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.12 System Design — Relations, Indexes, Performance Soch.md",
         },
         {
@@ -618,12 +618,12 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-7.0",
-          title: "7.0 Optimization & Production — Kya Seekhenge",
-          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.0 Optimization & Production — Kya Seekhenge.md",
+          title: "7.0 Optimization & Production — What to Learn",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.0 Optimization & Production — What to Learn.md",
         },
         {
           id: "next-7.1",
-          title: "7.1 Manual Images — img Tag ke Problems",
+          title: "7.1 Manual Images — Problems with img Tag",
           path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.1 Manual Images — img Tag ke Problems.md",
         },
         {
@@ -690,8 +690,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-8.0",
-          title: "8.0 Security & Deployment — Kya Seekhenge",
-          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.0 Security & Deployment — Kya Seekhenge.md",
+          title: "8.0 Security & Deployment — What to Learn",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.0 Security & Deployment — What to Learn.md",
         },
         {
           id: "next-8.1",
@@ -742,7 +742,7 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-cap-0",
-          title: "C.0 Hiring Platform — Kya Banayenge (Course Ka Finale)",
+          title: "C.0 Hiring Platform — What We'll Build (Course Finale)",
           path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.0 Hiring Platform — Kya Banayenge (Course Ka Finale).md",
         },
         {
@@ -767,7 +767,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-cap-5",
-          title: "C.5 Auth — Roles ke Saath (Auth.js)",
+          title: "C.5 Auth — With Roles (Auth.js)",
           path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.5 Auth — Roles ke Saath (Auth.js).md",
         },
         {
@@ -787,7 +787,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-cap-9",
-          title: "C.9 AI Match Score — Apply Ke Waqt Scoring",
+          title: "C.9 AI Match Score — Scoring at Apply Time",
           path: "docs/coding/Next JS/Final Capstone - Hiring Platform/C.9 AI Match Score — Apply Ke Waqt Scoring.md",
         },
         {
