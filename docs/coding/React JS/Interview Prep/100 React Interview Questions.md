@@ -1,348 +1,349 @@
 # React Interview Questions & Concepts (2026) — 100 Q&A
 
-Deep-researched, organized by topic. Har section basics se advanced/2026-level (React 19) tak jaata hai. Ratta mat maaro — concept samjho, phir apne words mein explain karna practice karo.
+Deep-researched, organized by topic. Each section goes from basics to advanced/2026-level (React 19). Don't memorize — understand each concept, then practice explaining it in your own words.
 
 ---
 
 ## 1. React Fundamentals
 
-**1. React kya hai aur kyu use karte hain?**
-React ek JavaScript library hai (framework nahi) jo Meta ne banaya, UI banane ke liye — component-based architecture ke through. Reusable components, declarative UI, aur Virtual DOM ki wajah se fast updates deta hai.
+**1. What is React and why use it?**
+React is a JavaScript library (not a framework) built by Meta for building UIs — through component-based architecture. It provides reusable components, declarative UI, and fast updates via the Virtual DOM.
 
-**2. Library vs Framework — React kaunsa hai?**
-React library hai kyunki ye sirf UI layer handle karta hai — routing, state management, HTTP calls ke liye external tools (React Router, Redux, Axios) chahiye. Framework (jaise Angular) opinionated hota hai aur sab kuch built-in deta hai.
+**2. Library vs Framework — which is React?**
+React is a library because it only handles the UI layer — you need external tools for routing, state management, and HTTP calls (React Router, Redux, Axios). A framework (like Angular) is opinionated and provides everything built-in.
 
-**3. Virtual DOM kya hai?**
-Real DOM ka lightweight in-memory copy. State/props change hone par React pehle Virtual DOM update karta hai, phir previous version se diff (reconciliation) karke sirf changed parts real DOM mein update karta hai — isse expensive DOM operations kam hote hain.
+**3. What is the Virtual DOM?**
+A lightweight in-memory copy of the real DOM. When state/props change, React first updates the Virtual DOM, then diffs it against the previous version (reconciliation) and updates only the changed parts in the real DOM — reducing expensive DOM operations.
 
-**4. Reconciliation kya hai?**
-Ye algorithm hai jisse React purane aur naye Virtual DOM tree ko compare karta hai (diffing) aur minimum operations mein real DOM ko sync karta hai. Same-type elements ko reuse karta hai, keys ke through list items ko track karta hai.
+**4. What is Reconciliation?**
+The algorithm that React uses to compare the old and new Virtual DOM trees (diffing) and sync the real DOM with minimum operations. It reuses same-type elements and tracks list items with keys.
 
-**5. React Fiber kya hai?**
-React ka reconciliation engine (React 16 se). Rendering work ko chhote units mein todkar interruptible banata hai, jisse high-priority updates (jaise user input) low-priority updates (jaise data fetch render) ko block nahi karte — concurrent rendering ka foundation.
+**5. What is React Fiber?**
+React's reconciliation engine (since React 16). It breaks rendering work into smaller units that can be interrupted, so high-priority updates (like user input) don't block low-priority updates (like data-fetching renders) — the foundation for concurrent rendering.
 
-**6. JSX kya hai?**
-JavaScript XML — HTML jaisi syntax jo JS ke andar likhi jaati hai. Babel isse `React.createElement()` calls mein compile karta hai. Browser JSX ko directly samajh nahi sakta.
+**6. What is JSX?**
+JavaScript XML — HTML-like syntax written inside JavaScript. Babel compiles it to `React.createElement()` calls. Browsers cannot understand JSX directly.
 
-**7. Ek component se multiple root elements kaise return karein?**
-Fragment use karo: `<React.Fragment>` ya shorthand `<>...</>`. Ye extra DOM node add kiye bina multiple children group karta hai.
+**7. How do you return multiple root elements from a component?**
+Use a Fragment: `<React.Fragment>` or the shorthand `<>...</>`. It groups multiple children without adding an extra DOM node.
 
 **8. Controlled vs Uncontrolled components?**
-Controlled: form input ki value React state se control hoti hai (`value` + `onChange`). Uncontrolled: DOM khud value maintain karta hai, `ref` se access karte hain. Controlled predictable hote hain, uncontrolled simple/legacy code ke liye kaam aate hain.
+Controlled: form input value is controlled by React state (`value` + `onChange`). Uncontrolled: the DOM maintains the value itself, accessed via `ref`. Controlled components are predictable; uncontrolled components are simpler for legacy code.
 
-**9. Keys list rendering mein kyu zaroori hain?**
-Keys React ko batate hain ki list mein kaunsa item add/remove/reorder hua — isse reconciliation efficient hota hai aur wrong component state reuse nahi hota. Index ko key banana risky hai jab list reorder/filter ho sakti hai.
+**9. Why are keys necessary in list rendering?**
+Keys tell React which item was added/removed/reordered in a list — enabling efficient reconciliation and preventing wrong component state reuse. Using array index as a key is risky when the list can be reordered or filtered.
 
 **10. Props vs State?**
-Props: parent se child ko pass hone wale read-only inputs. State: component ke andar manage hone wala mutable data jo re-render trigger karta hai. Props immutable hote hain child ke perspective se, state mutable hota hai (via setter).
+Props: read-only inputs passed from parent to child. State: mutable data managed inside a component that triggers a re-render when updated. Props are immutable from the child's perspective; state is mutable (via setter).
 
-**11. Unidirectional data flow kya hai?**
-React mein data sirf parent → child flow karta hai (props ke through). Child parent ka data directly modify nahi kar sakta — callback functions pass karke "lift state up" karte hain taaki child parent ko update trigger kar sake.
+**11. What is unidirectional data flow?**
+In React, data flows only from parent → child (through props). A child cannot directly modify a parent's data — you "lift state up" by passing callback functions so the child can trigger a parent update.
 
 **12. React element vs component?**
-Element ek plain object hai jo describe karta hai UI mein kya render hona chahiye (immutable, lightweight). Component ek function/class hai jo elements return karta hai — reusable blueprint.
+An element is a plain object describing what should render in the UI (immutable, lightweight). A component is a function or class that returns elements — a reusable blueprint.
 
-**13. Synthetic Events kya hain?**
-React ka cross-browser wrapper native DOM events ke upar, jo consistent API deta hai sab browsers mein. React 17+ mein events root container par attach hote hain (event delegation), document par nahi.
+**13. What are Synthetic Events?**
+React's cross-browser wrapper around native DOM events, providing a consistent API across all browsers. In React 17+, events are attached to the root container (event delegation) rather than `document`.
 
-**14. React mein `key` prop se related common mistake?**
-Array index ko key banana jab items reorder/add/delete ho sakte hain — isse stale state/UI bugs aate hain kyunki React wrong instance ko reuse kar leta hai. Stable unique ID use karo.
+**14. Common mistake with the `key` prop?**
+Using array index as a key when items can be reordered, added, or deleted — this causes stale state and UI bugs because React reuses the wrong component instance. Use stable, unique IDs instead.
 
-**15. dangerouslySetInnerHTML kya hai aur risk kya hai?**
-Raw HTML string ko directly DOM mein inject karne ka tarika. XSS (cross-site scripting) attack ka risk hota hai agar user-generated content sanitize kiye bina render kiya jaaye.
+**15. What is `dangerouslySetInnerHTML` and its risk?**
+A way to inject a raw HTML string directly into the DOM. The risk is XSS (cross-site scripting) attacks if user-generated content is rendered without sanitization.
 
 ---
 
 ## 2. Components, Props & Lifecycle
 
 **16. Functional vs Class components?**
-Functional: plain JS function jo JSX return karta hai, Hooks se state/lifecycle handle karta hai — modern standard. Class: ES6 class jo `render()` method aur lifecycle methods use karta hai — legacy approach, ab rarely likha jaata hai.
+Functional: a plain JavaScript function returning JSX, using Hooks for state/lifecycle — the modern standard. Class: an ES6 class with a `render()` method and lifecycle methods — a legacy approach, rarely written today.
 
-**17. Class component lifecycle phases kya hain?**
-Mounting (`constructor`, `render`, `componentDidMount`), Updating (`shouldComponentUpdate`, `render`, `componentDidUpdate`), Unmounting (`componentWillUnmount`). `componentDidCatch` error handling ke liye.
+**17. What are the class component lifecycle phases?**
+Mounting (`constructor`, `render`, `componentDidMount`), Updating (`shouldComponentUpdate`, `render`, `componentDidUpdate`), Unmounting (`componentWillUnmount`). `componentDidCatch` is for error handling.
 
-**18. `useEffect` class lifecycle methods ko kaise replace karta hai?**
-Empty dependency array `[]` ≈ `componentDidMount`. Dependency array mein values ≈ `componentDidUpdate` (un values ke change hone par). Return cleanup function ≈ `componentWillUnmount`.
+**18. How does `useEffect` replace class lifecycle methods?**
+Empty dependency array `[]` ≈ `componentDidMount`. A dependency array with values ≈ `componentDidUpdate` (fires when those values change). Returning a cleanup function ≈ `componentWillUnmount`.
 
-**19. Props drilling kya hai aur iska solution?**
-Jab props ko deeply nested components tak pass karna padta hai sirf intermediate components ke through pass-through karne ke liye. Solution: Context API, ya state management library (Redux, Zustand), ya component composition.
+**19. What is props drilling and its solution?**
+Props drilling is when you have to pass props through many intermediate components just to reach a deeply nested child. Solutions: Context API, or a state management library (Redux, Zustand), or component composition.
 
-**20. Children prop kaise kaam karta hai?**
-`props.children` automatically wo content hold karta hai jo component tags ke beech likha jaata hai — `<Wrapper><p>Hello</p></Wrapper>` mein `<p>` `children` ban jaata hai. Layout/wrapper components banane ke liye useful.
+**20. How does the `children` prop work?**
+`props.children` automatically holds whatever is written between the component's tags — `<Wrapper><p>Hello</p></Wrapper>` puts `<p>` into `children`. Useful for layout and wrapper components.
 
-**21. defaultProps ka purpose?**
-Prop na milne par fallback value deta hai. Functional components mein ab default parameter values (`function Comp({ name = "Guest" })`) more common hain kyunki `defaultProps` deprecated ho raha hai.
+**21. Purpose of `defaultProps`?**
+Provides a fallback value when a prop isn't passed. In functional components, default parameter values (`function Comp({ name = "Guest" })`) are now more common since `defaultProps` is being deprecated.
 
-**22. PropTypes kya karta hai?**
-Runtime type-checking library jo dev mode mein warn karti hai agar galat prop type pass ho. TypeScript is production mein zyada reliable alternative hai (compile-time checking).
+**22. What does PropTypes do?**
+A runtime type-checking library that warns in development mode if a prop of the wrong type is passed. TypeScript is a more reliable alternative in production (compile-time checking).
 
-**23. Pure Components kya hote hain?**
-`React.PureComponent` (class) ya `React.memo` (function) — shallow comparison karke props/state same hone par re-render skip karte hain. Performance optimization ke liye, lekin deep/nested objects ke saath careful rehna padta hai.
+**23. What are Pure Components?**
+`React.PureComponent` (class) or `React.memo` (function) — they skip re-rendering when props/state are shallowly equal. A performance optimization, but requires care with deep/nested objects.
 
-**24. Higher-Order Component (HOC) kya hai?**
-Function jo ek component leta hai aur enhanced component return karta hai — `withAuth(Component)` jaisa pattern. Logic reuse ke liye purana pattern, ab hooks/custom hooks isse replace kar chuke hain zyada tar cases mein.
+**24. What is a Higher-Order Component (HOC)?**
+A function that takes a component and returns an enhanced component — the `withAuth(Component)` pattern. A legacy pattern for logic reuse; hooks/custom hooks have replaced HOCs in most cases now.
 
-**25. Render Props pattern kya hai?**
-Component apna logic ek function prop ke through expose karta hai jo JSX return karti hai — `<DataProvider render={data => <UI data={data} />} />`. HOC ka alternative, ab custom hooks usually cleaner hote hain.
+**25. What is the Render Props pattern?**
+A component exposes its logic through a function prop that returns JSX — `<DataProvider render={data => <UI data={data} />} />`. An alternative to HOCs; custom hooks are usually cleaner now.
 
 ---
 
 ## 3. Hooks — Core
 
-**26. useState kaise kaam karta hai?**
-`const [state, setState] = useState(initial)` — current value aur updater function return karta hai. Setter call karne se re-render trigger hota hai; state updates asynchronous/batched ho sakte hain.
+**26. How does `useState` work?**
+`const [state, setState] = useState(initial)` returns the current value and an updater function. Calling the setter triggers a re-render; state updates can be asynchronous and batched.
 
-**27. Functional updates (`setState(prev => ...)`) kab use karein?**
-Jab naya state purane state par depend karta ho, especially multiple updates ek saath ho rahi ho ya closures stale value capture kar sakte hon — functional form latest state guarantee karta hai.
+**27. When to use functional updates (`setState(prev => ...)`)?**
+When the new state depends on the previous state, especially with multiple simultaneous updates or when closures might capture stale values. The functional form guarantees the latest state.
 
-**28. useEffect kya karta hai aur dependency array kaise kaam karta hai?**
-Side effects (data fetching, subscriptions, DOM manipulation) render ke baad run karta hai. No array = har render pe chalta hai; `[]` = sirf mount pe; `[dep1, dep2]` = jab dependencies change hon tab chalta hai.
+**28. What does `useEffect` do and how does dependency array work?**
+Side effects (data fetching, subscriptions, DOM manipulation) run after render. No array = runs every render; `[]` = runs only on mount; `[dep1, dep2]` = runs when those dependencies change.
 
-**29. useEffect cleanup function kab zaroori hai?**
-Jab subscription, timer, event listener, ya socket connection setup kiya ho — memory leaks aur stale references avoid karne ke liye return statement mein cleanup dena chahiye.
+**29. When is `useEffect` cleanup necessary?**
+When you set up a subscription, timer, event listener, or socket connection — return a cleanup function to prevent memory leaks and stale references.
 
-**30. useEffect vs useLayoutEffect?**
-`useEffect` browser paint hone ke baad asynchronously chalta hai. `useLayoutEffect` synchronously, paint se pehle chalta hai — DOM measurements (layout thrashing avoid karne) ke liye use hota hai jaha visible flicker avoid karna ho.
+**30. `useEffect` vs `useLayoutEffect`?**
+`useEffect` runs asynchronously after the browser paints. `useLayoutEffect` runs synchronously before paint — used for DOM measurements where you need to avoid visible flicker (layout thrashing).
 
-**31. useContext kya karta hai?**
-Context se value directly consume karne deta hai bina `<Context.Consumer>` wrapper ke. Props drilling avoid karne ka clean tarika — theming, auth, locale jaise global data ke liye.
+**31. What does `useContext` do?**
+Lets you consume a Context directly without a `<Context.Consumer>` wrapper. A clean way to avoid props drilling for global data like theming, auth, or locale.
 
-**32. useRef ke use cases?**
-(a) DOM element ko directly access karna (`ref.current`), (b) mutable value store karna jo re-render trigger na kare (jaise interval ID, previous value track karna).
+**32. What are `useRef` use cases?**
+(a) Accessing a DOM element directly (`ref.current`); (b) Storing a mutable value that doesn't trigger a re-render (like an interval ID or tracking a previous value).
 
-**33. useMemo kya karta hai?**
-Expensive computation ka result memoize (cache) karta hai jab tak dependencies change na hon — unnecessary recalculation avoid karta hai render ke beech.
+**33. What does `useMemo` do?**
+Memoizes (caches) the result of an expensive computation so it only recomputes when its dependencies change — avoiding unnecessary recalculations during render.
 
-**34. useCallback kya karta hai?**
-Function reference ko memoize karta hai — jab tak dependencies same hain, same function instance return karta hai. Child components ko unnecessary re-render se bachane ke liye useful (especially `React.memo` ke saath).
+**34. What does `useCallback` do?**
+Memoizes a function reference — it returns the same function instance as long as dependencies haven't changed. Useful for preventing unnecessary re-renders in child components (especially with `React.memo`).
 
-**35. useMemo vs useCallback mein difference?**
-`useMemo` computed value memoize karta hai, `useCallback` function definition memoize karta hai. Actually `useCallback(fn, deps)` = `useMemo(() => fn, deps)` — same underlying mechanism.
+**35. Difference between `useMemo` and `useCallback`?**
+`useMemo` memoizes a computed value, `useCallback` memoizes a function. In fact, `useCallback(fn, deps)` is equivalent to `useMemo(() => fn, deps)` — same underlying mechanism.
 
-**36. useReducer kab use karna chahiye?**
-Jab state logic complex ho, multiple sub-values involve hon, ya next state previous state + action par depend kare — Redux jaise reducer pattern. `useState` ka scalable alternative complex state ke liye.
+**36. When should you use `useReducer`?**
+When state logic is complex, involves multiple sub-values, or the next state depends on previous state and action — a Redux-style reducer pattern. A scalable alternative to `useState` for complex state.
 
-**37. Custom Hooks kya hote hain?**
-`use` prefix wale functions jo built-in hooks compose karke reusable stateful logic banate hain (jaise `useFetch`, `useLocalStorage`). Logic reuse karte hain bina component hierarchy change kiye — HOC/render props ka modern replacement.
+**37. What are Custom Hooks?**
+Functions prefixed with `use` that compose built-in hooks to create reusable stateful logic (like `useFetch`, `useLocalStorage`). They let you share logic without changing component hierarchy — the modern replacement for HOCs and render props.
 
-**38. Rules of Hooks kya hain?**
-(1) Hooks sirf top level pe call karo — loops/conditions/nested functions ke andar nahi. (2) Hooks sirf React function components ya custom hooks ke andar call karo. Ye rules React ko hooks ka consistent call order track karne dete hain.
+**38. What are the Rules of Hooks?**
+(1) Only call Hooks at the top level — not inside loops, conditions, or nested functions. (2) Only call Hooks from React function components or custom Hooks. These rules let React keep track of Hook call order consistently.
 
-**39. useId hook ka purpose?**
-Unique, stable IDs generate karta hai jo server aur client render ke beech match karein (SSR-safe) — form labels/accessibility attributes ke liye, `Math.random()` jaise approaches ko replace karta hai jo hydration mismatch cause karte the.
+**39. Purpose of `useId` hook?**
+Generates a unique, stable ID that matches between server and client renders (SSR-safe) — for form labels and accessibility attributes. It replaces approaches like `Math.random()` that caused hydration mismatches.
 
-**40. useTransition kya karta hai?**
-State update ko "non-urgent" (transition) mark karta hai taaki urgent updates (jaise typing) block na ho. `isPending` flag deta hai jisse loading UI dikha sakte ho jab tak transition complete na ho.
+**40. What does `useTransition` do?**
+Marks a state update as "non-urgent" (a transition) so that urgent updates (like typing) aren't blocked. It provides an `isPending` flag so you can show a loading state while the transition completes.
 
-**41. useDeferredValue kya karta hai?**
-Ek value ka "deferred" version deta hai jo lag ke saath update hota hai — expensive re-renders (jaise large list filtering) ko urgent UI updates se block hone se rokta hai.
+**41. What does `useDeferredValue` do?**
+Returns a "deferred" version of a value that updates with a slight delay — preventing expensive re-renders (like filtering a large list) from blocking urgent UI updates.
 
 ---
 
 ## 4. State Management & Context
 
-**42. Context API kab use karna chahiye vs Redux/Zustand?**
-Context simple, infrequently-changing global data (theme, auth user, locale) ke liye achha hai. Frequent updates, complex state logic, ya devtools/middleware chahiye toh Redux/Zustand/Jotai jaisi library better hai — Context har consumer ko re-render karta hai on change.
+**42. When to use Context API vs Redux/Zustand?**
+Context is good for simple, infrequently-changing global data (theme, auth user, locale). For frequent updates, complex state logic, or need for devtools/middleware, a state management library like Redux/Zustand/Jotai is better — Context re-renders all consumers on any change.
 
-**43. Context re-render performance problem kaise solve karein?**
-Context ko split karo (alag-alag concerns ke liye alag providers), memoize karo provider value (`useMemo`), ya state management library use karo jo selective subscriptions support kare.
+**43. How to solve the Context re-render performance issue?**
+Split Context (separate providers for separate concerns), memoize the provider value (`useMemo`), or use a state management library that supports selective subscriptions.
 
-**44. Redux ka core flow kya hai?**
-Single store → Actions (jo describe karte hain kya hua) → Reducers (pure functions jo naya state return karte hain) → Store update → Components re-render via `useSelector`/`connect`.
+**44. What is the core Redux flow?**
+Single store → Actions (describing what happened) → Reducers (pure functions returning new state) → Store updates → Components re-render via `useSelector`/`connect`.
 
-**45. Redux Toolkit (RTK) purane Redux se better kyu hai?**
-Boilerplate kam karta hai — `createSlice`, built-in Immer (mutable-looking syntax se immutable updates), `configureStore` with sensible defaults, RTK Query for data fetching/caching.
+**45. Why is Redux Toolkit (RTK) better than plain Redux?**
+Less boilerplate — `createSlice`, built-in Immer (writes immutable updates with mutable syntax), `configureStore` with sensible defaults, and RTK Query for data fetching/caching.
 
-**46. Prop drilling vs Context vs global state library — kab kya?**
-2-3 levels tak props theek hain. Deeper/cross-cutting concerns ke liye Context. App-wide complex state, time-travel debugging, middleware chahiye toh Redux/Zustand jaisi library.
+**46. Props drilling vs Context vs global state library — when to use what?**
+2-3 levels of props passing is fine. For deeper or cross-cutting concerns, use Context. When you need app-wide complex state, time-travel debugging, or middleware, use a library like Redux/Zustand.
 
-**47. Zustand ya Jotai jaise lightweight state managers Redux se kaise alag hain?**
-Kam boilerplate, no providers mandatory (Zustand), atomic state model (Jotai), simpler API — bade apps mein bhi kaafi popular ho gaye hain 2026 tak kyunki Redux jitna ceremony nahi chahiye hota.
+**47. How do lightweight state managers like Zustand or Jotai differ from Redux?**
+Less boilerplate, no mandatory providers (Zustand), an atomic state model (Jotai), and a simpler API. By 2026, they've become popular even in large apps because they don't require the ceremony that Redux does.
 
 ---
 
 ## 5. Performance Optimization
 
-**48. React app ko re-renders se optimize kaise karein?**
-`React.memo` for components, `useMemo`/`useCallback` for expensive values/functions, state ko sahi level pe rakho (colocate state), list virtualization, code splitting.
+**48. How to optimize a React app from re-renders?**
+Use `React.memo` for components, `useMemo`/`useCallback` for expensive values/functions, keep state at the right level (colocate state), list virtualization, and code splitting.
 
-**49. Code Splitting kya hai aur kaise karte hain?**
-App ka bundle chhote chunks mein todna jo on-demand load hon. `React.lazy(() => import('./Component'))` + `<Suspense>` se route/component-level splitting karte hain — initial load time kam hota hai.
+**49. What is code splitting and how to do it?**
+Breaking the app's bundle into smaller chunks that load on demand. Use `React.lazy(() => import('./Component'))` + `<Suspense>` for route or component-level splitting — reduces initial load time.
 
-**50. React.lazy aur Suspense kaise kaam karte hain saath mein?**
-`React.lazy` dynamically import karta hai component ko. `<Suspense fallback={<Loader/>}>` uska wrapper hai jo loading state dikhata hai jab tak lazy component load nahi ho jaata.
+**50. How do `React.lazy` and `Suspense` work together?**
+`React.lazy` dynamically imports a component. `<Suspense fallback={<Loader/>}>` is its wrapper that shows a loading state while the lazy component loads.
 
-**51. List virtualization kya hai?**
-Sirf visible (viewport ke andar) items render karna instead of pura large list — `react-window`/`react-virtualized` jaisi libraries use hoti hain. Hazaaron rows wale tables/lists ke liye performance critical.
+**51. What is list virtualization?**
+Rendering only the items visible in the viewport instead of the entire large list — using libraries like `react-window` or `react-virtualized`. Performance-critical for tables/lists with thousands of rows.
 
-**52. Unnecessary re-renders kaise debug karein?**
-React DevTools Profiler use karo (highlight updates), `why-did-you-render` library, ya console logs component render count ke saath. Common causes: inline object/array/function props, missing memoization, Context misuse.
+**52. How to debug unnecessary re-renders?**
+Use the React DevTools Profiler (highlight updates), the `why-did-you-render` library, or console logs tracking render count. Common causes: inline object/array/function props, missing memoization, and Context misuse.
 
-**53. React Compiler (React 19) kya karta hai?**
-Build-time tool jo automatically memoization (`useMemo`/`useCallback`/`React.memo` jaisa kaam) apply karta hai bina manually likhe — component code analyze karke smart re-render skipping generate karta hai, jisse manual memoization ki zaroorat kaafi kam ho jaati hai.
+**53. What does the React Compiler (React 19) do?**
+A build-time tool that automatically applies memoization (like `useMemo`/`useCallback`/`React.memo`) without writing it manually — it analyzes component code and generates smart re-render skipping, significantly reducing the need for manual memoization.
 
-**54. Debouncing vs Throttling — React mein kab use karein?**
-Debounce: rapid-fire events (search input typing) ke baad ek gap ke baad hi function chalao. Throttle: fixed interval par max ek baar chalao (scroll/resize events). Dono expensive operations (API calls, re-renders) limit karte hain.
+**54. Debouncing vs Throttling — when to use each in React?**
+Debounce: run a function after a gap following rapid-fire events (typing in a search input). Throttle: run a function at most once per fixed interval (window resize/scroll). Both limit expensive operations like API calls or re-renders.
 
-**55. Concurrent Rendering ka fayda kya hai?**
-React ko render work ko interrupt/pause/resume karne deta hai priority ke hisaab se — high-priority updates (input typing) low-priority updates (large list render) ko block nahi karte, UI responsive rehta hai.
+**55. What is the benefit of Concurrent Rendering?**
+It lets React interrupt, pause, and resume render work based on priority — high-priority updates (input typing) don't block low-priority updates (rendering a large list), keeping the UI responsive.
 
 ---
 
 ## 6. Forms, Events & Refs
 
-**56. Controlled form input ka basic pattern?**
-`<input value={state} onChange={e => setState(e.target.value)} />` — value React state se aati hai, har keystroke pe state update hoti hai, jo re-render trigger karti hai.
+**56. What is the basic pattern for a controlled form input?**
+`<input value={state} onChange={e => setState(e.target.value)} />` — the value comes from React state, and every keystroke updates state which triggers a re-render.
 
-**57. forwardRef kis liye hota hai?**
-Parent component ko child ke andar ke DOM node/ref tak access dene ke liye jab child ek custom (non-DOM) component ho. `React.forwardRef((props, ref) => ...)`.
+**57. What is `forwardRef` for?**
+Lets a parent component access a child's DOM node/ref when the child is a custom (non-DOM) component. Syntax: `React.forwardRef((props, ref) => ...)`.
 
-**58. useImperativeHandle kya karta hai?**
-`forwardRef` ke saath use hota hai — parent ko sirf specific methods/properties expose karta hai (poora DOM node nahi), ref ke through custom "imperative API" banane ke liye.
+**58. What does `useImperativeHandle` do?**
+Used together with `forwardRef` — it exposes only specific methods/properties to the parent (not the entire DOM node) through the ref, creating a custom "imperative API."
 
-**59. Event delegation React mein kaise implement hota hai?**
-React 17+ mein sab events root DOM container par ek hi listener se attach hote hain (na ki document par), jo memory efficient hai aur multiple React versions ko same page pe coexist karne deta hai.
+**59. How is event delegation implemented in React?**
+In React 17+, all events are attached to a single root DOM container (not `document`), which is memory efficient and lets multiple React versions coexist on the same page.
 
-**60. e.preventDefault() aur e.stopPropagation() ka difference?**
-`preventDefault()` browser ka default behavior rokta hai (jaise form submit pe page reload). `stopPropagation()` event ko parent elements tak bubble hone se rokta hai.
+**60. Difference between `e.preventDefault()` and `e.stopPropagation()`?**
+`preventDefault()` stops the browser's default behavior (like a form submission causing a page reload). `stopPropagation()` stops the event from bubbling up to parent elements.
 
 ---
 
 ## 7. Error Handling & Testing
 
-**61. Error Boundaries kya hain?**
-Class components (`componentDidCatch`/`getDerivedStateFromError`) jo apne child tree mein JS errors catch karte hain aur fallback UI dikhate hain instead of poori app crash hone ke. Hooks se error boundary nahi ban sakta abhi tak.
+**61. What are Error Boundaries?**
+Class components (`componentDidCatch` / `getDerivedStateFromError`) that catch JavaScript errors in their child tree and display a fallback UI instead of crashing the entire app. Currently, you cannot build an error boundary with hooks.
 
-**62. Error Boundaries kya catch NAHI karte?**
-Event handlers ke errors, async code (setTimeout, promises), server-side rendering errors, aur error boundary khud ke andar ke errors — inke liye try/catch manually use karna padta hai.
+**62. What do Error Boundaries NOT catch?**
+Errors in event handlers, async code (`setTimeout`, Promises), server-side rendering errors, and errors inside the error boundary itself — for these, you still need manual `try/catch`.
 
-**63. React Testing Library ki philosophy kya hai?**
-"Test the way users use your app" — implementation details (internal state) test karne ke bajaye DOM output aur user interactions (`getByRole`, `fireEvent`) test karo, jisse tests refactor-resistant rehte hain.
+**63. What is the philosophy of React Testing Library?**
+"Test the way users use your app" — test DOM output and user interactions (`getByRole`, `fireEvent`) rather than implementation details like internal state, so tests stay resilient to refactoring.
 
-**64. Jest vs React Testing Library — role kya hai dono ka?**
-Jest test runner + assertion library hai (test files chalata hai, `expect()` deta hai). React Testing Library components ko render karne aur DOM query/interact karne ke utilities deti hai — dono saath use hote hain.
+**64. What roles do Jest and React Testing Library play?**
+Jest is the test runner + assertion library (it runs the test files, provides `expect()`). React Testing Library provides utilities to render components and query/interact with the DOM — the two are used together.
 
-**65. Snapshot testing kya hai aur risk kya hai?**
-Component output ko ek saved "snapshot" se compare karta hai. Risk: over-reliance se developers bina check kiye snapshots update karne lagte hain jab UI change ho — false confidence de sakta hai.
+**65. What is snapshot testing and its risk?**
+Compares a component's rendered output against a saved "snapshot." The risk: over-reliance means developers update snapshots without checking when the UI changes — producing false confidence.
 
 ---
 
 ## 8. Routing (React Router)
 
-**66. React Router mein client-side routing kaise kaam karti hai?**
-Browser History API (`pushState`) use karke bina full page reload ke URL change karta hai aur matching component render karta hai — SPA navigation feel deta hai.
+**66. How does client-side routing work in React Router?**
+It uses the Browser History API (`pushState`) to change the URL without a full page reload, then renders the matching component — giving a SPA navigation feel.
 
-**67. `<Link>` vs `<a>` tag — difference kya hai routing mein?**
-`<Link>` client-side navigation karta hai (page reload nahi), History API use karta hai. `<a>` full page reload trigger karta hai jo SPA state reset kar deta hai.
+**67. Difference between `<Link>` and `<a>` tag?**
+`<Link>` does client-side navigation (no page reload), using the History API. `<a>` triggers a full page reload, which resets SPA state.
 
-**68. Nested Routes aur `<Outlet>` kya hote hain?**
-Nested routes parent layout ke andar child routes render karne dete hain. `<Outlet>` wo placeholder hai jaha matched child route render hoti hai parent layout ke andar.
+**68. What are Nested Routes and `<Outlet>`?**
+Nested routes render child routes inside a parent layout. `<Outlet>` is the placeholder where the matched child route renders within the parent layout.
 
-**69. Dynamic/protected routes kaise implement karte hain?**
-Dynamic: `path="/user/:id"` + `useParams()` se value read karo. Protected: wrapper component jo auth check kare aur agar unauthenticated ho toh `<Navigate to="/login" />` redirect kare.
+**69. How to implement dynamic/protected routes?**
+Dynamic: `path="/user/:id"` + read the value with `useParams()`. Protected: a wrapper component that checks auth and, if unauthenticated, redirects with `<Navigate to="/login" />`.
 
 ---
 
 ## 9. React 19 & Modern Patterns
 
-**70. Server Components (RSC) kya hain?**
-Components jo server par render hote hain aur sirf resulting HTML/data client ko bhejte hain — client-side JS bundle chhota hota hai, direct backend/database access possible hota hai bina API layer ke. Interactivity (event handlers) inke andar nahi ho sakti.
+**70. What are Server Components (RSC)?**
+Components that render on the server and send only the resulting HTML/data to the client — shrinking the client-side JS bundle and allowing direct backend/database access without an API layer. Interactivity (event handlers) cannot live inside them.
 
 **71. Server Components vs Client Components?**
-Server Components (`'use server'` ya default in Next.js App Router) — no interactivity, no hooks, smaller bundle. Client Components (`'use client'`) — interactive, hooks/state/effects use kar sakte hain, browser mein hydrate hote hain.
+Server Components (default in Next.js App Router, or `'use server'`) — no interactivity, no hooks, smaller bundle. Client Components (`'use client'`) — interactive, can use hooks/state/effects, and hydrate in the browser.
 
-**72. React 19 Actions kya hain?**
-Async functions jo form submissions/mutations handle karte hain, automatically pending/error/optimistic states manage karte hain — `useActionState`, `useOptimistic` ke saath integrate hote hain, manual loading-state boilerplate khatam karte hain.
+**72. What are React 19 Actions?**
+Async functions that handle form submissions and mutations, automatically managing pending/error/optimistic states — integrated with `useActionState` and `useOptimistic`, eliminating manual loading-state boilerplate.
 
-**73. useActionState hook kya karta hai?**
-Form action ke result, pending state, aur error ko track karta hai ek hi hook mein — multiple `useState` (loading, error, data) ki zaroorat khatam karta hai.
+**73. What does `useActionState` do?**
+Tracks a form action's result, pending state, and errors in a single hook — eliminating the need for multiple `useState` calls for loading, error, and data.
 
-**74. useOptimistic hook kya karta hai?**
-Async action complete hone se pehle hi UI ko "predicted" final state dikhata hai (jaise like button turant fill ho jaana), action fail hone par automatically revert kar deta hai.
+**74. What does `useOptimistic` do?**
+Shows the user a "predicted" final state before an async action completes (like a like button instantly filling), and automatically rolls back if the action fails.
 
-**75. `use` hook kya hai aur kaise alag hai baaki hooks se?**
-Promise ya Context ko render ke andar read karne deta hai — Suspense ke saath integrate hota hai (promise resolve hone tak component suspend karta hai). Unlike other hooks, ye conditionally bhi call ho sakta hai (loops/if statements ke andar).
+**75. What is the `use` hook and how is it different from other hooks?**
+Reads a Promise or Context directly during render — integrates with Suspense (the component suspends until the promise resolves). Unlike other hooks, it can be called conditionally (inside loops/conditionals).
 
-**76. Server Actions kya hote hain?**
-`'use server'` directive wale async functions jo directly client se call ho sakte hain (form action ya event handler ke through) bina manually API route banaye — React RPC layer khud handle karta hai.
+**76. What are Server Actions?**
+Async functions marked with `'use server'` that can be called directly from the client (through a form action or event handler) without manually creating an API route — React's own RPC layer handles the communication.
 
-**77. Hydration kya hai?**
-Server-rendered static HTML ko client-side par React "activate" karta hai — event listeners attach karke usse interactive banata hai bina dobara HTML render kiye. React 19 mein hydration mismatches better report hote hain aur partial/streaming hydration improve hui hai.
+**77. What is Hydration?**
+The process of making server-rendered static HTML interactive on the client by attaching event listeners — without re-rendering the HTML. React 19 improves mismatch reporting and partial/streaming hydration.
 
 ---
 
 ## 10. Architecture, Patterns & Miscellaneous
 
-**78. Compound Components pattern kya hai?**
-Multiple components jo saath mein kaam karte hain shared implicit state ke saath (jaise `<Select><Select.Option/></Select>`), usually Context ke through communicate karte hain — flexible, composable APIs banata hai.
+**78. What is the Compound Components pattern?**
+Multiple components that work together with shared implicit state (like `<Select><Select.Option/></Select>`), usually communicating through Context — creating flexible, composable APIs.
 
-**79. Container/Presentational pattern kya hai?**
-Container components logic/data handle karte hain, presentational components sirf UI render karte hain (props leke). Hooks ke aane ke baad ye pattern kam strict follow hota hai, but concept (concerns separate karna) abhi bhi relevant hai.
+**79. What is the Container/Presentational pattern?**
+Container components handle logic/data, while presentational components only render UI (taking props). Less strictly followed since Hooks, but the concept (separating concerns) remains relevant.
 
-**80. React mein memoization ke traps kya hain?**
-Inline objects/arrays/functions har render pe naya reference banate hain, jisse `React.memo` fail ho jaata hai (shallow comparison). Over-memoization bhi bura hai — unnecessary complexity aur memory overhead add karta hai without real benefit.
+**80. What are the traps of memoization in React?**
+Inline objects, arrays, and functions create new references on every render, causing `React.memo` to fail (shallow comparison). Over-memoization is also bad — adding unnecessary complexity and memory overhead without real benefit.
 
-**81. Composition vs Inheritance — React mein kya prefer karte hain?**
-React composition prefer karta hai (children/props ke through behavior combine karna) inheritance ke bajaye — flexible, loosely-coupled components milte hain. Official React docs explicitly composition recommend karte hain.
+**81. Composition vs Inheritance — which does React prefer?**
+React favors composition (combining behaviors through children/props) over inheritance. It produces flexible, loosely-coupled components. The official React docs explicitly recommend composition.
 
-**82. Portal kya hota hai React mein?**
-`ReactDOM.createPortal(child, domNode)` — component ko parent DOM hierarchy se bahar kisi aur DOM node mein render karne deta hai (modals, tooltips) jabki React tree/event bubbling logically same rehta hai.
+**82. What is a Portal in React?**
+`ReactDOM.createPortal(child, domNode)` renders a component into a DOM node outside its parent hierarchy (useful for modals, tooltips) while React tree and event bubbling remain logically the same.
 
-**83. Strict Mode kya karta hai?**
-Development-only wrapper jo potential problems detect karne ke liye components ko double-render karta hai, deprecated APIs warn karta hai, aur side-effects ke liye extra checks lagata hai — production build mein koi effect nahi hota.
+**83. What does Strict Mode do?**
+A development-only wrapper that double-renders components to catch potential problems, warns about deprecated APIs, and adds extra checks for side effects. It has no effect in production builds.
 
-**84. Immutability React mein kyu important hai?**
-State ko directly mutate karne se React change detect nahi kar pata (reference same rehta hai) — isliye naya object/array banakar update karna padta hai taaki re-render trigger ho aur predictable state history mile.
+**84. Why is immutability important in React?**
+If you mutate state directly, React can't detect the change (the reference stays the same) — you must create a new object/array to trigger a re-render and maintain predictable state history.
 
-**85. `key` prop change karne se component ka kya hota hai?**
-Agar key change ho jaaye, React usse completely naya component treat karta hai — purana unmount, naya mount hota hai (state reset ho jaata hai). Ye intentionally component "reset" karne ke liye trick use hoti hai.
+**85. What happens when you change a `key` prop?**
+If the key changes, React treats it as a completely new component — the old one unmounts and a new one mounts (state is reset). This is intentionally used to "reset" a component.
 
-**86. React mein memory leaks kaise hote hain aur kaise avoid karein?**
-Unmounted component par state set karna, cleanup na kiye event listeners/timers/subscriptions — `useEffect` cleanup function se in sab ko properly unsubscribe/clear karo.
+**86. How do memory leaks happen in React and how to avoid them?**
+Setting state on an unmounted component, or leaving event listeners/timers/subscriptions that weren't cleaned up — use the `useEffect` cleanup function to properly unsubscribe and clear them.
 
-**87. Suspense sirf lazy loading ke liye hai ya aur bhi kuch?**
-Sirf `React.lazy` nahi — data fetching (frameworks/libraries ke saath jo Suspense support karte hain), aur React 19 mein `use()` hook ke saath promises resolve karne ke liye bhi use hota hai.
+**87. Is Suspense only for lazy loading?**
+No — Suspense is also used for data fetching (with frameworks/libraries that support it), and in React 19 it works with the `use()` hook to suspend on promises until they resolve.
 
-**88. React mein "lifting state up" kab karna chahiye?**
-Jab do ya zyada sibling components ko same data share/sync karna ho — state ko unke closest common parent mein move karo aur props/callbacks ke through pass karo.
+**88. When should you "lift state up" in React?**
+When two or more sibling components need to share and sync the same data — move the state to their closest common parent and pass it down via props and callbacks.
 
-**89. Batching kya hai React mein?**
-Multiple `setState` calls ko ek single re-render mein combine karna performance ke liye. React 18+ mein automatic batching sab jagah hoti hai (promises, setTimeout, native event handlers ke andar bhi) — pehle sirf React event handlers mein hoti thi.
+**89. What is batching in React?**
+Combining multiple `setState` calls into a single re-render for performance. React 18+ does automatic batching everywhere (inside promises, `setTimeout`, and native event handlers) — previously it only happened inside React event handlers.
 
-**90. React mein "single source of truth" principle kya hai?**
-Har piece of state ka ek hi authoritative owner hona chahiye component tree mein — duplicate/derived state avoid karo, instead existing state se compute karo taaki data inconsistency na ho.
+**90. What is the "single source of truth" principle in React?**
+Every piece of state should have one authoritative owner in the component tree — avoid duplicating or deriving state; instead compute from the single existing state so data inconsistency doesn't occur.
 
-**91. Derived state anti-pattern kya hai?**
-Props se state copy karna `useState` mein aur phir manually sync karna — bugs cause karta hai jab props change hote hain but state stale reh jaata hai. Better: seedha props se compute karo render ke time, ya `key` prop se component reset karo.
+**91. What is the "derived state" anti-pattern?**
+Copying props into state with `useState` and then trying to manually sync them — this causes bugs when props change but the state goes stale. Better: compute directly from props during render, or use the `key` prop to reset the component.
 
-**92. React 19 mein ref cleanup functions kya hain?**
-`ref` callback ab ek cleanup function return kar sakta hai (jaisa `useEffect` karta hai) jo tab chalti hai jab element unmount ho ya ref change ho — manual `current = null` assignment ki zaroorat khatam.
+**92. What are ref cleanup functions in React 19?**
+A `ref` callback can now return a cleanup function (like `useEffect` does) that runs when the element unmounts or the ref changes — removing the need for manual `current = null` assignments.
 
-**93. Accessibility (a11y) React apps mein kaise ensure karte hain?**
-Semantic HTML use karo, ARIA attributes jaha zaroori ho, keyboard navigation test karo, `useId` se label associations, aur tools jaise `eslint-plugin-jsx-a11y` / axe-core se automated checks.
+**93. How to ensure accessibility in React apps?**
+Use semantic HTML, add ARIA attributes where needed, test keyboard navigation, use `useId` for label associations, and run automated checks with tools like `eslint-plugin-jsx-a11y` or axe-core.
 
-**94. React app mein environment-specific config kaise handle karte hain?**
-Build tool ke env variables (Vite: `import.meta.env`, CRA: `process.env.REACT_APP_*`), `.env` files, aur secrets ko kabhi bhi client bundle mein expose nahi karna (sensitive keys backend/server side hi rakho).
+**94. How to handle environment-specific configuration in React?**
+Use build-tool env variables (Vite: `import.meta.env`, CRA: `process.env.REACT_APP_*`), `.env` files, and never expose sensitive keys in the client bundle — keep secrets on the backend/server side only.
 
-**95. TypeScript React ke saath kyu popular hai interview context mein?**
-Compile-time type safety, better autocomplete/IDE support, props/state ke shape explicit hote hain, refactoring safer hoti hai large codebases mein. Interviewers senior roles mein TS familiarity expect karte hain.
+**95. Why is TypeScript popular with React in interviews?**
+It provides compile-time type safety, better autocomplete and IDE support, explicit prop/state shapes, and safer refactoring in large codebases. Interviewers for senior roles expect TypeScript fluency.
 
-**96. React mein "waterfall" data fetching problem kya hai?**
-Jab nested components sequentially data fetch karte hain (parent ka fetch complete hone ke baad child fetch start hota hai) — total load time badh jaata hai. Solution: parallel fetching, Server Components, ya data-fetching libraries (React Query) jo request deduplication/parallelization handle karein.
+**96. What is the "waterfall" data-fetching problem in React?**
+When nested components fetch data sequentially (a child waits for its parent's fetch to complete) — total load time grows. Solutions: parallel fetching, Server Components, or data-fetching libraries (React Query) that handle deduplication and parallelization.
 
-**97. React Query / TanStack Query React state management se kaise alag hai?**
-Ye "server state" (async, remote data) manage karta hai — caching, background refetching, stale-while-revalidate, deduplication built-in deta hai. Redux/Context "client state" (local UI state) ke liye better suited hain — dono complementary hain, competing nahi.
+**97. How does React Query / TanStack Query differ from React state management?**
+It manages "server state" (async, remote data) — with built-in caching, background refetching, stale-while-revalidate, and deduplication. Redux/Context are for "client state" (local UI state) — the two are complementary, not competing.
 
-**98. React mein common performance anti-patterns kya hain?**
-Render ke andar naya object/array/function banana (inline), bade lists bina virtualization ke render karna, unnecessary Context re-renders, deeply nested state jo poori tree re-render kare, missing `key`/wrong `key` strategy.
+**98. What are common performance anti-patterns in React?**
+Creating new objects/arrays/functions during render (inline), rendering large lists without virtualization, unnecessary Context re-renders, deeply nested state that re-renders the whole tree, and missing or incorrect `key` strategy.
 
-**99. Interview mein "React internals" question aane par kya cover karna chahiye?**
-Fiber architecture (interruptible rendering), reconciliation/diffing algorithm (O(n) heuristic, type + key based), render vs commit phase separation, aur concurrent features (transitions, Suspense) ka high-level mental model.
+**99. What should you cover for "React internals" interview questions?**
+The Fiber architecture (interruptible rendering), the reconciliation/diffing algorithm (O(n) heuristic, based on type and key), the separation of render vs commit phases, and a high-level mental model of concurrent features (transitions, Suspense).
 
-**100. Senior React interview mein trade-off discuss karna kyu important hai?**
-Interviewers "sahi jawab" se zyada dekhte hain ki candidate trade-offs samajhta hai ya nahi — jaise "useMemo kab zaroorat nahi" ya "Context kab Redux se better/worse hai". Blanket "best practice" bolna weak signal hai; context-aware reasoning strong signal hai.
+**100. Why is discussing trade-offs important in a senior React interview?**
+Interviewers look less for the "right answer" and more for whether you understand trade-offs — like "when `useMemo` isn't needed" or "when Context is better/worse than Redux." Blanket "best practice" statements are a weak signal; context-aware reasoning is a strong signal.
 
 ---
 
 ### Bonus tip
-Interview mein sirf definitions ratt kar mat jaana — har concept ke liye ek chhota real example ya "maine kab use kiya tha" story taiyar rakho. Ye dono junior aur senior interviews mein farak dalta hai.
+
+Don't just memorize definitions for the interview — for every concept, have a brief real example or a "I used this when..." story ready. That makes the difference in both junior and senior interviews.

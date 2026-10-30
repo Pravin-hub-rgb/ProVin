@@ -1,37 +1,33 @@
----
+Picking up from the last file — T.4 built the router (protected routes, lazy loading, login flow). Now **T.5 — Habits Feature**: CRUD, daily check-in, streak logic. This is the app's core feature.
 
-## Abhi Tak Kya Hua
-
-T.4 mein router banaya — protected routes, lazy loading, login flow. Ab **T.5 — Habits Feature**: habits CRUD, daily check-in, streak logic. Ye app ka core feature hai.
-
-Toh aisa scene hai...
+So here's the situation...
 
 ---
 
-## Coder Mindset — Habits Feature Socho
+## Coder Mindset — Think About the Habits Feature
 
-Habits page pe kya hona chahiye?
+What should the Habits page have?
 
-| Feature | Kya |
-|---------|-----|
-| **Habit list** | Saare habits dikhao — title, emoji, current streak |
-| **Add habit** | Naya habit banane ka form |
-| **Check-in** | Aaj ka habit done/not-done toggle |
-| **Streak** | Lagataar kitne din habit done hai |
-| **Delete/Edit** | Habit remove/update |
+| Feature | What it does |
+|---------|------|
+| **Habit list** | Show all habits — title, emoji, current streak |
+| **Add habit** | Form to create a new habit |
+| **Check-in** | Toggle today's habit done/not-done |
+| **Streak** | How many consecutive days the habit was done |
+| **Delete/Edit** | Remove or update a habit |
 
-**Streak logic — senior thinking:** Streak kya hai? **Lagataar din** jisme habit done thi, aaj se peeche. Agar aaj done nahi kiya toh streak kaise count ho? Do tareeke:
+**Streak logic — senior thinking:** What is a streak? **Consecutive days** the habit was done, counting back from today. If today isn't done, how do we count? Two approaches:
 
-1. **Strict:** Aaj agar done nahi toh streak 0 (ya purani streak)
-2. **Grace:** Aaj done nahi toh bhi kal tak streak dikhe (streak "living" — aaj ka mauka baaki)
+1. **Strict:** If today isn't done, streak resets to 0
+2. **Grace:** If today isn't done, yesterday's streak still shows (streak is "living" — today's slot is still open)
 
-Real habit apps (Duolingo, Habitica) grace period use karte hain. Hum simple approach rakhte hain: **streak = aaj se peeche lagataar done days** — agar aaj done nahi, toh streak 0.
+Real habit apps (Duolingo, Habitica) use a grace period. We keep it simple: **streak = consecutive done days counting back from today** — if today isn't done, streak is 0.
 
 ---
 
 ## Step 1 — useHabits Custom Hook
 
-Saari habit logic ek hook mein wrap karte hain — streak calculation, date helpers. Nayi file banao — `src/hooks/useHabits.ts`:
+Wrap all habit logic in a hook — streak calculation, date helpers. Create new file — `src/hooks/useHabits.ts`:
 
 ```ts
 // src/hooks/useHabits.ts
@@ -65,7 +61,7 @@ export function useHabits() {
   const today = formatDate(new Date());
   const last7Days = useMemo(() => getLastNDays(7), []);
 
-  // Ek habit ki streak — aaj se peeche lagataar done days
+  // A habit's streak — consecutive done days counting back from today
   function getStreak(habitId: string): number {
     let streak = 0;
     for (let i = 0; i < 60; i++) {
@@ -74,13 +70,13 @@ export function useHabits() {
       if (day && day[habitId]) {
         streak++;
       } else if (i > 0) {
-        break; // aaj skip ho toh break (aaj ka mauka baaki)
+        break;
       }
     }
     return streak;
   }
 
-  // Ek habit ki last 7 din ka check-in status
+  // A habit's check-in status for last 7 days
   function getHabitLast7Days(habitId: string): boolean[] {
     return last7Days.map((date) => {
       const day = checkIns[date];
@@ -105,29 +101,31 @@ export function useHabits() {
 }
 ```
 
-**Streak function ka logic:**
+**Streak function logic:**
 
 ```
-for i = 0..59 (60 din tak):
-    date = aaj - i din
-    agar us din habit done:
+for i = 0..59 (check up to 60 days back):
+    date = today - i days
+    if that date's habit was done:
         streak++
-    warna (i > 0): break        ← aaj skip = break (aaj ka mauka baaki), purana gap = break
+    else if i > 0:
+        break     ← today skipped = don't break (today's slot still open)
+                   ← past day missed = break
 return streak
 
-Example (aaj = din 0):
-  Din:  0(today) 1    2    3    4
+Example (today = day 0):
+  Day:  0(today) 1    2    3    4
   Done: ✅       ✅   ❌   ✅   ✅
-  Streak: i=0 done → 1, i=1 done → 2, i=2 nahi → break → streak = 2
+  Streak: i=0 done → 1, i=1 done → 2, i=2 skip → break → streak = 2
 ```
 
-`86400000` = ek din ke milliseconds. `Date.now() - i * 86400000` — i din peeche.
+`86400000` = milliseconds in a day. `Date.now() - i * 86400000` — i days ago.
 
 ---
 
 ## Step 2 — HabitCard Component
 
-Nayi file banao — `src/components/habits/HabitCard.tsx`:
+Create new file — `src/components/habits/HabitCard.tsx`:
 
 ```tsx
 // src/components/habits/HabitCard.tsx
@@ -154,7 +152,7 @@ export const HabitCard = memo(function HabitCard({ habit }: HabitCardProps) {
           {habit.emoji}
         </span>
         <h3>{habit.title}</h3>
-        <span className="streak">🔥 {streak} din</span>
+        <span className="streak">🔥 {streak} days</span>
       </div>
 
       <div className="week-dots" aria-label="Last 7 days">
@@ -172,22 +170,22 @@ export const HabitCard = memo(function HabitCard({ habit }: HabitCardProps) {
         aria-pressed={doneToday}
         className="checkin-btn"
       >
-        {doneToday ? "✅ Done aaj" : "Check in"}
+        {doneToday ? "✅ Done today" : "Check in"}
       </button>
     </div>
   );
 });
 ```
 
-**React.memo kyu:** `useHabits()` hook sab actions leta hai — agar yeh hook re-render pe naye references bana raha hota, memo useless ho jata. Kyunki Zustand actions **stable references** hain, memo sahi kaam karta hai — sirf jab habit actual change hui, card re-render. (Batch 5.1)
+**Why `React.memo`:** `useHabits()` pulls all actions — if this hook returned new references on every render, memo would be useless. Since Zustand actions are **stable references**, memo works — the card only re-renders when its `habit` actually changes.
 
-**Accessibility:** `aria-pressed` — button state screen reader ko pata (toggle button pattern). `aria-label` — dots ka meaning. `aria-hidden` on decorative emoji.
+**Accessibility:** `aria-pressed` — tells the screen reader the button's toggle state. `aria-label` — describes what the dots mean. `aria-hidden` on decorative emoji.
 
 ---
 
 ## Step 3 — Habits Page
 
-Ab sab jodte hain — habits page. Nayi file banao — `src/pages/Habits.tsx`:
+Now assemble everything — the Habits page. Create new file — `src/pages/Habits.tsx`:
 
 ```tsx
 // src/pages/Habits.tsx
@@ -226,8 +224,8 @@ export function Habits() {
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="Nayi habit... (e.g. Paani piyo)"
-          aria-label="Nayi habit ka naam"
+          placeholder="New habit... (e.g. Drink water)"
+          aria-label="New habit name"
         />
         <select
           value={emoji}
@@ -244,7 +242,7 @@ export function Habits() {
       </div>
 
       {habitList.length === 0 ? (
-        <p className="empty">Koi habit nahi — ek add karo aur streak shuru karo! 🚀</p>
+        <p className="empty">No habits yet — add one and start your streak! 🚀</p>
       ) : (
         <div className="habits-grid">
           {habitList.map((habit) => (
@@ -253,7 +251,7 @@ export function Habits() {
               <button
                 className="delete-habit"
                 onClick={() => deleteHabit(habit.id)}
-                aria-label={`${habit.title} delete karo`}
+                aria-label={`Delete ${habit.title}`}
               >
                 🗑️
               </button>
@@ -266,21 +264,21 @@ export function Habits() {
 }
 ```
 
-**Flow:**
+**The flow:**
 
 ```
-User habit add karta hai → handleAdd → addHabit(habit) → habitsStore → habits update → UI re-render
+User adds habit → handleAdd → addHabit(habit) → habitsStore → habits update → UI re-renders
 
-HabitCard render → useHabits → isHabitDone(today), getStreak, getHabitLast7Days → UI
+HabitCard renders → useHabits → isHabitDone(today), getStreak, getHabitLast7Days → UI
 
-Check-in click → toggleCheckIn(today, habitId) → checkIns update → habitCard re-render
+Check-in click → toggleCheckIn(today, habitId) → checkIns update → HabitCard re-renders
 ```
 
 ---
 
-## Step 4 — Streak Calculation Verify
+## Step 4 — Verifying the Streak Calculation
 
-Streak logic ko ek real example se verify karte hain:
+Verify the streak logic with a real example:
 
 ```
 CheckIns (2 habits):
@@ -289,74 +287,74 @@ CheckIns (2 habits):
 "2026-08-03": { "h1": false, "h2": true  }
 "2026-08-04": { "h1": true,  "h2": true  }   ← today
 
-h1 streak: aaj done (1) → 03 nahi → break → streak = 1
-h2 streak: aaj done (1) → 03 done (2) → 02 nahi → break → streak = 2
+h1 streak: today done (1) → day 3 no → break → streak = 1
+h2 streak: today done (1) → day 3 done (2) → day 2 no → break → streak = 2
 ```
 
-**Senior detail:** Aaj (i=0) done nahi ho toh `i > 0` condition break nahi karta (i=0 pe `else if` skip hota hai — `i > 0` false). Iska matlab aaj ka mauka baaki hai — aaj tak ki streak count hoti hai, aaj ke baad tabhi count hoga jab done karo. Simple + intuitive.
+**Senior detail:** Today (i=0) not done → the `i > 0` condition doesn't break (i=0 means `i > 0` is false). This means today's slot is still open — the streak counts up to today, not before. Simple and intuitive.
 
 ---
 
 ## What T.5 Taught Us
 
-1. **Streak logic** — date math, lagataar days, grace period
-2. **Custom hook wrapping** — `useHabits` saare habit operations + streak helpers ek jagah
-3. **`React.memo` + stable actions** — Zustand stable references = memo works
+1. **Streak logic** — date math, consecutive days, grace period
+2. **Custom hook wrapping** — `useHabits` puts all habit operations + streak helpers in one place
+3. **`React.memo` + stable actions** — Zustand's stable references make memo work
 4. **Accessibility** — `aria-pressed`, `aria-label`, `aria-hidden`
-5. **Selective subscription** — har component sirf uski zaroorat
-6. **Pure date helpers** — `formatDate`, `getLastNDays` — test-able (T.8)
+5. **Selective subscription** — each component subscribes only to what it needs
+6. **Pure date helpers** — `formatDate`, `getLastNDays` — testable
 
 ---
 
 ## So Here's the Takeaway
 
-Core feature (habits) ready — add, check-in, streak, delete. UI ab real user functionality dikha raha hai. Agla step (T.6) — **Dashboard**: stats, charts, quote via `useFetch<T>` + Tailwind styling.
+Core feature ready — add, check-in, streak, delete. The UI now shows real user functionality. Next step (T.6) — **Dashboard**: stats, charts, a quote via `useFetch<T>`, and Tailwind styling.
 
 ---
 
 ## In Your Own Words
 
-1. Streak logic mein `else if (i > 0) break` — `i > 0` condition kyun zaroori hai?
+1. Why is the `i > 0` condition in the streak logic?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kyunki aaj (i=0) agar habit done nahi hai, toh streak ko turant 0 nahi karna chahiye — aaj ka mauka abhi baaki hai. `i > 0` condition sirf purane din (i>=1) pe break karta hai. Agar aaj done hai (i=0), loop continue karta hai agle din. Isse "grace period" milta hai — aaj ka check-in karte hi streak badhti hai, pehle se count nahi hota. Simple, intuitive habit streak behaviour.
+**Sample Answer:** Because if today (i=0) the habit wasn't done, we shouldn't immediately reset the streak to 0 — today's slot is still open (grace period). The `i > 0` condition only breaks for past days (i >= 1). If today is done (i=0), the loop continues to yesterday. This gives a grace period — the streak counts up to today, and only starts decrementing when a past day is broken. Simple, intuitive habit streak behavior.
 
 </details>
 
-2. `useHabits` custom hook mein sab kuch wrap karke kya fayda? Components ko seedha store use karne se kya fark?
+2. What's the benefit of wrapping everything in the `useHabits` hook? Why not let components use the store directly?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `useHabits` hook saare habit operations + streak helpers ek jagah provide karta hai — components clean rehte hain, seedha store subscribe nahi karte. Store raw data deta hai (`checkIns` object), hook derived logic deta hai (`getStreak`, `getHabitLast7Days`). Fayda: (a) components simple — sirf hook call karte hain, (b) streak logic ek jagah — test karna easy (T.8), (c) agar store structure badle, sirf hook adapt karna, components untouched.
+**Sample Answer:** The `useHabits` hook provides all habit operations + streak helpers in one place — components stay clean, not subscribing directly to the store. The store gives raw data (`checkIns` object), the hook gives derived logic (`getStreak`, `getHabitLast7Days`). Benefits: (a) components stay simple — just call the hook; (b) streak logic lives in one place — easy to test (T.8); (c) if the store structure changes, only the hook adapts, components stay untouched.
 
 </details>
 
-3. `React.memo` HabitCard pe kaise kaam karta hai — kyun Zustand ke saath effective hai?
+3. How does `React.memo` work with `HabitCard`, and why does it work well with Zustand?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `React.memo` component ko skip karta hai agar props same hain (shallow compare). HabitCard ko `habit` prop milta hai. Agar Zustand actions stable references return karte hain (jo woh karte hain — actions ek baar banaye jaate hain), toh jab koi aur state change hoti hai (jaise tasks), HabitCard re-render nahi hota — sirf jab uska `habit` object change hua. State libraries ke saath memo effective tab hai jab actions stable ho — Zustand waisa hi hai.
+**Sample Answer:** `React.memo` skips re-rendering a component if its props haven't changed (shallow comparison). `HabitCard` receives the `habit` prop. If the Zustand store's actions return stable references — which they do — then memo works correctly: a card only re-renders when its specific `habit` object changes, not when unrelated state (like tasks) changes. State management libraries work well with memo when actions are stable references — Zustand is.
 
 </details>
 
-4. `aria-pressed` check-in button pe kyu? Isse accessibility kya milti hai?
+4. Why use `aria-pressed` on the check-in button? What does accessibility gain us?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Check-in button ek toggle hai — "done" aur "not done" ke beech. `aria-pressed={doneToday}` screen reader ko batata hai ki button abhi pressed hai ya nahi — toggle state accessible hota hai (visual dot ke saath aur audio bhi). `aria-label` delete button pe (`"Workout delete karo"`) — icon-only button (🗑️) ka meaning screen reader user ko milta hai. Ye Batch 4 ke accessibility rules hain — keyboard + screen reader users ke liye same info.
+**Sample Answer:** The check-in button is a toggle — between "done" and "not done." `aria-pressed={doneToday}` tells the screen reader the button's current pressed state — making the toggle accessible (paired with the visual dot). `aria-label` on the delete button (`Delete ${habit.title}`) gives meaning to an icon-only button (🗑️). This follows Batch 4's accessibility rules — keyboard + screen reader users get the same information.
 
 </details>
 
-5. `formatDate` function date ko "2026-08-04" format mein kyun convert karta hai, aur `toISOString().slice(0, 10)` kaise?
+5. Why does `formatDate` convert dates to "2026-08-04" format, and how does `toISOString().slice(0, 10)` work?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Check-ins localStorage mein consistent key chahiye — date string. `toISOString()` date ko UTC ISO format mein deta hai (`2026-08-04T...Z`), `.slice(0, 10)` pehle 10 characters leta hai (`2026-08-04`) — sirf date, time nahi. Consistent date key se `checkIns[date]` lookup kaam karta hai aur streak calc mein same format. (Note: ISO local timezone nahi, UTC hota hai — simple apps ke liye acceptable; production mein timezone careful handling chahiye.)
+**Sample Answer:** Check-ins need a consistent key in localStorage — a date string. `toISOString()` converts the date to UTC ISO format (`2026-08-04T...Z`), and `.slice(0, 10)` takes the first 10 characters (`2026-08-04`) — just the date, no time. This consistent key format makes `checkIns[date]` lookups work and streak calculations use the same format. (Note: ISO is in UTC, not local timezone — acceptable for small apps; production apps need timezone-aware handling.)
 
 </details>

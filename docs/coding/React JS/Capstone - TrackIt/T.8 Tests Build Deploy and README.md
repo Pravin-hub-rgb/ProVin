@@ -1,30 +1,26 @@
----
+Picking up from the last file — T.1 through T.7 built TrackIt's entire production-grade app: setup, stores, hooks, router, habits, dashboard, animations, error boundary, security. Now **T.8 — Final Polish**: tests (Vitest + RTL), build, deploy, and README. The last step of your portfolio project.
 
-## Abhi Tak Kya Hua
-
-T.1-T.7 mein TrackIt ka poora production app banaya — setup, stores, hooks, router, habits, dashboard, animations, error boundary, security. Ab **T.8 — Final Polish**: tests (Vitest + RTL), build, deploy, README. Portfolio ka aakhri step.
-
-Toh aisa scene hai...
+So here's the situation...
 
 ---
 
-## Coder Mindset — Capstone Ko Complete Karo
+## Coder Mindset — Completing the Capstone
 
-Production app ke teen aakhri requirements (Batch 7 se):
+The last three requirements for a production app (from Batch 7):
 
-| Cheez | Kya |
-|-------|-----|
-| **Tests** | Core pieces verify — regression protection |
+| Thing | What it does |
+|-------|------|
+| **Tests** | Verify core pieces — regression protection |
 | **Build + Deploy** | Production bundle + live URL |
-| **README** | Portfolio face — recruiter pehle yeh padhta hai |
+| **README** | Portfolio face — the first thing recruiters read |
 
-Ye steps app ko "side project" se "portfolio project" banate hain.
+These steps turn your app from a "side project" into a "portfolio project."
 
 ---
 
 ## Part 1 — Testing Setup
 
-T.1 mein test deps install ki thi. Ab config + setup file:
+Test dependencies were installed in T.1. Now the config + setup file:
 
 ```ts
 // vitest.config.ts
@@ -43,7 +39,7 @@ export default defineConfig({
 import "@testing-library/jest-dom/vitest";
 ```
 
-`package.json` mein script:
+Add the script to `package.json`:
 
 ```json
 // package.json
@@ -58,11 +54,11 @@ import "@testing-library/jest-dom/vitest";
 
 ## Part 2 — Tests
 
-TrackIt ke core pieces ke tests likhte hain — jo cheezein sabse important hain.
+Write tests for TrackIt's core pieces — the most important parts.
 
-### Test 1 — taskReducer (pure logic — easiest + highest value)
+### Test 1 — `taskReducer` (pure logic — fastest + highest value)
 
-Nayi file banao — `src/stores/__tests__/taskReducer.test.ts`:
+Create new file — `src/stores/__tests__/taskReducer.test.ts`:
 
 ```ts
 // src/stores/__tests__/taskReducer.test.ts
@@ -79,36 +75,36 @@ const task: Task = {
 };
 
 describe("taskReducer", () => {
-  it("ADD_TASK naya task add karta hai", () => {
+  it("ADD_TASK adds a new task", () => {
     const state = taskReducer(initialTaskState, { kind: "ADD_TASK", payload: task });
     expect(state.tasks).toHaveLength(1);
     expect(state.tasks[0].title).toBe("Code review");
   });
 
-  it("TOGGLE_TASK completed flip karta hai", () => {
+  it("TOGGLE_TASK flips completed", () => {
     const added = taskReducer(initialTaskState, { kind: "ADD_TASK", payload: task });
     const toggled = taskReducer(added, { kind: "TOGGLE_TASK", payload: { id: "t1" } });
     expect(toggled.tasks[0].completed).toBe(true);
   });
 
-  it("DELETE_TASK task remove karta hai", () => {
+  it("DELETE_TASK removes a task", () => {
     const added = taskReducer(initialTaskState, { kind: "ADD_TASK", payload: task });
     const deleted = taskReducer(added, { kind: "DELETE_TASK", payload: { id: "t1" } });
     expect(deleted.tasks).toHaveLength(0);
   });
 
-  it("SET_FILTER filter update karta hai", () => {
+  it("SET_FILTER updates the filter", () => {
     const state = taskReducer(initialTaskState, { kind: "SET_FILTER", payload: "active" });
     expect(state.filter).toBe("active");
   });
 });
 ```
 
-**Pure reducer test = no render, no DOM — sabse fast + reliable test.**
+**Pure reducer test = no rendering, no DOM — the fastest and most reliable test.**
 
-### Test 2 — habitsStore (store actions + normalized check-ins)
+### Test 2 — `habitsStore` (store actions + normalized check-ins)
 
-Nayi file banao — `src/stores/__tests__/habitsStore.test.ts`:
+Create new file — `src/stores/__tests__/habitsStore.test.ts`:
 
 ```ts
 // src/stores/__tests__/habitsStore.test.ts
@@ -129,24 +125,24 @@ describe("habitsStore", () => {
     useHabitsStore.setState({ habits: {}, checkIns: {} });
   });
 
-  it("addHabit habit add karta hai", () => {
+  it("addHabit adds a habit", () => {
     useHabitsStore.getState().addHabit(habit);
     expect(useHabitsStore.getState().habits.h1.title).toBe("Workout");
   });
 
-  it("toggleCheckIn done flip karta hai (normalized)", () => {
+  it("toggleCheckIn flips done (normalized)", () => {
     useHabitsStore.getState().addHabit(habit);
     useHabitsStore.getState().toggleCheckIn("2026-08-04", "h1");
 
     const checkIns = useHabitsStore.getState().checkIns;
     expect(checkIns["2026-08-04"]["h1"]).toBe(true);
 
-    // flip again — wapas false
+    // flip again — back to false
     useHabitsStore.getState().toggleCheckIn("2026-08-04", "h1");
     expect(useHabitsStore.getState().checkIns["2026-08-04"]["h1"]).toBe(false);
   });
 
-  it("isHabitDone aur getCheckInCount sahi dete hain", () => {
+  it("isHabitDone and getCheckInCount return correct values", () => {
     useHabitsStore.getState().addHabit(habit);
     useHabitsStore.getState().toggleCheckIn("2026-08-04", "h1");
 
@@ -154,7 +150,7 @@ describe("habitsStore", () => {
     expect(useHabitsStore.getState().getCheckInCount("2026-08-04")).toBe(1);
   });
 
-  it("deleteHabit habit remove karta hai", () => {
+  it("deleteHabit removes a habit", () => {
     useHabitsStore.getState().addHabit(habit);
     useHabitsStore.getState().deleteHabit("h1");
     expect(useHabitsStore.getState().habits.h1).toBeUndefined();
@@ -162,11 +158,11 @@ describe("habitsStore", () => {
 });
 ```
 
-**Store test pattern (7.4 se yaad):** `getState()` se action call + state verify — no component render needed.
+**Store test pattern (recap from 7.4):** `getState()` to call actions + verify state — no rendering needed.
 
-### Test 3 — useTasks hook (renderHook)
+### Test 3 — `useTasks` hook (renderHook)
 
-Nayi file banao — `src/hooks/__tests__/useTasks.test.tsx`:
+Create new file — `src/hooks/__tests__/useTasks.test.tsx`:
 
 ```tsx
 // src/hooks/__tests__/useTasks.test.tsx
@@ -184,7 +180,7 @@ const task: Task = {
 };
 
 describe("useTasks", () => {
-  it("addTask aur toggleTask kaam karte hain", () => {
+  it("addTask and toggleTask work", () => {
     const { result } = renderHook(() => useTasks());
 
     act(() => result.current.addTask(task));
@@ -194,7 +190,7 @@ describe("useTasks", () => {
     expect(result.current.tasks[0].completed).toBe(true);
   });
 
-  it("setFilter filter update karta hai", () => {
+  it("setFilter updates the filter", () => {
     const { result } = renderHook(() => useTasks());
 
     act(() => result.current.setFilter("completed"));
@@ -203,9 +199,9 @@ describe("useTasks", () => {
 });
 ```
 
-### Test 4 — ProtectedRoute (component — access control)
+### Test 4 — `ProtectedRoute` (component — access control)
 
-Nayi file banao — `src/components/__tests__/ProtectedRoute.test.tsx`:
+Create new file — `src/components/__tests__/ProtectedRoute.test.tsx`:
 
 ```tsx
 // src/components/__tests__/ProtectedRoute.test.tsx
@@ -220,7 +216,7 @@ describe("ProtectedRoute", () => {
     useAuthStore.setState({ isLoggedIn: false, user: null });
   });
 
-  it("logged in ho toh children render karta hai", () => {
+  it("renders children when logged in", () => {
     useAuthStore.setState({ isLoggedIn: true, user: { name: "Amit" } });
 
     render(
@@ -234,7 +230,7 @@ describe("ProtectedRoute", () => {
     expect(screen.getByText("Secret Dashboard")).toBeInTheDocument();
   });
 
-  it("logged out ho toh /login pe redirect karta hai", () => {
+  it("redirects to /login when logged out", () => {
     render(
       <MemoryRouter initialEntries={["/habits"]}>
         <ProtectedRoute>
@@ -244,17 +240,17 @@ describe("ProtectedRoute", () => {
     );
 
     // Navigate → login route — use test navigation assertion
-    // (redirect check ke liye Router context chahiye, simple render se children nahi dikhta)
+    // (redirect check needs Router context — simple render doesn't show children)
     expect(screen.queryByText("Secret")).not.toBeInTheDocument();
   });
 });
 ```
 
-**MemoryRouter kyu:** Tests mein browser URL nahi hota — `MemoryRouter` URL ko memory mein rakhta hai. `initialEntries` se starting URL set karte hain.
+**Why `MemoryRouter`:** In tests, there's no real browser URL. `MemoryRouter` keeps the URL in memory (a history array) — you can set the starting URL with `initialEntries`. `ProtectedRoute` uses `<Navigate>` for redirects — which needs Router context. Plain rendering breaks without it. `MemoryRouter` provides that context in tests.
 
 ---
 
-## Tests Chalana
+## Running the Tests
 
 ```bash
 bun run test
@@ -266,11 +262,11 @@ bun run test
  ✓ src/hooks/__tests__/useTasks.test.tsx (2 tests)
  ✓ src/components/__tests__/ProtectedRoute.test.tsx (2 tests)
 
- Test Files  4 passed (4)
-      Tests  12 passed (12)
+  Test Files  4 passed (4)
+       Tests  12 passed (12)
 ```
 
-**12 tests** — reducer, stores, hooks, routing — core logic protected.
+**12 tests** — reducer, stores, hooks, routing — the core logic is protected.
 
 ---
 
@@ -289,7 +285,7 @@ dist/index.html                    0.45 kB │ gzip: 0.28 kB
 dist/assets/index-DcP2b5sB.js  321.55 kB │ gzip: 88.10 kB
 ```
 
-**Lazy-loaded chunks** (React.lazy se) alag files mein:
+**Lazy-loaded chunks** (from T.4's `React.lazy`) appear as separate files:
 
 ```
 dist/assets/Dashboard-abc123.js    45.2 kB │ gzip: 14.1 kB
@@ -297,7 +293,7 @@ dist/assets/Habits-def456.js       30.1 kB │ gzip: 9.8 kB
 dist/assets/Tasks-ghi789.js        28.4 kB │ gzip: 9.2 kB
 ```
 
-Initial bundle chhota + pages on-demand — **code splitting kaam kar raha hai** (T.4). Production preview:
+Small initial bundle + pages load on demand — **code splitting is working** (T.4). Production preview:
 
 ```bash
 bun run preview
@@ -307,9 +303,9 @@ bun run preview
 
 ## Part 4 — Deploy (Vercel)
 
-T.1 mein `.env` file hai (`VITE_QUOTE_API_URL`). Deploy:
+T.1 has the `.env` file (`VITE_QUOTE_API_URL`). Deploy:
 
-**GitHub push:**
+**Push to GitHub:**
 
 ```bash
 git init
@@ -320,25 +316,25 @@ git remote add origin https://github.com/yourname/trackit.git
 git push -u origin main
 ```
 
-**Vercel:**
-1. [vercel.com](https://vercel.com) pe project import karo (GitHub repo)
-2. Framework: Vite (auto-detect)
+**On Vercel:**
+1. Import your project at [vercel.com](https://vercel.com) (from your GitHub repo)
+2. Framework: Vite (auto-detected)
 3. Env vars: `VITE_QUOTE_API_URL=https://api.quotable.io/random`
-4. Deploy — URL milega `https://trackit.vercel.app`
+4. Click Deploy — you'll get a URL like `https://trackit.vercel.app`
 
-**Continuous deployment** — GitHub push → Vercel auto-build + auto-deploy.
+**Continuous Deployment:** Every push to GitHub → Vercel auto-builds + auto-deploys.
 
 ---
 
 ## Part 5 — README (Portfolio Face)
 
-Root folder mein `README.md` banao:
+Create `README.md` in the root:
 
 ```markdown
 # 🏁 TrackIt — Habit Tracker + Dashboard
 
-TrackIt ek habit tracker + dashboard app hai — daily habits check-in, streaks,
-tasks, aur progress visualization. React + TypeScript production-grade capstone.
+TrackIt is a habit tracker + dashboard app — daily habit check-ins, streaks,
+tasks, and progress visualization. A production-grade React + TypeScript capstone.
 
 ## Tech Stack
 - React 19 + TypeScript
@@ -350,13 +346,14 @@ tasks, aur progress visualization. React + TypeScript production-grade capstone.
 
 ## Features
 - 📋 Habit CRUD + daily check-in
-- 🔥 Streak tracking (grace period)
+- 🔥 Streak tracking (with grace period)
 - 📊 Dashboard — weekly completion chart
 - 💬 Motivational quote (public API, useFetch<T>)
 - 📝 Tasks — useReducer (discriminated actions)
 - 🔐 Protected routes (dummy auth)
 - 🌙 Light/dark theme (useLocalStorage<T>)
 - 🛡️ Error boundary + security hygiene
+- 🎬 Page + card animations (Framer Motion)
 
 ## Setup
 bun install
@@ -365,7 +362,7 @@ bun run dev
 ## Scripts
 - `bun run dev` — development server
 - `bun run build` — production build
-- `bun run preview` — production build locally
+- `bun run preview` — test production build locally
 - `bun run test` — run tests
 
 ## Deployed At
@@ -374,27 +371,27 @@ bun run dev
 
 ---
 
-## Verification Checklist (7.5 se yaad)
+## Verification Checklist (recap from 7.5)
 
-Deploy ke baad:
+After deploying, check:
 
-| Check | Kya |
+| Check | What to do |
 |-------|-----|
-| **Live URL** | Mobile pe kholo — responsive? |
-| **Login flow** | Naam daal → dashboard → refresh → still logged in (persist)? |
-| **Habits** | Add → check-in → streak — refresh pe data safe? |
-| **Quote** | Dashboard pe quote dikh rahi? |
+| **Live URL** | Open on mobile — responsive? |
+| **Login flow** | Enter name → dashboard → refresh → still logged in (persist works)? |
+| **Habits** | Add → check-in → streak — refresh → data persists? |
+| **Quote** | Dashboard shows the quote? |
 | **Lighthouse** | Performance + accessibility score |
-| **Console** | Koi error nahi? |
+| **Console** | No errors? |
 
 ---
 
 ## What T.8 Taught Us — Capstone Complete
 
-1. **Pure logic tests** — reducer sabse fast + reliable
-2. **Store tests** — `getState()` pattern, no render needed
+1. **Pure logic tests** — reducers are fastest + most reliable
+2. **Store tests** — `getState()` pattern, no rendering needed
 3. **Hook tests** — `renderHook` + `act`
-4. **Component tests** — `MemoryRouter` for routing
+4. **Component tests** — `MemoryRouter` for routing tests
 5. **Build + code splitting** — lazy chunks, small initial bundle
 6. **Deploy** — Vercel + env vars + continuous deployment
 7. **README** — portfolio face, tech stack + features + live URL
@@ -403,10 +400,10 @@ Deploy ke baad:
 
 ## So Here's the Takeaway — TrackIt Complete 🎉
 
-**TrackIt poori tarah ready hai:**
+**TrackIt is fully ready:**
 
-| Layer | Kya |
-|-------|-----|
+| Layer | What it has |
+|-------|------|
 | Data | Zustand + persist (habits, tasks, prefs, auth) |
 | Logic | useReducer + custom hooks (useFetch, useLocalStorage, useTasks, useHabits) |
 | Navigation | Router — protected + lazy |
@@ -414,55 +411,55 @@ Deploy ke baad:
 | Safety | Error boundary + security hygiene |
 | Quality | 12 tests + production build + deploy |
 
-Ye tumhara **resume + portfolio ka main project** hai. Saari batches (1-7) ka knowledge yahan ek saath hai — production-grade, deployed, tested.
+This is your **main resume + portfolio project**. Every batch (1-7) is combined here — production-grade, deployed, tested.
 
-**Agla step:** Live URL README mein daalo, screenshot lo, LinkedIn/GitHub pe daalo. Portfolio ready!
+**Your next step:** Put the live URL in the README, take a screenshot, post it on LinkedIn/GitHub. Portfolio ready!
 
 ---
 
 ## In Your Own Words
 
-1. taskReducer test doosre tests se zyada fast aur reliable kyun hai?
+1. Why are `taskReducer` tests the fastest and most reliable?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kyunki taskReducer ek **pure function** hai — same input, same output, koi side effects, koi DOM, koi render, koi network. Test sirf function call karta hai aur output assert karta hai — no act(), no render, no waitFor. Isliye microseconds mein chalta hai aur 100% deterministic. Pure logic sabse pehle test karo — highest value, lowest cost. Yehi testing best practice hai.
+**Sample Answer:** Because `taskReducer` is a **pure function** — same input always gives the same output, no side effects, no DOM, no rendering, no network. The test just calls the function and asserts the output. No `act()`, no `render`, no `waitFor`. That's why it runs in microseconds and is 100% deterministic. Pure logic is always the highest value + lowest cost to test — it's testing best practice.
 
 </details>
 
-2. ProtectedRoute test mein `MemoryRouter` kyun use kiya? Regular render se kya fark?
+2. Why use `MemoryRouter` in the `ProtectedRoute` test? What's different from regular rendering?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Test environment mein real browser URL nahi hota. `MemoryRouter` URL ko memory (history array) mein rakhta hai — bina browser ke router use kar sakte ho. `initialEntries` se starting URL set karte hain. ProtectedRoute mein `<Navigate>` redirects use hota hai — redirect ko handle karne ke liye router context chahiye. Regular render (bina router) mein `Navigate` error deta — router context missing. MemoryRouter = router context provide karta hai test mein.
+**Sample Answer:** In the test environment there's no real browser URL. `MemoryRouter` keeps the URL in memory (a history array) — you can set the initial URL with `initialEntries`. `ProtectedRoute` uses `<Navigate>` for redirects, which needs Router context. Regular rendering (without a router) would throw an error because `<Navigate>` can't find the router context. `MemoryRouter` provides that context so routing can be tested.
 
 </details>
 
-3. Store tests mein `beforeEach` mein `setState` reset kyun? (habitsStore test)
+3. Why reset the store with `setState` in `beforeEach`? (habitsStore test)
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kyunki Zustand store module-level singleton hai — har test use kar sakta hai, lekin state tests ke beech shared rehti hai. Ek test ne habit add ki, agar reset nahi kiya toh agla test wahi habit dekhega — assertions fail ho sakte hain. `beforeEach` mein `useHabitsStore.setState({ habits: {}, checkIns: {} })` — har test fresh state se shuru. Isolated tests = deterministic = reliable (7.4 ka lesson).
+**Sample Answer:** Because a Zustand store is a module-level singleton — shared across all tests. If one test adds a habit and you don't clean up, the next test sees that same habit and assertions may fail. `beforeEach` with `useHabitsStore.setState({ habits: {}, checkIns: {} })` resets the state before every test so they all start fresh. Isolated tests = deterministic = reliable.
 
 </details>
 
-4. Build output mein lazy chunks alag files kyon dikhte hain, aur iska fayda kya hai?
+4. Why do lazy-loaded chunks appear as separate files in the build output, and what's the benefit?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kyunki T.4 mein `React.lazy` + dynamic import use kiya — har page (Dashboard, Habits, Tasks) apne alag chunk mein bundle hota hai. Fayda: initial load sirf main bundle load karta hai (small, fast) — user ke page navigate karne pe hi uska chunk load hota hai (on-demand). Dashboard pe heavy charts wala chunk sirf tab load jab user `/` pe jaye. Code splitting se initial load time kam — better UX, better Lighthouse score.
+**Sample Answer:** Because T.4 used `React.lazy` + dynamic imports, each page (Dashboard, Habits, Tasks) gets bundled into its own chunk. Benefit: the initial bundle only loads what's needed for the first page — small, fast. Other pages load on demand when the user navigates to them. The Dashboard (with heavy charts) loads only when the user hits `/`. Code splitting → faster initial load → better UX and Lighthouse scores.
 
 </details>
 
-5. Deploy ke baad verification checklist mein kaunse 3 checks sabse critical hain aur kyun?
+5. What are the 3 most critical verification checks after deployment?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** (1) **Login + refresh persist** — login karo, dashboard dikhe, page refresh pe bhi logged in rehna chahiye (authStore persist). Agar na ho, persist middleware ki galti hai. (2) **Habits data refresh-safe** — habit add + check-in karo, refresh pe bhi wahi data. (3) **Production env var** — quote API URL production pe sahi hai (localhost nahi). Ye teen check karte hain ki production mein data persistence + env configuration sahi hai — app ka core survive karta hai browser refresh aur production deploy pe.
+**Sample Answer:** (1) **Login + refresh persistence** — log in, see the Dashboard, refresh, still logged in (authStore's `persist` works). If this fails, it's a `persist` middleware bug. (2) **Habits data survives refresh** — add a habit, check it in, refresh, data is still there (Zustand `persist` working). (3) **Production env var** — the quote API URL points to the real API, not `localhost`. These three verify that data persistence and environment configuration work in production — the app's core survives browser refresh and deployment.
 
 </details>

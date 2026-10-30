@@ -1,30 +1,26 @@
----
+Picking up from the last file — T.1 through T.6 built TrackIt's full functional core: setup, stores, hooks, router, habits, dashboard, Tailwind styling. Now **T.7 — Polish + Safety**: Framer Motion animations, Error Boundary, and security hygiene.
 
-## Abhi Tak Kya Hua
-
-T.1-T.6 mein TrackIt ka poora functional core banaya — setup, stores, hooks, router, habits, dashboard, Tailwind. Ab **T.7 — Polish + Safety**: Framer Motion animations, Error Boundary, security hygiene.
-
-Toh aisa scene hai...
+So here's the situation...
 
 ---
 
-## Coder Mindset — "Kam Kaam Ho Gaya, Ab Chalta Hai" Kafi Nahi
+## Coder Mindset — "It Works" Isn't Enough
 
-Functional app ban gaya. Lekin production-grade app mein teen aur cheezein chahiye:
+The functional app is built. But a production-grade app needs three more things:
 
-| Cheez | Kya | Batch |
-|-------|-----|-------|
-| **Animations** | Smooth transitions — UI "alive" feel | (naya — Framer Motion) |
-| **Error Boundary** | Crash-proof — white screen nahi | 7.1 |
+| Thing | What it does | Batch |
+|-------|------|-------|
+| **Animations** | Smooth transitions — UI feels alive | (new — Framer Motion) |
+| **Error Boundary** | Crash-proofing — no white screen | 7.1 |
 | **Security hygiene** | XSS, env vars, safe rendering | 7.2 |
 
-**Order matters:** pehle safety (Error Boundary + security), phir polish (animations). Kyunki bina safety ke app crash ho sakti hai — animations toh phir bhi. Lekin hum dono add karte hain — production-grade complete.
+**The order matters:** safety first (Error Boundary + security), then polish (animations). Without safety, the app can crash — animations won't matter. But we add both — production-grade is complete.
 
 ---
 
 ## Part 1 — Safety: Error Boundary
 
-7.1 ka pattern — TrackIt mein class-based ErrorBoundary. Nayi file banao — `src/components/ErrorBoundary.tsx`:
+Apply 7.1's pattern — a class-based ErrorBoundary in TrackIt. Create new file — `src/components/ErrorBoundary.tsx`:
 
 ```tsx
 // src/components/ErrorBoundary.tsx
@@ -59,7 +55,7 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
           <div className="bg-white border rounded-lg p-8 max-w-md text-center">
             <h1 className="text-2xl font-bold mb-2">Oops! 😅</h1>
             <p className="text-gray-600 mb-4">
-              Kuch galat ho gaya. Page refresh karo — agar wahi error ho, report karo.
+              Something went wrong. Try refreshing — if the error persists, report it.
             </p>
             <button
               onClick={() => this.setState({ hasError: false })}
@@ -77,15 +73,15 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
 }
 ```
 
-**7.1 se yaad — kya kya:**
+**Recap from 7.1:**
 
-| Cheez | Kya |
-|-------|-----|
-| `getDerivedStateFromError` | Error pe state update → fallback render |
-| `componentDidCatch` | Error log — Sentry jaise service yahan integrate hoti |
-| "Try again" button | `setState({ hasError: false })` — boundary reset |
+| Thing | What it does |
+|-------|------|
+| `getDerivedStateFromError` | On error, updates state → fallback renders |
+| `componentDidCatch` | Logs the error — integrates with error-tracking services |
+| "Try again" button | `setState({ hasError: false })` — resets the boundary |
 
-**Integrate `main.tsx` mein (poore app ko wrap):**
+**Integrate in `main.tsx`** (wrap the entire app):
 
 ```tsx
 // src/main.tsx
@@ -104,10 +100,10 @@ createRoot(document.getElementById("root")!).render(
 );
 ```
 
-**Aur feature-level boundary (7.1 ka layered pattern)** — Dashboard mein (risky — quote API data):
+**And a feature-level boundary** (7.1's layered pattern) — in the Dashboard (risky — quote API data):
 
 ```tsx
-// src/pages/Dashboard.tsx (partial — boundary around risky widget)
+// src/pages/Dashboard.tsx (partial — boundary around the risky widget)
 import { ErrorBoundary } from "../components/ErrorBoundary";
 import { useQuote } from "../hooks/useQuote";
 
@@ -116,7 +112,7 @@ function QuoteWidget() {
   // ... quote rendering
   return (
     <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded">
-      {isLoading ? <p>⏳...</p> : error ? <p>Quote fail</p> : (
+      {isLoading ? <p>⏳...</p> : error ? <p>Quote failed</p> : (
         <blockquote>"{quote?.content}"</blockquote>
       )}
     </div>
@@ -129,72 +125,72 @@ export function Dashboard() {
       <ErrorBoundary>
         <QuoteWidget />
       </ErrorBoundary>
-      {/* ... baaki dashboard */}
+      {/* ... rest of dashboard */}
     </div>
   );
 }
 ```
 
-**Layered:** Top-level boundary (blank screen se) + feature-level (quote crash = sirf quote widget fallback, baaki dashboard live).
+**Layered:** Top-level boundary (prevents blank screens) + feature-level (if the quote widget crashes, only it falls back — the rest of the Dashboard stays live).
 
 ---
 
 ## Part 2 — Safety: Security Hygiene
 
-7.2 ke principles TrackIt mein apply karte hain:
+Applying 7.2's principles to TrackIt:
 
-### 1. Env vars — secrets `VITE_` prefix
+### 1. Env vars — secrets with `VITE_` prefix
 
-T.6 mein already: `.env` file mein `VITE_QUOTE_API_URL`. Yaad rakhna:
-- Sirf `VITE_` prefixed values client mein
-- Koi private secret (password, keys) frontend mein kabhi nahi
-- `.env` aur `.env.production` — environment-specific
+T.6 already had it: the `.env` file with `VITE_QUOTE_API_URL`. Remember:
+- Only `VITE_`-prefixed values reach the client
+- Never put private secrets (passwords, keys) in the frontend
+- `.env` and `.env.production` — environment-specific
 
-### 2. React default escaping pe bharosa
+### 2. Trust React's default escaping
 
-Saari user input `{}` se render — React default escape karta hai:
+All user input is rendered with `{}` — React escapes by default:
 
 ```tsx
-// ✅ Safer — React escape karta hai
-<h1>{user?.name ?? "user"}</h1>
+// ✅ Safe — React escapes
+<h1>{user?.name ?? "friend"}</h1>
 <p>{habit.title}</p>
 ```
 
-TrackIt mein koi `dangerouslySetInnerHTML` nahi hai — isliye sanitization (DOMPurify) technically zaroori nahi. **Lekin** `dompurify` dependency install ki hai (T.1) kyunki:
+TrackIt has no `dangerouslySetInnerHTML` — so sanitization (DOMPurify) isn't strictly needed. **But** `dompurify` was installed in T.1, and here's why:
 
 ```tsx
 // src/lib/sanitize.ts
 import DOMPurify from "dompurify";
 
-// Kisi future rich-text content ke liye ready pattern
+// Ready pattern for any future rich-text content
 export function sanitizeHtml(html: string): string {
   return DOMPurify.sanitize(html);
 }
 ```
 
-**Senior thinking:** Jab tak raw HTML render nahi kar rahe, sanitization overkill hai. Jab chahiye — helper ready hai. Do not add complexity for its own sake.
+**Senior thinking:** Don't add complexity for its own sake. If you're not rendering raw HTML, sanitization is overkill. But have the helper ready — if you need it later, the path is clear.
 
 ### 3. Type safety
 
-Saari API data typed hai (`useFetch<Quote>`), forms typed. TypeScript + React escaping + (future) sanitization — **defense in depth** (7.2).
+All API data is typed (`useFetch<Quote>`), forms are typed. TypeScript + React's escaping + (future) sanitization — that's **defense in depth** (7.2).
 
 ---
 
 ## Part 3 — Polish: Framer Motion
 
-Ab animations. **Framer Motion** React animations ki popular library. Core concept:
+Now for animations. **Framer Motion** is the popular animation library for React. Core concepts:
 
-| Cheez | Kya |
-|-------|-----|
-| `motion.div` | Animated element — `motion` HOC se koi bhi element |
-| `initial` | Shuru ki state (opacity 0, y: 20) |
+| Thing | What it does |
+|-------|------|
+| `motion.div` | An animated element — `motion` works on any element |
+| `initial` | Starting state (opacity 0, y: 20) |
 | `animate` | Final state (opacity 1, y: 0) |
 | `transition` | Duration, easing |
-| `whileHover` / `whileTap` | Hover/tap pe animation |
+| `whileHover` / `whileTap` | Animation on hover/tap |
 
 ### HabitCard Animation
 
-`src/components/habits/HabitCard.tsx` update karo:
+Update `src/components/habits/HabitCard.tsx`:
 
 ```tsx
 // src/components/habits/HabitCard.tsx (update)
@@ -250,26 +246,26 @@ export const HabitCard = memo(function HabitCard({ habit }: HabitCardProps) {
         }`}
         whileTap={{ scale: 0.95 }}
       >
-        {doneToday ? "✅ Done aaj" : "Check in"}
+        {doneToday ? "✅ Done today" : "Check in"}
       </motion.button>
     </motion.div>
   );
 });
 ```
 
-**Kya animate ho raha hai:**
+**What animates:**
 
-| Animation | Kya |
-|-----------|-----|
-| `initial={{ opacity: 0, y: 20 }}` | Card initially transparent + 20px neeche |
-| `animate={{ opacity: 1, y: 0 }}` | Fade in + upar aana |
-| `whileHover={{ scale: 1.03 }}` | Hover pe halka bada |
-| `whileTap={{ scale: 0.98 }}` | Tap pe halka chhota — press feedback |
-| `transition={{ duration: 0.2 }}` | 0.2s smooth transition |
+| Animation | What it does |
+|-----------|------|
+| `initial={{ opacity: 0, y: 20 }}` | Card starts transparent, 20px below |
+| `animate={{ opacity: 1, y: 0 }}` | Fades in, rises up |
+| `whileHover={{ scale: 1.03 }}` | Slight grow on hover |
+| `whileTap={{ scale: 0.98 }}` | Slight shrink on tap — press feedback |
+| `transition={{ duration: 0.2 }}` | Smooth 0.2s transition |
 
 ### Page Transitions
 
-`App.tsx` mein page enter animation — wrapper component:
+Page enter animation in `App.tsx` — a wrapper component:
 
 ```tsx
 // src/components/PageTransition.tsx
@@ -290,15 +286,15 @@ export function PageTransition({ children }: { children: ReactNode }) {
 }
 ```
 
-`src/App.tsx` mein routes wrap karo:
+Wrap routes in `App.tsx`:
 
 ```tsx
-// src/App.tsx (partial — page transition wrap)
+// src/App.tsx (partial — wrap pages)
 <main>
   <Suspense fallback={<div className="loading">⏳ Loading...</div>}>
     <Routes>
       <Route path="/" element={<ProtectedRoute><PageTransition><Dashboard /></PageTransition></ProtectedRoute>} />
-      {/* ... baaki routes same pattern ... */}
+      {/* ... same pattern for other routes ... */}
     </Routes>
   </Suspense>
 </main>
@@ -306,12 +302,12 @@ export function PageTransition({ children }: { children: ReactNode }) {
 
 ---
 
-## Accessibility + Animations Balance
+## Balancing Animations and Accessibility
 
 **Senior detail — animations + accessibility:**
 
-- `whileHover` / `whileTap` sirf **enhancement** hain — content visual pe depend nahi
-- Motion **reduce karo** users ke liye — `useReducedMotion`:
+- `whileHover` and `whileTap` are **enhancements** — the content doesn't depend on visual state
+- Reduce motion for users who need it — `useReducedMotion`:
 
 ```tsx
 // src/hooks/usePrefersReducedMotion.ts
@@ -322,70 +318,70 @@ export function usePrefersReducedMotion() {
 }
 ```
 
-Agar user OS mein "reduce motion" on hai, framer-motion automatically respect karta hai (useReducedMotion hook). Content hamesha visible — animation kabhi content ka substitute nahi.
+If the user has "reduce motion" enabled in their OS, Framer Motion automatically respects it. Content is always visible — animation is never a substitute for content.
 
 ---
 
 ## What T.7 Taught Us
 
-1. **Error boundary layered** — top-level (blank screen) + feature-level (quote widget)
+1. **Layered error boundaries** — top-level (blank screen prevention) + feature-level (quote widget)
 2. **Security hygiene** — env vars, default escaping, type safety, ready sanitizer
 3. **Framer Motion basics** — `initial`, `animate`, `whileHover`, `whileTap`, `transition`
-4. **Motion.div** — koi bhi element animated
-5. **Reduced motion** — accessibility, OS preference respect
+4. **`motion.div`** — animate any element
+5. **Reduced motion** — accessibility, OS preference respected
 6. **Animations = polish, safety = priority**
 
 ---
 
 ## So Here's the Takeaway
 
-TrackIt ab production-grade — crash-proof (error boundaries), safe (security hygiene), polished (animations). Agla aakhri step (T.8) — **tests + build + deploy + README**. Portfolio ka final polish.
+TrackIt is now production-grade — crash-proof (error boundaries), safe (security hygiene), polished (animations). The final step (T.8) — **tests + build + deploy + README**. The last polish for your portfolio.
 
 ---
 
 ## In Your Own Words
 
-1. Error boundary top-level aur feature-level kyu — dono kahan lagaye?
+1. Why place an error boundary at both the top level and the feature level — where does each go?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Top-level boundary (`main.tsx` mein) poori app wrap karti hai — koi bhi unexpected crash pe user ko blank screen ki jagah fallback (Try again button) dikhta hai. Feature-level boundary (Dashboard mein quote widget) specific risky section wrap karti hai — agar quote API data issue hua, sirf quote widget fallback mein jaata hai, baaki dashboard chalta rehta hai. Layered = max safety + max isolation (7.1 ka pattern).
+**Sample Answer:** The top-level boundary (in `main.tsx`) wraps the entire app — no matter what unexpected crash happens, the user sees a fallback (the "Try again" button) instead of a blank white screen. The feature-level boundary (in Dashboard, around the quote widget) wraps a specific risky section — if the quote API's data causes a crash, only the quote widget falls back, and the rest of the Dashboard stays live. Layered = maximum safety + maximum isolation.
 
 </details>
 
-2. Framer Motion mein `initial`, `animate`, `transition` — teeno ka role kya hai?
+2. What do `initial`, `animate`, and `transition` each do in Framer Motion?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `initial` element ki shuruati state batata hai (jaise `opacity: 0, y: 20` — transparent, 20px neeche). `animate` final state (jaise `opacity: 1, y: 0` — visible, upar). `transition` animation ka duration/easing control karta hai (`duration: 0.2` — kitne sec mein initial se final jana). `whileHover`/`whileTap` alag trigger hain — hover/tap pe extra animation.
+**Sample Answer:** `initial` sets the element's starting state (e.g. `opacity: 0, y: 20` — transparent, 20px below). `animate` sets the final state (e.g. `opacity: 1, y: 0` — visible, at rest). `transition` controls the animation itself (e.g. `duration: 0.2` — how long to go from initial to animate). `whileHover` and `whileTap` are separate triggers — they add an animation on hover/tap.
 
 </details>
 
-3. TrackIt mein `dangerouslySetInnerHTML` nahi hai — phir bhi `dompurify` kyon install kiya?
+3. We didn't use `dangerouslySetInnerHTML` in TrackIt — why was `dompurify` still installed?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kyunki "abhi nahi" ka matlab "hamesha nahi" nahi. Senion thinking — ek `sanitizeHtml` helper banaya hai jo ready hai agar future mein rich-text content (CMS, user HTML) render karna ho. Tab direct `dangerouslySetInnerHTML` se XSS risk hoga — sanitizer ready hai. Saath hi, jo abhi use nahi ho raha woh complexity nahi badhana chahiye — helper ready, lekin app mein no-op hai. Prepare for future, don't add dead complexity.
+**Sample Answer:** Because "not needed now" doesn't mean "never needed." Senior thinking: a `sanitizeHtml` helper is created and ready — if a future feature renders rich text (from a CMS or user HTML), the sanitizer is already there. Without it, you'd be tempted to use `dangerouslySetInnerHTML` directly — XSS risk. Having the helper ready means when you do need it, the safe path exists. Don't add dead complexity, but prepare for the future.
 
 </details>
 
-4. `useReducedMotion` kya hai, aur animations accessibility ke liye kyu matter karti hain?
+4. What is `useReducedMotion`, and why do animations matter for accessibility?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kuch users ko motion se motion sickness/migraine hota hai — wo OS mein "reduce motion" setting karte hain. `useReducedMotion` (framer-motion ka hook) batata hai ki user ne yeh preference di hai — animation minimize karte hain. Principle: animation content ka substitute nahi hai, sirf enhancement hai. Agar animation hata bhi do, content accessible rehta hai. WCAG accessibility guideline — motion reduction respect karo.
+**Sample Answer:** Some users experience motion sickness or migraines from animation — they enable "reduce motion" in their OS settings. `useReducedMotion` (from Framer Motion) tells you the user has this preference — and you reduce or disable animations. The principle: animation is an enhancement, not a substitute for content. If you remove all animations, the content should still be fully usable. This follows WCAG accessibility guidelines — respect the user's motion preference.
 
 </details>
 
-5. Security hygiene TrackIt mein kis-tarike se apply hua? (3 cheezein)
+5. How is security hygiene applied in TrackIt? (3 things)
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** (1) Env vars — secrets `.env` mein `VITE_` prefix, sirf public URL expose (`VITE_QUOTE_API_URL`), private secrets frontend mein nahi. (2) Default escaping — saari user input `{}` se render hoti hai, React HTML escape karta hai, `dangerouslySetInnerHTML` ka use nahi. (3) Type safety — API data typed (`useFetch<Quote>`), forms typed — defense in depth. Plus future-ready sanitizer helper. Yehi Batch 7 security principles production app mein applied.
+**Sample Answer:** (1) Env vars — secrets go in `.env` with `VITE_` prefix, only public URLs are exposed (just `VITE_QUOTE_API_URL`), private secrets never touch the frontend. (2) Default escaping — all user input renders with `{}`, React escapes HTML, no `dangerouslySetInnerHTML` used. (3) Type safety — API data is typed (`useFetch<Quote>`), forms are typed — defense in depth. Plus a ready sanitizer helper for future needs. These are the Batch 7 security principles, applied.
 
 </details>

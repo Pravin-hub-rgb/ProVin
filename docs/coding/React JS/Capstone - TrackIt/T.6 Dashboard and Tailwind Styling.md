@@ -1,40 +1,36 @@
----
+Picking up from the last file — T.5 built the habits feature (CRUD, check-in, streaks). Now **T.6 — Dashboard**: stats, charts, motivational quote via `useFetch<T>`, and **Tailwind** styling.
 
-## Abhi Tak Kya Hua
-
-T.5 mein habits feature banaya — CRUD, check-in, streak. Ab **T.6 — Dashboard**: stats, charts (lazy), motivational quote via `useFetch<T>`, aur **Tailwind** styling.
-
-Toh aisa scene hai...
+So here's the situation...
 
 ---
 
-## Coder Mindset — Dashboard Socho
+## Coder Mindset — Think About the Dashboard
 
-Dashboard kya dikhaye? Senior thinking — **user ko "kaise kar rahe ho" ka quick overview chahiye:**
+What should the Dashboard show? Senior thinking — the user needs a **quick overview of how they're doing**:
 
 | Widget | Data |
 |--------|------|
-| **Stats cards** | Total habits, aaj kitne done, best streak |
-| **Weekly chart** | Last 7 din ka completion rate |
-| **Quote** | Motivational line (useFetch<T> — real API) |
-| **Tasks preview** | Aaj ke pending tasks |
+| **Stats cards** | Total habits, done today, best streak |
+| **Weekly chart** | Completion rate for the last 7 days |
+| **Quote** | A motivational line (`useFetch<T>` — real API) |
+| **Tasks preview** | Today's pending tasks |
 
-**Tailwind kyu ab?** Functional core (data, logic, routing) ready hai. Ab UI ko polish karte hain — **responsive + accessible** (Batch 4 skills). Tailwind se utility classes ki speed milti hai.
+**Why Tailwind now?** The functional core (data, logic, routing) is ready. Now we polish the UI — **responsive + accessible** (Batch 4 skills). Tailwind gives you the speed of utility classes.
 
 ---
 
-## Step 1 — Tailwind Setup (4.1.1 se yaad)
+## Step 1 — Tailwind Setup (recap from 4.1.1)
 
-Project root mein run karo:
+Run in the project root:
 
 ```bash
 bun add -d tailwindcss @tailwindcss/postcss postcss
 ```
 
-`postcss.config.js` banao (root folder mein — 4.1.1 mein seekha tha yeh galti common hai):
+Create `postcss.config.js` (in the root folder — a common mistake from 4.1.1, don't put it in `src/`):
 
 ```js
-// postcss.config.js — project ROOT folder mein (src/ mein nahi!)
+// postcss.config.js — in project ROOT (not src/)
 export default {
   plugins: {
     "@tailwindcss/postcss": {},
@@ -42,20 +38,20 @@ export default {
 };
 ```
 
-Aur `src/index.css` mein Tailwind import karo:
+Then import Tailwind in `src/index.css`:
 
 ```css
 /* src/index.css */
 @import "tailwindcss";
 ```
 
-**Dev server restart** karo — ab Tailwind utilities available hain (`bg-blue-500`, `text-white`, `p-4`, etc.).
+**Restart the dev server** — Tailwind utilities are now available (`bg-blue-500`, `text-white`, `p-4`, etc.).
 
 ---
 
-## Step 2 — Stats Hooks (Derived Data)
+## Step 2 — Stats Hook (Derived Data)
 
-Dashboard ke stats calculated hain — habits se derived. Custom hook banate hain — `src/hooks/useDashboardStats.ts`:
+Dashboard stats are derived from the habits store. Create a custom hook — `src/hooks/useDashboardStats.ts`:
 
 ```ts
 // src/hooks/useDashboardStats.ts
@@ -79,7 +75,7 @@ export function useDashboardStats() {
     const totalTasks = tasks.length;
     const pendingTasks = tasks.filter((t) => !t.completed).length;
 
-    // Best streak — sab habits ka max streak
+    // Best streak — the max streak across all habits
     let bestStreak = 0;
     for (const habit of habitList) {
       let streak = 0;
@@ -92,7 +88,7 @@ export function useDashboardStats() {
       bestStreak = Math.max(bestStreak, streak);
     }
 
-    // Last 7 din ka completion rate (percent)
+    // Last 7 days completion rate (percent)
     const weekRates = [];
     for (let i = 6; i >= 0; i--) {
       const date = new Date(Date.now() - i * 86400000).toISOString().slice(0, 10);
@@ -110,13 +106,13 @@ export function useDashboardStats() {
 }
 ```
 
-**`useMemo` kyu:** Derived data — habits/tasks/checkIns jab tak na badle, stats re-compute mat karo. Expensive loop (streak, weekRates) cache ho jaata hai. (Batch 5.2)
+**Why `useMemo`:** Derived data — stats are computed from habits/tasks/checkIns. `useMemo` won't recompute unless the dependencies change. Expensive loops (streak calculation, week rates) get cached.
 
 ---
 
-## Step 3 — Quote via useFetch<T>
+## Step 3 — Quote via useFetch\<T\>
 
-T.3 ka `useFetch<T>` ab real use. Nayi file banao — `src/hooks/useQuote.ts`:
+Now we actually use `useFetch<T>` from T.3. Create new file — `src/hooks/useQuote.ts`:
 
 ```ts
 // src/hooks/useQuote.ts
@@ -131,20 +127,20 @@ export function useQuote() {
 }
 ```
 
-**Env var:** `.env` file banao (root):
+**Env var — ** create `.env` (in root):
 
 ```
 # .env
 VITE_QUOTE_API_URL=https://api.quotable.io/random
 ```
 
-`import.meta.env.VITE_QUOTE_API_URL` — build time pe inject hoga (7.2/7.5 se yaad). `??` fallback — agar env set na ho toh default URL.
+`import.meta.env.VITE_QUOTE_API_URL` — injected at build time. The `??` provides a fallback — if the env var isn't set, the default URL is used.
 
 ---
 
 ## Step 4 — Dashboard Page (with Tailwind)
 
-Nayi file banao — `src/pages/Dashboard.tsx`:
+Create new file — `src/pages/Dashboard.tsx`:
 
 ```tsx
 // src/pages/Dashboard.tsx
@@ -161,16 +157,16 @@ export function Dashboard() {
   return (
     <div className="p-4 md:p-8">
       <h1 className="text-2xl font-bold mb-1">
-        Namaste, {user?.name ?? "user"} 👋
+        Hello, {user?.name ?? "friend"} 👋
       </h1>
-      <p className="text-gray-500 mb-6">Aaj ka summary</p>
+      <p className="text-gray-500 mb-6">Today's summary</p>
 
-      {/* Quote — useFetch se */}
+      {/* Quote — from useFetch */}
       <div className="bg-indigo-50 border-l-4 border-indigo-500 p-4 rounded mb-6">
         {quoteLoading ? (
-          <p className="text-indigo-700">⏳ Quote load ho raha hai...</p>
+          <p className="text-indigo-700">⏳ Loading quote...</p>
         ) : quoteError ? (
-          <p className="text-red-600">Quote load nahi hui 😔</p>
+          <p className="text-red-600">Quote failed to load 😔</p>
         ) : quote ? (
           <>
             <blockquote className="text-indigo-900 italic">
@@ -184,14 +180,14 @@ export function Dashboard() {
       {/* Stats cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
         <StatCard label="Total Habits" value={totalHabits} />
-        <StatCard label="Aaj Done" value={doneToday} />
+        <StatCard label="Done Today" value={doneToday} />
         <StatCard label="Best Streak" value={`${bestStreak}🔥`} />
         <StatCard label="Pending Tasks" value={pendingTasks} />
       </div>
 
       {/* Weekly chart */}
       <div className="bg-white border rounded-lg p-4">
-        <h2 className="font-semibold mb-4">Last 7 din — Completion %</h2>
+        <h2 className="font-semibold mb-4">Last 7 days — Completion %</h2>
         <div className="flex items-end gap-2 h-32">
           {weekRates.map((w) => (
             <div key={w.label} className="flex flex-col items-center flex-1">
@@ -220,24 +216,24 @@ function StatCard({ label, value }: { label: string; value: string | number }) {
 }
 ```
 
-**Tailwind classes kya kar rahi hain:**
+**Tailwind classes in action:**
 
-| Class | Kya |
-|-------|-----|
-| `p-4 md:p-8` | Padding 4, desktop pe 8 — responsive (Batch 4) |
-| `grid grid-cols-2 lg:grid-cols-4` | Mobile 2 columns, desktop 4 — responsive grid |
-| `gap-4` | Grid items ke beech gap |
+| Class | What it does |
+|-------|------|
+| `p-4 md:p-8` | Padding 4, on desktop 8 — responsive spacing |
+| `grid grid-cols-2 lg:grid-cols-4` | 2 columns on mobile, 4 on desktop — responsive grid |
+| `gap-4` | Gap between grid items |
 | `text-2xl font-bold` | Typography |
 | `bg-indigo-50 border-l-4` | Quote card background + accent border |
-| `h-32` + `style height %` | Bar chart heights — Tailwind + inline |
+| `h-32` + `style height %` | Bar chart heights — Tailwind + inline styles |
 
-**Chart accessibility:** `aria-label` on each bar — `"08-04: 75% completed"` — screen reader user ko chart ka data milta hai (Batch 4 — charts accessible hone chahiye).
+**Accessibility for charts:** `aria-label` on each bar — `"08-04: 75% completed"` — screen reader users get the data.
 
 ---
 
-## Step 5 — Tailwind ke Saath Previous Pages Polish
+## Step 5 — Adding Tailwind to Previous Pages
 
-Ab T.4/T.5 ke pages ko Tailwind classes se polish karte hain. Example — `src/pages/Habits.tsx` ka add-habit section:
+Now add Tailwind classes to the pages from T.4/T.5. Example — the add-habit section in `src/pages/Habits.tsx`:
 
 ```tsx
 // src/pages/Habits.tsx (partial update — styling)
@@ -245,7 +241,7 @@ Ab T.4/T.5 ke pages ko Tailwind classes se polish karte hain. Example — `src/p
   <input
     value={title}
     onChange={(e) => setTitle(e.target.value)}
-    placeholder="Nayi habit..."
+    placeholder="New habit..."
     className="flex-1 border rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
   />
   <button
@@ -257,15 +253,15 @@ Ab T.4/T.5 ke pages ko Tailwind classes se polish karte hain. Example — `src/p
 </div>
 ```
 
-`focus:ring-2` — keyboard focus visible (accessibility). `hover:bg-blue-600` — hover state. **Tailwind utilities se styling fast aur consistent.**
+`focus:ring-2` — visible keyboard focus (accessibility). `hover:bg-blue-600` — hover state. **Tailwind utilities make styling fast and consistent.**
 
 ---
 
 ## What T.6 Taught Us
 
-1. **Tailwind setup** — postcss config root mein, `@import "tailwindcss"`
-2. **Derived data via useMemo** — stats/streak/weekRates — cache
-3. **useFetch<T> real use** — quote API, env var fallback, loading/error states
+1. **Tailwind setup** — postcss config in root, `@import "tailwindcss"`
+2. **Derived data with `useMemo`** — stats, streaks, week rates — cached
+3. **`useFetch<T>` in real use** — quote API, env var fallback, loading/error states
 4. **Responsive grid** — `grid-cols-2 lg:grid-cols-4`, `p-4 md:p-8`
 5. **Accessible charts** — `aria-label` on data visualization
 6. **Focus/hover states** — `focus:ring`, `hover:bg` — accessible + polished
@@ -274,53 +270,53 @@ Ab T.4/T.5 ke pages ko Tailwind classes se polish karte hain. Example — `src/p
 
 ## So Here's the Takeaway
 
-Dashboard ready — user ko quick overview, motivational quote, charts — sab Tailwind se styled, accessible. Ab agla step (T.7) — **Framer Motion animations + Error Boundary + security hygiene** — polish + safety.
+The Dashboard is ready — the user gets a quick overview, a motivational quote, and charts — all styled with Tailwind, accessible. Next step (T.7) — **Framer Motion animations + Error Boundary + security hygiene** — polish and safety.
 
 ---
 
 ## In Your Own Words
 
-1. Tailwind setup mein `postcss.config.js` root folder mein kyu? (4.1.1 ka lesson)
+1. Why does the `postcss.config.js` go in the root folder? (Lesson from 4.1.1)
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Vite root folder mein PostCSS config dhundhta hai — `src/` mein nahi. Agar config `src/` mein daalo, Vite use nahi karega aur Tailwind kaam nahi karega. Root folder mein `postcss.config.js` + `@import "tailwindcss"` in `index.css` — yehi complete setup. (Batch 4.1.1 mein yeh common galti highlighted thi — root folder mein rakhna.)
+**Sample Answer:** Vite looks for PostCSS config in the root folder — not in `src/`. If you put the config in `src/`, Vite won't use it and Tailwind won't work. The complete setup is: `postcss.config.js` in the root folder, plus `@import "tailwindcss"` in `src/index.css`. (In 4.1.1, this was highlighted as a common mistake — keep the config in the root.)
 
 </details>
 
-2. `useDashboardStats` mein `useMemo` kyon? Iske bina kya problem?
+2. Why use `useMemo` in `useDashboardStats`? What happens without it?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Stats derived data hai — habits, tasks, checkIns se calculate. `useMemo` dependencies (habits, checkIns, tasks) tab tak re-compute nahi karta jab tak wo change na ho. Iske bina har render pe saara loop (streak calc, weekRates) chalta — Dashboard ke heavy renders slow. `useMemo` expensive calculations cache karta hai (Batch 5.2) — sirf jab data actual change hua, recompute hota hai.
+**Sample Answer:** Stats are derived data — calculated from habits, tasks, and checkIns. `useMemo` recomputes only when those dependencies change. Without it, the entire calculation (streak loops, week rates) runs on every render — slowing down the Dashboard. `useMemo` caches the expensive calculations — recalculated only when the data actually changes.
 
 </details>
 
-3. `useFetch<Quote>` dashboard pe — loading, error, success teen states kaise handle kiye?
+3. How does `useFetch<Quote>` handle loading, error, and success states on the Dashboard?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Hook `{ data, isLoading, error }` return karta hai. UI mein conditional render — `quoteLoading` → "⏳ Quote load ho raha hai"; `quoteError` → "Quote load nahi hui"; `quote` present → blockquote + author. Ye tri-state pattern (6.2 se) — user ko har state mein kuch dikhta hai, blank screen nahi. Aur agar quote API fail ho, dashboard baaki widgets chalti hain — graceful degradation.
+**Sample Answer:** The hook returns `{ data, isLoading, error }`. The UI uses conditional rendering — `quoteLoading` shows "Loading quote...", `quoteError` shows "Quote failed to load", and `quote` present shows the blockquote + author. This tri-state pattern means the user always sees something — never a blank screen. And if the quote API fails, the rest of the Dashboard keeps working — graceful degradation.
 
 </details>
 
-4. `import.meta.env.VITE_QUOTE_API_URL ?? "https://api.quotable.io/random"` — fallback kyu?
+4. Why the `??` fallback on `import.meta.env.VITE_QUOTE_API_URL`?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `??` nullish coalescing — agar env var set nahi hai (undefined/null), default URL use hota hai. Fayda: (a) development mein bina `.env` ke bhi kaam karta hai, (b) deploy pe agar env set karna bhool jao, app crash nahi, default URL pe chalta hai. Production mein `.env.production` se set karo, but fallback safety net hai — build kabhi fail nahi hoga bina env ke.
+**Sample Answer:** The `??` (nullish coalescing) operator uses the default URL when the env var isn't set (undefined/null). Benefits: (a) works in development even without a `.env` file; (b) if you forget to set the env var during deployment, the app still works with the default URL instead of crashing. Production should use `.env.production`, but the fallback is a safety net.
 
 </details>
 
-5. Charts/visualization accessible kaise bante hain? `aria-label` kya karta hai?
+5. How do you make data visualizations (charts) accessible? What does `aria-label` do?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Visualization pure visual hai — screen reader user ko data nahi milta bina accessible alternative. Har bar pe `aria-label` (`"08-04: 75% completed"`) screen reader ko text data deta hai — "bar height se kya matlab" kisi ko bhi audio mein milta hai. Batch 4 ke rules: (a) color alone data convey na kare (b) text alternative do (aria-label/label), (c) keyboard accessible. Charts mein data ya toh aria-label se, ya asli table/lists se accessible banate hain.
+**Sample Answer:** Visualizations are purely visual — without an accessible alternative, screen reader users get no data. Put `aria-label` on each bar — like `"08-04: 75% completed"` — so screen reader users hear the data as audio. Following Batch 4's rules: (a) don't rely on color alone to convey data; (b) provide text alternatives (`aria-label` or `<label>`); (c) keep it keyboard accessible. Charts expose their data either through `aria-label` or through actual tables/lists for accessibility.
 
 </details>

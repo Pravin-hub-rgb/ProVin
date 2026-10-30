@@ -1,34 +1,30 @@
----
+Picking up from the last file — T.2 built the data layer (stores), T.3 built the logic layer (`useReducer` + generic hooks). Now **T.4 — Navigation**: React Router for dynamic routes, protected routes, and `React.lazy` + Suspense for code splitting.
 
-## Abhi Tak Kya Hua
-
-T.2 mein data layer (stores), T.3 mein logic layer (useReducer + generic hooks). Ab **T.4 — Navigation**: React Router se dynamic routes, protected routes, aur `React.lazy` + Suspense se code splitting.
-
-Toh aisa scene hai...
+So here's the situation...
 
 ---
 
-## Coder Mindset — App Ka Layout Socho
+## Coder Mindset — Think About the App's Layout
 
-TrackIt ki pages kya hongi?
+What pages should TrackIt have?
 
 | Route | Page | Protected? |
 |-------|------|-----------|
-| `/` | Dashboard | ✅ (login chahiye) |
+| `/` | Dashboard | ✅ (needs login) |
 | `/habits` | Habits | ✅ |
 | `/tasks` | Tasks | ✅ |
 | `/login` | Login | ❌ (public) |
-| `*` | 404 NotFound | ❌ |
+| `*` | 404 Not Found | ❌ |
 
-**Senior thinking:** Dashboard, Habits, Tasks — sabhi **protected** hain (user ko login karna hai). `/login` public hai. Yehi pattern industry apps mein hai — user data pages sirf logged-in users ke liye.
+**Senior thinking:** Dashboard, Habits, Tasks — all **protected** (user must log in). `/login` is public. This is the same pattern as real apps — pages with user data are only for logged-in users.
 
-**Lazy loading kyu?** Dashboard mein charts honge (T.6), Habits mein streak logic — saari pages ek saath load karne se initial bundle bada ho jata hai. `React.lazy` se sirf current page load hota hai, baaki on-demand. **Code splitting** (Batch 5.6).
+**Why lazy loading?** The Dashboard will have charts (T.6), Habits will have streak logic — loading all pages at once makes the initial bundle huge. With `React.lazy`, only the current page loads, the rest loads on demand. That's **code splitting** (Batch 5.6).
 
 ---
 
-## Step 1 — Pages Banana
+## Step 1 — Create the Pages
 
-Pehle saari pages ka skeleton bana lete hain. Nayi files:
+First, create skeletons for all pages. New files:
 
 ```tsx
 // src/pages/Login.tsx
@@ -51,12 +47,12 @@ export function Login() {
   return (
     <form onSubmit={handleSubmit} className="login-form">
       <h1>TrackIt</h1>
-      <p>Apna naam daalo — demo login (koi real password nahi)</p>
+      <p>Enter your name — demo login (no real password)</p>
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Aapka naam..."
-        aria-label="Aapka naam"
+        placeholder="Your name..."
+        aria-label="Your name"
       />
       <button type="submit">Login</button>
     </form>
@@ -72,8 +68,8 @@ export function NotFound() {
   return (
     <div className="not-found">
       <h1>404</h1>
-      <p>Yeh page nahi mila.</p>
-      <Link to="/">← Dashboard pe jao</Link>
+      <p>This page was not found.</p>
+      <Link to="/">← Back to Dashboard</Link>
     </div>
   );
 }
@@ -82,18 +78,18 @@ export function NotFound() {
 **Login flow:**
 
 ```
-User naam daal kar submit
-    → login(name) → authStore set { isLoggedIn: true, user: { name } }
-    → navigate("/") → Dashboard route
+User enters name and submits
+    → login(name) → authStore sets { isLoggedIn: true, user: { name } }
+    → navigate("/") → goes to Dashboard route
 ```
 
-**Note:** `useAuthStore((s) => s.login)` — selective subscription, action reference stable hai (6.4 pattern).
+**Note:** `useAuthStore((s) => s.login)` — selective subscription, the action reference is stable.
 
 ---
 
 ## Step 2 — ProtectedRoute Component
 
-Protected route ka pattern (Batch 3.3) — ek wrapper jo check karta hai login state. Nayi file banao — `src/components/ProtectedRoute.tsx`:
+The protected route pattern (from Batch 3.3) — a wrapper that checks login state. Create new file — `src/components/ProtectedRoute.tsx`:
 
 ```tsx
 // src/components/ProtectedRoute.tsx
@@ -116,25 +112,25 @@ export function ProtectedRoute({ children }: ProtectedRouteProps) {
 }
 ```
 
-**Flow:**
+**The flow:**
 
 ```
-User /habits pe jata hai
+User visits /habits
     │
     ▼
-ProtectedRoute render hota hai
+ProtectedRoute renders
     │
-    ├── isLoggedIn = true  → children render (Habits page)
+    ├── isLoggedIn = true  → renders children (Habits page)
     └── isLoggedIn = false → <Navigate to="/login" replace />
 ```
 
-`replace` — back button pe protected page wapas nahi aata (login ke baad), history clean.
+`replace` — on the back button, the protected page doesn't come back (clean history after login).
 
 ---
 
-## Step 3 — Lazy Loading Pages
+## Step 3 — Lazy-Loading Pages
 
-Ab `React.lazy` se pages load karte hain — sirf jab route hit ho. Nayi file banao — `src/App.tsx` (poori router setup):
+Now load pages with `React.lazy` — only when the route is hit. Create the full router in `src/App.tsx`:
 
 ```tsx
 // src/App.tsx
@@ -143,7 +139,7 @@ import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useAuthStore } from "./stores/authStore";
 
-// Lazy-loaded pages — sirf route pe load hote hain
+// Lazy-loaded pages — only loaded when route is hit
 const Dashboard = lazy(() =>
   import("./pages/Dashboard").then((m) => ({ default: m.Dashboard }))
 );
@@ -221,29 +217,23 @@ function App() {
 export default App;
 ```
 
-**Har cheez kya kar rahi hai:**
+**What each thing does:**
 
-| Cheez | Kya |
-|-------|-----|
-| `lazy(() => import(...))` | Dynamic import — page sirf tab load jab route hit |
-| `.then((m) => ({ default: m.Dashboard }))` | Named export ko default banata hai — `lazy` default expects |
-| `<Suspense fallback={...}>` | Lazy load ke waqt loading indicator |
-| `<NavLink>` | Active route pe highlight (isActive class auto) |
+| Thing | What it does |
+|-------|------|
+| `lazy(() => import(...))` | Dynamic import — page only loads when route is hit |
+| `.then((m) => ({ default: m.Dashboard }))` | Turns the named export into a default export — `lazy` needs a default |
+| `<Suspense fallback={...}>` | Shows loading indicator while a lazy page loads |
+| `<NavLink>` | Highlights the active route |
 | `<ProtectedRoute>` | Login check — wrapper |
 
-**Lazy import pattern — kyun `.then`?**
-
-`lazy()` ko default export chahiye. Humara page **named export** hai (`export function Dashboard()`). Toh dynamic import se module milta hai, `.then` se `default` bana dete hain:
-
-```ts
-lazy(() => import("./pages/Dashboard").then((m) => ({ default: m.Dashboard })))
-```
+**Why the `.then`?** `React.lazy` expects a function that returns a Promise whose result is `{ default: Component }`. Our pages are **named exports** (`export function Dashboard()`). The dynamic import gives you the whole module (`m`), and `.then` converts it to `{ default: m.Dashboard }` — turns the named export into a default.
 
 ---
 
-## Step 4 — useLocalStorage for Theme (Integrate)
+## Step 4 — Integrating useLocalStorage for Theme
 
-T.3 mein `useLocalStorage<T>` banaya. Theme ko integrate karte hain — App level pe `usePrefsStore` ke saath. Nayi file banao — `src/hooks/useTheme.ts`:
+We built `useLocalStorage<T>` in T.3. Now integrate it for the theme. Create new file — `src/hooks/useTheme.ts`:
 
 ```ts
 // src/hooks/useTheme.ts
@@ -258,10 +248,10 @@ export function useTheme() {
 }
 ```
 
-Aur `App.tsx` mein isko root div pe class lagao (Tailwind T.6 mein use karenge):
+Then apply the theme to the root div in `App.tsx` (Tailwind in T.6):
 
 ```tsx
-// src/App.tsx (update — theme integrate)
+// src/App.tsx (update — theme integration)
 import { useTheme } from "./hooks/useTheme";
 
 function App() {
@@ -279,28 +269,28 @@ function App() {
 }
 ```
 
-**`useTheme` kyon custom hook:** Theme logic (localStorage + type) ek jagah — reusable, aur `useLocalStorage<T>` ka use project mein visible hai (roadmap spec).
+**Why `useTheme` as a custom hook:** Keeps theme logic (localStorage + type) in one place — reusable, and `useLocalStorage<T>` stays visible in the project (per the roadmap).
 
 ---
 
-## Routes Ka Test
+## Testing the Routes
 
-Ab `bun run dev` — URL try karo:
+Run `bun run dev` and try the URLs:
 
 | URL | Result |
 |-----|--------|
-| `/` | Login pe redirect (protected + not logged in) |
+| `/` | Redirects to `/login` (protected + not logged in) |
 | `/login` | Login page |
-| Login karke `/` | Dashboard page |
+| After login, `/` | Dashboard page |
 | `/habits`, `/tasks` | Respective pages |
-| `/random-junk` | 404 NotFound |
+| `/random-junk` | 404 Not Found |
 
-**Working flow:**
+**The working flow:**
 
 ```
-Not logged in → / → ProtectedRoute → Navigate /login
-Login → authStore isLoggedIn=true → navigate /
-Protected pages ab accessible
+Not logged in → / → ProtectedRoute → Navigate to /login
+Login → authStore isLoggedIn = true → navigate to /
+Now protected pages are accessible
 ```
 
 ---
@@ -309,62 +299,62 @@ Protected pages ab accessible
 
 1. **Routing structure** — public (`/login`) + protected (`/`, `/habits`, `/tasks`) + 404
 2. **ProtectedRoute pattern** — `useAuthStore` check + `<Navigate to="/login" replace />`
-3. **React.lazy + Suspense** — code splitting, on-demand page loading, fallback
-4. **NavLink** — active route highlighting (accessibility ke liye good)
+3. **`React.lazy` + `Suspense`** — code splitting, on-demand page loading, loading fallback
+4. **`NavLink`** — highlights the active route (good for accessibility)
 5. **Named export + lazy** — `.then((m) => ({ default: m.X }))` pattern
-6. **useLocalStorage integration** — theme custom hook ke through
+6. **`useLocalStorage` integration** — theme through a custom hook
 
 ---
 
 ## So Here's the Takeaway
 
-App ki spine ready — routing, protected routes, lazy loading. Ab agla step (T.5) — **Habits UI**: CRUD, daily check-in, streak logic. Real user-facing feature.
+The spine of the app is ready — routing, protected routes, lazy loading. Next step (T.5) — **Habits feature**: CRUD, daily check-in, streak logic. The core user-facing feature.
 
 ---
 
 ## In Your Own Words
 
-1. ProtectedRoute kya karta hai, aur `replace` prop kyu?
+1. What does ProtectedRoute do, and what is the `replace` prop for?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** ProtectedRoute ek wrapper component hai jo `useAuthStore` se `isLoggedIn` check karta hai. Agar logged in → children render (protected page). Agar nahi → `<Navigate to="/login" replace />` redirect. `replace` ka matlab history mein redirect entry replace hoti hai, push nahi — toh back button pe protected page wapas nahi aata (login ke baad clean state).
+**Sample Answer:** ProtectedRoute is a wrapper component that checks `isLoggedIn` from `useAuthStore`. If logged in → renders children (the protected page). If not → `<Navigate to="/login" replace />` redirects. The `replace` prop means the redirect replaces the history entry instead of pushing — so when the user hits the back button after login, they don't end up back on the protected page they couldn't access. Clean history state.
 
 </details>
 
-2. `React.lazy` + Suspense kya achieve karta hai? Iske bina kya hota?
+2. What do `React.lazy` and `Suspense` achieve? What would happen without them?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `React.lazy` + dynamic import pages ko code-split karta hai — har page apne bundle chunk mein. Sirf current route ka page load hota hai, baaki on-demand. Suspense lazy load ke waqt fallback (loading spinner) dikhata hai. Iske bina saari pages ek hi bundle mein — initial load slow. TrackIt mein Dashboard (charts), Habits (streak) heavy hai — lazy se initial bundle chhota, jaldi load.
+**Sample Answer:** `React.lazy` + dynamic imports split each page into its own bundle chunk. Only the current route's page loads — the rest loads on demand. `Suspense` shows a loading fallback while a lazy page loads. Without them, every page is bundled together — the initial load is slow. TrackIt has heavy pages (Dashboard with charts, Habits with streaks) — lazy loading keeps the initial bundle small and fast.
 
 </details>
 
-3. `lazy(() => import("./pages/Dashboard").then((m) => ({ default: m.Dashboard })))` mein `.then` kyun?
+3. Why the `.then((m) => ({ default: m.Dashboard }))` in lazy imports?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `React.lazy` ko ek function chahiye jo ek Promise return kare jiska result `{ default: Component }` ho — default export. Humare pages **named exports** hain (`export function Dashboard()`). Dynamic import se poora module milta hai (`m`), `.then` se module ko `{ default: m.Dashboard }` mein convert karte hain — named export ko default banate hain. Isse `lazy` samajh pata hai ki default component kaun hai.
+**Sample Answer:** `React.lazy` expects a function returning a Promise whose result is `{ default: Component }` — it needs a default export. Our pages are **named exports** (`export function Dashboard()`). The dynamic `import()` returns the whole module (`m`). The `.then` converts that module into `{ default: m.Dashboard }` — turning the named export into a default. So `lazy` knows which component to use as the default.
 
 </details>
 
-4. Login ke baad `navigate("/")` kyun? ProtectedRoute handle karta toh?
+4. Why does `navigate("/")` after login matter? Doesn't ProtectedRoute handle it?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Login component mein `useNavigate` se `navigate("/")` — login success ke baad user ko dashboard (default route) le jaata hai. ProtectedRoute tab render hota hai jab route hit ho — user `/` pe redirect ka wait kare yeh better hai ki login component khud navigate kare. Flow: login submit → authStore update → navigate("/") → ProtectedRoute ab isLoggedIn=true → Dashboard render. Direct, clean UX.
+**Sample Answer:** The `navigate("/")` in the Login component redirects the user to the Dashboard after a successful login. ProtectedRoute renders when a route is hit — having it wait to see if the user tries to access `/` is worse UX than redirecting immediately on login. The flow: login submitted → authStore updated → `navigate("/")` → ProtectedRoute now sees `isLoggedIn = true` → Dashboard renders. Direct, clean user experience.
 
 </details>
 
-5. NavLink vs Link — kya fark hai, aur kyon NavLink navbar ke liye?
+5. `NavLink` vs `Link` — what's the difference, and why `NavLink` for the navbar?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Dono navigation ke liye — Link simple navigation, NavLink extra feature: active route pe auto class/isActive state deta hai. Navbar mein active page highlight hona chahiye (user ko pata ho kaunsi page pe hai) — isliye NavLink. Style ke liye `isActive` se conditional class lagate ho. Accessibility bhi improve hoti hai — active link visually clear hota hai.
+**Sample Answer:** Both handle navigation — `Link` is a plain link, `NavLink` adds the ability to style the active route (via `isActive` or an `activeClassName`). The navbar should highlight which page the user is on — that's what `NavLink` does by default. It's also better for accessibility — the active link is visually clear. `Link` is for plain navigation where you don't need active-state styling.
 
 </details>
