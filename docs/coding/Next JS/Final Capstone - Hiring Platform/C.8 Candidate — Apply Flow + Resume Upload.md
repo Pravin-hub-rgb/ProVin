@@ -1,44 +1,44 @@
-Employer side poori ho gayi — post, manage, boost. Ab coin ka doosra pehlu: **candidate**. Journey simple dikhne wali hai — job detail → Apply button → form bhara → submit — par is flow ke andar capstone ke **do sabse interesting technical pieces** hain:
+The employer side is done — posting (AI-assisted), managing, boosting (paid). Now the other half of the marketplace: **the candidate.** The user journey looks simple — job detail → Apply button → fill form → submit — but two of the capstone's most technical pieces live inside it:
 
-1. **File upload** — resume PDF browser se lekar durable storage tak. Serverless pe file system nahi likh sakte (`fs.writeFile` Vercel pe read-only!) — toh files kahan jaati hain? **Object storage** (Vercel Blob).
-2. **Private files** — resume sensitive document hai. Koi bhi URL guess karke kisi ka resume nahi khol sakta chahiye. Download ko **authentication ke peeche** rakhna hai.
+1. **File upload** — a resume PDF travels from the browser to durable storage. In serverless, the local filesystem is read-only and ephemeral (no `fs.writeFile` on Vercel!) — files go to **object storage**: Vercel Blob.
+2. **Private files** — a resume is sensitive. A URL anyone can guess must never open another candidate's resume. Downloads stay **behind authentication**.
 
-Aur ek chhota lekin pyaara detail: **duplicate apply guard** — C.1 mein jo `@@unique([jobId, candidateId])` design kiya tha, aaj woh live fire hoga.
+Plus C.1's most interesting design goes live: the **duplicate-apply guard** — `@@unique([jobId, candidateId])` stops the same person applying twice, at the database level.
 
 # Hiring Platform — Part 8: Apply Flow + Resume Upload
 
 ## Step 0 — Vercel Blob Setup
 
-**Concept pehle:** Storage ke teen options aur serverless reality:
+**Concept first:** Storage options on serverless:
 
-| Option | Serverless pe? | Kyun |
+| Option | Serverless-safe? | Why |
 |---|---|---|
-| Local disk (`fs.writeFile`) | ❌ | Vercel functions ka filesystem **read-only** hai; containers ephemeral hain — agle request pe file gayab |
-| Database (byte column) | ⚠️ technically haan | Multi-MB PDFs DB mein bloat queries/backups — anti-pattern |
-| **Object storage (Blob/S3)** | ✅ | Files ke liye bana hai: cheap, durable, HTTP se accessible |
+| Local disk (`fs.writeFile`) | No | Vercel functions share a read-only filesystem; containers are ephemeral — the next request may run on an instance where the file never existed. |
+| Database (byte column) | Technically yes, but bad | Multi-MB PDFs bloat queries and backups — an anti-pattern. |
+| **Object storage (Blob / S3)** | Yes | Built for this: cheap, durable, HTTP-accessible. |
 
-Vercel Blob = Vercel ka S3-style object storage. Setup:
+Vercel Blob is Vercel's S3-style object store. Setup:
 
-1. Vercel dashboard (Batch 8 wala account) → **Storage** tab → **Create Database → Blob**
-2. Store banao → **`.env.local`** tab se token copy karo:
+1. The Vercel dashboard (Batch 8's account) → **Storage** tab → **Create Database → Blob**.
+2. Create a store → copy the token from the `.env.local` tab.
 
 ```env
-BLOB_READ_WRITE_TOKEN=vercel-blob-token
+BLOB_READ_WRITE_TOKEN=<vercel-blob-token>
 ```
 
 ```bash
 npm install @vercel/blob
 ```
 
-Token server-only rahega (no `NEXT_PUBLIC_` — same 8.1 rule). Uploads hamare **Server Action** se honge — client kabhi direct Blob touch nahi karta.
+The token stays server-only (no `NEXT_PUBLIC_` — same 8.1 rule). Uploads happen from **Server Actions** — the client never touches Blob directly.
 
-> **S3 comparison box:** AWS S3 industry-standard hai, Vercel Blob usi ka managed-simple version. API concepts identical — put/get/delete, paths, access control. Yahan Blob kyunki Vercel deploy ke saath zero-config hai (C.12 mein env var auto-link ho jayegi).
+> **S3 comparison note:** S3 is the industry standard; Vercel Blob is its managed-simple cousin. The API concepts are identical (put/get/delete, paths, access control). Blob is chosen here because it links to a Vercel deploy with zero config (C.12).
 
-## Step 1 — Apply Page: Guards Pehle, Form Baad Mein
+## Step 1 — Apply Page: Guards First, Then Form
 
 **File:** `app/jobs/[slug]/apply/page.tsx`
 
-Apply page teen guards ke baad hi form dikhayega — order matter karta hai:
+Three guards, in order, before the form is shown:
 
 ```tsx
 // app/jobs/[slug]/apply/page.tsx
@@ -52,16 +52,16 @@ export default async function ApplyPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const session = await requireRole("CANDIDATE");          // login + role gate
+  const session = await requireRole("CANDIDATE");          // guard 1: role
   const { slug } = await params;
 
   const job = await prisma.job.findUnique({
     where: { slug },
     include: { company: true },
   });
-  if (!job || !job.open) notFound();                       // job gate
+  if (!job || !job.open) notFound();                       // guard 2: job exists + open
 
-  const existing = await prisma.application.findUnique({   // duplicate gate
+  const existing = await prisma.application.findUnique({   // guard 3: duplicate
     where: {
       jobId_candidateId: {
         jobId: job.id,
@@ -78,43 +78,43 @@ export default async function ApplyPage({
       {existing ? (
         <div className="bg-green-50 border border-green-200 rounded-lg p-6">
           <p className="font-medium text-green-800">
-            Aap apply kar chuke ho ✓
+            You've already applied ✓
           </p>
           <p className="text-sm text-green-700 mt-1">
-            Status dekho{" "}
+            Track your status in{" "}
             <a href="/applications" className="underline">
               My Applications
-            </a>{" "}
-            mein.
+            </a>
+            .
           </p>
         </div>
       ) : (
-        <ApplyForm jobId={job.id} jobTitle={job.title} />
+        <ApplyForm jobId={job.id} />
       )}
     </main>
   );
 }
 ```
 
-Teen gates, teen alag outcomes:
+Three gates, three outcomes:
 
-- **`requireRole("CANDIDATE")`** — guest/employer yahan aa hi nahi sakte (login ya cross-redirect)
-- **`!job || !job.open`** — closed/galat job ka apply form exist hi nahi karta → 404
-- **Duplicate check** — **compound unique ka named lookup!** Prisma composite unique fields ko `@@unique([jobId, candidateId])` → accessor naam `jobId_candidateId` banata hai. Mila → friendly "already applied" card (form ki jagah).
+- **`requireRole("CANDIDATE")`** — guests or employers can't get here (redirect to login or cross-redirect).
+- **`!job || !job.open`** → `notFound()`: a wrong slug or a closed job renders nothing (404). The detail-page banner in C.7 told them it's closed; here there's no Apply button anyway.
+- **Duplicate check** — **a compound-unique named lookup in action.** Prisma turns `@@unique([jobId, candidateId])` from C.2 into an accessor named `jobId_candidateId`. Hitting that combination again → a friendly "you already applied" card instead of the form.
 
-Ek design note: duplicate check yahan **UX-level** hai (form chhupana). **DB-level guard** (`@@unique`) phir bhi zinda hai — agar race mein do tabs khul gaye ya action direct call hua, insert fail hoga. Dono layers apna kaam karti hain (C.1 Q2 wali kahani ab concrete).
+Design note: the page-level check is **UX refinement** (hide the form). The **real guarantee** is still the DB constraint — if a race slips through (two tabs, or a direct action call), the insert fails. Two layers, same source of truth (C.1's Question 2, now concrete).
 
-## Step 2 — Upload Ka Concept: FormData Mein File
+## Step 2 — The Concept of a File Upload: FormData and the File Object
 
-React course mein forms handle kiye — text inputs. File thoda alag hai:
+The React course covered form handling — text inputs. Files are slightly different:
 
-- `<input type="file">` — browser file-picker kholta hai
-- Form submit hone pe file **FormData ka hissa** ban jaati hai — text values jaisi hi, bas type `File` hota hai
-- Server Action ko woh `File` object milta hai — uska `.size`, `.type`, `.name`, aur content stream
+- An `<input type="file">` opens the browser's file picker.
+- On form submit, the file becomes **part of the FormData** — just like a text value, except its type is `File`.
+- The Server Action receives that `File` object: it has `.size`, `.type`, `.name`, and the content as a stream.
 
-Matlab: koi base64 encoding, koi alag upload-endpoint, koi XHR progress-bar nahi chahiye beginner flow ke liye. Ek normal form, Server Action, done. (Large-file UX — progress %, resumable — advanced topic; 2MB resumes ke liye simple flow perfect.)
+That's it — no base64, no separate upload endpoint, no XHR progress bar (that's an advanced concern). A plain form + a Server Action handles a 2 MB resume fine.
 
-## Step 3 — ApplyForm Client Component
+## Step 3 — The ApplyForm (Client Component)
 
 **File:** `app/jobs/[slug]/apply/apply-form.tsx`
 
@@ -141,22 +141,6 @@ export function ApplyForm({
     applyAction,
     null
   );
-
-  if (state?.ok) {
-    return (
-      <div className="bg-green-50 border border-green-200 rounded-lg p-6">
-        <p className="font-medium text-green-800">Application submitted! 🎉</p>
-        <p className="text-sm text-green-700 mt-1">
-          AI abhi aapka resume is job se match kar raha hai — score kuch der
-          mein{" "}
-          <a href="/applications" className="underline font-medium">
-            My Applications
-          </a>{" "}
-          mein dikhega.
-        </p>
-      </div>
-    );
-  }
 
   return (
     <form action={formAction} className="space-y-4">
@@ -202,15 +186,11 @@ export function ApplyForm({
 }
 ```
 
-Chhoti cheezein jo dhyan mangti hain:
+## Step 4 — `applyAction`: Validate → Upload → Insert
 
-- **`accept="application/pdf"`** — picker PDFs filter karta hai. **Yeh convenience hai, validation NAHI** — koi bhi file manually drag/select kar sakta hai. Real check server pe (agle step).
-- **Success-state replace** — form gayab, green card. Match score ka promise isi card mein — C.9 usko poora karega.
-- **Hidden jobId** — URL se nahi, prop se aaya; action mein bhi phir verify hoga.
+The Server Action. Four guard layers, then the upload-and-persist:
 
-## Step 4 — applyAction: Validate → Upload → Insert
-
-Asli kaam. **File:** `app/jobs/[slug]/apply/actions.ts`
+**File:** `app/jobs/[slug]/apply/actions.ts`
 
 ```ts
 // app/jobs/[slug]/apply/actions.ts
@@ -221,7 +201,7 @@ import prisma from "@/lib/prisma";
 import { put } from "@vercel/blob";
 import { revalidatePath } from "next/cache";
 
-const MAX_SIZE = 2 * 1024 * 1024; // 2MB bytes mein
+const MAX_SIZE = 2 * 1024 * 1024; // 2 MB in bytes
 
 type ApplyState =
   | { ok: true }
@@ -231,13 +211,13 @@ export async function applyAction(
   _prev: ApplyState,
   formData: FormData
 ): Promise<ApplyState> {
-  // ---- Guard 1: session + role ----
+  // Guard 1: session + role
   const session = await auth();
   if (session?.user.role !== "CANDIDATE") {
-    return { ok: false, error: "Sirf logged-in candidates apply kar sakte hain." };
+    return { ok: false, error: "Only logged-in candidates can apply." };
   }
 
-  // ---- Guard 2: inputs ----
+  // Guard 2: input sanity
   const jobId = Number(formData.get("jobId"));
   const coverNote = ((formData.get("coverNote") as string) ?? "").trim();
   const resume = formData.get("resume") as File | null;
@@ -246,24 +226,24 @@ export async function applyAction(
     return { ok: false, error: "Invalid job." };
   }
   if (!resume || resume.size === 0) {
-    return { ok: false, error: "Resume PDF required hai." };
+    return { ok: false, error: "A resume PDF is required." };
   }
 
-  // ---- Guard 3: file validation (client accept= bypass-able) ----
+  // Guard 3: file validation (the accept= attribute is bypassable)
   if (resume.type !== "application/pdf") {
-    return { ok: false, error: "Sirf PDF files allowed hain." };
+    return { ok: false, error: "Only PDF files are allowed." };
   }
   if (resume.size > MAX_SIZE) {
-    return { ok: false, error: "File 2MB se choti honi chahiye." };
+    return { ok: false, error: "File must be smaller than 2MB." };
   }
 
-  // ---- Guard 4: job open hai? ----
+  // Guard 4: is the job still open?
   const job = await prisma.job.findUnique({ where: { id: jobId } });
   if (!job || !job.open) {
-    return { ok: false, error: "Yeh job applications accept nahi kar rahi." };
+    return { ok: false, error: "This job is no longer accepting applications." };
   }
 
-  // ---- Upload to Blob ----
+  // Upload to Blob
   let resumeUrl: string;
   try {
     const blob = await put(`resumes/${crypto.randomUUID()}.pdf`, resume, {
@@ -271,10 +251,10 @@ export async function applyAction(
     });
     resumeUrl = blob.url;
   } catch {
-    return { ok: false, error: "Upload fail hua. Dobara try karo." };
+    return { ok: false, error: "Upload failed. Try again." };
   }
 
-  // ---- DB insert ----
+  // DB insert
   try {
     await prisma.application.create({
       data: {
@@ -282,21 +262,21 @@ export async function applyAction(
         resumeUrl,
         jobId: job.id,
         candidateId: session.user.id,
-        // matchScore/matchReason abhi null — C.9 AI bhar dega
+        // matchScore/matchReason — null for now; C.9 fills them in
       },
     });
   } catch (err: unknown) {
-    // Duplicate apply race — DB @@unique ne roka
+    // Duplicate apply — the @@unique constraint caught the race
     if (
       typeof err === "object" &&
       err !== null &&
       "code" in err &&
       err.code === "P2002"
     ) {
-      return { ok: false, error: "Aap is job pe apply kar chuke ho." };
+      return { ok: false, error: "You've already applied to this job." };
     }
     console.error(err);
-    return { ok: false, error: "Kuch galat ho gaya. Dobara try karo." };
+    return { ok: false, error: "Something went wrong. Try again." };
   }
 
   revalidatePath("/applications");
@@ -304,26 +284,26 @@ export async function applyAction(
 }
 ```
 
-Flow ko todo-mei todo samjho:
+Read the flow:
 
-1. **Char guards sequence mein** — session/role → basic input sanity → file type/size → job state. Har fail pe early-return friendly message. Server pe yeh order cheap-se-expensive hai: pehle free string checks, DB query end mein — fail-fast saves work.
-2. **`formData.get("resume") as File | null`** — file input FormData mein `File` instance deta hai. `.size` (bytes), `.type` (MIME string) available.
-3. **`crypto.randomUUID()`** — collision-impossible filename. Do candidates dono `resume.pdf` upload karein — ek doosre ko overwrite NAHI karenge. Path structure (`resumes/`) bucket organization ke liye.
-4. **P2002 catch** — C.6 mein slug-retry kiya tha; yahan retry galat hota (user intent hi duplicate hai) — isliye friendly error. Same constraint, context-based handling!
-5. **`redirect` ka istemal nahi kiya** — C.6 se fark notice karo. Wahan success pe dashboard jaana tha (page navigation). Yahan form hi success-card mein replace hota hai (SPA feel). Dono valid patterns — UX goal decide karta hai.
+1. **Four guards in sequence** — role → input sanity → file type/size → job-open. Each fails fast with a friendly message. Order is cheapest-first: string checks before the DB call.
+2. **`formData.get("resume") as File | null`** — a file input yields a `File` object; `.size` is in bytes, `.type` is the MIME string.
+3. **`crypto.randomUUID()`** — a collision-proof filename. Two candidates both naming a file `resume.pdf` won't overwrite each other. The `resumes/` prefix is just path bucketing.
+4. **P2002 in the insert** — the same constraint handling as C.6, but here it **rejects** (returns a friendly error) because a duplicate application *should not* succeed. Context decides: slugs can be suffixed; duplicate apps can't.
+5. **No `redirect()` here** — on success, the form component swaps to a success state (an SPA feel). C.6 redirected on success because it navigated away; here we stay and show confirmation. Both valid — the UX goal decides.
 
-### Resume Private Kaise Raha?
+### How Resumes Stay Private
 
-Abhi toh Blob public URL dega (`blob.url`)! Sach bolte hain — us URL se koi bhi file khol sakta hai agar pass ho. Humne do mitigation layers rakhe hain:
+Right now `put()` returns a **public** Blob URL. Left exposed, anyone with the link could read a resume. Two mitigation layers:
 
-1. **Unguessable path** — UUID pathname se URL brute-force practically impossible
-2. **URL kahin expose nahi hota** — `resumeUrl` sirf DB mein hai; employer ko kabhi raw Blob URL nahi denge. Download hamesha hamare **authenticated route handler se** hoga — C.10 mein jab employer applicants dekhega, resume-view link `/api/resumes/[id]` jaisa hoga jo session + ownership verify karke hi content stream karta hai.
+1. **Unguessable path** — the UUID pathname makes brute-forcing the URL practically impossible.
+2. **The URL is never handed out.** `resumeUrl` lives only in the DB; the employer never sees the raw Blob URL. Downloads always go through our **authenticated route** — `/api/resumes/[applicationId]` — which verifies the session and ownership before streaming the file (that route is in C.10).
 
-Honest trade-off note: Vercel Blob ka native private-access mode bhi evolve ho raha hai; humara auth-proxy pattern har object storage pe portable hai (S3 presigned URLs bhi isi problem ka solution hain — different mechanism, same goal: *authorization at download-time*). Interview gold: "storage security = upload-time + download-time dono."
+Honest trade-off: modern object stores have native private-access modes, but the auth-proxy pattern is portable across all of them (S3 presigned URLs solve the same problem differently — authorization at download time, not upload time). Interview gold: "file security = upload-time validation + download-time authorization."
 
-## Step 5 — My Applications Page
+## Step 5 — The "My Applications" Page
 
-Candidate ka home-base. **File:** `app/(candidate)/applications/page.tsx`:
+The candidate's home base. **File:** `app/(candidate)/applications/page.tsx`
 
 ```tsx
 // app/(candidate)/applications/page.tsx
@@ -347,11 +327,10 @@ export default async function ApplicationsPage() {
 
       {applications.length === 0 ? (
         <p className="text-gray-500 text-center py-12">
-          Abhi koi application nahi.{" "}
+          No applications yet.{" "}
           <a href="/" className="underline">
-            Jobs browse karo
-          </a>
-          .
+            Browse jobs
+          </a>.
         </p>
       ) : (
         <div className="space-y-3">
@@ -382,7 +361,7 @@ export default async function ApplicationsPage() {
                     Scoring...
                   </span>
                 )}
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-gray-500">
                   {app.status.toLowerCase()}
                 </p>
               </div>
@@ -395,81 +374,83 @@ export default async function ApplicationsPage() {
 }
 ```
 
-- **Reverse relation query** — C.6 mein employer→jobs nikale the (`company.ownerId`); ab user→applications (`candidateId`). Same table, dusra direction — junction table ka fayda.
-- **Nested include** — application → job → company, teen levels ek call mein.
-- **`matchScore !== null` ternary** — C.9 ke liye teaser: score aane pe blue badge, warna pulsing "Scoring..." placeholder.
+- **A reverse relation query** — C.6 fetched `employer → jobs` (`company.ownerId`); here it's `user → applications` (`candidateId`). Same join table, other direction — the junction-table payoff.
+- **Nested include** — `application → job → company`, three levels in one query.
+- **`matchScore` ternary** — the teaser for C.9: a real score shows as a blue badge; otherwise a pulsing "Scoring..." placeholder (the score computes right after this page renders).
 
-**TEST checklist:**
+## Test Checklist
 
-1. Incognito → apply button dabao → login pe redirect (guest gate)
-2. Employer se login → `/jobs/[slug]/apply` → cross-redirect dashboard (role gate)
-3. Candidate bano → apply → PDF choose → submit → green success card
-4. Dobara same job pe → "already applied" card (page-level guard)
-5. 3MB file → "2MB se choti" error; .docx rename karke .pdf → MIME check pakad lega (type browser se aata hai actual content se)
-6. Neon SQL Editor: `SELECT "resumeUrl" FROM "Application";` — UUID-path wala Blob URL pada hai
-7. `/applications` — nayi entry, pulsing "Scoring..."
+1. Incognito → hit an Apply button → redirected to login (guest gate).
+2. Log in as an employer → go to `/jobs/[slug]/apply` → cross-redirect to dashboard (role gate).
+3. Log in as a candidate → apply → select a PDF → submit → green success card.
+4. Try the same job again → the "already applied" card (page-level guard).
+5. A 3 MB file → "smaller than 2MB"; a renamed `.docx` as `.pdf` → MIME check catches it (the type comes from the file's actual content type, sent by the browser).
+6. In the Neon console: `SELECT "resumeUrl" FROM "Application";` — a UUID-path Blob URL is there.
+7. `/applications` — the row appears with the pulsing "Scoring..." placeholder.
 
 ## Nutshell
 
-Apply flow = **4-layer guard** (role → inputs → file type/size → job-open) + **FormData-native upload** (file input = File object in SA, no extra machinery) + **Vercel Blob put** (UUID path, server-only token) + DB insert with **P2002-as-friendly-error** (same constraint, C.6 se opposite handling — retry vs reject, context decides). Security model: upload validated server-side, resume URL never exposed — download-time authorization C.10 ke proxy-route se. Page pe teen gates (role → job-exists/open → duplicate) har ek apna outcome deta hai: redirect/404/friendly-card.
+The apply flow = **multi-layer guards** (role → inputs → file type/size → job-open, cheapest-first) + **native FormData upload** (a file input is a `File` object in the Server Action; no extra machinery) + **Vercel Blob** (`put` with a `crypto.randomUUID()` path, server-only token) + **DB insert with a dual-purpose P2002** (here it rejects a duplicate application with a friendly error — opposite of C.6's retry, same constraint). Security: validation at upload time, the raw Blob URL never exposed — downloads go through the auth-proxy route in C.10. The page has three gates (role → job-exists-and-open → duplicate), each with its own outcome (redirect / 404 / friendly card).
 
 ## What It Is NOT
 
-- **`accept="application/pdf"` = security nahi.** Picker filter hai. Server-side MIME + (production-me) magic-byte sniffing hi asli validation. Frontend attributes = UX polish, backend checks = enforcement.
-- **Blob public URL = "leak ho gaya toh kya farak" nahi sochna.** Unguessable ≠ inaccessible-by-design. Isliye defense-in-depth: URL kabhi share nahi hota, downloads auth-proxy se. Agar kal URL kahin log ho jaye, exposure surface minimal hai.
-- **2MB limit = "arbitrary restriction" nahi.** Serverless function memory/time limits, abuse prevention (koi 500GB movie na bhej de), aur storage cost — teeno ka balance. Real products limits ko config me rakhte hain.
-- **Duplicate-check page pe = "poora solution" nahi.** Woh UX refinement hai. Guarantee DB constraint deti hai. UI checks help users, constraints protect data — roles confuse mat karo.
-- **"Scoring..." placeholder = fake spinner nahi.** Honest state hai — score genuinely pending hai (C.9 mein compute hoga). UI truthfully incomplete-process dikhati hai.
+- **`accept="application/pdf"` is not security.** It's a picker convenience filter. The real check is server-side MIME validation (and in production, magic-byte sniffing). Frontend attributes are UX polish; backend is enforcement.
+- **An unguessable Blob URL is not "secure by design."** Unguessable ≠ unfindable. That's why defense-in-depth: the URL is never shared, and downloads are proxied. If a URL ever leaked, exposure surface is minimized.
+- **The 2 MB limit is not "arbitrary."** It balances serverless function limits, abuse prevention (no 500 GB videos), and storage cost. Real products make it configurable.
+- **The page-level duplicate check is not "the whole solution."** It's UX smoothing. The DB constraint is the guarantee. UI checks inform the user; constraints protect the data — don't conflate them.
+- **The "Scoring..." placeholder is not "a fake spinner."** It truthfully reflects a pending state — the AI hasn't scored yet. Honest loading states beat fake-sophisticated ones.
 
 ---
 
 **In Your Own Words**
 
-1. Serverless pe `fs.writeFile('/tmp/resume.pdf')` kyun fail hota hai production mein — dev machine pe chalta bhi hai?
+1. Why can't a Server Action write a resume to the local filesystem (`fs.writeFile`) in production?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Dev mein localhost ek persistent machine hai — file wahi rehti hai. Production serverless mein function instances ephemeral hain — request khatam, container recycle ho sakta hai; agli request shayad doosre instance pe chale jahan file hai hi nahi. Aur Vercel ka deploy filesystem immutable/read-only hota hai. Durable data ke liye external systems: DB ya object storage.
+**Sample Answer:** On Vercel (and most serverless platforms), the function filesystem is read-only and ephemeral. Even `/tmp` isn't shared across invocations — the next request might land on a different instance where the file never existed. The file would vanish instantly. Durable data must go to external storage (DB or Blob); the local filesystem is for build artifacts only.
 
 </details>
 
-2. `@@unique([jobId, candidateId])` ne yahan do alag jagah kaam kiya — kaunse, aur dono ka experience kaisa tha?
+2. The `@@unique([jobId, candidateId])` constraint is handled in two places — how, and what does each protect?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** (1) Page-level `findUnique({ where: { jobId_candidateId: {...} } })` — pre-check jo form ko "already applied" card se replace karta hai (smooth UX). (2) Action-level P2002 catch — race/direct-call case mein hard guarantee. Pehla optimization hai, doosra enforcement. Dono ka source same constraint — ek schema decision ne UX + integrity dono diye.
+**Sample Answer:** (1) On the apply *page*, a `findUnique` using the named accessor `jobId_candidateId` — a pre-check that hides the form and shows "already applied." UX-level. (2) In the apply *Server Action*, the insert is attempted and a `P2002` error is caught — returns a friendly error if the race slipped through (two tabs, or a direct action call). Enforcement-level. Same constraint, two purposes: smooth UX and hard data integrity.
 
 </details>
 
-3. Resume ka Blob URL employer ko direct kyun nahi de sakte — aur hum de rahe hain kis cheez se replace karke (C.10 preview)?
+3. After a candidate uploads, the resume URL is technically public (Blob). The page shows the employer a resume-view link (`/api/resumes/...`) instead — how does that keep it private?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Raw URL share hota toh employer forward/save kar sakta, browser history/cache mein rehta, link kabhi expire nahi hota — candidate ka control zero. Replace: internal route `/api/resumes/[applicationId]` jo har request pe session + ownership verify karke stream karta hai. Access revocable, auditable, candidate-scoped. Authorization download-ke-time pe hoti hai, upload-pe-ek-baar nahi.
+**Sample Answer:** The raw Blob URL is never exposed — it stays only in the database. The employer clicks `/api/resumes/[applicationId]`, a Route Handler that checks the session (employer?) and ownership (does this application belong to *their* job?), and only then proxies the file from Blob to the browser. The candidate controls who downloads, when; revocation is as simple as removing access. Upload-time validation + download-time authorization — that's the full model.
 
 </details>
 
-4. `put()` call try-catch mein hai par DB insert ka error alag handle hota hai — agar Blob succeed hua par DB insert P2002 se fail hua, kya bacha hoga storage mein? Acceptable hai?
+4. The apply action uploads to Blob first, *then* inserts the row — if the insert fails (e.g. P2002), an orphan file is left in storage. Is that acceptable?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Orphan blob bachega — storage pe file, DB mein record nahi. Acceptable-ish trade-off: rare case, harmless (koi reference nahi, koi access nahi), cleanup cron se ho sakta hai. Ulta order worse hota (DB pehle → upload fail = broken resumeUrl pointing nowhere). Rule: side-effect order such that most-likely-to-fail-cheap thing first; orphan cleanup strategy document karo.
+**Sample Answer:** Acceptable, yes — here's why. The alternative (insert first, upload after) leaves a `resumeUrl` pointing to nothing if the upload fails — a broken reference that's harder to repair. An orphan Blob file costs pennies and is invisible (no DB reference, no access path). The rule: do the step most likely to fail and cheapest to skip *last*-ish, but keep references intact. An orphan-file cleanup job (a one-liner `npx` script) resolves it; a broken reference would require a migration.
 
 </details>
 
-5. `pending` state mein submit button disable — par file upload slow ho toh user refresh maar de? Kya hoga, kya hota chahiye?
+5. Why doesn't the apply success redirect to `/applications` (refresh the list) — instead, the form swaps to a success message?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Refresh = request cancel; state unknown — ho sakta hai blob upload ho chuka ho par insert nahi (ya dono adhoore). Retry safe hai kyunki duplicate P2002 catch hai (worst case friendly error). Behtar UX: optimistic lock/pending-record ya client-side upload-progress. Minimum bar jo humne rakha: operations idempotent-ish + errors graceful — data corruption nahi, worst case orphan file.
+**Sample Answer:** Because the AI scoring hasn't finished — redirecting to `/applications` would show the pulsing "Scoring..." state and the user might think it broke. The inline success card sets expectations ("AI is scoring — check back in a bit") while still in context. C.10's `revalidatePath("/applications")` then ensures the list is fresh next time the user navigates there. UX goal: reassure in-place, not navigate-and-hope.
 
 </details>
 
 ---
 
-Application DB mein hai, resume Blob pe — par woh "Scoring..." pulse abhi hamesha pulsing rahegi. C.9 mein capstone ka signature feature: **AI Match Score** — apply ke turant baad Gemini resume-content aur job-description ko compare karega, score + reasons DB mein save karega. Structured JSON output maangna, prompt-design scoring ke liye, aur AI-fail-hone pe graceful degradation — teen production lessons.
+The full candidate loop is closed: a candidate applies, uploads their resume, gets a score, and tracks status. The employer side sees those applicants with scores, ranked. But "Scoring..." pulses forever until the AI actually runs — and that's the capstone's signature feature. **C.9** adds the AI match score: on the moment of applying, Gemini reads the uploaded PDF resume and compares it against the job description — returning a 0–100 score plus a human-readable reason, all written back to the application row.
+
+We'll explore this in detail in the next topic.

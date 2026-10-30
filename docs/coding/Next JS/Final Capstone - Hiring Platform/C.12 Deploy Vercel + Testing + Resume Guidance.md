@@ -1,76 +1,76 @@
-C.11 ke baad Hiring Platform secure hai — rate limits lagee hain, audit table saaf hai, error hierarchy complete hai. Ab sirf ek kaam bacha hai jo is journey ko "project banaya" se "**product ship kiya**" mein badalta hai: **deploy**. Aur uske baad woh hissa jiske liye yeh poora capstone design hua tha — ise **resume aur interview** mein dikhana.
+After C.11, the Hiring Platform is secure — rate limits are in place, the audit table is clean, the error hierarchy is complete. Only one thing remains that turns this journey from "project built" to "**product shipped**": **deploy**. And after that, the part this whole capstone was designed for — showing it off on your **resume and in interviews.**
 
-Yeh course ki aakhri file hai. Chalo ise poore style se khatam karte hain.
+This is the last file of the course. Let's see it through to the end.
 
 # Hiring Platform — Part 12: Deploy + Testing + Resume Guidance
 
-## Step 1 — Code GitHub Pe
+## Step 1 — Push Code to GitHub
 
-Vercel git-based deploy karta hai (8.4 yaad hai): push karo → import karo → live. Pehle repo:
+Vercel deploys git-based (remember 8.4): push → import → live. First, the repo:
 
 ```bash
 git init
 git add .
 git commit -m "Hiring Platform - Next.js capstone"
 git branch -M main
-git remote add origin https://github.com/<tumhara-username>/hiring-platform.git
+git remote add origin https://github.com/<your-username>/hiring-platform.git
 git push -u origin main
 ```
 
-**Commit se pehle ek baar:** `git status` dekho — `.env`, `.env.local` list mein NAHI honi chahiye (C.11 ka check). Secrets kabhi push nahi.
+**Before committing, check once:** `git status` — `.env`, `.env.local` should NOT be listed (C.11's check). Never push secrets.
 
-## Step 2 — Vercel Import + Env Vars
+## Step 2 — Vercel Import + Environment Variables
 
-1. vercel.com → GitHub se login → **Add New Project** → repo select → Import
-2. Framework auto-detect (Next.js) — build settings default theek
-3. **Environment Variables section** — yahan C.11 wali poori inventory dobara banegi, ab dashboard mein:
+1. vercel.com → Sign in with GitHub → **Add New Project** → select your repo → Import
+2. Framework is auto-detected (Next.js) — default build settings are fine
+3. **Environment Variables section** — rebuild the full C.11 inventory here, in the dashboard:
 
-| Var | Value kahan se |
+| Var | Value source |
 |---|---|
-| `DATABASE_URL` | Neon console — production project ka connection string |
-| `AUTH_SECRET` | Wahi jo local pe hai (ya naya generate) |
-| `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET` | Wahi values |
-| `GEMINI_API_KEY` | Wahi key (free tier prod pe bhi chalega) |
-| `STRIPE_SECRET_KEY` | Test-mode key (`sk_test_...`) — demo safe rahegi |
-| `STRIPE_WEBHOOK_SECRET` | Abhi placeholder — Step 3 mein prod webhook banega |
-| `BLOB_READ_WRITE_TOKEN` | Vercel dashboard → Storage tab → tumhara Blob store → **Connect to Project** (token auto-inject!) |
+| `DATABASE_URL` | Neon console — the production project's connection string |
+| `AUTH_SECRET` | Same as local (or generate a new one) |
+| `AUTH_GITHUB_ID` / `AUTH_GITHUB_SECRET` | Same values |
+| `GEMINI_API_KEY` | Same key (free tier works in prod too) |
+| `STRIPE_SECRET_KEY` | Test-mode key (`sk_test_...`) — keeps the demo safe |
+| `STRIPE_WEBHOOK_SECRET` | Placeholder for now — the production webhook is created in Step 3 |
+| `BLOB_READ_WRITE_TOKEN` | Vercel dashboard → Storage tab → your Blob store → **Connect to Project** (the token auto-injects!) |
 
-Deploy button → ~2 min build → live URL (`hiring-platform.vercel.app` jaisa).
+Click Deploy → ~2 min build → live URL (`hiring-platform.vercel.app`-style).
 
-### Step 2.5 — External Services Ko Naye URL Se Batana (Sabse Zyada Log Yahan Phaste Hain)
+### Step 2.5 — Point External Services at the New URL (Where Most People Get Stuck)
 
-Deploy hone ke baad app "chal rahi" dikhegi, par teen cheezein **localhost URL pe abhi tiki hain** — production flow tab tak tootega:
+After deploy, the app "runs" visually, but three things are still sitting on **localhost URLs** — the production flow breaks until they're updated:
 
 **GitHub OAuth App:**
 - github.com → Settings → Developer settings → OAuth App
-- Callback URL mein **doosri line add** karo: `https://<tumhara-app>.vercel.app/api/auth/callback/github`
-- (Localhost wali bhi rehne do — dono URLs allowed)
+- Add another callback URL line: `https://<your-app>.vercel.app/api/auth/callback/github`
+- (Leave the localhost one too — both URLs allowed)
 
 **Stripe Webhook:**
 - Dashboard → Developers → Webhooks → Add endpoint
-- URL: `https://<tumhara-app>.vercel.app/api/stripe/webhook`
+- URL: `https://<your-app>.vercel.app/api/stripe/webhook`
 - Event: `checkout.session.completed`
-- Nayi signing secret (`whsec_...`) copy → **Vercel env vars mein `STRIPE_WEBHOOK_SECRET` update** → Redeploy (env change deploy ke baad hi active hota)
+- Copy the new signing secret (`whsec_...`) → **update `STRIPE_WEBHOOK_SECRET` in Vercel env vars** → Redeploy (env changes are only active after a redeploy)
 
-> **Yaad raho ye pattern:** har external service jo hamare callback/webhook pe call karti hai (GitHub, Stripe), use production URL batana zaroori hai. Local dev mein CLI-tunnel/localhost tha; prod mein asli domain. Yeh "deploy ho gaya par login nahi hota" wala classic bug isi se hota hai.
+> **Remember this pattern:** every external service that calls our callback/webhook (GitHub, Stripe) must be told the production URL. Local dev used CLI-tunnel/localhost; production uses the real domain. This is the classic "deployed but login doesn't work" bug.
 
 ## Step 3 — Production Integration Test Run
 
-Live URL pe poora user-journey ek baar end-to-end — kyunki production environment alag hota hai (env vars, domains, real network):
+Run the full user journey end-to-end on the live URL — because the production environment is different (env vars, domains, real network):
 
-1. Home load — jobs dikh rahi (Neon connection ✓)
-2. Search/filter chalao (dynamic rendering prod pe ✓)
-3. Job detail kholo — title meta tags view-source mein (ISR prod ✓)
+1. Load home — jobs appear (Neon connection ✓)
+2. Run search/filter (dynamic rendering in prod ✓)
+3. Open a job detail — meta tags in view-source (ISR in prod ✓)
 4. GitHub login → onboarding → employer setup (OAuth callback fix ✓)
-5. Job post + AI generate (Gemini prod se ✓)
-6. Boost → Stripe test card 4242... → featured badge (webhook prod URL ✓)
-7. Doosre browser se candidate bano → apply + PDF upload → score aaya? (Blob prod token ✓)
-8. Employer → applicants page → ranked list + resume open (proxy route prod ✓)
-9. `/jobs/nonsense` → custom 404; koi crash nahi (error hierarchy ✓)
+5. Post a job + AI generate (Gemini from prod ✓)
+6. Boost → Stripe test card 4242... → featured badge (webhook on prod URL ✓)
+7. In another browser, become a candidate → apply + PDF upload → score appears? (Blob prod token ✓)
+8. Employer → applicants page → ranked list + resume opens (proxy route in prod ✓)
+9. `/jobs/nonsense` → custom 404; no crashes (error hierarchy ✓)
 
-Sab green = **production-grade product shipped.** 🚀
+All green = **a production-grade product shipped.** 🚀
 
-### Testing Summary Table — Poore Capstone Ka Matrix
+### Testing Summary Table — The Whole Capstone Matrix
 
 | Feature | Happy path | Edge/guard |
 |---|---|---|
@@ -78,41 +78,41 @@ Sab green = **production-grade product shipped.** 🚀
 | Detail (C.4) | Slug render + SEO tags | Bad slug → 404; closed job → banner |
 | Auth (C.5) | Login → onboarding → role sections | Guest redirect; cross-role block |
 | Post job (C.6) | AI draft → publish → listed | Validation errors; slug collision suffix |
-| Manage (C.7) | Toggle/delete/boost | Ownership 404; apps-wali delete block; double-pay guard |
+| Manage (C.7) | Toggle/delete/boost | Ownership 404; apps-stuck delete block; double-pay guard |
 | Apply (C.8) | Upload → submit → success | File type/size; duplicate guard; closed-job block |
 | Score (C.9) | Score + reason stored/shown | AI fail → application survives, null score |
 | Applicants (C.10) | Ranked list + stats stream | Cross-employer 404; unscored nulls-last |
 | Security (C.11) | Rate limits fire politely | 401/404 layers; secrets server-only |
 
-Har row C-file se mapped hai — yeh table README mein bhi jaata hai (agle section).
+Each row maps to a C-file — this table goes into the README too (next section).
 
-## Step 4 — Course Recap: React Se Yahan Tak Ka Safar
+## Step 4 — Course Recap: The Journey from React to Here
 
-Ek nazar mein poora course — kyunki capstone ne sab kuch use kiya:
+All at once — because the capstone used everything:
 
-| Batch | Seekha | Capstone mein |
+| Batch | Learned | In the capstone |
 |---|---|---|
-| Module 0 | Rendering mental models (RSC, hydration, caching) | Har page ka strategy decision isi pe based |
-| 1 | Routing, layouts, dynamic routes, states | Saare pages + `[slug]` + loading/error/not-found |
-| 2 | SC reads, CC split, ISR, SEO metadata | Listings/detail pages ka data layer |
-| 3 | Route Handlers vs Server Actions | SA-first mutations; Route Handler sirf webhook ke liye |
+| Module 0 | Rendering mental models (RSC, hydration, caching) | Every page's strategy decision |
+| 1 | Routing, layouts, dynamic routes, states | All pages + `[slug]` + loading/error/not-found |
+| 2 | SC reads, CC split, ISR, SEO metadata | Listings + detail data layer |
+| 3 | Route Handlers vs Server Actions | SA-first mutations; Route Handler only for webhook |
 | 4 | Proxy deep-dive | Rate limiting layer (per-IP API throttle) |
 | 5 | Auth manual → Auth.js | OAuth + roles + protected groups |
-| 6 | DBs: Mongo/SQL/Prisma + relations + indexes | Prisma schema design jo poora app carry karta hai |
+| 6 | DBs: Mongo/SQL/Prisma + relations + indexes | Prisma schema that carries the whole app |
 | 7 | Images/fonts/streaming/modals | Logos + Suspense stats |
-| 8 | Env/security/deploy | Aaj ka audit + live deployment |
-| Capstone | Sab kuch ek saath | **Yeh jo tumne banaya** |
+| 8 | Env/security/deploy | Today's audit + live deployment |
+| Capstone | Everything together | **What you built** |
 
-Aur "Manual → Better" philosophy har batch mein thi — problem feel karo, phir solution samjho. Wohi tumhari sabse badi seekh hai: tools nahi, **reasoning**.
+And the "Manual → Better" philosophy was in every batch — feel the problem, then the solution. That's the biggest lesson you take: not tools, but **reasoning.**
 
-## Step 5 — Resume-Worthy Banana (Asli Finale)
+## Step 5 — Make It Resume-Worthy (The Real Finale)
 
-Project strong hai — par recruiter ko tabhi pata chalega jab presentation strong hogi. Teen deliverables:
+A strong project only matters if the presentation is strong. Three deliverables:
 
 ### 5a — GitHub README Checklist
 
 ```
-# HireBoard — AI-Powered Hiring Platform        ← naam do, generic mat rakho
+# HireBoard — AI-Powered Hiring Platform        ← give it a name, generic is fine
 
 Live demo: https://... · LinkedIn post link
 
@@ -126,13 +126,13 @@ Live demo: https://... · LinkedIn post link
 ## Stack badges
 Next.js 16 · TypeScript · Prisma · PostgreSQL(Neon) · Auth.js · Gemini API · Stripe · Tailwind
 
-## Architecture (ek simple diagram — even ASCII/excalidraw)
+## Architecture (one simple diagram — ASCII/excalidraw even)
 Browser → RSC pages → Server Actions → Prisma/Neon
-                     ↘ Gemini / Blob / Stripe(webhook→route handler)
+                      ↘ Gemini / Blob / Stripe (webhook→route handler)
 
-## Key decisions (interview bait — deliberately likho)
+## Key decisions (write these deliberately — interview bait)
 - Server Actions over REST for mutations; Route Handler only for Stripe webhook
-- Ownership enforced at query level (`company.ownerId` filters), not just UI
+- Ownership enforced at query level (`company.ownerId` filters), not UI
 - Scores nullable by design — AI failure never loses an application
 - In-memory rate limits documented as approximation; Redis upgrade path noted
 
@@ -140,98 +140,98 @@ Browser → RSC pages → Server Actions → Prisma/Neon
 .env.example + install/migrate/seed commands
 ```
 
-Screenshots 3-4: home, AI generator in action, ranked applicants, Stripe checkout.
+3-4 screenshots: home, AI generator in action, ranked applicants, Stripe checkout.
 
-### 5b — Resume Bullet Points (Copy-Style, Tweak Karke)
+### 5b — Resume Bullet Points (Copy-Style, Tweak as Needed)
 
-- *Built and deployed a production-grade hiring platform (Next.js 16, TypeScript, Prisma/PostgreSQL) featuring AI-powered job-description generation and candidate-match scoring via Gemini API*
+- *Built and deployed a production-grade hiring platform (Next.js 16, TypeScript, Prisma/PostgreSQL) with AI-generated job descriptions and candidate-match scoring via the Gemini API*
 - *Implemented payment monetization with Stripe Checkout and signature-verified webhooks, driving featured-listing purchases end-to-end*
 - *Designed role-based auth (Auth.js/GitHub OAuth) with query-level ownership guards across multi-tenant data, plus layered rate limiting (in-action per-user, proxy per-IP)*
 - *Optimized delivery with ISR, streaming Suspense dashboards, and next/image pipelines; security-audited and deployed on Vercel*
 
-Chaaron milke batate hain: full-stack, payments, AI, auth, performance, security — six signals, four lines.
+All four together: full-stack, payments, AI, auth, performance, security — six signals, four lines.
 
-### 5c — Interview Talking Points (Har Bullet Ke Peeche Ki Kahani)
+### 5c — Interview Talking Points (The Story Behind Each Bullet)
 
-Interviewer poochega *"is project mein sabse interesting problem kya thi?"* — ready jawab:
+An interviewer asks: *"what was the most interesting problem in this project?"* — have the answer ready:
 
-1. **"Why Server Actions over REST?"** — mutations internal the; webhook exception explain karo (external caller). Trade-off bolna aata hai toh senior lagte ho.
-2. **"How does payment state stay trustworthy?"** — success_url trust nahi; signature-verified webhook + idempotent handler. CVE-style thinking impress karti hai.
-3. **"AI fail hone pe kya hota hai?"** — nullable-score design: insert-first ordering, graceful degradation. Reliability mindset dikhta hai.
+1. **"Why Server Actions over REST?"** — mutations are internal; explain the webhook exception (external caller). Knowing trade-offs makes you sound senior.
+2. **"How does payment state stay trustworthy?"** — didn't trust the success URL; signature-verified webhook + idempotent handler. CVE-style thinking impresses.
+3. **"What happens when AI fails?"** — nullable-score design: insert-first ordering, graceful degradation. Reliability mindset.
 4. **"Multi-tenancy security?"** — query-level ownership filters + 404-not-403 enumeration defense.
-5. **"Rate limits serverless pe?"** — in-memory approximation honestly named, Redis upgrade path ready. Honesty > hand-waving.
+5. **"Rate limits in serverless?"** — in-memory approximation named honestly, Redis upgrade path ready. Honesty beats hand-waving.
 
-Pattern notice karo: har jawab mein **decision + alternative rejected + why**. Yehi Master Prompt wali "trade-off line" soch ab interview language ban gayi.
+Notice the pattern in every answer: **decision + rejected alternative + why.** That "trade-off line" is now interview language.
 
-## Khud Try Karo — Aage Ka Roadmap (Extensions)
+## Try It Yourself — The Roadmap Ahead (Extensions)
 
-Capstone khatam, playground shuru — in extensions se seekhna continue hota:
+The capstone ends, the playground begins — keep learning with these extensions:
 
-1. **Email notifications** (Resend) — apply hone pe employer ko mail; webhook-style async flow
-2. **Semantic job search** — embeddings + vector similarity; "React developer" search "frontend engineer" job ko pakad le
-3. **Employer subscriptions** — one-time boost se recurring plan (Stripe subscriptions + customer portal)
-4. **Application status pipeline** — PENDING → REVIEWED → INTERVIEW → OFFER, timeline UI ke saath
-5. **Tests** — Vitest unit (rate-limiter logic perfect candidate!) + Playwright e2e apply-flow
-6. **Custom domain** — Vercel domains section; DNS basics practical mein
+1. **Email notifications** (Resend) — employer gets an email when someone applies; webhook-style async flow
+2. **Semantic job search** — embeddings + vector similarity; "React developer" also matches "frontend engineer" jobs
+3. **Employer subscriptions** — one-time boost → recurring plan (Stripe subscriptions + customer portal)
+4. **Application status pipeline** — PENDING → REVIEWED → INTERVIEW → OFFER, with a timeline UI
+5. **Tests** — Vitest unit (rate-limiter logic is a great candidate!) + Playwright e2e for the apply flow
+6. **Custom domain** — Vercel's Domains section; DNS basics in practice
 
 ## Nutshell
 
-Ship = **git push → Vercel import → env vars transfer → external callbacks update** (OAuth + Stripe webhook production URLs — classic-breakage point) → integration run. Production-grade proof = testing matrix (har feature ka happy + guard path). Career-grade proof = **README with decisions**, **resume bullets with signals** (full-stack/payments/AI/auth/perf/security), aur **trade-off-based interview answers**. Course ka core promise yahin pura hua: concepts se reasoning tak, reasoning se product tak.
+Ship = **git push → Vercel import → transfer env vars → update external callbacks** (OAuth + Stripe webhook production URLs — the classic breakage point) → integration test run. Production-grade proof = the testing matrix (every feature's happy path + guard). Career-grade proof = **a README with key decisions**, **resume bullets with signals** (full-stack / payments / AI / auth / perf / security), and **trade-off-based interview answers**. The course's core promise is fulfilled here: from concepts to reasoning, from reasoning to product.
 
 ## What It Is NOT
 
-- **Deployed project = "ab bas khatam" nahi.** Live app maintenance mangti hai: dependency updates, quota monitoring, Neon/Blob usage checks. Ship ek milestone hai, ownership start hoti hai.
-- **Resume bullets = "exaggeration license" nahi.** Har claim interview mein defend honi chahiye — isliye bullets wahi jo tumne khud banaya/debug kiya. Jo samajh nahi aaya woh resume pe mat daalo — interview mein wahi pakda jayega.
-- **Testing matrix = "100% coverage" nahi.** Manual happy+edge paths cover hue hain; automated suite agla level hai (extension #5). Matrix documentation-of-confidence hai, certificate nahi.
-- **AI-generated README = "tumhari kahani" nahi.** Structure template se lo, par decisions/apni galtiyan apne words mein likho — authenticity interviews mein mehsoos hoti hai.
-- **Course khatam = "seekhna khatam" nahi.** Extensions list intentionally chhooti hai kyunki real growth ab khud choose karne se aati hai — woh skill bhi seekhi hai is course mein.
+- **A deployed project = "done for good" is NOT true.** A live app needs maintenance: dependency updates, quota monitoring, Neon/Blob usage checks. Shipping is a milestone, not the end of ownership.
+- **Resume bullets = "license to exaggerate" is NOT true.** Every claim must be defensible in the interview — only put what you built/debugged yourself. If you don't understand it, don't list it — you'll get caught.
+- **Testing matrix = "100% coverage" is NOT true.** It covers the happy paths + edge guards manually. An automated suite is the next level (extension #5). The matrix documents confidence, it doesn't certify.
+- **An AI-generated README = "your story" is NOT true.** Take the structure, but write decisions and your own bugs/errors in your own words — authenticity shows in interviews.
+- **Course complete = "learning is over" is NOT true.** The extensions list is intentionally short because real growth comes from choosing your own path — and that skill was taught here too.
 
 ---
 
-**In Your Own Words**
+## In Your Own Words
 
-1. Deploy ke baad login toota toh sabse pehla suspect kya — aur fix kis file/dashboard mein?
+1. After deploy, login breaks — what's the first suspect, and where do you fix it?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** GitHub OAuth App ka callback URL — abhi bhi `localhost:3000/api/auth/callback/github` pe tika hoga. Fix GitHub Developer settings mein: production domain ka callback add karo. Pattern: har external-service callback/webhook (GitHub, Stripe) apne config mein hamara URL hold karta hai — code deploy hona unhe update nahi karta.
+**Sample Answer:** The GitHub OAuth App's callback URL — it's still on `localhost:3000/api/auth/callback/github`. Fix it in GitHub's Developer settings: add the production domain's callback. Pattern: every external service (GitHub, Stripe) holds our URL in *their* config — deploying the code doesn't update their side.
 
 </details>
 
-2. Testing matrix mein "happy path + edge/guard" columns kyun — sirf happy paths likhne se kya chhoot raha?
+2. Why track both "happy path" and "edge/guard" columns in the testing matrix — what's lost with happy paths alone?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Happy paths prove karte hain features kaam karti hain; guards prove karte hain galat istemal se bachti hain. Recruiters/users abuse se takraate hain, demos se nahi. Guard-column = security/reliability thinking ka visible evidence — aur regression-time pe yaad dilata hai ki invisible behavior bhi preserve karna hai.
+**Sample Answer:** Happy paths prove features work; guards prove you survive misuse. Users/recruiters hit edge cases, not demos. The guard column is visible evidence of security/reliability thinking — and it's a reminder during regression that invisible behavior must be preserved too.
 
 </details>
 
-3. Resume bullet mein "signature-verified webhooks" likha — interviewer "explain karo" bole toh tumhara 30-second answer kya hoga?
+3. You wrote "signature-verified webhooks" on your resume — if an interviewer says "explain," what's your 30-second answer?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** "Payment confirmation client-controlled success URL se lena unsafe tha, toh state-change sirf Stripe ke authenticated webhook se hota hai — raw body pe HMAC signature verify hota hai constructEvent se, metadata se jobId milti hai, aur handler idempotent hai retry-safety ke liye." Ek breath mein: threat, mechanism, data-flow, robustness — chaar signal.
+**Sample Answer:** "Payment confirmation wasn't trusted from the client-controlled success URL; state changes only happen on Stripe's authenticated webhook — the raw body is HMAC-verified with `constructEvent`, the jobId comes from metadata, and the handler is idempotent for retry-safety." In one breath: threat, mechanism, data-flow, robustness — four signals.
 
 </details>
 
-4. README mein "key decisions" section alag se kyun — features list kaafi nahi?
+4. Why a separate "key decisions" section in the README — isn't a features list enough?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Features batate hain KYA banaya; decisions batate hain KAISE SOCHA. Interviewer/features se differentiate nahi hote (sabke paas CRUD hai), judgment se hota hai. Decisions-section reviewer ko batata hai ki candidate alternatives weigh kar sakta hai — jo senior-signal hai chahe junior title ho.
+**Sample Answer:** Features say *what* you built; decisions say *how you thought*. Interviewers don't differentiate on features (everyone has CRUD) but on judgment. A decisions section shows the reviewer you weigh alternatives — the senior signal, regardless of title.
 
 </details>
 
-5. Extensions list mein semantic search pehle kyun rakha vs subscriptions — agar goal "resume impact maximize" ho?
+5. Why is semantic search first on the extensions list ahead of subscriptions — if the goal is maximizing resume impact?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Semantic search = AI-story ka natural extension (embeddings/vectors — 2026 keyword-dense area, already Gemini context hai). Subscriptions valuable hai par common-pattern territory (docs-follow exercise). Impact-per-effort ranking: jo skill-market mein scarce ho aur existing narrative extend kare woh pehle. Prioritization bhi ek interview-skill hai — list order deliberate hai.
+**Sample Answer:** Semantic search extends the AI narrative naturally (embeddings/vectors — a keyword-dense skill in 2026, already in the Gemini context). Subscriptions are valuable but common-pattern territory (follow-the-docs). Ranking by impact-per-effort: lead with what's both scarce in the market and a natural extension of your existing story. Prioritization itself is an interview skill — the list order is deliberate.
 
 </details>
 
@@ -239,8 +239,8 @@ Ship = **git push → Vercel import → env vars transfer → external callbacks
 
 ## Course Complete 🎓
 
-Module 0 mein humne poocha tha — *Next.js akhir React se alag kaise hai?* Aaj tumhare paas jawab sirf theory mein nahi, ek **live product** mein hai: routing se lekar streaming tak, cookies se lekar crypto-verified webhooks tak, dummy data se lekar Neon Postgres tak — sab kuch ek hiring platform mein jiska har file, har guard, har trade-off tumne khud socha.
+In Module 0, we asked — *what makes Next.js different from React?* Today you have the answer, not just in theory but in a **live product**: from routing through streaming, from cookies through crypto-verified webhooks, from dummy data through Neon Postgres — every line, every guard, every trade-off thought through by you.
 
-Agla step tumhara hai: extensions list uthao, ya apna agla idea. Patterns tumhare paas hain — **SOCH → CONCEPT → CODE → TEST** — ab inko naye problems pe chalao.
+The next step is yours: take the extensions list, or your own next idea. The patterns are in your hands — **THINK → CONCEPT → CODE → TEST** — apply them to new problems.
 
-Milte hain agle project mein. 🚀
+See you in the next project. 🚀

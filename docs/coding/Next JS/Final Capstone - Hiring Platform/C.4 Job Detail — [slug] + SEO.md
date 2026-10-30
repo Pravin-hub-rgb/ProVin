@@ -1,24 +1,24 @@
-Home page ready hai — browse, search, filter sab chal raha hai. Par har card `/jobs/frontend-developer-at-acme` jaise URL pe le jaata hai — aur woh page exist hi nahi karta. Click karo → 404. Aaj woh fix karenge: **job detail page**.
+The home page is ready — browsing, searching, filtering all work. But every card links to `/jobs/frontend-developer-at-acme`, a page that doesn't exist yet. Click the link → 404. Fix that now: the **job detail page**.
 
-Yeh file teen kaam karti hai jo poore course mein alag-alag seekhi thi:
-1. **Dynamic route `[slug]`** — ek file, hazaar URLs (Batch 1 ka blog project isi pe bana tha)
-2. **`generateMetadata`** — per-job SEO tags (2.4) — job board ke liye yeh feature nahi, **survival** hai: Google se traffic aata hai
-3. **ISR (`revalidate`)** — fast static page jo khud refresh hota rahe (0.6 ka concept finally production mein)
+This file combines three concepts learned separately throughout the course:
+1. **Dynamic routes `[slug]`** — one file, thousands of URLs (Batch 1's blog project was built on this).
+2. **`generateMetadata`** — per-job SEO tags (2.4) — for a job board, this isn't a feature, it's **survival**: the traffic comes from Google.
+3. **ISR (`revalidate`)** — a fast static page that refreshes itself (0.6's concept, finally in production).
 
 # Hiring Platform — Part 4: Job Detail Page
 
-## Stage 1 — Route + Static UI
+## Stage 1 — Route Setup + Static UI
 
-**Concept:** File-based routing yaad hai (1.1)? `app/jobs/page.tsx` = `/jobs`. Dynamic segment (1.3): folder name square brackets mein — `app/jobs/[slug]/page.tsx` — bracket wala hissa variable ban jaata hai. `/jobs/frontend-developer-at-acme`, `/jobs/backend-intern-at-acme` — dono isi ek file se render honge, slug value prop mein milegi.
+**Concept:** File-based routing (1.1)? `app/jobs/page.tsx` = `/jobs`. Dynamic segment (1.3): the folder name in square brackets — `app/jobs/[slug]/page.tsx` — the bracketed part becomes a variable. `/jobs/frontend-developer-at-acme`, `/jobs/backend-intern-at-acme` — both render from this one file, the slug value comes through the props.
 
-**File:** `app/jobs/[slug]/page.tsx` — pehle hardcoded ek job ke saath design dekho:
+**File:** `app/jobs/[slug]/page.tsx` — start with one hardcoded job to get the layout:
 
 ```tsx
 // app/jobs/[slug]/page.tsx
 const job = {
   title: "Frontend Developer",
   description:
-    "Acme Corp ko React developer chahiye jo modern web apps banaye. Aap Next.js components, state management aur API integration handle karoge.",
+    "Acme Corp needs a React developer to build modern web apps. You'll own Next.js components, state management, and API integration.",
   location: "Remote (India)",
   type: "FULL_TIME",
   salaryMin: 800000,
@@ -36,7 +36,7 @@ export default function JobDetailPage() {
   return (
     <main className="mx-auto max-w-3xl p-8">
       <div className="flex items-center gap-4 mb-6">
-        {/* Logo — abhi plain img, thodi der mein next/image */}
+        {/* Logo — plain img for now, switch to next/image shortly */}
         <img src={job.company.logoUrl} alt="" className="w-16 h-16 rounded" />
         <div>
           <h1 className="text-2xl font-bold">{job.title}</h1>
@@ -91,15 +91,15 @@ export default function JobDetailPage() {
 
 Design decisions:
 
-- **`whitespace-pre-line`** — description mein agar employer ne line breaks likhe hon (`\n`) toh render ho; bina iske sab ek paragraph ban jaata
-- **`job.skills.split(",").map(...)`** — comma-separated string ko chips mein todna. `.trim()` zaroori — `"React, TypeScript"` split karne pe doosra item `" TypeScript"` (leading space ke saath) hota hai
-- **Apply button abhi dummy href** — C.8 mein real route banega
+- **`whitespace-pre-line`** — if the employer wrote line breaks (`\n`) in the description, this renders them; without it the whole thing collapses into one paragraph.
+- **`job.skills.split(",").map(...)`** — split the comma-separated string into chips. `.trim()` matters — `"React, TypeScript"` splits to the second item `" TypeScript"` (with a leading space).
+- **The Apply button is a dummy href for now** — the real route is built in C.8.
 
-**TEST:** `localhost:3000/jobs/kuch-bhi` — same hardcoded page har URL pe dikhega. Kyunki abhi slug padha hi nahi. Ab asli data + slug.
+**TEST:** `localhost:3000/jobs/anything` — the same hardcoded page renders for every URL (the slug isn't read yet).
 
-## Stage 2 — Params Se Real Job Nikaalna
+## Stage 2 — Fetching the Real Job from Params
 
-**Concept:** `[slug]` folder ki value Next.js page ko `params` prop mein deta hai (1.3). Home ke `searchParams` jaisa hi **Next.js 16 twist**: `params` bhi **Promise** hai — await karna padega:
+**Concept:** The `[slug]` folder's value is passed to the page in the `params` prop (1.3). Same Next.js 16 twist as the home page's `searchParams`: `params` is also a **Promise** — must `await`:
 
 ```tsx
 type JobDetailProps = {
@@ -115,11 +115,11 @@ export default async function JobDetailPage({ params }: JobDetailProps) {   // C
   });                                                                        // NEW
 ```
 
-- **`await params`** — `{ slug }` destructured; URL `/jobs/frontend-developer-at-acme` pe slug = `"frontend-developer-at-acme"`
-- **`findUnique({ where: { slug } })`** — slug pe unique constraint tha (C.2), isliye `findUnique` valid. Email-style lookup.
-- **`include: { company: true }`** — logo + company naam ke liye (home wala hi pattern)
+- **`await params`** — destructured to get `slug`; URL `/jobs/frontend-developer-at-acme` gives slug = `"frontend-developer-at-acme"`.
+- **`findUnique({ where: { slug } })`** — the `@unique` constraint on slug (C.2) is what makes `findUnique` valid. Same idea as an email lookup.
+- **`include: { company: true }`** — the logo + company name (same pattern as the home page).
 
-Ab hardcoded `const job = {...}` block delete karo. JSX same rahega — bas apply button ka href real slug se:
+Remove the hardcoded `const job = {...}` block. The JSX stays the same — only the Apply button's href changes to use the real slug:
 
 ```tsx
 <a
@@ -127,56 +127,56 @@ Ab hardcoded `const job = {...}` block delete karo. JSX same rahega — bas appl
   ...
 ```
 
-### Job Na Mile Toh?
+### What If the Job Doesn't Exist?
 
-URL galat slug ke saath aa sakta hai (`/jobs/nonsense-slug`). `findUnique` tab `null` return karta hai. Null JSX mein pass karo → `Cannot read properties of null` crash. Guard:
+The URL can carry a wrong slug (`/jobs/nonsense-slug`). `findUnique` returns `null` in that case, and passing null to JSX → `Cannot read properties of null` crash. Guard against it:
 
 ```tsx
 import { notFound } from "next/navigation";                                 // NEW
-// ...async function ke andar, findUnique ke turant baad:
+// ...inside the async function, right after findUnique:
 
 if (!job) {                                                                 // NEW
   notFound();                                                               // NEW
 }                                                                           // NEW
 ```
 
-**`notFound()`** — 1.4 ka pattern: execution wahin rok deta hai aur nearest `not-found.tsx` render karta hai. Abhi humare paas default 404 hai — capstone ke end mein (C.11 audit) custom banayenge. Abhi kaafi hai.
+**`notFound()`** — the 1.4 pattern: it halts execution and renders the nearest `not-found.tsx`. Right now there's just the default 404 — a custom one is made at the end (C.11 audit). For now, it's enough.
 
-TypeScript bonus: `notFound()` ka return type `never` hai — TS samajh jaata hai iske baad `job` non-null hai. Baaki JSX mein `job.` pe red squiggles nahi aayenge.
+**TypeScript bonus:** `notFound()`'s return type is `never` — TypeScript now knows that past this point, `job` is non-null. No red squiggles on `job.` in the rest of the JSX.
 
-## Stage 3 — ISR: Fast Page Jo Khud Refresh Ho
+## Stage 3 — ISR: A Fast Page That Refreshes Itself
 
-Ab ek sochne wali sawaal. Is page mein `searchParams`/cookies kuch nahi — sirf `params`. Matlab Next.js ise **Static** render kar sakta hai (build time pe HTML pre-made — 0.x ka model). Par problem: build ke baad nayi job post hui toh?
+A question to think through. This page doesn't use `searchParams` or cookies — only `params`. That means Next.js **can render this statically** (pre-build the HTML at build time — Module 0's model). But the problem: after a build, a new job is posted — what then?
 
-Options the:
+The options:
 
-| Option | Kya hota | Problem |
+| Option | What it does | Problem |
 |---|---|---|
-| Poora Dynamic force karo | Har request pe DB query | Slow-ish, DB load — jabki job detail rarely badalti |
-| Build-time static (default) | Ek hi baar query | Nayi jobs kabhi nahi dikhti — deal-breaker |
-| **ISR (`revalidate`)** | Static HTML cache, X seconds baad auto-refresh | Best of both — fast + fresh-enough |
+| Force fully dynamic | DB query on every request | A bit slower, DB load — when a job detail rarely changes |
+| Build-time static (default) | Query once at build time | New jobs never appear — a dealbreaker |
+| **ISR (`revalidate`)** | Cache the static HTML, auto-refresh after N seconds | Best of both — fast + fresh-enough |
 
-Job detail **rarely changes, heavily viewed** hota hai — ISR iska textbook use-case hai (0.6 ka theory ab production mein):
+A job detail **is rarely changed but heavily viewed** — ISR is its textbook use case (0.6's theory, now in production):
 
 ```tsx
-// app/jobs/[slug]/page.tsx — component ke bahar, top-level
+// app/jobs/[slug]/page.tsx — at the top level, outside the component
 export const revalidate = 300;                                              // NEW
 ```
 
-Ek line. Matlab: page pehli request pe render+cache hoga, agle 5 minute ke visitors ko cached HTML instant milega, 300s baad pehli request background mein fresh render trigger karegi (stale dikha ke refresh — stale-while-revalidate). Featured flag Stripe webhook se badle (C.7) toh bhi max 5 min mein update dikhega — acceptable.
+One line. It means: the first request renders + caches, the next 5 minutes every visitor gets cached HTML instantly, and after 300 seconds the first request triggers a background refresh (stale-while-revalidate — show stale, refresh in background). If the featured flag changes via the Stripe webhook (C.7), it takes at most 5 minutes to update — acceptable.
 
-> **Connection:** Home page dynamic tha (searchParams), detail page ISR hai — same app, per-route strategy. Yehi App Router ka selling point tha Module 0 se: *har route apni rendering strategy choose karta hai.*
+> **Connection:** The home page is dynamic (because of `searchParams`), the detail page is ISR — all within the same app. This is App Router's core selling point from Module 0: **every route can choose its own rendering strategy.**
 
 ## Stage 4 — generateMetadata: Per-Job SEO
 
-**Problem:** Abhi browser tab mein har job ke liye same title dikhta hai. Aur Google ke liye bhi — `<title>` fixed hai, description generic. Shared listing Twitter/WhatsApp pe paste karo — preview card bland.
+**Problem:** The browser tab shows the same generic title for every job. Google sees the same — `<title>` is fixed, description is generic. Paste the link on WhatsApp/Twitter — the preview card is bland.
 
-**Concept (2.4):** Static pages ke liye `export const metadata` object hota hai. Par hamara title **per-job** hai — function chahiye jo job dekh ke metadata banaye. Woh hai `generateMetadata` — params receive karta hai (page jaisa hi), Metadata object return karta hai, Next.js `<head>` mein daal deta hai:
+**Concept (2.4):** Static pages use `export const metadata` — an object. But our title is **per-job** — a function is needed that reads the job and builds the metadata. That's `generateMetadata` — it receives `params` (just like the page component), returns a `Metadata` object, and Next.js injects it into the `<head>`:
 
 ```tsx
 import type { Metadata } from "next";                                       // NEW
 
-// ...revalidate export ke baad:
+// ...after the revalidate export:
 
 export async function generateMetadata(                                     // NEW
   { params }: JobDetailProps
@@ -186,9 +186,9 @@ export async function generateMetadata(                                     // N
     where: { slug },                                                        // NEW
     include: { company: true },                                             // NEW
   });                                                                       // NEW
-                                                                            // NEW
+
   if (!job) return { title: "Job not found" };                              // NEW
-                                                                            // NEW
+
   return {                                                                  // NEW
     title: `${job.title} at ${job.company.name}`,                           // NEW
     description: job.description.slice(0, 155),                             // NEW
@@ -200,21 +200,21 @@ export async function generateMetadata(                                     // N
 }                                                                           // NEW
 ```
 
-- **Duplicated lookup** notice karo — `generateMetadata` aur page component dono `findUnique` chalate hain. Haan, do queries lagti hain. Dedupe patterns exist karte hain (React `cache()`), par abhi clarity > cleverness — aur ISR ke saath ye queries rare hi chalti hain (cached HTML).
-- **`slice(0, 155)`** — Google meta description ~160 characters tak dikhata hai; lambi string truncate hogi anyway, hum clean cut karte hain
-- **`openGraph`** — social media preview cards (WhatsApp/Twitter share) isi se bante hain
-- **`if (!job)` guard yahan bhi** — warna `job.company.name` pe null crash metadata generation mein
+- **Notice the duplicated lookup** — both `generateMetadata` and the page component run `findUnique`. Yes, two queries. Deduplication patterns exist (React's `cache()`), but for now clarity > cleverness — and with ISR, these queries are infrequent (cached HTML).
+- **`slice(0, 155)`** — Google displays meta descriptions around 160 chars; a longer string gets truncated anyway, so it's cut cleanly here.
+- **`openGraph`** — social preview cards (WhatsApp/Twitter shares) come from here.
+- **The `if (!job)` guard here too** — otherwise `job.company.name` crashes during metadata generation.
 
-**TEST:** DevTools mein page source dekho (`view-source:`) — `<title>Frontend Developer at Acme Corp</title>` + meta description dikhni chahiye. Alag job kholo — alag title. Yehi per-page SEO hai.
+**TEST:** In DevTools, view the page source (`view-source:`) — you should see `<title>Frontend Developer at Acme Corp</title>` + a meta description. Open a different job — a different title. That's per-page SEO.
 
 ## Stage 5 — Company Logo with next/image
 
-Abhi `<img>` hai — Batch 7 ka pehla lesson tha ki iske problems kya the (no optimization, no lazy loading, layout shift). Replace karo:
+It's currently a plain `<img>` — Batch 7's opening lesson was about the problems with that (no optimization, no lazy loading, layout shift). Replace it:
 
 ```tsx
 import Image from "next/image";                                             // NEW
 
-// JSX mein img tag ki jagah:
+// In the JSX, replace the img tag:
 <Image
   src={job.company.logoUrl ?? ""}
   alt={`${job.company.name} logo`}
@@ -224,13 +224,13 @@ import Image from "next/image";                                             // N
 />
 ```
 
-Save karo → error! Console mein Next.js clearly batayega:
+Save → error! The console says:
 
 ```
 Error: Invalid src prop ... hostname "picsum.photos" is not configured under images in your next.config.ts
 ```
 
-**Error aane do — explain karte hain.** `next/image` optimization server pe hoti hai (7.2) — server sirf allowlisted hosts se images fetch karta hai, warna SSRF-type abuse ho sakti hai (koi apni image URL se tumhare server ko kahin bhi bhejwa sake). Isliye remote host allowlist config mein declare hoti hai — 7.2 wala `remotePatterns`:
+**Let it error — we'll explain.** `next/image` optimization happens server-side (7.2) — the server only fetches from allowlisted hosts; otherwise SSRF-type abuse is possible (someone could make your server fetch from anywhere on the internet). That's why remote hosts must be declared — the `remotePatterns` from 7.2:
 
 **File:** `next.config.ts`
 
@@ -252,79 +252,81 @@ const nextConfig: NextConfig = {
 export default nextConfig;
 ```
 
-Dev server restart karo (config changes hot-reload nahi hote) — logo ab optimized `<img>` se render hoga: proper sizing, lazy load, WebP conversion.
+Restart the dev server (config changes don't hot-reload) — the logo now renders as an optimized `<img>`: correct sizing, lazy load, WebP conversion.
 
-Production thought (C.12 mein deploy karte waqt kaam aayega): real employers ke logos kahan se? Options — upload system (Vercel Blob, jaise resumes C.8) ya SaaS logo APIs (Clearbit etc.). Config mein unka hostname add hota. Pattern same rahega.
+**Production thought** (pays off in C.12 deploy): where do real employers' logos come from? Either an upload system (Vercel Blob, like resumes in C.8) or a logo API (Clearbit etc.). Add that hostname to the config. The pattern stays the same.
 
 ## Full Test Checklist
 
-1. `/jobs/frontend-developer-at-acme` — poori job detail, logo visible
-2. `/jobs/backend-intern-at-acme` — salary section hidden (null guard kaam kar raha)
-3. `/jobs/nonsense` — 404 page (notFound() fire hua)
-4. View-source — per-job title/description meta tags
-5. WhatsApp/Twitter pe URL paste karo (agar public URL ho) — preview card title ke saath (openGraph)
+1. `/jobs/frontend-developer-at-acme` → full detail, logo visible.
+2. `/jobs/backend-intern-at-acme` → salary section hidden (null guard works).
+3. `/jobs/nonsense` → 404 page (`notFound()` fired).
+4. View source → per-job title/description meta tags.
+5. Paste the URL on WhatsApp/Twitter (if public) → preview card with title (openGraph).
 
 ## Nutshell
 
-Job detail = **`[slug]` dynamic route** (1.3 pattern, `params` Promise — Next 16) + `findUnique({ where: { slug } })` + `include company`. Missing job → **`notFound()`** (TS ko bhi non-null pata chal jaata). Rarely-changed + heavily-viewed → **`export const revalidate = 300`** ISR — static speed, auto-refresh. Per-job SEO → **`generateMetadata`** (async, params await, Metadata return — title/description/openGraph). Remote logo → `next/image` + **`remotePatterns` allowlist** in `next.config.ts` (SSRF protection).
+Job detail = **`[slug]` dynamic route** (1.3 pattern — `params` is a Promise, await it, Next 16) + `findUnique({ where: { slug } })` + `include: company`. Missing job → **`notFound()`** (TypeScript also learns it's non-null past that line). Rarely-changed + heavily-viewed → **`export const revalidate = 300`** ISR — static speed, auto-refresh. Per-job SEO → **`generateMetadata`** (async, await params, return a Metadata object: title/description/openGraph). Remote logo → `next/image` + **`remotePatterns` allowlist** in `next.config.ts` (SSRF protection).
 
 ## What It Is NOT
 
-- **`revalidate = 300` = "har 5 minute mein sab users ke liye re-render" nahi.** Cache 5 min tak serve hota raha; expiry ke baad **agle visitor** ko stale content milta hai jabki background mein fresh banta hai. Timer-driven cron nahi, request-triggered refresh hai.
-- **`notFound()` = "return null ka fancy version" nahi.** Woh exception throw karta hai jo rendering rok deta hai aur 404 boundary tak jaata hai. Uske baad ka code execute hi nahi hota — isliye null-guard ka kaam bhi karta hai.
-- **`generateMetadata` = "SEO ranking guarantee" nahi.** Sirf correct tags provide karta hai — raw material. Ranking content quality, backlinks, performance (Core Web Vitals) pe depend karti hai. Humne material diya, promise nahi.
-- **`remotePatterns` = "ek baar ka setup" nahi.** Har naya image-host add hone pe config update + redeploy. Isliye user-generated images ke liye log Blob storage (same-domain URL) prefer karte hain — C.8 resume upload mein wahi hoga.
-- **Do `findUnique` calls (metadata + page) = "bug" nahi.** Intentional simplicity hai; React `cache()` se dedupe ho sakta tha par abhi readability chuni. ISR ke saath cost negligible.
+- **`revalidate = 300` is not "re-render for all users every 5 minutes."** The cache serves until expiry; after expiry the **next visitor** gets stale content while the fresh version generates in the background. Request-triggered, not timer-driven.
+- **`notFound()` is not "a fancy null return."** It throws a special exception that halts rendering and jumps to the 404 boundary. Code after it doesn't execute — which is also what makes the null guard work.
+- **`generateMetadata` is not "an SEO ranking guarantee."** It only supplies the right tags — raw material. Ranking depends on content quality, backlinks, performance (Core Web Vitals). We're providing the material, not a promise.
+- **`remotePatterns` is not "one-time setup."** Every new image host needs a config update + redeploy. That's why user-generated images prefer Blob storage (same-domain URLs, as resumes do in C.8).
+- **The two `findUnique` calls (metadata + page) are not "a bug."** Intentional simplicity; React's `cache()` could deduplicate, but for now readability wins — and with ISR the cost is negligible.
 
 ---
 
 **In Your Own Words**
 
-1. `params` aur `searchParams` — dono Promise props hain, par data source alag kaise?
+1. `params` and `searchParams` — both are Promise props, but what's their data source difference?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `params` URL ka **path** se aata hai (`/jobs/[slug]` mein bracket segment ki actual value) — routing structure decide karti hai. `searchParams` URL ka `?key=value` part se aata hai — optional filters/query. Dono await hote hain (Next 16), par path-based identity vs query-based preference ka fark hai: slug = resource kaunsa, query = usko kaise filter/dekha jaye.
+**Sample Answer:** `params` comes from the URL **path** (`/jobs/[slug]` — the actual bracketed segment). `searchParams` comes from the URL **query string** (`?key=value`). Both are awaited (Next 16), but purpose differs: path-based = which resource (the slug selects a job), query-based = how to view it (filters/search). The slug determines identity; the query filters and views.
 
 </details>
 
-2. Job detail pe `revalidate = 300` chuna, par home dynamic rehne diya — decision ka reasoning kya tha?
+2. Choosing `revalidate = 300` on the detail page but leaving the home page dynamic — what's the reasoning?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Data-change frequency × view-frequency ka equation. Detail page: content rare change (edit/close), heavy views (SEO traffic) → ISR best — cached instant HTML, 5-min freshness. Home: har request pe filters alag ho sakte (query-dependent output) → caching per-combination useless, dynamic natural. Per-route strategy hi App Router ka core benefit hai.
+**Sample Answer:** The data-change-frequency × view-frequency equation. The detail page: content rarely changes, heavily viewed (SEO traffic) → ISR is ideal — cached instant HTML, refreshed every 5 minutes. The home page: each request can carry different filters (URL-dependent output) → caching per combination is pointless, dynamic is natural. And fresh listings matter (a new job shows immediately) — dynamic is the right trade-off.
 
 </details>
 
-3. `generateMetadata` mein bhi `if (!job) return {...}` kyun — page component mein toh already `notFound()` hai?
+3. `generateMetadata` has its own `if (!job) return {...}` — the page component already calls `notFound()`, so why the guard here too?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Dono functions independently run hote hain — metadata pehle generate hota hai (head ke liye), phir page render. Agar metadata wale function mein null-guard na ho toh `job.company.name` access pe crash ho jayega — notFound() page wale function mein hone se metadata wale ko protect nahi karta. Har async data-access function apna guard khud rakhta hai.
+**Sample Answer:** The two functions run independently — metadata generates first (for the `<head>`), then the page component renders. Without the null guard in `generateMetadata`, `job.company.name` crashes during metadata generation; the page-level `notFound()` doesn't protect the metadata function. Every async data-access function keeps its own guard.
 
 </details>
 
-4. `remotePatterns` allowlist kyun hai — Next.js har host se image kyun nahi le leta?
+4. Why the `remotePatterns` allowlist — why can't `next/image` just load from any host?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Optimization server pe hoti hai — tumhara server user-supplied URL se image download karta hai. Unrestricted hota toh attacker arbitrary internal/cloud endpoints hit karwa sakta (SSRF — server-side request forgery) ya bandwidth abuse. Allowlist = explicit trust declaration. Config mein declared host = allowed, baaki sab reject — secure by default design.
+**Sample Answer:** Image optimization runs on your server — your server downloads the image from whatever URL the user gave. Without restrictions, an attacker could point that at anything on the internet (SSRF — server-side request forgery) or burn your bandwidth. The allowlist is an explicit trust declaration. Only declared hosts are permitted — secure by default.
 
 </details>
 
-5. Skills chips ke liye `split(",").map()` use kiya — agar employer skills field mein trailing comma daal de ("React, TypeScript,") toh kya hoga, kaise handle karoge?
+5. The skill chips use `split(",").map()` — if the employer types a trailing comma ("React, TypeScript,") what happens, and how would you handle it?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Split karne pe last element empty string `""` banega — ek khali chip render hogi. Handle: `.filter(s => s.trim().length > 0)` map se pehle, ya seedha `split(",").map(s => s.trim()).filter(Boolean)`. Better fix source pe: create-job Server Action (C.6) mein input normalize karo — save se pehle hi trim/clean. Input pe control, output pe patch se behtar.
+**Sample Answer:** Splitting yields an empty string `""` as the last element — an empty chip renders. Fix with `.filter((s) => s.trim().length > 0)` before the map, e.g. `split(",").map((s) => s.trim()).filter(Boolean)`. Even better: normalize the input at the source — the create-job Server Action (C.6) cleans before saving. Control input, don't patch output.
 
 </details>
 
 ---
 
-Public side complete — listings, filters, detail, SEO. Ab **kaam ka hissa**: login. Guest browse kar sakta hai, par post karne/apply karne ke liye auth chahiye — aur hamara auth simple login se aage hai: **roles**. C.5 mein GitHub OAuth + role selection + protected route groups — Batch 5 ke concepts capstone scale pe.
+The public side is complete — listings, filters, detail page, SEO. But so far you can only **look.** To post a job you need an employer; to apply you need a candidate — that's authorization. Batch 5 built Auth.js + GitHub OAuth (Login Demo v2), but that app asked only *"is the user logged in?"* The capstone asks more: **"who is logged in — an EMPLOYER or a CANDIDATE?"** That role layer is built in C.5.
+
+We'll explore this in detail in the next topic.

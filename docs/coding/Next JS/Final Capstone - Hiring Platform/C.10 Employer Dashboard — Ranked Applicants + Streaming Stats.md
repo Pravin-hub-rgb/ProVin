@@ -1,13 +1,10 @@
-C.9 ke end mein scores DB mein ban rahe the — par ek problem khuli thi: **employer ko applicants kahan dikh rahe hain?** Dashboard pe toh bas `{job._count.applications} applications` ka count hai. Click karke andar jaaye toh kya dekhe? Aaj woh page banayenge aur saath mein do bache hue production concepts:
+The AI scoring from C.9 is running — a candidate applied, their resume is in storage, and now the match score gets written back to the application. But where does the employer actually *see* those applicants? The dashboard (C.6) only showed a count. The missing piece: a page per-job that lists every applicant, **ranked by score**, with a resume-view button that streams the PDF securely. This file also closes a promise from C.8: the `/api/resumes/[id]` authenticated download route.
 
-1. **Authenticated file download** — C.8 ka promise poora karte hain: resume-view route jo session + ownership verify karke PDF stream karta hai
-2. **Streaming with Suspense (7.5)** — stats section slow hai, applicants list fast hai — page turant dikhe, stats apni Suspense boundary mein baad mein aaye
-
-Aur AI ka promised payoff: applicants **match-score se ranked**.
+Plus one production pattern that's been waiting: **section-level streaming with Suspense** (7.5), because the applicant list loads fast but the aggregate stats (average score, strong-candidate count) are a slower DB query — they shouldn't block the rest of the page.
 
 # Hiring Platform — Part 10: Applicants Dashboard
 
-## Step 1 — Page + Ownership-Gated Query
+## Step 1 — Page Setup + Ownership-Gated Query
 
 **File:** `app/(employer)/jobs/[id]/page.tsx`
 
@@ -29,7 +26,7 @@ export default async function ApplicantsPage({
   const jobId = Number(id);
   if (!Number.isInteger(jobId)) notFound();
 
-  // Ownership guard — doosre employer ki job ka id daala toh 404
+  // Ownership guard — another employer's job id yields a 404, not a 403
   const job = await prisma.job.findFirst({
     where: { id: jobId, company: { ownerId: session.user.id } },
     include: { company: true },
@@ -39,8 +36,8 @@ export default async function ApplicantsPage({
   const applications = await prisma.application.findMany({
     where: { jobId: job.id },
     orderBy: [
-      { matchScore: { sort: "desc", nulls: "last" } },   // ranked — scored pehle
-      { createdAt: "desc" },                              // tie-break: newest
+      { matchScore: { sort: "desc", nulls: "last" } },   // ranked: scored first
+      { createdAt: "desc" },                              // tie-break: newest first
     ],
     include: { candidate: true },
   });
@@ -52,7 +49,7 @@ export default async function ApplicantsPage({
         {applications.length} applications · {job.location}
       </p>
 
-      {/* Stats — alag section, streaming ke liye (Step 3) */}
+      {/* Stats — a separate section, wrapped for streaming (Step 3) */}
       <Suspense fallback={<StatsSkeleton />}>
         <StatsSection jobId={job.id} />
       </Suspense>
@@ -61,7 +58,7 @@ export default async function ApplicantsPage({
       <div className="space-y-3 mt-8">
         {applications.length === 0 && (
           <p className="text-gray-500 text-center py-12">
-            Abhi koi application nahi aayi.
+            No applications for this job yet.
           </p>
         )}
         {applications.map((app, index) => (
@@ -91,7 +88,6 @@ export default async function ApplicantsPage({
                 </a>
               </div>
             </div>
-
             <div className="text-right">
               {app.matchScore !== null ? (
                 <>
@@ -100,8 +96,8 @@ export default async function ApplicantsPage({
                       app.matchScore >= 70
                         ? "bg-green-100 text-green-800"
                         : app.matchScore >= 40
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-red-100 text-red-700"
+                        ? "bg-blue-100 text-blue-800"
+                        : "bg-red-100 text-red-700"
                     }`}
                   >
                     {app.matchScore}/100
@@ -126,23 +122,23 @@ export default async function ApplicantsPage({
 }
 ```
 
-Is page ke key decisions:
+Key decisions on this page:
 
-- **Ownership guard phir se query mein** — C.7 ka pattern (`company: { ownerId }`) — ab habit ban gayi hai: har employer-side data-access pe. Doosre employer `/jobs/42` type kare → `findFirst` null → **404**, "forbidden" nahi. 404 intentional hai — existence bhi leak na ho.
-- **`orderBy` nulls-last** — `matchScore: { sort: "desc", nulls: "last" }` — scored applicants upar, unscored neeche (score-null wale C.8/C.9 ke edge-case survivors). Yeh Prisma ka dedicated syntax hai — SQL mein yeh chhupa trick hoti hai (`NULLS LAST`). Tie-break second key: same score → newest first.
-- **Rank number `index + 1`** — UI-only ranking display; DB rank column nahi banaya (over-engineering).
-- **Color-coded score buckets** (green/blue/red) — C.9 ke "buckets not precise-comparator" principle ka UI translation.
-- **Resume link hamare internal route pe** — `/api/resumes/${app.id}` — Blob URL kahin nahi dikha. Ab woh route banate hain.
+- **The ownership guard appears in the query again** — `findFirst({ where: { id, company: { ownerId } } })`. Another employer guessing an id (`/jobs/42`) → `findFirst` returns null → **404**, not 403. 404 is intentional — it doesn't confirm the job's existence (enumeration defense from C.7).
+- **`orderBy` with nulls-last** — `{ matchScore: { sort: "desc", nulls: "last" } }`. Without it, Postgres sorts NULLs first in a DESC scan — unscored applications would float to the top, the opposite of what's wanted. Prisma's dedicated syntax for this. Tie-breaker: `createdAt desc` — same score, newest application first.
+- **Row rank `index + 1`** — purely a display number; no rank column in the DB (over-engineering).
+- **Score color buckets** — green (70+), blue (40-69), red (< 40). The UI translation of C.9's "buckets over precise comparators."
+- **The resume link points at the internal route** — `/api/resumes/${app.id}`, never the raw Blob URL. That route is built next.
 
-(`Suspense`/`StatsSkeleton` imports Step 3 mein — pehle resume route.)
+(`Suspense` and `StatsSkeleton` imports come in Step 3.)
 
 ## Step 2 — Resume Download Route: Authorization at Download-Time
 
-C.8 ka design yaad karo: `resumeUrl` (Blob ka raw URL) DB ke siwa kahin expose nahi hota. Employer jab "View Resume" dabata hai, hamara route:
+Remember C.8's design: `resumeUrl` (the raw Blob URL) is never exposed. When an employer clicks "View Resume," this route runs:
 
-1. Session check — employer logged-in hai?
-2. Ownership check — *yeh* application *us* employer ki job ki hai?
-3. Sab pass → Blob se fetch karke stream
+1. Session check — is the viewer an employer?
+2. Ownership check — does *this* application belong to *their* job?
+3. If both pass — fetch from Blob and stream.
 
 **File:** `app/api/resumes/[id]/route.ts`
 
@@ -155,18 +151,21 @@ export async function GET(
   _req: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // 1. Role gate
   const session = await auth();
   if (session?.user.role !== "EMPLOYER") {
     return new Response("Unauthorized", { status: 401 });
   }
 
+  // 2. Parse id + ownership check
   const { id } = await params;
   const applicationId = Number(id);
   if (!Number.isInteger(applicationId)) {
     return new Response("Not found", { status: 404 });
   }
 
-  // Ownership: application → job → company → owner
+  // Ownership via a nested relation filter:
+  // application → job → company → owner
   const application = await prisma.application.findFirst({
     where: {
       id: applicationId,
@@ -179,7 +178,7 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
 
-  // Server-side proxy fetch — raw URL client tak kabhi nahi jaata
+  // 3. Proxy-fetch from Blob and stream
   const blobRes = await fetch(application.resumeUrl);
 
   if (!blobRes.ok || !blobRes.body) {
@@ -189,39 +188,39 @@ export async function GET(
   return new Response(blobRes.body, {
     headers: {
       "Content-Type": "application/pdf",
-      "Content-Disposition": 'inline',
+      "Content-Disposition": "inline",
       "Cache-Control": "private, no-store",
     },
   });
 }
 ```
 
-Chaar security-relevant lines samjho:
+Four security-relevant lines:
 
-- **Nested ownership filter** — `job: { company: { ownerId } }` — teen tables ka chain **ek where-clause mein**. Junction relations ka poora fayda: koi manual multi-step verify nahi.
-- **`select: { resumeUrl: true }`** — sirf needed field. PII discipline: candidate ka email/name is response mein jata hi nahi.
-- **Proxy fetch + stream** — `fetch(blobRes)` ka body directly Response mein — Node stream pipe hota hai, poori file memory mein load NAHI hoti. Raw URL network tab mein bhi nahi dikhta (client ne sirf `/api/resumes/12` dekha).
-- **`Cache-Control: private, no-store`** — shared/proxy caches resume ko cache na karein. Sensitive-file downloads ka standard header set.
+- **Nested ownership filter** — `job: { company: { ownerId } }` — three tables joined in a single `where`. No separate "fetch then verify" step (no TOCTOU gap).
+- **`select: { resumeUrl: true }`** — the minimal field. Not pulling candidate email/name/coverNote — PII discipline. The response contains only what's needed.
+- **Proxy stream** — `blobRes.body` is piped straight into the `Response`. The file is never fully loaded into memory (streams work), and the raw Blob URL never reaches the browser. (A note on size: Blob stores are cheap and fast to fetch; for very large files this stays efficient.)
+- **`Cache-Control: private, no-store`** — shared or proxy caches must not retain a resume. Standard for sensitive file downloads.
 
-**Test attack scenarios (khud karo):**
-1. Logged-out → `/api/resumes/1` direct URL → 401
-2. Candidate login karke → 401 (role gate)
-3. Employer B (doosri company) → 404 (ownership gate)
-4. Owner employer → PDF khulta hai ✓
+**Try the attack scenarios (do it yourself):**
+1. Logged-out → `/api/resumes/1` → 401.
+2. A candidate account → 401 (role gate).
+3. Employer B (someone else's job) → 404 (ownership gate).
+4. The owner employer → the PDF opens.
 
-Yeh chaar-line test suite hi is pattern ka ROI hai — interview mein "file authorization kaise handle karte ho" ka concrete jawab.
+That four-line test suite is the ROI for this pattern — it's the concrete answer to "how do you authorize file downloads?"
 
-## Step 3 — Streaming Stats (7.5 Ka Real Use)
+## Step 3 — Streaming Stats (7.5's Real Use)
 
-Ab stats section. Data pehle socho — employer kya jaanna chahgega?
+Now the stats section. What does an employer want to know?
 
-- Total applications (already heading mein)
-- **Average match score** — batch quality ka quick signal
-- **Strong candidates count** (score ≥ 70) — interview-shortlist estimate
+- Total applications (already in the page heading).
+- **Average match score** — a quick quality signal for the applicant pool.
+- **Strong candidates count** (score ≥ 70) — a shortlist estimate.
 
-Aggregate query — Postgres group computation, rows badhne ke saath dheemi hogi. Perfect Suspense candidate.
+These are aggregate queries — Postgres computes them in one pass, but they're still slower than the list query. A textbook Suspense candidate.
 
-**Concept recap (7.5):** `loading.tsx` **poore route** ka skeleton tha. `<Suspense>` boundary **section-level** control deti hai — page shell instantly render, slow child apne fallback ke saath stream hota hai. Ek hi page pe multiple boundaries bhi allowed — har section apni speed se.
+**Concept recap (7.5):** `loading.tsx` was a whole-route skeleton. A `<Suspense>` boundary gives **per-section** control — the page shell renders instantly, and only the slow section falls back to its own placeholder. Multiple independent boundaries on one page are allowed.
 
 **File:** `app/(employer)/jobs/[id]/stats-section.tsx`
 
@@ -241,21 +240,21 @@ export async function StatsSection({ jobId }: { jobId: number }) {
   });
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="grid grid-cols-3 gap-4 mb-8">
       <div className="border rounded-lg p-4">
-        <p className="text-sm text-gray-500">Total</p>
+        <p className="text-sm text-gray-500">Total Applications</p>
         <p className="text-2xl font-bold">{agg._count.id}</p>
       </div>
       <div className="border rounded-lg p-4">
-        <p className="text-sm text-gray-500">Avg Match</p>
+        <p className="text-sm text-gray-500">Average Match</p>
         <p className="text-2xl font-bold">
           {agg._avg.matchScore !== null
-            ? Math.round(agg._avg.matchScore)
+            ? `${Math.round(agg._avg.matchScore)}/100`
             : "—"}
         </p>
       </div>
       <div className="border rounded-lg p-4">
-        <p className="text-sm text-gray-500">Strong (70+)</p>
+        <p className="text-sm text-gray-500">Strong Matches (70+)</p>
         <p className="text-2xl font-bold text-green-700">{strongCount}</p>
       </div>
     </div>
@@ -264,11 +263,11 @@ export async function StatsSection({ jobId }: { jobId: number }) {
 
 export function StatsSkeleton() {
   return (
-    <div className="grid grid-cols-3 gap-4 animate-pulse">
+    <div className="grid grid-col-3 gap-4 animate-pulse mb-8">
       {[1, 2, 3].map((n) => (
         <div key={n} className="border rounded-lg p-4">
-          <div className="h-3 bg-gray-200 rounded w-16 mb-2" />
-          <div className="h-7 bg-gray-200 rounded w-12" />
+          <div className="h-3 bg-gray-200 rounded w-24 mb-2" />
+          <div className="h-7 bg-gray-200 rounded w-16" />
         </div>
       ))}
     </div>
@@ -276,89 +275,90 @@ export function StatsSkeleton() {
 }
 ```
 
-- **`aggregate()`** — DB-side math (`COUNT`, `AVG`). Saari applications JS mein laake `.length`/reduce karna beginner-trap hai — data badhta gaya toh request heavy hoti jayegi. Computation jahan data hai, wahin.
-- **`_avg.matchScore: null` case** — zero applications ya sab unscored → AVG null → em-dash display. Honest empty-state.
-- **Async component as child** — `StatsSection` ek normal async Server Component hai; parent page ne ise `<Suspense>` mein wrap kiya. Bas. Next.js khud isko separate stream chunk banata hai.
-- **Skeleton same file mein** — chhota co-located piece; alag file banane ka ceremony zaroori nahi.
+- **`aggregate()` + `count()`** — DB-side math (`COUNT`, `AVG`, `COUNT WHERE score >= 70`). Pulling all the rows into JS to sum them is a beginner's trap — it gets worse as the dataset grows.
+- **`_avg.matchScore: null`** — either zero applications or all unscored. Displays a clean em-dash instead of `NaN` or a misleading number. Honest empty state.
+- **Async component as a child** — `StatsSection` is a normal async Server Component. The parent wraps it in `<Suspense>` — Next.js streams it as a separate chunk automatically. Drop it in, it works.
+- **Skeleton co-located** — no ceremony; the helper sits right next to the component.
 
-Page mein import fix:
+Fix the import at the top of the applicants page:
 
 ```tsx
 // app/(employer)/jobs/[id]/page.tsx — top:
-import { Suspense } from "react";                                  // NEW
-import { StatsSection, StatsSkeleton } from "./stats-section";     // CHANGED
+import { Suspense } from "react";                                    // NEW
+import { StatsSection, StatsSkeleton } from "./stats-section";       // CHANGED
 ```
 
-**TEST (streaming dekhna):**
+**TEST (watch the streaming):**
+1. DevTools → Network → throttle to "Slow 3G."
+2. Open the applicants page — the heading + ranked list appear **immediately**; the stats area is grey pulses.
+3. After ~1-2 seconds, the stat numbers stream in.
+4. Turn throttling off — everything's instant.
 
-1. DevTools → Network → Slow 3G throttle ON
-2. Applicants page kholo — **heading + ranked list turant**, stats jagah grey pulse
-3. ~1-2 sec mein stats numbers pop (stream-in)
-4. Throttle OFF — sab instant
-
-Agar stats itni fast hai ki skeleton flash na dikhe — natural hai (dev data kam hai). Concept verify karne ke liye temporarily `await new Promise(r => setTimeout(r, 2000))` StatsSection mein daalo, dekho, hatao. (7.5 mein bhi yahi trick tha.)
+If the stats are too fast to demo on a small dataset, temporarily inject `await new Promise((r) => setTimeout(r, 2000))` into `StatsSection`, watch the skeleton, then remove it. (Same trick from 7.5.)
 
 ## Nutshell
 
-Applicants dashboard = **query-level ownership** (404-not-forbidden philosophy), **nulls-last ranked ordering** (`{ sort, nulls }` syntax), color-bucketed scores. Resume access = **authenticated proxy route**: session→role→nested-ownership-filter→select-minimal→stream-fetch, `no-store` headers — raw Blob URL kabhi client-touch nahi karta. Stats = **`aggregate()`/`count()`** (DB-side math) async-component ke roop mein, `<Suspense>` + co-located skeleton se section-level streaming — page shell instant, numbers apne time pe.
+The applicants dashboard = **query-level ownership** (a wrong-owner job id yields a 404, not 403 — enumeration defense), **nulls-last ranked ordering** (the `{ sort, nulls }` syntax — NULLs would otherwise float to the top of a DESC scan), and color-bucketed scores. Resume access = **an authenticated proxy route**: session → role → nested ownership filter (`job.company.ownerId`) → `select`-minimal → streaming proxy fetch, with `Cache-Control: no-store`. Stats = **`aggregate()` / `count()`** (DB-side math, not JS-side iteration) rendered as an async child wrapped in `<Suspense>` with a co-located skeleton — the page shell is instant, stats arrive on their own schedule.
 
 ## What It Is NOT
 
-- **404-on-other-employer's-job = "error message chhupana" nahi.** Deliberate information-boundary: 403 "exist karti hai par teri nahi" bolta hai; 404 kuch nahi bolta. Enumeration attacks (id=1,2,3... try karna) ko signal-less banata hai.
-- **`_avg` = "statistically robust metric" nahi.** Do applications ka avg misleading hota hai. Production dashboards sample-size ke saath context dikhati ("avg of 2") — humne count card side mein rakha hi wajah se.
-- **Proxy-stream = "performance overhead bekar mein" nahi.** Haan, bytes hamare server se transit karte hain (direct Blob URL se double-hop-ish). Price paid for: authorization-at-download, URL secrecy, revocability. Presigned URLs (S3) alternate trade-off point hai — short-lived tokens instead of proxy hop.
-- **Suspense boundary = "loading.tsx ka replacement" nahi.** Route-level first-paint ke liye loading.tsx (C.3), section-level progressive reveal ke liye Suspense. Dono alag problems, dono tools bag mein rehte hain.
-- **Rank #1 badge = "hire this person" nahi.** Score-ordering ek triage view hai — recruiter ka kaam accelerate karta hai, replace nahi karta. Wajah se har row mein reason-text saath hai.
+- **404-on-another-employer's-job is not "hiding an error."** It's a deliberate information boundary: 403 confirms the resource exists (enumeration leaks valid ids); 404 reveals nothing. Returning not-found on ownership failure is standard hardening.
+- **`_avg` is not "a statistically robust metric."** Two applications make an average misleading. Production dashboards show sample size ("avg of 2") — and the count card sits right next to it for that reason.
+- **The proxy-stream is not "unnecessary overhead."** True — bytes transit our server (one extra hop vs. a direct Blob URL). The price buys authorization-at-download, URL secrecy, and revocation. Presigned URLs (S3) are a different trade-off for the same goal.
+- **Suspense here is not "a replacement for `loading.tsx`."** `loading.tsx` (C.3) covers the whole route on first paint; Suspense covers a section that streams after the shell. Different problems, both tools in the belt.
+- **The rank shown on the list is not "a stored column."** It's `index + 1` from the `orderBy` query — pure display. No rank column was added to the schema (no need, no over-engineering).
 
 ---
 
 **In Your Own Words**
 
-1. Doosre employer ki job-id pe yeh page 404 deta hai, 403 nahi — kyun yeh choice?
+1. Why does this page return 404 (not 403) when another employer's job id is requested?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** 403 confirm karta hai ki resource exist karti hai (attacker ko valid-id mapping milti jaati hai enumeration se); 404 existence ka signal bhi chhupa leta hai. Ownership-failures ko not-found treat karna standard hardening hai — unauthorized user ko authorized-user jaisa hi response mile, fark guess na ho.
+**Sample Answer:** A 403 explicitly confirms the resource exists (good for an enumeration attack — try id=1, 2, 3... until a 403 vs. a 404), while a 404 reveals nothing. Treating ownership failures as "not found" is standard hardening. The crucial part: the actual data is never returned either way — the 404 is just navigation, not the security boundary.
 
 </details>
 
-2. `{ matchScore: { sort: "desc", nulls: "last" } }` ke bina default behavior kya hota — aur UX pe kya asar?
+2. If `orderBy` didn't specify `nulls: "last"`, where would unscored applications sort, and why does it matter?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Default mein NULLS sort engine-dependent/ordering-ambiguous hote hain (Postgres DESC mein nulls pehle aate hain!) — matlab not-scored applicants top pe, scored neeche — bilkul ulta jo chahiye. Explicit nulls-last se triage order sahi: reviewed-upar, pending-neeche. Database quirks explicitly handle karna hi safe SQL ORM usage hai.
+**Sample Answer:** Postgres sorts NULLs first in a `DESC` scan by default — so unscored (pending) applications would float to the top, ahead of the highest-scoring candidates. That inverts the entire purpose of ranking. Explicit `nulls: "last"` pushes pending applications to the bottom, keeping reviewed/scored ones prioritized. Database sort behavior is often engine-dependent — always specify NULL placement explicitly.
 
 </details>
 
-3. Resume-proxy route mein `select: { resumeUrl: true }` — bina select kya extra jaata aur yeh kyun matter karta hai?
+3. In the resume proxy, why `select: { resumeUrl: true }` instead of fetching the whole application row?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Bina select poori Application row aati — candidate ka email/name, coverNote, timestamps sab. Response mein use nahi hota, par logs/error-dumps/accidental-response-modification mein leak surface badh jaata. Data-minimization: har layer sirf utna le jitna us layer ko chahiye (least-privilege, data-parity with need).
+**Sample Answer:** Data minimization. The full row includes `coverNote`, `candidateId`, timestamps — none needed for a file download. Returning only `resumeUrl` shrinks the query and ensures PII like the cover note never sits in a handler's scope where it could be logged or accidentally returned. Least-privilege access: each layer fetches only what it needs.
 
 </details>
 
-4. Stats ko Suspense mein daala — agar poore page ko hi loading.tsx se cover kar dete toh kya nuksaan?
+4. If stats already loaded fast on a small dataset, when is Suspense still worth it?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Whole-route skeleton = users ko poori page ka intezar (slowest section jitna), phir ek saath sab content. Section-Suspense mein fastest content (list) instant dikhta hai — perceived performance dramatically better kyunki user ka primary task (applicants dekhna) block nahi hota. Progressive rendering = per-section honesty of progress.
+**Sample Answer:** At scale. A production job might have 5,000 applicants — the `AVG`/`count` aggregates scan more rows and take longer. With Suspense, that slow query never blocks the list (which is what the employer came to see). At small scale it's invisible, which is fine — you're paying the streaming cost upfront so the architecture doesn't break later.
 
 </details>
 
-5. `aggregate` vs saari applications fetch karke JavaScript mein average nikalna — kab JS-version acceptable hota?
+5. Why is the resume streamed (`Response(blobRes.body)`) rather than buffered in memory?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Jab rows genuinely kam hon (tens/hundreds) aur values already UI ke liye fetched — duplicate query avoid hoti. Ya jab calculation DB express nahi kar sakta (custom scoring formula involving app logic). Scale rule: aggregation math data ke paas rakho; JS-side math sirf already-loaded-data pe ya non-expressible logic pe.
+**Sample Answer:** Buffering holds the entire file in memory simultaneously — on a serverless instance with a memory limit, a large or concurrent download set can trigger OOM kills. Streaming pipes byte-for-byte from the upstream response to the client: constant memory regardless of file size. It's also cheaper at scale (no full-file allocation). The pattern generalizes to any proxy/download handler.
 
 </details>
 
 ---
 
-Employer ka poora toolkit ready hai: post (AI-assisted) → manage → boost (paid) → review (AI-ranked). Candidate ka bhi: browse → apply → track. App **functionally complete** hai — par "production-grade" ka matlab sirf features nahi. Ab C.11: capstone ki security pass — apply/AI endpoints pe **proxy rate-limiting** (Gemini free-quota protection!), env-vars audit, error-hierarchy check — Batch 4 aur Batch 8 ke concepts ek final sweep mein.
+With the applicants dashboard live, the capstone's **functional** scope is complete — every box from C.0 is filled. But "it works" and "it's production-grade" are still different. The final pass: **security hardening at scale** — rate limiting on the AI and apply endpoints (protecting the free-tier quota), a full env/secret sweep, and a proper error boundary hierarchy. This is C.11 — Batch 4's proxy deep-dive and Batch 8's security audit, now applied to a real application.
+
+We'll explore this in detail in the next topic.

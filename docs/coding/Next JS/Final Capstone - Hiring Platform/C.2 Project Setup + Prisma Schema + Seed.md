@@ -1,19 +1,19 @@
-C.1 mein poora blueprint ready hai — 9 pages, 3 roles, aur 4 models ka schema draft (`User`, `Company`, `Job`, `Application`). Ab uss draft ko **asli cheez** banana hai: naya project create karna, Neon se jodna, Prisma schema likhna, tables migrate karna, aur seed data daalna — taaki C.3 mein jab home page banayein, database mein real jobs paddi hui hon.
+In C.1 the full blueprint was set — 9 pages, 3 roles, and a schema draft (4 models: `User`, `Company`, `Job`, `Application`). Now turn that draft into **reality** — create the project, connect to Neon, write the Prisma schema, run migrations, add seed data — so that when C.3 builds the home page, there's real data in the database.
 
-Setup ke steps (create-next-app, Prisma install/init) Batch 6/7 mein detail mein kar chuke hain (0.8, 6.9, 6.13.3) — yahan wahi commands hain, isliye quick rakhenge. **Asli focus schema pe hoga** — kyunki yeh capstone ka foundation hai, aur C.1 ke design decisions ab PSL (Prisma Schema Language) mein likhe jaenge.
+The generic setup steps (create-next-app, Prisma install/init) are already covered in detail in Batch 6/7 (0.8, 6.9, 6.13.3) — so those are quick here. **The real focus is the schema** — because it's the capstone's foundation, and C.1's design decisions now get written in PSL (Prisma Schema Language).
 
 # Hiring Platform — Part 2: Setup + Schema + Seed
 
 ## Project Create + Packages
 
-**Concept:** Naya project, naya folder — Photo Gallery (7.7.2) jaisa hi process. `create-next-app` TypeScript + App Router + Tailwind ke saath:
+**Concept:** A fresh project — same process as the Photo Gallery (7.7.2). Create Next.js with TypeScript + App Router + Tailwind:
 
 ```bash
 npx create-next-app@latest hiring-platform --typescript --app --tailwind
 cd hiring-platform
 ```
 
-Ab Prisma ke dono packages + init — 6.13.3 wale hi steps:
+Now install Prisma's two packages + init — the same steps from 6.13.3:
 
 ```bash
 npm install @prisma/client
@@ -21,36 +21,36 @@ npm install -D prisma
 npx prisma init
 ```
 
-- **`@prisma/client`** — runtime client — `prisma.job.findMany()` isi se chalega
-- **`prisma`** (dev dependency) — CLI — `migrate dev` jaise commands ke liye
-- **`npx prisma init`** — `prisma/schema.prisma` + `.env` scaffold karta hai
+- **`@prisma/client`** — the runtime client — used for `prisma.job.findMany()` and all queries
+- **`prisma`** — a dev dependency — the CLI, for `migrate dev` and similar commands
+- **`npx prisma init`** — scaffolds `prisma/schema.prisma` + `.env`
 
-`.env` mein Neon ki connection string daalo — 6.9 mein Neon project banaya tha (ya naya bana lo — capstone ke liye fresh project saaf rahta hai):
+Put the Neon connection string in `.env` — the same one from 6.9 (or create a fresh project in Neon — a clean database keeps the capstone simple):
 
 ```env
 DATABASE_URL="postgresql://username:password@ep-something-xxx.region.neon.tech/neondb?sslmode=require"
 ```
 
-> **Yaad hai?** `.env` (Prisma convention), `.env.local` nahi — 6.13.3 mein wajah bhi padi thi: Prisma khud `.env` padhta hai.
+> **Reminder:** Use `.env` (Prisma's convention), not `.env.local` — as explained in 6.13.3: Prisma reads `.env` directly.
 
-**TEST:** `npx prisma init` ke baad terminal mein `✔ Generated prisma/schema.prisma` dikhna chahiye. Folder structure:
+**TEST:** After `npx prisma init`, the terminal shows `✔ Generated prisma/schema.prisma`. The folder structure:
 
 ```
 hiring-platform/
 ├── app/
 ├── prisma/
-│   └── schema.prisma    ← abhi models likhenge
-├── .env                 ← DATABASE_URL set ho chuki
+│   └── schema.prisma    ← where we write the models
+├── .env                 ← DATABASE_URL is set
 └── package.json
 ```
 
-## Schema — 4 Models, Ek-Ek Karke
+## Schema — The 4 Models
 
-Ab C.1 ka draft asli PSL mein. Order same jo planning mein tha: **User (root) → Company → Job → Application (junction)**. Har model build karte waqt sirf naye lines `NEW` se mark karunga — purana code repeat nahi.
+Translating C.1's blueprint into real PSL. The build order mirrors the plan: **User (root) → Company → Job → Application (junction).** Only `NEW` lines are marked — existing patterns aren't repeated.
 
 ### Model 1 — User
 
-Pehla model sabse simple hai — email, naam, image (GitHub avatar), role, timestamps:
+The simplest model — email, name, image (GitHub avatar), role, timestamps:
 
 ```prisma
 // prisma/schema.prisma
@@ -64,15 +64,15 @@ model User {
 }
 ```
 
-Line-by-line:
+Line by line:
 
-- **`id Int @id @default(autoincrement())`** — 6.13.3 ka wahi pattern — primary key, auto 1,2,3...
-- **`email String @unique`** — GitHub se aane wali email; `@unique` = do users same email se register nahi kar sakte. Yeh auth lookup bhi fast banata hai (unique = automatic index)
-- **`name String?` / `image String?`** — optional (`?`) — GitHub profile se aate hain, par guaranteed nahi
-- **`role Role @default(CANDIDATE)`** — C.1 ka decision! Enum type `Role` (neeche define karenge). Default `CANDIDATE` kyun? Safe default hai — koi bina soche employer powers na le le. Employer hona conscious choice hona chahiye.
-- **`createdAt DateTime @default(now())`** — banate waqt khud set hoti hai, hum nahi bhejte (6.13.3 Board wala hi concept)
+- **`id Int @id @default(autoincrement())`** — the same pattern from 6.13.3 — primary key, auto 1, 2, 3...
+- **`email String @unique`** — comes from GitHub OAuth. `@unique` — no two users share an email. It also makes the auth lookup fast (unique = automatic index).
+- **`name String?` / `image String?`** — optional (`?`) — they come from the GitHub profile, but aren't guaranteed.
+- **`role Role @default(CANDIDATE)`** — C.1's decision! The type is an enum `Role` (defined below). Default `CANDIDATE` — why? It's the safe default — no one accidentally gets employer powers without choosing. Being an employer is a deliberate choice.
+- **`createdAt DateTime @default(now())`** — auto-set on creation, we don't send it (same concept as the Board model in 6.13.3).
 
-Ab relations — User do jagah judta hai:
+Now add relations — a User connects in two directions:
 
 ```prisma
 // prisma/schema.prisma
@@ -88,124 +88,111 @@ model User {
 }
 ```
 
-- **`company Company?`** — relation field (database column NAHI — 6.13.3 rule yaad hai). `?` kyun? Sirf employer ka company hota hai — candidate ka nahi. Optional = honest reflection.
-- **`applications Application[]`** — ek candidate ki saari applications (1:N)
+- **`company Company?`** — a *relation field* (not a database column — remember the rule from 6.13.3). The `?` — why? Only employer users have a company. Optional = an honest reflection of the domain.
+- **`applications Application[]`** — all applications from one candidate (1:N).
 
 ### Model 2 — Company
 
-Employer apni company register karega onboarding pe (C.5). Fields: naam, logo, owner:
+Employers register their company during onboarding (C.5). Fields: name, logo, owner:
 
 ```prisma
 // prisma/schema.prisma
-model User {
-  id           Int           @id @default(autoincrement())
-  email        String        @unique
-  name         String?
-  image        String?
-  role         Role          @default(CANDIDATE)
-  createdAt    DateTime      @default(now())
-  company      Company?
-  applications Application[]
-}
-
 model Company {                                              // NEW
   id      Int     @id @default(autoincrement())              // NEW
   name    String                                             // NEW
   logoUrl String?                                            // NEW
-                                                            // NEW
+
   ownerId Int     @unique                                    // NEW
   owner   User    @relation(fields: [ownerId], references: [id])  // NEW
-                                                            // NEW
+
   jobs    Job[]                                              // NEW
 }                                                            // NEW
 ```
 
-Naye concepts yahan do hain:
+Two new concepts here:
 
-- **`logoUrl String?`** — remote URL store karenge (jaise 7.7.1 Photo.src tha). Logo har job card pe dikhega → `next/image` + `remotePatterns` (7.2) ka use-case. Optional — company bina logo ke bhi post kar sake.
-- **`ownerId Int @unique` + `owner User @relation(fields: [ownerId], references: [id])`** — foreign key pattern toh 6.13.3 ka hi hai (`Board.user_id`), par ek naya twist: **`@unique` foreign key pe!**
+- **`logoUrl String?`** — a remote URL (just like `Photo.src` in 7.7.1). The logo appears on every job card → gives `next/image` + `remotePatterns` (7.2) a real use-case. Optional — a company can post jobs before uploading a logo.
+- **`ownerId Int @unique` + `owner User @relation(fields: [ownerId], references: [id])`** — the foreign key pattern from 6.13.3 (`Board.userId`), with a twist: **`@unique` on the foreign key.**
 
-**`@unique` FK pe kyun?** Socho — `ownerId` bina unique ke hota toh ek user multiple companies bana sakta (1:N). Unique lagane se ek user ki **sirf ek** company ho sakti hai — yeh Postgres mein **1:1 relationship** banane ka tareeka hai. Constraint hi relationship enforce karta hai.
+**Why `@unique` on the FK?** Without it, `ownerId` is a plain foreign key — one user could create multiple companies (1:N). Adding `@unique` means each `ownerId` value appears only once in the table — one user can have **at most one** company. This is how Postgres enforces a **1:1 relationship** — the constraint enforces the cardinality.
 
-- **`jobs Job[]`** — company ki saari jobs (1:N)
+- **`jobs Job[]`** — all jobs from this company (1:N).
 
 ### Model 3 — Job
 
-Sabse bada model — public listing ka saara data:
+The biggest model — everything the public listing needs:
 
 ```prisma
 // prisma/schema.prisma
-// ...User aur Company upar waise hi...
 
-model Job {                                                  // NEW
-  id          Int      @id @default(autoincrement())        // NEW
-  title       String                                        // NEW
-  slug        String   @unique                              // NEW
-  description String                                        // NEW
-  location    String?                                       // NEW
-  type        JobType  @default(FULL_TIME)                  // NEW
-  salaryMin   Int?                                          // NEW
-  salaryMax   Int?                                          // NEW
-  skills      String                                        // NEW
-  featured    Boolean  @default(false)                      // NEW
-  createdAt   DateTime @default(now())                      // NEW
-                                                           // NEW
-  companyId  Int                                           // NEW
-  company    Company @relation(fields: [companyId], references: [id])  // NEW
-                                                           // NEW
-  applications Application[]                               // NEW
-                                                           // NEW
-  @@index([featured, createdAt])                           // NEW
-}                                                          // NEW
+model Job {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  title       String
+  description String
+  location    String?
+  type        JobType  @default(FULL_TIME)
+  salaryMin   Int?
+  salaryMax   Int?
+  skills      String
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+
+  companyId  Int
+  company    Company @relation(fields: [companyId], references: [id])
+
+  applications Application[]
+
+  @@index([featured, createdAt])
+}
 ```
 
-Har "sochne wali" field:
+Each "think about it" field:
 
-- **`slug String @unique`** — C.1 Sawaal 2 ka SEO decision. URL `/jobs/frontend-developer-at-acme` Google-friendly hai, `/jobs/42` nahi. Unique = do jobs ka same slug impossible.
-- **`description String`** — lambi job description (AI generate karega C.6 mein). PostgreSQL mein Prisma ka `String` already TEXT type hota hai — limit ki chinta nahi.
-- **`type JobType @default(FULL_TIME)`** — enum (neeche) — filter dropdown isi pe chalega (C.3)
-- **`salaryMin/salaryMax Int?`** — range; optional kyunki kuch employers salary hide karti hain
-- **`skills String`** — comma-separated ("React, TypeScript, Next.js") — C.1 ka scope decision (array complexity nahi chahiye). AI Match Score isi string ko padhega (C.9).
-- **`featured Boolean @default(false)`** — Stripe payment hone pe webhook ise `true` karega (C.7). Default false = normal listing free.
-- **`@@index([featured, createdAt])`** — **naya concept, dhyan do.** Home page query hamesha aisi hogi: *"featured pehle, phir newest"* — matlab sort by `featured DESC, createdAt DESC`. Bina index ke Postgres har baar poori table scan karta sort ke liye. Composite index dono columns ka pre-sorted mini-directory bana deta hai — query turant result utha leti hai. Abhi rows kam hain toh fark nahi dikhega, production data pe yehi fark hota hai. (6.12 system design ka "indexes" section ab haath mein aa gaya.)
+- **`slug String @unique`** — C.1's SEO decision. `/jobs/frontend-developer-at-acme` is Google-friendly; `/jobs/42` is not. `@unique` — two jobs can't have the same slug.
+- **`description String`** — the full job description (AI-generated in C.6). In Prisma+PostgreSQL, `String` maps to `TEXT` — no length limit to worry about.
+- **`type JobType @default(FULL_TIME)`** — enum (defined below). This powers the filter dropdown in C.3.
+- **`salaryMin/salaryMax Int?`** — a range; optional because some employers prefer to hide salary.
+- **`skills String`** — comma-separated (`"React, TypeScript, Next.js"`) — C.1's scope decision (an array's complexity isn't needed here). The AI Match Score in C.9 reads this string.
+- **`featured Boolean @default(false)`** — Stripe payment confirmation (via webhook) flips this to `true` in C.7. Default false = posting is free, featuring costs money.
+- **`@@index([featured, createdAt])`** — **pay attention — new concept.** The home page query always looks like: *"featured first, then newest."* Without an index, Postgres does a full table scan + in-memory sort on every request. This composite index is a pre-sorted mini-directory on exactly those two columns — the query reads the index directly, no sorting needed. With few rows it's invisible, but at production scale this is where performance lives. (The "indexes" section from 6.12 is now in your hands.)
 
 ### Model 4 — Application (Junction)
 
-Do foreign keys wala junction table — C.1 ka sabse interesting design:
+The two-foreign-key junction table — C.1's most interesting design:
 
 ```prisma
 // prisma/schema.prisma
-// ...User, Company, Job upar waise hi...
 
-model Application {                                          // NEW
-  id          Int                @id @default(autoincrement())  // NEW
-  coverNote   String?                                         // NEW
-  resumeUrl   String                                          // NEW
-  matchScore  Int?                                            // NEW
-  matchReason String?                                         // NEW
-  status      ApplicationStatus  @default(PENDING)            // NEW
-  createdAt   DateTime           @default(now())              // NEW
-                                                              // NEW
-  jobId       Int                                             // NEW
-  job         Job  @relation(fields: [jobId], references: [id])   // NEW
-                                                              // NEW
-  candidateId Int                                             // NEW
-  candidate   User @relation(fields: [candidateId], references: [id])  // NEW
-                                                              // NEW
-  @@unique([jobId, candidateId])                              // NEW
-}                                                             // NEW
+model Application {
+  id          Int                @id @default(autoincrement())
+  coverNote   String?
+  resumeUrl   String
+  matchScore  Int?
+  matchReason String?
+  status      ApplicationStatus  @default(PENDING)
+  createdAt   DateTime           @default(now())
+
+  jobId       Int
+  job         Job  @relation(fields: [jobId], references: [id])
+
+  candidateId Int
+  candidate   User @relation(fields: [candidateId], references: [id])
+
+  @@unique([jobId, candidateId])
+}
 ```
 
-- **`coverNote String?`** — candidate ka short message; optional
-- **`resumeUrl String`** — Vercel Blob private URL (C.8). Non-null — resume ke bina apply hi nahi hota, isliye required.
-- **`matchScore Int?` / `matchReason String?`** — nullable kyun, C.1 In-Your-Own-Words Q4 mein soch chuke: AI call fail ho toh application phir bhi save rahe. DB mein NULL = "score abhi available nahi".
-- **`status ApplicationStatus @default(PENDING)`** — employer ne dekha ya nahi (REVIEWED). Minimal status enum — REJECTED/OFFERED jaise states abhi nahi (scope control, C.0 wala rule).
-- **Do relations** — `job` (kaunsi job pe) + `candidate` (kaun apply kar raha). Junction table ka signature — 6.12 mein theory thi, yahan live hai.
-- **`@@unique([jobId, candidateId])`** — **composite unique** — dono fields ka combination unique. Ek candidate ek job pe sirf ek application. Race condition bhi covered — do simultaneous requests mein second insert DB level pe fail hoga (C.1 Q2).
+- **`coverNote String?`** — the candidate's short message; optional.
+- **`resumeUrl String`** — the Vercel Blob private URL (C.8). Non-null — you can't apply without a resume, so it's required.
+- **`matchScore Int?` / `matchReason String?`** — nullable, as discussed in C.1's Question 4: the AI call (C.9) can fail. With a nullable column, the application is saved first, and the score is filled in later (or null).
+- **`status ApplicationStatus @default(PENDING)`** — whether the employer has reviewed it (`REVIEWED`). A minimal enum — no REJECTED/OFFERED states yet (scope control, per C.0's rule).
+- **Two relations** — `job` (which job) + `candidate` (who applied). The junction-table signature — theory in 6.12, reality here.
+- **`@@unique([jobId, candidateId])`** — **composite unique** — the combination of both fields must be unique. One candidate can apply to one job **only once.** Even with race conditions (two near-simultaneous requests), the second insert fails at the database level (C.1, Question 2).
 
-### Enums — Teen Types Ki Validity
+### Enums — Validity for Three Types
 
-Models reference kar chuke hain — ab teeno enums define karo (schema ke end mein, 6.13.3 Status jaisa):
+The models reference them — define all three enums (at the end of the schema, like the `Status` enum in 6.13.3):
 
 ```prisma
 // prisma/schema.prisma
@@ -227,32 +214,32 @@ enum ApplicationStatus {
 }
 ```
 
-Enum ka fayda wahi 6.13.3 wala — galat value insert ho hi nahi sakti. `"fulltime"` (typo) DB mein jayega hi nahi.
+The same benefit as in 6.13.3 — a typo like `"fulltime"` never makes it into the database. Invalid values are rejected at insert time.
 
-**Poori relation picture:**
+**The full relation picture:**
 
 ```
 User 1 ── 0..1 Company 1 ── N Job 1 ── N Application N ── 1 User
-(employer)        (ownerId uniq)  (companyId)   (jobId)      (candidateId)
+(employer)         (ownerId unique)  (companyId)   (jobId)   (candidateId)
 ```
 
-**TEST:** `npx prisma migrate dev --name init` chalao:
+**TEST:** Run the migration:
 
 ```bash
 npx prisma migrate dev --name init
 ```
 
-Terminal output: `✔ Generated Prisma Client` + `✔ Your database is now in sync`. Neon SQL Editor mein verify:
+Terminal output: `✔ Generated Prisma Client` + `✔ Your database is now in sync`. Then verify in the Neon SQL Editor:
 
 ```sql
 SELECT * FROM "Job";
 ```
 
-`(0 rows)` — 4 tables ban gayi, khali hain. Ab data bharte hain.
+The result is `(0 rows)` — 4 tables created, all empty. Now fill them with seed data.
 
 ## Client — `lib/prisma.ts`
 
-Wahi 6.13.3 wala singleton — code same hai, copy kar lo:
+The exact same file from 6.13.3 — used again here. Copy it:
 
 ```ts
 // lib/prisma.ts
@@ -271,18 +258,18 @@ if (process.env.NODE_ENV !== "production") {
 export default prisma;
 ```
 
-Kyun aisa hai — 6.13.3 mein line-by-line dekha tha (hot reload pe connection leak na ho). Recap ek line mein: dev mein client global slot mein cache hota hai, `??` pehli baar naya banata hai baar-baar nahi.
+The why — 6.13.3 explained it line-by-line (hot reload causes connection leaks; the global singleton reuses one instance). Quick recap: in dev, the client is cached on `globalThis`; `??` creates a new one only on the first run.
 
-## Seed — Database Mein Starter Data
+## Seed — Starter Data in the Database
 
-**Problem pehle:** Home page test karne ke liye jobs chahiye. Options kya the?
+**The problem first:** to test the home page, we need jobs. The options were:
 
-1. Neon SQL Editor mein INSERT statements — kaam karega, par 4 related tables mein FK order maintain karna padega (pehle User, phir Company, phir Job...) aur har baar IDs manually dekhni padengi. Painful.
-2. **Seed script** — TypeScript file jo Prisma client se saara starter data create kare. Run karo, data aa gaya. Dobara run karo, pehle saaf karke firse.
+1. INSERT statements in the Neon SQL Editor — works, but with 4 related tables you maintain foreign-key order (User first, then Company, then Job...) and look up IDs manually. Painful.
+2. **A seed script** — a TypeScript file using the Prisma client to create all starter data. Run once, data appears. Run again, it clears first.
 
-Option 2 production-standard hai — har serious project mein seed script hota hai. Aur Prisma client use karne se relations automatically resolve hote hain (nested create — IDs manually nahi).
+Option 2 is production-standard — every serious project has a seed script. And using the Prisma client means relations are resolved automatically (nested create) — no manual ID passing.
 
-**File:** `prisma/seed.ts` — naya file:
+**File:** `prisma/seed.ts` — new file:
 
 ```ts
 // prisma/seed.ts
@@ -291,17 +278,17 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  // Purana seed data saaf karo (dobara run pe duplicate na ho)
+  // Clear old seed data (idempotent on re-runs)
   await prisma.application.deleteMany();
   await prisma.job.deleteMany();
   await prisma.company.deleteMany();
   await prisma.user.deleteMany();
 ```
 
-**Delete order ulta kyun?** Foreign keys! Application Job + User ko reference karti hai — pehle woh delete nahi karoge toh Job delete fail hoga ("rows still referenced"). Child-first deletion — FK ka golden rule.
+**Why delete in reverse?** Foreign keys! `Application` references both `Job` and `User` — if you delete `User` first, Prisma throws a foreign-key violation ("row still referenced"). The golden rule: delete deepest children first.
 
 ```ts
-  // Employer 1 + company
+  // Employer 1 + their company
   const acmeOwner = await prisma.user.create({
     data: {
       email: "acme@example.com",
@@ -318,17 +305,17 @@ async function main() {
   });
 ```
 
-**Nested create** — `company: { create: {...} }` se User aur Company ek call mein bante hain, Prisma khud `ownerId` wire karta hai — manually ID pass karne ka jhanjhat zero. **`include: { company: true }`** — response mein created company bhi milegi (agli lines mein use hogi):
+**Nested create** — `company: { create: {...} }` creates the User and Company in one call; Prisma wires `ownerId` automatically — no manual ID passing. **`include: { company: true }`** — the response includes the created company (needed on the next lines).
 
 ```ts
-  // Jobs — Acme ki 3 (ek featured)
+  // 3 jobs for Acme (one featured)
   const acmeJobs = await Promise.all([
     prisma.job.create({
       data: {
         title: "Frontend Developer",
         slug: "frontend-developer-at-acme",
         description:
-          "Acme Corp ko React developer chahiye jo modern web apps banaye. Aap Next.js components, state management aur API integration handle karoge.",
+          "Acme Corp is hiring a React developer to build modern web apps. You'll own Next.js components, state management, and API integration.",
         location: "Remote (India)",
         type: "FULL_TIME",
         salaryMin: 800000,
@@ -343,7 +330,7 @@ async function main() {
         title: "Backend Intern",
         slug: "backend-intern-at-acme",
         description:
-          "6-month internship — Node.js APIs, MongoDB/PostgreSQL basics, REST design seekhne ka mauka mentorship ke saath.",
+          "6-month internship — learn Node.js APIs, MongoDB/PostgreSQL basics, REST design under mentorship.",
         location: "Bengaluru",
         type: "INTERNSHIP",
         skills: "Node.js, Express, SQL basics",
@@ -355,7 +342,7 @@ async function main() {
         title: "Full Stack Engineer",
         slug: "fullstack-engineer-at-acme",
         description:
-          "End-to-end features — React frontend se lekar PostgreSQL schema tak. Chhoti team, badi responsibility.",
+          "Build end-to-end features — from React frontend to PostgreSQL schema. Small team, big responsibility.",
         location: "Hyderabad (Hybrid)",
         type: "CONTRACT",
         salaryMin: 1200000,
@@ -367,9 +354,9 @@ async function main() {
   ]);
 ```
 
-- **`salaryMin/max` lakhs mein** (800000 = ₹8 LPA) — Int hai, paise/currency symbol nahi store karte
-- **Ek job `featured: true`** — taaki C.3 mein featured sorting ka effect turant dikhe
-- **`Promise.all`** — teen independent creates parallel — speed (React course ka concept, bas yahan server-side)
+- **Salaries in lakhs** (800000 = ₹8 LPA) — `Int`, no currency symbols stored in the DB.
+- **One job `featured: true`** — so C.3's featured sorting is visible immediately.
+- **`Promise.all`** — the three creates are independent, so they run in parallel — the concurrency pattern from the React course, applied server-side here.
 
 ```ts
   // Employer 2 + company + 1 job
@@ -388,7 +375,7 @@ async function main() {
       title: "React Native Developer",
       slug: "react-native-developer-at-technova",
       description:
-        "Mobile-first product team. React Native apps, performance tuning, native module integration.",
+        "Mobile-first product team. Build React Native apps, performance tuning, native module integration.",
       location: "Remote",
       type: "FULL_TIME",
       salaryMin: 900000,
@@ -400,7 +387,7 @@ async function main() {
 ```
 
 ```ts
-  // Candidate + 1 application (score ke saath — dashboard test ke liye)
+  // Candidate + 1 pre-scored application (for dashboard testing)
   const candidate = await prisma.user.create({
     data: {
       email: "priya@example.com",
@@ -411,16 +398,16 @@ async function main() {
 
   await prisma.application.create({
     data: {
-      coverNote: "2 saal React experience hai, portfolio mein 3 projects.",
+      coverNote: "2 years of React experience, with 3 projects in my portfolio.",
       resumeUrl: "https://example.com/sample-resume.pdf",
       matchScore: 82,
-      matchReason: "Strong React+TS overlap; Next.js experience bonus.",
+      matchReason: "Strong React+TS overlap; Next.js experience is a bonus.",
       jobId: acmeJobs[0].id,
       candidateId: candidate.id,
     },
   });
 
-  console.log("Seed complete!");
+  console.log("🌱 Seed complete!");
 }
 
 main()
@@ -431,18 +418,18 @@ main()
   .finally(() => prisma.$disconnect());
 ```
 
-- **Sample application pre-seeded** — taaki C.10 dashboard pe khali list na dikhe, ranked applicant ka effect turant dikhe. `matchScore/matchReason` hardcoded hain — real AI scoring C.9 mein aayegi.
-- **`finally(() => prisma.$disconnect())`** — script end pe connection band — warna terminal hang rehta hai.
+- **A pre-seeded application** with a score — so C.10's dashboard isn't empty; the ranked-applicant effect is visible immediately. The `matchScore/matchReason` are hardcoded — the real AI scoring happens in C.9.
+- **`finally(() => prisma.$disconnect())`** — close the connection when the script ends (otherwise the terminal hangs).
 
-Run karne ke liye TypeScript runner chahiye:
+Run it with a TypeScript runner (no build needed):
 
 ```bash
 npx tsx prisma/seed.ts
 ```
 
-**`tsx` kyun?** Node seedha TypeScript nahi chalata; `tsx` zero-config TS runner hai — seed ek baar chalani hai, isliye heavy tooling (tsc config etc.) bekaar hai.
+**`tsx`?** Plain Node can't run `.ts` files; `tsx` is a zero-config TypeScript runner. Since the seed runs once, heavy tooling isn't worth it.
 
-**TEST:** Output `Seed complete!` — phir Neon SQL Editor:
+**TEST:** Output shows `🌱 Seed complete!`. Then verify in the Neon SQL Editor:
 
 ```sql
 SELECT j.title, c.name AS company, j.featured
@@ -450,69 +437,71 @@ FROM "Job" j JOIN "Company" c ON j."companyId" = c.id
 ORDER BY j.featured DESC, j."createdAt" ASC;
 ```
 
-4 rows milni chahiye — Frontend Developer sabse upar (featured), phir baaki. Yehi ordering C.3 home page dikhayega.
+4 rows — Frontend Developer first (featured), then the rest in order. That's the exact ordering C.3's home page will show.
 
 ## Nutshell
 
-Capstone setup: `create-next-app` + Prisma init + Neon `.env` (sab 6.x/7.x patterns). Schema = 4 models — `User` (role enum), `Company` (**FK pe `@unique` = 1:1 relationship**), `Job` (slug unique SEO ke liye, `@@index([featured, createdAt])` home-sorting ke liye), `Application` (junction — do FKs + **`@@unique([jobId, candidateId])`** duplicate-apply guard). `migrate dev --name init` se history-wali migration. Seed script (`prisma/seed.ts`, `npx tsx`) nested creates se FK pain solve karti hai — child-first delete, employer+jobs+ek scored application.
+Capstone setup: `create-next-app` + Prisma init + Neon in `.env` (all 6.x/7.x patterns). Schema = 4 models: `User` (role enum), `Company` (**`@unique` on FK = 1:1 relationship**), `Job` (slug `@unique` for SEO, `@@index([featured, createdAt])` for home sorting), `Application` (junction — two FKs + **`@@unique([jobId, candidateId])`** duplicate-apply guard). `migrate dev --name init` creates history-tracked migration. Seed script (`prisma/seed.ts`, run via `tsx`) — nested creates resolve FKs automatically; deletes are child-first; seeds employer + jobs + one scored application. `lib/prisma.ts` is the singleton client (copy from 6.13.3).
 
 ## What It Is NOT
 
-- **`ownerId Int @unique` = "owner change nahi ho sakta" nahi.** Unique constraint "ek owner = ek company" enforce karta hai; owner update karna allowed hai. 1:1 ka matlab count-per-side, immutability nahi.
-- **`@@index([featured, createdAt])` = "data sorted store hota hai" nahi.** Index ek alag data-structure (mini-directory) hai jo lookups fast karta hai; table ki actual row-order change nahi hoti. Read/write trade-off bhi hai — har insert pe index update hota hai, isliye har column pe index nahi dalte.
-- **Seed = "production data" nahi.** Seed sirf development/testing starter data hai. Production deploy pe seed run nahi karte — real users ka data real se aata hai.
-- **`skills String` = "best practice" nahi.** Comma-separated strings querying/searching mein limited hote hain — yeh conscious scope-trade-off hai (C.1). Real product mein array/JSON ya alag table better hoti.
-- **Enums = "UI dropdown options ka source of truth" nahi.** DB validity enforce karte hain; UI labels (jaise "Full Time" display) alag mapping se aate hain — DB value `FULL_TIME` hai, screen pe "Full Time" dikha sakte ho.
+- **`ownerId @unique` is not "the owner can never change."** A unique constraint means "each ownerId value appears once" — ownership transfer is allowed (update the column), it just enforces one-company-per-owner. 1:1 means cardinality, not immutability.
+- **`@@index([featured, createdAt])` is not "the table stores data pre-sorted."** An index is a separate data structure (a pre-sorted mini-directory) — it doesn't change the table's row order. There's a trade-off too: every insert updates the index, so you don't index every column.
+- **Seed is not "production data."** Seed creates development/test data. Production deploys don't run seeds — real data comes from real users.
+- **`skills String` is not "best practice."** Comma-separated strings are hard to query — it's a deliberate scope trade-off (decided in C.1). A real product would use an array, JSON, or a separate table.
+- **Enums are not "the source of truth for UI labels."** The database enforces valid values (`FULL_TIME` can't be misspelled as `"fulltime"`), but the display label ("Full Time") comes from a UI mapping — DB values and UI labels are separate.
 
 ---
 
 **In Your Own Words**
 
-1. `Company.ownerId` pe `@unique` lagane se relationship kaise badal gayi — bina unique ke kya hoti?
+1. Adding `@unique` to `Company.ownerId` — how did that change the relationship, and what would happen without it?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Bina `@unique` ke `ownerId` normal foreign key hoti — ek user multiple companies bana sakta (1:N). Unique lagane se ek `ownerId` value table mein sirf ek baar aa sakti — matlab ek user ki sirf ek company (1:1). Postgres mein one-to-one enforce karne ka standard tareeka hi yeh hai — FK pe unique constraint.
+**Sample Answer:** Without `@unique`, `ownerId` is a plain foreign key — one user could create multiple companies (1:N). Adding `@unique` means each `ownerId` value appears only once in the `Company` table — so one user can have at most one company (1:1). This is the standard way to enforce a one-to-one relationship in Postgres — put a unique constraint on the foreign key.
 
 </details>
 
-2. `@@unique([jobId, candidateId])` vs `@unique` single field pe — fark kya hai?
+2. What's the difference between `@@unique([jobId, candidateId])` and a single-field `@unique`?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Single-field `@unique` us column ki har value unique maangta (do candidates same email nahi). Composite `@@unique` **combination** ko unique banata hai — `jobId=1, candidateId=5` allowed hai aur `jobId=1, candidateId=7` bhi allowed (different candidates, same job), par `jobId=1, candidateId=5` dobara nahi (duplicate apply block). Combination-level uniqueness junction tables ki zaroorat hoti hai.
+**Sample Answer:** Single-field `@unique` requires that column's value to be unique (no two users with the same email). Composite `@@unique` requires the **combination** to be unique: `(jobId=1, candidateId=5)` is allowed and `(jobId=1, candidateId=7)` is also allowed (different candidates for the same job), but `(jobId=1, candidateId=5)` appearing twice is blocked. This is what prevents duplicate applications — a combination-level constraint, essential for junction tables.
 
 </details>
 
-3. Seed mein deletes child-first kyun — Application → Job → Company → User order pe kya hota agar User pehle delete karte?
+3. Why do seed deletes happen in reverse order (Application → Job → Company → User)? What if User were deleted first?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Foreign key violation. `Company.ownerId` User.id reference karta hai — User delete karne pe wo row aisi ban jaati jiska reference hi exist nahi karta, isliye Postgres error deta ("update or delete violates foreign key constraint"). Isliye pehle deepest child (Application — do parents reference karta hai), phir Job, phir Company, phir User.
+**Sample Answer:** Foreign-key violation. `Company.ownerId` references `User.id` — deleting a User leaves a Company pointing at a non-existent owner, and Postgres throws an error ("update or delete violates foreign key constraint"). The safe order is: deepest children first (Application references two parents), then Job, then Company, then User.
 
 </details>
 
-4. `matchScore Int?` nullable rakha — DB mein non-null kar dete toh kya concrete problem aati?
+4. Why is `matchScore Int?` nullable — what concrete problem does non-nullable cause?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Apply flow mein AI call (C.9) DB insert ke around hoti hai. Agar score non-null hota, toh AI fail/rate-limit hone pe insert reject hoti — candidate ki application hi lost. Nullable se application pehle save hoti hai, score baad mein fill ho sakta hai (retry). Data integrity important-things-first principle: application > score.
+**Sample Answer:** The AI scoring call (C.9) happens around the database insert. If `matchScore` were non-nullable, an AI failure (rate limit, timeout) would cause the insert to be rejected — the candidate's application is lost over a scoring failure. With nullable, the application saves first (score can be null), and scoring retries later. It encodes a priority: the application matters more than the score.
 
 </details>
 
-5. `@@index([featured, createdAt])` kis exact query pattern ko serve karta hai, aur isse kab ignore bhi kar sakte the?
+5. What query pattern does `@@index([featured, createdAt])` serve, and when could you skip it?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Home query pattern: `findMany({ orderBy: [{ featured: "desc" }, { createdAt: "desc" }] })` — featured-first, newest-first sort. Index is composite sort ka pre-computed directory hai — scan ki jagah direct read. Chhote data (< few hundred rows) mein sequential scan bhi milliseconds mein hota — index ki value production volume pe dikhti hai. Over-indexing bhi cost hai (har insert slower), isliye soch ke lagate hain.
+**Sample Answer:** The home page query: `findMany({ orderBy: [{ featured: "desc" }, { createdAt: "desc" }] })` — featured first, then newest. The composite index is a pre-sorted mini-directory on exactly those columns — the query reads it directly instead of sorting at runtime. With small data (< a few hundred rows), a sequential scan is still milliseconds — the index only matters at production scale. Over-indexing also has a cost (every insert updates the index), so you choose deliberately.
 
 </details>
 
 ---
 
-Foundation taiyar hai — project, database, 4 tables, seed data. Ab pehla **user-facing page**: home — featured jobs upar, search + filters, sab Server Component reads ke saath. C.3 mein hardcoded UI se shuru karenge, phir Prisma queries jodenge.
+The foundation is ready — the project, database, 4 tables, and seed data. Now the first **user-facing page:** the home page — featured jobs first, with search + filters, all as Server Component reads. We start with hardcoded UI, then add the Prisma queries. This is C.3.
+
+We'll explore this in detail in the next topic.

@@ -1,26 +1,26 @@
-C.4 ke saath public side complete ho gayi — listings, filters, detail page, SEO. Par abhi tak **sirf dekh sakte hain**. Post karne ke liye employer chahiye, apply karne ke liye candidate — matlab auth. Batch 5 mein Auth.js + GitHub OAuth bana tha (Login Demo v2), par wahan sirf ek sawaal tha: *"logged in hai ya nahi?"* Capstone ka sawaal bada hai: **"kaun logged in hai — EMPLOYER ya CANDIDATE?"** Yeh file mein woh role layer upar banayenge.
+With C.4, the public side is complete — listings, filters, detail pages, SEO. But until now you could only **look.** To post, you need an employer; to apply, you need a candidate — so you need auth. Batch 5 built Auth.js + GitHub OAuth (Login Demo v2), but there the question was only: *"is the user logged in?"* The capstone's question is bigger: **"who is logged in — EMPLOYER or CANDIDATE?"** This file puts that role layer on top.
 
-Reuse pehle, naya baad mein: OAuth setup (GitHub app + env vars + install) 5.4.1 jaisa hi hai — quick recap karenge. Asli naya kaam: DB mein user record, session mein role, onboarding flow, protected route groups.
+Reuse what came first, add what's new: OAuth setup (GitHub app + env vars + install) is the same as 5.4.1 — we'll quickly recap it. The real new work: a user record in the DB, the role in the session, the onboarding flow, and protected route groups.
 
 # Hiring Platform — Part 5: Auth with Roles
 
-## Step 1 — Setup Recap (5.4.1 Se Same)
+## Step 1 — Setup Recap (Same as 5.4.1)
 
-GitHub OAuth App banao — 5.4.1 Step 1 ke exact steps: Settings → Developer settings → OAuth Apps → New. Do values yaad rakho:
+Create a GitHub OAuth App — 5.4.1 Step 1, exact same steps: Settings → Developer settings → OAuth Apps → New. Remember two values:
 
 | Field | Value |
 |---|---|
 | Homepage URL | `http://localhost:3000` |
 | Authorization callback URL | `http://localhost:3000/api/auth/callback/github` |
 
-Client ID + Client Secret milenge (secret sirf ek baar dikhta hai!). Phir:
+You'll get the Client ID + Client Secret (the secret shows only once!). Then:
 
 ```bash
 npm install next-auth@beta
 npx auth secret
 ```
 
-**`.env.local`** mein teen vars (5.4.1 convention — `AUTH_GITHUB_` prefix se provider khud padh leta hai):
+**`.env.local`** gets three vars (5.4.1's convention — `AUTH_GITHUB_` prefix lets the provider read it automatically):
 
 ```env
 AUTH_SECRET=npx-auth-secret-ne-dala-hoga
@@ -28,7 +28,7 @@ AUTH_GITHUB_ID=github-client-id
 AUTH_GITHUB_SECRET=github-client-secret
 ```
 
-Auth.js ko route handler chahiye — 5.4.2 wala hi file:
+Auth.js needs a route handler — 5.4.2's same file:
 
 ```ts
 // app/api/auth/[...nextauth]/route.ts
@@ -37,7 +37,7 @@ import { handlers } from "@/auth";
 export const { GET, POST } = handlers;
 ```
 
-Aur base config — root `auth.ts` (project root, `app/` ke bahar) — 5.4.1 ka final state:
+And the base config — root `auth.ts` (project root, outside `app/`) — 5.4.1's final state:
 
 ```ts
 // auth.ts (project root)
@@ -52,18 +52,18 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
 });
 ```
 
-Yeh tak sab revision tha. Ab naya kaam.
+That was all review. Now the new stuff.
 
-## Step 2 — Login Ke Waqt DB Mein User Record
+## Step 2 — Create a User Record at Login Time
 
-**Problem:** Abhi login karne pe Auth.js ko sirf GitHub profile milta hai (naam, email) aur JWT ban jaata hai. Hamare paas toh poori `User` table hai (C.2)! Applications, role, company — sab `userId` se judi hai. Agar DB row create na ho toh apply action ko pata hi nahi chalega applicant kaun hai.
+**The problem:** When you log in, Auth.js only sees the GitHub profile (name, email) and creates a JWT. But we have a full `User` table (C.2)! Applications, role, company — all connect to `userId`. If no DB row is created, the apply action won't know who the candidate is.
 
-**Concept:** Auth.js config ke **callbacks** lifecycle hooks hain — auth ke different points pe hamara code chalta hai. Humein do chahiye:
+**Concept:** Auth.js config has **callbacks** — lifecycle hooks that run at different points in auth. We need two:
 
-- **`signIn` callback** — *sirf login ke waqt* ek baar chalta hai → yahan user record upsert karenge
-- **`jwt` callback** — JWT ban/refresh hone pe chalta hai → token mein `userId` daalenge
+- **`signIn` callback** — runs *once at login time* → create/update the user record
+- **`jwt` callback** — runs when the JWT is created/updated → put `userId` in the token
 
-"Upsert" = update-or-insert: email se dhoondo, mila toh use karo, naya user hai toh banao. Dobara login pe duplicates nahi bante.
+"Upsert" = update-or-insert: look by email; if found, use it; if it's a new user, create it. No duplicates on repeat logins.
 
 ```ts
 // auth.ts (project root)
@@ -79,18 +79,18 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
   callbacks: {                                                           // NEW
     async signIn({ user }) {                                             // NEW
       if (!user.email) return false;                                     // NEW
-                                                                      // NEW
+                                                                       // NEW
       const dbUser = await prisma.user.upsert({                          // NEW
         where: { email: user.email },                                    // NEW
         update: {},                                                      // NEW
-        create: {                                                        // NEW
+        create: {                                                       // NEW
           email: user.email,                                             // NEW
           name: user.name,                                               // NEW
           image: user.image,                                             // NEW
-          // role schema default lega — CANDIDATE                        // NEW
+          // role gets schema default — CANDIDATE                        // NEW
         },                                                               // NEW
       });                                                                // NEW
-                                                                      // NEW
+
       return true;                                                       // NEW
     },                                                                   // NEW
     async jwt({ token, user }) {                                         // NEW
@@ -106,23 +106,23 @@ export const { handlers, signIn, auth, signOut } = NextAuth({
 });
 ```
 
-Flow samjho — login pe kya-kya hota hai:
+Trace the login flow:
 
-1. GitHub se profile aaya (`user` param)
-2. `signIn`: `user.email` nahi? → `return false` = login reject (rare, but guard). Warna **upsert** — pehli baar row bani (schema default role `CANDIDATE` laga), dobara login pe existing mili (`update: {}` = kuch mat badlo)
-3. `jwt`: sirf tab DB query jab `user` present hai (= fresh sign-in; har request pe yeh callback chalta hai, par `if` andar ki query sirf sign-in pe) → token mein `userId` pack
-4. Ab har future request pe JWT ke andar `token.userId` available
+1. GitHub profile arrives (`user` param)
+2. `signIn`: no `user.email`? → `return false` = login rejected (rare, but a guard). Otherwise **upsert** — first time creates a row (schema default `role: CANDIDATE`), repeat login finds the existing row (`update: {}` = change nothing)
+3. `jwt`: only runs the DB query when `user` is present (= fresh sign-in; the callback runs on every request, but the `if` block only runs at sign-in) → pack `userId` into the token
+4. From now on, every future request has `token.userId` available
 
-TypeScript note: `token.userId` pe red squiggle aa sakti hai — default `JWT` type mein `userId` field nahi. Fix agle step mein (type augmentation).
+TypeScript note: red squiggles may appear on `token.userId` — the default `JWT` type doesn't have that field. Fix it in the next step (type augmentation).
 
-## Step 3 — Session Mein Fresh Role (DB = Single Source of Truth)
+## Step 3 — Fresh Role in Session (DB = Single Source of Truth)
 
-**Problem:** Token mein `userId` hai, par pages ko chahiye `role` — layout checks ke liye. Role change hota rahega (onboarding pe candidate→employer). Token mein role daala toh **stale** ho sakta hai — JWT refresh hone tak purani role dikhegi.
+**The problem:** The token has `userId`, but pages need `role` — for layout checks. Roles change (during onboarding, candidate → employer). Storing the role in the token would be **stale** — it won't update until the JWT refreshes.
 
-**Decision:** Role kabhi token mein store NAHI karenge. Har request pe session banate waqt DB se **fresh user** uthayenge. Ek extra indexed query per request — trade-off honest hai: simplicity + always-correct role, cost microseconds ki query.
+**Decision:** Role is **never** stored in the token. Every time a session is built, we fetch the **fresh user** from the DB. One extra indexed query per request — an honest trade-off: simplicity + always-correct role, at the cost of a microsecond query.
 
 ```ts
-// auth.ts — callbacks ke andar hi, jwt ke neeche:
+// auth.ts — inside callbacks, below jwt:
 async session({ session, token }) {                                      // NEW
   if (token.userId) {                                                    // NEW
     const dbUser = await prisma.user.findUnique({                        // NEW
@@ -139,12 +139,12 @@ async session({ session, token }) {                                      // NEW
 },                                                                       // NEW
 ```
 
-### Type Augmentation — Library Ke Types Ko Extend Karna
+### Type Augmentation — Extending Library Types
 
-Red squiggles fix karne ka time. Auth.js ke default types mein `session.user.role` / `token.userId` exist nahi karte — humne **add** kiya hai. TypeScript module augmentation se library ke types badha sakte hain. **File:** `auth.ts` ke end mein hi (colocated — sab ek jagah dikhe):
+Time to fix the red squiggles. Auth.js' default types don't include `session.user.role` or `token.userId` — we **added** them. TypeScript module augmentation lets you extend a library's types. **File:** append to `auth.ts` (co-located — keep everything in one place):
 
 ```ts
-// auth.ts — file ke end mein
+// auth.ts — end of file
 declare module "next-auth" {
   interface Session {
     user: {
@@ -164,13 +164,13 @@ declare module "next-auth/jwt" {
 }
 ```
 
-**Kya ho raha hai:** `declare module` TypeScript ko bolta hai — "is library ke types ko meri definition se merge kar do." Ab poore project mein `session.user.role` typed hai — autocomplete + typo protection. (React course ke generics/interfaces wale concepts ka real-world use.)
+**What's happening:** `declare module` tells TypeScript — "merge my definitions with this library's types." Now across the whole project, `session.user.role` is typed — autocomplete + typo protection. (The real-world use of the React course's generics/interfaces.)
 
-**TEST checkpoint:** `auth.ts` save karo, `/api/auth/signin` pe jao → GitHub login karo → error-free hona chahiye. Neon SQL Editor: `SELECT * FROM "User";` — tumhari row dikhni chahiye (role = CANDIDATE).
+**TEST checkpoint:** Save `auth.ts`, go to `/api/auth/signin` → click GitHub login → it should work error-free. In the Neon SQL Editor: `SELECT * FROM "User";` — your row should appear (role = CANDIDATE).
 
 ## Step 4 — Login Page
 
-Custom `/login` page — `pages.signIn` isi pe point karta hai. Server component + Server Action se signIn:
+Custom `/login` page — `pages.signIn` points here. Server component + Server Action to sign in:
 
 **File:** `app/login/page.tsx`
 
@@ -202,11 +202,11 @@ export default function LoginPage() {
 }
 ```
 
-- **Inline `"use server"`** — form ka `action` Server Action hai (3.3 pattern); chhote actions inline theek hain
-- **`redirectTo: "/onboarding"`** — login ke baad seedha onboarding — kyunki naye user ka role decide hona hai. (Purane users ke liye thodi extra click, par flow simple rehta hai — C.12 polish item.)
-- **`signIn("github")`** — OAuth dance shuru: GitHub redirect → consent → callback → hamare callbacks (Step 2) → wapas onboarding
+- **Inline `"use server"`** — the form's `action` is a Server Action (3.3 pattern); small inline actions are fine
+- **`redirectTo: "/onboarding"`** — after login, straight to onboarding — because a new user needs to decide their role. (Existing users get one extra click, but the flow stays simple — a C.12 polish item.)
+- **`signIn("github")`** — starts the OAuth dance: GitHub redirects → consent → callback → our callbacks (Step 2) → back to onboarding
 
-Sign out — header/navbar button (chhota sa component, dashboard layouts mein use hoga):
+Sign out — a small button for the header/navbar (used in the dashboard layouts):
 
 **File:** `components/logout-button.tsx`
 
@@ -230,11 +230,11 @@ export function LogoutButton() {
 }
 ```
 
-## Step 5 — Onboarding: Role Chuno
+## Step 5 — Onboarding: Choose a Role
 
-Login ke baad user `/onboarding` pe aata hai — ab usse poochna hai kaun hai woh.
+After login, the user arrives at `/onboarding` — now we ask what they are.
 
-**File:** `app/onboarding/page.tsx` — pehle static UI (do cards):
+**File:** `app/onboarding/page.tsx` — start with static UI (two cards):
 
 ```tsx
 // app/onboarding/page.tsx
@@ -245,15 +245,15 @@ import { CompleteOnboarding } from "./actions";
 export default async function OnboardingPage() {
   const session = await auth();
 
-  // Already role choose kar chuka? Uske section pe bhejo
+  // Already chosen a role? Send to their section
   if (session?.user.role === "EMPLOYER") redirect("/dashboard");
   if (session?.user.role === "CANDIDATE") redirect("/applications");
 
   return (
     <main className="mx-auto max-w-3xl p-8">
-      <h1 className="text-3xl font-bold mb-2">Aap kaun hain?</h1>
+      <h1 className="text-3xl font-bold mb-2">Who are you?</h1>
       <p className="text-gray-600 mb-8">
-        Yeh baad mein change nahi hoga is demo mein — soch ke choose karo.
+        This won't change later in this demo — choose carefully.
       </p>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -320,7 +320,7 @@ function EmployerForm() {
 }
 ```
 
-Ab asli mutation — role update (+ company create for employer):
+Now for the real mutation — updating the role (+ creating a company for the employer):
 
 **File:** `app/onboarding/actions.ts`
 
@@ -358,15 +358,15 @@ export async function CompleteOnboarding(
 }
 ```
 
-- **Server pe phir se auth()** — client se aaya "role" trust nahi karte; session se userId leke hi update. Aur `role` parameter ko bhi union-type restrict kiya (`"CANDIDATE" | "EMPLOYER"`) — koi aur value type-level pe hi invalid.
-- **Conditional spread** — `...(cond ? {...} : {})` pattern: employer ho tabhi `company.create` data mein jaata hai. Nested create (C.2 seed wala) — User update ke saath Company ban gayi, FK automatic.
-- **Redirect role-based** — har role apne ghar mein.
+- **Authenticate again on the server** — we don't trust the role the client sends; we get `userId` from the session. The `role` parameter is also restricted to a union type (`"CANDIDATE" | "EMPLOYER"`) — no other value is valid at the type level.
+- **Conditional spread** — the `...(cond ? {...} : {})` pattern: `company.create` only goes into `data` when the user is an employer. Nested create (the seed pattern from C.2) — a Company is created alongside the User update, FK automatically.
+- **Role-based redirect** — each role goes home to their own section.
 
-**TEST:** Naya browser (ya incognito) → `/login` → GitHub → onboarding → Employer + company name "Test Co" → `/dashboard` pe land (abhi 404 hoga — next step!). Neon check: User.role = EMPLOYER, Company table mein row.
+**TEST:** A new incognito window → `/login` → GitHub → onboarding → Employer + company name "Test Co" → lands on `/dashboard` (will 404 for now — next step!). Neon check: `User.role` = EMPLOYER, a row in the `Company` table.
 
 ## Step 6 — Protected Route Groups
 
-**Concept (5.4.3 ka scale version):** `(employer)` group ke layout mein ek hi baar check likhenge — group ke andar ke saare pages protected. Helper banate hain taaki dono groups reuse karein:
+**Concept (5.4.3 at scale):** Write the check once in each group's layout — all pages in the group are protected. Create a helper so both groups can reuse it:
 
 **File:** `lib/require-role.ts`
 
@@ -387,9 +387,9 @@ export async function requireRole(role: "EMPLOYER" | "CANDIDATE") {
 }
 ```
 
-- Bina login → `/login`
-- Galat role → apne section pe cross-redirect (employer ko candidate pages mein ghusna hai toh uska dashboard, vice versa)
-- Sahi role → session return — calling layout/page use kar sake
+- Not logged in → `/login`
+- Wrong role → cross-redirect to their own section (if an employer tries candidate pages, send to dashboard, and vice versa)
+- Correct role → return the session so the calling layout/page can use it
 
 **File:** `app/(employer)/layout.tsx`
 
@@ -425,83 +425,83 @@ export default async function EmployerLayout({
 }
 ```
 
-**File:** `app/(candidate)/layout.tsx` — same shape, `requireRole("CANDIDATE")`, nav mein "My Applications".
+**File:** `app/(candidate)/layout.tsx` — same shape, `requireRole("CANDIDATE")`, nav has "My Applications".
 
-> Parentheses folders URL mein nahi aate (5.5.x mein dekha) — `(employer)/dashboard/page.tsx` = `/dashboard`. Group sirf code organization + shared layout deta hai.
+> Parenthesized folders don't appear in the URL (covered in 5.5.x) — `(employer)/dashboard/page.tsx` = `/dashboard`. The group is just code organization + a shared layout.
 
-**Security note (Batch 4/8 ka rule yahan bhi):** Protection **layout-level `auth()` pe hai** — proxy/middleware mein NAHI. CVE-2025-29927 wali kahani yaad hai — middleware bypass ho sakta tha; layout server pe render hota hai, bypass impossible. Proxy ka role capstone mein sirf rate-limiting hoga (C.11).
+**Security note (rule from Batch 4/8, here too):** Protection is at the **layout-level `auth()`** — NOT in the proxy/middleware. Remember CVE-2025-29927 — middleware could be bypassed; layouts render on the server, bypass impossible. The proxy's role in the capstone is only rate-limiting (C.11).
 
-Ek aur zaroori baat jo interviews mein poochi jaati hai: **layout check ≠ page check.** Layout render hota hai har child page ke around — practically covered. Par agar kabhi koi page layout ke bahar nikal jaye (restructure), protection chhoot sakti hai. Isliye sensitive actions (jaise delete job) ke Server Actions **andar bhi ownership+role verify karte hain** — C.7 mein dikhega. Defense in depth.
+One more important point that comes up in interviews: **layout check ≠ page check.** The layout renders around every child page — practically covered. But if someone ever moves a page outside its layout (restructure), the protection could slip. That's why sensitive actions (like deleting a job) **also** verify ownership+role in the Server Action itself — you'll see this in C.7. Defense in depth.
 
 **TEST checklist:**
 
-1. Incognito → `/dashboard` directly → `/login` pe redirect
+1. Incognito → `/dashboard` directly → redirect to `/login`
 2. Login as Employer → onboarding → `/dashboard` renders (with header)
-3. Same session → manually `/applications` URL type → cross-redirect back to `/dashboard`
-4. Naya incognito, login as Candidate → `/applications` works, `/dashboard` blocked
-5. Sign out → public home, protected URLs phir se login pe redirect
+3. Same session → manually type `/applications` URL → cross-redirect back to `/dashboard`
+4. New incognito, login as Candidate → `/applications` works, `/dashboard` blocked
+5. Sign out → public home, protected URLs redirect to login again
 
 ## Nutshell
 
-Role-wala auth = Batch 5 base + 3 nayi cheezein. **(1)** `signIn` callback mein DB **upsert** (pehli login pe User row; duplicate-safe), `jwt` callback token mein `userId`. **(2)** `session` callback **har request pe DB se fresh user** — role single-source-of-truth DB hai, token stale nahi ho sakta; types `declare module` augmentation se extend. **(3)** Flow: login → `/onboarding` → role+company SA se DB update → role-based redirect → `(employer)/(candidate)` groups ke layouts `requireRole()` helper se protect (login nahi → /login; galat role → apna section). Security layout-level, proxy pe nahi.
+Role-based auth = Batch 5 base + 3 new things. **(1)** In the `signIn` callback, DB **upsert** (first login creates the User row; repeat login finds it, `update: {}` = no change), `jwt` callback packs `userId` into the token. **(2)** The `session` callback fetches the **fresh user from DB on every request** — role is single-source-of-truth in the DB, token stays non-stale; extend types with `declare module` augmentation. **(3)** Flow: login → `/onboarding` → role+company via SA → DB update → role-based redirect → `(employer)/(candidate)` groups protected by the `requireRole()` helper (login? → /login; wrong role? → own section). Security at layout-level, not proxy-level.
 
 ## What It Is NOT
 
-- **`upsert` = "har login pe naya record" nahi.** Email match hua toh update branch (khali `{}`) chalti hai — same user, same row. Insert sirf first-time. Isliye `@unique` email ke saath conflict bhi kabhi nahi.
-- **Session mein fresh DB read = "performance bug" nahi.** Conscious trade-off hai — correctness (fresh role) > microsecond query. Production optimization (JWT claims caching + update events) possible hai, par complexity abhi value nahi deti.
-- **Role system = "full RBAC" nahi.** Sirf do roles hain, flat permissions. Enterprise RBAC (permission tables, role hierarchies) alag universe hai — yeh capstone ka simple, honest version hai.
-- **Layout protection = "pages khud safe hain" nahi.** Layout visual/route access gate karta hai; **data mutations** apni Server Actions mein ownership verify karti hain (C.7/C.10). Dono layers alag kaam karti hain — UI gate vs operation gate.
-- **`declare module` = "library ka source edit" nahi.** Sirf TypeScript ki type-world mein merge hota hai — runtime code untouched. Pure compile-time feature.
+- **`upsert` = "creates a record every login" is NOT true.** If the email matches, the update branch runs (`update: {}` = no change) — same user, same row. Insert only happens for first-timers. So the `@unique` email never even comes close to conflicting.
+- **Fresh DB read in session = "a performance bug" is NOT true.** A conscious trade-off — correctness (fresh role) > a microsecond query. Production optimization (JWT claims caching + update events) is possible, but the complexity doesn't pay off yet.
+- **Role system = "full RBAC" is NOT true.** Just two roles, flat permissions. Enterprise RBAC (permission tables, role hierarchies) is a different universe — this is the capstone's simple, honest version.
+- **Layout protection = "the pages themselves are safe" is NOT true.** The layout gates visual/route access; **data mutations still verify ownership in their own Server Actions** (C.7/C.10). Two layers, two jobs — UI gate vs operation gate.
+- **`declare module` = "editing the library's source" is NOT true.** It's just a TypeScript type-world merge — runtime code untouched, pure compile-time.
 
 ---
 
-**In Your Own Words**
+## In Your Own Words
 
-1. `signIn` callback mein upsert kyun — plain `create` kyun nahi?
+1. Why `upsert` in the `signIn` callback — why not just `create`?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** User dobara login karta hai toh `create` unique-email constraint pe fail karega (row already exists) — poora login crash. Upsert dono cases handle karta hai: naya user → insert, purana → no-op update. Auth flows mein repeat visits guaranteed hain, isliye upsert standard pattern hai.
+**Sample Answer:** A user logs in again — `create` would fail on the unique-email constraint (row already exists) — the whole login crashes. Upsert handles both cases: new user → insert, existing user → no-op update. Repeat visits are guaranteed in auth flows, so upsert is the standard pattern.
 
 </details>
 
-2. Role token (JWT) mein store karne ke bajaye har request pe DB se fetch kyun — trade-off explain karo.
+2. Why fetch the role from DB on every request instead of storing it in the token — what's the trade-off?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Token mein role stale ho jata — user onboarding pe role badle toh JWT refresh tak purani role chalti (access control galat!). DB-fresh session se role hamesha correct, single source of truth. Cost: ek indexed PK query per request (~ms). Correctness-sensitive data (permissions) ke liye yeh trade worth it hai; static prefs (theme etc.) token mein rakh sakte the.
+**Sample Answer:** The role stored in a token goes stale — during onboarding the role changes, but the old role would serve until the JWT refreshes. Fetching the session fresh from DB means the role is always correct, single source of truth. The cost: one indexed PK query per request (~milliseconds). For correctness-sensitive data (permissions), that trade-off is worth it; for static preferences (theme etc.), the token is fine.
 
 </details>
 
-3. `requireRole` galat role pe user ko uske apne section pe redirect karti hai — security perspective se yeh information leak toh nahi?
+3. `requireRole` redirects the wrong-role user to their own section — is that an information leak from a security perspective?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Halka leak hai — response se pata chalta hai "/dashboard exist karti hai" (vs generic 404 jo existence bhi chhupata). Capstone scope mein acceptable UX trade-off hai (better guidance > secrecy). High-security systems generic 404 prefer karti hain. Important: yeh UI-level choice hai — actual data/actions toh phir bhi protected hain, redirect sirf navigation hai.
+**Sample Answer:** A light leak — the response confirms that "/dashboard exists" (versus a generic 404 that conceals existence). In scope of the capstone this is an acceptable UX trade-off (better guidance than secrecy). High-security systems prefer a generic 404. The important thing: this is a UI-level choice — the actual data and actions are still protected; the redirect is just navigation.
 
 </details>
 
-4. `CompleteOnboarding` mein role parameter server pe validate kyun kiya jab form se hi aa raha hai?
+4. Why validate the `role` parameter in `CompleteOnboarding` when it comes from the form?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Form HTML user-controlled hai — koi DevTools se apna form/action craft karke `role=ADMIN` jaisi values POST kar sakta hai (8.2: client input pe trust nahi). Union type + explicit branches se sirf valid roles process hote hain. Server Actions publicly callable endpoints hain — unki inputs untrusted treat karna rule hai.
+**Sample Answer:** The form HTML is user-controlled — someone could craft their own form/action in DevTools and POST `role=ADMIN` (8.2: don't trust client input). The union type + explicit branches means only valid roles are processed. Server Actions are publicly callable endpoints — their inputs must be treated as untrusted.
 
 </details>
 
-5. `(employer)/layout.tsx` ka `requireRole("EMPLOYER")` check CVE-2025-29927 se kyun safe hai jabki proxy-level check unsafe tha?
+5. The `(employer)/layout.tsx` checks `requireRole("EMPLOYER")` — how is this safe from CVE-2025-29927 (middleware bypass) when a proxy-level check wasn't?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** CVE wala attack middleware/proxy routing layer ko special headers se bypass karta tha — woh request pipeline ka interceptable part hai. Layout check App ke render phase mein hota hai — server-side React tree banate waqt `auth()` chalti hai; us layer ko "skip" karne ka path hi nahi hai. Page content hi render nahi hota agar check fail. Infra-layer vs application-layer difference.
+**Sample Answer:** The CVE let attackers bypass the middleware/proxy routing layer using special headers — that layer is interceptable. The layout check runs during App's render phase — `auth()` runs while the React tree is built; there's no way to skip it. The page content doesn't render at all if the check fails. The difference is infrastructure-layer vs application-layer.
 
 </details>
 
 ---
 
-Auth layer poori hai — login, roles, onboarding, protected sections. Ab in roles ko **kaam** pe lagate hain. C.6 mein employer ka pehla power tool: **Post Job form** — aur uske saath capstone ki pehli AI call: title/skills type karo, Gemini job description draft likh dega. Server Action + external API + useActionState feedback — teen concepts ek saath.
+The auth layer is complete — login, roles, onboarding, protected sections. Now put these roles to **work**. In C.6, the employer's first power tool: the **Post Job form** — with the capstone's first AI feature: type a title + skills, and **Gemini** drafts the full job description. Server Action + external API + useActionState feedback — three concepts together.

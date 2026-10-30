@@ -1,19 +1,19 @@
-C.2 mein foundation poori ho gayi — project bana, Neon juda, 4 tables migrate hui, aur seed data (4 jobs, 2 companies, 1 scored application) database mein pada hai. Neon SQL Editor mein query chala ke verify bhi kar liya tha. Ab pehla **user-facing page** — home. Guest ya logged-in, koi bhi aaye, sabse pehle yahi dikhega: featured jobs upar, neeche saari jobs, upar ek search bar + filters.
+In C.2 the foundation was built — the project was created, connected to Neon, 4 tables migrated, and seed data (4 jobs, 2 companies, 1 scored application) was loaded into the database. The data was verified by querying the Neon SQL Editor. Now the first **user-facing page** — the home page. Whether a guest or a logged-in user, everyone sees the same thing first: featured jobs at the top, all jobs below, with a search bar and filters above.
 
-Yeh page 3 cheezein sikhayega jo poore capstone mein baar-baar aayengi:
-1. **Server Component se Prisma read with relations** (`include` — 6.13.4 ka pattern)
-2. **Page-level `searchParams`** — URL ke `?q=react&type=FULL_TIME` ko page ke andar padhna (naya concept!)
-3. **Server-side filtering — bina kisi "use client" ke**
+This page teaches three concepts that repeat throughout the capstone:
+1. **Server Component reads from Prisma, with relations** (using `include` — the pattern from 6.13.4).
+2. **Page-level `searchParams`** — reading URL query filters like `?q=react&type=FULL_TIME` inside the page (new concept).
+3. **Server-side filtering — without any "use client".**
 
 # Hiring Platform — Part 3: Home Page
 
-## Stage 1 — Static UI Pehle (Hamesha Ka Rule)
+## Stage 1 — Static UI First (Always the Rule)
 
-Golden rule yaad hai — 6.13.2 Task Board, 7.7.2 Photo Gallery, sab static UI se shuru hue. Kyun? Data layer baad mein judti hai, par **design ka faisla abhi** hota hai — aur hardcoded data se hi pata chal jaata hai ki data shape sahi hai ya nahi.
+The golden rule — every project started with static UI first (Task Board in 6.13.2, Photo Gallery in 7.7.2). Why? The data layer connects later, but the **design decision happens now** — and you can see whether the data shape is right or not with hardcoded data.
 
-Pehle socho — job card pe kya dikhna chahiye? Seed data dekho (C.2): title, company name, company logo, location, type badge, salary range, skills chips, featured badge. Bas.
+First, think — what does a job card show? Look at the seed data (C.2): title, company name, logo, location, type badge, salary range, skills chips, featured badge. That's it.
 
-**File:** `app/page.tsx` — default content replace karo:
+**File:** `app/page.tsx` — replace the default content:
 
 ```tsx
 // app/page.tsx
@@ -52,7 +52,7 @@ export default function Home() {
         {jobs.length} open positions
       </p>
 
-      {/* Filter bar — abhi sirf dikhne ke liye */}
+      {/* Filter bar — visual only for now */}
       <form className="flex gap-2 mb-8">
         <input
           name="q"
@@ -110,24 +110,24 @@ export default function Home() {
 }
 ```
 
-Code ke important bits:
+Key bits of the code:
 
-- **`jobs.map()`** — hardcoded array se cards; `key={job.id}` React course ka purana dost
-- **Card poora `<a>` hai** — poora card clickable, `/jobs/[slug]` pe le jaata hai (C.4 mein banega)
-- **`{job.featured && (...)}`** — conditional render (&& pattern) — featured job pe hi amber badge
-- **`job.type.replace("_", " ").toLowerCase()`** — DB value `FULL_TIME` hai, screen pe "full time" dikhana zyada natural hai. Yehi C.2 wala point tha — DB enum value ≠ display label
-- **`job.salaryMin && ...` + `salaryMax!`** — optional fields ka guard. Andar `!` (non-null assertion) isliye kyunki min hai toh max bhi hoga (humara data rule) — TypeScript ko batana pad raha hai
-- **Form abhi kuch nahi karta** — `action` nahi diya, button click submit karke same page reload karega. Jaan-boojh ke — filters agle stage mein judenge
+- **`jobs.map()`** — maps over the hardcoded array, `key={job.id}` — the old friend from the React course.
+- **The entire card is an `<a>` tag** — clicking anywhere navigates to `/jobs/[slug]` (built in C.4).
+- **`{job.featured && (...)}`** — the conditional render (`&&`) pattern — the amber badge only on featured jobs.
+- **`job.type.replace("_", " ").toLowerCase()`** — the DB value is `FULL_TIME`, rendering `"full time"` is more natural. This is exactly the point from C.2 — the enum's DB value ≠ the display label.
+- **`job.salaryMin && ...` + `salaryMax!`** — guard for optional fields. The `!` (non-null assertion) is because of our rule that where there's a min there's a max too — telling TypeScript.
+- **The form does nothing yet** — no `action` attribute; clicking Search triggers a GET form submit that reloads the same page. Intentional — the filters connect in the next stage.
 
-**TEST:** `npm run dev` → `localhost:3000`. Do cards dikhne chahiye — Frontend Developer pe ★ Featured badge. Design confirm? Ab asli data.
+**TEST:** `npm run dev` → `localhost:3000`. Two cards should render — Frontend Developer with the ★ Featured badge. Design look right? Time for real data.
 
-## Stage 2 — Prisma Read (Hardcoded Array Ki Jagah)
+## Stage 2 — Prisma Read (Replacing the Hardcoded Array)
 
-Ab woh stage jahan har project ka hardcoded data real database se replace hota hai (6.13.4, 7.7.3 mein bhi yehi hua tha).
+This is the stage where every project swaps hardcoded data for database reads (6.13.4, 7.7.3).
 
-**Concept recap:** Server Component mein seedha `await` — no useEffect, no fetch, no loading spinner for the initial HTML (2.1). Prisma client singleton (`lib/prisma.ts`) import karo, query chalao.
+**Concept recap:** The Server Component can `await` directly — no useEffect, no fetch, no loading state for the initial HTML (2.1). Import the Prisma singleton (`lib/prisma.ts`), run the query.
 
-Relations ka sawaal: card pe `companyName` chahiye — par woh `Job` table mein nahi, uski `Company` mein hai. **`include`** se related data saath laate hain (6.13.4 boards+tasks wala hi pattern):
+The relation question: the card needs `companyName` — but that's on the `Company` table, not `Job`. Bring related data with **`include`** (same pattern as boards+tasks in 6.13.4):
 
 ```tsx
 // app/page.tsx
@@ -138,60 +138,60 @@ export default async function Home() {                                   // NEW 
     orderBy: [{ featured: "desc" }, { createdAt: "desc" }],              // NEW
     include: { company: true },                                          // NEW
   });
-  // ...baaki JSX same...
+  // ...JSX the same...
 ```
 
-- **`async function Home()`** — Server Component async ban gaya — ab andar `await` allowed
-- **`orderBy: [{ featured: "desc" }, { createdAt: "desc" }]`** — C.2 wale index ka exact use! Featured jobs sabse upar, phir newest pehle. Array = multi-level sort.
-- **`include: { company: true }`** — har job ke saath uski poori Company object. Result: `job.company.name` accessible.
+- **`async function Home()`** — the Server Component is now async — `await` is legal in its body.
+- **`orderBy: [{ featured: "desc" }, { createdAt: "desc" }]`** — the exact use of the C.2 index. Featured jobs first, then newest. An array = multi-level sort.
+- **`include: { company: true }`** — brings each job's full Company object alongside. Result: `job.company.name` is accessible.
 
-JSX mein hardcoded field ab relation se aayegi:
+In the JSX, the hardcoded field becomes a relation:
 
 ```tsx
-{/* pehle: */}
+{/* before: */}
 <p className="text-sm text-gray-600">{job.companyName}</p>
 
-{/* ab: */}
+{/* after: */}
 <p className="text-sm text-gray-600">{job.company.name}</p>              // CHANGED
 ```
 
-Baaki fields (`title`, `location`, `type`...) seedhe `job.` pe hain — same rahenge. Sirf company wali line badli.
+Other fields (`title`, `location`, `type`...) come straight off `job.` — they stay the same. Only the company line changed.
 
-**TypeScript bonus:** Prisma Client ne generate kiye types automatically `jobs` pe lag rahe hain — `job.company.name` hover karo, poora type dikh jayega. Koi manual interface nahi likha (Prisma ka sabse bada fayda — 6.13.3 ka point).
+**TypeScript bonus:** Prisma Client auto-generates types onto `jobs` — hovering `job.company.name` shows the full type. No manual interface needed (Prisma's biggest perk — 6.13.3's point).
 
-**TEST:** Save karo → page reload. Ab **4 jobs** dikhni chahiye (seed wale), Frontend Developer sabse upar featured badge ke saath. Agar error aaye `@/lib/prisma` not found — path alias check karo (`tsconfig.json` mein `"@/*": ["./*"]` hota hai create-next-app by default).
+**TEST:** Save → page reload. Now **4 jobs** render (the seed ones), Frontend Developer first with the featured badge. If you get an error that `@/lib/prisma` isn't found — check the path alias (`tsconfig.json` has `"@/*": ["./*"]` by default in create-next-app).
 
-## Stage 3 — searchParams: URL Se Filters Padhna
+## Stage 3 — searchParams: Reading URL Filters
 
-UI mein form already hai, par woh kuch karta nahi. Ab filtering ka asli concept.
+The UI form is already there, but it does nothing. Now the real filtering concept.
 
-**Problem:** User "React" type karke Search dabaye toh kya hota hai? Form submit hota hai — aur browser URL banta hai:
+**Problem:** The user types "React", selects FULL_TIME, clicks Search. What happens? The form submits — and the browser URL becomes:
 
 ```
 localhost:3000/?q=React&type=FULL_TIME
 ```
 
-HTML forms ka built-in behaviour: `<input name="q">` ki value URL mein `?q=value` ban jaati hai. Humne JavaScript likhi hi nahi — **browser khud query string banata hai** GET form pe. Ab bas page ko chahiye: *URL mein kya hai, wahi filter laga do.*
+HTML forms have built-in behavior: an `<input name="q">` value becomes `?q=value` in the URL. No JavaScript was written — **the browser builds the query string** on a GET form. All the page needs then is: *read what's in the URL, and apply those filters.*
 
-**Concept — page-level `searchParams`:** Batch 4 mein proxy ke andar URL padhna seekha tha (`request.nextUrl.searchParams.get(...)` — 4.4). Wahan request object se manually nikaalte the. App Router pages ka apna shortcut hai — Next.js har page ko ek prop deta hai jisme **current URL ki saari query params** hain:
+**Concept — page-level `searchParams`:** Batch 4 showed URL parsing from inside a proxy (`request.nextUrl.searchParams.get(...)` — 4.4). There, you pulled it off the request object manually. App Router pages have a shorthand: Next.js passes every page a prop containing **all the current URL's query params**:
 
 ```tsx
-// sirf samajhne ke liye — abhi code nahi
+// just to visualize — not the real code yet
 export default async function Home({ searchParams }) {
   // searchParams = { q: "React", type: "FULL_TIME" }
-  // agar URL mein ?q=... nahi hai → {} (khali object)
+  // if the URL has no ?q=... → {} (empty object)
 }
 ```
 
-Ek **critical Next.js 16 detail:** yeh prop **Promise hai** — direct `.q` access nahi karoge, pehle `await` karna padega. Kyun promise? Next.js streaming render ke waqt URL parse ko optimize karta hai — promise dete hain taaki rendering block na ho jab tak params ki zaroorat na pade. Syntax:
+A **critical Next.js 16 detail:** that prop is a **Promise** — you can't access `.q` directly, you have to `await` it first. Why a Promise? Streaming render optimization in Next.js — passing a Promise lets it not block rendering until query params are actually needed. The syntax:
 
 ```ts
 const { q, type } = await searchParams;
 ```
 
-Aur ek side-effect samjho (2.3 ka static-vs-dynamic yaad karo): **jis page mein `searchParams` await hota hai, woh page automatically Dynamic ban jaata hai.** Build time pe pre-render nahi hoga — har request pe server render karega, kyunki output URL pe depend karta hai. Iska matlab: humara home page ab dynamic hai — filters ke bina bhi. Trade-off acceptable hai: job board fresh listings dikhana chahta hai har request pe, stale cache nahi.
+And one side effect (recall 2.3's static-vs-dynamic): **a page that `await`s `searchParams` becomes Dynamic automatically.** It won't be pre-rendered at build time — every request server-renders it, since output depends on the URL. Takeaway: the home page is now dynamic — even without filters. Acceptable trade-off: a job board wants fresh listings on every request, not stale cache.
 
-Ab code:
+Now the code:
 
 ```tsx
 // app/page.tsx
@@ -227,34 +227,34 @@ export default async function Home({ searchParams }: HomeProps) {       // CHANG
   // ...JSX same...
 ```
 
-Step-by-step:
+Step by step:
 
-- **`type HomeProps`** — TypeScript typing: `searchParams` Promise hai jiske andar optional strings. `?` kyun? URL mein param ho bhi sakta hai nahi bhi.
-- **`await searchParams`** — Next 16 syntax; destructure se `q`, `type` nikale
-- **`filters` array gradually build hota hai** — ternary-in-object se cleaner pattern. Har condition apni line pe push karti hai. Dono conditions ho toh AND mein dono lagte hain; ek bhi na ho toh `where: undefined` (= no filter, saari jobs).
-- **`{ contains: q, mode: "insensitive" }`** — SQL LIKE %q% case-insensitive. "react" type karo toh "React, TypeScript..." wali jobs milengi.
-- **`OR`** — title **ya** skills mein match. Dono jagah dekhna user-friendly hai.
-- **Enum whitelist check** — `type` URL se aata hai, matlab **user-controlled string**! Koi `?type=HACKED` daal sakta hai. Seedha `{ type }` pass karte toh Prisma runtime error deta (invalid enum value) — ugly crash. Whitelist check = input validation (8.2 ka awareness yahan apply hua). Valid values ke alawa kuch filter trigger nahi karega.
+- **`type HomeProps`** — TypeScript typing: `searchParams` is a Promise of optional strings. The `?` — why? The param may or may not be present in the URL.
+- **`await searchParams`** — Next 16 syntax; destructure `q`, `type` from it.
+- **`filters` array builds gradually** — cleaner than ternary-in-object. Each condition pushes its own line. Both conditions true → both go into `AND`; neither → `where: undefined` (no filter, all jobs).
+- **`{ contains: q, mode: "insensitive" }`** — a SQL `LIKE %q%` case-insensitive search. Type `"react"` → jobs whose skills include "React, TypeScript..." match.
+- **`OR`** — title **or** skills. Checking both is more user-friendly.
+- **Enum whitelist** — `type` comes from the URL, so it's **user-controlled string!** Someone can send `?type=HACKED`. Dropping `{ type }` directly into `where` makes Prisma throw a runtime error (invalid enum value) — an ugly 500. The whitelist check rejects invalid values → "no filter." That's input validation at the client/server boundary (8.2 in action).
 
-### Filter Form Ko Kaam Karwana
+### Making the Filter Form Work
 
-Form mein ek line change:
+A one-line change to the form:
 
 ```tsx
 <form action="/" method="get" className="flex gap-2 mb-8">               // CHANGED
 ```
 
-Bas itna?! Haan. Dekho kya hota hai:
+That's all? Yes. Here's what happens:
 
-1. User "React" type karta hai, type select karta hai FULL_TIME, Search dabata hai
-2. Browser GET form submit karta hai → URL: `/?q=React&type=FULL_TIME`
-3. Next.js page re-render karta hai, `searchParams` prop mein yeh values
-4. Hamara `filters` logic unse WHERE banata hai
-5. Filtered results render
+1. The user types "React", selects FULL_TIME, clicks Search.
+2. The browser submits the GET form → URL: `/?q=React&type=FULL_TIME`.
+3. Next.js re-renders the page, `searchParams` prop carries those values.
+4. The `filters` logic turns them into a WHERE clause.
+5. Filtered results render.
 
-**Zero client-side JavaScript. Zero "use client". Zero state management.** Poora flow server pe. Yeh server-first thinking hai — jo kaam server pe ho sakta hai, woh client pe mat lo (poora course isi philosophy pe chala hai).
+**Zero client-side JavaScript. Zero "use client". Zero state.** The whole flow runs on the server — this server-first thinking: if the server can do it, don't push it to the client (the entire course runs on this philosophy).
 
-Chhota polish — empty state (jab koi job match na ho):
+A small polish — the empty state (when no job matches):
 
 ```tsx
 {jobs.length === 0 && (
@@ -264,20 +264,20 @@ Chhota polish — empty state (jab koi job match na ho):
 )}
 ```
 
-Aur count update — heading ke neeche `{jobs.length} open positions` already dynamic hai, filtered count automatically dikhega.
+The count is already dynamic: the heading reads `{jobs.length} open positions` — the filtered count shows up automatically.
 
-**TEST:** 
-1. `localhost:3000` — 4 jobs
-2. "React" search karo — 2 jobs (Frontend Dev + Fullstack — dono ke skills mein React)
-3. Type = Internship select karo — 1 job
-4. `?q=xyznothing&type=INTERNSHIP` manually URL mein daalo — empty state message
-5. `?type=HACKED` daalo — crash nahi, saari jobs (whitelist ne reject kiya)
+**TEST:**
+1. `localhost:3000` — 4 jobs.
+2. Search "React" — 2 jobs (Frontend Dev + Fullstack — both have React in skills).
+3. Type = Internship — 1 job.
+4. Manually type `?q=xyznothing&type=INTERNSHIP` in the URL — the empty state message appears.
+5. Type `?type=HACKED` — no crash, all jobs show (the whitelist rejected the invalid value).
 
-Sab paas? Home page complete hai.
+All pass? The home page is complete.
 
-## Ek Aur Cheez — `loading.tsx` (Dynamic Page Ka Companion)
+## One More Thing — `loading.tsx` (The Dynamic Page's Companion)
 
-Page ab dynamic hai — har search pe thoda wait (DB query). Slow network pe blank screen buri experience. Batch 1.4 ka convention yaad hai — `loading.tsx` folder mein daalo, Next.js automatic Suspense boundary bana deta hai:
+The page is dynamic now — each search takes a moment (the DB query). On a slow network, a blank screen is bad UX. Batch 1.4's convention — drop a `loading.tsx` at the folder root; Next.js auto-wraps the page in a Suspense boundary:
 
 **File:** `app/loading.tsx`
 
@@ -301,71 +301,73 @@ export default function Loading() {
 }
 ```
 
-Skeleton cards (`animate-pulse` = Tailwind ka shimmer effect) — layout actual page jitna similar rakha, taaki swap smooth lage (layout shift na ho — CLS, 7.x ka concept).
+Skeleton cards (`animate-pulse` is Tailwind's shimmer) — make the layout as close to the real page as possible, so the swap feels smooth (no layout shift — CLS, a Batch 7 concept).
 
-**TEST:** Search submit karo — thoda network slow karke (DevTools → Network → Slow 3G) skeleton flash hona chahiye phir results.
+**TEST:** Submit a search, then slow down the network (DevTools → Network → Slow 3G) — the skeleton flashes before results arrive.
 
 ## Nutshell
 
-Home page = **SC read + server-side filters**. Static UI pehle (hardcoded array) → Prisma read (`findMany` + `orderBy` featured/newest + `include company`) → **page-level `searchParams` (Promise! `await` karo — Next 16)** se `q`/`type` padho → `Prisma.JobWhereInput[]` gradually build karke `AND` where → **GET form (`action="/" method="get"`)** browser se hi query string banwao — zero client JS. `searchParams` await hone se page Dynamic ban jaata hai (2.3 ka rule live). User-controlled enum whitelist se validate. `loading.tsx` skeleton ke saath.
+Home page = **Server Component reads + server-side filters.** Static UI first (hardcoded array) → Prisma read (`findMany` + `orderBy` featured/newest + `include: company`) → **page-level `searchParams`** (a Promise! `await` it — that's Next 16) to read `q` and `type` → build a `Prisma.JobWhereInput[]` array → `where: { AND: filters }` or `undefined`. The **GET form** (`action="/" method="get"`) makes the browser build the query string — zero client JS. Awaiting `searchParams` makes the page Dynamic (2.3's rule, live). User-controlled enum validated by a whitelist. `loading.tsx` brings skeleton cards.
 
 ## What It Is NOT
 
-- **`searchParams` prop = proxy wala `searchParams` nahi.** Proxy (4.4) mein `request.nextUrl.searchParams` tha — URLSearchParams object, `.get("q")` se padhte the. Page prop plain object hai — `searchParams.q` directly. Naam same, shape alag — context pe dhyan.
-- **GET form = "purane zamane ka tareeka" nahi.** Yeh web ka native pattern hai — bookmarkable/shareable URLs (filtered result ka link bhejo kisi ko!), zero JS, SEO-friendly. Modern SPAs isko client state + history API se recreate karne ki koshish karti hain — server pe free milta hai.
-- **Dynamic page = "har baar slow" nahi.** Har request pe render hota hai, par Neon query milliseconds mein hai; Vercel region close hone pe overall fast hi rahega. ISR (revalidate) tab chahiye jab data rarely change ho — job postings active board pe frequently aati hain, dynamic fair choice hai.
-- **Empty `where` (`undefined`) = "saare rows without order" nahi.** `where` undefined hai toh filter nahi, par `orderBy` phir bhi lagta hai. Dono independent clauses hain.
-- **Whitelist check = "security ka poora solution" nahi.** Yeh input validation ka ek piece hai (invalid enum reject). Full security posture C.11 mein audit hogi — rate limiting, secrets, boundaries.
+- **`searchParams` prop is not the proxy's `searchParams`.** In the proxy (4.4), `request.nextUrl.searchParams` was a `URLSearchParams` object, read with `.get("q")`. The page prop is a plain object read with `searchParams.q`. Same name, different shape — context matters.
+- **A GET form is not "old-school" —** it's the web's native pattern. Bookmarkable, shareable URLs (send a link to a filtered result!), zero JS, SEO-friendly. Modern SPAs try to rebuild this with client state + history API; here it's free on the server.
+- **A Dynamic page is not "always slow."** Each request does render, but the Neon query is in milliseconds, and Vercel regions keep the rest fast. ISR (`revalidate`) only helps when every visitor gets the same HTML — here each filter-combination is its own output, so cache hits are rare. And fresh job listings are the point — a dynamic page is a fair trade.
+- **Empty `where` (`undefined`) is not "rows without ordering."** If `where` is undefined there's no filter, but `orderBy` still applies. They're independent clauses.
+- **The whitelist isn't "complete security."** It's one piece of input validation (reject the invalid enum). The whole security posture gets audited in C.11 — rate limiting, secret handling, trust boundaries.
 
 ---
 
 **In Your Own Words**
 
-1. Form mein `method="get"` + `action="/"` se filter kaise chalta hai — koi JavaScript kahan hai?
+1. With `<form method="get" action="/">`, how do filters flow — where's the JavaScript?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kahin nahi. GET form submit pe browser khud URL banata hai — named inputs (`name="q"`) ki values `?q=...&type=...` query string mein jaati hain. Next.js naya URL dekh ke page ko `searchParams` prop ke saath re-render karta hai, hamara server code unse Prisma WHERE banata hai. Filtering poora HTTP-native flow hai — JS sirf Tailwind styling tak simit.
+**Sample Answer:** Nowhere. A GET form submission makes the browser build the URL itself — input field `name="q"` values go into `?q=...&type=...`. Next.js sees the new URL and re-renders the page, passing the values via `searchParams`. Our server code converts them into a Prisma WHERE clause. The whole flow is a native HTTP cycle — JavaScript only reaches the Tailwind styling.
 
 </details>
 
-2. `searchParams` ko `await` kyun karna padta hai — bina kya hota?
+2. Why does `searchParams` need to be `await`ed — what goes wrong without it?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Next.js 16 mein yeh prop Promise hai (streaming optimization — rendering URL-parse pe block na ho). Bina await ke destructuring undefined degi (`Promise.q` exist nahi karta) — filters silently kaam nahi karenge, ya TypeScript pehle hi error pakad lega. `await` ke baad plain object milta hai `{ q?: string, type?: string }`.
+**Sample Answer:** In Next.js 16, the prop is a Promise (streaming optimization — don't block rendering on URL parse). Without `await`, destructuring `Promise.q` yields `undefined` — the filters silently fail, or TypeScript catches the error first. After `await`, you have a plain `{ q?: string, type?: string }`.
 
 </details>
 
-3. `type === "FULL_TIME" || ...` wali lambi check kyun — seedha `{ type }` kyun nahi where mein?
+3. Why the long `type === "FULL_TIME" || ...` check — why not just `{ type }` into the where?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `type` URL se aaya hai — user-controlled. Koi `?type=XYZ` bheje toh Prisma invalid enum value pe runtime throw karega — 500 error. Whitelist check invalid values ko ignore karke "no filter" treat karta hai — graceful degradation. Principle: client/server boundary se aaya har input validate hota hai (8.2).
+**Sample Answer:** `type` came from the URL — user-controlled. Someone can send `?type=XYZ` and Prisma would throw a runtime error on the invalid enum (a 500). The whitelist check treats unknown values as "no filter" — graceful degradation. Principle: input over the client/server boundary is always untrusted (8.2).
 
 </details>
 
-4. Yeh page Static kyun nahi raha — `revalidate` laga dete toh kya bigad jaata?
+4. Why isn't this page Static — what breaks if you add `revalidate`?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `searchParams` await karte hi Next.js page ko Dynamic mark kar deta hai (output URL-dependent hai, pre-render impossible per-filter). Revalidate ka fayda tab hota jab sab visitors ko same HTML milta — yahan har filter-combination ka apna output hai, cache hit rare. Aur fresh listings chahiye (new job turant dikhe) — dynamic acceptable trade-off.
+**Sample Answer:** Awaiting `searchParams` marks the page Dynamic (output depends on the URL, can't pre-render per filter). Revalidate helps when all visitors see the same HTML — here every filter combination is a different output, so cache hits are rare. And fresh listings matter (a new job should show immediately) — dynamic is the right trade-off.
 
 </details>
 
-5. `filters.length > 0 ? { AND: filters } : undefined` — `undefined` kyun, khali `{}` kyun nahi?
+5. `filters.length > 0 ? { AND: filters } : undefined` — why `undefined`, not an empty `{}`?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Dono technically kaam karte hain, par intent clear hona chahiye: `undefined` = "koi filter nahi" (Prisma ignores), `{}` = empty condition object. Khali `AND: []` edge cases mein confusing hota hai (kai ORMs mein empty AND true/no-op ambiguity karta hai). Explicit undefined self-documenting hai — "filter nahi laga" padhta hai code mein.
+**Sample Answer:** Both technically work, but intent should be explicit: `undefined` says "no filter" (Prisma skips it), while `{}` is an empty condition object. An empty `AND: []` is ambiguous in some ORMs. Writing `undefined` is self-documenting — the code reads "no filter applied."
 
 </details>
 
 ---
 
-Public listing side ready — browse, search, filter. Par card pe click karte hi `/jobs/frontend-developer-at-acme` pe 404 milega — woh page bana hi nahi. C.4 mein job detail page: dynamic `[slug]` route, `generateMetadata` se proper SEO tags, not-found handling, aur company logo ke saath `next/image`.
+The public side is ready — browse, search, filter. But clicking a card goes to `/jobs/frontend-developer-at-acme`, which 404s because that page doesn't exist yet. C.4 builds the job detail page: a dynamic `[slug]` route, `generateMetadata` for proper SEO tags, not-found handling, and the company logo with `next/image`.
+
+We'll explore this in detail in the next topic.

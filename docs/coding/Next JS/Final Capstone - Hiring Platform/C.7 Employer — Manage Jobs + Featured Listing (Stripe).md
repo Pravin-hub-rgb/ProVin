@@ -1,17 +1,17 @@
-C.6 ke end mein employer jobs post kar sakta hai — AI draft ke saath. Par dashboard ki list sirf **dekhne** layak hai: job galat post ho gayi toh? Applications band karni ho toh? Aur sabse badi baat — C.0 wala paisa-wala feature abhi nahi hai: employer apni job ko **featured boost** karke upar dikhana chahta hai, aur uske liye **pay** karega. Aaj woh sab: manage actions + **Stripe Checkout**.
+At the end of C.6 the employer can post jobs — AI drafts included. But the dashboard job list is read-only so far: a job posted wrong, no way to close it, no way to delete. And the key paid feature from C.0 is still absent: the employer wants to **boost** a job to the top, and that means **payment via Stripe**. This file covers both: manage actions (with ownership guards) and **Stripe Checkout with signature-verified webhooks** — payment integration, and the first time an external service calls *into* our app.
 
-Stripe flow web development ka classic interview topic hai aur isme ek concept hai jo tak saare course mein nahi aaya: **webhook** — jab external service (Stripe) hamare app ko call karti hai.
+Stripe flow is a classic interview topic, and it introduces one concept that hasn't appeared yet in the course: **webhooks** — when an external service (Stripe) calls your app to notify you.
 
-# Hiring Platform — Part 7: Manage Jobs + Featured Listing
+# Hiring Platform — Part 7: Manage Jobs + Featured Listing (Stripe)
 
-## Step 1 — Schema Update: `open` Flag (Migrations Dar Nahi Lagte)
+## Step 1 — Schema Update: The `open` Flag (Migrations Exist for This)
 
-**Problem:** Employer ne hiring band kar di. Job delete kar dein? Applications ka record bhi jayega. Behtar: job **open/closed** flag — closed job listing mein dikhe par apply na ho sake.
+**Problem:** An employer closes hiring on a job. Delete it? The `Application` rows referencing it get lost too. Better: an `open` flag — closed jobs still display but can't be applied to.
 
-C.1 planning mein `open` field nahi thi — aur C.1 mein hi likha tha *"planning direction fix karti hai, har line freeze nahi karti."* Build-time schema adjustments normal hain; migrations isi liye exist karti hain (6.13.3: history + reproducibility).
+C.1's planning didn't have an `open` field — and C.12 said it explicitly: *"planning sets direction, it doesn't freeze every line."* Build-time schema changes are normal; migrations exist for exactly this (the history + reproducibility lesson from 6.13.3).
 
 ```prisma
-// prisma/schema.prisma — Job model ke andar:
+// prisma/schema.prisma — inside the Job model:
 model Job {
   // ...existing fields...
   featured    Boolean  @default(false)
@@ -25,21 +25,21 @@ model Job {
 npx prisma migrate dev --name add_job_open_flag
 ```
 
-Migration file bani (`add_job_open_flag/migration.sql` — `ALTER TABLE "Job" ADD COLUMN "open" BOOLEAN NOT NULL DEFAULT true`) + Prisma Client types refresh. Existing rows automatically `true` — default ka fayda.
+That creates the migration file (`add_job_open_flag/migration.sql` — an `ALTER TABLE ... ADD COLUMN "open" BOOLEAN NOT NULL DEFAULT true`) and refreshes the Prisma Client types. Existing rows become `true` automatically — the default value doing its job.
 
-> **Fear-remover:** Pehli migration se dar lagta tha ("schema change = sab tootega"). Reality: chhota additive change, ek command, poora trackable. Production apps mein har hafte migrations hoti hain.
+> **Fear-remover:** The first migration felt scary ("schema change = everything breaks"). Reality: a small additive change, one command, fully tracked. Production apps migrate weekly.
 
-Ab home query mein closed jobs filter (C.3 wale filters ke saath):
+Now add `open` to the home page's filters (same array pattern from C.3):
 
 ```tsx
-// app/page.tsx — filters array build ke baad:
+// app/page.tsx — right after the filters array builds:
 filters.push({ open: true });                                               // NEW
 
-// findMany where same rahega:
+// The findMany where clause stays:
 where: filters.length > 0 ? { AND: filters } : undefined,
 ```
 
-Aur detail page pe closed banner (C.4 ke JSX mein, Apply button se pehle):
+And a closed-job banner on the detail page (in C.4's JSX, before the Apply button):
 
 ```tsx
 {!job.open && (
@@ -47,10 +47,9 @@ Aur detail page pe closed banner (C.4 ke JSX mein, Apply button se pehle):
     This job is no longer accepting applications.
   </p>
 )}
-{(job.open || true) && (                                                    // placeholder — niche fix hoga
 ```
 
-Ruko — yeh condition galat hai. Sahi version: Apply button **sirf open job pe** dikhe:
+Note the deliberate (and slightly wrong-at-first) version — the correct guard for the Apply button is:
 
 ```tsx
 {job.open && (
@@ -60,9 +59,9 @@ Ruko — yeh condition galat hai. Sahi version: Apply button **sirf open job pe*
 )}
 ```
 
-## Step 2 — Manage Actions: Ownership Guard Ka Elegant Pattern
+## Step 2 — Manage Actions: An Elegant Ownership Pattern
 
-Teen actions chahiye: toggle open/closed, delete job, aur boost (Stripe — agle step). Pehle do simple ones.
+Three actions needed: toggle open/closed, delete a job, and boost (Stripe — next step). First, the simple ones.
 
 **File:** `app/(employer)/dashboard/actions.ts`
 
@@ -86,82 +85,64 @@ export async function toggleOpenAction(formData: FormData) {
 
   const jobId = Number(formData.get("jobId"));
 
-  const result = await prisma.job.updateMany({
-    where: { id: jobId, company: { ownerId: session.user.id } },
-    data: { open: false },
+  await prisma.$transaction(async (tx) => {
+    const job = await tx.job.findFirst({
+      where: { id: jobId, company: { ownerId: session.user.id } },
+    });
+    if (!job) return;
+
+    await tx.job.update({
+      where: { id: job.id },
+      data: { open: !job.open },
+    });
   });
 
   revalidatePath("/dashboard");
 }
 ```
 
-Ruko — isme ek bug jaan-boojh ke hai. `updateMany` ne job ko **unconditionally `open: false`** kiya. Toggle hona chahiye tha (open → closed, closed → open). Fix:
+Walk through the deliberate choices:
 
-```ts
-export async function toggleOpenAction(formData: FormData) {                // CHANGED
-  const session = await requireEmployer();                                  // CHANGED
-  if (!session) return;                                                     // CHANGED
+- **The ownership guard lives inside the `where` clause** — `company: { ownerId: session.user.id }` — the relation filter from C.6's dashboard. Another employer slipping in a foreign `jobId` → `findFirst` returns `null` → nothing happens. **Query-level authorization**: no separate "fetch, then check" step.
+- **`$transaction(async (tx) => {...})`** — read + write as one atomic unit. Strictly necessary here (single-user context), but it's a pattern worth learning: in a read-then-write flow, no one else can mutate in between. `tx` is the transaction client.
+- **The first version had a deliberate bug** — `updateMany` with `open: false` hardcoded, which forced-close instead of toggle. The transaction + `findFirst` + `update` fixes it by reading the current state first.
 
-  const jobId = Number(formData.get("jobId"));                              // CHANGED
+### Delete — The Applications Complication
 
-  await prisma.$transaction(async (tx) => {                                 // NEW
-    const job = await tx.job.findFirst({                                    // NEW
-      where: { id: jobId, company: { ownerId: session.user.id } },          // NEW
-    });                                                                     // NEW
-    if (!job) return;                                                       // NEW
-                                                                            // NEW
-    await tx.job.update({                                                   // NEW
-      where: { id: job.id },                                                // NEW
-      data: { open: !job.open },                                            // NEW
-    });                                                                     // NEW
-  });                                                                       // NEW
-                                                                            // NEW
-  revalidatePath("/dashboard");                                             // CHANGED
-}                                                                           // CHANGED
-```
+Deleting is simple... unless applications exist. `Application.jobId` is a foreign key — deleting a job with applications causes Postgres to throw a **foreign-key violation** (referential integrity: you can't delete the parent while the children exist).
 
-Naye concepts:
+Two options:
 
-- **Ownership guard WHERE ke andar** — `company: { ownerId: session.user.id }` — relation-filter (C.6 dashboard wala) ab security ke liye. Kisi doosre employer ka `jobId` daala toh `findFirst` null — kuch nahi hota. **Query-level authorization**: alag se "pehle fetch, phir check" ka extra step nahi.
-- **`$transaction(async (tx) => {...})`** — read + write ek atomic unit mein. Yahan strictly zaroori nahi (single-user flow), par pattern seekhna zaroori: read-then-write flows mein beech mein koi aur change na ho jaye. `tx` transaction client hai — iske andar ke queries ek hi unit.
-- **`updateMany` vs `update` note:** `updateMany` ownership-guard ke liye perfect single-statement hota (`data: { open: !?? }` nahi likh sakte bina padhe), isliye transaction + findFirst + update liya. Trade-offs samajhna important — tools fixed nahi hote.
-
-### Delete — Applications Wali Complication
-
-Delete simple hota... agar applications na hoti. `Application.jobId` FK hai — job delete karne pe Postgres **foreign key violation** throw karega jabki us job pe applications paddi hain (referential integrity — parent nahi marta jiska bacha zinda ho).
-
-Options:
-
-| Option | Matlab | Pasand? |
+| Option | What happens | Chosen? |
 |---|---|---|
-| DB cascade (`onDelete: Cascade`) | Job delete → applications auto-delete | Data loss — employer ne galti se dabaya toh applicants gaye |
-| App-level block | Applications hain toh delete mana | Safe + honest — business rule code mein visible |
+| DB cascade (`onDelete: Cascade`) | Deleting the job auto-deletes its applications | No — accidental data loss if an employer clicks delete by mistake |
+| App-level block | Applications exist → refuse to delete | Yes — safe + honest |
 
-Block chunte hain:
+The block approach:
 
 ```ts
-export async function deleteJobAction(formData: FormData) {                // NEW
-  const session = await requireEmployer();                                 // NEW
-  if (!session) return;                                                    // NEW
-                                                                           // NEW
-  const jobId = Number(formData.get("jobId"));                             // NEW
-                                                                           // NEW
-  await prisma.$transaction(async (tx) => {                                // NEW
-    const job = await tx.job.findFirst({                                   // NEW
-      where: { id: jobId, company: { ownerId: session.user.id } },         // NEW
-      include: { _count: { select: { applications: true } } },             // NEW
-    });                                                                    // NEW
-    if (!job) return;                                                      // NEW
-    if (job._count.applications > 0) return;                               // NEW — block: pehle applicants dekho
-                                                                           // NEW
-    await tx.job.delete({ where: { id: job.id } });                        // NEW
-  });                                                                      // NEW
-                                                                           // NEW
-  revalidatePath("/dashboard");                                            // NEW
-}                                                                          // NEW
+export async function deleteJobAction(formData: FormData) {
+  const session = await requireEmployer();
+  if (!session) return;
+
+  const jobId = Number(formData.get("jobId"));
+
+  await prisma.$transaction(async (tx) => {
+    const job = await tx.job.findFirst({
+      where: { id: jobId, company: { ownerId: session.user.id } },
+      include: { _count: { select: { applications: true } } },
+    });
+    if (!job) return;
+    if (job._count.applications > 0) return; // block — too late to delete now
+
+    await tx.job.delete({ where: { id: job.id } });
+  });
+
+  revalidatePath("/dashboard");
+}
 ```
 
-Silent-block thoda harsh UX hai — production mein message dikhaate ("X applications hain, unhe review karke hi delete kar sakte ho"). Abhi count-check ka concept hi main point hai. UI mein confirm() ke saath delete button — client island:
+The silent block is a harsh UX — production would surface a message ("X applications exist; review them first"). But the *concept* (count-before-delete, ownership-gated) is the point here. A client island wraps the delete button with a `confirm()`:
 
 **File:** `components/delete-job-button.tsx`
 
@@ -186,10 +167,10 @@ export function DeleteJobButton({ jobId }: { jobId: number }) {
 }
 ```
 
-- **Hidden input** — form submit ke saath jobId travel karti hai; action `formData.get("jobId")` se leta hai
-- **`confirm()` + preventDefault** — browser-native confirm dialog; cancel pe submit roka. Server Action forms mein bhi onSubmit normally kaam karta hai.
+- **Hidden input** — `jobId` travels as form data; the action reads it with `formData.get("jobId")`.
+- **`confirm()` + `preventDefault`** — the browser's native confirm dialog; cancel aborts the submit.
 
-Toggle button similar — bina confirm:
+The toggle button is similar (no confirm):
 
 **File:** `components/toggle-open-button.tsx`
 
@@ -217,7 +198,7 @@ export function ToggleOpenButton({
 }
 ```
 
-Dashboard row mein dono buttons + featured badge add karo (C.6 wali list ko expand):
+Drop the two buttons plus the featured badge into the C.6 dashboard row (expand the list item):
 
 ```tsx
 <li key={job.id} className="border rounded-lg p-4 flex justify-between items-center">
@@ -246,31 +227,31 @@ Dashboard row mein dono buttons + featured badge add karo (C.6 wali list ko expa
 </li>
 ```
 
-`BoostButton` abhi banega — pehle Stripe setup.
+The `BoostButton` comes in the next step.
 
 ## Step 3 — Stripe: Setup + Checkout Session
 
-### External Setup (10 minute)
+### External Setup (Takes ~10 Minutes)
 
-1. **dashboard.stripe.com** → sign up (free)
-2. Test mode ON rakho (default) — real paise nahi lagenge, test cards chalega
-3. Developers → API keys → **Secret key** copy karo (`sk_test_...`)
+1. **dashboard.stripe.com** → sign up (free).
+2. Leave **Test mode** on (the default) — test cards work, no real money moves.
+3. **Developers** → **API keys** → copy the **Secret key** (`sk_test_...`).
 
 ```bash
 npm install stripe
 ```
 
-**`.env.local`:**
+Put it in `.env.local`:
 
 ```env
 STRIPE_SECRET_KEY=sk_test_your_key_here
 ```
 
-### Checkout Session Banana
+### Creating the Checkout Session
 
-**Concept:** Hum card details **kabhi handle nahi karte.** Card form, PCI compliance, fraud checks — sab Stripe ke hosted page pe. Hum sirf *ek checkout session* banate hain (kitna paisa, kis product ka) aur user ko Stripe pe redirect karte hain. Payment hone ke baad Stripe user ko wapas hamare app pe bhejta hai — aur **alag se hamare server ko batata hai** payment hua (webhook — agle step).
+**Concept:** You never handle card details yourself. Card forms, PCI compliance, fraud checks — all on Stripe's hosted page. You only create *a checkout session* (the price, the product) and redirect the user there. Payment succeeds and Stripe sends the user back to your app — and separately, Stripe calls your server (the webhook, next step) to confirm it.
 
-Paise integer-paise mein: ₹499 = `49900` (paisa unit avoid floating-point bugs).
+Money in smallest unit: ₹499 = `49900` paise (no floating-point bugs).
 
 **File:** `lib/stripe.ts`
 
@@ -283,63 +264,63 @@ export const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 });
 ```
 
-Boost action — dashboard actions mein:
+The boost action — in the dashboard actions:
 
 ```ts
-// app/(employer)/dashboard/actions.ts — imports:
-import { stripe } from "@/lib/stripe";                                      // NEW
-import { headers } from "next/headers";                                     // NEW
+// app/(employer)/dashboard/actions.ts — add imports:
+import { stripe } from "@/lib/stripe";
+import { headers } from "next/headers";
 
-export async function createCheckoutAction(formData: FormData) {           // NEW
-  const session = await requireEmployer();                                 // NEW
-  if (!session) return;                                                    // NEW
-                                                                           // NEW
-  const jobId = Number(formData.get("jobId"));                             // NEW
-                                                                           // NEW
-  const job = await prisma.job.findFirst({                                 // NEW
-    where: { id: jobId, company: { ownerId: session.user.id } },           // NEW
-  });                                                                      // NEW
-  if (!job) return;                                                        // NEW
-  if (job.featured) return; // already boosted — double charge se bacho    // NEW
-                                                                           // NEW
-  const origin = (await headers()).get("origin")                           // NEW
-    ?? "http://localhost:3000";                                            // NEW
-                                                                           // NEW
-  const checkoutSession = await stripe.checkout.sessions.create({          // NEW
-    mode: "payment",                                                       // NEW
-    line_items: [                                                          // NEW
-      {                                                                    // NEW
-        quantity: 1,                                                       // NEW
-        price_data: {                                                      // NEW
-          currency: "inr",                                                 // NEW
-          unit_amount: 49900, // ₹499 in paise                             // NEW
-          product_data: { name: `Featured Listing: ${job.title}` },        // NEW
-        },                                                                 // NEW
-      },                                                                   // NEW
-    ],                                                                     // NEW
-    success_url: `${origin}/dashboard?boosted=${job.id}`,                  // NEW
-    cancel_url: `${origin}/dashboard`,                                     // NEW
-    metadata: {                                                            // NEW
-      jobId: String(job.id),                                               // NEW
-    },                                                                     // NEW
-  });                                                                      // NEW
-                                                                           // NEW
-  redirect(checkoutSession.url!);                                          // NEW
-}                                                                          // NEW
+export async function createCheckoutAction(formData: FormData) {
+  const session = await requireEmployer();
+  if (!session) return;
+
+  const jobId = Number(formData.get("jobId"));
+
+  const job = await prisma.job.findFirst({
+    where: { id: jobId, company: { ownerId: session.user.id } },
+  });
+  if (!job) return;
+  if (job.featured) return; // already boosted — guard against double charges
+
+  const origin = (await headers()).get("origin")
+    || "http://localhost:3000";
+
+  const checkoutSession = await stripe.checkout.sessions.create({
+    mode: "payment",
+    line_items: [
+      {
+        quantity: 1,
+        price_data: {
+          currency: "inr",
+          unit_amount: 49900, // ₹499 in paise
+          product_data: { name: `Featured Listing: ${job.title}` },
+        },
+      },
+    ],
+    success_url: `${origin}/dashboard?boosted=${job.id}`,
+    cancel_url: `${origin}/dashboard`,
+    metadata: {
+      jobId: String(job.id),
+    },
+  });
+
+  redirect(checkoutSession.url!);
+}
 ```
 
-Line-by-line important bits:
+Key lines worth reading:
 
-- **Ownership + double-payment guards** — wohi findFirst relation-filter; featured already hai toh early return
-- **`headers()` se origin** — success/cancel URLs absolute hone chahiye; deploy pe domain badlega, hardcode nahi
-- **`metadata: { jobId }`** — **sabse important line.** Session ke saath free-form data attach — webhook (agle step) isi se pata karega *kaunsi* job boost karni hai. Metadata string-only hoti hai — `String(job.id)` conversion.
-- **`redirect(session.url!)`** — Stripe-hosted hosted checkout page ka URL; user wahan jaata hai, card bharta hai (test mode mein test card)
+- **Ownership + double-payment guards** — the same `findFirst` with the relation filter; if it's already featured, bail early.
+- **`headers()` for the origin** — success/cancel URLs must be absolute; this adapts to local vs. production.
+- **`metadata: { jobId }`** — **the most important line.** Attach free-form data to the session — the webhook (next step) reads it to figure out *which* job to boost. Metadata is string-only, hence `String(job.id)`.
+- **`redirect(checkoutSession.url!)`** — redirect to Stripe's hosted checkout page, where the user enters card details (test card in test mode).
 
-### Webhook — Jab Stripe Hamein Bataye "Payment Ho Gaya"
+### The Webhook — When Stripe Calls *You* to Say "Payment Done"
 
-**Problem:** User payment karke `success_url` pe wapas aaya. Kya hum URL dekh ke `featured = true` kar dein? **Kabhi nahi** — success_url user-controlled hai: koi `/dashboard?boosted=999` manually type kar sakta hai, bina pay kiye. URL = trust nahi.
+**Problem:** A user pays and lands back on `success_url`. Do we flip `featured = true` based on the URL? **Never.** `success_url` is user-controlled — anyone can type `/dashboard?boosted=5` by hand, no payment. The URL is a signal, not proof.
 
-Sahi source of truth: **Stripe khud hamare server pe HTTP POST kare** payment confirmation ke saath. Wohi webhook hai — external-service-calls-YOU pattern (Route Handler ka use-case jo Server Action handle nahi kar sakta — 3.x ka comparison live!).
+The source of truth is **Stripe calling your server back** with a cryptographic notification. That's the webhook — an external-service-calls-you pattern (a Route Handler is the perfect tool: Server Actions are called *from* the browser, not by Stripe — the 3.x comparison, live).
 
 **File:** `app/api/stripe/webhook/route.ts`
 
@@ -350,7 +331,7 @@ import prisma from "@/lib/prisma";
 import Stripe from "stripe";
 
 export async function POST(req: Request) {
-  const body = await req.text(); // RAW body — signature verify ke liye bytes chahiye
+  const body = await req.text(); // RAW body — signature verification needs the exact bytes
   const signature = req.headers.get("stripe-signature");
 
   if (!signature) {
@@ -384,39 +365,39 @@ export async function POST(req: Request) {
 }
 ```
 
-Is route ke chaar lessons:
+Four lessons from this route:
 
-1. **Raw body kyun?** Stripe har request ke saath cryptographic signature bhejta hai jo **exact bytes** pe computed hoti hai. Agar framework body parse karke JSON object bana de, bytes badal gaye — verification fail. Isliye `req.text()` — untouched string. (Yeh Route Handler mein trivial hai; Express-style middleware mein historically pain tha.)
-2. **`constructEvent` = authentication.** Secret ke bina koi bhi hamare webhook pe fake "payment done" POST maar sakta tha! Signature verify fail → 400. Yeh route **public hai par verified hai** — auth session nahi, crypto proof.
-3. **`event.type` switch** — Stripe bahut saare events bhejta hai (payment failed, refund, dispute...). Sirf jo handle karne ho woh process karo, baaki politely `{ received: true }`.
-4. **Idempotency ka thought** — Stripe kabhi-kabhi same event dobara bhejta hai (retry on timeout). `featured: true` set karna idempotent operation hai — do baar bhi same result. Idempotent webhook handlers = production best practice (accident se double charge-effect nahi hoga).
+1. **Why raw body?** Stripe's signature is an HMAC over the **exact bytes**. If the framework parses it to JSON, re-serialization (key order, whitespace) changes the bytes — verification fails. So `req.text()` — untouched. In a Route Handler this is trivial; it was historically painful in Express-style middleware.
+2. **`constructEvent` = authentication.** Without the secret, anyone could POST a fake "payment succeeded" to this endpoint! The signature is verified against the secret — a 400 is returned on mismatch. This is a **public-but-signed** endpoint (not session-authenticated; cryptographically proven).
+3. **Switch on `event.type`.** Stripe sends many events (payment failed, refund, dispute...). Process only what you handle, and politely return `{ received: true }` for the rest.
+4. **Idempotency mindset** — Stripe retries webhook delivery on timeout/5xx. `featured: true` is naturally idempotent (setting it twice is harmless). Production handlers should be designed this way — or track processed IDs, or deduplicate. Because webhooks are **at-least-once**, never exactly-once.
 
-### Local Testing — Stripe CLI
+### Local Testing with the Stripe CLI
 
-Webhook locally test karne ke liye Stripe ka CLI tumhare localhost tak Stripe ke servers ka tunnel banata hai:
+Webhook testing locally requires Stripe's CLI to tunnel from Stripe's servers to your localhost:
 
 ```bash
-# Ek baar install: https://stripe.com/docs/stripe-cli
+# One-time install: https://stripe.com/docs/stripe-cli
 stripe login
 stripe listen --forward-to localhost:3000/api/stripe/webhook
 ```
 
-CLI ek `whsec_...` signing secret print karega — **`.env.local` mein daalo** (server restart):
+The CLI prints a signing secret (`whsec_...`) — add it to `.env.local` (restart the server):
 
 ```env
 STRIPE_WEBHOOK_SECRET=whsec_from_cli_output
 ```
 
-Ab full test:
+Now the full test:
 
-1. Dashboard → kisi non-featured job pe **Boost ₹499**
-2. Stripe checkout page khulega — test card: `4242 4242 4242 4242`, koi bhi future expiry, koi bhi CVC
-3. Pay → redirect back `/dashboard?boosted=...`
-4. CLI terminal mein `checkout.session.completed` event log
-5. Page refresh → job pe **★ Featured** badge
-6. Home page → wohi job sabse upar
+1. Dashboard → hit **Boost ₹499** on a non-featured job.
+2. Stripe's checkout page opens — test card: `4242 4242 4242 4242`, any future date, any CVC.
+3. Pay → redirected back to `/dashboard?boosted=...`.
+4. The CLI terminal logs the `checkout.session.completed` event.
+5. Refresh → the job now shows **★ Featured**.
+6. Open the home page → that job is at the top.
 
-**BoostButton component** — delete/toggle jaisa hi pattern:
+**BoostButton** — same pattern as delete/toggle:
 
 ```tsx
 // components/boost-button.tsx
@@ -444,75 +425,77 @@ export function BoostButton({
 }
 ```
 
-**TEST checklist:**
+## Test Checklist
 
-1. Job close karo → badge "Closed", home listing se gayab, detail page banner + no apply button
-2. Reopen → wapas sab normal
-3. Application-wali job delete → kuch nahi hota (block); empty job delete → gayab
-4. Boost → Stripe page → test card pay → featured badge + home top
-5. Directly `/dashboard?boosted=5` type karo bina pay kiye → kuch nahi badla (webhook hi boss hai)
+1. Close a job → "Closed" badge on dashboard; disappears from home listing; detail page shows a banner + no Apply button.
+2. Reopen → back to normal.
+3. Delete a job with applications → nothing happens (blocked); delete a job with no applications → gone.
+4. Boost → Stripe page → pay with test card → featured badge, then home-top placement.
+5. Type `/dashboard?boosted=5` by hand without paying → nothing changes (the webhook is the only truth).
 
 ## Nutshell
 
-Manage layer: schema evolve (`open` flag + migration — additive changes safe), actions mein **query-level ownership guard** (`company: { ownerId }` relation-filter inside `findFirst/updateMany`), `$transaction` read-then-write units, delete pe application-count block (business rule > DB cascade). Stripe flow: **checkout session create** (line_items price_data paise-mein, `metadata.jobId`, origin-based urls) → user Stripe-hosted page pe → **webhook Route Handler** raw-body + `constructEvent` signature-verify → `checkout.session.completed` → metadata se jobId → `featured: true`. Success URL kabhi trust nahi — webhook authenticated by cryptography, not sessions. Local testing Stripe CLI forward ke saath.
+The manage layer: schema evolves (`open` flag + migration — additive changes are safe), and actions use **query-level ownership guards** (`company: { ownerId }` inside `findFirst`/`update`) and `$transaction` for read-then-write. Delete is blocked when applications exist (business rule over DB cascade). The Stripe flow: **create a checkout session** (line items, paise-denominated `unit_amount`, `metadata.jobId`, origin-based URLs) → redirect to Stripe's hosted page → **webhook Route Handler** verifies the raw body + signature (`constructEvent`) → on `checkout.session.completed`, read `metadata.jobId` → `featured: true`. The `success_url` is never trusted — the cryptographic webhook is the source of truth. Local testing uses the Stripe CLI to forward webhooks to localhost.
 
 ## What It Is NOT
 
-- **Webhook = "hamara internal API endpoint" nahi.** Caller external service hai (Stripe), auth session nahi hota — identity cryptographic signature se prove hoti hai. Public-but-signed endpoint ka alag mental model hai.
-- **`metadata` = "secure storage" nahi.** Woh plain data-passing channel hai session↔webhook ke beech (tamper-proof hai — signature se cover — but Stripe dashboard pe visible). Secrets/kuch sensitive metadata mein mat daalo.
-- **Test mode keys = "real money" nahi.** `sk_test_`/`pk_test_` + `4242...` card = sandbox. Live mode alag activation hai. Deploy pe (C.12) bhi test keys hi rakhenge — safe demo.
-- **`redirect(checkoutSession.url!)` = "internal redirect jaisa" nahi.** External full-URL hai — Next.js browser ko wahan le jaata hai, apna routing involve nahi hota. Wapsi success/cancel URLs se hoti hai.
-- **Blocked delete = "feature missing" nahi.** Business rule hai: applicants ka record preserve karna. DB cascade technically possible tha — choice deliberate hai (audit trail + accidental-data-loss protection).
+- **The webhook is not "our internal API endpoint."** The caller is Stripe (an external service); there's no session/auth. Identity is proved by the cryptographic signature, not a cookie. "Public-but-signed" is a different security model than "private-by-cookie."
+- **`metadata` is not "secure storage."** It's a plain data-passing channel between session and webhook (tamper-proof only because the signature covers it; visible in the Stripe dashboard). Don't put secrets in it.
+- **Test-mode keys are not "free production capacity."** `sk_test_`/`pk_test_` + `4242...` card = sandbox. Live mode is a separate activation. The demo stays on test keys.
+- **`redirect(checkoutSession.url!)` is not "an internal redirect."** It's an external full URL — Next.js sends the browser there; app routing isn't involved. Returns happen via the `success_url`/`cancel_url`.
+- **The blocked delete is not "a missing feature."** It's a deliberate business rule: preserve applicant data. DB cascade was technically possible — the choice guards an audit trail against accidental loss.
 
 ---
 
 **In Your Own Words**
 
-1. Success URL pe `featured=true` set karna kitne tarike se toot sakta hai?
+1. What breaks if you set `featured = true` from the `success_url` handler instead of the webhook?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** (1) User manually `/dashboard?boosted=5` type kare — bina payment. (2) Cancel karke URL edit karke wapas aaye. (3) Browser refresh/retry pe duplicate logic chale. Success URL client-controlled signal hai, proof nahi. Server-side verified webhook hi ek trusted source hai — isliye state-change wahin hota hai.
+**Sample Answer:** Three ways it breaks: (1) A user can type `/dashboard?boosted=5` by hand, with no payment. (2) Someone pays for job #3, cancels, edits the query to `?boosted=999` on the redirect. (3) A browser refresh/retry re-triggers the logic, or a shared URL gets reprocessed. The `success_url` is client-controlled signal, not proof. The only trustworthy state-change is the server-side verified webhook — the signature proves Stripe sent it.
 
 </details>
 
-2. Webhook route mein `req.text()` kyun, `req.json()` kyun nahi?
+2. Why does the webhook handler use `req.text()` instead of `req.json()`?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Stripe signature exact raw bytes pe HMAC hash hai. `.json()` parse karke object banata hai — re-serialization mein spacing/key-order change ho sakta hai, bytes match nahi, `constructEvent` fail ho jayega ("no valid signature"). Raw string pass karo, library khud parse karti hai verify ke baad via `JSON.parse(event)` internally.
+**Sample Answer:** The Stripe signature is an HMAC hash over the **raw bytes**. `.json()` parses into an object — re-serialization changes spacing/key-order, the bytes no longer match, and `constructEvent` rejects with "no valid signature." Pass the raw string; the SDK parses it internally *after* verifying.
 
 </details>
 
-3. Ownership check query ke WHERE mein (`company: { ownerId }`) vs pehle fetch phir if-check — dono ka fark kya hai?
+3. What's the difference between the ownership guard in the WHERE clause (`company: { ownerId }`) versus fetching first and then asserting?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Functional same (unauthorized access blocked), par WHERE-version atomic hai — fetch aur use ke beech race window nahi (TOCTOU — time-of-check-to-time-of-use problem). Ek query kam. Aur intent clear: "apni company ki job" condition data-access policy ke roop mein document hai. Read-then-write zaroori ho (toggle jaisa) tab $transaction + findFirst pattern.
+**Sample Answer:** Functionally the same (unauthorized access is blocked), but the WHERE-version is atomic: there's no gap between fetch and use (no TOCTOU — time-of-check-to-time-of-use). One query, no gap. And the intent is clearer in the code: "this employer's jobs" is a data-access policy expressed as a filter. The read-then-write pattern (fetch then toggle) is only needed when you actually need the value first — like in `toggleOpenAction`.
 
 </details>
 
-4. `metadata.jobId` String mein kyun bheja, number directly kyun nahi?
+4. Why send `jobId` to Stripe as a string (`metadata.job.metadata`) — can't you pass the number directly?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Stripe metadata values string-only accept karti hai (API contract). Number pass karoge toh SDK/API reject ya stringify karega depending on version — explicit `String(job.id)` intention clear karta hai. Wapas aate waqt bhi string hi milti hai (`Number(metadata?.jobId)` round-trip). Third-party APIs ke primitive-type contracts respect karne hi best practice hain.
+**Sample Answer:** Stripe's metadata values are strings only — that's an API contract. Passing a number risks the SDK rejecting it or coercing it inconsistently across versions. The explicit `String(job.id)` documents the contract; coming back, `Number(session.metadata?.jobId)` round-trips it safely. Respect a third-party API's primitive types — it prevents subtle version-dependent bugs.
 
 </details>
 
-5. Stripe retry kare webhook delivery — double `featured=true` update harmless hai, par agar action "₹499 wallet credit" hota toh?
+5. If Stripe retries a webhook, the handler runs twice — is the double `featured = true` a problem here? Would it be for a "credit wallet" operation instead?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Wallet credit double ho jaata — paisa bug! Isliye webhook handlers **idempotent** design karte hain: processed event IDs store karo (table), duplicate event ID mile toh skip. Ya state-machine style check ("already credited? return"). Hamara featured-flag case naturally idempotent hai (set true twice = same), par general rule yaad rakhna: webhooks at-least-once deliver hote hain, exactly-once nahi.
+**Sample Answer:** Here it's harmless — setting `featured = true` twice is the same result (idempotent). But for a "credit wallet ₹499" operation, a double-execution credits twice — real money lost. That's why idempotent webhook design matters: track processed event IDs (a table), use deduplication keys, or check current state before acting ("already credited? return"). Webhooks are at-least-once by design — handlers must be safe to replay.
 
 </details>
 
 ---
 
-Employer side complete: post (AI-assisted), manage, boost (paid). Ab dusri taraf ka khel — **candidate**. C.8 mein: job detail se apply form, PDF resume upload **Vercel Blob** pe (private!), duplicate-apply guard DB level pe, aur candidate ka My Applications page. Resume private kyun aur public URL kyun nahi — file-security ka pehla lesson bhi.
+The employer side is complete: post (AI-assisted) → manage → boost (paid) → review applications (next step). And the candidate-facing apply flow from C.4 (`/jobs/[slug]/apply`) still leads nowhere. **C.8** closes the loop: the apply form, **PDF file upload to Vercel Blob** (private!), the duplicate-apply guard firing for real at the database level, and the candidate's "My Applications" page where the "Scoring..." placeholder from C.2 finally gets its real score.
+
+We'll explore this in detail in the next topic.

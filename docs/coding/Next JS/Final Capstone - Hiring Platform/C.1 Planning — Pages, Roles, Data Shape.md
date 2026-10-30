@@ -1,61 +1,61 @@
-C.0 mein plan lock ho gaya tha — **Hiring Platform**: employers job post karenge (AI JD generator se), candidates resume upload karke apply karenge (AI Match Score ke saath), Stripe se featured listings bikengi. Ab code likhne se pehle wahi karna hai jo har project se pehle karte aaye hain — **sochna**. Batch 1 ka blog project bhi planning file (1.5.1) se shuru hua tha, Task Board planning se (6.13.1), Photo Gallery planning se (7.7.1). Rule same hai: **UI dekhne se pehle pages, data aur flow clear karo** — warna beech mein schema badalne padte hain, aur migration pain hota hai.
+In C.0 the plan was locked in — the **Hiring Platform**: employers post jobs (with AI-generated descriptions), candidates apply with resume upload (getting an AI Match Score), and Stripe handles featured listings. Before writing any code, let's do what every project starts with: **planning.** Batch 1's blog started with a planning file (1.5.1), the Task Board started with planning (6.13.1), the Photo Gallery too (7.7.1). The rule is always the same: **clarify pages, data, and flow before looking at the UI** — otherwise you'll have to change the schema mid-build, and migrations hurt.
 
-Yeh 5 sawaal poore project ka blueprint banayenge:
+This file answers **five questions** that form the project's blueprint.
 
 ---
 
-## Sawaal 1 — Kya Banana Hai? (User Journey Se Samjho)
+## Question 1 — What Are We Building? (From User Journeys)
 
-Features list karne se pehle **logon ki journey** sochte hain — kyunki app ka har page kisi insaan ke kisi kaam ke liye hona chahiye:
+Before listing features, think about **people's journeys** — every page in the app should serve some person doing some task:
 
-**Employer ki journey:**
-1. GitHub se login → pehli baar "Employer" role choose + company name/logo deta hai
-2. Dashboard pe jaata hai — apni jobs ki list, stats (kitni applications aayi)
-3. "Post Job" pe click — title/skills type karta hai, **AI button** se description draft generate karwata hai, edit karke post karta hai
-4. Chahe toh job ko **featured** banata hai — Stripe checkout → payment → job upar dikhegi
-5. Applications aane lagti hain — har application pe **AI match score** already laga hai, ranked list dekhta hai, resume kholta hai
+**Employer journey:**
+1. Sign in with GitHub → first time, choose the "Employer" role + provide company name/logo
+2. Go to dashboard — see their job list + stats (how many applications arrived)
+3. Click "Post Job" — type title/skills, hit the **AI button** to generate a draft description, edit it, post
+4. Optionally make the job **featured** — Stripe checkout → payment → the job appears at the top
+5. Applications start coming in — each has an **AI match score** pre-computed, shown ranked, click to open a resume
 
-**Candidate ki journey:**
-1. GitHub se login → "Candidate" role choose
-2. Home pe jobs browse/filter karta hai — featured jobs sabse upar
-3. Job detail kholta hai — "Apply" click
-4. Form bharta hai (cover note) + **PDF resume upload** karta hai → submit
-5. Turant **AI Match Score** milta hai ("aap is job ke liye 78/100 fit ho") — aur "My Applications" page pe apni saari applications track karta hai
+**Candidate journey:**
+1. Sign in with GitHub → choose "Candidate" role
+2. Browse jobs on the home page — featured jobs first
+3. Open a job detail → click "Apply"
+4. Fill the form (cover note) + **upload a PDF resume** → submit
+5. Instantly get an **AI Match Score** ("you're a 78/100 fit for this job") — track all applications on a "My Applications" page
 
-Dekho — journey se features khud nikal aate hain. Yeh features ab pages banenge.
+See how the journeys produce the features naturally. Those features now become pages.
 
-## Sawaal 2 — Kaunse Pages Chahiye?
+## Question 2 — What Pages Do We Need?
 
-Journey ko routes mein translate karte hain:
+Translating journeys into routes:
 
-| Route | Kya dikhta hai | Access | Batch concept |
+| Route | What it shows | Access | Batch concept |
 |---|---|---|---|
-| `/` | Home — featured jobs upar, phir saari jobs + search/location/type filters | Public | SC read (2.1), searchParams (1.x), revalidate (2.3) |
-| `/jobs/[slug]` | Job detail — description, skills, salary, company logo, Apply button | Public | Dynamic route (1.3), generateMetadata (2.4), next/image (7.2) |
-| `/jobs/[slug]/apply` | Apply form — cover note + resume PDF upload | Candidate | Server Action (3.3), Vercel Blob |
+| `/` | Home — featured jobs first, then all jobs + search/location/type filters | Public | SC read (2.1), searchParams, revalidate (2.3) |
+| `/jobs/[slug]` | Job detail — description, skills, salary, company logo, Apply button | Public | Dynamic route (1.3), `generateMetadata` (2.4), `next/image` (7.2) |
+| `/jobs/[slug]/apply` | Application form — cover note + resume PDF upload | Candidate | Server Action (3.3), Vercel Blob |
 | `/login` | GitHub sign-in button | Public | Auth.js (5.4) |
-| `/onboarding` | Role selection — Employer ya Candidate (+ employer ke liye company form) | Logged-in | Session read (5.4.2), SA mutation |
-| `(employer)/dashboard` | Apni jobs + stats cards (streaming Suspense) | Employer | Protected group (5.4.3), Streaming (7.5) |
-| `(employer)/post-job` | Post job form + "Generate with AI" button | Employer | useActionState (3.3.1), Gemini API |
-| `(employer)/jobs/[id]` | Applicants list — AI-ranked + resume links | Employer (owner) | Prisma relations (6.x) |
-| `(candidate)/applications` | Meri applications + match scores | Candidate | SC reads + relations |
+| `/onboarding` | Role selection — Employer or Candidate (+ company form for employers) | Logged-in | Session read (5.4.2), SA mutation |
+| `(employer)/dashboard` | My jobs + stats cards (streaming Suspense) | Employer | Protected group (5.4.3), Streaming (7.5) |
+| `(employer)/post-job` | Post job form + "Generate with AI" button | Employer | `useActionState` (3.3.1), Gemini API |
+| `(employer)/jobs/[id]` | Applicant list — AI-ranked + resume links | Employer (owner) | Prisma relations (6.x) |
+| `(candidate)/applications` | My applications + match scores | Candidate | SC reads + relations |
 
-**Route groups ka fayda yahan real hai:** `(employer)` group ka layout ek hi jagah `auth()` check karega — teen employer pages ko alag-alag protect nahi karna padega. Yeh 5.4.3 wala pattern scale pe use ho raha hai.
+**Why route groups matter here:** The `(employer)` group's layout does a single `auth()` check — you don't protect each of the three employer pages separately. This is 5.4.3's pattern, scaled up.
 
-Note `/jobs/[slug]` vs `(employer)/jobs/[id]` — public URL **SEO-friendly slug** (`frontend-developer-at-acme`) use karta hai, employer panel internal `id` se kaam karta hai. Dono alag concerns hain.
+Note `/jobs/[slug]` vs `(employer)/jobs/[id]` — the **public** URL uses an SEO-friendly slug (`frontend-developer-at-acme`), while the employer panel uses the internal `id`. Different concerns, different URLs.
 
-## Sawaal 3 — Data Ka Shape Kya Hai?
+## Question 3 — What Is the Data Shape?
 
-Rule wahi hai jo 7.7.1 mein tha: **UI dekh ke data decide karo, ulta nahi.**
+Same rule as 7.7.1: **decide data by looking at the UI, not the other way around.**
 
-Har page pe kya dikh raha hai, usse fields nikalti hain:
+Looking at each page tells us the fields:
 
 - Job card/detail → title, description, location, type, salary range, skills, posted date, company (name + logo)
 - Featured sorting → `featured` flag
-- Applicant list → kaun apply kiya, kab, score kitna, resume kahan
-- Employer ka dashboard → uski company ki jobs
+- Applicant list → who applied, when, score, resume location
+- Employer dashboard → the jobs for their company
 
-Iska matlab **4 tables + relations:**
+This means **four tables + relations:**
 
 ```
 User            Company          Job              Application
@@ -73,66 +73,66 @@ createdAt                        salaryMax?
                                  companyId→Company
                                  applications 1:N
                                  createdAt
-                                 
+
 Application: jobId→Job + candidateId→User
 ```
 
-Har field ka reason (jo obvious nahi):
+**Why each field (that isn't obvious):**
 
-- **`User.role`** — enum `CANDIDATE | EMPLOYER`. GitHub OAuth se yeh nahi aata — yeh hamara app-level decision hai, onboarding pe user choose karega. Session mein carry hoga taaki har check cheap ho.
-- **`Job.slug`** — URL ke liye SEO-friendly string (`title-company` jaisa). `id` internal panel ke liye theek hai, par Google pe rank karna hai toh URL readable hone chahiye. Unique constraint zaroori — do jobs ka same slug nahi ho sakta.
-- **`Job.skills`** — simple comma-separated string rakhte hain (`React, TypeScript, Next.js`). Array bhi ho sakta tha, par filter sirf text-match karega — array ki complexity abhi zaroorat se zyada hai.
-- **`Job.featured`** — boolean flag. Stripe webhook payment confirm hone pe ise `true` karega (C.7). Home query ise sort mein use karegi.
-- **`Application.matchScore` + `matchReason`** — nullable (`Int?`). Kyunki score **apply ke waqt** compute hoga (C.9) — agar AI call fail ho jaye toh application phir bhi save rahe, score baad mein aa sake. Nullable = "score optional hai" ka honest DB reflection.
-- **`Application.resumeUrl`** — Vercel Blob ka private URL. Private kyun? Resume sirf us job ke employer ko dikhna chahiye — public URL hota toh koi bhi guess karke khol leta. Access control C.10/C.8 mein.
-- **`@@unique([jobId, candidateId])`** — composite unique! Ek candidate ek job pe **sirf ek baar** apply kar sake. Yeh DB-level guard hai — agar humne app-level check hi sahii likha ho, race condition mein double apply ho sakta tha. Database hi last line of defense hai.
+- **`User.role`** — enum `CANDIDATE | EMPLOYER`. Comes from GitHub OAuth? No — this is an app-level decision, the user chooses it during onboarding. Carried in the session so every check is cheap.
+- **`Job.slug`** — an SEO-friendly string for URLs (`title-company` style). The `id` is fine internally, but to rank on Google the URL needs to be readable. The unique constraint is critical — two jobs can't share the same slug.
+- **`Job.skills`** — a simple comma-separated string (`React, TypeScript, Next.js`). An array would work too, but search is just text matching — an array's complexity is unnecessary here.
+- **`Job.featured`** — a boolean flag. When Stripe's webhook confirms payment, this flips to `true` (C.7). The home page query uses it for sorting.
+- **`Application.matchScore` + `matchReason`** — nullable (`Int?`). Because the score is computed at apply-time (C.9) — if the AI call fails, the application should still be saved. Nullable is an honest database reflection: "the application is important, the score is a bonus."
+- **`Application.resumeUrl`** — a Vercel Blob **private URL**. Private because a resume should only be visible to the employer of that one job — a public URL could be guessed and opened by anyone. Access control is handled in C.8/C.10.
+- **`@@unique([jobId, candidateId])`** — a **composite unique constraint!** One candidate can apply to one job **only once.** This is the database-level guard — even if the app-level check has a race condition (two nearly-simultaneous requests both pass the check), the database is the last line of defense. The second insert fails.
 
-Relations recap (6.12 ka system design): `User 1—1 Company` (employer ka apna company), `Company 1—N Jobs`, `Job 1—N Applications`, `User 1—N Applications` (candidate ki applications). Do foreign keys `Application` mein hain kyunki woh do tables ko jodta hai — yahi junction-table pattern hai.
+Relations recap (6.12's system): `User 1—1 Company` (an employer has one company), `Company 1—N Jobs`, `Job 1—N Applications`, `User 1—N Applications` (a candidate's applications). The `Application` table has two foreign keys because it joins two tables — this is the **junction table** pattern.
 
-## Sawaal 4 — Mutations Kahan Hain?
+## Question 4 — Where Do Mutations Happen?
 
-Reads toh SC queries hongi, asli kaam mutations ka hai:
+Reads are Server Component queries. The real work is **mutations.** Here's the map:
 
-| Mutation | Kaise | File |
+| Mutation | How | File |
 |---|---|---|
-| Role/company setup | Server Action — `User.role` update (+ Company create) | C.5 |
-| Job description draft | Server Action → Gemini API call → draft string return | C.6 |
-| Job post/edit/close | Server Actions — `useActionState` forms | C.6/C.7 |
-| Featured purchase | SA → Stripe Checkout session redirect; **payment result webhook Route Handler** (`route.ts`) mein aata hai → `featured = true` | C.7 |
-| Apply (note + resume + score) | SA → Blob upload → Application create → Gemini score → save | C.8/C.9 |
-| Rate limiting | proxy.ts — apply/AI endpoints pe request-limit | C.11 |
+| Role + company setup | Server Action — update `User.role` (+ create `Company`) | C.5 |
+| Job description draft | Server Action → call Gemini API → return draft string | C.6 |
+| Post / edit / close job | Server Actions with `useActionState` | C.6/C.7 |
+| Featured purchase | SA → Stripe Checkout redirect; **payment result comes via webhook** → set `featured = true` | C.7 |
+| Apply (note + resume + score) | SA → Blob upload → create Application → Gemini score → save | C.8/C.9 |
+| Rate limiting | `proxy.ts` — apply + AI endpoints get a request limit | C.11 |
 
-Pattern note (roadmap ka rule): **mutations Server Actions se**, Route Handlers sirf Stripe webhook ke liye — kyunki webhook ko external server se HTTP POST aata hai, woh SA call nahi kar sakta. Yeh 3.4.15 wale comparison ka live example hai.
+**Pattern note (roadmap's rule):** **Mutations go in Server Actions.** Route Handlers are only for the Stripe webhook — because a webhook is an HTTP POST from Stripe's server, which can't call a Server Action. This is the live example of the SA vs. Route Handler comparison.
 
-## Sawaal 5 — Roles Ka Flow Kaise Hoga?
+## Question 5 — How Do Roles Flow?
 
-Auth flow step-by-step:
+The auth flow, step by step:
 
 ```
 GitHub login (Auth.js)
    │
    ▼
-Pehli baar login? ──yes──▶ /onboarding ──▶ role choose
+First time logging in? ──yes──▶ /onboarding ──▶ choose role
    │ no                                      │
    ▼                                         ▼
-Session mein role                    EMPLOYER → company form → (employer)/dashboard
-ka pata hai                          CANDIDATE → (candidate)/applications
+Session has the role              EMPLOYER → company form → (employer)/dashboard
+                                  CANDIDATE → (candidate)/applications
 ```
 
-- Har protected layout `(employer)/layout.tsx` mein `auth()` se session uthayega, role check karega, galat role ho toh redirect — 5.4.3 ka pattern + role twist
-- Guest sirf public routes dekh sakta hai — apply button pe click kare toh `/login` pe redirect
+- Every protected layout (like `(employer)/layout.tsx`) calls `auth()`, checks the role, and redirects if it's wrong — the 5.4.3 pattern with the role twist.
+- Guests can only see public routes. Click "Apply" while logged out → redirect to `/login`.
 
 ---
 
-## Ab Tak Ka Plan — Summary Table
+## Plan Summary Table
 
 | | Plan |
 |---|---|
-| **Kya** | Hiring Platform — jobs (public) + posting/applicants (employer) + applying/scores (candidate) |
+| **What** | Hiring Platform — jobs (public) + posting/applicants (employer) + applying/scores (candidate) |
 | **Pages** | 4 public (`/`, `[slug]`, apply, login) + onboarding + 3 employer + 1 candidate |
-| **Roles** | Guest / Candidate / Employer — role onboarding pe choose, session mein carry |
-| **Data** | 4 models — User, Company, Job, Application; Application junction table (@@unique duplicate guard) |
-| **Mutations** | Sab Server Actions; Route Handler sirf Stripe webhook ke liye |
+| **Roles** | Guest / Candidate / Employer — role chosen at onboarding, carried in session |
+| **Data** | 4 models — User, Company, Job, Application; Application is a junction table (`@@unique` prevents duplicate applies) |
+| **Mutations** | All Server Actions; Route Handler only for the Stripe webhook |
 | **AI** | 2 Gemini calls — JD draft (C.6) + Match Score (C.9) |
 | **Payments** | One-time Featured Listing via Stripe Checkout + webhook |
 | **Files** | Resume PDF → Vercel Blob private storage |
@@ -140,65 +140,67 @@ ka pata hai                          CANDIDATE → (candidate)/applications
 
 ## Nutshell
 
-Planning pattern: **user journeys se pages niklo** (har page kisi ke kaam ka ho), **pages se data shape** (UI pehle, schema baad mein — 7.7.1 ka rule), **mutations ka pattern pehle decide karo** (SA vs Route Handler — webhook exception), aur **auth flow ka diagram bana lo** (kab kahan check hoga). Hiring Platform = 4 public pages + onboarding + 3 employer + 1 candidate page, 4 related models, 2 AI calls, 1 payment flow.
+The planning pattern: **derive pages from user journeys** (every page serves a person doing a task), **derive data shape from the UI** (UI first, schema second — the rule from 7.7.1), **decide the mutation pattern first** (Server Action vs. Route Handler — the webhook exception), and **diagram the auth flow** (where each check happens). The Hiring Platform = 4 public pages + onboarding + 3 employer + 1 candidate page, 4 related models, 2 AI calls, 1 payment flow.
 
 ## What It Is NOT
 
-- **Hiring platform = LinkedIn clone nahi.** Feed, connections, messaging — kuch nahi. Sirf core loop: post → apply → review. Scope control capstone ki strength hai, kamzori nahi.
-- **`matchScore` = "candidate ki guarantee" nahi.** LLM ka estimate hai — screening helper, hiring decision nahi. Isliye `matchReason` bhi store karenge — score akela misleading hota hai.
-- **Role system = "permissions matrix" nahi.** Sirf 2 roles hain, admin/moderator kuch nahi. Simple enum + layout checks — RBAC frameworks ki zaroorat nahi.
-- **Slug = "random ID ka nickname" nahi.** Slug ka purpose SEO + shareability hai — Google pe job listing rank karni hai, UUID nahi.
-- **Planning file = "schema final hai" nahi.** Build karte waqt chhoti adjustments aayengi (jaise koi field add ho). Planning direction fix karti hai, har line freeze nahi karti.
+- **A hiring platform is not "a LinkedIn clone."** No feed, no connections, no messaging — just the core loop: post → apply → review. Scope control is the capstone's strength, not a weakness.
+- **`matchScore` is not "a candidate's guarantee."** It's an LLM estimate — a screening helper, not a hiring decision. That's why `matchReason` is stored alongside it — a lone score is misleading.
+- **The role system is not "a permissions matrix."** Just two roles — no admin or moderator tiers. A simple enum + layout-level checks — no RBAC framework needed.
+- **A slug is not "just a random ID renamed."** The slug's purpose is SEO + shareability — Google needs to index these job listings, and UUIDs don't rank. A human-readable URL matters.
+- **A planning file is not "an immutable spec."** During implementation, small adjustments happen (a field gets added). The plan sets direction — it doesn't freeze every line.
 
 ---
 
 **In Your Own Words**
 
-1. `Application` table mein do foreign keys kyun hain — `jobId` aur `candidateId`?
+1. The `Application` table has two foreign keys — `jobId` and `candidateId`. Why?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Application ek **junction entity** hai — woh `Job` aur `User` (candidate) dono ko jodti hai. Ek job pe kai candidates apply karte hain, ek candidate kai jobs pe — dono taraf many relationships hain, isliye middle table chahiye jisme dono ka reference ho plus apni fields (resumeUrl, matchScore).
+**Sample Answer:** `Application` is a **junction entity** — it links a `Job` and a `User` (the candidate). Many candidates apply to one job, and one candidate applies to many jobs — a many-to-many in both directions. So you need a middle table that references both, plus its own fields (resumeUrl, matchScore). That's the junction-table pattern.
 
 </details>
 
-2. `@@unique([jobId, candidateId])` kya rok raha hai — app-level check se kya problem thi?
+2. What does `@@unique([jobId, candidateId])` prevent — and why isn't an app-level check enough?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Duplicate apply rok raha hai — ek candidate ek job pe sirf ek baar. App-level check (pehle query, phir insert) mein **race condition** hoti hai: do requests almost saath mein aayein toh dono check pass karke insert ho sakti hain. DB-level unique constraint atomic hai — second insert fail ho jayega chahe kuch bhi ho.
+**Sample Answer:** It prevents **duplicate applications** — one candidate applying to the same job twice. An app-level check ("query first, insert if empty") has a **race condition**: two near-simultaneous requests can both pass the check and both insert. A database unique constraint is atomic — the second insert fails regardless. The database is the last line of defense.
 
 </details>
 
-3. Stripe payment ke baad job featured kaise hogi — Server Action se kyun nahi?
+3. After Stripe payment, the job gets featured — why isn't this a Server Action?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Payment confirmation **Stripe ke server se** hamare app pe POST aata hai (webhook) — woh hamara browser/UI nahi hai, Server Action call nahi kar sakta. Webhook ek public HTTP endpoint maangta hai — Route Handler (`route.ts`). Hum Checkout session SA se banate hain, par result webhook se process hota hai.
+**Sample Answer:** The payment confirmation arrives as an **HTTP POST from Stripe's server** (a webhook) — it's not a browser-initiated request, so it can't call a Server Action. A webhook needs a public HTTP endpoint — a Route Handler (`route.ts`). We create the Checkout session in a Server Action, but the payment result is processed in the webhook handler.
 
 </details>
 
-4. `matchScore` nullable (`Int?`) kyun rakha — apply ke waqt hi toh score banega?
+4. Why is `matchScore` nullable (`Int?`) — doesn't it get computed at apply time?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Score apply ke waqt compute hota hai, lekin AI call fail ho sakti hai (rate limit, network). Agar field non-null hoti toh application save hi nahi hoti jab tak score na mile. Nullable ka matlab: application important hai, score bonus hai — fail hone pe application saved rahegi, score null rahega, baad mein retry ho sakta hai.
+**Sample Answer:** The score is computed at apply-time, but the AI call can fail (rate limits, network issues). If the column were non-nullable, the application couldn't be saved at all until the score succeeds. Making it nullable says: "the application is the important part; the score is a bonus." A failed score is `null`, the application is still saved, and the score can be retried later.
 
 </details>
 
-5. `/jobs/[slug]` public hai par `(employer)/jobs/[id]` protected — ek hi cheez ke do URLs kyun?
+5. `/jobs/[slug]` is public but `(employer)/jobs/[id]` is protected — why two URLs for jobs?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Dono ka audience alag hai. Public detail page **SEO/shareability** ke liye slug use karta hai (Google + candidates ke liye readable URL). Employer panel internal management ke liye hai — wahan SEO matter nahi karta, seedha `id` se lookup fast aur simple hai. Alag concerns = alag URLs.
+**Sample Answer:** Different audiences, different needs. The public detail page uses a **slug** for SEO and shareability — Google needs to index these, and humans need to read the URL. The employer panel is internal — SEO doesn't matter there, and a direct `id` lookup is simpler and faster. Different concerns, different URLs.
 
 </details>
 
 ---
 
-Plan ready — pages, roles, data, flow, sab clear. Ab **environment** banana hai: naya Next.js project, Neon connection, Prisma schema (yehi 4 models), aur seed data — taaki C.3 se pehle database mein real jobs paddi hui hon. C.2 mein milte hain.
+The plan is ready — pages, roles, data, and flow are all clear. Now build the **environment:** a new Next.js project, a Neon database connection, the Prisma schema (those four models), and seed data — so there's real data in the database before C.3. See you in C.2.
+
+We'll explore this in detail in the next topic.
