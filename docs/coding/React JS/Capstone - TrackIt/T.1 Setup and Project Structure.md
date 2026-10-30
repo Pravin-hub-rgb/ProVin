@@ -1,10 +1,10 @@
 ---
 
-## Abhi Tak Kya Hua — Safar Poora
+## Where We Left Off — The Full Journey
 
-Saari batches (1-7) complete kar liye:
+All batches (1-7) are complete:
 
-| Batch | Seekha |
+| Batch | What We Learned |
 |-------|--------|
 | **1** | JSX, Components, Props, State, Lists |
 | **2** | Effects, API, Refs, Context |
@@ -14,47 +14,47 @@ Saari batches (1-7) complete kar liye:
 | **6** | Custom Hooks, Generics, Zustand |
 | **7** | Error Boundaries, Security, Testing, Deploy |
 
-Ab sab kuch ek saath — **FINAL CAPSTONE: TrackIt**. Ye tumhara **resume + portfolio ka main project** banega. Isliye hum ise ek batch ki tarah treat karenge — apna folder, apne steps (T.1 se T.8), code **from scratch** (`bunx` se start), coder mindset ke saath.
+**Now, bringing it all together** — **THE FINAL CAPSTONE: TrackIt**. This becomes your **main project for resume + portfolio**. So we'll treat it like a batch — our own folder, our own steps (T.1 through T.8), code **from scratch** (starting with `bunx`), with a coder mindset.
 
-Toh aisa scene hai...
+Here's the scene...
 
 ---
 
-## Broader Goal — TrackIt Kya Hai
+## Broader Goal — What is TrackIt
 
-**TrackIt** — ek **habit tracker + dashboard**. Users apne daily habits track karte hain (jaldi uthna, paani peena, workout), streaks maintain karte hain, aur ek dashboard pe progress dekhte hain.
+**TrackIt** — a **habit tracker + dashboard**. Users track their daily habits (wake up early, drink water, workout), maintain streaks, and view progress on a dashboard.
 
-**Kya seekhenge is project mein (saari batches combine):**
+**What we'll build in this project (combining all batches):**
 
-| Concept | Batch | TrackIt Mein |
+| Concept | Batch | In TrackIt |
 |---------|-------|--------------|
 | Custom hooks + Generics | 6 | `useFetch<T>`, `useLocalStorage<T>` |
 | Zustand + persist | 6 | habits, tasks, prefs, auth stores |
 | `useReducer` | 5 | complex task state (discriminated actions) |
 | React Router | 3 | dynamic + protected + lazy routes |
 | Tailwind | 4 | responsive, accessible UI |
-| Framer Motion | (naya) | smooth animations |
+| Framer Motion | (new) | smooth animations |
 | Error Boundary | 7 | crash-proof |
 | Security | 7 | env vars, safe rendering |
 | Testing | 7 | Vitest + RTL on core pieces |
 | Deploy | 7 | Vercel + README |
 
-**Data-source decision (senior thinking — 7.2 से yaad karo):**
+**Data source decision (senior thinking — remember from 7.2):**
 - **Core data** (habits, tasks, prefs, auth) → Zustand + `persist` → localStorage
-- **`useFetch<T>`** → ek real public API (motivational quote dashboard pe) — fake complexity nahi, honest use
-- **`useLocalStorage<T>`** → theme preference (hook ko visible rakhne ke liye)
-- Frontend hai — private secrets nahi, sirf `VITE_` public values
+- **`useFetch<T>`** → a real public API (motivational quote on the dashboard) — no fake complexity, an honest use
+- **`useLocalStorage<T>`** → theme preference (to make the hook visible)
+- Frontend app — no private secrets, just `VITE_` public values
 
 ---
 
-## Tutorial — Kaise Chalega
+## Tutorial — How It Works
 
-Har step (T.1-T.8) ek isolated milestone hai:
+Each step (T.1-T.8) is an isolated milestone:
 
-1. **Project ko chalane layak** chhoda jaata hai — har file ka `// src/...` path, "yeh file banao" guidance
-2. **Coder mindset** — pehle socho (problem), phir code karo (solution)
-3. Har step ke end mein **In Your Own Words** — apne zuban mein samjho
-4. Project **ek hi folder** mein — `trackit/` — har step usi folder ko build karta hai
+1. **Each step gives you a runnable project** — every file's `// src/...` path, "create this file" guidance
+2. **Coder mindset** — first imagine (problem), then code (solution)
+3. **Each step ends with In Your Own Words** — understand in your own words
+4. **Project in one folder** — `trackit/` — each step builds on that same folder
 
 **Folder structure (final target):**
 
@@ -63,7 +63,7 @@ trackit/
 ├── src/
 │   ├── stores/
 │   │   ├── habitsStore.ts       # T.2 — habits CRUD + streak
-│   │   ├── tasksStore.ts        # T.2 — tasks (useReducer ke saath)
+│   │   ├── tasksStore.ts        # T.2 — tasks (useReducer)
 │   │   ├── prefsStore.ts        # T.2 — theme + preferences
 │   │   └── authStore.ts         # T.2 — dummy auth
 │   ├── hooks/
@@ -93,20 +93,20 @@ trackit/
 └── package.json
 ```
 
-Ab shuru karte hain — **T.1: Project Setup**.
+Now let's begin — **T.1: Project Setup**.
 
 ---
 
 ## T.1 — Project Setup
 
-Ek nayi directory mein, `bunx` se Vite + React + TypeScript project banao:
+In a new directory, create a Vite + React + TypeScript project with `bunx`:
 
 ```bash
 bunx create-vite@latest trackit --template react-ts
 cd trackit
 ```
 
-**Kya bana:**
+**What's created:**
 
 ```
 trackit/
@@ -122,16 +122,16 @@ trackit/
 └── vite.config.ts
 ```
 
-Ab dependencies install karte hain — sab kuch jo project ko chahiye:
+**Now install dependencies** — everything the project needs:
 
 ```bash
 bun add zustand react-router-dom framer-motion
 bun add -d vitest jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom dompurify @types/dompurify
 ```
 
-**Har dependency kya karegi:**
+**What each dependency does:**
 
-| Package | Kyun |
+| Package | Why |
 |---------|------|
 | `zustand` | Global state management (Batch 6) |
 | `react-router-dom` | Routing (Batch 3) |
@@ -139,19 +139,19 @@ bun add -d vitest jsdom @testing-library/react @testing-library/user-event @test
 | `dompurify` | HTML sanitization (Batch 7 security) |
 | `vitest` + Testing Library | Tests (Batch 7) |
 
-**Note:** Tailwind hum T.6 (dashboard/UI styling) mein add karenge — jab UI banane lagenge. Pehle data layer + logic (T.2-T.5), phir styling. **Yeh senior approach hai:** functional core pehle, styling baad mein.
+**Note:** We'll add Tailwind in T.6 (dashboard/UI styling) — when we start building UI. First the data layer + logic (T.2-T.5), then styling. **This is the senior approach:** functional core first, styling later.
 
 ---
 
-## Folder Structure Clean Karna
+## Cleaning Up the Folder Structure
 
-Vite default mein `App.css`, `src/assets`, `App.tsx` hota hai. Hum project ko clean karte hain — structure warna. App ki `src/` folder ko proper folders banate hain:
+Vite includes `App.css`, `src/assets`, `App.tsx` by default. We clean up the project — structure first. We create proper folders in the `src/` directory:
 
 ```
 mkdir src/components src/pages src/hooks src/stores src/types src/test
 ```
 
-Ab `src/app/` ke andar **folder tree final** (nahi — structure upar diagram wala hi hai). Dekhte hain main.tsx ko saaf karte hain:
+Now, in `src/`, the folder tree is the final structure shown in the diagram above. Let's clean up `main.tsx`:
 
 ```tsx
 // src/main.tsx
@@ -167,7 +167,7 @@ createRoot(document.getElementById("root")!).render(
 );
 ```
 
-Aur `src/App.tsx` ko ek simple placeholder se replace karo (router T.4 mein aayega):
+And replace `src/App.tsx` with a simple placeholder (router comes in T.4):
 
 ```tsx
 // src/App.tsx
@@ -183,7 +183,7 @@ function App() {
 export default App;
 ```
 
-**Cleanup:** Default Vite files jo use nahi hongi (`src/App.css`, `src/assets/react.svg`) hata sakte ho — unki jagah hum ajaye humara structure. `src/index.css` ko bhi basic reset se replace karo:
+**Cleanup:** Remove default Vite files not needed (`src/App.css`, `src/assets/react.svg`) — in their place, our own structure. Replace `src/index.css` with a basic reset:
 
 ```css
 /* src/index.css */
@@ -202,76 +202,76 @@ body {
 
 ---
 
-## Dev Server Chalana
+## Running the Dev Server
 
 ```bash
 bun run dev
 ```
 
-Browser mein `http://localhost:5173` — "TrackIt" heading dikhni chahiye. **Project setup ho gaya.** Ye milestone chhota hai lekin bhout important — clean structure pe bada project banti hai.
+In the browser, `http://localhost:5173` — the "TrackIt" heading should appear. **Project setup is complete.** This milestone is small but very important — big projects are built on clean structure.
 
 ---
 
 ## What T.1 Taught Us
 
 1. **`bunx create-vite`** — zero config React + TS project
-2. **Dependencies ko samajh ke** install karna — har ek ka role pata hai
-3. **Senior ordering** — functional core (data + logic) pehle, styling (Tailwind) baad mein
-4. **Clean folder structure** — `stores/`, `hooks/`, `components/`, `pages/`, `types/` — kahan kya hai, pata rehta hai
+2. **Install dependencies understanding** what each does — the role of each
+3. **Senior ordering** — functional core (data + logic) first, styling (Tailwind) later
+4. **Clean folder structure** — `stores/`, `hooks/`, `components/`, `pages/`, `types/` — know where everything lives
 
 ---
 
 ## So Here's the Takeaway
 
-Project ka foundation ready hai. Clean structure, saari dependencies, dev server chal raha hai. Ab agla step (T.2) — **types + normalized state + Zustand stores**. Data pehle, UI baad mein — production-grade thinking.
+The project foundation is ready. Clean structure, all dependencies, dev server running. Now the next step (T.2) — **types + normalized state + Zustand stores**. Data first, UI later — production-grade thinking.
 
-Forward is project mein agar kabhi "T.1 ka folder kaunsa tha" jaisa confusion ho, toh upar ka structure diagram dekh lo — sab map hai.
+If you ever get confused about which folder belongs to which step, look back at the structure diagram above — it's all mapped out.
 
 ---
 
 ## In Your Own Words
 
-1. TrackIt mein har main library (zustand, router, framer-motion) ki role kya hai?
+1. What is the role of each main library (zustand, router, framer-motion) in TrackIt?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Zustand global state ke liye hai — habits, tasks, prefs, auth stores (Batch 6 ka approach). react-router-dom routing ke liye — dynamic routes (habit detail), protected routes (login ke baad), lazy loading (Batch 3). framer-motion animations ke liye — card bane pe, dashboard update pe smooth transitions. Inke saath dompurify security ke liye (raw HTML sanitize) aur vitest+RTL testing ke liye.
+**Sample Answer:** Zustand is for global state — habits, tasks, prefs, auth stores (Batch 6 approach). react-router-dom is for routing — dynamic routes (habit detail), protected routes (after login), lazy loading (Batch 3). framer-motion is for animations — smooth transitions when cards appear and dashboard updates. Along with these, dompurify for security (sanitizing raw HTML) and vitest+RTL for testing.
 
 </details>
 
-2. Senior approach mein Tailwind (styling) baad mein kyon add kiya, pehle nahi?
+2. Why was Tailwind added later in the senior approach, not first?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kyunki hamein pehle functional core chahiye — data layer, stores, logic, routing. Yeh cheezein test-able aur production-critical hain. Styling (Tailwind) chor page pe baad mein lagti hai — UI components banne ke baad. Approach: functional core pehle (T.2-T.5 data + logic), styling baad mein (T.6 dashboard/UI). Isse core pehle verify hota hai, aur styling seekhi cheez ko zabardasti pehle se include nahi karta jo core ko distracted kare.
+**Sample Answer:** Because we need the functional core first — data layer, stores, logic, routing. These are testable and production-critical. Styling goes on the front page later — after building UI components. Approach: functional core first (T.2-T.5 data + logic), styling later (T.6 dashboard/UI). This way, the core gets verified first, and styling doesn't include unasked-for things that would distract the core.
 
 </details>
 
-3. `bunx create-vite@latest trackit --template react-ts` kya karta hai?
+3. What does `bunx create-vite@latest trackit --template react-ts` do?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Ye `bunx` (bun ka CLI runner) se Vite ko latest version mein call karta hai, ek nayi project `trackit/` directory banata hai, aur `react-ts` template use karta hai — matlab React + TypeScript setup, zero config. Vite ek folder banata hai with `src/`, `index.html`, `package.json`, `tsconfig.json`, `vite.config.ts` — ready-to-run project. Phir `cd trackit` aur dependencies install karte hain.
+**Sample Answer:** It calls Vite in the latest version via `bunx` (bun's CLI runner), creates a new project in a `trackit/` directory, and uses the `react-ts` template — React + TypeScript setup, zero config. Vite creates a folder with `src/`, `index.html`, `package.json`, `tsconfig.json`, `vite.config.ts` — a ready-to-run project. Then `cd trackit` and install dependencies.
 
 </details>
 
-4. Project mein `stores/` aur `hooks/` folders alag kyun rakhe? Inka alag-alag role kya hai?
+4. Why are `stores/` and `hooks/` folders separate in the project? What's the role of each?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kyunki yeh do alag cheezein hain (Batch 6 ka separation of concerns). `stores/` = Zustand stores — global state + actions + persistence (`persist` middleware). `hooks/` = custom hooks — `useFetch<T>` (data fetching), `useLocalStorage<T>` (minimized persistence), `useHabits` (habit business logic). Store raw state manages karta hai, hooks logic/composition provide karte hain. Alag folder = kahan kya hai clearly pata rehta hai, badi project mein clean rahta hai.
+**Sample Answer:** Because they're two different things (Batch 6 separation of concerns). `stores/` = Zustand stores — global state + actions + persistence (`persist` middleware). `hooks/` = custom hooks — `useFetch<T>` (data fetching), `useLocalStorage<T>` (persisted values), `useHabits` (habit business logic). The store manages raw state, hooks provide logic/composition. Separate folders = always know where things are, stays clean in bigger projects.
 
 </details>
 
-5. TrackIt mein core data localStorage mein kyon, API se kyon nahi? (senior thinking)
+5. Why is core data in localStorage in TrackIt, not from an API? (senior thinking)
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Kyunki TrackIt pure frontend hai (React) — koi backend nahi. Habits/tasks user ke local data hain jo persist middleware localStorage mein save karta hai. Yahoo load/refresh-safe hai — bina backend ke asli persistence. API se data lene ke liye backend chahiye hota jo we taught nahi. `useFetch<T>` ko hum ek real public API (quote) ke liye use karte hain — jo dashboard pe honest use hai (fake mock-service nahi). Senior thinking: complexity nahi badhana bina zaroorat — apne data ka sahi tool (Zustand+persist) aur API ka sahi tool (useFetch) choona.
+**Sample Answer:** Because TrackIt is a pure frontend app — no backend. Habits/tasks are the user's local data, which the `persist` middleware saves in localStorage. This survives load/refresh — real persistence without a backend. A backend would be needed to fetch data from an API, which we haven't taught. `useFetch<T>` is used for a real public API (quotes) on the dashboard — an honest use, not a fake mock service. Senior thinking: don't add complexity without need — choose the right tool for your data (Zustand+persist) and the right tool for API (useFetch).
 
 </details>
