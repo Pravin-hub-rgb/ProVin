@@ -506,12 +506,12 @@ export const reactSubject: Subject = {
       lectures: [
         {
           id: "react-5.1",
-          title: "5.1 React.memo — Unnecessary Re-renders Se Bachna",
+          title: "5.1 React.memo — Avoiding Unnecessary Re-renders",
           path: "docs/coding/React JS/Batch 5 - Performance/5.1 React.memo — Unnecessary Re-renders Se Bachna.md",
         },
         {
           id: "react-5.2",
-          title: "5.2 useMemo — Expensive Calculations Cache Karna",
+          title: "5.2 useMemo — Caching Expensive Calculations",
           path: "docs/coding/React JS/Batch 5 - Performance/5.2 useMemo — Expensive Calculations Cache Karna.md",
         },
         {
@@ -531,7 +531,7 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-5.6",
-          title: "5.6 Lazy Loading, Suspense aur Code Splitting",
+          title: "5.6 Lazy Loading, Suspense and Code Splitting",
           path: "docs/coding/React JS/Batch 5 - Performance/5.6 Lazy Loading, Suspense aur Code Splitting.md",
         },
         {
