@@ -1,24 +1,24 @@
 # 🌐 Phase 1: Topic 2 - Cache Busting
 
-> **Interview Question:** "Naya code deploy kiya, purana cache kyun dikh raha hai? Isse kaise fix karte hain?"
+> **Interview Question:** "Deployed new code, but why is the old cache showing? How do we fix it?"
 
 ---
 
 ## 💡 Beginner-Friendly Explanation (The "New Edition" Problem)
 
-Socho, tumne apne ghar ke drawer mein ek **book** rakhi thi jo **1 saal tak fresh** thi (humne Topic 1 mein seekha — `max-age=31536000`). Ab maan lo, us book ka **naya edition** aa gaya — kuch pages change ho gaye. Par tumhare drawer mein toh **purani copy** padi hai!
+Imagine you kept a **book** in your home drawer that stays **fresh for 1 year** (we learned this in Topic 1 — `max-age=31536000`). Now suppose a **new edition** of that book came out — some pages changed. But you still have the **old copy** in your drawer!
 
-Browser bhi yahi problem face karta hai. Agar humne kisi file ko **1 saal ke liye cache** kar diya, aur uske baad humein usme **ek chota sa change** karna pada (jaise CSS color change), toh user ko **1 saal tak purana color** dikhega! 😱
+The browser faces the same problem. If we **cache a file for 1 year** and later need a **small change** in it (like a CSS color change), the user will see the **old color for 1 year**! 😱
 
-**Ye problem solve karne ke liye hum use karte hain — Cache Busting!**
+**To solve this problem, we use — Cache Busting!**
 
 ---
 
-## 🛠️ Cache Busting Kaise Kaam Karta Hai? (The "Name Change" Trick)
+## 🛠️ How Does Cache Busting Work? (The "Name Change" Trick)
 
-Cache busting ka simple sa concept hai:
+Cache busting has a simple concept:
 
-> **File ka naam hi badal do!** Browser ko lagega ye **nayi file** hai, aur wo purana cache chhod kar naye wale ko download kar lega.
+> **Just change the file's name!** The browser will think it's a **new file** and download the new one, abandoning the old cache.
 
 ```
 Before: style.css → Browser caches for 1 year
@@ -28,18 +28,18 @@ After:  style.v2.css → Browser thinks it's a new file, downloads it!
 ### Real-World Example:
 
 ```html
-<!-- Before (purana cache dikhega) -->
+<!-- Before (old cache will show) -->
 <link rel="stylesheet" href="style.css">
 
-<!-- After (naya version dikhega) -->
+<!-- After (new version will show) -->
 <link rel="stylesheet" href="style.abc123.css">
 ```
 
-Browser ke liye `style.css` aur `style.abc123.css` **do alag files** hain. Toh wo `style.abc123.css` ko naye sire se download karega, bhale hi `style.css` cached ho!
+For the browser, `style.css` and `style.abc123.css` are **two different files**. So it downloads `style.abc123.css` fresh, even if `style.css` is cached!
 
 ---
 
-## 🎯 Cache Busting Techniques (3 Common Tarike)
+## 🎯 Cache Busting Techniques (3 Common Methods)
 
 ### 1. Version Number (Manual)
 
@@ -48,7 +48,7 @@ Browser ke liye `style.css` aur `style.abc123.css` **do alag files** hain. Toh w
 <link rel="stylesheet" href="style.v3.css">
 ```
 
-**Problem:** Har baar manually version change karna padta hai. Error prone hai.
+**Problem:** Version must be changed manually every time. Error-prone.
 
 ### 2. Query Parameters
 
@@ -57,138 +57,138 @@ Browser ke liye `style.css` aur `style.abc123.css` **do alag files** hain. Toh w
 <link rel="stylesheet" href="style.css?v=3">
 ```
 
-**Problem:** Kuch purane browsers aur proxies query parameters ko ignore kar dete hain aur cached version serve kar dete hain.
+**Problem:** Some older browsers and proxies ignore query parameters and serve the cached version.
 
 ### 3. Content Hash (Best Practice ✅)
 
 ```html
-<link rel="stylesheet" href="style.abc123.css">  <!-- abc123 = file content ka hash -->
+<link rel="stylesheet" href="style.abc123.css">  <!-- abc123 = hash of file content -->
 <link rel="stylesheet" href="style.xyz789.css"> <!-- xyz789 = new hash after change -->
 ```
 
-**Benefit:** 
-- **Automatic** — build tools (Webpack, Vite) generate karte hain
-- **Unique** — content change hua toh hash bhi change hoga
-- **Reliable** — sab browsers aur proxies respect karte hain
+**Benefit:**
+- **Automatic** — build tools (Webpack, Vite) generate it
+- **Unique** — if content changes, hash changes too
+- **Reliable** — all browsers and proxies respect it
 
 ---
 
-## 🔧 Build Tools Kaise Karte Hain? (Webpack/Vite Example)
+## 🔧 How Build Tools Do It (Webpack/Vite Example)
 
 ### Webpack Configuration:
 
-**Kya kar rahe hain:** Webpack ko configure kar rahe hain taki wo automatically **content hash** generate kare filenames mein.
+**What we're doing:** Configure Webpack so it automatically generates a **content hash** in filenames.
 
 ```javascript
 // webpack.config.js
 const path = require('path');
 
 module.exports = {
-  // Entry point - tumhara main JS file
+  // Entry point - your main JS file
   entry: './src/index.js',
-  
+
   // Output configuration
   output: {
-    // [name] = entry point ka naam (index)
-    // [contenthash] = file content ka hash (change hoga jab content change hoga)
+    // [name] = name of entry point (index)
+    // [contenthash] = hash of file content (changes when content changes)
     // .js = extension
     filename: '[name].[contenthash].js',  // Output: index.abc123.js
-    
-    // Static assets (images, fonts) ke liye
+
+    // For static assets (images, fonts)
     // [name] = original filename
     // [hash] = content hash
     // [ext] = original extension
     assetModuleFilename: 'images/[name].[hash][ext]',  // Output: images/logo.xyz789.png
-    
-    // Sab files dist/ folder mein jayengi
+
+    // All files go into dist/ folder
     path: path.resolve(__dirname, 'dist'),
-    
-    // Pehle ki purani files automatically delete ho jayengi
+
+    // Old files from previous build get deleted automatically
     clean: true
   },
-  
+
   // CSS loaders
   module: {
     rules: [
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader']  // CSS ko process karo
+        use: ['style-loader', 'css-loader']  // Process CSS
       },
       {
         test: /\.(png|jpg|gif)$/,
-        type: 'asset/resource'  // Images ko copy karo with hash
+        type: 'asset/resource'  // Copy images with hash
       }
     ]
   }
 };
 ```
 
-**Output (Build ke baad):**
+**Output (After build):**
 ```
 dist/
-├── index.html              ← HTML file (hash nahi hota)
-├── index.abc123.js         ← Hash automatically generated from content
-├── style.xyz789.css        ← Hash automatically generated from content
+├── index.html              ← HTML file (no hash)
+├── index.abc123.js         ← Hash auto-generated from content
+├── style.xyz789.css        ← Hash auto-generated from content
 └── images/
-    └── logo.def456.png     ← Hash automatically generated from content
+    └── logo.def456.png     ← Hash auto-generated from content
 ```
 
 **Key Points:**
-- `[contenthash]` — file content ka hash, content change hua toh hash bhi change hoga
-- `[chunkhash]` — chunk ka hash (multiple entry points ke liye)
-- `[hash]` — build ka hash (saari files ka same hash)
-- `clean: true` — purani files automatically delete ho jati hain
+- `[contenthash]` — hash of file content, changes when content changes
+- `[chunkhash]` — hash of chunk (for multiple entry points)
+- `[hash]` — build hash (same hash for all files)
+- `clean: true` — old files get deleted automatically
 
 ---
 
 ### Vite Configuration:
 
-**Kya kar rahe hain:** Vite ko configure kar rahe hain taki wo automatically **hash** generate kare assets mein.
+**What we're doing:** Configure Vite so it automatically generates **hashes** in assets.
 
 ```javascript
 // vite.config.js
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';  // React plugin (agar React use kar rahe ho)
+import react from '@vitejs/plugin-react';  // React plugin (if using React)
 import path from 'path';
 
 export default defineConfig({
-  // React support (agar React project hai)
+  // React support (if React project)
   plugins: [react()],
-  
+
   // Build configuration
   build: {
     // Output directory
     outDir: 'dist',
-    
+
     // Rollup options (Vite uses Rollup internally)
     rollupOptions: {
       output: {
-        // JavaScript files ke liye pattern
+        // Pattern for JavaScript files
         entryFileNames: `assets/[name].[hash].js`,      // index.abc123.js
         chunkFileNames: `assets/[name].[hash].js`,      // vendor.xyz789.js
-        
-        // CSS files ke liye pattern
+
+        // Pattern for CSS files
         assetFileNames: `assets/[name].[hash].[ext]`,   // style.def456.css, logo.ghi789.png
       }
     },
-    
-    // Source maps generate karo (debugging ke liye)
+
+    // Generate source maps (for debugging)
     sourcemap: true,
-    
-    // Minification enable karo (file size kam karne ke liye)
+
+    // Enable minification (to reduce file size)
     minify: 'terser',
-    
+
     // Terser options (JavaScript minification)
     terserOptions: {
       compress: {
-        drop_console: true,  // Production mein console.log remove karo
+        drop_console: true,  // Remove console.log in production
       }
     }
   },
-  
+
   // CSS options
   css: {
-    // CSS modules use karo (optional)
+    // Use CSS modules (optional)
     modules: {
       generateScopedName: '[name]__[local]___[hash:base64:5]'
     }
@@ -196,7 +196,7 @@ export default defineConfig({
 });
 ```
 
-**Output (Build ke baad):**
+**Output (After build):**
 ```
 dist/
 ├── index.html
@@ -206,21 +206,21 @@ dist/
 │   ├── style.def456.css     ← CSS file
 │   └── logo.ghi789.png      ← Image file
 └── assets/
-    └── index.abc123.js.map  ← Source map (debugging ke liye)
+    └── index.abc123.js.map  ← Source map (for debugging)
 ```
 
 **Key Points:**
-- `entryFileNames` — main entry point ka filename pattern
-- `chunkFileNames` — dynamic imports/chunks ka filename pattern
-- `assetFileNames` — static assets (CSS, images) ka filename pattern
-- `sourcemap: true` — debugging ke liye source maps generate karta hai
-- `minify: 'terser'` — JavaScript ko minify karta hai
+- `entryFileNames` — filename pattern for main entry point
+- `chunkFileNames` — filename pattern for dynamic imports/chunks
+- `assetFileNames` — filename pattern for static assets (CSS, images)
+- `sourcemap: true` — generates source maps for debugging
+- `minify: 'terser'` — minifies JavaScript
 
 ---
 
 ### Create React App (CRA) — Default Configuration
 
-**Kya kar rahe hain:** Create React App already configured hota hai, bas samajhna hai ki wo kaise kaam karta hai.
+**What we're doing:** CRA is already configured — just understand how it works.
 
 ```javascript
 // CRA automatically uses these patterns (no configuration needed):
@@ -229,7 +229,7 @@ dist/
 // Images: static/media/logo.[hash].[ext]
 ```
 
-**Output (Build ke baad):**
+**Output (After build):**
 ```
 build/
 ├── index.html
@@ -246,15 +246,15 @@ build/
 ```
 
 **Key Points:**
-- CRA automatically hash generate karta hai
-- Source maps bhi automatically generate hote hain
+- CRA generates hashes automatically
+- Source maps are also generated automatically
 - No configuration needed — just `npm run build`
 
 ---
 
-### HTML Generation — Hash Ko Replace Karna
+### HTML Generation — Replacing the Hash
 
-**Kya kar rahe hain:** Build tools automatically HTML file mein **hashed filenames** inject kar dete hain.
+**What we're doing:** Build tools automatically inject **hashed filenames** into the HTML file.
 
 ```html
 <!-- Before Build (Source HTML) -->
@@ -277,19 +277,19 @@ build/
 <html>
 <head>
   <title>My App</title>
-  <!-- Hash automatically injected by build tool -->
+  <!-- Hash auto-injected by build tool -->
   <link href="/static/css/main.xyz789.css" rel="stylesheet">
 </head>
 <body>
   <div id="root"></div>
-  <!-- Hash automatically injected by build tool -->
+  <!-- Hash auto-injected by build tool -->
   <script src="/static/js/main.abc123.js"></script>
 </body>
 </html>
 ```
 
-**Kaise hota hai:**
-- **Webpack:** `HtmlWebpackPlugin` automatically HTML generate karta hai
+**How it happens:**
+- **Webpack:** `HtmlWebpackPlugin` automatically generates HTML
 - **Vite:** Built-in HTML handling with `index.html` as entry point
 - **CRA:** Pre-configured `HtmlWebpackPlugin`
 
@@ -304,10 +304,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',  // Source HTML
       filename: 'index.html',         // Output HTML
-      inject: 'body',                 // Scripts ko body ke end mein inject karo
+      inject: 'body',                 // Inject scripts at end of body
       minify: {
-        removeComments: true,         // Comments remove karo
-        collapseWhitespace: true      // Extra spaces remove karo
+        removeComments: true,         // Remove comments
+        collapseWhitespace: true      // Remove extra spaces
       }
     })
   ]
@@ -318,67 +318,67 @@ module.exports = {
 
 ## 🎙️ Interview Articulation (How to Answer)
 
-### Q: "Cache busting kya hai? Kyu zaroori hai?"
+### Q: "What is cache busting? Why is it needed?"
 
-**Answer:** "Sir, cache busting ek technique hai jo ensure karti hai ki naye code deploy ke baad users ko purana cached version na dikhe. Hum file ka naam badal dete hain (jaise `style.css` se `style.abc123.css`), taaki browser use ek nayi file samjhe aur download kare. Ye zaroori hai kyunki hum static assets ko long-term cache karte hain (1 saal tak), aur agar humein urgent change karna pada toh users ko turant naya version dikhna chahiye."
+**Answer:** "Sir, cache busting is a technique that ensures users don't see the old cached version after new code is deployed. We change the file name (like from `style.css` to `style.abc123.css`), so the browser treats it as a new file and downloads it. This is needed because we cache static assets long-term (up to 1 year), and if an urgent change is needed, users should see the latest version immediately."
 
-### Q: "Content hash vs version number — kaunsa better hai?"
+### Q: "Content hash vs version number — which is better?"
 
-**Answer:** "Content hash zyada reliable hai. Version number manually change karna padta hai aur error prone hai. Content hash automatically generate hota hai file content ke basis pe — agar content change hua toh hash bhi change hoga. Ye build tools jaise Webpack aur Vite automatically karte hain."
+**Answer:** "Content hash is more reliable. Version number must be changed manually and is error-prone. Content hash is generated automatically based on file content — if content changes, the hash changes too. Build tools like Webpack and Vite do this automatically."
 
-### Q: "Query parameters use kar sakte hain cache busting ke liye?"
+### Q: "Can we use query parameters for cache busting?"
 
-**Answer:** "Technically haan, lekin ye best practice nahi hai. Kuch purane browsers aur proxies query parameters ko ignore kar dete hain aur cached version serve kar dete hain. Isliye filename-based cache busting (content hash) zyada reliable hai."
+**Answer:** "Technically yes, but it's not best practice. Some older browsers and proxies ignore query parameters and serve the cached version. Filename-based cache busting (content hash) is more reliable."
 
-### Q: "Agar sirf ek chota sa CSS change karna ho, toh poori file dobara download hogi?"
+### Q: "If only a small CSS change is needed, will the whole file be re-downloaded?"
 
-**Answer:** "Haan, ye ek limitation hai. Lekin iska benefit ye hai ki humein guarantee milti hai ki user ko latest version dikhega. Aur kyunki hum gzip/brotli compression use karte hain, toh file size kaafi chota hota hai. Trade-off worth it hai consistency ke liye."
+**Answer:** "Yes, that's a limitation. But the benefit is a guarantee that users see the latest version. And since we use gzip/brotli compression, file size is quite small. The trade-off is worth it for consistency."
 
-### Q: "CDN ke saath cache busting kaise handle karte hain?"
+### Q: "How do you handle cache busting with a CDN?"
 
-**Answer:** "CDN ke saath bhi same approach kaam karta hai. Hum `Cache-Control: public, max-age=31536000, immutable` set karte hain versioned assets ke liye. CDN bhi inhe cache karta hai, aur jab hum filename change karte hain (hash change), toh CDN bhi naya version fetch karta hai origin server se."
+**Answer:** "Same approach works with CDN. We set `Cache-Control: public, max-age=31536000, immutable` for versioned assets. The CDN also caches them, and when we change the filename (hash changes), the CDN fetches the new version from the origin server."
 
 ---
 
 ## ⚠️ Common Pitfalls & Solutions
 
-### Problem 1: HTML File Cache Nahi Hoti
+### Problem 1: HTML File Not Cached Properly
 
-**Scenario:** JS/CSS ke filenames change ho gaye, lekin HTML mein purane references hain!
+**Scenario:** JS/CSS filenames changed, but HTML still has old references!
 
 ```html
-<!-- HTML mein purana reference -->
+<!-- Old reference in HTML -->
 <script src="app.abc123.js"></script>
 
-<!-- Naya version deploy hua -->
+<!-- New version deployed -->
 <script src="app.xyz789.js"></script>
 ```
 
-**Solution:** HTML ko **cache mat karo** ya **short cache** do:
+**Solution:** Don't cache HTML, or give it a **short cache**:
 
 ```http
 Cache-Control: no-cache, must-revalidate
 ```
 
-Ya phir **Server-Side Rendering** use karo jo har baar fresh HTML generate kare.
+Or use **Server-Side Rendering** that generates fresh HTML every time.
 
-### Problem 2: Build Ke Baad Bhi Purana Cache
+### Problem 2: Old Cache Still Showing After Build
 
-**Scenario:** Build ho gaya, filenames change ho gaye, lekin CDN pe purana cache hai!
+**Scenario:** Build succeeded, filenames changed, but CDN still serves old cache!
 
-**Solution:** 
-1. **CDN purge** karo (Cloudflare, CloudFront mein option hota hai)
-2. **Versioned URLs** use karo jo automatically CDN ko force refresh karde
-3. **Cache invalidation**策略 use karo
+**Solution:**
+1. **Purge CDN** (option available in Cloudflare, CloudFront)
+2. **Use versioned URLs** that automatically force CDN to refresh
+3. **Use cache invalidation** strategies
 
 ### Problem 3: Multiple Deployments
 
-**Scenario:** Roz multiple deployments hote hain, har baar naya hash — cache kabhi use nahi hota!
+**Scenario:** Multiple deployments daily — new hash every time — cache never gets used!
 
 **Solution:**
-1. **Chunk splitting** karo — common code alag, changing code alag
-2. **Long-term caching** sirf stable libraries ke liye
-3. **Runtime code** ko short cache do
+1. **Chunk splitting** — separate common code from changing code
+2. **Long-term caching** only for stable libraries
+3. **Short cache** for runtime code
 
 ---
 
@@ -413,8 +413,8 @@ Ya phir **Server-Side Rendering** use karo jo har baar fresh HTML generate kare.
 
 ## 🚀 Next Steps
 
-Ab tum **Topic 3: Cache vs Database Dilemma** ke liye ready ho! Ye interview ka favorite architecture question hai — "Agar cache itna fast hai, toh sab kuch cache mein kyun nahi store karte?"
+Now you're ready for **Topic 3: Cache vs Database Dilemma**! This is a favorite architecture question in interviews — "If cache is so fast, why not store everything in cache?"
 
 ---
 
-> **Pro Tip:** Interview mein jab cache busting discuss ho, toh **build process** ka zikr zaroor karna — "Hum Webpack/Vite use karte hain jo automatically content hash generate karta hai" — ye dikhata hai ki tum practical implementation bhi jaante ho! 💡
+> **Pro Tip:** When discussing cache busting in an interview, always mention the **build process** — "We use Webpack/Vite which automatically generates content hashes" — this shows you know practical implementation too! 💡

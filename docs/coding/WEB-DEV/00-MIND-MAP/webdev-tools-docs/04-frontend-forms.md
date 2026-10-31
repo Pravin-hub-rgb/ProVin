@@ -1,34 +1,34 @@
-# 04 — Forms + Validation: React Hook Form, Zod, Yup aur Baaki
+# 04 — Forms + Validation: React Hook Form, Zod, Yup and the Rest
 
 > Umbrella: Frontend → Form Handling + Validation
-> Kaam: User input lena, validate karna, errors dikhana
-> Note: Zod frontend + backend dono mein use hota hai
+> Purpose: Taking user input, validating it, showing errors
+> Note: Zod is used on both frontend and backend
 
 ---
 
-## Yeh Category Kya Solve Karti Hai
+## What This Category Solves
 
-Forms mein yeh sab handle karna padta hai:
-- Input values track karna
-- Validation (email format sahi hai? password 8 chars ka hai?)
-- Error messages dikhana
+In forms you have to handle:
+- Tracking input values
+- Validation (is the email format correct? is the password 8 chars?)
+- Showing error messages
 - Submit handling
 - Loading states
 
-Scratch se karo toh bahut code — yeh tools simplify karte hain.
+Doing it from scratch is lots of code — these tools simplify it.
 
 ---
 
-## Do Alag Cheezein Hain — Form Library + Validator
+## Two Separate Things — Form Library + Validator
 
 ```
-FORM LIBRARY:    Form state manage karo, submit handle karo
+FORM LIBRARY:    Manage form state, handle submit
   → React Hook Form, Formik
 
-VALIDATOR:       Data sahi format mein hai? Check karo
+VALIDATOR:       Is the data in the right format? Check it
   → Zod, Yup, Valibot
 
-Dono saath use hote hain:
+Used together:
   → React Hook Form + Zod → Most popular combo 2024
 ```
 
@@ -42,19 +42,19 @@ Dono saath use hote hain:
 **Tag: 🟢 Most Popular 2024 | Recommended | Performance**
 
 ```
-Kya hai: Hooks-based form library — minimal re-renders, great performance
-Kab use karo:
-  → Almost always — naye projects mein default choice
+What it is: Hooks-based form library — minimal re-renders, great performance
+When to use:
+  → Almost always — default choice in new projects
 
 Real app example:
-  → Swiggy ka address form: Name, phone, house no, landmark — sab validate
-  → Razorpay onboarding: Business details form (bahut fields)
+  → Swiggy's address form: Name, phone, house no, landmark — all validated
+  → Razorpay onboarding: Business details form (many fields)
   → ShopKaro signup/login forms
 
 Pros:
   → Uncontrolled inputs — minimal re-renders (fast)
-  → Zod ke saath perfect integration
-  → TypeScript support excellent
+  → Perfect integration with Zod
+  → Excellent TypeScript support
 
 Code feel:
   const { register, handleSubmit, formState: { errors } } = useForm({
@@ -64,11 +64,11 @@ Code feel:
   <input {...register("email")} />
   {errors.email && <span>{errors.email.message}</span>}
 
-Formik se fark:
+Difference from Formik:
   → React Hook Form: Uncontrolled (refs) → Fast
   → Formik: Controlled (state) → More re-renders → Slower
 
-India mein: Standard ban gaya hai naye projects mein
+In India: Became standard in new projects
 ```
 
 ---
@@ -77,17 +77,17 @@ India mein: Standard ban gaya hai naye projects mein
 **Tag: 🟡 Legacy | Was standard 2019-2022**
 
 ```
-Kya hai: Form state management with controlled inputs
-Kab use karo:
+What it is: Form state management with controlled inputs
+When to use:
   → Existing Formik codebase
-  → Naye projects mein avoid — React Hook Form better
+  → Avoid in new projects — React Hook Form is better
 
-React Hook Form se fark:
-  → Controlled inputs → Har keystroke pe re-render
-  → React Hook Form se slow
-  → Zyada boilerplate
+Difference from React Hook Form:
+  → Controlled inputs → Re-render on every keystroke
+  → Slower than React Hook Form
+  → More boilerplate
 
-Status: Still maintained — lekin React Hook Form ne le li popularity
+Status: Still maintained — but React Hook Form took the popularity
 ```
 
 ---
@@ -100,45 +100,45 @@ Status: Still maintained — lekin React Hook Form ne le li popularity
 **Tag: 🟢 Most Popular 2024 | TypeScript-first | Frontend + Backend**
 
 ```
-Kya hai: TypeScript-first schema validation — frontend + backend dono mein use hota hai
-Kab use karo:
-  → TypeScript project hai
+What it is: TypeScript-first schema validation — used on both frontend and backend
+When to use:
+  → TypeScript project
   → Form validation
-  → API request/response validate karna (backend pe bhi)
-  → Environment variables validate karna
+  → Validating API request/response (backend too)
+  → Validating environment variables
 
-IMPORTANT: Zod sirf frontend nahi — backend pe bhi:
-  → API route mein aaya request body → Zod se validate karo
-  → Database se aaya data → Zod se parse karo
-  → .env variables → Zod se validate karo (popular pattern)
+IMPORTANT: Zod isn't only frontend — backend too:
+  → Request body in an API route → validate with Zod
+  → Data from database → parse with Zod
+  → .env variables → validate with Zod (popular pattern)
 
 Real app example:
   → Swiggy: Address form — pincode 6 digits? phone 10 digits?
   → ShopKaro signup: Email format? Password min 8 chars?
-  → Backend: POST /api/orders ka body validate karo
+  → Backend: Validate POST /api/orders body
 
 Code feel:
   const signupSchema = z.object({
-    email: z.string().email("Valid email daalo"),
-    password: z.string().min(8, "8 characters minimum"),
-    name: z.string().min(2, "Naam bahut chhota hai")
+    email: z.string().email("Enter valid email"),
+    password: z.string().min(8, "Minimum 8 characters"),
+    name: z.string().min(2, "Name too short")
   })
 
-  // TypeScript type automatically milta hai:
+  // TypeScript type automatically available:
   type SignupData = z.infer<typeof signupSchema>
 
-  // Backend mein bhi same schema use karo:
+  // Same schema on backend:
   const body = signupSchema.parse(await req.json())
-  // Agar invalid → Automatically error throw
+  // If invalid → automatically throws error
 
 Pros:
-  → TypeScript types automatically generate hoti hain schema se
-  → Frontend aur backend same schema share kar sakte hain
+  → TypeScript types generate automatically from schema
+  → Frontend and backend can share the same schema
   → Excellent error messages
-  → Composable — schemas combine kar sakte ho
+  → Composable — schemas can be combined
 
-India mein: 2022 ke baad rapidly adopted
-tRPC ke saath: Perfect pair — end-to-end type safety
+In India: Rapidly adopted after 2022
+With tRPC: Perfect pair — end-to-end type safety
 ```
 
 ---
@@ -147,18 +147,18 @@ tRPC ke saath: Perfect pair — end-to-end type safety
 **Tag: 🟡 Older | Was standard before Zod | Still used**
 
 ```
-Kya hai: Schema-based validation — JavaScript-first (TypeScript support hai lekin secondary)
-Kab use karo:
+What it is: Schema-based validation — JavaScript-first (TypeScript support secondary)
+When to use:
   → Existing Yup codebase
-  → Formik ke saath (Formik + Yup classic combo)
+  → With Formik (Formik + Yup classic combo)
   → JavaScript project (no TypeScript)
 
-Zod se fark:
+Difference from Zod:
   → Yup: JavaScript-first, promise-based async
   → Zod: TypeScript-first, sync by default
-  → Zod mein TypeScript integration better
+  → Better TypeScript integration in Zod
 
-Status: Still maintained, still popular — lekin Zod ne lead le li
+Status: Still maintained, still popular — but Zod took the lead
 
 Code feel:
   const schema = yup.object({
@@ -173,17 +173,17 @@ Code feel:
 **Tag: 🔵 Lightweight | Tiny bundle | Growing**
 
 ```
-Kya hai: Zod jaisi validation — lekin bahut chhota bundle size
-Kab use karo:
-  → Bundle size critical hai (edge functions, serverless)
-  → Zod bahut bada lag raha hai
+What it is: Validation like Zod — but much smaller bundle size
+When to use:
+  → Bundle size critical (edge functions, serverless)
+  → Zod feels too big
 
-Zod se fark:
+Difference from Zod:
   → Valibot: ~8KB | Zod: ~50KB
-  → API thodi alag hai
-  → Ecosystem chhota hai abhi
+  → Slightly different API
+  → Smaller ecosystem for now
 
-Status: Growing — lekin Zod ka ecosystem zyada mature
+Status: Growing — but Zod's ecosystem more mature
 ```
 
 ---
@@ -192,16 +192,16 @@ Status: Growing — lekin Zod ka ecosystem zyada mature
 **Tag: 🟡 Backend-first | Node.js classic**
 
 ```
-Kya hai: Schema validation — originally Node.js/Express ke liye
-Kab use karo:
+What it is: Schema validation — originally for Node.js/Express
+When to use:
   → Express.js backend with existing Joi
-  → Browser mein avoid — Zod better
+  → Avoid in browser — Zod is better
 
 Express classic pattern:
   → Joi + Express → Request validation
-  → Ab: Zod + Hono/Fastify → Better TypeScript
+  → Now: Zod + Hono/Fastify → Better TypeScript
 
-Status: Purane Express projects mein milega
+Status: Found in older Express projects
 ```
 
 ---
@@ -215,10 +215,10 @@ Status: Purane Express projects mein milega
 
 Legacy (still working):
   Formik + Yup
-  → Purane projects
+  → Older projects
 
 Backend validation:
-  Zod (same library, frontend se share kar sakte ho schema)
+  Zod (same library, can share schemas with frontend)
 ```
 
 ---
@@ -226,10 +226,10 @@ Backend validation:
 ## ShopKaro Example — Login Form
 
 ```tsx
-// Zod schema — frontend + backend share kar sakte ho
+// Zod schema — can share between frontend + backend
 const loginSchema = z.object({
-  email: z.string().email("Valid email daalo"),
-  password: z.string().min(1, "Password daalo")
+  email: z.string().email("Enter valid email"),
+  password: z.string().min(1, "Enter password")
 })
 
 // React Hook Form + Zod
@@ -251,10 +251,10 @@ function LoginForm() {
   )
 }
 
-// Backend mein bhi same schema
+// Same schema on backend
 // /app/api/auth/login/route.js
 const body = loginSchema.parse(await req.json())
-// Agar invalid → 400 error automatic
+// If invalid → 400 error automatically
 ```
 
 ---
@@ -264,11 +264,11 @@ const body = loginSchema.parse(await req.json())
 ```
 Form library:
   → React Hook Form (almost always)
-  → Existing Formik? Rehne do
+  → Existing Formik? Leave it
 
 Validator:
   → Zod (TypeScript project)
-  → Yup (existing codebase ya plain JS)
+  → Yup (existing codebase or plain JS)
   → Valibot (bundle size critical)
 
 Backend validation:
@@ -277,6 +277,6 @@ Backend validation:
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`05-frontend-http.md` — HTTP Clients — fetch, Axios, React Query, SWR — API calls kaise karte hain, Zomato ki product listing kaise fetch hoti hogi.
+`05-frontend-http.md` — HTTP Clients — fetch, Axios, React Query, SWR — how API calls are made, how Zomato's product listing would be fetched.

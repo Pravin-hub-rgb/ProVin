@@ -1,19 +1,19 @@
-# 01 — State Management: Zustand, Redux, Jotai aur Baaki Sab
+# 01 — State Management: Zustand, Redux, Jotai and the Rest
 
 > Umbrella: Frontend → State Management
-> Kaam: App ki global "yaadaasht" manage karna — cart, user, UI state
-> ShopKaro docs mein: Doc 27-31
+> Purpose: Manage the app's global "memory" — cart, user, UI state
+> ShopKaro docs: Doc 27-31
 
 ---
 
-## Yeh Category Kya Solve Karti Hai
+## What This Category Solves
 
-Jab ek component ka data doosre component ko chahiye — aur woh directly related nahi hain (parent-child nahi) — tab **state management** kaam aata hai.
+When one component's data is needed by another component — and they aren't directly related (not parent-child) — that's when **state management** comes in.
 
 ```
 Zomato example:
-Cart mein items → Header mein count dikhana + Cart page + Checkout
-Teen alag components → Ek hi cart data chahiye → Global state
+Cart items → show count in header + Cart page + Checkout
+Three separate components → same cart data needed → Global state
 ```
 
 ---
@@ -26,31 +26,31 @@ Teen alag components → Ek hi cart data chahiye → Global state
 **Tag: 🟢 Built-in | No install needed**
 
 ```
-Kya hai: React ka built-in global state solution
-Kab use karo:
-  → Stable data jo baar baar change na ho
+What it is: React's built-in global state solution
+When to use:
+  → Stable data that doesn't change frequently
   → User login status, theme (dark/light), language
-  → Chhoti app, props drilling avoid karna ho
+  → Small app, avoid prop drilling
 
-Kab mat use karo:
-  → Cart jaisi frequently changing state
-  → Baar baar update ho → Sab components re-render → Slow
+When NOT to use:
+  → Frequently changing state like cart
+  → Frequent updates → all components re-render → Slow
 
 Real app example:
-  → Hotstar: Current logged-in user info poori app mein
-  → Swiggy: Selected city/location (baar baar change nahi hoti)
+  → Hotstar: Current logged-in user info across the whole app
+  → Swiggy: Selected city/location (doesn't change often)
 
 Industry preference:
-  → Hamesha available — koi bhi app mein milega
-  → Complex state ke liye akela kaafi nahi
+  → Always available — found in any app
+  → Not enough alone for complex state
 ```
 
 ---
 
 #### Installation
 ```bash
-# No installation needed! React ke saath built-in aata hai
-# Bas React install hona chahiye:
+# No installation needed! Comes built-in with React
+# Just need React installed:
 npm install react
 # or
 pnpm add react
@@ -60,13 +60,13 @@ pnpm add react
 ```javascript
 import { createContext, useContext, useState } from 'react'
 
-// 1. Context create karo
+// 1. Create context
 const ThemeContext = createContext()
 
-// 2. Provider component banao
+// 2. Create provider component
 function ThemeProvider({ children }) {
   const [theme, setTheme] = useState('light')
-  
+
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
       {children}
@@ -74,7 +74,7 @@ function ThemeProvider({ children }) {
   )
 }
 
-// 3. Consume karo kisi bhi component mein
+// 3. Consume in any component
 function ThemedButton() {
   const { theme, setTheme } = useContext(ThemeContext)
   return <button onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
@@ -89,28 +89,28 @@ function ThemedButton() {
 **Tag: 🟢 Most Popular 2024 | Recommended for new projects**
 
 ```
-Kya hai: Minimal global state library — simple API, powerful
-Kab use karo:
+What it is: Minimal global state library — simple API, powerful
+When to use:
   → Cart, notifications, modal state — frequently changing
   → Medium size apps
-  → Ek ya chhoti team
-  → Naya project shuru kar rahe ho
+  → One or small team
+  → Starting a new project
 
-Kab mat use karo:
-  → Bahut complex state logic with time-travel debugging chahiye (Redux better)
+When NOT to use:
+  → Very complex state logic needing time-travel debugging (Redux better)
 
 Real app example:
   → ShopKaro: Cart items (add, remove, quantity update)
   → Swiggy clone: Cart + delivery address + coupon state
   → Razorpay dashboard clone: Active tab, filters, selected items
 
-India mein: 2023 ke baad naye projects mein Redux se shift ho raha hai Zustand ki taraf
-Global: Vercel, Linear, bade companies use kar rahe hain
+In India: Shifting from Redux to Zustand in new projects since 2023
+Global: Vercel, Linear, big companies use it
 
-Alternatives se fark:
-  → Redux se: 10x kam code, no boilerplate
-  → Context se: Re-render problem nahi
-  → Jotai se: Store-based (ek jagah sab), Jotai atom-based (chota chota pieces)
+Difference from alternatives:
+  → Redux: 10x less code, no boilerplate
+  → Context: No re-render problem
+  → Jotai: Store-based (everything in one place), Jotai is atom-based (small pieces)
 ```
 
 ---
@@ -126,25 +126,25 @@ pnpm add zustand
 ```javascript
 import { create } from 'zustand'
 
-// Store create karo
+// Create store
 const useCartStore = create((set) => ({
   items: [],
-  
-  addItem: (item) => set((state) => ({ 
-    items: [...state.items, item] 
+
+  addItem: (item) => set((state) => ({
+    items: [...state.items, item]
   })),
-  
+
   removeItem: (itemId) => set((state) => ({
     items: state.items.filter(item => item.id !== itemId)
   })),
-  
+
   clearCart: () => set({ items: [] })
 }))
 
-// Component mein use karo
+// Use in component
 function CartComponent() {
   const { items, addItem, removeItem } = useCartStore()
-  
+
   return (
     <div>
       {items.map(item => (
@@ -164,29 +164,29 @@ function CartComponent() {
 **Tag: 🟡 Enterprise | Legacy Projects | Still relevant**
 
 ```
-Kya hai: Predictable state container — complex global state with strict patterns
-Kab use karo:
-  → Existing Redux codebase hai (rewrite mat karo)
-  → Badi team — 10+ developers
-  → Complex state logic — undo/redo, time-travel debugging chahiye
-  → Enterprise app jahan strict patterns zaroori hain
+What it is: Predictable state container — complex global state with strict patterns
+When to use:
+  → Existing Redux codebase (don't rewrite)
+  → Large team — 10+ developers
+  → Complex state logic — undo/redo, time-travel debugging needed
+  → Enterprise app where strict patterns are required
 
-Kab mat use karo:
-  → Naya project shuru kar rahe ho — Zustand lo
-  → Chhoti team, simple state
+When NOT to use:
+  → Starting a new project — use Zustand
+  → Small team, simple state
 
 Real app example:
   → Flipkart: Complex state — cart + filters + search + user + wishlist + offers
   → IRCTC: Booking state machine — seat selection, passenger info, payment steps
   → Trading platforms: Real-time data updates, complex UI state
 
-India mein: Bahut purane projects mein milega — 2018-2022 era ke apps
-Global: Twitter (purana), Facebook, enterprise apps
+In India: Found in many older projects — 2018-2022 era apps
+Global: Twitter (old), Facebook, enterprise apps
 
 Redux vs Redux Toolkit:
-  → Redux (original): Bahut boilerplate — actions, action creators, reducers alag
-  → Redux Toolkit: Official way — createSlice se sab simple
-  → Naya project? Redux Toolkit use karo, plain Redux nahi
+  → Redux (original): Lots of boilerplate — actions, action creators, reducers separate
+  → Redux Toolkit: Official way — createSlice makes everything simple
+  → New project? Use Redux Toolkit, not plain Redux
 ```
 
 ---
@@ -203,7 +203,7 @@ pnpm add @reduxjs/toolkit react-redux
 import { configureStore, createSlice } from '@reduxjs/toolkit'
 import { useSelector, useDispatch } from 'react-redux'
 
-// Slice banao (actions + reducers ek saath)
+// Create slice (actions + reducers together)
 const cartSlice = createSlice({
   name: 'cart',
   initialState: { items: [] },
@@ -217,18 +217,18 @@ const cartSlice = createSlice({
   }
 })
 
-// Store configure karo
+// Configure store
 const store = configureStore({
   reducer: {
     cart: cartSlice.reducer
   }
 })
 
-// Component mein use karo
+// Use in component
 function CartComponent() {
   const items = useSelector((state) => state.cart.items)
   const dispatch = useDispatch()
-  
+
   return (
     <div>
       {items.map(item => (
@@ -250,23 +250,23 @@ function CartComponent() {
 **Tag: 🔵 Lightweight | Atomic State | Growing**
 
 ```
-Kya hai: Atom-based state — chhote chhote independent pieces
-Kab use karo:
-  → State ke chhote chhote independent pieces hain
-  → React Suspense ke saath kaam karna ho
-  → Bundle size bahut chhota chahiye
+What it is: Atom-based state — small independent pieces
+When to use:
+  → State is made of small independent pieces
+  → Need to work with React Suspense
+  → Very small bundle size needed
 
-Kab mat use karo:
-  → Sab state ek jagah rakhna ho (store pattern prefer karte ho)
-  → Team badi hai — Zustand/Redux patterns zyada familiar hain
+When NOT to use:
+  → Want all state in one place (store pattern preferred)
+  → Large team — Zustand/Redux patterns more familiar
 
 Real app example:
-  → Blog editor: Har field (title, content, tags) alag atom
-  → Dashboard: Har widget ki state independently manage karna
+  → Blog editor: Each field (title, content, tags) is a separate atom
+  → Dashboard: Each widget's state managed independently
 
-Zustand se fark:
-  → Zustand: Ek bada store → Sab kuch usme
-  → Jotai: Kai chhote atoms → Compose karo
+Difference from Zustand:
+  → Zustand: One big store → everything in it
+  → Jotai: Many small atoms → compose them
 ```
 
 ---
@@ -282,19 +282,19 @@ pnpm add jotai
 ```javascript
 import { atom, useAtom } from 'jotai'
 
-// Atom create karo (independent piece of state)
+// Create atom (independent piece of state)
 const countAtom = atom(0)
 const nameAtom = atom('Guest')
 
-// Multiple atoms ko combine bhi kar sakte ho
+// Combine multiple atoms
 const greetingAtom = atom((get) => `Hello, ${get(nameAtom)}!`)
 
-// Component mein use karo
+// Use in component
 function Counter() {
   const [count, setCount] = useAtom(countAtom)
   const [name] = useAtom(nameAtom)
   const [greeting] = useAtom(greetingAtom)
-  
+
   return (
     <div>
       <p>{greeting}</p>
@@ -311,21 +311,21 @@ function Counter() {
 **Tag: 🟠 Reactive | OOP Style | Niche**
 
 ```
-Kya hai: Reactive state management — state change → UI automatically update
-Kab use karo:
-  → OOP (class-based) style prefer karte ho
-  → Angular background se aa rahe ho
+What it is: Reactive state management — state changes → UI updates automatically
+When to use:
+  → Prefer OOP (class-based) style
+  → Coming from Angular background
   → Complex derived state (computed values)
 
-Kab mat use karo:
-  → Naya React project — React ecosystem mein out of place lagta hai
-  → Functional style prefer karte ho
+When NOT to use:
+  → New React project — feels out of place in React ecosystem
+  → Prefer functional style
 
 Real app example:
   → Enterprise apps with Angular/React hybrid
-  → Purani company ki codebase
+  → Old company codebases
 
-India mein: Rare — mostly purane projects
+In India: Rare — mostly old projects
 ```
 
 ---
@@ -342,22 +342,22 @@ pnpm add mobx mobx-react-lite
 import { makeAutoObservable } from 'mobx'
 import { observer } from 'mobx-react-lite'
 
-// Store class banao
+// Create store class
 class CartStore {
   items = []
-  
+
   constructor() {
     makeAutoObservable(this)
   }
-  
+
   addItem(item) {
     this.items.push(item)
   }
-  
+
   removeItem(itemId) {
     this.items = this.items.filter(item => item.id !== itemId)
   }
-  
+
   get totalCount() {
     return this.items.length
   }
@@ -365,7 +365,7 @@ class CartStore {
 
 const cartStore = new CartStore()
 
-// Component mein use karo (observer se wrap karo)
+// Use in component (wrap with observer)
 const CartComponent = observer(({ store }) => {
   return (
     <div>
@@ -387,18 +387,18 @@ const CartComponent = observer(({ store }) => {
 **Tag: 🔵 State Machines | Complex Logic | Niche**
 
 ```
-Kya hai: Finite state machines — complex flows model karna
-Kab use karo:
+What it is: Finite state machines — modeling complex flows
+When to use:
   → Complex multi-step flows — booking, onboarding, wizards
-  → State transitions explicitly define karni hain
-  → Impossible states prevent karni hain
+  → State transitions need to be explicitly defined
+  → Preventing impossible states
 
 Real app example:
   → MakeMyTrip: Booking flow — search → select → passenger details → payment → confirmation
   → Ola: Driver state machine — offline → available → on trip → completing
 
-Jab samjho toh powerful hai — lekin learning curve zyada hai
-Beginner ke liye: Baad mein seekhna
+Powerful once understood — but steep learning curve
+For beginners: Learn later
 ```
 
 ---
@@ -414,7 +414,7 @@ pnpm add xstate
 ```javascript
 import { createMachine, createActor } from 'xstate'
 
-// State machine define karo
+// Define state machine
 const bookingMachine = createMachine({
   id: 'booking',
   initial: 'searching',
@@ -423,19 +423,19 @@ const bookingMachine = createMachine({
       on: { FOUND: 'selected' }
     },
     selected: {
-      on: { 
+      on: {
         CONFIRM: 'passengerDetails',
         CANCEL: 'searching'
       }
     },
     passengerDetails: {
-      on: { 
+      on: {
         SUBMIT: 'payment',
         BACK: 'selected'
       }
     },
     payment: {
-      on: { 
+      on: {
         SUCCESS: 'confirmed',
         FAILED: 'payment'
       }
@@ -446,21 +446,21 @@ const bookingMachine = createMachine({
   }
 })
 
-// Actor create karo aur use karo
+// Create actor and use it
 const bookingActor = createActor(bookingMachine)
 bookingActor.start()
 
-// Component mein use karo
+// Use in component
 function BookingFlow() {
   const [state, setState] = React.useState(bookingActor.getSnapshot())
-  
+
   React.useEffect(() => {
     const subscription = bookingActor.subscribe((snapshot) => {
       setState(snapshot)
     })
     return () => subscription.unsubscribe()
   }, [])
-  
+
   return (
     <div>
       <p>Current state: {state.value}</p>
@@ -481,12 +481,12 @@ function BookingFlow() {
 **Tag: 🔵 Proxy-based | Simple | Growing**
 
 ```
-Kya hai: Proxy-based state — seedha mutate karo, reactivity automatic
-Kab use karo:
-  → Zustand jaisa lekin mutable style prefer karte ho
-  → Chhoti apps, quick prototypes
+What it is: Proxy-based state — mutate directly, reactivity is automatic
+When to use:
+  → Like Zustand but prefer mutable style
+  → Small apps, quick prototypes
 
-Zustand se fark: Mutation style vs functional style
+Difference from Zustand: Mutation style vs functional style
 ```
 
 ---
@@ -502,24 +502,24 @@ pnpm add valtio
 ```javascript
 import { proxy, useSnapshot } from 'valtio'
 
-// State create karo (proxy se)
+// Create state (via proxy)
 const state = proxy({
   count: 0,
   items: [],
-  
+
   increment() {
     ++state.count
   },
-  
+
   addItem(item) {
     state.items.push(item)
   }
 })
 
-// Component mein use karo
+// Use in component
 function Counter() {
   const snap = useSnapshot(state)
-  
+
   return (
     <div>
       <p>Count: {snap.count}</p>
@@ -534,11 +534,11 @@ function Counter() {
 ---
 
 ### Recoil
-**Tag: 🔴 Avoid | Facebook ne abandon kiya**
+**Tag: 🔴 Avoid | Facebook abandoned it**
 
 ```
-Kya hai: Facebook ka atom-based state
-Kyun avoid: Facebook ne practically abandon kar diya — last major update 2023
+What it is: Facebook's atom-based state
+Why avoid: Facebook practically abandoned it — last major update 2023
 Alternative: Jotai (same concept, actively maintained)
 ```
 
@@ -546,12 +546,12 @@ Alternative: Jotai (same concept, actively maintained)
 
 #### Installation (Not Recommended)
 ```bash
-# Agar phir bhi use karna ho (legacy project):
+# If you still want to use it (legacy project):
 npm install recoil
 # or
 pnpm add recoil
 
-# Lekin behtar hai Jotai use karo:
+# Better to use Jotai:
 npm install jotai
 ```
 
@@ -559,16 +559,16 @@ npm install jotai
 ```javascript
 import { atom, useRecoilState, RecoilRoot, RecoilState } from 'recoil'
 
-// Atom create karo
+// Create atom
 const countAtom = atom({
   key: 'countAtom',
   default: 0
 })
 
-// Component mein use karo
+// Use in component
 function Counter() {
   const [count, setCount] = useRecoilState(countAtom)
-  
+
   return (
     <div>
       <p>Count: {count}</p>
@@ -579,7 +579,7 @@ function Counter() {
   )
 }
 
-// App ko RecoilRoot mein wrap karna padta hai
+// Wrap app in RecoilRoot
 function App() {
   return (
     <RecoilRoot>
@@ -591,38 +591,38 @@ function App() {
 
 ---
 
-## Quick Decision — Kaunsa Choose Karo
+## Quick Decision — Which to Choose
 
 ```
-Naya Next.js project?
+New Next.js project?
   → Zustand (cart, global UI) + React Query (server data)
 
 Existing Redux codebase?
-  → Redux Toolkit ke saath rehne do — rewrite mat karo
+  → Stay on Redux Toolkit — don't rewrite
 
-Sirf ek do cheezein global chahiye (user, theme)?
-  → React Context kaafi hai
+Only one or two global things needed (user, theme)?
+  → React Context is enough
 
 Complex multi-step flow (booking, onboarding)?
-  → XState explore karo
+  → Explore XState
 
-Atom-based state prefer karte ho?
+Prefer atom-based state?
   → Jotai
 ```
 
 ---
 
-## India Mein Industry Reality
+## India Industry Reality
 
 ```
 Startup / New project (2024):  Zustand + React Query
-Mid-size company:              Redux Toolkit ya Zustand
-Enterprise / Purani company:   Redux (plain ya RTK)
-Freelance projects:            Zustand ya Context — jaldi setup
+Mid-size company:              Redux Toolkit or Zustand
+Enterprise / Old company:      Redux (plain or RTK)
+Freelance projects:            Zustand or Context — quick setup
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`02-frontend-styling.md` — Styling tools — Tailwind, CSS Modules, Styled Components — Swiggy ka UI Tailwind se hai, MUI se kaise alag hai, kab kya.
+`02-frontend-styling.md` — Styling tools — Tailwind, CSS Modules, Styled Components — how Swiggy's UI is built with Tailwind, how it differs from MUI, when to use what.

@@ -1,52 +1,52 @@
-# 40 — Images: Sabse Easy Performance Win
+# 40 — Images: The Easiest Performance Win
 
-> Pichle doc mein Performance umbrella overview hua.
-> Ab **Image Optimization** — sabse quick aur high impact improvement.
+> Previous doc gave an overview of the Performance umbrella.
+> Now **Image Optimization** — the quickest and highest-impact improvement.
 
 ---
 
-## Images Itni Slow Kyun Hoti Hain
+## Why Images Are So Slow
 
 ```
-Original product photo (camera se): 3MB PNG
-Priya mobile pe dekh rahi hai 300x300px mein
-Woh 3MB download karti hai sirf 300px image ke liye → Waste!
+Original product photo (from camera): 3MB PNG
+Priya viewing it on mobile at 300x300px
+She downloads 3MB just for a 300px image → Waste!
 ```
 
 Fix:
-- Sahi size ka image bhejo (300px ke liye 300px image)
-- WebP format use karo (PNG/JPG se ~30% chhota)
-- Lazy load karo (sirf jo screen pe hai woh load karo)
+- Send an image of the right size (300px image for 300px display)
+- Use WebP format (~30% smaller than PNG/JPG)
+- Lazy load (only load what's on screen)
 
 ---
 
-## Next.js Image Component — Sab Automatic
+## Next.js Image Component — Everything Automatic
 
-Next.js ka `<Image>` component yeh sab automatically karta hai:
+Next.js's `<Image>` component does all of this automatically:
 
 ```jsx
 import Image from 'next/image'
 
-// ❌ Regular img tag — koi optimization nahi
+// ❌ Regular img tag — no optimization
 <img src="/products/nike-shoes.jpg" alt="Nike Shoes" />
 
-// ✓ Next.js Image — sab kuch optimize
+// ✓ Next.js Image — everything optimized
 <Image
   src="/products/nike-shoes.jpg"
   alt="Nike Shoes"
   width={300}
   height={300}
   // Automatically:
-  // → WebP mein convert karta hai
-  // → Sahi size ka image bhejta hai (mobile pe chhota, desktop pe bada)
-  // → Lazy load karta hai (screen pe aane pe load)
-  // → Placeholder dikhata hai load hone tak
+  // → Converts to WebP
+  // → Sends correctly sized image (small on mobile, large on desktop)
+  // → Lazy loads (loads when on screen)
+  // → Shows placeholder until loaded
 />
 ```
 
 ---
 
-## ShopKaro Product Card Mein
+## In ShopKaro's Product Card
 
 ```jsx
 // /components/ProductCard.jsx
@@ -59,13 +59,13 @@ export default function ProductCard({ product }) {
         <Image
           src={product.imageUrl}
           alt={product.name}
-          fill                    // Parent div ko fill karo
+          fill                    // Fill the parent div
           style={{ objectFit: 'cover' }}
           sizes="(max-width: 768px) 100vw, 33vw"
-          // sizes → Browser ko batao kitne bade screen pe kitni badi image
-          // Mobile: poori width, Desktop: ek tehai width
+          // sizes → tells browser how big the image needs to be
+          // Mobile: full width, Desktop: one third width
           priority={false}        // false = lazy load (default)
-          // Homepage hero image ke liye priority={true} karo
+          // For homepage hero image use priority={true}
         />
       </div>
       <h3>{product.name}</h3>
@@ -79,7 +79,7 @@ export default function ProductCard({ product }) {
 
 ## External Images — next.config.js
 
-Agar images kisi aur server pe hain (Cloudinary, S3):
+If images are on another server (Cloudinary, S3):
 
 ```javascript
 // next.config.js
@@ -88,7 +88,7 @@ module.exports = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'res.cloudinary.com',  // Cloudinary images allow karo
+        hostname: 'res.cloudinary.com',  // Allow Cloudinary images
       },
       {
         protocol: 'https',
@@ -103,7 +103,7 @@ module.exports = {
 
 ## Hero Image — Priority Loading
 
-Homepage ka hero banner — yeh **above the fold** hai (screen pe seedha dikhta hai). Lazy load mat karo:
+The homepage hero banner is **above the fold** (visible immediately on screen). Don't lazy load it:
 
 ```jsx
 <Image
@@ -111,7 +111,7 @@ Homepage ka hero banner — yeh **above the fold** hai (screen pe seedha dikhta 
   alt="ShopKaro Sale"
   width={1200}
   height={400}
-  priority={true}  // Immediately load karo — lazy load nahi
+  priority={true}  // Load immediately — no lazy loading
 />
 ```
 
@@ -122,12 +122,12 @@ Homepage ka hero banner — yeh **above the fold** hai (screen pe seedha dikhta 
 | | |
 |--|--|
 | **Next Image** | Automatic WebP, resize, lazy load |
-| **sizes prop** | Browser ko batao kitni badi image chahiye |
-| **priority** | Hero images ke liye — immediately load |
-| **External images** | next.config.js mein allow karo |
+| **sizes prop** | Tells browser how big an image is needed |
+| **priority** | For hero images — load immediately |
+| **External images** | Allow in next.config.js |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`41-performance-loading.md` — **Lazy Loading aur Skeleton Screens** — page load feel fast kaise karo bina actual speed badhaye.
+`41-performance-loading.md` — **Lazy Loading and Skeleton Screens** — how to make page loading feel fast without actually speeding it up.

@@ -5,22 +5,22 @@
 
 # Project 3 — TalkSpace: Chat App (SQL Version)
 
-> Note: Actual TalkSpace mein MongoDB use kiya tha (flexible message schema).
-> Par ye doc SQL (PostgreSQL) mein same project design karna dikhata hai.
-> Interview mein ye comparison bahut kaam aata hai — "SQL mein karte toh..."
+> Note: Actual TalkSpace used MongoDB (flexible message schema).
+> But this doc shows designing the same project in SQL (PostgreSQL).
+> This comparison is very useful in interviews — "If we did it in SQL..."
 
 ---
 
-## Brief se Entities Nikaalte Hain
+## Extracting Entities from the Brief
 
 ```
 Brief: "Rooms/channels, real-time messaging, online status, DMs."
 
-NOUNS extract karo:
+Extract NOUNS:
 → Rooms/channels  → Room entity
 → Messages        → Message entity
-→ Online Status   → ✅ Nahi SQL mein, Redis mein store karenge
-→ DMs             → Room hi hai (isPrivate = true)
+→ Online Status   → ✅ Not in SQL, store in Redis
+→ DMs             → Room itself (isPrivate = true)
 → Users           → User entity
 → Room Members    → RoomMember junction table
 
@@ -80,7 +80,7 @@ model RoomMember {
   room Room @relation(fields: [roomId], references: [id], onDelete: Cascade)
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@unique([roomId, userId])    // Ek user ek room mein sirf ek baar
+  @@unique([roomId, userId])    // One user in a room only once
   @@index([roomId])
   @@index([userId])
 
@@ -98,7 +98,7 @@ model Message {
   room   Room @relation(fields: [roomId],   references: [id], onDelete: Cascade)
   sender User @relation(fields: [senderId], references: [id], onDelete: Restrict)
 
-  @@index([roomId, createdAt])   // "Room ke latest messages" — MOST CRITICAL INDEX
+  @@index([roomId, createdAt])   // "Latest messages of a room" — MOST CRITICAL INDEX
   @@index([senderId])
 
   @@map("messages")
@@ -152,7 +152,7 @@ messages:
 │ msg_005   │ r_003    │ u_001    │ "Hey, call at 3?"           │ 2024-03-15 11:00:00 │
 └───────────┴──────────┴──────────┴─────────────────────────────┴─────────────────────┘
 
-KEY QUERY — Room ke last 50 messages (@@index([roomId, createdAt]) use hoga):
+KEY QUERY — Last 50 messages of a room (@@index([roomId, createdAt]) used):
 const messages = await prisma.message.findMany({
   where: { roomId: 'r_001' },
   orderBy: { createdAt: 'desc' },
@@ -160,9 +160,9 @@ const messages = await prisma.message.findMany({
   include: { sender: { select: { name: true, avatarUrl: true } } }
 })
 
-Online status: Redis mein store karo (not SQL) — TTL feature chahiye
+Online status: Store in Redis (not SQL) — need TTL feature
 HSET online_status:u_001 status "online"
-EXPIRE online_status:u_001 300  // 5 minute TTL — heartbeat refresh karta hai
+EXPIRE online_status:u_001 300  // 5 minute TTL — heartbeat refreshes it
 ```
 
 ---
@@ -170,17 +170,17 @@ EXPIRE online_status:u_001 300  // 5 minute TTL — heartbeat refresh karta hai
 
 # Project 4 — ShopKaro: E-Commerce
 
-## Brief se Entities Nikaalte Hain
+## Extracting Entities from the Brief
 
 ```
-Brief: "Products browse karo, cart mein add karo, checkout karo, payment karo.
-        Admin products manage kare, orders track kare."
+Brief: "Browse products, add to cart, checkout, payment.
+        Admin manages products, tracks orders."
 
-NOUNS extract karo:
+Extract NOUNS:
 → Products    → Product entity
-→ Cart        → ✅ Session ya client side, SQL table nahi chahiye
+→ Cart        → ✅ Session or client side, no SQL table needed
 → Checkout    → Order entity
-→ Payment     → Order ke andar fields
+→ Payment     → Fields inside Order
 → Admin       → User (role = ADMIN)
 → Categories  → Category entity
 → Order Items → OrderItem junction table
@@ -289,7 +289,7 @@ model Order {
 
   @@index([userId])
   @@index([status])
-  @@index([customerEmail])  // Customer apne orders dhundhe
+  @@index([customerEmail])  // Customer order history
   @@index([createdAt])      // Latest orders first
 
   @@map("orders")
@@ -373,8 +373,8 @@ order_items (Junction with snapshot):
 
 ORDER TOTAL: 499 + 2999 + 799 = 4297 ✓ (ord_001)
 
-Kal Silver Ring ka price 599 ho jaaye — ord_002 mein ABHI BHI 499 dikhega.
-Ye snapshot pattern ka fayda hai!
+Tomorrow if Silver Ring price becomes 599 — ord_002 will STILL show 499.
+This is the benefit of snapshot pattern!
 ```
 
 ---
@@ -382,23 +382,23 @@ Ye snapshot pattern ka fayda hai!
 
 # Project 5 — DataLens: Analytics Dashboard
 
-## Brief se Entities Nikaalte Hain
+## Extracting Entities from the Brief
 
 ```
-Brief: "Sales team apna performance dekhe — daily/weekly/monthly sales,
+Brief: "Sales team sees their performance — daily/weekly/monthly sales,
         top products, region breakdown, salesperson performance."
 
-NOUNS extract karo:
+Extract NOUNS:
 → Sales Team    → User entity (role = SALESPERSON / MANAGER)
 → Sales         → Sale entity
 → Products      → Product entity
-→ Regions       → User ke column mein
-→ Performance   → Calculated field, separate table nahi chahiye
+→ Regions       → Column in User
+→ Performance   → Calculated field, no separate table needed
 
 ENTITIES: User, Sale, Product
 
-User   (1) ─── (N) Sale    [salesperson ne sale ki]
-Product(1) ─── (N) Sale    [kaunsa product bika]
+User   (1) ─── (N) Sale    [salesperson made the sale]
+Product(1) ─── (N) Sale    [which product was sold]
 ```
 
 ---
@@ -541,7 +541,7 @@ const dailyTrend = await prisma.$queryRaw`
 
 ---
 
-## 📊 Final Comparison — Sab 5 Projects ke Tables
+## 📊 Final Comparison — Tables of All 5 Projects
 
 ```
 ┌─────────────────┬───────────────────────────────────────────────────────────────────────┐

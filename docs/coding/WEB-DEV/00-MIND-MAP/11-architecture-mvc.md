@@ -1,31 +1,31 @@
-# 11 — MVC: Code Ko Teen Parts Mein Todna
+# 11 — MVC: Splitting Code Into Three Parts
 
-> Pichle doc mein Architecture umbrella ka overview hua.
-> Ab pehla pattern — **MVC**.
-> Yeh naam kaafi sunoge — ek baar seedha samajh lo.
+> In the previous doc we saw the overview of the Architecture umbrella.
+> Now the first pattern — **MVC**.
+> You'll hear this name a lot — understand it straight once.
 
 ---
 
-## MVC Kya Hai
+## What Is MVC
 
-MVC matlab **Model-View-Controller** — code ko teen responsibilities mein divide karna.
+MVC stands for **Model-View-Controller** — dividing code into three responsibilities.
 
-| Part | Kaam | ShopKaro Mein |
+| Part | Job | In ShopKaro |
 |------|------|---------------|
-| **Model** | Data — kya store hoga, kaise fetch hoga | Product, User, Order (Prisma) |
-| **View** | UI — user ko kya dikhega | React components, pages |
-| **Controller** | Logic — request aai, kya karna hai | API routes |
+| **Model** | Data — what gets stored, how it gets fetched | Product, User, Order (Prisma) |
+| **View** | UI — what the user sees | React components, pages |
+| **Controller** | Logic — a request came, what should happen | API routes |
 
 ---
 
-## Ek Order Place Hone Ki Example
+## An Order Placement Example
 
-Priya "Place Order" button dabati hai. Kya hota hai?
+Priya clicks "Place Order." What happens?
 
 ### View — Button Click
 ```jsx
 // /app/checkout/page.jsx
-// Sirf UI — koi logic nahi
+// UI only — no logic
 
 function CheckoutPage() {
   async function handleOrder() {
@@ -39,42 +39,42 @@ function CheckoutPage() {
 }
 ```
 
-View ka kaam sirf yeh hai — user ne kya kiya, woh API ko bata do.
+The View's job is only this — the user did something, tell the API.
 
 ---
 
-### Controller — Request Handle Karo
+### Controller — Handle the Request
 ```javascript
 // /app/api/orders/route.js
-// Request aai — kya karna hai decide karo
+// A request came — decide what to do
 
 export async function POST(req) {
-  // 1. User logged in hai?
+  // 1. Is the user logged in?
   const session = await getSession()
-  if (!session) return Response.json({ error: "Login karo" }, { status: 401 })
+  if (!session) return Response.json({ error: "Please login" }, { status: 401 })
 
-  // 2. Data lo
+  // 2. Get the data
   const { cartItems, address } = await req.json()
 
-  // 3. Model ko bulao — actual kaam karao
+  // 3. Call the Model — do the actual work
   const order = await createOrder(session.userId, cartItems, address)
 
-  // 4. Response bhejo
+  // 4. Send the response
   return Response.json({ orderId: order.id })
 }
 ```
 
-Controller ka kaam — **traffic police** — request aai, kahan jaayegi decide karo. Khud data ka kaam mat karo.
+The Controller's job is to be the **traffic police** — a request came, decide where it goes. Don't do the data work yourself.
 
 ---
 
-### Model — Actual Data Ka Kaam
+### Model — The Actual Data Work
 ```javascript
 // /lib/orders.js
-// Sirf data logic — koi HTTP, koi request, koi response nahi
+// Only data logic — no HTTP, no request, no response
 
 export async function createOrder(userId, cartItems, address) {
-  // Database se baat karo
+  // Talk to the database
   const order = await prisma.order.create({
     data: {
       userId,
@@ -94,29 +94,29 @@ export async function createOrder(userId, cartItems, address) {
 }
 ```
 
-Model ka kaam — **sirf data.** Koi UI nahi, koi request handling nahi.
+The Model's job is **only data.** No UI, no request handling.
 
 ---
 
-## Kyun Yeh Separation Zaroori Hai
+## Why This Separation Matters
 
-**Scenario:** Kal tumhe mobile app bhi banana hai ShopKaro ka.
-
-```
-Bina MVC:
-Mobile ke liye → Poora logic dobara likho :(
-
-MVC ke saath:
-Mobile ke liye → Wohi /api/orders use karo, sirf View alag hoga :)
-```
-
-**Scenario:** Order creation mein bug hai.
+**Scenario:** Tomorrow you also need to build a mobile app for ShopKaro.
 
 ```
-Bina MVC:
-Bug kahan hai? → Poori app mein dhundho :(
+Without MVC:
+For mobile → rewrite all the logic again :(
 
-MVC ke saath:
+With MVC:
+For mobile → use the same /api/orders, only the View is different :)
+```
+
+**Scenario:** There's a bug in order creation.
+
+```
+Without MVC:
+Where's the bug? → search the whole app :(
+
+With MVC:
 Data bug → /lib/orders.js
 UI bug → /app/checkout/page.jsx
 Request bug → /app/api/orders/route.js
@@ -125,22 +125,22 @@ Request bug → /app/api/orders/route.js
 
 ---
 
-## Next.js Mein MVC Exactly Kahan Hai
+## Where Exactly Is MVC in Next.js
 
 ```
-VIEW       → /app/(pages)/         React pages aur components
+VIEW       → /app/(pages)/         React pages and components
 CONTROLLER → /app/api/             API route handlers
 MODEL      → /lib/                 Business logic + DB queries
-             /prisma/schema.prisma Data structure define karna
+             /prisma/schema.prisma  Define the data structure
 ```
 
 ---
 
 ## Important Note
 
-MVC ek **concept** hai — strict rule nahi. Next.js khud MVC framework nahi hai. Lekin tum yeh pattern apply kar sakte ho — aur karni chahiye.
+MVC is a **concept** — not a strict rule. Next.js itself isn't an MVC framework. But you can apply this pattern — and you should.
 
-Real projects mein yeh perfectly clean nahi hota — thoda overlap hota hai. Toh worried mat ho agar sab perfectly fit nahi hota.
+In real projects this won't be perfectly clean — there's some overlap. Don't worry if everything doesn't fit perfectly.
 
 ---
 
@@ -148,13 +148,13 @@ Real projects mein yeh perfectly clean nahi hota — thoda overlap hota hai. Toh
 
 | | |
 |--|--|
-| **Model** | Data ka kaam — database queries, business logic |
-| **View** | UI ka kaam — React components |
+| **Model** | Data work — database queries, business logic |
+| **View** | UI work — React components |
 | **Controller** | Request handling — API routes |
-| **Fayda** | Bug dhundhna aasan, code reuse hota hai |
+| **Benefit** | Bugs are easy to find, code gets reused |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`12-architecture-folder.md` — Ab theory se practice. ShopKaro ki **actual folder structure** kaisi hogi — har folder ka naam, kyun woh wahan hai, kya jaata hai usмें. Yeh ek reference doc bhi hai — project banate waqt kaam aayega.
+`12-architecture-folder.md` — From theory to practice now. What will **ShopKaro's actual folder structure** look like — every folder's name, why it's there, what goes inside it. This is also a reference doc — you'll use it while building the project.

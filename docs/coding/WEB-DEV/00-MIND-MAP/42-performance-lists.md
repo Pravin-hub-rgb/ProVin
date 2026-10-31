@@ -1,24 +1,24 @@
-# 42 — Pagination vs Infinite Scroll: Kab Kaunsa?
+# 42 — Pagination vs Infinite Scroll: Which When?
 
-> Pichle doc mein lazy loading aur skeletons samjhe.
-> Ab **Pagination vs Infinite Scroll** — 500 products efficiently kaise dikhao.
+> Previous doc covered lazy loading and skeletons.
+> Now **Pagination vs Infinite Scroll** — how to efficiently show 500 products.
 
 ---
 
-## Problem — Sab Ek Saath Nahi Dikha Sakte
+## Problem — Can't Show Everything at Once
 
-ShopKaro mein 500 products hain. Sab ek saath load karo toh:
-- 500 database rows ek saath fetch
+ShopKaro has 500 products. Loading all at once:
+- 500 database rows fetched at once
 - 500 image requests
-- Page bajenge → Slow → User bounce karega
+- Page hangs → Slow → User bounces
 
-Solution: **Thoda thoda load karo.**
+Solution: **Load a little at a time.**
 
 ---
 
 ## Option 1 — Pagination
 
-Pages mein divide karo — Page 1, Page 2, Page 3...
+Divide into pages — Page 1, Page 2, Page 3...
 
 ```
 [Page 1] 1-12 products    → [Next →]
@@ -95,50 +95,50 @@ function ProductsPage() {
 
 ## Option 2 — Infinite Scroll
 
-Scroll karo → Automatically aur load ho jaao.
+Scroll → automatically load more.
 
 ```
 [12 products]
 ↓ scroll
-[12 aur load]
+[12 more loaded]
 ↓ scroll
-[12 aur load]
+[12 more loaded]
 ```
 
-**Kab use karein:**
+**When to use:**
 - Social media feed (Instagram, Twitter)
-- Discovery browsing — user specific cheez nahi dhundh raha
+- Discovery browsing — user isn't looking for something specific
 
-**Limitation:** User kisi cheez pe wapas nahi ja sakta easily. "Product 47 pe wapas jaana hai" — scroll karte raho.
+**Limitation:** User can't easily go back. "That product was on page 47" — keep scrolling.
 
 ---
 
-## ShopKaro Ke Liye — Kaunsa?
+## For ShopKaro — Which One?
 
 **Products listing → Pagination** ✓
 
-Kyun:
-- User specific product dhundh raha hai (Nike Shoes, size 10)
-- Filter/search use karta hai
-- "Page 3 mein tha woh product" — bookmark kar sakta hai URL se
-- SEO ke liye alag pages better
+Why:
+- User is looking for a specific product (Nike Shoes, size 10)
+- Uses filters/search
+- "It was on page 3" — can bookmark via URL
+- Better for SEO — separate pages
 
-**Infinite scroll kab:** Agar "Browse karo, dekhte hain kya milta hai" type experience chahiye — fashion apps mein common.
+**Infinite scroll when:** "Browse, let's see what's there" type experience — common in fashion apps.
 
 ---
 
-## Performance Umbrella — Complete Hua
+## Performance Umbrella — Complete
 
 ```
 PERFORMANCE
 │
 ├── Images          → Doc 40 ✓
 ├── Lazy Loading    → Doc 41 ✓
-└── Pagination      → Doc 42 ✓ (YEH)
+└── Pagination      → Doc 42 ✓ (THIS)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`43-accessibility-what-is-it.md` — Daswa umbrella — **Accessibility**. ShopKaro sirf "normal" users ke liye nahi — keyboard users, screen reader users, color blind users — sab ke liye kaam karna chahiye.
+`43-accessibility-what-is-it.md` — Tenth umbrella — **Accessibility**. ShopKaro isn't just for "normal" users — keyboard users, screen reader users, color blind users — it should work for everyone.

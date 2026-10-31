@@ -1,36 +1,36 @@
-# 18 — ShopKaro: Har Page Ki Rendering Strategy
+# 18 — ShopKaro: Rendering Strategy Per Page
 
-> Pichle teen docs mein CSR, SSR, SSG samjhe.
-> Ab ShopKaro ka har page decide karte hain — kaunsi strategy, kyun.
-> Yeh ek **reference doc** hai — project banate waqt yaad aayega.
+> Previous three docs covered CSR, SSR, SSG.
+> Now decide for every ShopKaro page — which strategy and why.
+> This is a **reference doc** — useful while building the project.
 
 ---
 
 ## ShopKaro Pages — Complete Decision Table
 
-| Page | URL | Strategy | Kyun |
-|------|-----|----------|------|
-| Homepage | `/` | SSG + ISR | Sab ke liye same, fast load chahiye |
-| Products listing | `/products` | SSR | SEO zaroori, filters real-time |
+| Page | URL | Strategy | Why |
+|------|-----|----------|-----|
+| Homepage | `/` | SSG + ISR | Same for everyone, fast load needed |
+| Products listing | `/products` | SSR | SEO needed, filters real-time |
 | Product detail | `/products/[id]` | SSR | Stock real-time, SEO important |
 | Cart | `/cart` | CSR | Private, fast interactions |
 | Checkout | `/checkout` | CSR | Heavy user interactions |
 | Orders list | `/orders` | SSR | Auth required, fresh data |
-| Order detail | `/orders/[id]` | SSR | Fresh status chahiye |
+| Order detail | `/orders/[id]` | SSR | Fresh status needed |
 | Profile | `/profile` | CSR | Private, user edits |
 | Login / Signup | `/login`, `/signup` | SSG | Static forms, fast load |
 | About / Contact | `/about` | SSG | Static content |
 
 ---
 
-## Har Page Ko Detail Mein Samjho
+## Each Page In Detail
 
 ### Homepage `/` — SSG + ISR
 
 ```jsx
 // /app/page.jsx
 
-export const revalidate = 3600  // Har 1 ghante mein rebuild
+export const revalidate = 3600  // Rebuild every 1 hour
 
 export default async function HomePage() {
   const featuredProducts = await prisma.product.findMany({
@@ -47,7 +47,7 @@ export default async function HomePage() {
 }
 ```
 
-**Kyun SSG+ISR:** Homepage sabse zyada visit hoti hai — speed critical hai. Featured products daily badte nahi — 1 ghante ka cache theek hai.
+**Why SSG+ISR:** Homepage is the most visited — speed is critical. Featured products don't change daily — 1 hour cache is fine.
 
 ---
 
@@ -67,14 +67,14 @@ export default async function ProductPage({ params }) {
     <div>
       <h1>{product.name}</h1>
       <p>₹{product.price}</p>
-      <p>{product.stock > 0 ? `${product.stock} bacha hai` : 'Out of stock'}</p>
+      <p>{product.stock > 0 ? `${product.stock} left` : 'Out of stock'}</p>
       <AddToCartButton productId={product.id} />  {/* CSR component */}
     </div>
   )
 }
 ```
 
-**Kyun SSR:** Stock real-time dikhna chahiye. SEO ke liye product name, description Google index kare. "Add to Cart" button CSR component hoga — page mein mix ho sakta hai.
+**Why SSR:** Stock needs real-time display. For SEO, product name and description must be indexed by Google. The "Add to Cart" button is a CSR component — can be mixed into the page.
 
 ---
 
@@ -84,7 +84,7 @@ export default async function ProductPage({ params }) {
 // /app/cart/page.jsx
 'use client'
 
-import { useCartStore } from '@/store/cartStore'  // Zustand — aage samjhenge
+import { useCartStore } from '@/store/cartStore'  // Zustand — covered later
 
 export default function CartPage() {
   const { items, removeItem, updateQuantity } = useCartStore()
@@ -105,7 +105,7 @@ export default function CartPage() {
 }
 ```
 
-**Kyun CSR:** Cart mein +/- buttons, remove — yeh sab instant hone chahiye. Private page — SEO ki zaroorat nahi. State Zustand mein hogi (aage samjhenge).
+**Why CSR:** Cart needs +/- buttons, remove — all should be instant. Private page — no SEO needed. State lives in Zustand (covered later).
 
 ---
 
@@ -113,43 +113,43 @@ export default function CartPage() {
 
 ```jsx
 // /app/(auth)/login/page.jsx
-// Koi async nahi, koi data fetch nahi → Automatic SSG
+// No async, no data fetch → automatic SSG
 
 export default function LoginPage() {
   return (
     <div>
       <h1>Login</h1>
-      <LoginForm />  {/* Yeh 'use client' component hoga — form handling ke liye */}
+      <LoginForm />  {/* This will be a 'use client' component — for form handling */}
     </div>
   )
 }
 ```
 
-**Kyun SSG:** Form static hai — sab ke liye same. Fast load chahiye — user pehle yahan aata hai.
+**Why SSG:** The form is static — same for everyone. Fast load needed — users land here first.
 
 ---
 
-## Mix Karna — SSR Page + CSR Component
+## Mixing — SSR Page + CSR Component
 
-Ek page mein dono ho sakte hain:
+A page can have both:
 
 ```
 Product Page (SSR):
-  - Product info, stock → Server se fetch (SSR)
-  - "Add to Cart" button → Client mein kaam karta hai (CSR component)
-  - Reviews section → Server se fetch (SSR)
+  - Product info, stock → Fetched from server (SSR)
+  - "Add to Cart" button → Works in client (CSR component)
+  - Reviews section → Fetched from server (SSR)
   - "Write Review" form → Client (CSR component)
 ```
 
 ```jsx
 // /app/products/[id]/page.jsx — SSR page
 export default async function ProductPage({ params }) {
-  const product = await getProductById(params.id)  // Server pe
+  const product = await getProductById(params.id)  // On server
 
   return (
     <div>
       <h1>{product.name}</h1>
-      {/* Yeh CSR component hai — 'use client' inside */}
+      {/* This is a CSR component — 'use client' inside */}
       <AddToCartButton productId={product.id} stock={product.stock} />
     </div>
   )
@@ -162,22 +162,22 @@ export default async function ProductPage({ params }) {
 
 export default function AddToCartButton({ productId, stock }) {
   function handleAdd() {
-    // Cart mein add karo — Zustand se
+    // Add to cart — using Zustand
   }
 
   return (
     <button onClick={handleAdd} disabled={stock === 0}>
-      {stock > 0 ? 'Cart Mein Daalo' : 'Out of Stock'}
+      {stock > 0 ? 'Add to Cart' : 'Out of Stock'}
     </button>
   )
 }
 ```
 
-Yeh mix karna **normal** hai — almost har Next.js app mein hota hai.
+This mixing is **normal** — happens in almost every Next.js app.
 
 ---
 
-## Rendering Umbrella — Complete Hua
+## Rendering Umbrella — Complete
 
 ```
 RENDERING
@@ -185,11 +185,11 @@ RENDERING
 ├── CSR  → Doc 15 ✓
 ├── SSR  → Doc 16 ✓
 ├── SSG  → Doc 17 ✓
-└── ShopKaro decisions → Doc 18 ✓ (YEH)
+└── ShopKaro decisions → Doc 18 ✓ (THIS)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`19-database-what-is-it.md` — Chautha bada umbrella — **Database**. Data permanently kahan store hoga? PostgreSQL kya hai, MongoDB se kya fark hai, Prisma kya karta hai — yeh sab samjhenge.
+`19-database-what-is-it.md` — Fourth big umbrella — **Database**. Where will data be stored permanently? What is PostgreSQL, how is it different from MongoDB, what does Prisma do — we'll understand all of it.

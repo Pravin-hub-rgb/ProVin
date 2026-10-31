@@ -1,15 +1,15 @@
 # OOP — Interview Prep (Deep Dive)
 
 > Target: Full-stack developer roles, Gurgaon, 5–30 LPA range
-> Context: Tumhe already TypeScript aata hai, isliye concepts ko TS examples ke saath samjhna — ratne se zyada strong rahega kyunki tum khud code likh ke verify kar sakte ho.
+> Context: You already know TypeScript, so understand concepts with TS examples — stronger than memorization since you can write and verify the code yourself.
 
 ---
 
 ## 1. Class vs Object (Foundation)
 
-**Class**: Ek blueprint/template — define karta hai ki object mein kya properties aur methods honge.
+**Class**: A blueprint/template — defines what properties and methods an object will have.
 
-**Object**: Class ka ek actual instance — real memory mein exist karta hai.
+**Object**: An actual instance of a class — exists in real memory.
 
 ```typescript
 class Product {
@@ -22,10 +22,10 @@ class Product {
   }
 }
 
-const rice = new Product("Basmati Rice", 120); // yeh object hai
+const rice = new Product("Basmati Rice", 120); // this is an object
 ```
 
-**Interview mein poochte hain**: *"Class aur object mein difference?"* — Answer: Class ek design hai (jaise ghar ka naksha), object uska actual banaya hua ghar hai. Ek class se multiple objects ban sakte hain.
+**Asked in interviews**: *"Difference between class and object?"* — Answer: Class is a design (like a house blueprint), object is the actual built house. Multiple objects can be created from one class.
 
 ---
 
@@ -33,13 +33,13 @@ const rice = new Product("Basmati Rice", 120); // yeh object hai
 
 ### a) Encapsulation
 
-**Kya hai**: Data (properties) aur uspe kaam karne wale methods ko ek unit (class) mein bandh dena, aur internal details ko bahar se directly access hone se rokna.
+**What it is**: Bundling data (properties) and the methods that operate on it into one unit (class), and preventing internal details from being accessed directly from outside.
 
-**Kyun**: Taaki koi bahar se galat tarike se data modify na kar sake — sab kuch controlled tarike se (methods ke through) hoga.
+**Why**: So no one can modify data incorrectly from outside — everything happens in a controlled way (through methods).
 
 ```typescript
 class InventoryItem {
-  private quantity: number; // bahar se directly access nahi kar sakte
+  private quantity: number; // can't be accessed directly from outside
 
   constructor(quantity: number) {
     this.quantity = quantity;
@@ -58,37 +58,37 @@ class InventoryItem {
 }
 
 const item = new InventoryItem(50);
-// item.quantity = -10; // Error! private hai, directly access nahi hoga
-item.reduceStock(10); // controlled tarike se change ho raha hai
+// item.quantity = -10; // Error! private, can't access directly
+item.reduceStock(10); // changing in a controlled way
 ```
 
-**DukaanOS angle**: Agar `quantity` public hota, to koi bhi code seedha `item.quantity = -999` likh sakta tha — validation bypass karke. `private` + method se access karna encapsulation hai.
+**DukaanOS angle**: If `quantity` were public, any code could write `item.quantity = -999` — bypassing validation. Accessing via `private` + method is encapsulation.
 
-**Interview tip**: `private`, `public`, `protected` keywords ka matlab bhi bata do saath mein:
-- `public` — kahin se bhi access ho sakta hai (default)
-- `private` — sirf usi class ke andar
-- `protected` — usi class + uski child classes mein
+**Interview tip**: Also explain the `private`, `public`, `protected` keywords:
+- `public` — accessible from anywhere (default)
+- `private` — only inside the same class
+- `protected` — same class + its child classes
 
 ---
 
 ### b) Inheritance
 
-**Kya hai**: Ek class (child) dusri class (parent) ki properties aur methods ko reuse kar sakti hai, bina dobara likhe.
+**What it is**: A class (child) can reuse properties and methods of another class (parent), without rewriting them.
 
-**Kyun**: Code duplication kam karta hai — common logic ek jagah, specific logic child classes mein.
+**Why**: Reduces code duplication — common logic in one place, specific logic in child classes.
 
 ```typescript
 class Vehicle {
   constructor(public brand: string, public speed: number) {}
 
   displayInfo(): string {
-    return `${this.brand} chal raha hai ${this.speed} km/h par`;
+    return `${this.brand} is running at ${this.speed} km/h`;
   }
 }
 
 class Car extends Vehicle {
   constructor(brand: string, speed: number, public doors: number) {
-    super(brand, speed); // parent constructor call karna zaroori hai
+    super(brand, speed); // calling parent constructor is mandatory
   }
 
   honk(): string {
@@ -97,27 +97,27 @@ class Car extends Vehicle {
 }
 
 const myCar = new Car("Honda", 120, 4);
-console.log(myCar.displayInfo()); // Vehicle se inherited method
-console.log(myCar.honk()); // Car ka apna method
+console.log(myCar.displayInfo()); // inherited method from Vehicle
+console.log(myCar.honk()); // Car's own method
 ```
 
-**Interview mein poochte hain**: *"`super()` kyun call karna padta hai?"* — Answer: Parent class ka constructor initialize karne ke liye. TypeScript/JS mein agar child class ka constructor hai, to `super()` call karna mandatory hai warna error aayega.
+**Asked in interviews**: *"Why call `super()`?"* — Answer: To initialize the parent class's constructor. In TS/JS, if a child class has a constructor, calling `super()` is mandatory, otherwise there's an error.
 
-**Types of inheritance** (naam yaad rakho, deep nahi):
-- Single (ek parent, ek child) — jaise upar wala example
+**Types of inheritance** (remember names, not deep details):
+- Single (one parent, one child) — like the example above
 - Multilevel (A → B → C)
-- Hierarchical (ek parent, multiple children)
-- TypeScript/JS mein **multiple inheritance** (ek class do parents se extend) allowed nahi hai (unlike C++) — iske liye **interfaces** use karte hain.
+- Hierarchical (one parent, multiple children)
+- TypeScript/JS does **not** allow multiple inheritance (one class extending two parents) (unlike C++) — use **interfaces** for that.
 
 ---
 
 ### c) Polymorphism
 
-**Kya hai**: "Poly" = many, "morph" = forms. Same method/function different classes mein different tarike se behave kar sakta hai.
+**What it is**: "Poly" = many, "morph" = forms. The same method/function can behave differently in different classes.
 
-**Do types**:
+**Two types**:
 
-**1. Method Overriding** (runtime polymorphism) — child class parent ke method ko apne tarike se redefine karta hai.
+**1. Method Overriding** (runtime polymorphism) — child class redefines the parent's method in its own way.
 
 ```typescript
 class Shape {
@@ -147,12 +147,12 @@ class Rectangle extends Shape {
 }
 
 const shapes: Shape[] = [new Circle(5), new Rectangle(4, 6)];
-shapes.forEach(shape => console.log(shape.area())); // har shape apna area calculate karega
+shapes.forEach(shape => console.log(shape.area())); // each shape calculates its own area
 ```
 
-Ye asli polymorphism hai — same method call (`area()`), but har object apne hisaab se behave karta hai.
+This is real polymorphism — same method call (`area()`), but each object behaves according to its own type.
 
-**2. Method Overloading** (compile-time polymorphism) — same method naam, different parameters.
+**2. Method Overloading** (compile-time polymorphism) — same method name, different parameters.
 
 ```typescript
 function calculateTotal(price: number): number;
@@ -162,21 +162,21 @@ function calculateTotal(price: number, tax?: number): number {
 }
 ```
 
-**Interview tip**: TypeScript mein overloading thoda different hai C++/Java se (signatures declare karke ek hi implementation likhte hain) — agar poochein "TS mein overloading kaise karte ho," ye example use karo.
+**Interview tip**: Overloading in TypeScript differs from C++/Java (declare signatures, write a single implementation) — if asked "how do you overload in TS," use this example.
 
 ---
 
 ### d) Abstraction
 
-**Kya hai**: Complex implementation details ko chhupa ke, sirf zaroori/relevant cheezein user ko dikhana.
+**What it is**: Hiding complex implementation details, showing only the necessary/relevant things to the user.
 
-**Real-world example**: Car chalate waqt tumhe engine ka internal working nahi pata hona chahiye — bas steering, accelerator, brake use karna aata ho. Ye abstraction hai.
+**Real-world example**: When driving a car, you don't need to know the engine's internal working — just steering, accelerator, brake. That's abstraction.
 
-**Code mein kaise**: Abstract classes ya interfaces ke through.
+**How in code**: Through abstract classes or interfaces.
 
 ```typescript
 abstract class PaymentMethod {
-  abstract processPayment(amount: number): void; // implementation nahi, sirf contract
+  abstract processPayment(amount: number): void; // declaration only, no implementation
 
   logTransaction(amount: number): void {
     console.log(`Transaction of ₹${amount} logged`);
@@ -197,23 +197,23 @@ class CashPayment extends PaymentMethod {
   }
 }
 
-// const p = new PaymentMethod(); // Error! Abstract class ka direct object nahi bana sakte
+// const p = new PaymentMethod(); // Error! Can't instantiate abstract class
 const upi = new UPIPayment();
 upi.processPayment(500);
 ```
 
-**Interview mein poochte hain**: *"Abstract class ka object kyun nahi bana sakte?"* — Kyunki wo incomplete hai (kuch methods sirf declared hain, defined nahi) — usko use karne se pehle child class mein complete karna zaroori hai.
+**Asked in interviews**: *"Why can't you instantiate an abstract class?"* — Because it's incomplete (some methods are only declared, not defined) — you must complete it in a child class before using it.
 
 ---
 
-## 3. Abstract Class vs Interface (Bahut common comparison question)
+## 3. Abstract Class vs Interface (Very common comparison question)
 
 | | Abstract Class | Interface |
 |---|---|---|
-| Implementation | Kuch methods implement ho sakte hain, kuch abstract | Sirf structure/contract, koi implementation nahi (TS mein kabhi kabhi default hota hai) |
-| Multiple inheritance | Ek class sirf ek abstract class extend kar sakti hai | Ek class multiple interfaces implement kar sakti hai |
-| State (properties) | Ho sakte hain with values | Sirf shape define karta hai, values nahi |
-| Kab use karo | Jab common logic share karna ho child classes ke beech | Jab sirf "ye methods honi chahiye" ka contract chahiye, implementation ki freedom child pe chhodni ho |
+| Implementation | Some methods can be implemented, some abstract | Only structure/contract, no implementation (sometimes defaults in TS) |
+| Multiple inheritance | A class can extend only one abstract class | A class can implement multiple interfaces |
+| State (properties) | Can have values | Only defines shape, no values |
+| When to use | When common logic should be shared among child classes | When you only want the contract "these methods must exist," leaving implementation freedom to the child |
 
 ```typescript
 interface Payable {
@@ -234,38 +234,38 @@ class OnlineOrder implements Payable, Refundable { // multiple interfaces — al
 }
 ```
 
-**Simple interview answer**: "Interface tab use karta hoon jab mujhe sirf ye define karna hai ki class mein kya hona chahiye, implementation ki freedom child class pe chhodni hai. Abstract class tab jab kuch common logic bhi share karna hai saath mein."
+**Simple interview answer**: "I use an interface when I only want to define what a class must have, leaving implementation freedom to the child class. I use an abstract class when I want to share some common logic along with that."
 
 ---
 
-## 4. SOLID Principles (Naam + one-liner, deep nahi chahiye abhi)
+## 4. SOLID Principles (Names + one-liners, no deep dive needed yet)
 
 | Letter | Principle | One-liner |
 |---|---|---|
-| **S** | Single Responsibility | Ek class ka sirf ek kaam/reason-to-change hona chahiye |
-| **O** | Open/Closed | Extension ke liye open, modification ke liye closed (naya feature add karo bina purana code chhede) |
-| **L** | Liskov Substitution | Child class, parent class ki jagah use ho sakni chahiye bina behavior tode |
-| **I** | Interface Segregation | Chhote, specific interfaces behtar hain ek bade "sab kuch wale" interface se |
-| **D** | Dependency Inversion | High-level modules low-level modules pe directly depend na karein, dono abstraction pe depend karein |
+| **S** | Single Responsibility | A class should have only one job/reason-to-change |
+| **O** | Open/Closed | Open for extension, closed for modification (add new features without touching old code) |
+| **L** | Liskov Substitution | A child class should be usable in place of the parent class without breaking behavior |
+| **I** | Interface Segregation | Small, specific interfaces are better than one big "everything" interface |
+| **D** | Dependency Inversion | High-level modules shouldn't depend directly on low-level modules; both should depend on abstractions |
 
-**Interview tip**: Agar SOLID poochein, naam bata do + ek principle (Single Responsibility) ka chhota example de do — deep dive expect nahi karte full-stack junior/mid role mein.
+**Interview tip**: If asked about SOLID, give the names + one example (Single Responsibility) — a small code example. Deep dive isn't expected at junior/mid full-stack roles.
 
 ---
 
 ## Quick Revision Checklist (before interview)
 
 - [ ] Class vs Object — one-line difference
-- [ ] Encapsulation — `private`/`public`/`protected` ka use + example
-- [ ] Inheritance — `extends`, `super()` ka use + example
-- [ ] Polymorphism — overriding vs overloading, dono ka example
-- [ ] Abstraction — abstract class ka example, kyun object nahi ban sakta
-- [ ] Abstract class vs Interface — table wala comparison yaad
+- [ ] Encapsulation — `private`/`public`/`protected` usage + example
+- [ ] Inheritance — `extends`, `super()` usage + example
+- [ ] Polymorphism — overriding vs overloading, examples of both
+- [ ] Abstraction — abstract class example, why it can't be instantiated
+- [ ] Abstract class vs Interface — the table comparison memorized
 - [ ] SOLID — 5 letters + one-liner
 
 ---
 
 ## Practice Approach
 
-1. Har pillar ke liye khud se ek chhota TypeScript example likho (jaise upar diye hain) — apne DukaanOS ke context mein socho (Product, Order, Payment jaisi classes).
-2. Interview mein jab poochein "OOP explain karo," seedha 4 pillars bolke ek-ek ka chhota code example do — ye "ratta laga hai" se zyada strong lagta hai.
-3. Jab confident ho, mujhe bolna — CN (Computer Networks) ki file banata hoon next.
+1. Write a small TypeScript example for each pillar yourself (like the ones above) — think in your DukaanOS context (Product, Order, Payment classes).
+2. In interviews, when asked "explain OOP," state the 4 pillars and give a small code example for each — stronger than "I memorized it."
+3. When confident, tell me — I'll create the CN (Computer Networks) file next.

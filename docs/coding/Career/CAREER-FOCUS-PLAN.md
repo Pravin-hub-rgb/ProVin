@@ -14,8 +14,8 @@
 
 1. **One active milestone at a time.** Open the next one only when the current one's "Done when" is met — or when you use its skip-license.
 2. **Never-behind principle.** A break is not lost progress. Reopening after any gap just means: resume where you stopped.
-3. **Skip-licenses are legitimate tool, not failure.** Every milestone lists a skip condition. Walking away from a heavy item keeps the plan alive; grinding a bad item kills it.
-4. **Labs are a private gym.** All hands-on labs live in one folder (`C:\Users\Pravin\Desktop\main\hands-on-gym\`), each under ~150 lines, and **never** go on the resume. They exist so your hands have touched each concept ground floor, nothing more.
+3. **Skip-licenses are a legitimate tool, not a failure.** Every milestone lists a skip condition. Walking away from a heavy item keeps the plan alive; grinding a bad item kills it.
+4. **Labs are a private gym.** All hands-on labs live in one folder (`C:\Users\Pravin\Desktop\main\hands-on-gym\`), each under ~150 lines, and **never** go on the resume. They exist so your hands have touched each concept at ground level, nothing more.
 5. **Language identity: TypeScript/JavaScript only.** Your headline is *Fullstack — React · Next.js · Node · TypeScript*. Python never appears in your headline, summary, or skills column. It appears only as the language of TradeStack's backend bullets — because it's already shipped there, and real work doesn't get un-declared.
 6. **Truth Rule.** Never write or say any claim your code can't back up. Step 0 (M0) exists because of this rule — it caught real fiction already (see below).
 7. **Post-offer parking lot.** `Agentic AI Production` (LangChain/LangGraph/RAG), the `Agentic AI` intro course Phases 2-8, and all new one-day AI-assisted projects are for **after the first offer**. Your build-fast skill is a growth-track superpower, not a pre-interview distraction.
@@ -345,7 +345,7 @@ The redo exists because spoken interviews improve specifically through hearing y
 
 ## L. M13 — Applications
 
-Startable any time after M10. Applications were never a "perfect first" milestone — Week-after-week polishing while zero applications go out is the classic fresher mistake. This plan applies *before* "perfect".
+Startable any time after M10. Applications were never a "perfect first" milestone — week-after-week polishing while zero applications go out is the classic fresher mistake. This plan applies *before* "perfect".
 
 - [ ] Small batch of tailored applications per session: job boards (Naukri, LinkedIn, Wellfound, Internshala), Gurgaon/Noida startup listings, and a few direct founder/connect messages per batch
 - [ ] Tailoring: first line of each application references the company's product/role — no fully generic blasts

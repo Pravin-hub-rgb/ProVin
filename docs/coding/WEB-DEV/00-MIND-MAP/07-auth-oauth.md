@@ -1,82 +1,82 @@
-# 07 — OAuth: "Google Se Login Karo" Kaise Kaam Karta Hai
+# 07 — OAuth: How Does "Login with Google" Work
 
-> Pichle doc mein cookies samjhe — session/JWT browser tak kaise pohnchaati hain.
-> Ab ek popular concept — **OAuth**. ShopKaro v1 mein nahi use karenge, lekin yeh har jagah milega.
-
----
-
-## Problem Jo OAuth Solve Karta Hai
-
-Soch lo tum ek naya app use karna chahte ho — **ShopKaro**.
-
-Option 1: Naya email + password banana → boring, time lagta hai
-Option 2: "Google se Login karo" → ek click, done
-
-Option 2 kaafi popular hai — aur users bhi prefer karte hain.
-
-Lekin sawaal yeh hai — **ShopKaro ko tumhara Google password kaise pata?**
-
-Answer: **Pata nahi hota. Aur hona bhi nahi chahiye.**
-
-Yahi OAuth ka kaam hai.
+> In the previous doc we understood cookies — how sessions/JWT reach the browser.
+> Now a popular concept — **OAuth**. Not used in ShopKaro v1, but you'll see it everywhere.
 
 ---
 
-## OAuth Flow — Kaise Kaam Karta Hai
+## The Problem OAuth Solves
+
+Imagine you want to use a new app — **ShopKaro.**
+
+Option 1: Create a new email + password → boring, takes time
+Option 2: "Login with Google" → one click, done
+
+Option 2 is very popular — and users prefer it too.
+
+But the question is — **how does ShopKaro know your Google password?**
+
+Answer: **It doesn't. And it shouldn't.**
+
+That's what OAuth does.
+
+---
+
+## OAuth Flow — How It Works
 
 ```
-1. Priya ShopKaro pe "Google se Login" dabati hai
+1. Priya clicks "Login with Google" on ShopKaro
 
-2. ShopKaro → Priya ko Google pe redirect karta hai
-   "Google bhai, yeh ShopKaro hai — Priya se pooch ki mujhe uska
-   naam aur email de sakti hai?"
+2. ShopKaro → redirects Priya to Google
+   "Google, this is ShopKaro — ask Priya if she can share her
+   name and email with me"
 
-3. Google → Priya ko poochta hai
-   "ShopKaro aapka naam aur email access karna chahta hai. Allow?"
+3. Google → asks Priya
+   "ShopKaro wants to access your name and email. Allow?"
 
-4. Priya → "Allow" dabati hai
+4. Priya → clicks "Allow"
 
-5. Google → ShopKaro ko ek **code** bhejta hai
-   "Yeh lo ek temporary code"
+5. Google → sends ShopKaro a **code**
+   "Here's a temporary code"
 
-6. ShopKaro → Google ko code bhejta hai
-   "Yeh code lo, mujhe Priya ki info do"
+6. ShopKaro → sends the code to Google
+   "Take this code, give me Priya's info"
 
-7. Google → ShopKaro ko info deta hai
+7. Google → gives ShopKaro the info
    { name: "Priya Sharma", email: "priya@gmail.com" }
 
-8. ShopKaro → Priya ka account banata hai/dhundhta hai → Login!
+8. ShopKaro → finds/creates Priya's account → Logged in!
 ```
 
-**Poore process mein ShopKaro ko Priya ka Google password kabhi pata nahi chala.**
+**Throughout the entire process, ShopKaro never learns Priya's Google password.**
 
 ---
 
 ## Key Terms
 
-**Provider** — Jiske account se login ho raha hai (Google, GitHub, Facebook)
+**Provider** — The account you're logging in with (Google, GitHub, Facebook)
 
-**Client** — Tumhara app (ShopKaro)
+**Client** — Your app (ShopKaro)
 
-**Scope** — Kya information maangi hai (sirf email? ya contacts bhi?)
+**Scope** — What information is being asked for (just email? or contacts too?)
 
-**Access Token** — Google ShopKaro ko deta hai — future API calls ke liye
-
----
-
-## ShopKaro Mein OAuth Add Karna — Kab Karein?
-
-**v1 mein nahi** — kyunki:
-- Setup thoda complex hai (Google Console mein app register karna padta hai)
-- Pehle basic auth samajhna zaroori hai
-
-**v2 mein add karo** — jab basic auth comfortable ho.
+**Access Token** — Given by Google to ShopKaro — for future API calls
 
 ---
 
-## OAuth Kaise Add Karein (Next.js Mein) — NextAuth Se
+## When to Add OAuth to ShopKaro?
 
-NextAuth / Auth.js OAuth ko bahut simple bana deta hai:
+**Not in v1** — because:
+- Setup is a bit complex (you have to register your app in Google Console)
+- You should understand basic auth first
+
+**Add it in v2** — once basic auth is comfortable.
+
+---
+
+## How to Add OAuth in Next.js — Using NextAuth
+
+NextAuth / Auth.js makes OAuth very simple:
 
 ```javascript
 // /app/api/auth/[...nextauth]/route.js
@@ -94,15 +94,15 @@ export const { GET, POST } = NextAuth({
 })
 ```
 
-Bas — yeh 10 lines mein Google login ready.
+That's it — Google login ready in 10 lines.
 
-`GOOGLE_CLIENT_ID` aur `GOOGLE_CLIENT_SECRET` — Google Console se milte hain jab app register karo.
+`GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET` come from Google Console when you register your app.
 
 ---
 
-## OAuth vs Password Login — Dono Saath Rakh Sakte Ho
+## OAuth vs Password Login — You Can Have Both
 
-ShopKaro mein dono options ho sakte hain:
+ShopKaro can have both options:
 
 ```
 Login Page:
@@ -111,14 +111,14 @@ Login Page:
 │  Password: _________    │
 │  [Login]                │
 │                         │
-│  ─── ya ───             │
+│  ─── or ───             │
 │                         │
-│  [G] Google se Login    │
-│  [GitHub se Login]      │
+│  [G] Login with Google  │
+│  [GitHub Login]         │
 └─────────────────────────┘
 ```
 
-Dono alag flows hain — lekin end result same: user logged in, session/cookie set.
+These are separate flows — but the end result is the same: user logged in, session/cookie set.
 
 ---
 
@@ -126,13 +126,13 @@ Dono alag flows hain — lekin end result same: user logged in, session/cookie s
 
 | | |
 |--|--|
-| **OAuth kya hai** | Third-party se login — bina unka password jaane |
-| **Flow** | App → Provider → User allow → Code → Token → Info |
-| **ShopKaro mein** | v2 mein add karenge NextAuth se |
-| **v1 mein** | Sirf email/password — khud banaya hua |
+| **What is OAuth** | Login via a third party — without knowing their password |
+| **Flow** | App → Provider → User allows → Code → Token → Info |
+| **In ShopKaro** | We'll add it in v2 using NextAuth |
+| **In v1** | Only email/password — built ourselves |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`08-auth-email-verification.md` — Priya ne signup kiya — lekin kya woh email sach mein uski hai? **Email verification** aur **password reset** flow kaise kaam karta hai — tokens, expiry — yeh sab samjhenge. Yeh ShopKaro v1 mein bhi hai.
+`08-auth-email-verification.md` — Priya signed up — but is that email really hers? How does **Email Verification** and **Password Reset** work — tokens, expiry — we'll understand all of that. This is also part of ShopKaro v1.

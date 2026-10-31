@@ -1,8 +1,8 @@
 # "I Know Computers" — Full Course
 
-**Goal:** Is course ko poora karne ke baad tum confidently keh sako — "I know computers. Main office mein kaam kar sakta/sakti hoon."  
+**Goal:** After completing this course you can confidently say — "I know computers. I can work in an office."  
 **Target jobs:** Office assistant, data entry, front desk, receptionist, billing operator  
-**Language:** Hinglish  
+**Language:** English  
 **Level:** Beginner to job-ready  
 
 ---
@@ -29,44 +29,44 @@
 
 # Module 0 — History & How Computers Work
 
-**Why yeh module hai:**  
-Computer use karna alag baat hai, computer samajhna alag. Jab tumhe pata hoga ki CPU kya karta hai, RAM kya hoti hai — toh troubleshoot karna aasaan ho jaata hai. Aur interview mein bhi kaam aata hai.
+**Why this module exists:**  
+Using a computer is one thing, understanding a computer is another. Once you know what the CPU does and what RAM is, troubleshooting becomes easier. It also helps in interviews.
 
 ---
 
-## Chapter 0.1 — Computer Ka Itihaas (History)
+## Chapter 0.1 — Computer History
 
-### Abacus se Laptop tak
+### From Abacus to Laptop
 
 **Abacus (3000 BC)**  
-Sabse pehla "calculating tool" — beads se counting hoti thi. Yeh computer nahi tha, but calculation ka idea yahin se shuru hua.
+The first "calculating tool" — counting was done with beads. This wasn't a computer, but the idea of calculation started here.
 
 **Charles Babbage — "Father of Computer" (1820s)**  
-British mathematician. "Difference Engine" banaya — ek mechanical machine jo calculations kar sakti thi. Kabhi puri tarah nahi bani kyunki us waqt technology itni advanced nahi thi. Phir "Analytical Engine" ka design diya jo modern computer ka blueprint tha — input, processing, output, memory — yeh concept usi ne diya.
+British mathematician. He built the "Difference Engine" — a mechanical machine that could do calculations. It was never fully built because the technology of that time wasn't advanced enough. Then he designed the "Analytical Engine", which was the blueprint of the modern computer — the concepts of input, processing, output, and memory all came from him.
 
 **Ada Lovelace (1840s)**  
-Charles Babbage ki saathi. Duniya ki pehli programmer manी jaati hain. Unhone Analytical Engine ke liye pehla algorithm likha.
+Charles Babbage's colleague. She is considered the world's first programmer. She wrote the first algorithm for the Analytical Engine.
 
 **ENIAC (1945)**  
-Electronic Numerical Integrator and Computer — duniya ka pehla fully electronic computer. Size: ek poora kamra. Weight: 30 tons. Kaam: military calculations. Programming: wires physically connect/disconnect karke hoti thi.
+Electronic Numerical Integrator and Computer — the world's first fully electronic computer. Size: an entire room. Weight: 30 tons. Purpose: military calculations. Programming was done by physically connecting/disconnecting wires.
 
-**Transistor aur IC (1950s–60s)**  
-Vacuum tubes ki jagah transistors aaye — computers chhhote aur saste hue. Phir Integrated Circuits (IC) — aur bhi chhhote.
+**Transistor and IC (1950s–60s)**  
+Transistors replaced vacuum tubes — computers became smaller and cheaper. Then Integrated Circuits (IC) — even smaller.
 
 **Personal Computer — PC (1970s–80s)**  
-Apple II (1977), IBM PC (1981) — pehli baar common logon ke liye computer. Ghar aur office mein aane laga.
+Apple II (1977), IBM PC (1981) — the first time computers reached ordinary people. They started entering homes and offices.
 
-**Windows aur GUI (1985–90s)**  
-Microsoft Windows aaya — ab command line ki jagah mouse se click karke kaam hota tha. Graphical User Interface (GUI) ne computers ko sabke liye easy bana diya.
+**Windows and GUI (1985–90s)**  
+Microsoft Windows arrived — instead of the command line, work was done by clicking with a mouse. The Graphical User Interface (GUI) made computers easy for everyone.
 
-**Internet aur WWW (1990s)**  
-World Wide Web — Tim Berners-Lee ne banaya. Email, websites, information sharing — duniya connected ho gayi.
+**Internet and WWW (1990s)**  
+World Wide Web — created by Tim Berners-Lee. Email, websites, information sharing — the world became connected.
 
 **Smartphones (2007–present)**  
-iPhone (2007) ne sab badal diya. Ab computer hamare haath mein hai — pocket mein.
+The iPhone (2007) changed everything. Now the computer is in our hands — in our pocket.
 
-**AI aur Cloud (2010s–present)**  
-Cloud computing — data internet pe store hota hai. AI — computer khud seekhta hai. Yeh abhi bhi evolve ho raha hai.
+**AI and Cloud (2010s–present)**  
+Cloud computing — data is stored on the internet. AI — the computer learns on its own. This is still evolving.
 
 ### Timeline Summary
 
@@ -77,45 +77,45 @@ Abacus (3000 BC) → Babbage (1820s) → ENIAC (1945) → Transistor (1950s)
 ```
 
 ### Real Task
-Ek timeline banao — paper pe ya Word mein — jisme 8 milestones hon computer history ke. Har milestone pe: naam, saal, ek line mein kya tha.
+Make a timeline — on paper or in Word — with 8 milestones from computer history. For each milestone: name, year, one line about what it was.
 
 ---
 
-## Chapter 0.2 — Computer Ke Parts — Hardware
+## Chapter 0.2 — Computer Parts — Hardware
 
-**Hardware kya hota hai:**  
-Jo cheez tum haath se chhoo sako — monitor, keyboard, CPU box — yeh sab hardware hai.
+**What hardware is:**  
+The things you can physically touch — monitor, keyboard, CPU box — all of this is hardware.
 
 ### Main Components
 
 **CPU — Central Processing Unit**  
-"Brain of the computer." Har kaam yahan hota hai — calculation, decision, instruction follow karna. Speed GHz mein measure hoti hai. Jitna zyada GHz, utna fast.  
+"Brain of the computer." Every task happens here — calculation, decision, following instructions. Speed is measured in GHz. More GHz = faster.  
 Example: Intel Core i5, i7 | AMD Ryzen 5
 
 **RAM — Random Access Memory**  
-"Short-term memory." Jo kaam abhi chal raha hai woh RAM mein hota hai. Browser band kiya → RAM free ho gayi. Jitni zyada RAM, utne zyada programs ek saath chala sakte ho.  
-Measure: GB mein. Office work ke liye 8GB enough hai.
+"Short-term memory." Whatever work is running right now is in RAM. Close the browser → RAM is freed. More RAM = more programs can run at once.  
+Measure: in GB. 8GB is enough for office work.
 
 **Storage — Hard Disk / SSD**  
-"Long-term memory." Files, photos, videos, software — sab yahan save hota hai permanently. Power off karo — data phir bhi rahega.  
-HDD (Hard Disk Drive) — purana, slow, sasta  
-SSD (Solid State Drive) — fast, thoda mahanga, modern laptops mein yahi hota hai
+"Long-term memory." Files, photos, videos, software — everything is saved here permanently. Power off — data still remains.  
+HDD (Hard Disk Drive) — old, slow, cheap  
+SSD (Solid State Drive) — fast, a bit expensive, modern laptops have this
 
 **Motherboard**  
-Saare parts isse connected hain — CPU, RAM, storage, ports sab. "Backbone" of the computer.
+All parts connect to it — CPU, RAM, storage, ports, everything. The "backbone" of the computer.
 
 **Monitor**  
-Screen — jo tum dekh rahe ho. Size inches mein. Resolution — HD (1280x720), Full HD (1920x1080).
+The screen — what you see. Size in inches. Resolution — HD (1280x720), Full HD (1920x1080).
 
 **Keyboard + Mouse**  
-Input devices — tum computer ko yahi se instructions dete ho.
+Input devices — you give instructions to the computer through these.
 
 **Power Supply**  
-Electricity ko usable form mein convert karta hai. Laptop mein battery + adapter.
+Converts electricity into a usable form. Laptop has battery + adapter.
 
 ### Input vs Output Devices
 
-| Input (tum → computer) | Output (computer → tum) |
+| Input (you → computer) | Output (computer → you) |
 |---|---|
 | Keyboard | Monitor |
 | Mouse | Printer |
@@ -124,48 +124,48 @@ Electricity ko usable form mein convert karta hai. Laptop mein battery + adapter
 | Camera | Headphones |
 
 ### Real Task
-Apne ghar ya school ke computer/laptop ko dekho. Identify karo: CPU brand kya hai? RAM kitni hai? Storage kitna hai? (Settings → About This PC mein milega)
+Look at the computer/laptop at your home or school. Identify: what is the CPU brand? How much RAM? How much storage? (You'll find it in Settings → About This PC)
 
 ---
 
-## Chapter 0.3 — Software aur Operating System
+## Chapter 0.3 — Software and Operating System
 
-**Software kya hota hai:**  
-Jo tum dekh nahi sakte, chhoo nahi sakte — sirf use karte ho. Programs, apps, games — sab software hai.
+**What software is:**  
+What you can't see or touch — you only use it. Programs, apps, games — all software.
 
-### Software ke Types
+### Types of Software
 
 **System Software**  
-Computer chalane ke liye zaroori. Operating System (OS) iska sabse important part hai.  
+Essential for running the computer. The Operating System (OS) is its most important part.  
 Examples: Windows 10/11, macOS, Linux, Android, iOS
 
 **Application Software**  
-Kaam karne ke liye — MS Word, Excel, Chrome, VLC, Photoshop  
+For doing work — MS Word, Excel, Chrome, VLC, Photoshop  
 
 **Utility Software**  
-Maintenance ke liye — Antivirus, Disk Cleanup, WinZip
+For maintenance — Antivirus, Disk Cleanup, WinZip
 
-### Operating System (OS) kya karta hai
+### What the Operating System (OS) does
 
-OS ek manager ki tarah hai — hardware aur software ke beech mediator.
+The OS is like a manager — the mediator between hardware and software.
 
-Kaam:
-- Files manage karna
-- Programs chalaana aur band karna
-- Memory allocate karna
-- User se interact karna (desktop, icons, windows)
-- Hardware se baat karna (drivers ke zariye)
+Jobs:
+- Manage files
+- Run and close programs
+- Allocate memory
+- Interact with the user (desktop, icons, windows)
+- Talk to hardware (through drivers)
 
 ### Windows OS — Basic Interface
 
 - **Desktop:** Main screen — icons, wallpaper
-- **Taskbar:** Neeche ki strip — Start button, open apps, clock
-- **Start Menu:** Sab programs yahan milte hain
-- **File Explorer:** Files aur folders browse karne ke liye
-- **Task Manager:** Ctrl+Shift+Esc — kaun sa program kitna RAM use kar raha hai
+- **Taskbar:** Strip at the bottom — Start button, open apps, clock
+- **Start Menu:** All programs are found here
+- **File Explorer:** For browsing files and folders
+- **Task Manager:** Ctrl+Shift+Esc — which program is using how much RAM
 
 ### Real Task
-Windows computer pe: Start Menu khoolo → sab installed programs dekho. Task Manager khoolo → dekho kaun se programs chal rahe hain aur CPU/RAM use ho rahi hai. Ek screenshot lo.
+On a Windows computer: open the Start Menu → see all installed programs. Open Task Manager → see which programs are running and how much CPU/RAM they use. Take a screenshot.
 
 ---
 
@@ -173,22 +173,22 @@ Windows computer pe: Start Menu khoolo → sab installed programs dekho. Task Ma
 
 # Module 1 — OS, Files, Folders & Shortcuts
 
-**Why yeh module hai:**  
-Computer pe kaam karne ke liye files organize karna aana chahiye. Jaise ghar mein cupboard hoti hai — waise computer mein folders hote hain. Yeh basics hain jo har office job mein daily chahiye.
+**Why this module exists:**  
+To work on a computer you need to know how to organize files. Just like a cupboard in a house, computers have folders. These basics are needed daily in every office job.
 
 ---
 
-## Chapter 1.1 — Files aur Folders
+## Chapter 1.1 — Files and Folders
 
 ### Basic Concepts
 
-**File:** Ek document, image, video, ya program — kuch bhi jo computer pe save hota hai.  
+**File:** A document, image, video, or program — anything saved on the computer.  
 Examples: `report.docx`, `photo.jpg`, `data.xlsx`, `song.mp3`
 
-**Folder (Directory):** Files ko organize karne ke liye container.  
-Example: Ek folder "School Work" jisme sab assignments hain.
+**Folder (Directory):** A container for organizing files.  
+Example: A folder "School Work" containing all assignments.
 
-**File extension:** File ke naam ke baad dot ke saath aata hai — file ka type batata hai.
+**File extension:** Comes after a dot at the end of the file name — tells you the file type.
 
 | Extension | Type | Opens with |
 |---|---|---|
@@ -204,20 +204,20 @@ Example: Ek folder "School Work" jisme sab assignments hain.
 
 ### File Explorer — Navigation
 
-File Explorer kholne ke liye: `Windows key + E`
+Open File Explorer with: `Windows key + E`
 
 Parts of File Explorer:
 - **Left panel (Navigation pane):** Quick access, Desktop, Downloads, Documents, This PC
-- **Right panel:** Current folder ka content
-- **Address bar:** Abhi tum kahan ho (path)
-- **Search bar:** File naam se search karo
+- **Right panel:** Content of the current folder
+- **Address bar:** Where you are right now (path)
+- **Search bar:** Search by file name
 
-**File path kya hota hai:**  
+**What a file path is:**  
 `C:\Users\Rahul\Documents\School\Class10\Marksheet.xlsx`  
-Iska matlab: C drive → Users folder → Rahul → Documents → School → Class10 → Marksheet.xlsx file
+Meaning: C drive → Users folder → Rahul → Documents → School → Class10 → Marksheet.xlsx file
 
 ### Real Task
-"My Documents" mein ek folder structure banao:
+Create a folder structure in "My Documents":
 ```
 Documents/
 └── Office Work/
@@ -225,7 +225,7 @@ Documents/
     ├── Data Entry/
     └── Emails/
 ```
-Phir ek fake file har folder mein banao (right-click → New → Text Document).
+Then create a fake file in each folder (right-click → New → Text Document).
 
 ---
 
@@ -233,37 +233,37 @@ Phir ek fake file har folder mein banao (right-click → New → Text Document).
 
 ### Basic Operations
 
-**Copy (Ctrl+C) aur Paste (Ctrl+V)**  
-File copy hoti hai — original bhi rahegi, copy bhi ban jaayegi.  
-Steps: File select karo → Ctrl+C → destination folder khoolo → Ctrl+V
+**Copy (Ctrl+C) and Paste (Ctrl+V)**  
+The file is copied — the original stays, a copy is also created.  
+Steps: Select the file → Ctrl+C → open the destination folder → Ctrl+V
 
-**Cut (Ctrl+X) aur Paste (Ctrl+V)**  
-File move hoti hai — original jagah se hatakar nayi jagah jaayegi.  
-Steps: File select karo → Ctrl+X → destination folder khoolo → Ctrl+V
+**Cut (Ctrl+X) and Paste (Ctrl+V)**  
+The file is moved — it leaves the original location and goes to the new one.  
+Steps: Select the file → Ctrl+X → open the destination folder → Ctrl+V
 
 **Delete (Delete key)**  
-File Recycle Bin mein jaati hai — permanently nahi hati abhi.
+The file goes to the Recycle Bin — not permanently deleted yet.
 
 **Permanent Delete (Shift+Delete)**  
-File seedha delete — Recycle Bin mein nahi jaati. Careful!
+The file is deleted directly — it does not go to the Recycle Bin. Be careful!
 
 **Rename (F2)**  
-File select karo → F2 dabaao → naya naam likho → Enter
+Select the file → press F2 → type the new name → Enter
 
 **Undo (Ctrl+Z)**  
-Galti ho gayi? Ctrl+Z dabaao — pichla action undo ho jaayega.
+Made a mistake? Press Ctrl+Z — the previous action is undone.
 
-### Multiple Files Select Karna
+### Selecting Multiple Files
 
-- **Ek ek:** Ctrl dabaake click karo har file pe
-- **Range:** Pehli file click karo → Shift dabaao → aakhri file click karo — beech ka sab select
-- **Sab:** Ctrl+A — folder ki saari files select
+- **One by one:** Hold Ctrl and click each file
+- **Range:** Click the first file → hold Shift → click the last file — everything in between is selected
+- **All:** Ctrl+A — selects all files in the folder
 
 ### Recycle Bin
 
-- Delete ki gayi files yahan jaati hain
-- **Restore:** Right-click → Restore — file wapas original jagah
-- **Empty Recycle Bin:** Permanently delete — space free hoti hai
+- Deleted files go here
+- **Restore:** Right-click → Restore — the file returns to its original location
+- **Empty Recycle Bin:** Permanent delete — frees up space
 
 ### File Naming — Professional Convention
 
@@ -271,24 +271,24 @@ Bad naming: `file1.xlsx`, `untitled.docx`, `final_FINAL_v3_use_this.xlsx`
 Good naming: `Class10A_Marksheet_Oct2024.xlsx`, `Invoice_RahulSharma_Nov2024.pdf`
 
 Rules:
-- Date include karo: `YYYY` ya `MonYYYY`
-- Version include karo agar zaroorat ho: `_v1`, `_v2`
-- Spaces mat use karo — underscore `_` use karo
-- Clear aur short naam rakho
+- Include the date: `YYYY` or `MonYYYY`
+- Include version if needed: `_v1`, `_v2`
+- Don't use spaces — use underscore `_`
+- Keep names clear and short
 
 ### Real Task
-Downloads folder mein jaao. 5 random files select karo (Ctrl+click). Ek nayi folder "Sorted" banao. Files move karo usme (Cut + Paste). Files rename karo proper naming convention se.
+Go to the Downloads folder. Select 5 random files (Ctrl+click). Create a new folder "Sorted". Move the files there (Cut + Paste). Rename the files using the proper naming convention.
 
 ---
 
 ## Chapter 1.3 — Keyboard Shortcuts
 
 **Why shortcuts:**  
-Mouse se kaam karna slow hai. Shortcuts se 3x fast kaam hota hai. Office pe log dekh ke impress hote hain — aur tumhara kaam bhi jaldi hota hai.
+Working with a mouse is slow. Shortcuts make work 3x faster. People at the office are impressed when they see it — and your work gets done faster too.
 
-### Essential Shortcuts — Hamesha Kaam Aate Hain
+### Essential Shortcuts — Always Useful
 
-| Shortcut | Kaam |
+| Shortcut | Task |
 |---|---|
 | Ctrl+C | Copy |
 | Ctrl+X | Cut |
@@ -297,32 +297,32 @@ Mouse se kaam karna slow hai. Shortcuts se 3x fast kaam hota hai. Office pe log 
 | Ctrl+Y | Redo |
 | Ctrl+S | Save |
 | Ctrl+A | Select All |
-| Ctrl+F | Find (kisi bhi document ya webpage mein) |
+| Ctrl+F | Find (in any document or webpage) |
 | Ctrl+P | Print |
 | Ctrl+N | New file/window |
-| Ctrl+W | Current window/tab band karo |
-| Alt+Tab | Open programs ke beech switch karo |
-| Windows+D | Desktop dikhao (sab minimize) |
-| Windows+E | File Explorer khoolo |
-| Windows+L | Computer lock karo |
-| Ctrl+Shift+Esc | Task Manager khoolo |
+| Ctrl+W | Close current window/tab |
+| Alt+Tab | Switch between open programs |
+| Windows+D | Show desktop (minimize all) |
+| Windows+E | Open File Explorer |
+| Windows+L | Lock the computer |
+| Ctrl+Shift+Esc | Open Task Manager |
 | F2 | Rename |
-| Delete | Recycle Bin mein bhejo |
+| Delete | Send to Recycle Bin |
 | Shift+Delete | Permanently delete |
-| Alt+F4 | Program band karo |
-| Ctrl+Home | Document ka top |
-| Ctrl+End | Document ka bottom |
+| Alt+F4 | Close program |
+| Ctrl+Home | Top of document |
+| Ctrl+End | Bottom of document |
 
 ### Real Task
-Ek text file khoolo (Notepad). Sirf shortcuts use karke yeh karo:
-1. Kuch text likho
-2. Ctrl+A se sab select karo
-3. Ctrl+C se copy karo
-4. Neeche click karo
-5. Ctrl+V se paste karo
-6. Ctrl+Z se undo karo
-7. Ctrl+S se save karo
-8. Alt+F4 se band karo
+Open a text file (Notepad). Do this using only shortcuts:
+1. Type some text
+2. Select all with Ctrl+A
+3. Copy with Ctrl+C
+4. Click below
+5. Paste with Ctrl+V
+6. Undo with Ctrl+Z
+7. Save with Ctrl+S
+8. Close with Alt+F4
 
 ---
 
@@ -330,74 +330,74 @@ Ek text file khoolo (Notepad). Sirf shortcuts use karke yeh karo:
 
 # Module 2 — Internet, Email & Browsers
 
-**Why yeh module hai:**  
-Office mein internet aur email daily use hota hai — information dhundhna, documents bhejana, clients se communicate karna. Yeh basic digital literacy hai.
+**Why this module exists:**  
+Internet and email are used daily in the office — finding information, sending documents, communicating with clients. This is basic digital literacy.
 
 ---
 
-## Chapter 2.1 — Internet aur Browser Basics
+## Chapter 2.1 — Internet and Browser Basics
 
 ### Internet vs World Wide Web
 
-**Internet:** Network of networks — computers worldwide ek dusre se connected hain. Infrastructure hai.  
-**World Wide Web (WWW):** Internet pe jo websites hain woh — HTTP/HTTPS se access hoti hain. Internet ka ek part hai.
+**Internet:** A network of networks — computers worldwide are connected to each other. It's the infrastructure.  
+**World Wide Web (WWW):** The websites on the internet — accessed via HTTP/HTTPS. A part of the internet.
 
-### Browser kya hota hai
+### What a browser is
 
-Browser ek software hai jo websites dikhata hai.  
+A browser is software that displays websites.  
 Common browsers: Google Chrome (most popular), Mozilla Firefox, Microsoft Edge, Safari (Mac)
 
-### Browser Ka Interface
+### Browser Interface
 
-- **Address bar:** URL type karo ya seedha search karo
-- **Tabs:** Multiple websites ek saath — Ctrl+T new tab, Ctrl+W tab band
+- **Address bar:** Type a URL or search directly
+- **Tabs:** Multiple websites at once — Ctrl+T new tab, Ctrl+W close tab
 - **Back/Forward:** Alt+Left / Alt+Right
-- **Refresh:** F5 ya Ctrl+R
-- **Bookmarks:** Favourite websites save karo — Ctrl+D
-- **Incognito mode:** Ctrl+Shift+N — history save nahi hogi
+- **Refresh:** F5 or Ctrl+R
+- **Bookmarks:** Save favorite websites — Ctrl+D
+- **Incognito mode:** Ctrl+Shift+N — history won't be saved
 - **Zoom:** Ctrl+Plus (zoom in), Ctrl+Minus (zoom out), Ctrl+0 (reset)
 
-### Smart Search Karna
+### Searching Smartly
 
-Basic: just type karo Google mein  
+Basic: just type in Google  
 Advanced:
-- `"exact phrase"` — quotes mein — exact match dhundho
-- `site:wikipedia.org computer history` — sirf ek website pe search
-- `filetype:pdf annual report` — sirf PDF files
-- `-word` — minus sign — yeh word exclude karo
+- `"exact phrase"` — in quotes — find an exact match
+- `site:wikipedia.org computer history` — search only on one website
+- `filetype:pdf annual report` — only PDF files
+- `-word` — minus sign — exclude this word
 
 ### Downloads
 
-File download hoti hai toh by default Downloads folder mein jaati hai.  
-File Explorer → Downloads → apni file lo
+When a file is downloaded it goes to the Downloads folder by default.  
+File Explorer → Downloads → get your file
 
 ### Real Task
-Google pe search karo: "MS Excel shortcut keys PDF". Ek PDF result dhundho. Download karo. Downloads folder mein verify karo ki file aa gayi.
+Search on Google: "MS Excel shortcut keys PDF". Find a PDF result. Download it. Verify in the Downloads folder that the file arrived.
 
 ---
 
 ## Chapter 2.2 — Email — Gmail
 
-### Email Kya Hota Hai
+### What Email Is
 
-Electronic mail — internet ke zariye message + attachments bhejana. Office communication ka main tool.
+Electronic mail — sending a message + attachments over the internet. The main tool for office communication.
 
 ### Gmail Interface
 
-- **Inbox:** Aaye hue emails
-- **Sent:** Bheje hue emails
-- **Drafts:** Save kiye hue incomplete emails
+- **Inbox:** Emails that have arrived
+- **Sent:** Emails you sent
+- **Drafts:** Incomplete emails saved
 - **Spam:** Junk/unwanted emails
-- **Trash:** Delete kiye emails (30 din baad permanent delete)
-- **Compose button:** Naya email likhne ke liye (top-left, red button)
+- **Trash:** Deleted emails (permanently deleted after 30 days)
+- **Compose button:** To write a new email (top-left, red button)
 
-### Email Likhna — Compose
+### Writing an Email — Compose
 
-**To:** Receiver ka email address  
-**CC (Carbon Copy):** Jinhein copy mein rakho — sab dekh sakte hain  
-**BCC (Blind Carbon Copy):** Copy mein rakho — baaki logon ko pata nahi chalega  
-**Subject:** Email ka topic — clear aur specific rakho  
-**Body:** Actual message
+**To:** Receiver's email address  
+**CC (Carbon Copy):** Those kept in copy — everyone can see  
+**BCC (Blind Carbon Copy):** Kept in copy — others won't know  
+**Subject:** The topic of the email — keep it clear and specific  
+**Body:** The actual message
 
 ### Professional Email Format
 
@@ -409,46 +409,46 @@ Body:
 
 Dear [Name / Sir / Ma'am],
 
-[Opening line — why likh rahe ho]
+[Opening line — why you're writing]
 
-[Main content — short aur clear]
+[Main content — short and clear]
 
-[Closing line — next step ya thank you]
+[Closing line — next step or thank you]
 
 Regards,
-[Tumhara naam]
+[Your name]
 [Designation]
 [Phone number]
 ```
 
-### Attachment Bhejana
+### Sending Attachments
 
-1. Compose karo
-2. Paperclip icon (Attach files) dabaao
-3. File select karo
-4. Wait karo upload hone tak
+1. Compose
+2. Click the paperclip icon (Attach files)
+3. Select the file
+4. Wait for it to upload
 5. Send
 
-**Important:** 25MB se bada file Gmail se directly nahi bhej sakte — Google Drive link bhejo.
+**Important:** Files larger than 25MB can't be sent directly through Gmail — send a Google Drive link.
 
-### Email Receive Karna aur Reply
+### Receiving Email and Replying
 
-- **Reply:** Sirf sender ko jawab
-- **Reply All:** Sab logon ko jawab jo email mein the
-- **Forward:** Email kisi aur ko bhejo
+- **Reply:** Reply only to the sender
+- **Reply All:** Reply to everyone who was on the email
+- **Forward:** Send the email to someone else
 
 ### Real Task
-Gmail account khoolo. Ek professional email draft karo (save as draft — send mat karo):
+Open your Gmail account. Draft a professional email (save as draft — don't send):
 - To: teacher@school.com (fake address)
 - Subject: "Class 10A Marksheet — October 2024"
-- Body: Professional format mein — marksheet attach ki hai, please review karein
-- Attach: Pichle chapter mein banaya PDF attach karo
+- Body: Professional format — marksheet attached, please review
+- Attach: The PDF created in the previous chapter
 
 ---
 
-## Chapter 2.3 — Internet Safety aur Best Practices
+## Chapter 2.3 — Internet Safety and Best Practices
 
-### Strong Password Kaise Banayein
+### How to Create a Strong Password
 
 Weak: `password123`, `rahul2000`, `abcd1234`  
 Strong: `Tr0ub4dor&3!`, `School@Oct#2024`
@@ -456,29 +456,29 @@ Strong: `Tr0ub4dor&3!`, `School@Oct#2024`
 Rules:
 - Minimum 8 characters
 - Uppercase + lowercase + number + special character
-- Har account ke liye alag password
-- Password kisi ko mat batao — email pe bhi mat likhna
+- A different password for every account
+- Don't tell anyone your password — not even in an email
 
-### Phishing kya hota hai
+### What Phishing Is
 
-Fake email ya website jo asli lagti hai — tumhara password ya bank details churaane ke liye.  
+A fake email or website that looks real — to steal your password or bank details.  
 Signs:
 - Unknown sender
-- "Urgent" ya "Your account will be deleted" jaise scary subject
-- Link hover karo — URL mein spelling mistake ya weird domain
-- Attachment unexpected hai
+- Scary subject like "Urgent" or "Your account will be deleted"
+- Hover over the link — spelling mistake or weird domain in the URL
+- Unexpected attachment
 
-**Rule: Bank ya koi bhi company kabhi email pe password nahi maangti.**
+**Rule: No bank or company ever asks for your password over email.**
 
 ### Safe Browsing
 
-- HTTPS websites use karo (address bar mein lock icon)
-- Unknown websites se kuch download mat karo
-- Pop-ups pe "You won a prize!" — ignore karo, close karo
-- Public WiFi pe sensitive kaam mat karo (banking, passwords)
+- Use HTTPS websites (lock icon in the address bar)
+- Don't download anything from unknown websites
+- Ignore "You won a prize!" pop-ups — close them
+- Don't do sensitive work (banking, passwords) on public WiFi
 
 ### Real Task
-5 emails dekho apne inbox mein. Identify karo: kaunse legitimate hain aur kaunse spam lag rahe hain. Kya signs hain? Ek list banao.
+Look at 5 emails in your inbox. Identify which are legitimate and which look like spam. What are the signs? Make a list.
 
 ---
 
@@ -486,46 +486,46 @@ Signs:
 
 # Module 3 — MS Word
 
-**Why yeh module hai:**  
-Office mein letters, reports, notices, memos — sab Word mein bante hain. Ek professional document banana aana chahiye.
+**Why this module exists:**  
+Letters, reports, notices, memos in the office are all made in Word. You should be able to create a professional document.
 
 ---
 
-## Chapter 3.1 — Word Interface aur Basic Typing
+## Chapter 3.1 — Word Interface and Basic Typing
 
-### Word Ka Interface
+### Word Interface
 
-- **Ribbon:** Top pe tabs — Home, Insert, Page Layout, Review, etc.
+- **Ribbon:** Tabs at the top — Home, Insert, Page Layout, Review, etc.
 - **Quick Access Toolbar:** Top-left corner — Save, Undo, Redo
-- **Document area:** Jahan tum type karte ho
-- **Status bar:** Neeche — word count, page number, zoom
-- **Ruler:** Page margins dikhata hai
+- **Document area:** Where you type
+- **Status bar:** At the bottom — word count, page number, zoom
+- **Ruler:** Shows page margins
 
-### New Document Banao
+### Create a New Document
 
 Ctrl+N — new blank document  
-Ya File → New → Blank Document
+Or File → New → Blank Document
 
 ### Basic Typing Tips
 
-- **Enter:** New paragraph — ek line chhodo
-- **Shift+Enter:** New line — paragraph nahi, sirf line break
-- **Tab:** Indent — paragraph shuru karne ke liye ya columns align karne ke liye
-- **Backspace:** Cursor ke peeche wala character delete
-- **Delete:** Cursor ke aage wala character delete
+- **Enter:** New paragraph — leaves one line
+- **Shift+Enter:** New line — not a paragraph, just a line break
+- **Tab:** Indent — to start a paragraph or align columns
+- **Backspace:** Deletes the character behind the cursor
+- **Delete:** Deletes the character ahead of the cursor
 
 ### Word Count
 
-Status bar mein neeche dikhta hai. Ya Review → Word Count.
+Shown at the bottom in the status bar. Or Review → Word Count.
 
-### Save Karna
+### Saving
 
-- **Ctrl+S:** Save (pehli baar — Save As dialog aayega)
-- **File → Save As:** Nayi location ya format pe save
-- **AutoSave:** OneDrive pe save karo toh automatic hota hai
+- **Ctrl+S:** Save (first time — Save As dialog appears)
+- **File → Save As:** Save to a new location or format
+- **AutoSave:** Happens automatically when saved on OneDrive
 
 ### Real Task
-Word khoolo. Apna introduction type karo — naam, kahan se ho, kya seekhna chahte ho computers mein. 100 words minimum. Ctrl+S se save karo: `MyIntro.docx`.
+Open Word. Type your introduction — name, where you're from, what you want to learn about computers. Minimum 100 words. Save with Ctrl+S as: `MyIntro.docx`.
 
 ---
 
@@ -533,29 +533,29 @@ Word khoolo. Apna introduction type karo — naam, kahan se ho, kya seekhna chah
 
 ### Text Formatting — Home Tab
 
-| Option | Shortcut | Kya karta hai |
+| Option | Shortcut | What it does |
 |---|---|---|
-| Bold | Ctrl+B | Text mota karta hai |
-| Italic | Ctrl+I | Text teda karta hai |
-| Underline | Ctrl+U | Text ke neeche line |
-| Font size | Ctrl+Shift+> / < | Size badhao/ghataao |
-| Font color | — | Text ka color |
+| Bold | Ctrl+B | Makes text bold |
+| Italic | Ctrl+I | Makes text italic |
+| Underline | Ctrl+U | Line under text |
+| Font size | Ctrl+Shift+> / < | Increase/decrease size |
+| Font color | — | Color of text |
 | Highlight | — | Background color |
 | Align Left | Ctrl+L | Left side |
-| Center | Ctrl+E | Center mein |
+| Center | Ctrl+E | Center |
 | Align Right | Ctrl+R | Right side |
-| Justify | Ctrl+J | Dono taraf aligned |
+| Justify | Ctrl+J | Aligned on both sides |
 
-### Headings aur Styles
+### Headings and Styles
 
-Heading 1, Heading 2 use karo — sirf size badhane se heading nahi banti.  
+Use Heading 1, Heading 2 — just increasing the size doesn't make a heading.  
 Home tab → Styles section → Heading 1 / Heading 2
 
-Kyon: Table of Contents automatically ban jaati hai, document professional lagta hai.
+Why: A Table of Contents is generated automatically, and the document looks professional.
 
 ### Lists
 
-- **Bullet list:** Home → Bullets (ya Ctrl+Shift+L)
+- **Bullet list:** Home → Bullets (or Ctrl+Shift+L)
 - **Numbered list:** Home → Numbering
 
 ### Paragraph Formatting
@@ -564,76 +564,76 @@ Kyon: Table of Contents automatically ban jaati hai, document professional lagta
 - **Paragraph spacing:** Layout → Spacing Before/After
 
 ### Real Task
-Ek "Notice" banao school ke liye:
+Create a "Notice" for a school:
 - Heading: "Annual Sports Day — Notice" (Heading 1 style)
 - Date right-aligned
 - Body text justified, 1.5 line spacing
-- 3-4 bullet points (activities ki list)
-- Footer mein principal ka naam
+- 3-4 bullet points (list of activities)
+- Principal's name in the footer
 
 ---
 
 ## Chapter 3.3 — Tables
 
-### Table Insert Karna
+### Inserting a Table
 
-Insert tab → Table → grid se select karo kitne rows/columns chahiye
+Insert tab → Table → select from the grid how many rows/columns you need
 
-Ya: Insert → Table → "Insert Table" → exact number daalo
+Or: Insert → Table → "Insert Table" → enter exact numbers
 
-### Table Mein Kaam Karna
+### Working in a Table
 
-- **Cell mein jaao:** Click karo ya Tab key
-- **Row add karo:** Last cell mein Tab dabaao → new row ban jaayegi
-- **Row/column add:** Right-click → Insert → Row Above/Below ya Column Left/Right
+- **Go to a cell:** Click or press Tab
+- **Add a row:** Press Tab in the last cell → a new row is created
+- **Add row/column:** Right-click → Insert → Row Above/Below or Column Left/Right
 - **Delete:** Right-click → Delete Rows/Columns
-- **Merge cells:** Cells select karo → right-click → Merge Cells
-- **Column width:** Border pe cursor laao → drag karo
+- **Merge cells:** Select cells → right-click → Merge Cells
+- **Column width:** Hover over the border → drag
 
 ### Table Design
 
-Table select karo → Table Design tab aayega ribbon mein → pre-made styles choose karo.
+Select the table → Table Design tab appears in the ribbon → choose pre-made styles.
 
 ### Real Task
-Ek table banao: 6 columns × 11 rows  
+Create a table: 6 columns × 11 rows  
 Columns: Roll No, Student Name, English, Math, Science, Total  
-10 fake students ka data bharo. Header row bold karo aur background color deo. Last row mein "Average" likho.
+Fill data for 10 fake students. Make the header row bold with a background color. Write "Average" in the last row.
 
 ---
 
-## Chapter 3.4 — Page Layout, Headers/Footers aur Save as PDF
+## Chapter 3.4 — Page Layout, Headers/Footers and Save as PDF
 
 ### Page Layout
 
 Layout tab:
 - **Margins:** Normal (1 inch), Narrow (0.5 inch), Wide (1.5 inch)
-- **Orientation:** Portrait ya Landscape
-- **Size:** A4 (standard India)
-- **Columns:** 1, 2, ya 3 columns mein text
+- **Orientation:** Portrait or Landscape
+- **Size:** A4 (standard in India)
+- **Columns:** Text in 1, 2, or 3 columns
 
-### Headers aur Footers
+### Headers and Footers
 
-Insert tab → Header → style choose karo  
-Ya Insert tab → Footer
+Insert tab → Header → choose a style  
+Or Insert tab → Footer
 
-Header mein aaata hai: Document title, company name, logo  
-Footer mein aata hai: Page number, date, file name
+Header contains: Document title, company name, logo  
+Footer contains: Page number, date, file name
 
-**Page number add karna:**  
-Insert → Page Number → position choose karo
+**Adding a page number:**  
+Insert → Page Number → choose position
 
 ### Print Preview
 
-Ctrl+P → right side pe preview  
-Check karo: margins sahi hain, page break sahi jagah hai, koi text cut toh nahi ho raha
+Ctrl+P → preview on the right side  
+Check: are margins correct, is the page break in the right place, is any text cut off
 
 ### Save as PDF
 
-File → Save As → File type mein PDF  
-Ya Ctrl+P → "Microsoft Print to PDF"
+File → Save As → choose PDF in file type  
+Or Ctrl+P → "Microsoft Print to PDF"
 
 ### Real Task
-Pichle chapter ka student table document lo. Add karo:
+Take the student table document from the previous chapter. Add:
 - Header: "Delhi Public School — Marksheet 2024" (centered)
 - Footer: Page number (center) + date (right)
 - Margins: Narrow
@@ -645,54 +645,54 @@ Pichle chapter ka student table document lo. Add karo:
 
 # Module 4 — MS Excel (Detailed)
 
-**Why yeh module hai:**  
-Data entry jobs mein Excel sabse zyada use hoti hai. Marks, salary, inventory, billing — sab Excel mein hota hai. Yeh module sabse detailed hai kyunki yahi sabse important hai.
+**Why this module exists:**  
+Excel is used the most in data entry jobs. Marks, salary, inventory, billing — everything is in Excel. This is the most detailed module because it's the most important.
 
 ---
 
-## Chapter 4.1 — Excel Interface aur Navigation
+## Chapter 4.1 — Excel Interface and Navigation
 
-### Excel Kya Hai
+### What Excel Is
 
-MS Excel ek spreadsheet software hai — data rows aur columns mein organize hota hai, calculations automatic hoti hain.
+MS Excel is spreadsheet software — data is organized in rows and columns, and calculations happen automatically.
 
-### Interface Ke Parts
+### Parts of the Interface
 
-- **Workbook:** Puri Excel file (`.xlsx`)
-- **Worksheet (Sheet):** Workbook ke andar ek tab — Sheet1, Sheet2, etc.
-- **Cell:** Row aur column ka intersection — e.g., A1, B3, C10
-- **Row:** Horizontal — numbers se (1, 2, 3...)
-- **Column:** Vertical — letters se (A, B, C...)
-- **Name Box:** Top-left — abhi kaunsa cell selected hai (e.g., A1)
-- **Formula Bar:** Name Box ke baad — cell ka content dikhta hai
-- **Ribbon:** Top pe tabs — Home, Insert, Page Layout, Formulas, Data, Review
-- **Sheet tabs:** Neeche — Sheet1, Sheet2, Sheet3
+- **Workbook:** The whole Excel file (`.xlsx`)
+- **Worksheet (Sheet):** A tab inside the workbook — Sheet1, Sheet2, etc.
+- **Cell:** Intersection of a row and column — e.g., A1, B3, C10
+- **Row:** Horizontal — numbered (1, 2, 3...)
+- **Column:** Vertical — lettered (A, B, C...)
+- **Name Box:** Top-left — which cell is currently selected (e.g., A1)
+- **Formula Bar:** After the Name Box — shows the cell's content
+- **Ribbon:** Tabs at the top — Home, Insert, Page Layout, Formulas, Data, Review
+- **Sheet tabs:** At the bottom — Sheet1, Sheet2, Sheet3
 
 ### Navigation Shortcuts
 
-| Shortcut | Kaam |
+| Shortcut | Task |
 |---|---|
-| Arrow keys | Ek cell move |
-| Ctrl+Arrow | Data ka aakhri cell tak jump |
-| Ctrl+Home | A1 pe jaao |
-| Ctrl+End | Last used cell pe jaao |
-| Ctrl+G ya F5 | Go To — specific cell pe jump |
-| Page Up/Down | Ek screen upar/neeche |
+| Arrow keys | Move one cell |
+| Ctrl+Arrow | Jump to the last cell of the data |
+| Ctrl+Home | Go to A1 |
+| Ctrl+End | Go to last used cell |
+| Ctrl+G or F5 | Go To — jump to a specific cell |
+| Page Up/Down | One screen up/down |
 | Tab | Next cell (right) |
 | Shift+Tab | Previous cell (left) |
 | Enter | Next cell (down) |
 
 ### Real Task
-Ek 200-row sheet khoolo (ya banao). Sirf keyboard se navigate karo:
-1. Ctrl+End — last cell dhundho
-2. Ctrl+Home — A1 pe wapas jaao
-3. Ctrl+Down arrow — column A ka last data
-4. F5 → "G50" type karo → Enter — seedha G50 pe
-5. Mouse use mat karo puri navigation mein
+Open a sheet with 200 rows (or create one). Navigate using only the keyboard:
+1. Ctrl+End — find the last cell
+2. Ctrl+Home — back to A1
+3. Ctrl+Down arrow — last data in column A
+4. F5 → type "G50" → Enter — straight to G50
+5. Don't use the mouse at all during navigation
 
 ---
 
-## Chapter 4.2 — Data Entry aur Formatting
+## Chapter 4.2 — Data Entry and Formatting
 
 ### Data Types in Excel
 
@@ -706,20 +706,20 @@ Ek 200-row sheet khoolo (ya banao). Sirf keyboard se navigate karo:
 
 ### Data Entry Tips
 
-- **Fast entry:** Type → Enter (neeche jaao) ya Tab (right jaao)
-- **Same value multiple cells mein:** Cells select karo → value type karo → Ctrl+Enter
-- **AutoFill:** Cell ke bottom-right corner pe cursor laao → small black plus aayega → drag karo — series automatically fill hogi (1,2,3 ya Mon,Tue,Wed etc.)
-- **Date shortcut:** Ctrl+; (aaj ki date)
+- **Fast entry:** Type → Enter (goes down) or Tab (goes right)
+- **Same value in multiple cells:** Select cells → type the value → Ctrl+Enter
+- **AutoFill:** Hover over the bottom-right corner of a cell → a small black plus appears → drag — the series fills automatically (1,2,3 or Mon,Tue,Wed etc.)
+- **Date shortcut:** Ctrl+; (today's date)
 - **Time shortcut:** Ctrl+Shift+; (current time)
 
 ### Cell Formatting
 
 **Home tab → Number group:**
 - General (default)
-- Number — decimal places set karo
+- Number — set decimal places
 - Currency — Rs. symbol
 - Percentage — 0.95 → 95%
-- Date — format choose karo
+- Date — choose format
 
 **Ctrl+1** — Format Cells dialog box (full options)
 
@@ -730,92 +730,92 @@ Ek 200-row sheet khoolo (ya banao). Sirf keyboard se navigate karo:
 - Alignment — Left, Center, Right, Top, Middle, Bottom
 
 **Merge & Center:**  
-Multiple cells select karo → Home → Merge & Center — heading ke liye useful
+Select multiple cells → Home → Merge & Center — useful for headings
 
 **Wrap Text:**  
-Home → Wrap Text — text ek cell mein multiple lines mein dikhega
+Home → Wrap Text — text shows in multiple lines within one cell
 
 **Column Width / Row Height:**  
-Column header pe double-click → auto-fit  
-Ya column header border pe drag karo
+Double-click the column header → auto-fit  
+Or drag the column header border
 
 ### Real Task
-50 students ka data enter karo:
+Enter data for 50 students:
 - Columns: Roll No (1-50), Student Name, English (marks), Math, Science, Total, Result
-- Roll No: AutoFill use karo (1 likho, 2 likho, select karo, drag karo)
-- Names: 50 fake names type karo (ya copy-paste)
-- Marks: 30-100 ke beech random numbers
+- Roll No: use AutoFill (type 1, type 2, select, drag)
+- Names: type 50 fake names (or copy-paste)
+- Marks: random numbers between 30-100
 - Header row: Bold, background color (blue/green), white text, center-aligned
-- Column widths: Auto-fit sab columns
+- Column widths: Auto-fit all columns
 - Save: `Class10_Marksheet.xlsx`
 
 ---
 
-## Chapter 4.3 — Formulas aur Functions
+## Chapter 4.3 — Formulas and Functions
 
 ### Formula Basics
 
-Har formula `=` se shuru hota hai.  
-Example: `=A1+B1` (A1 aur B1 add karo)
+Every formula starts with `=`.  
+Example: `=A1+B1` (add A1 and B1)
 
 **Operators:**
 
-| Operator | Kaam | Example |
+| Operator | Task | Example |
 |---|---|---|
 | + | Addition | =A1+B1 |
 | - | Subtraction | =A1-B1 |
 | * | Multiplication | =A1*B1 |
 | / | Division | =A1/B1 |
-| ^ | Power | =A1^2 (A1 ka square) |
+| ^ | Power | =A1^2 (square of A1) |
 
 ### Essential Functions
 
-**SUM — Total nikalo**  
-`=SUM(B2:D2)` — B2 se D2 tak sab add karo  
-`=SUM(B2,D2,F2)` — sirf yeh teen cells add karo
+**SUM — Find the total**  
+`=SUM(B2:D2)` — add everything from B2 to D2  
+`=SUM(B2,D2,F2)` — add only these three cells
 
-**AVERAGE — Average nikalo**  
-`=AVERAGE(B2:D2)` — B2 se D2 ka average
+**AVERAGE — Find the average**  
+`=AVERAGE(B2:D2)` — average of B2 to D2
 
-**MAX — Sabse bada number**  
-`=MAX(B2:B51)` — column B mein sabse bada
+**MAX — Largest number**  
+`=MAX(B2:B51)` — largest in column B
 
-**MIN — Sabse chhhota number**  
-`=MIN(B2:B51)` — column B mein sabse chhhota
+**MIN — Smallest number**  
+`=MIN(B2:B51)` — smallest in column B
 
-**COUNT — Numbers count karo**  
-`=COUNT(B2:B51)` — kitne numbers hain B2 se B51 mein
+**COUNT — Count numbers**  
+`=COUNT(B2:B51)` — how many numbers are in B2 to B51
 
-**COUNTA — Non-empty cells count karo**  
-`=COUNTA(A2:A51)` — kitne non-empty cells hain
+**COUNTA — Count non-empty cells**  
+`=COUNTA(A2:A51)` — how many non-empty cells
 
-**IF — Condition check karo**  
+**IF — Check a condition**  
 `=IF(condition, value_if_true, value_if_false)`  
 Example: `=IF(F2>=33,"Pass","Fail")`  
-Matlab: Agar F2 (Total) 33 se zyada ya equal hai → "Pass" likho, warna "Fail"
+Meaning: If F2 (Total) is 33 or more → write "Pass", otherwise "Fail"
 
 **Nested IF:**  
 `=IF(F2>=75,"Distinction",IF(F2>=60,"First",IF(F2>=45,"Second","Fail")))`
 
-**COUNTIF — Condition ke saath count**  
-`=COUNTIF(G2:G51,"Pass")` — kitne students pass hue
+**COUNTIF — Count with a condition**  
+`=COUNTIF(G2:G51,"Pass")` — how many students passed
 
-**SUMIF — Condition ke saath sum**  
-`=SUMIF(A2:A51,"Class A",F2:F51)` — sirf "Class A" wale students ke marks ka total
+**SUMIF — Sum with a condition**  
+`=SUMIF(A2:A51,"Class A",F2:F51)` — total marks of only "Class A" students
 
 ### Cell References
 
-**Relative reference:** `=A1` — formula copy karne par change hota hai  
-**Absolute reference:** `=$A$1` — formula copy karne par change nahi hota (F4 dabaao cell select karke)  
-**Mixed:** `=$A1` ya `=A$1`
+**Relative reference:** `=A1` — changes when the formula is copied  
+**Absolute reference:** `=$A$1` — doesn't change when copied (press F4 after selecting the cell)  
+**Mixed:** `=$A1` or `=A$1`
 
-Kab absolute use karein: Jab ek fixed cell (jaise tax rate, passing marks) sab formulas mein use karna ho.
+When to use absolute: When one fixed cell (like tax rate, passing marks) is used in all formulas.
 
 ### Real Task
-Pichle chapter ki marksheet lo. Add karo:
-- **Column F (Total):** `=SUM(C2:E2)` — teen subjects ka total (formula row 2 mein likho, baaki rows pe drag karke copy karo)
+Take the marksheet from the previous chapter. Add:
+- **Column F (Total):** `=SUM(C2:E2)` — total of three subjects (write the formula in row 2, then drag-copy to the remaining rows)
 - **Column G (Average):** `=AVERAGE(C2:E2)`
-- **Column H (Result):** `=IF(F2>=100,"Pass","Fail")` — total 100 se zyada toh pass (ya apne passing criteria set karo)
+- **Column H (Result):** `=IF(F2>=100,"Pass","Fail")` — pass if total is 100 or more (or set your own passing criteria)
 - **Row 52 (Class Total):** `=SUM(F2:F51)`
 - **Row 53 (Class Average):** `=AVERAGE(F2:F51)`
 - **Row 54 (Highest Score):** `=MAX(F2:F51)`
@@ -825,254 +825,255 @@ Pichle chapter ki marksheet lo. Add karo:
 
 ---
 
-## Chapter 4.4 — VLOOKUP aur HLOOKUP
+## Chapter 4.4 — VLOOKUP and HLOOKUP
 
-### VLOOKUP Kya Hota Hai
+### What VLOOKUP Is
 
-"Vertical Lookup" — ek value dhundho ek column mein, aur usi row se koi aur value laao.
+"Vertical Lookup" — find a value in one column and bring back another value from the same row.
 
 **Syntax:**  
 `=VLOOKUP(lookup_value, table_array, col_index_num, [range_lookup])`
 
-| Parameter | Matlab |
+| Parameter | Meaning |
 |---|---|
-| lookup_value | Kya dhundh rahe ho (e.g., Roll No) |
-| table_array | Kahan dhundho (e.g., A2:H51) |
-| col_index_num | Kaunsa column return karo (1=first, 2=second...) |
-| range_lookup | FALSE = exact match (hamesha FALSE use karo) |
+| lookup_value | What you're searching for (e.g., Roll No) |
+| table_array | Where to search (e.g., A2:H51) |
+| col_index_num | Which column to return (1=first, 2=second...) |
+| range_lookup | FALSE = exact match (always use FALSE) |
 
 **Example:**  
 `=VLOOKUP(J2, A2:H51, 2, FALSE)`  
-Matlab: J2 mein jo Roll No hai, use A2:H51 mein column A mein dhundho, aur column 2 (Student Name) return karo.
+Meaning: Take the Roll No in J2, find it in column A of A2:H51, and return column 2 (Student Name).
 
 ### Step by Step — Student Lookup System
 
-Sheet 1 mein data hai: A=Roll No, B=Name, C=English, D=Math, E=Science, F=Total, G=Result
+Sheet 1 has the data: A=Roll No, B=Name, C=English, D=Math, E=Science, F=Total, G=Result
 
-Sheet 2 mein ek lookup form banao:
-- Cell B2: Roll No enter karo (e.g., 15)
-- Cell B3: `=VLOOKUP(B2, Sheet1!A:G, 2, FALSE)` → Name aayega
+Create a lookup form on Sheet 2:
+- Cell B2: Enter Roll No (e.g., 15)
+- Cell B3: `=VLOOKUP(B2, Sheet1!A:G, 2, FALSE)` → Name appears
 - Cell B4: `=VLOOKUP(B2, Sheet1!A:G, 3, FALSE)` → English marks
 - Cell B5: `=VLOOKUP(B2, Sheet1!A:G, 4, FALSE)` → Math marks
 - Cell B6: `=VLOOKUP(B2, Sheet1!A:G, 5, FALSE)` → Science marks
 - Cell B7: `=VLOOKUP(B2, Sheet1!A:G, 6, FALSE)` → Total
 - Cell B8: `=VLOOKUP(B2, Sheet1!A:G, 7, FALSE)` → Result
 
-Ab B2 mein koi bhi Roll No daalo → sab details automatically aa jaayengi.
+Now type any Roll No in B2 → all details appear automatically.
 
 ### Common VLOOKUP Errors
 
-| Error | Matlab | Fix |
+| Error | Meaning | Fix |
 |---|---|---|
-| #N/A | Value nahi mili | Check karo value exist karti hai |
-| #REF! | Column number range se bahar | col_index check karo |
-| Wrong value | Approximate match on | range_lookup ko FALSE karo |
+| #N/A | Value not found | Check whether the value exists |
+| #REF! | Column number out of range | Check col_index |
+| Wrong value | Approximate match was on | Set range_lookup to FALSE |
 
 ### HLOOKUP
 
-Same as VLOOKUP but horizontal — rows mein dhundta hai columns ki jagah.  
+Same as VLOOKUP but horizontal — searches in rows instead of columns.  
 `=HLOOKUP(lookup_value, table_array, row_index_num, FALSE)`
 
-Kab use karein: Jab data horizontal ho — columns mein categories, rows mein values.
+When to use: When data is horizontal — categories in columns, values in rows.
 
 ### Real Task
-Marksheet data (Sheet 1) ke basis pe ek "Student Report Card" system banao (Sheet 2):
+Based on the marksheet data (Sheet 1), create a "Student Report Card" system (Sheet 2):
 - Cell B1: "Enter Roll Number:"
 - Cell B2: Roll number input
-- Cells B3 se B8: VLOOKUP se automatically Name, English, Math, Science, Total, Result fetch karo
-- Format karo nicely — yeh ek mini report card lagni chahiye
-- Test karo: 5 alag alag Roll Numbers daalo aur results verify karo
+- Cells B3 to B8: Fetch Name, English, Math, Science, Total, Result automatically using VLOOKUP
+- Format it nicely — it should look like a mini report card
+- Test it: enter 5 different Roll Numbers and verify the results
 
 ---
 
-## Chapter 4.5 — Sort, Filter aur Data Cleanup
+## Chapter 4.5 — Sort, Filter and Data Cleanup
 
-### Sort Karna
+### Sorting
 
 **Simple sort:**  
-Column click karo → Data tab → Sort A to Z ya Sort Z to A  
-Ya Home → Sort & Filter
+Click a column → Data tab → Sort A to Z or Sort Z to A  
+Or Home → Sort & Filter
 
 **Multi-level sort:**  
 Data → Sort → Add Level  
-Example: Pehle Result se sort karo (Pass/Fail), phir Total se (high to low)
+Example: First sort by Result (Pass/Fail), then by Total (high to low)
 
 **Steps:**
-1. Data ke andar koi bhi cell click karo
+1. Click any cell inside the data
 2. Data tab → Sort
 3. Sort by: Column F (Total), Order: Largest to Smallest
 4. OK
 
-### Filter Karna
+### Filtering
 
-Filter se sirf woh rows dikhti hain jo condition match karein — baaki temporarily hide ho jaati hain.
+Filter shows only the rows matching a condition — the rest are temporarily hidden.
 
-**Filter on karna:**  
-Data ke andar click karo → Data → Filter  
-Ya Ctrl+Shift+L  
-Header row mein dropdown arrows aayenge.
+**Turning on filter:**  
+Click inside the data → Data → Filter  
+Or Ctrl+Shift+L  
+Dropdown arrows appear in the header row.
 
-**Filter use karna:**  
-Column G (Result) ke dropdown pe click karo → sirf "Pass" select karo → OK  
-Ab sirf pass students dikhenge.
+**Using filter:**  
+Click the dropdown on column G (Result) → select only "Pass" → OK  
+Now only passing students are shown.
 
-**Filter hataana:**  
-Wahi dropdown → "Select All" → OK  
-Ya Data → Filter (toggle off)
+**Removing filter:**  
+Same dropdown → "Select All" → OK  
+Or Data → Filter (toggle off)
 
 **Custom filter:**  
 Dropdown → Number Filters → "Greater Than" → 60  
-Ab sirf 60 se zyada marks wale dikhenge.
+Now only those with more than 60 marks are shown.
 
 ### Data Cleanup
 
 **Remove Duplicates:**  
-Data select karo → Data → Remove Duplicates → columns choose karo → OK  
-Excel batayega kitne duplicates mile aur remove hue.
+Select data → Data → Remove Duplicates → choose columns → OK  
+Excel reports how many duplicates were found and removed.
 
-**TRIM function — extra spaces hatao:**  
-`=TRIM(A2)` — A2 ke text ke aage/peeche ke extra spaces hataata hai
+**TRIM function — remove extra spaces:**  
+`=TRIM(A2)` — removes extra spaces before/after the text in A2
 
 **Text case functions:**  
-`=UPPER(A2)` — sab CAPITALS  
-`=LOWER(A2)` — sab lowercase  
-`=PROPER(A2)` — Har Word Ka Pehla Letter Capital
+`=UPPER(A2)` — ALL CAPITALS  
+`=LOWER(A2)` — all lowercase  
+`=PROPER(A2)` — First Letter Of Each Word Capital
 
 **Find & Replace:**  
-Ctrl+H → Find what: purana text → Replace with: naya text → Replace All
+Ctrl+H → Find what: old text → Replace with: new text → Replace All
 
 ### Real Task
-50 students ki marksheet lo:
-1. Total marks ke basis pe descending sort karo (highest first)
-2. Filter lagao — sirf "Fail" students dikhao
-3. Fail students count note karo
-4. Filter hataao
-5. Filter lagao — sirf 60 se zyada total wale dikhao
-6. Ek duplicate Roll No manually add karo → Remove Duplicates use karo → verify
+Take the 50-student marksheet:
+1. Sort descending by Total marks (highest first)
+2. Apply filter — show only "Fail" students
+3. Note the count of failing students
+4. Remove the filter
+5. Apply filter — show only those with total above 60
+6. Manually add a duplicate Roll No → use Remove Duplicates → verify
 
 ---
 
 ## Chapter 4.6 — Pivot Tables
 
-### Pivot Table Kya Hota Hai
+### What a Pivot Table Is
 
-Pivot table ek summary tool hai — bade data se quickly insights nikalne ke liye. Manually formulas likhne ki zaroorat nahi.
+A pivot table is a summary tool — to quickly extract insights from large data without writing formulas manually.
 
-Example: 50 students ka data hai. Pivot table se ek click mein pata chal sakta hai:
+Example: You have data for 50 students. With one click a pivot table can show:
 - Subject-wise average marks
 - Class-wise pass/fail count
 - City-wise student count
 
-### Pivot Table Banane Ke Steps
+### Steps to Create a Pivot Table
 
-1. Data mein koi bhi cell click karo
+1. Click any cell inside the data
 2. Insert tab → PivotTable
-3. Dialog aayega — "New Worksheet" select karo → OK
-4. Nayi sheet khulegi — right side pe "PivotTable Fields" panel
+3. Dialog appears — select "New Worksheet" → OK
+4. A new sheet opens — "PivotTable Fields" panel on the right
 
 ### PivotTable Fields Panel
 
-- **Rows:** Kaunsa column row mein aayega
-- **Columns:** Kaunsa column column header banega
-- **Values:** Kya calculate karna hai (sum, average, count)
-- **Filters:** Filter lagao poori table pe
+- **Rows:** Which column goes in rows
+- **Columns:** Which column becomes the column header
+- **Values:** What to calculate (sum, average, count)
+- **Filters:** Apply a filter to the whole table
 
 ### Example — Subject-wise Average Marks
 
-Student data mein columns hain: Name, English, Math, Science, Total, Result
+Student data has columns: Name, English, Math, Science, Total, Result
 
-**Goal:** English, Math, Science ka average nikalna  
+**Goal:** Find the average of English, Math, Science  
 
 Steps:
-1. Pivot table banao
-2. Rows mein kuch na daalo (ya "Result" daalo grouping ke liye)
-3. Values mein "English" daalo → right-click → Value Field Settings → Average
-4. Values mein "Math" daalo → Average
-5. Values mein "Science" daalo → Average
+1. Create a pivot table
+2. Put nothing in Rows (or put "Result" for grouping)
+3. Put "English" in Values → right-click → Value Field Settings → Average
+4. Put "Math" in Values → Average
+5. Put "Science" in Values → Average
 
 **Goal 2:** Pass/Fail count  
 
-1. Rows mein "Result" daalo
-2. Values mein "Student Name" daalo → Count
+1. Put "Result" in Rows
+2. Put "Student Name" in Values → Count
 
-Result: Automatically table ban jaayegi — Pass: 45, Fail: 5 (example)
+Result: A table is generated automatically — Pass: 45, Fail: 5 (example)
 
-### Pivot Table Refresh Karna
+### Refreshing a Pivot Table
 
-Original data badla → Pivot table pe right-click → Refresh
+Original data changed → right-click on the pivot table → Refresh
 
 ### Real Task
-50 students ki marksheet se ek pivot table banao:
-- Result (Pass/Fail) ke basis pe count
-- Teen subjects ki average marks
-- Ek aur pivot: Total marks ka range banao (manual grouping — 0-40, 41-60, 61-80, 81-100) aur har range mein kitne students hain
+Create a pivot table from the 50-student marksheet:
+- Count based on Result (Pass/Fail)
+- Average marks of the three subjects
+- One more pivot: create a range of Total marks (manual grouping — 0-40, 41-60, 61-80, 81-100) and count how many students fall in each range
 
 ---
 
-## Chapter 4.7 — Charts aur Graphs
+## Chapter 4.7 — Charts and Graphs
 
-### Chart Kyon Banate Hain
+### Why Charts Are Made
 
-Numbers se patterns dikhna mushkil hota hai. Chart se ek second mein samajh aata hai — kaunsa subject weak hai, kaun top performer hai.
+Patterns are hard to see in numbers. A chart makes it clear in one second — which subject is weak, who the top performer is.
 
 ### Chart Types
 
-| Chart Type | Kab Use Karein | Example |
+| Chart Type | When to use | Example |
 |---|---|---|
-| Bar / Column chart | Categories compare karna | Subjects ki average marks |
-| Line chart | Time ke saath trend | Monthly sales |
-| Pie chart | Parts of whole | Pass vs Fail percentage |
-| Scatter plot | Two values ka relation | Study hours vs marks |
+| Bar / Column chart | Compare categories | Average marks of subjects |
+| Line chart | Trend over time | Monthly sales |
+| Pie chart | Parts of a whole | Pass vs Fail percentage |
+| Scatter plot | Relation between two values | Study hours vs marks |
 
-### Chart Banane Ke Steps
+### Steps to Create a Chart
 
-1. Data select karo (headers bhi include karo)
-2. Insert tab → Charts section → chart type choose karo
-3. Chart sheet pe insert ho jaayega
-4. Customize karo:
-   - **Chart Title:** Click karo title pe → edit karo
+1. Select the data (include headers)
+2. Insert tab → Charts section → choose chart type
+3. The chart is inserted on the sheet
+4. Customize:
+   - **Chart Title:** Click on the title → edit
    - **Axis Titles:** Chart Design → Add Chart Element → Axis Titles
    - **Colors:** Chart Design tab → Change Colors
-   - **Move chart:** Chart pe click → Design → Move Chart → New Sheet (separate sheet pe jaayega)
+   - **Move chart:** Click the chart → Design → Move Chart → New Sheet (goes to a separate sheet)
 
-### Chart Customize Karna
+### Customizing a Chart
 
-Chart click karo → teen tabs aate hain:
+Click the chart → three tabs appear:
 - **Chart Design:** Overall style, colors, layout
-- **Format:** Individual elements ka format
+- **Format:** Format individual elements
 
-Double-click karo kisi bhi element pe (bar, pie slice, axis) → Format pane khulega right side pe
+Double-click any element (bar, pie slice, axis) → Format pane opens on the right
 
 ### Real Task
-Marksheet se teen charts banao:
-1. **Bar chart:** Teen subjects ki class-average marks (X-axis: subjects, Y-axis: average marks)
-2. **Pie chart:** Pass vs Fail students (percentage mein)
-3. **Column chart:** Top 10 students ke total marks  
-Har chart pe title daalo. Ek "Dashboard" sheet banao aur teeno charts wahan copy karo.
+Create three charts from the marksheet:
+1. **Bar chart:** Class-average marks of the three subjects (X-axis: subjects, Y-axis: average marks)
+2. **Pie chart:** Pass vs Fail students (in percentage)
+3. **Column chart:** Total marks of the top 10 students  
+
+Add a title to each chart. Create a "Dashboard" sheet and copy all three charts there.
 
 ---
 
-## Chapter 4.8 — Print, Share aur Protect
+## Chapter 4.8 — Print, Share and Protect
 
 ### Print
 
-**Print Area Set Karna:**  
-Specific cells select karo → Page Layout → Print Area → Set Print Area  
-Clear karna: Page Layout → Print Area → Clear Print Area
+**Setting Print Area:**  
+Select specific cells → Page Layout → Print Area → Set Print Area  
+Clear: Page Layout → Print Area → Clear Print Area
 
 **Page Layout:**  
-- Orientation: Portrait ya Landscape (wide data ke liye Landscape)
+- Orientation: Portrait or Landscape (Landscape for wide data)
 - Size: A4
 - Margins: Normal / Narrow
-- Scale to Fit: "1 page wide, 1 tall" — ek page pe fit karo
+- Scale to Fit: "1 page wide, 1 tall" — fit on one page
 
 **Freeze Panes:**  
-View → Freeze Panes → Freeze Top Row — headers hamesha dikhenge  
+View → Freeze Panes → Freeze Top Row — headers always visible  
 Shortcut: Alt → W → F → R
 
-**Print Preview:** Ctrl+P — print se pehle hamesha dekho
+**Print Preview:** Ctrl+P — always check before printing
 
-**Real Task:** 50 students ki sheet mein columns A-E ka print area set karo, A4 landscape mein, ek page pe fit karo, Ctrl+P se verify karo.
+**Real Task:** Set the print area to columns A-E in the 50-student sheet, A4 landscape, fit to one page, verify with Ctrl+P.
 
 ---
 
@@ -1080,56 +1081,56 @@ Shortcut: Alt → W → F → R
 
 **Save as PDF:**  
 File → Save As → PDF  
-Ya Ctrl+P → "Microsoft Print to PDF"  
+Or Ctrl+P → "Microsoft Print to PDF"  
 Naming convention: `Class10_Marksheet_2024.pdf`
 
-**Email se share:**  
-- Office ke andar: `.xlsx` bhejo (edit kar sakte hain)
-- Bahar: PDF bhejo (formatting safe)
+**Sharing by email:**  
+- Inside office: send `.xlsx` (editable)
+- Outside: send PDF (formatting safe)
 
 **Cloud share:**  
-Google Drive ya OneDrive pe upload karo → link copy karo  
-View only link do agar sirf dikhana hai — Edit access mat do sab ko
+Upload to Google Drive or OneDrive → copy link  
+Give a view-only link if you only want them to see it — don't give edit access to everyone
 
-**Real Task:** Marksheet PDF banao `Class10_Marksheet_2024.pdf`. Gmail mein draft karo — subject: "Class 10A Final Marksheet", PDF attach karo.
+**Real Task:** Create a marksheet PDF `Class10_Marksheet_2024.pdf`. Draft an email in Gmail — subject: "Class 10A Final Marksheet", attach the PDF.
 
 ---
 
 ### Protect
 
 **Sheet Protect (Password):**  
-Review → Protect Sheet → password daalo → OK  
-Test: Koi cell edit karne ki koshish karo → warning aani chahiye  
-Unprotect: Review → Unprotect Sheet → password daalo
+Review → Protect Sheet → enter password → OK  
+Test: try editing a cell → a warning should appear  
+Unprotect: Review → Unprotect Sheet → enter password
 
 **Workbook Protect:**  
-Review → Protect Workbook → Structure protect karo  
-Kab use karein: Final files mein — sheet add/delete/rename nahi hogi
+Review → Protect Workbook → protect structure  
+When to use: In final files — sheets can't be added/deleted/renamed
 
 **Selective Cell Locking:**
-1. Ctrl+A → Format Cells → Protection → "Locked" uncheck karo (sab unlock)
-2. Sirf lock karni wali cells select karo → Format Cells → Protection → "Locked" check karo
+1. Ctrl+A → Format Cells → Protection → uncheck "Locked" (unlock all)
+2. Select only the cells to lock → Format Cells → Protection → check "Locked"
 3. Review → Protect Sheet → password
 
-**Warning:** Password bhool gaye → recovery nahi hoti. Hamesha note karke rakhna.
+**Warning:** Forgot the password → no recovery. Always keep a note of it.
 
-**Real Task:** Marksheet protect karo `school2024` se. Name/Roll No columns lock rakho, marks editable. Test karo dono.
+**Real Task:** Protect the marksheet with `school2024`. Keep Name/Roll No columns locked, marks editable. Test both.
 
 ---
 
 **Final Combined Excel Task:**  
-Ek complete `Class10_Marksheet_Final.xlsx` banao:
-- 50 students ka data
+Create a complete `Class10_Marksheet_Final.xlsx`:
+- Data for 50 students
 - Formulas: Total, Average, Result (IF)
 - Summary row: Class average, highest, lowest, pass/fail count
-- VLOOKUP: Sheet 2 pe Roll No se student details fetch karo
+- VLOOKUP: Fetch student details by Roll No on Sheet 2
 - Sort: Total marks descending
 - Filter: Fail students
 - Pivot: Pass/Fail count + subject-wise average
 - Chart: Bar chart (subject averages) + Pie chart (pass/fail)
-- Print: A4 landscape, ek page
+- Print: A4 landscape, one page
 - PDF: Save as `Class10_Marksheet_Final.pdf`
-- Protect: Sheet protect karo
+- Protect: Protect the sheet
 
 ---
 
@@ -1137,135 +1138,135 @@ Ek complete `Class10_Marksheet_Final.xlsx` banao:
 
 # Module 5 — PowerPoint Basics
 
-**Why yeh module hai:**  
-Presentations office mein common hain — meetings, reports, proposals. Basic slides banana aana chahiye.
+**Why this module exists:**  
+Presentations are common in the office — meetings, reports, proposals. You should be able to make basic slides.
 
 ---
 
-## Chapter 5.1 — PowerPoint Interface aur Basic Slides
+## Chapter 5.1 — PowerPoint Interface and Basic Slides
 
 ### Interface
 
-- **Slide panel (left):** Sab slides ki thumbnail
-- **Main area:** Current slide edit karo
+- **Slide panel (left):** Thumbnails of all slides
+- **Main area:** Edit the current slide
 - **Notes panel (bottom):** Speaker notes
 - **Ribbon:** Home, Insert, Design, Transitions, Animations, Slide Show
 
 ### New Presentation
 
-Ctrl+N ya File → New → Blank Presentation  
-Ya template choose karo
+Ctrl+N or File → New → Blank Presentation  
+Or choose a template
 
-### Slides Add/Delete
+### Add/Delete Slides
 
-- **New slide:** Ctrl+M ya Home → New Slide
-- **Delete:** Slide thumbnail pe right-click → Delete Slide
+- **New slide:** Ctrl+M or Home → New Slide
+- **Delete:** Right-click the slide thumbnail → Delete Slide
 - **Duplicate:** Right-click → Duplicate Slide
 
 ### Layouts
 
-Har slide ka ek layout hota hai — Title Slide, Title & Content, Blank, Two Content, etc.  
-Home → Layout → choose karo
+Every slide has a layout — Title Slide, Title & Content, Blank, Two Content, etc.  
+Home → Layout → choose
 
-### Text Add Karna
+### Adding Text
 
-Click karo text box pe → type karo  
-New text box: Insert → Text Box → drag karo
+Click the text box → type  
+New text box: Insert → Text Box → drag
 
 ### Real Task
-5-slide presentation banao — "My School Introduction":
-- Slide 1: Title slide — School ka naam + tagline
+Create a 5-slide presentation — "My School Introduction":
+- Slide 1: Title slide — School name + tagline
 - Slide 2: About the school (bullet points)
 - Slide 3: Facilities (bullet points + image)
-- Slide 4: Achievements (table ya list)
+- Slide 4: Achievements (table or list)
 - Slide 5: Contact information
 
 ---
 
-## Chapter 5.2 — Design, Images aur Formatting
+## Chapter 5.2 — Design, Images and Formatting
 
-### Themes aur Design
+### Themes and Design
 
-Design tab → Themes section → ek theme choose karo  
-Sab slides ka look ek saath change ho jaayega.
+Design tab → Themes section → choose a theme  
+The look of all slides changes at once.
 
-Variants: Same theme ke alag color variations
+Variants: Different color variations of the same theme
 
 ### Background
 
 Design → Format Background → solid color, gradient, picture
 
-### Images Insert Karna
+### Inserting Images
 
-Insert → Pictures → This Device (apni file) ya Online Pictures  
-Image resize: Corner pe drag karo (aspect ratio maintain hoti hai)  
-Move: Image click karke drag karo
+Insert → Pictures → This Device (your file) or Online Pictures  
+Resize image: drag the corner (aspect ratio is maintained)  
+Move: click the image and drag
 
 ### Shapes
 
-Insert → Shapes → bahut saare options — rectangles, circles, arrows, callouts  
-Shapes pe right-click → Add Text — shape ke andar text
+Insert → Shapes → many options — rectangles, circles, arrows, callouts  
+Right-click a shape → Add Text — text inside the shape
 
 ### SmartArt
 
-Insert → SmartArt — process, hierarchy, cycle, etc. ke liye pre-made graphics  
+Insert → SmartArt — pre-made graphics for process, hierarchy, cycle, etc.  
 Good for: org charts, process flows, lists
 
 ### Alignment
 
-Multiple elements select karo (Ctrl+click) → Format tab → Align → options  
+Select multiple elements (Ctrl+click) → Format tab → Align → options  
 Distribute Horizontally/Vertically — equal spacing
 
 ### Real Task
-Pichli presentation lo. Ek theme apply karo. Slide 3 pe ek real image add karo (school ya generic). Slide 4 pe SmartArt use karo achievements ke liye. Slide 2 pe ek colored shape add karo highlight karne ke liye.
+Take the previous presentation. Apply a theme. Add a real image on slide 3 (school or generic). Use SmartArt on slide 4 for achievements. Add a colored shape on slide 2 to highlight something.
 
 ---
 
-## Chapter 5.3 — Transitions, Animations aur Present Karna
+## Chapter 5.3 — Transitions, Animations and Presenting
 
 ### Transitions
 
-Slide se slide jaane pe animation — Transitions tab.  
-Ek slide select karo → transition choose karo → "Apply to All" for consistency  
-Duration set karo  
+Animation when moving from one slide to another — Transitions tab.  
+Select a slide → choose a transition → "Apply to All" for consistency  
+Set the duration  
 Preview: Transitions → Preview
 
-**Rule:** Simple transitions use karo office mein — Fade ya Wipe. Fancy spinning effects professional nahi lagti.
+**Rule:** Use simple transitions in the office — Fade or Wipe. Fancy spinning effects don't look professional.
 
 ### Animations
 
-Kisi ek element pe animation — slide pe aata hai ya jaata hai.  
-Element select karo → Animations tab → animation choose karo  
-Types: Entrance (aata hai), Emphasis (highlight hota hai), Exit (jaata hai)
+Animation on a single element — it enters or exits the slide.  
+Select the element → Animations tab → choose an animation  
+Types: Entrance (comes in), Emphasis (gets highlighted), Exit (goes out)
 
-**Rule:** Office presentations mein animations minimize karo — distracting lagti hain. Sirf agar zaroorat ho tab.
+**Rule:** Minimize animations in office presentations — they're distracting. Use them only when needed.
 
-### Slideshow — Present Karna
+### Slideshow — Presenting
 
-- **F5:** Pehli slide se start
-- **Shift+F5:** Current slide se start
-- **Navigation during show:**
+- **F5:** Start from the first slide
+- **Shift+F5:** Start from the current slide
+- **Navigation during the show:**
   - Next: Click, Space, Right arrow, Enter
   - Previous: Backspace, Left arrow
-  - Jump to slide: Slide number type karo → Enter
+  - Jump to a slide: type the slide number → Enter
   - End: Escape
 
 ### Presenter View
 
 Slide show → Use Presenter View  
-Ek screen pe tumhe notes + next slide dikhti hai, doosri screen pe audience ko sirf current slide.
+On one screen you see notes + the next slide; the audience sees only the current slide on the other screen.
 
 ### Save as PDF / Video
 
-File → Save As → PDF (slides ki copy)  
-File → Export → Create a Video (recording bana sakte ho)
+File → Save As → PDF (copy of slides)  
+File → Export → Create a Video (you can make a recording)
 
 ### Real Task
-Presentation ko finalize karo:
-- Har slide pe Fade transition lagao (Apply to All)
-- Title slide pe ek simple entrance animation lagao
-- F5 se present karo — full presentation click-through karo
-- PDF mein save karo: `SchoolIntro_Presentation.pdf`
+Finalize the presentation:
+- Apply Fade transition to every slide (Apply to All)
+- Add a simple entrance animation to the title slide
+- Present with F5 — click through the whole presentation
+- Save as PDF: `SchoolIntro_Presentation.pdf`
 
 ---
 
@@ -1273,50 +1274,50 @@ Presentation ko finalize karo:
 
 # Module 6 — Google Workspace Basics
 
-**Why yeh module hai:**  
-Aajkal bahut companies Google Workspace use karti hain — especially startups aur modern offices. Gmail toh sabne use kiya hai, but Docs, Sheets, Drive bhi important hain.
+**Why this module exists:**  
+Nowadays many companies use Google Workspace — especially startups and modern offices. Everyone has used Gmail, but Docs, Sheets, and Drive are also important.
 
 ---
 
 ## Chapter 6.1 — Google Drive
 
-### Google Drive Kya Hai
+### What Google Drive Is
 
-Cloud storage — files internet pe store hoti hain. Kisi bhi device se access karo.  
-15 GB free storage with Google account.
+Cloud storage — files are stored on the internet. Access from any device.  
+15 GB free storage with a Google account.
 
 ### Drive Interface
 
-- **My Drive:** Tumhari files aur folders
-- **Shared with me:** Doosron ne share kiya
+- **My Drive:** Your files and folders
+- **Shared with me:** What others shared with you
 - **Recent:** Recently opened files
-- **Starred:** Important files star karo quick access ke liye
-- **Trash:** Delete kiye files
+- **Starred:** Star important files for quick access
+- **Trash:** Deleted files
 
 ### Basic Operations
 
 **Upload:**  
-New → File Upload ya Folder Upload  
-Ya drag-drop karo browser mein
+New → File Upload or Folder Upload  
+Or drag and drop in the browser
 
-**New file banao:**  
+**Create a new file:**  
 New → Google Docs / Sheets / Slides / Forms
 
 **Folder structure:**  
 New → Folder  
-Same hierarchy banao jaise Windows mein — organized rakho
+Create the same hierarchy as in Windows — keep it organized
 
 **Share:**  
-File/folder pe right-click → Share  
-Email address daalo ya link generate karo  
+Right-click file/folder → Share  
+Enter an email address or generate a link  
 Permission: Viewer / Commenter / Editor
 
 **Download:**  
-Right-click → Download — file original format mein download hogi  
-Google Sheets → `.xlsx` mein download hogi (Excel compatible)
+Right-click → Download — file downloads in its original format  
+Google Sheets → downloads as `.xlsx` (Excel compatible)
 
 ### Real Task
-Google Drive pe ek folder structure banao:
+Create a folder structure on Google Drive:
 ```
 My Drive/
 └── Office Work 2024/
@@ -1324,15 +1325,15 @@ My Drive/
     ├── Data Entry/
     └── Shared Documents/
 ```
-Pichle module ka PDF upload karo "Reports" folder mein. Kisi ko "View only" link bhejo (test karne ke liye apni doosri email use karo).
+Upload the PDF from the previous module into the "Reports" folder. Send a "View only" link to someone (use your second email to test).
 
 ---
 
 ## Chapter 6.2 — Google Sheets (vs Excel)
 
-### Google Sheets kya hai
+### What Google Sheets Is
 
-Browser-based spreadsheet — Excel jaisi but online, free, multiple log ek saath edit kar sakte hain.
+A browser-based spreadsheet — like Excel but online, free, and multiple people can edit at the same time.
 
 ### Excel vs Google Sheets — Key Differences
 
@@ -1340,67 +1341,67 @@ Browser-based spreadsheet — Excel jaisi but online, free, multiple log ek saat
 |---|---|---|
 | Price | Paid (Office 365) | Free |
 | Access | Desktop software | Browser / App |
-| Collaboration | Limited (OneDrive pe) | Real-time, multiple users |
-| Offline | Yes | Limited (offline mode on karna padta hai) |
-| File format | .xlsx | .gsheet (ya .xlsx mein export) |
+| Collaboration | Limited (on OneDrive) | Real-time, multiple users |
+| Offline | Yes | Limited (need to turn on offline mode) |
+| File format | .xlsx | .gsheet (or export to .xlsx) |
 | Advanced features | More (Macros, Power Query) | Less but improving |
 | Auto-save | Manual (Ctrl+S) | Automatic always |
 
-### Formulas — Same Hain!
+### Formulas — Same!
 
-Google Sheets mein Excel wali formulas kaam karti hain:
-- `=SUM()`, `=AVERAGE()`, `=IF()`, `=VLOOKUP()` — sab same
-- Shortcuts bhi mostly same: Ctrl+C, Ctrl+V, Ctrl+Z
+Formulas that work in Excel also work in Google Sheets:
+- `=SUM()`, `=AVERAGE()`, `=IF()`, `=VLOOKUP()` — all the same
+- Shortcuts are mostly the same too: Ctrl+C, Ctrl+V, Ctrl+Z
 
 ### Collaboration Feature
 
-Share karo → multiple log ek saath edit kar sakte hain  
-Different colors mein cursors dikhte hain — pata chalta hai kaun kahan edit kar raha hai  
-Comments: Ctrl+Alt+M — cell pe comment daalo (review ke liye)  
-Version history: File → Version History — purana version dekho/restore karo
+Share → multiple people can edit at the same time  
+Cursors appear in different colors — you can see who is editing where  
+Comments: Ctrl+Alt+M — add a comment on a cell (for review)  
+Version history: File → Version History — view/restore an older version
 
 ### Real Task
-Excel wali marksheet (Class10_Marksheet.xlsx) Google Drive pe upload karo. Google Sheets mein khoolo. Verify karo ki formulas kaam kar rahi hain. Ek comment add karo kisi cell pe. Version history dekho.
+Upload the Excel marksheet (Class10_Marksheet.xlsx) to Google Drive. Open it in Google Sheets. Verify the formulas still work. Add a comment on a cell. Check the version history.
 
 ---
 
-## Chapter 6.3 — Google Docs aur Google Forms
+## Chapter 6.3 — Google Docs and Google Forms
 
 ### Google Docs
 
-MS Word ka Google version — browser mein, free, collaborative.  
-Word jaisi formatting: Bold, Italic, Headings, Lists, Tables.  
-`.docx` mein download kar sakte ho — Word compatible.
+Google's version of MS Word — in the browser, free, collaborative.  
+Word-like formatting: Bold, Italic, Headings, Lists, Tables.  
+Can download as `.docx` — Word compatible.
 
 **Best use cases:**  
-Collaborative documents — jab team members ek saath edit karein  
-Quick documents — Office 365 nahi hai toh
+Collaborative documents — when team members edit together  
+Quick documents — when Office 365 isn't available
 
-### Google Forms — Bahut Useful!
+### Google Forms — Very Useful!
 
-Forms banao — surveys, quizzes, data collection  
-Free, easy, responses automatically Google Sheets mein save hote hain
+Create forms — surveys, quizzes, data collection  
+Free, easy, responses are automatically saved to Google Sheets
 
-**Form banane ke steps:**  
+**Steps to create a form:**  
 drive.google.com → New → Google Forms  
-Title daalo → Questions add karo (multiple choice, short answer, checkboxes, etc.)  
-Share → link bhejo → log fill karein → responses Sheets mein jaati hain
+Enter a title → add questions (multiple choice, short answer, checkboxes, etc.)  
+Share → send the link → people fill it → responses go to Sheets
 
-**Office use case:**  
+**Office use cases:**  
 - Attendance form
 - Daily report submission
 - Customer feedback
 - Inventory entry form
 
 ### Real Task
-Google Forms pe ek "Daily Attendance Form" banao:
+Create a "Daily Attendance Form" on Google Forms:
 - Employee Name (short answer)
 - Date (date picker)
 - Department (dropdown: Sales, HR, Operations, IT)
 - Present / WFH / Leave (multiple choice)
 - Notes (paragraph, optional)
 
-Form link copy karo. Khud 5 baar fill karo (fake data). Responses Google Sheets mein dekho — automatically table ban jaayegi.
+Copy the form link. Fill it 5 times yourself (fake data). View the responses in Google Sheets — a table is generated automatically.
 
 ---
 
@@ -1408,28 +1409,28 @@ Form link copy karo. Khud 5 baar fill karo (fake data). Responses Google Sheets 
 
 # Module 7 — Job-Ready Office Skills
 
-**Why yeh module hai:**  
-Yeh module "soft" skills ke baare mein hai — jo interview mein aur actual job pe daily kaam aate hain. Technical skills ke saath yeh bhi zaroori hain.
+**Why this module exists:**  
+This module is about "soft" skills — what you need daily on the actual job and in interviews. Along with technical skills, these are also necessary.
 
 ---
 
-## Chapter 7.1 — Typing Speed aur Accuracy
+## Chapter 7.1 — Typing Speed and Accuracy
 
-### Typing Kyon Important Hai
+### Why Typing Matters
 
-Data entry job mein typing speed directly productivity se linked hai. Slow typing = slow kaam = less value.
+In a data entry job, typing speed is directly linked to productivity. Slow typing = slow work = less value.
 
 **Industry standard:**  
 Basic office work: 30-40 WPM (words per minute)  
 Data entry specialist: 50-60+ WPM  
-1% error rate se kam
+Less than 1% error rate
 
-### Typing Improve Kaise Karein
+### How to Improve Typing
 
-**Touch typing:** Bina keyboard dekhe type karna — ek baar seekh lo, hamesha kaam aayega.
+**Touch typing:** Typing without looking at the keyboard — learn it once, use it forever.
 
-**Home row:** Ungliyan default position — ASDF (left hand) aur JKL; (right hand)  
-J aur F pe bump hota hai — aankhein band karke bhi position feel kar sakte ho
+**Home row:** Fingers in default position — ASDF (left hand) and JKL; (right hand)  
+There's a bump on J and F — you can feel the position even with eyes closed
 
 **Free practice websites:**
 - typingclub.com
@@ -1437,27 +1438,27 @@ J aur F pe bump hota hai — aankhein band karke bhi position feel kar sakte ho
 - 10fastfingers.com (speed test)
 - typeracer.com (fun, competitive)
 
-**Daily practice:** 15-20 minutes daily → 2-3 hafte mein noticeable improvement
+**Daily practice:** 15-20 minutes daily → noticeable improvement in 2-3 weeks
 
 ### Numeric Keypad
 
-Data entry mein numeric keypad bahut fast hoti hai — right side pe number pad (agar hai laptop pe)  
-NumLock on karo → numbers type karo  
-Practice: Number-heavy data jaise invoice amounts, marks, dates
+In data entry the numeric keypad is much faster — the number pad on the right side (if the laptop has one)  
+Turn on NumLock → type numbers  
+Practice: number-heavy data like invoice amounts, marks, dates
 
 ### Real Task
-10fastfingers.com pe jaao. Speed test do — note karo: WPM aur accuracy. 15 minute practice karo (typingclub.com). Phir wapas test do. Improvement note karo. Har din karo — ek hafte mein progress track karo.
+Go to 10fastfingers.com. Take a speed test — note: WPM and accuracy. Practice for 15 minutes (typingclub.com). Take the test again. Note the improvement. Do this every day — track progress over a week.
 
 ---
 
-## Chapter 7.2 — File Naming, Versioning aur Folder Organization
+## Chapter 7.2 — File Naming, Versioning and Folder Organization
 
-### Why Yeh Important Hai
+### Why This Matters
 
-Office mein 100s of files hoti hain. Agar sahi organize nahi kiya toh:
-- File dhundhne mein waqt waste hota hai
-- Wrong version bhej dete hain
-- Files lose ho jaati hain
+In the office there are 100s of files. If not organized properly:
+- Time wasted finding files
+- Wrong version sent
+- Files get lost
 
 ### File Naming Convention
 
@@ -1470,9 +1471,9 @@ Office mein 100s of files hoti hain. Agar sahi organize nahi kiya toh:
 - `Logo_Company_Final.png`
 
 **Rules:**
-- No spaces — underscore `_` ya hyphen `-` use karo
-- Date: YYYY-MM-DD format (sorting ke liye best)
-- Version number agar multiple drafts hain: `_v1`, `_v2`, `_Final`
+- No spaces — use underscore `_` or hyphen `-`
+- Date: YYYY-MM-DD format (best for sorting)
+- Version number if multiple drafts: `_v1`, `_v2`, `_Final`
 - Short but descriptive
 - No special characters: `/ \ : * ? " < > |`
 
@@ -1495,23 +1496,23 @@ My Documents/
 
 ### Versioning
 
-Draft bhejne se pehle v1, revisions hone pe v2, approved hone pe Final:
-- `ProjectReport_v1.docx` — pehla draft
-- `ProjectReport_v2.docx` — revisions ke baad
+Before sending a draft use v1, after revisions use v2, after approval use Final:
+- `ProjectReport_v1.docx` — first draft
+- `ProjectReport_v2.docx` — after revisions
 - `ProjectReport_Final.docx` — approved version
 
-Purani versions delete mat karo turant — "Archive" folder mein rakhna.
+Don't delete old versions immediately — keep them in the "Archive" folder.
 
 ### Real Task
-Apne computer pe ek proper folder structure setup karo (apne use case ke hisaab se — school ya imaginary job). Poori course mein jo files banaye hain unhe rename karo proper convention se aur right folders mein move karo.
+Set up a proper folder structure on your computer (according to your use case — school or imaginary job). Rename all the files created during the course using the proper convention and move them to the right folders.
 
 ---
 
-## Chapter 7.3 — Professional Communication aur Job Context
+## Chapter 7.3 — Professional Communication and Job Context
 
 ### Professional Email Tone
 
-**Formal email ke liye (boss, client, teacher):**
+**For formal emails (boss, client, teacher):**
 
 Opening:
 - "Dear Mr./Ms. [Last Name],"
@@ -1525,10 +1526,10 @@ Closing:
 - "Best regards,"
 
 **Avoid:**
-- "Hey!", "Sup", "Hii" — professional context mein nahi
-- Sab caps "PLEASE SEND URGENTLY" — rude lagta hai
+- "Hey!", "Sup", "Hii" — not in professional context
+- All caps "PLEASE SEND URGENTLY" — sounds rude
 - Multiple exclamation marks "Thanks!!!"
-- Emojis — unless office culture mein normal ho
+- Emojis — unless normal in office culture
 
 **Subject line — important:**  
 Bad: "please check"  
@@ -1536,42 +1537,42 @@ Good: "Invoice #1045 — Payment Pending — Action Required"
 
 ### Office Etiquette — Computer Related
 
-- **Lock your computer:** Windows+L — jab bhi seat chhodo, lock karo — privacy aur security
-- **Don't save passwords in browser:** Shared computer pe kabhi nahi
-- **Backup important files:** Daily ya weekly — Google Drive ya external drive
-- **USB drives:** Company policy check karo — kuch offices mein restricted hoti hain
-- **Personal use:** Office computer pe personal kaam minimize karo
-- **Printing:** Zaroorat se zyada print mat karo — paper waste
+- **Lock your computer:** Windows+L — lock it whenever you leave your seat — privacy and security
+- **Don't save passwords in the browser:** Never on a shared computer
+- **Backup important files:** Daily or weekly — Google Drive or external drive
+- **USB drives:** Check company policy — restricted in some offices
+- **Personal use:** Minimize personal work on the office computer
+- **Printing:** Don't print more than needed — paper waste
 
 ### Basic Billing Software Concept
 
-Bahut offices mein dedicated billing software hota hai — Tally, Zoho Books, Busy, etc.  
-Exact software alag hoga, but concept same hai:
+Many offices have dedicated billing software — Tally, Zoho Books, Busy, etc.  
+The exact software will differ, but the concept is the same:
 
 **Common features:**
-- **Invoice create karna:** Customer name, items, quantity, rate, total
-- **Payment record karna:** Cash, UPI, cheque
+- **Create invoice:** Customer name, items, quantity, rate, total
+- **Record payment:** Cash, UPI, cheque
 - **Reports:** Daily sales, outstanding payments
-- **Inventory:** Stock in/out track karna
+- **Inventory:** Track stock in/out
 
-**Excel se kaise relate karta hai:**  
-Billing software andar se basically Excel jaisi tables hain — data entry, formulas, reports. Excel seekhne ke baad billing software seekhna bahut easy lagta hai.
+**How it relates to Excel:**  
+Billing software is basically Excel-like tables underneath — data entry, formulas, reports. After learning Excel, learning billing software feels much easier.
 
 ### Data Entry Best Practices
 
-- **Double-check karo:** Enter karne se pehle ek baar aur check karo — especially numbers
-- **Copy-paste carefully:** Format mein differences ho sakti hain
-- **Consistency:** Dates hamesha ek format mein, names hamesha same case mein
-- **Backup:** Kaam karte karte Ctrl+S — regularly save karo
-- **Never rush:** Speed important hai but accuracy zyada — ek galat number sab bigad sakta hai
+- **Double-check:** Check once more before entering — especially numbers
+- **Copy-paste carefully:** There can be format differences
+- **Consistency:** Always use one date format, always use the same case for names
+- **Backup:** Save regularly while working — Ctrl+S
+- **Never rush:** Speed matters but accuracy matters more — one wrong number can ruin everything
 
 ### Real Task
-Ek "mock billing entry" karo Excel mein:
+Do a "mock billing entry" in Excel:
 - Columns: Invoice No, Date, Customer Name, Item, Qty, Rate, Amount (=Qty×Rate), Payment Status
-- 10 fake invoices enter karo
+- Enter 10 fake invoices
 - Total amount column: SUM
-- Filter: Sirf "Pending" payments dikhao
-- Professional email draft karo: Ek customer ko payment reminder bhejo (draft only)
+- Filter: Show only "Pending" payments
+- Draft a professional email: Send a payment reminder to a customer (draft only)
 
 ---
 
@@ -1579,47 +1580,47 @@ Ek "mock billing entry" karo Excel mein:
 
 # Course Completion Checklist
 
-Yeh course poora karne ke baad tumhe yeh sab aana chahiye:
+After completing this course, you should be able to do all of this:
 
 ## Technical Skills
 
-- [ ] Computer history aur hardware parts explain kar sako
-- [ ] Files aur folders organize kar sako, proper naming se
-- [ ] Keyboard shortcuts confidently use kar sako (Ctrl+C/V/Z/S/P etc.)
-- [ ] Browser se smart search kar sako
-- [ ] Professional email likh sako with attachment
-- [ ] Word mein formatted document bana sako (headings, tables, PDF export)
-- [ ] Excel mein data enter kar sako with proper formatting
-- [ ] Excel formulas use kar sako: SUM, AVERAGE, IF, VLOOKUP, COUNTIF
-- [ ] Pivot table bana sako
-- [ ] Charts bana sako (bar, pie, line)
-- [ ] Excel sheet print, PDF save, protect kar sako
-- [ ] PowerPoint presentation bana sako (5+ slides, transitions)
-- [ ] Google Drive use kar sako — upload, share, organize
-- [ ] Google Sheets mein basic kaam kar sako
-- [ ] Google Forms bana sako
+- [ ] Explain computer history and hardware parts
+- [ ] Organize files and folders with proper naming
+- [ ] Confidently use keyboard shortcuts (Ctrl+C/V/Z/S/P etc.)
+- [ ] Search smartly from the browser
+- [ ] Write a professional email with an attachment
+- [ ] Create a formatted document in Word (headings, tables, PDF export)
+- [ ] Enter data in Excel with proper formatting
+- [ ] Use Excel formulas: SUM, AVERAGE, IF, VLOOKUP, COUNTIF
+- [ ] Create a pivot table
+- [ ] Create charts (bar, pie, line)
+- [ ] Print, save as PDF, and protect an Excel sheet
+- [ ] Create a PowerPoint presentation (5+ slides, transitions)
+- [ ] Use Google Drive — upload, share, organize
+- [ ] Do basic work in Google Sheets
+- [ ] Create Google Forms
 
 ## Professional Skills
 
 - [ ] Typing speed 30+ WPM
-- [ ] Files proper naming convention se name kar sako
-- [ ] Folder structure organize kar sako
-- [ ] Computer lock karna yaad rahe jab seat chhodo
-- [ ] Data entry double-check karne ki habit
+- [ ] Name files using the proper naming convention
+- [ ] Organize folder structure
+- [ ] Remember to lock the computer when leaving your seat
+- [ ] Habit of double-checking data entry
 
 ## Final Project
 
-Ek complete "Office Package" banao:
+Create a complete "Office Package":
 
-1. **Word:** Ek 2-page formal report — "Monthly Attendance Report" (header, table, footer, PDF export)
-2. **Excel:** 50 employees ki salary sheet — Name, Department, Basic Salary, Allowances, Deductions, Net Salary (formulas), Pivot by Department, Chart
+1. **Word:** A 2-page formal report — "Monthly Attendance Report" (header, table, footer, PDF export)
+2. **Excel:** Salary sheet for 50 employees — Name, Department, Basic Salary, Allowances, Deductions, Net Salary (formulas), Pivot by Department, Chart
 3. **PowerPoint:** 6-slide presentation — "Department Performance Q4 2024"
-4. **Email:** Gmail mein draft — salary sheet PDF attach karo, professional format mein boss ko bhejo (draft only)
-5. **Drive:** Sab files Google Drive pe organized folder mein upload karo, "View only" link banao
+4. **Email:** Draft in Gmail — attach the salary sheet PDF, send to the boss in professional format (draft only)
+5. **Drive:** Upload all files to an organized folder on Google Drive, create a "View only" link
 
-Yeh final project kisi bhi office job interview mein dikhao — practical proof hai ki tum ready ho.
+Show this final project in any office job interview — it's practical proof that you're ready.
 
 ---
 
 *Course created for: "I Know Computers" — Job-Ready Skills Program*  
-*Language: Hinglish | Level: Beginner to Job-Ready*
+*Language: English | Level: Beginner to Job-Ready*

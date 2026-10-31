@@ -1,90 +1,90 @@
-**TradeStack Project ke hisaab se tujhe yeh seekhna hai**
+# TradeStack Project — What You Need to Learn
 
-Yeh list **priority order** mein hai. Jo cheez project mein already use ho rahi hai, usko deep samajh + uske aage ki cheezein.
+This list is in **priority order**. The things already used in the project, you'll understand deeply + the things beyond them.
 
-> **📋 Asli course yahan hai:** >`Python Course Roadmap.md` (phase-wise chapters + projects) + `Phase 0 - Backend Mindset/` (pehla module). Yeh file sirf "kya seekhna hai" ki priority list hai.
+> **The real course is here:** `Python Course Roadmap.md` (phase-wise chapters + projects) + `Phase 0 - Backend Mindset/` (first module). This file is just the priority list of "what to learn."
 
-### 1. Python Backend (Sabse Important)
+### 1. Python Backend (Most Important)
 
-| Topic                        | Kitna deep seekhna hai          | Kyu important hai (Project + Interview) |
-|-----------------------------|----------------------------------|-----------------------------------------|
-| **FastAPI**                 | Advanced level                   | Tera main backend hai |
-| Path operations, Dependencies | Strong                           | Clean code ke liye |
-| BackgroundTasks + Threading | Bahut strong                     | Long running scans ke liye use kar raha hai |
-| Pydantic Models             | Strong                           | Request/Response validation |
-| Middleware & Exception handling | Medium-Strong                 | Production ready banane ke liye |
-| **Async vs Sync**           | Clear difference samajh          | Kab async, kab thread use karna hai |
+| Topic | How deep to learn | Why it's important (Project + Interview) |
+|-------|-------------------|------------------------------------------|
+| **FastAPI** | Advanced level | Your main backend |
+| Path operations, Dependencies | Strong | For clean code |
+| BackgroundTasks + Threading | Very strong | You're using it for long running scans |
+| Pydantic Models | Strong | Request/Response validation |
+| Middleware & Exception handling | Medium-Strong | For making it production ready |
+| **Async vs Sync** | Clear difference | When to use async, when to use thread |
 
 ### 2. Database & Storage
 
-| Topic                        | Level                            | Notes |
-|-----------------------------|----------------------------------|-------|
-| **SQLite** (advanced)       | Strong                           | WAL mode, thread-local connections, indexing |
-| Database design             | Medium-Strong                    | Tables, relationships, migrations |
-| **Pickle / Caching strategies** | Medium                        | .pkl cache ka proper use |
-| SQL basics (Joins, Window functions, Indexing) | Strong                | Baad mein Postgres pe shift karna ho toh |
-| ORM vs Raw SQL              | Concept clear                    | Tu raw SQL use kar raha hai (achha hai) |
+| Topic | Level | Notes |
+|-------|-------|-------|
+| **SQLite** (advanced) | Strong | WAL mode, thread-local connections, indexing |
+| Database design | Medium-Strong | Tables, relationships, migrations |
+| **Pickle / Caching strategies** | Medium | Proper use of .pkl cache |
+| SQL basics (Joins, Window functions, Indexing) | Strong | In case you need to shift to Postgres later |
+| ORM vs Raw SQL | Concept clear | You're using raw SQL (that's good) |
 
 ### 3. Data & Computation (Python)
 
-| Topic                        | Level                            | Notes |
-|-----------------------------|----------------------------------|-------|
-| **Pandas + NumPy**          | Strong (vectorized operations)   | Indicators + scanners ka core |
-| Parallel processing         | Medium-Strong                    | `ProcessPoolExecutor` samajh |
-| Memory management           | Medium                           | 2000+ stocks scan karte time |
+| Topic | Level | Notes |
+|-------|-------|-------|
+| **Pandas + NumPy** | Strong (vectorized operations) | Core of indicators + scanners |
+| Parallel processing | Medium-Strong | Understand `ProcessPoolExecutor` |
+| Memory management | Medium | While scanning 2000+ stocks |
 
 ### 4. Real-time & Communication
 
-| Topic                        | Level                            | Notes |
-|-----------------------------|----------------------------------|-------|
-| **WebSocket**               | Strong                           | Upstox live ticks |
-| **Server-Sent Events (SSE)**| Medium-Strong                    | Live logs ke liye use ho raha hai |
-| HTTP polling vs WebSocket vs SSE | Concept clear              | Kab kaunsa use karna hai |
-| State Machines              | Strong                           | Live trader ka core logic |
+| Topic | Level | Notes |
+|-------|-------|-------|
+| **WebSocket** | Strong | Upstox live ticks |
+| **Server-Sent Events (SSE)** | Medium-Strong | Used for live logs |
+| HTTP polling vs WebSocket vs SSE | Concept clear | When to use which |
+| State Machines | Strong | Core logic of live trader |
 
-### 5. Next.js + Node side (jo already use kar raha hai)
+### 5. Next.js + Node side (already using)
 
-| Topic                        | Level                            | Notes |
-|-----------------------------|----------------------------------|-------|
-| Next.js App Router (advanced) | Strong                         | API routes, Server Components, streaming |
-| TypeScript (advanced)       | Strong                           | Types tight karna |
-| Event-driven architecture   | Medium                           | Orchestrator + state machines |
+| Topic | Level | Notes |
+|-------|-------|-------|
+| Next.js App Router (advanced) | Strong | API routes, Server Components, streaming |
+| TypeScript (advanced) | Strong | Tightening types |
+| Event-driven architecture | Medium | Orchestrator + state machines |
 
 ### 6. Extra Important Concepts (Interview + Growth)
 
-- **System Design basics** of this architecture  
-  (Kyun Python data ke liye, Node live ke liye — yeh explain kar paana chahiye)
+- **System Design basics** of this architecture
+  (Why Python for data, Node for live — you should be able to explain this)
 - Error handling & Resilience (retry, circuit breaker ideas)
 - Logging & Monitoring
 - Environment variables & Config management
-- Basic Docker (baad mein)
+- Basic Docker (later)
 - Git advanced (branching, clean commits)
 
 ---
 
-### Short Priority List (Abhi kya focus kar)
+### Short Priority List (What to focus on now)
 
 1. **FastAPI** (Background tasks, Dependencies, structure)
 2. **SQLite advanced** + Database design
 3. **Pandas vectorized** + Parallel processing
 4. **WebSocket + SSE** deeply
-5. **State Machines** (live trader wala part)
+5. **State Machines** (live trader part)
 6. TypeScript + clean architecture
 
 ---
 
-**Practical Advice:**
+### Practical Advice:
 
-- Naya framework mat seekh abhi.
-- Jo project mein use ho raha hai, usko **source code padh ke** samajh.
-- Har topic pe chhota experiment kar (alag se mini examples).
-- Phir us knowledge ko apne TradeStack mein improve kar ke apply kar.
+- Don't learn a new framework right now.
+- Understand what you're using in the project by **reading the source code**.
+- Do a small experiment on each topic (separate mini examples).
+- Then apply that knowledge to improve your TradeStack.
 
 ---
 
-### Framework Mapping (sirf ek jagah — beginner confusion se bachaane ke liye)
+### Framework Mapping (only one place — to avoid beginner confusion)
 
-> **Beginner confusion rule:** Backend samajhte waqt sabse bada sawaal hota hai "Flask/FastAPI/Django/Express kya hai, kaunsa chunu?" Iska ek saaf jawab >`Python Course Roadmap.md` + `Phase 0/0.4` (jungle map) mein diya hai. Concept: sab frameworks wahi core cheezein karte hain — bas syntax alag. Course mein mapping **sirf wohi jagah** hai, uske baad seedha FastAPI.
+> **Beginner confusion rule:** While understanding backend, the biggest question is "What are Flask/FastAPI/Django/Express, which one to choose?" A clear answer to this is given in `Python Course Roadmap.md` + `Phase 0/0.4` (jungle map). Concept: all frameworks do the same core things — only syntax differs. The mapping is **only in that place** in the course, after that it's straight FastAPI.
 
-Bata — kis area se start karna hai pehle?  
-FastAPI deep dive, Database, Real-time (WebSocket/SSE), ya State Machines?
+Which area should you start from first?
+FastAPI deep dive, Database, Real-time (WebSocket/SSE), or State Machines?

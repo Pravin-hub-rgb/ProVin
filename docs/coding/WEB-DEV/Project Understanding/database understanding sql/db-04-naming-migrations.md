@@ -1,5 +1,5 @@
 # 🗄️ DB Doc 4 — Naming, Migrations, Seeding & Common Mistakes
-### Standards Jo Hamesha Follow Karo
+### Standards to Always Follow
 
 ---
 
@@ -7,7 +7,7 @@
 
 ```
 CONSISTENCY > PERFECTION
-Jo bhi convention choose karo — poore project mein same rakho.
+Whatever convention you choose — keep it same throughout the project.
 
 PRISMA STANDARD (recommended):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -65,12 +65,12 @@ OPTION 1: autoincrement() — Simple integers (1, 2, 3...)
   Pros:
   → Simple, readable, small storage
   → Fast joins (integer comparison)
-  → Easy debugging ("Order #123 check karo")
+  → Easy debugging ("Check Order #123")
 
   Cons:
-  → Predictable — "order/124" guess kar sakte hain (security risk)
-  → Distributed systems mein collision possible
-  → URL mein expose karna risky
+  → Predictable — can guess "order/124" (security risk)
+  → Collision possible in distributed systems
+  → Risky to expose in URL
 
 OPTION 2: uuid() — Random UUID (550e8400-e29b-41d4-a716...)
   @id @default(uuid())
@@ -82,16 +82,16 @@ OPTION 2: uuid() — Random UUID (550e8400-e29b-41d4-a716...)
   Cons:
   → Longer (36 chars)
   → Slower index (string comparison vs integer)
-  → URL mein ugly dikhta hai
+  → Looks ugly in URL
 
 OPTION 3: cuid() — Collision-resistant ID (cjld2cyuq0000t3rmniod1foy)
   @id @default(cuid())
 
   Pros:
-  → Unique globally
+  → Globally unique
   → URL-safe
   → Slightly more readable than UUID
-  → Sortable by time (roughly)
+  → Roughly sortable by time
 
   Cons:
   → Longer string
@@ -105,43 +105,43 @@ RECOMMENDATION:
 
 ---
 
-## Part 3 — Migrations — Kya Hai, Kaise Karte Hain
+## Part 3 — Migrations — What They Are, How to Do Them
 
 ```
-MIGRATION KYA HAI?
-Schema change ko track karne ka system.
-Jaise Git code ke liye, migrations database ke liye.
+WHAT IS A MIGRATION?
+A system for tracking schema changes.
+Like Git for code, migrations are for database.
 
-Har migration ek file hai jo ye batati hai:
-"Database mein ye change karo"
+Each migration is a file that says:
+"Make this change in the database"
 
-Kyun zaroori hai?
-→ Development mein schema change karte hain → migration file banti hai
-→ Production deploy karte time → migration run karte hain
-→ Team mein koi aur join kare → migrations run karo → same schema
-→ Something break ho → rollback karo
+Why necessary?
+→ Change schema in development → migration file created
+→ During production deploy → run migration
+→ New team member joins → run migrations → same schema
+→ Something breaks → rollback
 ```
 
 ### Prisma Migration Workflow
 
 ```bash
-# Step 1: schema.prisma mein change karo
-# (nayi model add ki, column add kiya, etc.)
+# Step 1: Make change in schema.prisma
+# (added new model, added column, etc.)
 
-# Step 2: Migration generate karo (development mein):
+# Step 2: Generate migration (in development):
 npx prisma migrate dev --name add_priority_to_tasks
 
-# Ye karta hai:
-# → Migration SQL file generate hoti hai: prisma/migrations/20240315_add_priority_to_tasks/migration.sql
-# → Migration database pe apply hoti hai
-# → Prisma Client regenerate hota hai
+# This does:
+# → Generates migration SQL file: prisma/migrations/20240315_add_priority_to_tasks/migration.sql
+# → Applies migration to database
+# → Regenerates Prisma Client
 
-# Step 3: Production pe deploy karo:
+# Step 3: Deploy to production:
 npx prisma migrate deploy
-# → Pending migrations apply hoti hain
-# → Safe — previously run migrations skip hoti hain
+# → Applies pending migrations
+# → Safe — previously run migrations are skipped
 
-# Step 4: Current status check karo:
+# Step 4: Check current status:
 npx prisma migrate status
 ```
 
@@ -154,61 +154,61 @@ ALTER TABLE "tasks" ADD COLUMN "priority" TEXT NOT NULL DEFAULT 'MEDIUM';
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 IMPORTANT:
-→ Migration files COMMIT karo Git mein — ye schema history hai
-→ Kabhi manually migration files edit mat karo (already run ho chuki hain)
-→ Production pe migrate deploy run karo, dev nahi
+→ COMMIT migration files to Git — this is schema history
+→ Never manually edit migration files (already run)
+→ Run migrate deploy on production, not dev
 ```
 
 ### Common Migration Scenarios
 
 ```
-Scenario 1 — New column add karna (safe):
+Scenario 1 — Add new column (safe):
 model Task {
   // existing fields...
-  completedAt DateTime?  // ← NEW nullable column add kiya
+  completedAt DateTime?  // ← NEW nullable column added
 }
-→ Safe migration — existing data affect nahi hoti
+→ Safe migration — existing data not affected
 
-Scenario 2 — Required column add karna (tricky!):
+Scenario 2 — Add required column (tricky!):
 model Task {
-  urgencyLevel String  // ← NEW required column — existing rows ka kya?
+  urgencyLevel String  // ← NEW required column — what about existing rows?
 }
-→ Migration fail hogi! Existing rows mein value kya hogi?
-→ Fix: Default value do, ya pehle nullable banao, phir data fill karo, phir NOT NULL
+→ Migration fails! What value for existing rows?
+→ Fix: Give default value, or first make nullable, fill data, then NOT NULL
 
 // CORRECT approach:
-// Step 1: Nullable add karo
+// Step 1: Add as nullable
 urgencyLevel String?
 
-// Step 2: Data fill karo existing rows ke liye
+// Step 2: Fill data for existing rows
 await prisma.task.updateMany({ where: { urgencyLevel: null }, data: { urgencyLevel: 'NORMAL' } })
 
-// Step 3: NOT NULL banao
+// Step 3: Make NOT NULL
 urgencyLevel String  // Remove ?
 
-Scenario 3 — Column rename karna (dangerous!):
-❌ Mat karo: title → taskTitle (data loss ho sakta hai)
-✅ Karo: pehle naya column add karo, data copy karo, phir purana remove karo
+Scenario 3 — Rename column (dangerous!):
+❌ Don't do: title → taskTitle (data loss possible)
+✅ Do: first add new column, copy data, then remove old
 
-Scenario 4 — Column delete karna (careful!):
-→ Pehle application code se wo column hata do
-→ Deploy karo
-→ Phir migration se column drop karo
-→ Seedha drop karna = application crash if it tries to use that column
+Scenario 4 — Delete column (careful!):
+→ First remove that column from application code
+→ Deploy
+→ Then drop column via migration
+→ Direct drop = application crash if it tries to use that column
 ```
 
 ---
 
-## Part 4 — Seeding — Test Data Kaise Banate Hain
+## Part 4 — Seeding — How to Create Test Data
 
 ```
-SEED KYA HAI?
-Database mein initial/test data daalna.
+WHAT IS SEED?
+Putting initial/test data into the database.
 
-Kyun zaroori hai?
-→ Fresh database setup ke baad kuch data chahiye hota hai test karne ke liye
-→ Team members fresh clone karein → seed run karein → ready to develop
-→ Development mein realistic data se kaam karo
+Why necessary?
+→ After fresh database setup, some data is needed for testing
+→ Team member does fresh clone → run seed → ready to develop
+→ Work with realistic data in development
 ```
 
 ```typescript
@@ -224,7 +224,7 @@ async function main() {
   await prisma.task.deleteMany()
   await prisma.user.deleteMany()
 
-  // Admin user banao
+  // Create admin user
   const admin = await prisma.user.create({
     data: {
       name: 'Rohan Sharma',
@@ -234,7 +234,7 @@ async function main() {
     }
   })
 
-  // Employees banao
+  // Create employees
   const rahul = await prisma.user.create({
     data: {
       name: 'Rahul Verma',
@@ -253,7 +253,7 @@ async function main() {
     }
   })
 
-  // Tasks banao
+  // Create tasks
   await prisma.task.createMany({
     data: [
       {
@@ -299,7 +299,7 @@ main()
 ```
 
 ```json
-// package.json mein add karo:
+// Add to package.json:
 {
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
@@ -308,11 +308,11 @@ main()
 ```
 
 ```bash
-# Seed run karo:
+# Run seed:
 npx prisma db seed
 
-# Ya fresh start ke liye:
-npx prisma migrate reset  // ← Tables drop + migrate + seed (DEV ONLY!)
+# Or for fresh start:
+npx prisma migrate reset  // ← Drops tables + migrate + seed (DEV ONLY!)
 ```
 
 ---
@@ -320,51 +320,51 @@ npx prisma migrate reset  // ← Tables drop + migrate + seed (DEV ONLY!)
 ## Part 5 — Top 10 Common Mistakes
 
 ```
-MISTAKE 1: FK pe index nahi lagaya
+MISTAKE 1: Didn't add index on FK
 ❌ model Task { assignedToId String }
 ✅ model Task { assignedToId String; @@index([assignedToId]) }
 
-MISTAKE 2: Enum ki jagah String use kiya
+MISTAKE 2: Used String instead of Enum
 ❌ status String  // "todo" typo = "Todo" = "TODO" — inconsistent data
 ✅ status TaskStatus (Prisma enum) — only valid values accepted
 
-MISTAKE 3: Password plain text store kiya
+MISTAKE 3: Stored password in plain text
 ❌ password: "mypassword123"
 ✅ password: "$2a$10$..." (bcrypt hash)
 NEVER store plain text passwords — ever.
 
-MISTAKE 4: Required column bina default ke add kiya (existing data pe)
-❌ Schema mein add kiya → Migration fail
-✅ Pehle nullable add karo → data fill karo → phir NOT NULL
+MISTAKE 4: Added required column without default on existing data
+❌ Added in schema → Migration fails
+✅ First add as nullable → fill data → then NOT NULL
 
-MISTAKE 5: updatedAt manually manage kiya
-❌ updatedAt DateTime (manually set karna padega har update pe)
-✅ updatedAt DateTime @updatedAt (Prisma automatically update karta hai)
+MISTAKE 5: Manually managed updatedAt
+❌ updatedAt DateTime (have to set manually on every update)
+✅ updatedAt DateTime @updatedAt (Prisma auto-updates)
 
-MISTAKE 6: Array of strings ek column mein store kiya
+MISTAKE 6: Stored array of strings in one column
 ❌ tags: "react,nextjs,typescript" (comma separated string)
-✅ Alag Tag table banao + junction table
-   Ya PostgreSQL array type use karo → tags String[]
+✅ Create separate Tag table + junction table
+   Or use PostgreSQL array type → tags String[]
 
-MISTAKE 7: Sab columns pe index lagaya
+MISTAKE 7: Indexed every column
 ❌ @@index([id]) @@index([name]) @@index([email]) @@index([createdAt]) @@index([updatedAt])
-✅ Sirf wahi index karo jo queries mein actually use hote hain
+✅ Only index columns actually used in queries
 
-MISTAKE 8: Cascade delete blindly use kiya
-❌ onDelete: Cascade — User delete ho → uske saare orders delete!
-✅ onDelete: Restrict ya SetNull — data loss se bachao
-   Sochke choose karo behavior
+MISTAKE 8: Used cascade delete blindly
+❌ onDelete: Cascade — User deleted → all their orders deleted!
+✅ onDelete: Restrict or SetNull — prevents data loss
+   Choose behavior thoughtfully
 
-MISTAKE 9: Migration files Git mein commit nahi kiye
-❌ .gitignore mein prisma/migrations/ add kar diya
-✅ HAMESHA migrations commit karo — ye schema history hai
-   Nahi kiya → team member fresh setup nahi kar sakta
+MISTAKE 9: Didn't commit migration files to Git
+❌ Added prisma/migrations/ to .gitignore
+✅ ALWAYS commit migrations — this is schema history
+   Without it → team member can't do fresh setup
 
-MISTAKE 10: Production pe prisma migrate dev run kiya
-❌ npx prisma migrate dev  (production pe)
-✅ npx prisma migrate deploy  (production pe)
-migrate dev = database reset kar sakta hai!
-migrate deploy = sirf pending migrations apply karta hai safely
+MISTAKE 10: Ran prisma migrate dev on production
+❌ npx prisma migrate dev  (on production)
+✅ npx prisma migrate deploy  (on production)
+migrate dev = can reset database!
+migrate deploy = safely applies only pending migrations
 ```
 
 ---
@@ -372,7 +372,7 @@ migrate deploy = sirf pending migrations apply karta hai safely
 ## Part 6 — Prisma Client Best Practices
 
 ```typescript
-// 1. Singleton pattern — ek hi client instance
+// 1. Singleton pattern — one client instance
 // lib/prisma.ts
 import { PrismaClient } from '@prisma/client'
 
@@ -383,16 +383,16 @@ const globalForPrisma = globalThis as unknown as {
 export const prisma =
   globalForPrisma.prisma ??
   new PrismaClient({
-    log: ['query'],  // Development mein queries log karo
+    log: ['query'],  // Log queries in development
   })
 
 if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
-// 2. Select sirf zaroori fields (sensitive data expose mat karo):
-// ❌ WRONG — password bhi return ho jaayega!
+// 2. Select only needed fields (don't expose sensitive data):
+// ❌ WRONG — password also returned!
 const user = await prisma.user.findUnique({ where: { id } })
 
-// ✅ CORRECT — sirf chahiye wale fields:
+// ✅ CORRECT — only needed fields:
 const user = await prisma.user.findUnique({
   where: { id },
   select: {
@@ -400,41 +400,41 @@ const user = await prisma.user.findUnique({
     name: true,
     email: true,
     role: true,
-    // password: false — by default false, explicitly exclude
+    // password: false — false by default, explicitly exclude
   }
 })
 
 // 3. Include vs Select:
-// Include → related data fetch karo (JOIN):
+// Include → fetch related data (JOIN):
 const taskWithUser = await prisma.task.findUnique({
   where: { id },
-  include: { assignedTo: true }  // User bhi fetch karo
+  include: { assignedTo: true }  // Fetch User too
 })
 
-// Select with nested → specific related fields only:
+// Select with nested → only specific related fields:
 const taskWithUserName = await prisma.task.findUnique({
   where: { id },
   select: {
     title: true,
     status: true,
     assignedTo: {
-      select: { name: true, email: true }  // Sirf naam aur email chahiye
+      select: { name: true, email: true }  // Only name and email needed
     }
   }
 })
 
 // 4. Transaction — multiple operations atomically:
-// Agar ek fail ho toh sab rollback ho:
+// If one fails, all rollback:
 const [order, updatedProduct] = await prisma.$transaction([
   prisma.order.create({ data: orderData }),
   prisma.product.update({
     where: { id: productId },
-    data: { stock: { decrement: quantity } }  // Stock kam karo
+    data: { stock: { decrement: quantity } }  // Decrement stock
   })
 ])
-// Agar koi bhi fail ho → dono rollback, incomplete state nahi banega
+// If any fails → both rollback, no incomplete state
 ```
 
 ---
 
-**Next →** `db-project-01-staffsync.md` — Project 1: StaffSync ka complete database design
+**Next →** `db-project-01-staffsync.md` — Project 1: StaffSync complete database design

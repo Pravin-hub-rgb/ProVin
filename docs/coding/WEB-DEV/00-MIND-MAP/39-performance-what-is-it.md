@@ -1,72 +1,72 @@
-# 39 — Performance: Umbrella Kya Hai
+# 39 — Performance: What Is the Umbrella
 
-> Payments complete hua — Razorpay, Webhooks.
-> Ab nawa umbrella — **Performance**.
-> App fast feel karti hai ya slow — yeh decide karta hai user ruka ya chala gaya.
-
----
-
-## Performance Kyun Matter Karta Hai
-
-Ek study mein — **1 second delay = 7% conversion drop.**
-
-E-commerce mein:
-- ShopKaro slow hai → Priya frustrated → Competitor pe chali gayi → Sale lost
-
-Performance sirf "nice to have" nahi — **business critical** hai.
+> Payments are complete — Razorpay, Webhooks.
+> Now a new umbrella — **Performance**.
+> Whether the app feels fast or slow decides whether the user stays or leaves.
 
 ---
 
-## Performance Umbrella Ke Andar Kya Kya
+## Why Performance Matters
+
+One study found — **1 second delay = 7% drop in conversions.**
+
+In e-commerce:
+- ShopKaro is slow → Priya frustrated → Goes to competitor → Sale lost
+
+Performance isn't just "nice to have" — it's **business critical**.
+
+---
+
+## What's Inside the Performance Umbrella
 
 ```
 PERFORMANCE
 │
-├── Images Optimize Karna        → Doc 40
-├── Lazy Loading + Skeleton      → Doc 41
+├── Image Optimization        → Doc 40
+├── Lazy Loading + Skeleton   → Doc 41
 └── Pagination vs Infinite Scroll → Doc 42
 ```
 
 ---
 
-## Kya Slow Karta Hai App Ko — Common Culprits
+## Common Culprits That Slow Down the App
 
-ShopKaro ke liye most relevant:
+Most relevant for ShopKaro:
 
 ```
-1. Badi images → Sabse common problem
-   500KB image vs 50KB WebP — 10x fark
+1. Large images → Most common problem
+   500KB image vs 50KB WebP — 10x difference
 
-2. Saari products ek saath load → 500 products = slow
-   Pagination ya infinite scroll use karo
+2. Loading all products at once → 500 products = slow
+   Use pagination or infinite scroll
 
-3. JavaScript bundle bada → Tree shaking, code splitting
+3. Large JavaScript bundle → Tree shaking, code splitting
 
-4. Database slow query → Indexes add karo
+4. Slow database query → Add indexes
 
-5. Ek baar mein sab load karna → Lazy load karo
+5. Loading everything at once → Lazy load
 ```
 
 ---
 
 ## Perceived Performance vs Actual Performance
 
-Ek interesting concept:
+An interesting concept:
 
-**Actual performance** — kitne milliseconds lagte hain.
+**Actual performance** — how many milliseconds it takes.
 
-**Perceived performance** — user ko kitna fast **lagta** hai.
+**Perceived performance** — how fast it **feels** to the user.
 
-Skeleton loaders se perceived performance improve hoti hai:
+Skeleton loaders improve perceived performance:
 ```
-Bina skeleton: Blank screen → Suddenly content → Jarring
-Skeleton se:   Gray placeholder → Content → Smooth
+Without skeleton: Blank screen → Suddenly content → Jarring
+With skeleton:   Gray placeholder → Content → Smooth
 ```
 
-Actual time same ho sakta hai — lekin feel better hota hai.
+Actual time may be the same — but it feels better.
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`40-performance-images.md` — **Images** — sabse easy win. Next.js Image component se automatic optimization, WebP, lazy loading — sab ek component mein.
+`40-performance-images.md` — **Images** — the easiest win. Automatic optimization, WebP, lazy loading — all in one component with Next.js Image.

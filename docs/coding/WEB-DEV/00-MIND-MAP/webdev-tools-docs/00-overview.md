@@ -1,17 +1,17 @@
-# 00 — Poora Map: Web Dev Ki Duniya
+# 00 — The Complete Map: The World of Web Dev
 
-> Yeh doc ek **master index** hai.
-> Koi bhi tool ka naam suno — yahan se uska bucket aur category pata chalega.
-> Detail mein har tool ke aage wali docs mein jaana.
+> This doc is a **master index**.
+> Hear any tool's name — find its bucket and category here.
+> For details, go to the docs after each tool.
 
 ---
 
-## Buckets — Web Dev Ki Duniya
+## Buckets — The World of Web Dev
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  FRONTEND        │  BACKEND         │  DATABASE         │
-│  Jo user dekhta  │  Server logic    │  Data store       │
+│  What user sees  │  Server logic    │  Data store       │
 ├─────────────────────────────────────────────────────────┤
 │  AUTH            │  TESTING         │  DEVOPS / INFRA   │
 │  Identity        │  Quality check   │  Deploy + Monitor │
@@ -111,7 +111,7 @@
 | Elysia | 🔵 Bun runtime | 08 |
 | Koa | 🟡 Express-like, older | 08 |
 
-### ORM (Database se baat karna)
+### ORM (Talking to the Database)
 | Tool | Tag | Doc |
 |------|-----|-----|
 | Prisma | 🟢 Most Popular / TypeScript | 09 |
@@ -289,12 +289,12 @@
 
 ---
 
-## Tags Ka Matlab
+## What the Tags Mean
 
 ```
-🟢 Recommended / Popular / Use karo
-🟡 Legacy / Purana / Existing projects mein milega
-🔵 Niche / Specific use case / Explore karo
+🟢 Recommended / Popular / Use it
+🟡 Legacy / Old / Found in existing projects
+🔵 Niche / Specific use case / Explore
 🔴 Avoid / Deprecated
 ```
 
@@ -302,53 +302,53 @@
 
 ---
 
-## 🎬 **Poora Flow — Ek Website Ki Kahani**
+## 🎬 **The Complete Flow — A Website's Story**
 
-> Yeh section samjhata hai ki **saare tools milkar kaise kaam karte hain** — ek real user journey ke through.
+> This section explains how **all the tools work together** — through a real user journey.
 
-### **Scene: User ne "Add to Cart" button dabaya**
+### **Scene: User clicked "Add to Cart"**
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │  1. USER INTERFACE (Frontend - React/Next.js)                       │
-│     └─ User ne "Add to Cart" click kiya                             │
-│     └─ onClick handler → Zustand store update hua                   │
-│     └─ Cart state change → UI re-render (React.memo optimize)       │
+│     └─ User clicked "Add to Cart"                                   │
+│     └─ onClick handler → Zustand store updated                      │
+│     └─ Cart state change → UI re-render (React.memo optimized)       │
 └─────────────────────────────────────────────────────────────────────┘
                                     ↓
 ┌─────────────────────────────────────────────────────────────────────┐
 │  2. STATE MANAGEMENT (Zustand/Context)                              │
-│     └─ Cart items array update hui                                  │
-│     └─ Global state change → Navbar, Cart page, sab update hue      │
-│     └─ LocalStorage mein persist (Zustand middleware)               │
+│     └─ Cart items array updated                                     │
+│     └─ Global state change → Navbar, Cart page, all updated         │
+│     └─ Persisted to LocalStorage (Zustand middleware)               │
 └─────────────────────────────────────────────────────────────────────┘
                                     ↓
 ┌─────────────────────────────────────────────────────────────────────┐
 │  3. SERVER STATE (React Query)                                      │
-│     └─ Cart data server se sync karna                               │
-│     └─ Optimistic update → turant UI update                         │
-│     └─ Background mein API call → Server pe save                    │
+│     └─ Sync cart data with server                                   │
+│     └─ Optimistic update → UI updates instantly                     │
+│     └─ Background API call → Saved on server                       │
 └─────────────────────────────────────────────────────────────────────┘
                                     ↓
 ┌─────────────────────────────────────────────────────────────────────┐
 │  4. API CALL (Axios/fetch + tRPC)                                   │
 │     └─ POST /api/cart { productId, quantity }                       │
 │     └─ tRPC → End-to-end type safety                                │
-│     └─ Zod validation → Input validate hua                          │
+│     └─ Zod validation → Input validated                             │
 └─────────────────────────────────────────────────────────────────────┘
                                     ↓
 ┌─────────────────────────────────────────────────────────────────────┐
 │  5. AUTH CHECK (NextAuth/JWT/Cookie)                                │
-│     └─ Request ke saath cookie bheji                                │
-│     └─ JWT verify hua → User authenticated                          │
-│     └─ Session data nikala → User ID mila                           │
+│     └─ Cookie sent with request                                     │
+│     └─ JWT verified → User authenticated                            │
+│     └─ Session data extracted → User ID obtained                    │
 └─────────────────────────────────────────────────────────────────────┘
                                     ↓
 ┌─────────────────────────────────────────────────────────────────────┐
 │  6. BACKEND LOGIC (Express/Next.js API)                             │
 │     └─ Controller: addToCart(userId, productId, quantity)           │
-│     └─ Business logic: Stock check, price calculate                 │
-│     └─ Prisma: Database query build ki                              │
+│     └─ Business logic: Stock check, price calculation                │
+│     └─ Prisma: Database query built                                 │
 └─────────────────────────────────────────────────────────────────────┘
                                     ↓
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -360,8 +360,8 @@
                                     ↓
 ┌─────────────────────────────────────────────────────────────────────┐
 │  8. CACHE (Redis)                                                   │
-│     └─ Cart count cache update hua                                  │
-│     └─ Next request ke liye ready                                   │
+│     └─ Cart count cache updated                                     │
+│     └─ Ready for next request                                       │
 └─────────────────────────────────────────────────────────────────────┘
                                     ↓
 ┌─────────────────────────────────────────────────────────────────────┐
@@ -374,21 +374,21 @@
 
 ---
 
-### **Har Concept Ka Matlab — Real Example Ke Saath**
+### **Meaning of Each Concept — With Real Examples**
 
 #### **1. State Management (Zustand/Context)**
 ```
-Matlab: App ka "yaad rakhne" wala system.
+Meaning: The app's "memory" system.
 
 Example:
-- Cart mein 3 items hain → Yeh STATE hai
-- User logged in hai → Yeh STATE hai
-- Modal open hai → Yeh STATE hai
+- 3 items in cart → This is STATE
+- User is logged in → This is STATE
+- Modal is open → This is STATE
 
-Zustand: Global state manager — poori app mein accessible
+Zustand: Global state manager — accessible across the whole app
 Context: Simple global state — built-in React feature
 
-ShopKaro mein:
+In ShopKaro:
 - Zustand: Cart items, user info, theme
 - Context: Theme, language
 - useState: Search input, modal open/close
@@ -396,47 +396,47 @@ ShopKaro mein:
 
 #### **2. Server State (React Query)**
 ```
-Matlab: Server se aaya data — jo kabhi bhi change ho sakta hai.
+Meaning: Data that came from the server — which can change anytime.
 
 Example:
-- Products list → Server se aayi (kabhi bhi change ho sakti hai)
-- User profile → Server se aaya (user update kar sakta hai)
-- Order history → Server se aayi (naye orders aa sakte hain)
+- Products list → Came from server (can change anytime)
+- User profile → Came from server (user can update)
+- Order history → Came from server (new orders can arrive)
 
 React Query:
-- Data fetch karta hai
-- Cache karta hai
-- Auto revalidate karta hai (window focus pe)
-- Optimistic updates deta hai
+- Fetches data
+- Caches it
+- Auto-revalidates (on window focus)
+- Gives optimistic updates
 
-ShopKaro mein:
-- Products list → React Query se
-- User profile → React Query se
+In ShopKaro:
+- Products list → via React Query
+- User profile → via React Query
 - Cart data → React Query + Zustand (hybrid)
 ```
 
 #### **3. API (REST/tRPC/GraphQL)**
 ```
-Matlab: Frontend aur Backend ke beech baat karne ka tarika.
+Meaning: The way frontend and backend talk to each other.
 
 Example:
-- GET /api/products → Products laao
-- POST /api/cart → Cart mein add karo
-- PUT /api/user → User update karo
+- GET /api/products → Fetch products
+- POST /api/cart → Add to cart
+- PUT /api/user → Update user
 
 REST: Standard HTTP methods (GET, POST, PUT, DELETE)
-tRPC: End-to-end type safe — TypeScript functions jaise
-GraphQL: Exact data maango — no over/under fetching
+tRPC: End-to-end type safe — like TypeScript functions
+GraphQL: Ask for exact data — no over/under fetching
 
-ShopKaro mein:
+In ShopKaro:
 - Products: REST API
-- Cart: tRPC (type safety ke liye)
-- Search: GraphQL (complex queries ke liye)
+- Cart: tRPC (for type safety)
+- Search: GraphQL (for complex queries)
 ```
 
 #### **4. Database (PostgreSQL/MongoDB)**
 ```
-Matlab: Data permanently store karne ki jagah.
+Meaning: Where data is stored permanently.
 
 Example:
 - Users table: id, name, email, password
@@ -446,14 +446,14 @@ Example:
 PostgreSQL: SQL database — structured data, relations
 MongoDB: NoSQL database — flexible schema, documents
 
-ShopKaro mein:
+In ShopKaro:
 - PostgreSQL: Users, orders, products (structured)
 - Redis: Cart count cache, sessions (fast access)
 ```
 
 #### **5. ORM (Prisma/Drizzle)**
 ```
-Matlab: Database se baat karne ka easy tarika — raw SQL likhne ki zaroorat nahi.
+Meaning: An easy way to talk to the database — no need to write raw SQL.
 
 Example:
 // Raw SQL:
@@ -465,40 +465,40 @@ const user = await prisma.user.findUnique({ where: { id: 1 } });
 Prisma: Type-safe, auto-complete, migrations
 Drizzle: Lightweight, SQL-like, fast
 
-ShopKaro mein:
+In ShopKaro:
 - Prisma: Main ORM — users, products, orders
 - Drizzle: Simple queries — cache, logs
 ```
 
 #### **6. Auth (NextAuth/JWT/Cookie)**
 ```
-Matlab: User kaun hai — verify karna.
+Meaning: Verifying who the user is.
 
 Example:
-- User ne login kiya → Password verify hua
-- JWT token bana → Cookie mein store hua
-- Har request pe token verify hota hai
+- User logged in → Password verified
+- JWT token created → Stored in cookie
+- Token verified on every request
 
 NextAuth: Complete auth solution — Google, GitHub, email
 JWT: Token-based auth — stateless
-Cookie: Browser mein store — automatic bhejta hai
+Cookie: Stored in browser — sent automatically
 
-ShopKaro mein:
+In ShopKaro:
 - NextAuth: Google, email login
 - JWT: API authentication
-- Cookie: Session maintain karne ke liye
+- Cookie: To maintain the session
 ```
 
 #### **7. Caching (Browser/CDN/Server)**
 ```
-Matlab: Baar baar same kaam na karna — time bachana.
+Meaning: Don't redo the same work — save time.
 
 Example:
 - Browser cache: Images, CSS, JS files
 - CDN cache: Static assets (images, videos)
 - Server cache: Database query results (Redis)
 
-ShopKaro mein:
+In ShopKaro:
 - Browser: Product images cache
 - CDN: Product images, videos
 - Redis: Cart count, popular products
@@ -506,17 +506,17 @@ ShopKaro mein:
 
 #### **8. Testing (Vitest/Playwright)**
 ```
-Matlab: Code sahi kaam kar raha hai — verify karna.
+Meaning: Verifying that code works correctly.
 
 Example:
-- Unit test: Function sahi return kar raha hai?
-- Integration test: API sahi response de raha hai?
-- E2E test: User flow sahi kaam kar raha hai?
+- Unit test: Is the function returning the right value?
+- Integration test: Is the API giving the right response?
+- E2E test: Is the user flow working correctly?
 
 Vitest: Unit tests — fast, TypeScript support
 Playwright: E2E tests — browser automation
 
-ShopKaro mein:
+In ShopKaro:
 - Vitest: Utility functions, hooks
 - React Testing Library: Components
 - Playwright: Checkout flow, login flow
@@ -524,17 +524,17 @@ ShopKaro mein:
 
 #### **9. DevOps (Vercel/GitHub Actions)**
 ```
-Matlab: Code ko live karna aur maintain karna.
+Meaning: Taking code live and maintaining it.
 
 Example:
 - GitHub push → Build → Deploy → Live
-- Error aaya → Sentry alert → Fix
+- Error occurred → Sentry alert → Fix
 
 Vercel: Hosting — automatic deploy
 GitHub Actions: CI/CD — tests, build, deploy
 Sentry: Error tracking — real-time alerts
 
-ShopKaro mein:
+In ShopKaro:
 - Vercel: Frontend hosting
 - Railway: Backend hosting
 - GitHub Actions: Tests + Deploy pipeline
@@ -543,17 +543,17 @@ ShopKaro mein:
 
 ---
 
-### **Quick Reference — Kaunsa Tool Kahan**
+### **Quick Reference — Which Tool Where**
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│  USER NE CLICK KIYA                                                 │
+│  USER CLICKED                                                       │
 │  ↓                                                                  │
 │  React Component (onClick handler)                                  │
 │  ↓                                                                  │
 │  Zustand Store Update (cart state)                                  │
 │  ↓                                                                  │
-│  UI Re-render (React.memo optimize)                                 │
+│  UI Re-render (React.memo optimized)                                 │
 │  ↓                                                                  │
 │  React Query (optimistic update)                                    │
 │  ↓                                                                  │
@@ -583,32 +583,32 @@ ShopKaro mein:
 
 ## 🌐 Web Servers (Apache / Nginx)
 
-Ye traditional web servers hai jo overview mein nahi aaye kyunki aaj kal managed hosting inko automatically handle karte hai. Lekin ye bahut important hai interview ke liye.
+These traditional web servers didn't appear in the overview because managed hosting handles them automatically today. But they're very important for interviews.
 
 | Apache HTTP Server | Nginx |
 |--------------------|-------|
-| 🟡 Legacy / 1995 se hai | 🟢 Modern / 2004 |
+| 🟡 Legacy / Since 1995 | 🟢 Modern / 2004 |
 | Process based architecture | Event driven architecture |
-| High load par slow ho jata hai | 10x faster hai high concurrency mein |
-| .htaccess support hai | Nahi hai |
-| Configure karna aasan hai | Thoda tricky hai |
-| WordPress, PHP ke liye sabse popular | Ab industry standard hai har jagah |
+| Gets slow under high load | 10x faster under high concurrency |
+| .htaccess support | No .htaccess |
+| Easy to configure | A bit tricky |
+| Most popular for WordPress, PHP | Now industry standard everywhere |
 
-✅ **Actual mein ye kya karte hai:**
-- Port 80 / 443 pe request accept karte hai
-- Reverse proxy ka kaam karte hai apne application tak request bhejte hai
-- SSL Certificate handle karte hai
-- Static files serve karte hai
-- Load balancing, Rate limiting, Gzip compression sab karte hai
+✅ **What they actually do:**
+- Accept requests on port 80 / 443
+- Act as reverse proxy — forward requests to your application
+- Handle SSL Certificates
+- Serve static files
+- Load balancing, rate limiting, gzip compression — all of it
 
-✅ **Aaj kal kyun nahi dikhte:**
-Vercel, Railway, Netlify, Render, Fly.io sab ke peeche Nginx hi chalta hai lekin wo tumhe kabhi nahi dikhta. Sab automatically manage hota hai.
+✅ **Why you don't see them today:**
+Vercel, Railway, Netlify, Render, Fly.io — Nginx runs behind all of them, but you never see it. Everything is managed automatically.
 
 ✅ **Industry Standard 2024:**
-Koi bhi naya developer ab manually Nginx setup nahi karta. Sab managed hosting use karte hai. Lekin interview mein ye poochte hi hai isliye basic idea hona chahiye.
+No new developer manually sets up Nginx anymore. Everyone uses managed hosting. But interviews ask about it, so you should have the basic idea.
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`01-frontend-state.md` — State Management ke saare tools deep mein — Redux, Zustand, Jotai, MobX — Zomato, Amazon, Swiggy jaisi apps ke examples ke saath.
+`01-frontend-state.md` — All state management tools in depth — Redux, Zustand, Jotai, MobX — with examples from apps like Zomato, Amazon, Swiggy.

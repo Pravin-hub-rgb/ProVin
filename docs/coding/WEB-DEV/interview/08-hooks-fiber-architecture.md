@@ -1,31 +1,31 @@
 # ⚛️ Phase 2: Topic 8 - Rules of Hooks & Fiber Architecture
 
-> **Interview Question:** "Hooks top-level pe hi kyun? Loop/condition ke andar kyun nahi? React ka internal linked-list system kaise kaam karta hai?"
+> **Interview Question:** "Why must Hooks be called at top-level? Why not inside loops/conditions? How does React's internal linked-list system work?"
 
 ---
 
-## 🚨 **The Golden Rule — Sabse Pehle Samjho!**
+## 🚨 **The Golden Rule — Understand This First!**
 
-> **"Hooks ko hamesha top-level pe call karo — kabhi bhi loops, conditions, ya nested functions ke andar mat call karo."**
+> **"Always call Hooks at the top level — never call them inside loops, conditions, or nested functions."**
 
-### **Sabse Important Baat — Kyun?**
+### **Most Important Point — Why?**
 
 ```
-React ko HAR RENDER SE PEHLE ye pata hona chahiye ki:
-- Kitne hooks hain?
-- Kaunse hooks hain?
-- Kaunsa hook kahan hai?
+React must know BEFORE EVERY RENDER:
+- How many hooks are there?
+- Which hooks are there?
+- Which hook is where?
 
-Kyun? Kyunki React ko:
-1. Pehle render pe hooks create karne hain
-2. Baad ke renders pe same hooks ko reuse karna hai
+Why? Because React needs to:
+1. Create hooks on first render
+2. Reuse the same hooks on subsequent renders
 
-Agar hooks ki count ya order change hua, toh:
-- React galat hook se state match kar dega
-- State galat jagah chali jayegi
-- Bug fix karna mushkil ho jayega
+If hook count or order changes:
+- React matches state to wrong hook
+- State goes to wrong place
+- Bug becomes hard to fix
 
-Isliye React ko HAR RENDER PE SAME HOOKS, SAME ORDER mein chahiye!
+That's why React needs THE SAME HOOKS, IN SAME ORDER, on EVERY RENDER!
 ```
 
 ---
@@ -35,7 +35,7 @@ Isliye React ko HAR RENDER PE SAME HOOKS, SAME ORDER mein chahiye!
 ### 🎒 **Hooks — Backpack System**
 
 ```
-Socho tumhare paas ek backpack hai jisme tum items rakhte ho:
+Imagine you have a backpack where you keep items:
 
 Render 1:
 ┌─────────────────────────────────────┐
@@ -45,21 +45,21 @@ Render 1:
 │ 3. useEffect → (effect function)    │
 └─────────────────────────────────────┘
 
-React ko pata hai:
-- Pehla item = count state
-- Dusra item = name state
-- Teesra item = effect
+React knows:
+- First item = count state
+- Second item = name state
+- Third item = effect
 
-Agar tum condition ke andar hook call karoge:
-- React confuse ho jayega
-- "Kaunsa item kaunsa hai?" pata nahi chalega
-- State galat hook se match ho jayegi!
+If you call hook inside a condition:
+- React gets confused
+- "Which item is which?" unknown
+- State matches to wrong hook!
 ```
 
 ### 🔗 **Linked-List — Chain System**
 
 ```
-React hooks ek chain (linked-list) ki tarah connected hain:
+React hooks are connected like a chain (linked-list):
 
 ┌──────────┐    ┌──────────┐    ┌──────────┐
 │ Hook 1   │───▶│ Hook 2   │───▶│ Hook 3   │
@@ -67,119 +67,119 @@ React hooks ek chain (linked-list) ki tarah connected hain:
 └──────────┘    └──────────┘    └──────────┘
    (count)         (name)        (effect)
 
-Har render pe:
-- React same order mein hooks ko traverse karta hai
-- Agar order change hua → chain toot gayi!
-- State galat jagah match ho jayegi!
+Every render:
+- React traverses hooks in same order
+- If order changes → chain breaks!
+- State matches to wrong place!
 ```
 
 ---
 
-## 🤔 **"Call" ka Matlab Kya Hai? — Important Clarification**
+## 🤔 **What Does "Call" Mean? — Important Clarification**
 
 ```
-Jab hum kehte hain "hook call karna", toh matlab hai:
+When we say "calling a hook", we mean:
 
-const [count, setCount] = useState(0);  // ← Yeh HAI "call"
+const [count, setCount] = useState(0);  // ← This IS "calling"
 
-Yahan `useState(0)` ek function call hai.
-Jab React component render hota hai, toh:
-1. Component function execute hota hai (top to bottom)
-2. Har line execute hoti hai
-3. Jab `useState()` aata hai, toh woh CALL (execute) hota hai
+Here `useState(0)` is a function call.
+When React component renders:
+1. Component function executes (top to bottom)
+2. Each line executes
+3. When `useState()` comes, it gets CALLED (executed)
 
-"Call" = Function ko execute karna
-"Define" = Variable ko declare karna
+"Call" = Execute a function
+"Define" = Declare a variable
 
-Yahan dono ho raha hai:
-- `useState(0)` CALL ho raha hai (function execute)
-- `count` aur `setCount` DEFINE ho rahe hain (variables declare)
+Here both happen:
+- `useState(0)` is CALLED (function executes)
+- `count` and `setCount` are DEFINED (variables declared)
 
-Problem tab hoti hai jab `useState()` CALL hi nahi hota!
+Problem occurs when `useState()` is NOT called at all!
 ```
 
 ---
 
-## ⚠️ **Condition ke Andar Hook — Exact Problem**
+## ⚠️ **Hook Inside Condition — Exact Problem**
 
 ```javascript
 function Counter({ showCount }) {
-  const [count, setCount] = useState(0);  // Hook 1 - HAMESHA call hoga
-  
+  const [count, setCount] = useState(0);  // Hook 1 - ALWAYS called
+
   if (showCount) {
-    const [name, setName] = useState('');  // Hook 2 - SIRF tab call hoga jab showCount = true
+    const [name, setName] = useState('');  // Hook 2 - called ONLY when showCount = true
   }
-  
+
   const [age, setAge] = useState(0);  // Hook 2 or 3?
 }
 
 // RENDER 1: showCount = true
-// Line 1 execute: useState(0) CALL hua → Hook 1 (count)
-// Line 2 execute: if (true) → ANDAR GAYE
-// Line 3 execute: useState('') CALL hua → Hook 2 (name)
-// Line 4 execute: useState(0) CALL hua → Hook 3 (age)
+// Line 1 executes: useState(0) CALLED → Hook 1 (count)
+// Line 2 executes: if (true) → ENTERED
+// Line 3 executes: useState('') CALLED → Hook 2 (name)
+// Line 4 executes: useState(0) CALLED → Hook 3 (age)
 // Result: count=Hook1, name=Hook2, age=Hook3 ✅
 
 // RENDER 2: showCount = false
-// Line 1 execute: useState(0) CALL hua → Hook 1 (count)
-// Line 2 execute: if (false) → ANDAR NAHI GAYE
-// Line 3 execute: useState(0) CALL hua → Hook 2 (age) ← PROBLEM!
+// Line 1 executes: useState(0) CALLED → Hook 1 (count)
+// Line 2 executes: if (false) → NOT ENTERED
+// Line 3 executes: useState(0) CALLED → Hook 2 (age) ← PROBLEM!
 // Result: count=Hook1, age=Hook2 ❌
 
-// React sochta hai: "Hook 2 toh name tha, ab age kaise ho gaya?"
-// State mismatch! name ki state age ko chali gayi!
+// React thinks: "Hook 2 was name, now how is it age?"
+// State mismatch! name's state went to age!
 ```
 
-**Reason:** Condition ke andar code **execute hi nahi hota** jab condition false hoti hai. Toh `useState()` **call hi nahi hota**. React ko pata hi nahi chalta ki wahan hook tha.
+**Reason:** Code inside condition **doesn't execute** when condition is false. So `useState()` is **not called**. React doesn't even know there was a hook there.
 
 ---
 
-## ⚠️ **Loop ke Andar Hook — Exact Problem**
+## ⚠️ **Hook Inside Loop — Exact Problem**
 
 ```javascript
 function List({ items }) {
-  const [count, setCount] = useState(0);  // Hook 1 - HAMESHA 1 baar call
-  
+  const [count, setCount] = useState(0);  // Hook 1 - ALWAYS called once
+
   for (let i = 0; i < items.length; i++) {
-    const [item, setItem] = useState('');  // Hook 2 - items.length BAAR call!
+    const [item, setItem] = useState('');  // Hook 2 - called items.length TIMES!
   }
 }
 
 // RENDER 1: items = ['a', 'b', 'c'] (length = 3)
-// Line 1 execute: useState(0) CALL hua → Hook 1 (count)
-// Loop execute:
-//   i=0: useState('') CALL hua → Hook 2
-//   i=1: useState('') CALL hua → Hook 3
-//   i=2: useState('') CALL hua → Hook 4
+// Line 1 executes: useState(0) CALLED → Hook 1 (count)
+// Loop executes:
+//   i=0: useState('') CALLED → Hook 2
+//   i=1: useState('') CALLED → Hook 3
+//   i=2: useState('') CALLED → Hook 4
 // Total: 4 hooks ✅
 
 // RENDER 2: items = ['a', 'b', 'c', 'd', 'e'] (length = 5)
-// Line 1 execute: useState(0) CALL hua → Hook 1 (count)
-// Loop execute:
-//   i=0: useState('') CALL hua → Hook 2
-//   i=1: useState('') CALL hua → Hook 3
-//   i=2: useState('') CALL hua → Hook 4
-//   i=3: useState('') CALL hua → Hook 5 ← NAYA!
-//   i=4: useState('') CALL hua → Hook 6 ← NAYA!
+// Line 1 executes: useState(0) CALLED → Hook 1 (count)
+// Loop executes:
+//   i=0: useState('') CALLED → Hook 2
+//   i=1: useState('') CALLED → Hook 3
+//   i=2: useState('') CALLED → Hook 4
+//   i=3: useState('') CALLED → Hook 5 ← NEW!
+//   i=4: useState('') CALLED → Hook 6 ← NEW!
 // Total: 6 hooks ❌
 
-// React sochta hai: "Pehle 4 hooks the, ab 6 kaise ho gaye?"
-// Purane hooks ki state naye hooks se mismatch!
+// React thinks: "There were 4 hooks before, now how are there 6?"
+// Old hooks' state mismatches with new hooks!
 ```
 
-**Reason:** Loop ke andar hook **multiple baar call** hota hai. Har iteration mein naya hook add hota hai. Agar items ki length change hui, toh hooks ki count bhi change ho jati hai.
+**Reason:** Hook inside loop gets **called multiple times**. A new hook is added in every iteration. If items length changes, hook count changes too.
 
 ---
 
 ## 🔄 **Why Top-Level Only? — The Technical Reason**
 
-### **React ka Internal System:**
+### **React's Internal System:**
 
 ```javascript
-// React internally hooks ko store karta hai:
+// React internally stores hooks:
 const fiberNode = {
   memoizedState: null,  // Linked-list head
-  
+
   // Linked-list structure:
   // {
   //   memoizedState: hook1,
@@ -202,75 +202,75 @@ let currentHook = null;
 let hookIndex = 0;
 
 function useState(initialValue) {
-  // React current index se hook dhundta hai
+  // React finds hook from current index
   const hook = getCurrentHook(hookIndex);
-  
-  // Agar hook nahi mila (pehli render), toh create karo
+
+  // If hook not found (first render), create it
   if (!hook) {
     const newHook = {
       memoizedState: initialValue,
       queue: [],
       next: null
     };
-    // Linked-list mein add karo
+    // Add to linked-list
     addHook(newHook);
     return [newHook.memoizedState, setState];
   }
-  
-  // Agar hook mila (subsequent renders), toh use karo
-  hookIndex++;  // Next hook pe jao
+
+  // If hook found (subsequent renders), use it
+  hookIndex++;  // Move to next hook
   return [hook.memoizedState, setState];
 }
 ```
 
 ---
 
-## ❌ **Wrong Examples — Jo Kabhi Nahi Karna**
+## ❌ **Wrong Examples — Never Do These**
 
 ### **Example 1: Hook Inside Condition**
 
 ```javascript
-// ❌ GALAT — Hook condition ke andar
+// ❌ WRONG — Hook inside condition
 function Counter({ showCount }) {
   const [count, setCount] = useState(0);  // Hook 1
-  
+
   if (showCount) {
-    const [name, setName] = useState('');  // ❌ Hook 2 (kabhi kabhi call hoga)
+    const [name, setName] = useState('');  // ❌ Hook 2 (sometimes called)
   }
-  
+
   const [age, setAge] = useState(0);  // Hook 2 or 3? Confusion!
-  
+
   return <div>{count}</div>;
 }
 
 // Problem:
 // Render 1 (showCount = true):
 //   Hook 1: count
-//   Hook 2: name (condition ke andar)
+//   Hook 2: name (inside condition)
 //   Hook 3: age
 //
 // Render 2 (showCount = false):
 //   Hook 1: count
-//   Hook 2: age (kyunki name wala hook call hi nahi hua!)
+//   Hook 2: age (because name hook wasn't called!)
 //   ❌ State mismatch!
 ```
 
 ### **Example 2: Hook Inside Loop**
 
 ```javascript
-// ❌ GALAT — Hook loop ke andar
+// ❌ WRONG — Hook inside loop
 function List({ items }) {
   const [count, setCount] = useState(0);
-  
+
   for (let i = 0; i < items.length; i++) {
-    const [itemState, setItemState] = useState('');  // ❌ Har iteration mein naya hook!
+    const [itemState, setItemState] = useState('');  // ❌ New hook in every iteration!
   }
-  
+
   return <div>{count}</div>;
 }
 
 // Problem:
-// Agar items.length = 3:
+// If items.length = 3:
 //   Hook 1: count
 //   Hook 2: itemState (i=0)
 //   Hook 3: itemState (i=1)
@@ -281,51 +281,51 @@ function List({ items }) {
 //   Hook 2: itemState (i=0)
 //   Hook 3: itemState (i=1)
 //   Hook 4: itemState (i=2)
-//   Hook 5: itemState (i=3)  ← Naya hook!
-//   Hook 6: itemState (i=4)  ← Naya hook!
-// ❌ State mismatch!
+//   Hook 5: itemState (i=3)  ← New hook!
+//   Hook 6: itemState (i=4)  ← New hook!
+//   ❌ State mismatch!
 ```
 
 ### **Example 3: Hook Inside Nested Function**
 
 ```javascript
-// ❌ GALAT — Hook nested function ke andar
+// ❌ WRONG — Hook inside nested function
 function Form() {
   const [count, setCount] = useState(0);
-  
+
   const handleSubmit = () => {
-    const [name, setName] = useState('');  // ❌ Nested function ke andar!
+    const [name, setName] = useState('');  // ❌ Inside nested function!
   };
-  
+
   return <form onSubmit={handleSubmit}>{count}</form>;
 }
 
 // Problem:
-// Render 1: Hook 1: count (handleSubmit call nahi hua, toh name wala hook call hi nahi hua)
-// Render 2: Hook 1: count (ab handleSubmit call hua, toh name wala hook call hua)
-// ❌ Hook order change ho gaya!
+// Render 1: Hook 1: count (handleSubmit not called, so name hook not called)
+// Render 2: Hook 1: count (now handleSubmit called, so name hook called)
+// ❌ Hook order changed!
 ```
 
 ---
 
-## ✅ **Right Examples — Jo Hamesha Karna Hai**
+## ✅ **Right Examples — Always Do These**
 
 ### **Example 1: Hook at Top-Level**
 
 ```javascript
-// ✅ SAHI — Sab hooks top-level pe
+// ✅ RIGHT — All hooks at top-level
 function Counter({ showCount }) {
   const [count, setCount] = useState(0);  // Hook 1
   const [name, setName] = useState('');   // Hook 2
   const [age, setAge] = useState(0);      // Hook 3
-  
-  // Condition ke andar state use karo, hook nahi
+
+  // Use state inside condition, not hook
   const displayName = showCount ? name : 'Hidden';
-  
+
   return <div>{count} - {displayName}</div>;
 }
 
-// Har render pe same order:
+// Every render same order:
 // Hook 1: count
 // Hook 2: name
 // Hook 3: age
@@ -335,11 +335,11 @@ function Counter({ showCount }) {
 ### **Example 2: Conditional Hook Usage (Custom Hook)**
 
 ```javascript
-// ✅ SAHI — Custom hook ke andar condition, lekin hook top-level
+// ✅ RIGHT — Condition inside custom hook, but hook at top-level
 function useConditionalEffect(condition, effect) {
-  // Hook top-level pe
+  // Hook at top-level
   useEffect(() => {
-    // Condition ke andar effect run karo
+    // Run effect inside condition
     if (condition) {
       effect();
     }
@@ -351,78 +351,78 @@ function Component({ showNotification }) {
   useConditionalEffect(showNotification, () => {
     alert('Notification!');
   });
-  
+
   return <div>...</div>;
 }
 
-// Hook top-level pe call hua, condition ke andar sirf logic hai
+// Hook called at top-level, condition only in logic
 // ✅ Consistent!
 ```
 
 ### **Example 3: Dynamic Hooks (useMemo/useCallback)**
 
 ```javascript
-// ✅ SAHI — useMemo/useCallback ke andar dynamic values
+// ✅ RIGHT — useMemo/useCallback for dynamic values
 function List({ items }) {
   const [count, setCount] = useState(0);
-  
-  // useMemo top-level pe, dynamic calculation ke liye
+
+  // useMemo at top-level, dynamic calculation
   const processedItems = useMemo(() => {
     return items.map(item => ({
       ...item,
       processed: true
     }));
   }, [items]);
-  
+
   return <div>{count}</div>;
 }
 
-// Hook top-level pe, calculation dynamic
+// Hook at top-level, calculation dynamic
 // ✅ Consistent!
 ```
 
 ---
 
-## 🔧 **Fiber Architecture — React ka Internal System**
+## 🔧 **Fiber Architecture — React's Internal System**
 
 ### **Why Are We Talking About Fiber Here?**
 
 ```
-Pehle humne samjha ki hooks top-level pe kyun hone chahiye.
-Ab sawal ye hai — React internally hooks ko track kaise karta hai?
+First we understood why hooks must be at top-level.
+Now the question is — how does React internally track hooks?
 
-Jawab hai: **Fiber Architecture**
+Answer: **Fiber Architecture**
 
-React har component ke liye ek Fiber node banata hai,
-aur usi Fiber node ke andar hooks ki linked-list store hoti hai.
+React creates a Fiber node for each component,
+and stores hooks' linked-list inside that Fiber node.
 
-Toh hooks ko samajhne ke liye, Fiber ko samajhna zaroori hai.
+So to understand hooks, you must understand Fiber.
 ```
 
-### **What is Fiber? — The Complete Picture**
+### **What Is Fiber? — The Complete Picture**
 
 ```
-Fiber React 16+ ka internal data structure hai jo:
+Fiber is React 16+ internal data structure that:
 
-1. **Component Tree ko Represent Karta Hai**
-   - Har component ke liye ek Fiber node
-   - Parent-child relationships maintain karta hai
-   - Sibling components ko link karta hai
+1. **Represents Component Tree**
+   - One Fiber node per component
+   - Maintains parent-child relationships
+   - Links sibling components
 
-2. **Hooks ko Store Karta Hai**
-   - `memoizedState` property mein hooks ki linked-list
-   - useState, useEffect, etc. sab yahan store hote hain
-   - Har render pe same hooks access karne ke liye
+2. **Stores Hooks**
+   - `memoizedState` property holds hooks' linked-list
+   - useState, useEffect, etc. all stored here
+   - Same hooks accessed on every render
 
-3. **Reconciliation (Diffing) Karta Hai**
-   - Previous render vs current render compare karta hai
-   - `alternate` property mein do versions store karta hai
-   - Kya change hua, kya update karna hai — ye decide karta hai
+3. **Performs Reconciliation (Diffing)**
+   - Compares previous render vs current render
+   - Stores two versions in `alternate` property
+   - Decides what changed, what to update
 
-4. **Priority-Based Rendering Karta Hai**
-   - `lanes` property se priority track karta hai
-   - Important updates (user interaction) pehle
-   - Kam important updates (data fetching) baad mein
+4. **Priority-Based Rendering**
+   - Tracks priority via `lanes` property
+   - Important updates (user interaction) first
+   - Less important updates (data fetching) later
 ```
 
 ### **Fiber Analogy — Restaurant Management**
@@ -430,155 +430,157 @@ Fiber React 16+ ka internal data structure hai jo:
 ```
 🍽️ **Restaurant Scenario:**
 
-🏗️ **Component Tree = Restaurant ka Layout**
+🏗️ **Component Tree = Restaurant Layout**
    - Kitchen, dining area, counter (components)
-   - Kaun kahan baitha hai (component hierarchy)
+   - Who sits where (component hierarchy)
 
-📋 **Fiber = Har Table ka Order Ticket**
+📋 **Fiber = Order Ticket for Each Table**
    - Table number (component type)
    - Order details (props)
    - Special requests (state/hooks)
    - Order status (rendered, pending, updated)
 
-🔄 **Reconciliation = Kitchen ka Process**
-   - Pehle kya order tha? (previous render)
-   - Ab kya order hai? (current render)
-   - Kya change hua? (new items, removed items)
-   - Kya banana hai? (re-render)
+🔄 **Reconciliation = Kitchen Process**
+   - What was ordered before? (previous render)
+   - What's ordered now? (current render)
+   - What changed? (new items, removed items)
+   - What to cook? (re-render)
 
-⚡ **Priority-Based Rendering = Waiter ka Kaam**
-   - VIP customer → High priority (turant serve)
-   - Regular customer → Normal priority (baad mein serve)
-   - Takeaway order → Low priority (sabse baad mein)
+⚡ **Priority-Based Rendering = Waiter's Job**
+   - VIP customer → High priority (serve immediately)
+   - Regular customer → Normal priority (serve later)
+   - Takeaway order → Low priority (serve last)
 ```
 
 ### **Fiber Node Structure — Detailed Explanation**
 
 ```javascript
-// React internally har component ke liye ek Fiber node banata hai:
+// React creates a Fiber node for each component internally:
 const fiberNode = {
   // ==================== COMPONENT INFO ====================
   type: 'function',           // Component type (function/class/HostComponent)
   elementType: Counter,       // Component function reference
-  key: null,                  // React key (lists mein use hoti hai)
-  
+  key: null,                  // React key (used in lists)
+
   // ==================== STATE & EFFECTS ====================
-  memoizedState: null,        // Linked-list head (hooks store hote hain)
-  memoizedProps: null,        // Last rendered props (comparison ke liye)
-  stateNode: null,            // Class component instance ya DOM element
-  
+  memoizedState: null,        // Linked-list head (hooks stored here)
+  memoizedProps: null,        // Last rendered props (for comparison)
+  stateNode: null,            // Class component instance or DOM element
+
   // ==================== TREE STRUCTURE ====================
-  return: null,               // Parent fiber (upar wala component)
-  child: null,                // First child fiber (pehla child component)
-  sibling: null,              // Next sibling fiber (agla sibling component)
-  
+  return: null,               // Parent fiber (component above)
+  child: null,                // First child fiber (first child component)
+  sibling: null,              // Next sibling fiber (next sibling component)
+
   // ==================== RECONCILIATION ====================
-  pendingProps: null,         // New props (abhi aaye hain)
-  alternate: null,            // Work-in-progress vs current (do versions)
-                              // React do trees maintain karta hai:
-                              // - Current tree (screen pe dikh raha hai)
+  pendingProps: null,         // New props (just arrived)
+  alternate: null,            // Work-in-progress vs current (two versions)
+                              // React maintains two trees:
+                              // - Current tree (showing on screen)
                               // - Work-in-progress tree (next render)
-  
+
   // ==================== PRIORITY ====================
-  lanes: null,                // Priority lanes (kaunsa work priority)
-  childLanes: null,           // Children priority (bachon ka priority)
-  
+  lanes: null,                // Priority lanes (which work has priority)
+  childLanes: null,           // Children's priority
+
   // ==================== SIDE EFFECTS ====================
-  flags: null,                // Kya changes hain? (placement, update, deletion)
-  subtreeFlags: null,         // Children ke changes
-  deletions: null,            // Kaunse children delete honge
+  flags: null,                // What changes? (placement, update, deletion)
+  subtreeFlags: null,         // Children's changes
+  deletions: null,            // Which children will be deleted
 };
 ```
 
 ### **Why Fiber? — Problem & Solution**
 
 ```
-❌ **Purana System (Stack Reconciler - React 15 aur pehle):**
-   
-   Problem:
-   - React ek hi saath pura component tree render karta tha
-   - Render synchronous tha — ek baar shuru hua toh khatam hone tak nahi rukta tha
-   - Agar tree bada tha (1000+ components), toh UI freeze ho jata tha
-   - User interaction respond nahi kar pata tha
-   - Example: 1000 components render karte waqt, user ne click kiya → freeze!
-   
-   Technical Issue:
-   - JavaScript call stack recursion pe depend karta tha
-   - Recursion ko pause/resume nahi kar sakte
-   - Ek baar render shuru hua → poora complete hona zaroori tha
+❌ **Old System (Stack Reconciler - React 15 and before):**
 
-✅ **Naya System (Fiber Reconciler - React 16+):**
-   
+   Problem:
+   - React rendered entire component tree at once
+   - Render was synchronous — once started, couldn't stop until complete
+   - If tree was large (1000+ components), UI froze
+   - User interaction couldn't be handled
+   - Example: Rendering 1000 components, user clicks → freeze!
+
+   Technical Issue:
+   - Depended on JavaScript call stack recursion
+   - Can't pause/resume recursion
+   - Once render started → must complete
+
+✅ **New System (Fiber Reconciler - React 16+):**
+
    Solution:
-   - React thoda thoda render karta hai (incremental rendering)
-   - Fiber nodes ko linked-list ki tarah traverse karta hai
-   - Beech mein pause/resume kar sakta hai
-   - User interaction handle kar sakta hai
-   - Important updates pehle process karta hai
-   
+   - React renders in small chunks (incremental rendering)
+   - Traverses Fiber nodes like linked-list
+   - Can pause/resume in between
+   - Can handle user interaction
+   - Important updates processed first
+
    Technical Implementation:
-   - Linked-list structure (recursion ki zaroorat nahi)
-   - `alternate` property se do trees maintain karta hai
-   - Work loop se pause/resume capability
-   - `lanes` property se priority management
+   - Linked-list structure (no need for recursion)
+   - `alternate` property maintains two trees
+   - Work loop provides pause/resume capability
+   - `lanes` property manages priority
 ```
 
-### **Fiber ka Work Loop — How React Renders**
+### **Fiber's Work Loop — How React Renders**
 
 ```javascript
-// React ka rendering process do phases mein hota hai:
+// React's rendering process happens in two phases:
 
 // ==================== PHASE 1: RENDER PHASE ====================
 // (Can be paused, resumed, and deprioritized)
 
-// 1. React work loop start karta hai
+// 1. React starts work loop
 while (thereIsWork) {
-  // 2. Next priority work uthata hai
+  // 2. Pick next priority work
   const nextUnit = getNextUnitOfWork();
-  
-  // 3. Check karta hai — koi higher priority work toh nahi?
+
+  // 3. Check — is there higher priority work?
   if (higherPriorityWork) {
-    // 4. Current work pause karo, higher priority pe jao
+    // 4. Pause current work, go to higher priority
     yield; // Pause here!
     continue;
   }
-  
-  // 5. Current unit process karo
+
+  // 5. Process current unit
   const completed = performUnitOfWork(nextUnit);
-  
-  // 6. Next unit decide karo
+
+  // 6. Decide next unit
   scheduleWork(completed);
 }
 
 // ==================== PHASE 2: COMMIT PHASE ====================
 // (Cannot be interrupted — must complete)
 
-// 1. Render phase complete hua
-// 2. Ab DOM updates apply karo
+// 1. Render phase complete
+// 2. Now apply DOM updates
 commitRoot();
 
 // Example Scenario:
-// User ne click kiya → High priority update
-// Data fetch complete hua → Low priority update
-// React pehle click handle karega (render phase pause karke)
-// Phir data update karega (baad mein resume karke)
+// User clicked → High priority update
+// Data fetch completed → Low priority update
+// React first handles click (pauses render phase)
+// Then updates data (resumes later)
 ```
 
-### **Fiber aur Hooks — The Connection**
+### **Fiber and Hooks — The Connection**
 
 ```javascript
-// Fiber node ke andar hooks kaise store hote hain:
+// How hooks are stored inside Fiber node:
 fiberNode.memoizedState = {
   // Hook 1: useState
   memoizedState: 0,           // State value (count)
-  baseState: 0,               // Base state (update queue se pehle)
+  baseState: 0,               // Base state (before update queue)
   queue: null,                // Update queue (setState calls)
-  next: {                     // Linked-list ka next node
+  next: {                     // Next node in linked-list
+
     // Hook 2: useState
     memoizedState: '',        // State value (name)
     baseState: '',
     queue: null,
     next: {
+
       // Hook 3: useEffect
       memoizedState: {        // Effect object
         create: () => { /* ... */ },
@@ -592,12 +594,12 @@ fiberNode.memoizedState = {
   }
 };
 
-// Har render pe:
-// 1. React first hook se start karta hai
-// 2. Linked-list traverse karta hai
-// 3. Har hook ka state update karta hai
-// 4. Next hook pe jata hai (hookIndex++)
-// 5. End tak pahunch ke stop karta hai
+// Every render:
+// 1. React starts from first hook
+// 2. Traverses linked-list
+// 3. Updates state of each hook
+// 4. Moves to next hook (hookIndex++)
+// 5. Stops at end
 ```
 
 ---
@@ -607,14 +609,14 @@ fiberNode.memoizedState = {
 ### **Rule 1: Only Call Hooks at the Top Level**
 
 ```javascript
-// ✅ SAHI
+// ✅ RIGHT
 function Component() {
   const [state, setState] = useState(0);  // Top-level
   useEffect(() => { /* ... */ });         // Top-level
   return <div>{state}</div>;
 }
 
-// ❌ GALAT
+// ❌ WRONG
 function Component() {
   if (condition) {
     const [state, setState] = useState(0);  // ❌ Inside condition
@@ -626,19 +628,19 @@ function Component() {
 ### **Rule 2: Only Call Hooks from React Functions**
 
 ```javascript
-// ✅ SAHI
+// ✅ RIGHT
 function Component() {
   const [state, setState] = useState(0);  // React function
   return <div>{state}</div>;
 }
 
-// ✅ SAHI (Custom Hook)
+// ✅ RIGHT (Custom Hook)
 function useCustomHook() {
   const [state, setState] = useState(0);  // Custom hook (starts with "use")
   return state;
 }
 
-// ❌ GALAT
+// ❌ WRONG
 function regularFunction() {
   const [state, setState] = useState(0);  // ❌ Regular JavaScript function
   return state;
@@ -649,64 +651,64 @@ function regularFunction() {
 
 ## 🎙️ **Interview Articulation**
 
-### **Q: "Hooks top-level pe hi kyun? Loop/condition ke andar kyun nahi?"**
+### **Q: "Why must Hooks be at top-level? Why not inside loops/conditions?"**
 
-**Answer:** "React hooks ko **linked-list** mein store karta hai. Har render pe React same order mein hooks ko traverse karta hai. Agar tum hook ko condition ya loop ke andar call karoge, toh order change ho jayega — React confuse ho jayega ki kaunsa state kaunse hook se match karna hai.
+**Answer:** "React stores hooks in a **linked-list**. On every render, React traverses hooks in the same order. If you call a hook inside a condition or loop, the order changes — React gets confused about which state matches which hook.
 
 Example:
-- Render 1: Hook 1 (count), Hook 2 (name - condition ke andar), Hook 3 (age)
-- Render 2: Hook 1 (count), Hook 2 (age - kyunki name wala hook call hi nahi hua!)
+- Render 1: Hook 1 (count), Hook 2 (name - inside condition), Hook 3 (age)
+- Render 2: Hook 1 (count), Hook 2 (age - because name hook wasn't called!)
 - ❌ State mismatch!
 
-Isliye hooks ko hamesha top-level pe call karna chahiye — taaki har render pe same order maintain rahe."
+That's why hooks must always be called at top-level — so the same order is maintained on every render."
 
-### **Q: "React ka internal linked-list system kaise kaam karta hai?"**
+### **Q: "How does React's internal linked-list system work?"**
 
-**Answer:** "React internally har component ke liye ek **Fiber node** banata hai. Fiber node ke andar `memoizedState` property hoti hai jo hooks ki linked-list ka head hoti hai.
+**Answer:** "React internally creates a **Fiber node** for each component. The Fiber node has a `memoizedState` property that is the head of hooks' linked-list.
 
-Jab tum hook call karte ho:
-1. React current index se linked-list traverse karta hai
-2. Agar hook nahi mila (pehli render), toh naya hook create karke linked-list mein add karta hai
-3. Agar hook mila (subsequent renders), toh existing hook use karta hai
-4. Hook index increment hota hai, aur next hook pe jata hai
+When you call a hook:
+1. React traverses the linked-list from current index
+2. If hook not found (first render), creates new hook and adds to linked-list
+3. If hook found (subsequent renders), uses existing hook
+4. Hook index increments, moves to next hook
 
-Isliye order maintain rehna zaroori hai — agar order change hua, toh React galat hook se state match kar dega."
+That's why order must be maintained — if order changes, React matches state to wrong hook."
 
-### **Q: "Fiber architecture kya hai?"**
+### **Q: "What is Fiber architecture?"**
 
-**Answer:** "Fiber React ka internal data structure hai jo:
-1. **Component tree** ko represent karta hai (parent-child-sibling relationships)
-2. **Hooks** ko store karta hai (linked-list mein `memoizedState` property mein)
-3. **Reconciliation** karta hai (`alternate` property se previous vs current compare karta hai)
-4. **Priority-based rendering** karta hai (`lanes` property se priority track karta hai)
+**Answer:** "Fiber is React's internal data structure that:
+1. **Represents component tree** (parent-child-sibling relationships)
+2. **Stores hooks** (linked-list in `memoizedState` property)
+3. **Performs reconciliation** (`alternate` property compares previous vs current)
+4. **Priority-based rendering** (`lanes` property tracks priority)
 
-Fiber architecture React ko allow karta hai:
-- **Incremental rendering** — thoda thoda render karna (pause/resume capability)
-- **Priority-based updates** — important updates pehle (user interaction > data fetching)
-- **Concurrent mode** — multiple updates ek saath manage karna
+Fiber architecture allows React to:
+- **Incremental rendering** — render in small chunks (pause/resume capability)
+- **Priority-based updates** — important updates first (user interaction > data fetching)
+- **Concurrent mode** — manage multiple updates together
 
 Example:
-- User ne click kiya → High priority → React render pause karke click handle karega
-- Data fetch complete hua → Low priority → React baad mein update karega"
+- User clicked → High priority → React pauses render to handle click
+- Data fetch completed → Low priority → React updates later"
 
-### **Q: "Custom hooks banate waqt kya dhyan rakhna chahiye?"**
+### **Q: "What to keep in mind when creating custom hooks?"**
 
-**Answer:** "Custom hooks banate waqt:
-1. **Naam 'use' se start hona chahiye** — taaki React samajh sake ki ye hook hai
-2. **Hooks top-level pe call karo** — custom hook ke andar bhi same rules apply
-3. **Dependencies array sahi se do** — `useEffect`, `useMemo`, `useCallback` mein
-4. **State encapsulate karo** — custom hook ke andar state manage karo
-5. **Return values properly structure karo** — object ya array return karo
+**Answer:** "When creating custom hooks:
+1. **Name must start with 'use'** — so React knows it's a hook
+2. **Call hooks at top-level** — same rules apply inside custom hooks
+3. **Provide correct dependencies array** — in `useEffect`, `useMemo`, `useCallback`
+4. **Encapsulate state** — manage state inside custom hook
+5. **Structure return values properly** — return object or array
 
 Example:
 ```javascript
 function useCounter(initialValue = 0) {
-  // Hooks top-level pe
+  // Hooks at top-level
   const [count, setCount] = useState(initialValue);
-  
+
   const increment = () => setCount(count + 1);
   const decrement = () => setCount(count - 1);
-  
+
   // Properly structured return
   return {
     count,
@@ -714,7 +716,7 @@ function useCounter(initialValue = 0) {
     decrement
   };
 }
-```
+```"
 
 ---
 
@@ -724,15 +726,15 @@ function useCounter(initialValue = 0) {
 
 ```
 ✅ DO:
-- Hooks ko top-level pe call karo
-- React functions ya custom hooks ke andar call karo
-- Same order maintain rakho har render pe
+- Call hooks at top level
+- Call from React functions or custom hooks
+- Maintain same order on every render
 
 ❌ DON'T:
-- Loops ke andar call karo
-- Conditions ke andar call karo
-- Nested functions ke andar call karo
-- Regular JavaScript functions ke andar call karo
+- Call inside loops
+- Call inside conditions
+- Call inside nested functions
+- Call inside regular JavaScript functions
 ```
 
 ### **Fiber Node Key Properties:**
@@ -773,12 +775,12 @@ memoizedState:
 ### **Fiber Benefits:**
 
 ```
-✅ Incremental Rendering — thoda thoda render
-✅ Priority-Based Updates — important kaam pehle
-✅ Concurrent Mode — multiple updates manage
-✅ Pause/Resume — beech mein user interaction handle
+✅ Incremental Rendering — render in small chunks
+✅ Priority-Based Updates — important work first
+✅ Concurrent Mode — manage multiple updates
+✅ Pause/Resume — handle user interaction in between
 ```
 
 ---
 
-> **Pro Tip:** Interview mein jab bhi hooks discuss ho, **linked-list** zaroor mention karna. Ye demonstrate karta hai ki tum sirf hooks use nahi karte, balki unke internal implementation bhi samajhte ho! 🎯
+> **Pro Tip:** When discussing hooks in an interview, always mention **linked-list**. This demonstrates that you don't just use hooks, you understand their internal implementation too! 🎯

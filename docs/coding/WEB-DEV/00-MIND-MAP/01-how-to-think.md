@@ -1,68 +1,68 @@
-# 01 — Sochna Seekho: Project Shuru Karne Se Pehle
+# 01 — Learn to Think: Before Starting a Project
 
-> Pichle doc mein humne dekha ki ShopKaro ka poora picture kaisa dikhta hai.
-> Ab yeh samjhते hain ki ek senior dev kisi bhi project ko **kaise sochta hai** — code likhne se pehle.
-
----
-
-## Problem Kya Hai Abhi
-
-Tum abhi kuch aisa karte ho:
-
-```
-Idea aaya → VS Code khola → Code likhne lage
-```
-
-Yeh natural hai — beginners yahi karte hain. Lekin problem yeh hai ki beech mein jaake **wall** aati hai.
-
-- "Yeh data kahan store karun?"
-- "Yeh login wala kaise karun?"
-- "Cart ka data ek page se dusre pe kaise jaayega?"
-
-Aur tab tum Google karte ho, kuch copy karte ho, aur aage badhte ho — lekin samajh nahi aata ki **kyun** woh kiya.
+> In the previous doc we saw what ShopKaro's full picture looks like.
+> Now we'll understand how a senior dev **thinks** about any project — before writing any code.
 
 ---
 
-## Senior Dev Kya Karta Hai
+## The Problem Right Now
 
-Senior dev ka flow aisa hota hai:
+Right now you do something like this:
 
 ```
-Idea aaya → Sochta hai (bina code ke) → Phir likhta hai
+Idea came → Opened VS Code → Started writing code
 ```
 
-Yeh "sochna" roughly 3 stages mein hota hai:
+That's natural — beginners do exactly this. But the problem is that mid-way, a **wall** appears.
 
-### Stage 1 — "Kya banana hai?" (Requirements)
-### Stage 2 — "Kaise banana hai?" (Design Decisions)
-### Stage 3 — "Phir banata hai" (Implementation)
+- "Where do I store this data?"
+- "How do I handle login?"
+- "How does cart data move from one page to another?"
 
-Tum abhi seedha **Stage 3** pe jump karte ho. Stage 1 aur 2 skip ho jaati hai.
-
-Chalo teeno ko ShopKaro ke saath samjhte hain.
+And then you Google, copy something, and move on — but you never understand **why** it was done that way.
 
 ---
 
-## Stage 1 — "Kya banana hai?"
+## What a Senior Dev Does
 
-Yeh stage mein sirf **questions** pooche jaate hain — answers baad mein.
+A senior dev's flow looks like this:
 
-**ShopKaro ke liye questions:**
+```
+Idea came → Thinks (without code) → Then writes
+```
+
+This "thinking" roughly happens in 3 stages:
+
+### Stage 1 — "What to build?" (Requirements)
+### Stage 2 — "How to build?" (Design Decisions)
+### Stage 3 — "Then build it" (Implementation)
+
+Right now you jump straight to **Stage 3**. Stage 1 and 2 get skipped.
+
+Let's understand all three with ShopKaro.
+
+---
+
+## Stage 1 — "What to build?"
+
+In this stage, you only ask **questions** — answers come later.
+
+**Questions for ShopKaro:**
 
 ```
 USERS:
-- Kaun use karega? (Buyers? Sellers? Admin?)
-- Kya koi bhi dekh sakta hai products, ya login zaroori hai?
-- Kya ek user seller bhi ho sakta hai buyer bhi?
+- Who will use it? (Buyers? Sellers? Admin?)
+- Can anyone view products, or is login required?
+- Can one user be both a seller and a buyer?
 
 FEATURES:
-- Kya kya karna chahiye user ko?
-  - Products browse karna ✓
-  - Cart mein add karna ✓
-  - Order place karna ✓
-  - Payment karna ✓
-  - Order track karna ✓
-  - Review dena? (maybe later)
+- What should the user be able to do?
+  - Browse products ✓
+  - Add to cart ✓
+  - Place order ✓
+  - Make payment ✓
+  - Track order ✓
+  - Leave reviews? (maybe later)
   - Wishlist? (maybe later)
 
 MUST HAVE vs NICE TO HAVE:
@@ -70,108 +70,108 @@ MUST HAVE vs NICE TO HAVE:
 - Nice: Reviews, Wishlist, Seller Dashboard
 ```
 
-Yeh list banane ka fayda? — Tum **scope** decide karte ho. Warna hota yeh hai ki project kabhi khatam nahi hota kyunki naye features add karte rehte ho.
+What's the benefit of making this list? — You decide the **scope**. Otherwise what happens is the project never ends because you keep adding new features.
 
 ---
 
-## Stage 2 — "Kaise banana hai?"
+## Stage 2 — "How to build?"
 
-Ab har feature ke liye **decisions** lete hain.
+Now you make **decisions** for each feature.
 
-Yeh decisions hi hain jo ek senior dev ko beginner se alag karte hain. Decisions mein options hote hain — aur har option ke trade-offs hote hain.
+These decisions are what separate a senior dev from a beginner. Decisions come with options — and each option has trade-offs.
 
-### Decision 1 — Authentication kaise karein?
+### Decision 1 — How to handle Authentication?
 
 **Options:**
-- Khud banao (email + password + bcrypt + sessions) — ShopKaro mein yahi karenge
-- Clerk use karo — ready-made solution, 10 minute setup
-- NextAuth use karo — popular library, flexible
+- Build it yourself (email + password + bcrypt + sessions) — we'll do this in ShopKaro
+- Use Clerk — ready-made solution, 10-minute setup
+- Use NextAuth — popular library, flexible
 
-**Kab kya use karein:**
-- Sirf email/password chahiye + seekhna chahte ho andar se → Khud banao
-- Jaldi launch karna hai, Google/GitHub login bhi chahiye → Clerk
-- Custom logic chahiye + thoda control → NextAuth
+**When to use what:**
+- You only need email/password + want to learn the internals → Build it yourself
+- You need to launch fast, want Google/GitHub login too → Clerk
+- You need custom logic + some control → NextAuth
 
-ShopKaro mein hum **khud banayenge** — kyunki seekhna maksad hai.
+In ShopKaro we'll **build it ourselves** — because learning is the goal.
 
-Aage cover hoga: Doc 02-09
+Coming up: Doc 02-09
 
 ---
 
-### Decision 2 — Database kaunsa?
+### Decision 2 — Which Database?
 
 **Options:**
-- PostgreSQL — rows aur columns, structured data
-- MongoDB — flexible, JSON jaisa
+- PostgreSQL — rows and columns, structured data
+- MongoDB — flexible, JSON-like
 
-**Kab kya:**
-- Data ka structure fixed hai (User, Product, Order) → PostgreSQL
-- Data ka structure flexible hai, schema baar baar badle → MongoDB
+**When to use what:**
+- Data structure is fixed (User, Product, Order) → PostgreSQL
+- Data structure is flexible, schema changes often → MongoDB
 
-ShopKaro mein data structured hai — **PostgreSQL**.
+ShopKaro's data is structured — so **PostgreSQL**.
 
-Aage cover hoga: Doc 19-22
+Coming up: Doc 19-22
 
 ---
 
-### Decision 3 — State kahan rakhein?
+### Decision 3 — Where to keep State?
 
-"State" matlab app ki yaadaasht — jaise cart mein kya hai abhi.
+"State" means the app's memory — like what's in the cart right now.
 
 **Options:**
-- React `useState` — sirf ek component ke liye
-- React Context — poori app ke liye, simple cases
-- Zustand — poori app ke liye, complex cases
-- Server se har baar fetch karo — kabhi kabhi yahi sahi hota hai
+- React `useState` — for a single component
+- React Context — for the whole app, simple cases
+- Zustand — for the whole app, complex cases
+- Fetch from server every time — sometimes that's the right call
 
-**Kab kya:**
-- Cart data (sirf browser mein chahiye, fast update) → Zustand
-- User ka login status (poori app mein chahiye) → Context ya Zustand
-- Product list (server se aati hai) → React Query (server state)
+**When to use what:**
+- Cart data (only needed in browser, fast updates) → Zustand
+- User's login status (needed across the app) → Context or Zustand
+- Product list (comes from server) → React Query (server state)
 
-Aage cover hoga: Doc 27-31
+Coming up: Doc 27-31
 
 ---
 
-### Decision 4 — Rendering strategy kya ho?
+### Decision 4 — What's the Rendering Strategy?
 
-Matlab — page server pe banega ya browser mein?
+Meaning — should the page be built on the server or in the browser?
 
 **Options:**
-- SSR — server pe banega, fresh data
-- CSR — browser mein banega, fast interactions
-- SSG — pehle se bana hua, fastest
+- SSR — built on server, fresh data
+- CSR — built in browser, fast interactions
+- SSG — pre-built, fastest
 
-**ShopKaro mein:**
+**In ShopKaro:**
 - Homepage → SSG (same for everyone)
-- Product page → SSR (stock real-time)
-- Cart → CSR (sirf user ka data)
+- Product page → SSR (real-time stock)
+- Cart → CSR (only the user's data)
 
-Aage cover hoga: Doc 14-18
-
----
-
-## Stage 3 — "Phir banata hai"
-
-Jab Stage 1 aur 2 clear ho — tab VS Code kholo.
-
-Ab tum jab bhi kuch likhte ho, tumhe pata hota hai:
-- Yeh kis umbrella ka part hai
-- Yeh decision kyun liya
-- Aur kya alternatives the
+Coming up: Doc 14-18
 
 ---
 
-## ShopKaro Ka Rough Plan (Text Mein)
+## Stage 3 — "Then build it"
 
-Yeh woh document hai jo ek senior dev project shuru karne se pehle banata hai — koi fancy tool nahi, sirf text mein:
+When Stage 1 and 2 are clear — then open VS Code.
+
+Now whenever you write something, you already know:
+- Which umbrella it belongs to
+- Why that decision was made
+- What the alternatives were
+
+---
+
+## ShopKaro's Rough Plan (In Text)
+
+This is the document a senior dev creates before starting a project — no fancy tool, just text:
 
 ```
 PROJECT: ShopKaro
 
 USERS:
-- Buyer (register kar sakta hai, products kharid sakta hai)
-- Admin (products add kar sakta hai) — baad mein
+- Buyer (can register, can buy products)
+- Admin (can add products) — later
 
 CORE FEATURES (v1):
 - Signup / Login / Logout
@@ -183,7 +183,7 @@ CORE FEATURES (v1):
 TECH DECISIONS:
 - Framework: Next.js (App Router)
 - Database: PostgreSQL + Prisma
-- Auth: Khud banayenge (bcrypt + sessions)
+- Auth: Build ourselves (bcrypt + sessions)
 - State: Zustand (cart), React Query (server data)
 - Payments: Razorpay
 - Deploy: Vercel
@@ -207,18 +207,18 @@ FOLDER STRUCTURE (rough):
 /prisma         → Database schema
 ```
 
-Yeh likhne mein 20-30 minute lagte hain — lekin baad mein **ghanton ki confusion** bachti hai.
+This takes 20-30 minutes to write — but saves **hours of confusion** later.
 
 ---
 
-## Ek Cheez Yaad Rakho
+## One Thing to Remember
 
-> Tum jab bhi koi decision lete ho — note karo kyun liya.
-> "Zustand use kiya kyunki cart data poori app mein chahiye tha" — yeh ek line kaafi hai.
-> Yahi hai senior dev ki thinking.
+> Whenever you make a decision — note down why you made it.
+> "Used Zustand because cart data was needed across the whole app" — that one line is enough.
+> This is what senior-dev thinking looks like.
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`02-auth-what-is-it.md` — Authentication umbrella kya hai. Login, Signup, Sessions, JWT, OAuth — yeh sab ek hi umbrella ke andar hain. Pehle poora umbrella dekh lo, phir andar jaayenge.
+`02-auth-what-is-it.md` — What is the Authentication umbrella. Login, Signup, Sessions, JWT, OAuth — they all live under one umbrella. First look at the whole umbrella, then we'll go inside.

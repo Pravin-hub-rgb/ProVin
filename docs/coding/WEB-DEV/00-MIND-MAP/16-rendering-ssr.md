@@ -1,42 +1,42 @@
 # 16 — SSR: Server Side Rendering
 
-> Pichle doc mein CSR dekha — browser mein render hota hai.
-> Ab **SSR** — Server Side Rendering. Yeh Next.js ka default hai.
+> Previous doc covered CSR — rendering in the browser.
+> Now **SSR** — Server Side Rendering. This is Next.js's default.
 
 ---
 
-## SSR Kya Hai
+## What Is SSR
 
-**Server Side Rendering** — Har request pe server HTML banata hai aur complete page bhejta hai.
+**Server Side Rendering** — on every request the server builds HTML and sends the complete page.
 
 ```
-1. Priya /products/123 kholti hai
-2. Server → Database se product data nikalta hai
-3. Server → HTML banata hai — data pehle se andar hota hai
-4. Complete HTML → Browser ko bhejta hai
-5. Priya ko page dikhta hai — data pehle se wahan hai
+1. Priya opens /products/123
+2. Server → Fetches product data from database
+3. Server → Builds HTML — data already inside
+4. Complete HTML → Sent to browser
+5. Priya sees the page — data was already there
 ```
 
-Browser ko JavaScript run karne ka wait nahi karna.
+The browser doesn't need to wait for JavaScript to run.
 
 ---
 
-## Next.js Mein SSR — Default Behavior
+## SSR in Next.js — Default Behavior
 
-Next.js App Router mein **sab kuch by default SSR** hai — `'use client'` likho tabhi CSR hoga.
+In Next.js App Router, **everything is SSR by default** — only write `'use client'` when you want CSR.
 
 ```jsx
 // /app/products/[id]/page.jsx
-// Koi 'use client' nahi → Yeh SSR hai automatically
+// No 'use client' → This is SSR automatically
 
-// async function → Server pe run hoti hai
+// async function → Runs on the server
 export default async function ProductPage({ params }) {
-  // Yeh server pe chalega — seedha database se
+  // This runs on the server — directly from the database
   const product = await prisma.product.findUnique({
     where: { id: params.id }
   })
 
-  // Complete HTML return hoga — data already inside
+  // Complete HTML returned — data already inside
   return (
     <div>
       <h1>{product.name}</h1>
@@ -47,53 +47,53 @@ export default async function ProductPage({ params }) {
 }
 ```
 
-Database call **server pe** hoti hai — browser tak kabhi nahi pohnchaती.
+The database call happens **on the server** — never reaches the browser.
 
 ---
 
-## SSR Ke Fayde
+## Advantages of SSR
 
-**SEO** — Google crawler ko complete HTML milta hai — sab index ho jaata hai
+**SEO** — Google crawler gets complete HTML — everything gets indexed
 
-**Fast first paint** — Data pehle se HTML mein hai — loading state nahi
+**Fast first paint** — Data already in HTML — no loading state
 
-**Secure** — Database credentials server pe hain — browser mein nahi aate
+**Secure** — Database credentials stay on the server — never reach the browser
 
-**Real-time data** — Har request pe fresh data — stock kabhi outdated nahi
-
----
-
-## SSR Ki Problems
-
-**Har request pe server load** — 1000 log ek saath product dekh rahe hain → 1000 database calls
-
-**Slow TTFB** (Time To First Byte) — Server process karta hai pehle — phir bhejta hai
-
-**Server chahiye** — Static hosting pe deploy nahi kar sakte SSR pages (Vercel pe ho jaata hai)
+**Real-time data** — Fresh data on every request — stock never outdated
 
 ---
 
-## ShopKaro Mein SSR Kahan Use Karein
+## Problems With SSR
+
+**Server load per request** — 1000 people viewing a product at once → 1000 database calls
+
+**Slow TTFB** (Time To First Byte) — Server processes first — then sends
+
+**Server required** — Can't deploy SSR pages to static hosting (works on Vercel though)
+
+---
+
+## Where to Use SSR in ShopKaro
 
 ```
 /products → SSR ✓
-  Kyun: Google pe "shoes online" search hoga — SEO zaroori
-        Products real-time dikhne chahiye
+  Why: Google search "shoes online" needs SEO
+       Products need real-time display
 
 /products/[id] → SSR ✓
-  Kyun: SEO important (product name Google pe index ho)
-        Stock real-time — "Only 2 left" accurate ho
+  Why: SEO important (product name indexed on Google)
+       Stock real-time — "Only 2 left" must be accurate
 
 /orders → SSR ✓ (with auth check)
-  Kyun: Fresh order data chahiye
-        Auth check server pe karo — secure
+  Why: Fresh order data needed
+       Auth check on server — secure
 ```
 
 ---
 
-## Auth Check SSR Mein
+## Auth Check in SSR
 
-Protected pages mein session check server pe hoti hai:
+Protected pages check the session on the server:
 
 ```jsx
 // /app/orders/page.jsx
@@ -104,7 +104,7 @@ import { redirect } from 'next/navigation'
 export default async function OrdersPage() {
   const session = await getSession()
 
-  // Server pe check → Redirect → No flash of content
+  // Check on server → Redirect → No flash of content
   if (!session) {
     redirect('/login')
   }
@@ -117,24 +117,24 @@ export default async function OrdersPage() {
 }
 ```
 
-CSR mein auth check karo toh — pehle page dikhta hai phir redirect hota hai (ugly). SSR mein server pe hi redirect — smooth.
+With CSR auth check — the page shows first, then redirect happens (ugly). With SSR the redirect happens on the server — smooth.
 
 ---
 
 ## SSR vs CSR — Quick Decision
 
 ```
-Kya yeh page Google pe search hoga?
-  → Haan → SSR
+Will this page be searched on Google?
+  → Yes → SSR
 
-Kya data har user ke liye alag hai? (private page)
-  → Haan → CSR ya SSR with auth
+Is data different per user? (private page)
+  → Yes → CSR or SSR with auth
 
-Kya bahut fast interactions chahiye (buttons, real-time)?
-  → Haan → CSR
+Need very fast interactions (buttons, real-time)?
+  → Yes → CSR
 
-Kya data real-time update chahiye (stock, prices)?
-  → Haan → SSR
+Need real-time data (stock, prices)?
+  → Yes → SSR
 ```
 
 ---
@@ -143,13 +143,13 @@ Kya data real-time update chahiye (stock, prices)?
 
 | | |
 |--|--|
-| **SSR kya hai** | Har request pe server HTML banata hai |
-| **Next.js mein** | Default behavior — `'use client'` nahi likhna |
-| **Kab use karein** | Public pages, SEO important, real-time data |
-| **Kab mat karo** | Heavy user interactions (cart operations) |
+| **What SSR is** | Server builds HTML on every request |
+| **In Next.js** | Default behavior — no 'use client' needed |
+| **When to use** | Public pages, SEO important, real-time data |
+| **When not to** | Heavy user interactions (cart operations) |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`17-rendering-ssg.md` — Teesri strategy — **SSG**. Yeh sabse fast hoti hai — HTML pehle se bana hua hota hai. ShopKaro ka homepage aur "About" page yahi use karenge.
+`17-rendering-ssg.md` — Third strategy — **SSG**. The fastest — HTML is already built beforehand. ShopKaro's homepage and About page will use this.

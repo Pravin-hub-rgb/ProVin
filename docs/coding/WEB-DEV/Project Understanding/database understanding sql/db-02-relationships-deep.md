@@ -3,49 +3,48 @@
 
 ---
 
-## Recap — Teen Types
+## Recap — Three Types
 
 ```
 One-to-One   (1:1)  → User ↔ UserProfile
-One-to-Many  (1:N)  → User → Tasks        ← Sabse common
-Many-to-Many (M:N)  → Student ↔ Course    ← Junction table zaroori
+One-to-Many  (1:N)  → User → Tasks        ← Most common
+Many-to-Many (M:N)  → Student ↔ Course    ← Junction table required
 ```
 
-Ye teen toh Doc 1 mein cover kiya. Ab tricky cases cover karte hain.
+These three were covered in Doc 1. Now we cover tricky cases.
 
 ---
 
 ## Case 1 — Self-Referential Relationship
 
 ```
-Kya hota hai?
-Ek table apne aap ko reference karti hai.
+What is it?
+A table references itself.
 
 Real Examples:
-→ Manager → Employee   (Employee table mein managerId → same Employee table)
+→ Manager → Employee   (Employee table's managerId → same Employee table)
 → Category → Subcategory (Electronics → Phones, Laptops)
-→ Comment → Reply       (Comment ka parentId → same Comment table)
-→ Org Chart             (HR system mein hierarchy)
+→ Comment → Reply       (Comment's parentId → same Comment table)
+→ Org Chart             (Hierarchy in HR system)
 ```
 
 ### Example — Manager-Employee (StaffSync V2)
 
 ```
-Problem: Kuch employees manager bhi hain apni team ke.
-Manager bhi User table mein hai. Employee bhi User table mein hai.
+Problem: Some employees are also managers of their team.
+Manager is in User table. Employee is in User table.
+One User has one manager (another User).
+One User has many reportees (other Users).
 
-Ek User ka ek manager hoga (another User).
-Ek User ke many reportees honge (other Users).
-
-Prisma mein:
+In Prisma:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 model User {
   id         String  @id @default(cuid())
   name       String
   email      String  @unique
-  managerId  String?  // ← Nullable! CEO ka koi manager nahi hota
+  managerId  String?  // ← Nullable! CEO has no manager
 
-  // Self relation — apne aap ko reference
+  // Self relation — references itself
   manager    User?   @relation("ManagerEmployee", fields: [managerId], references: [id])
   reportees  User[]  @relation("ManagerEmployee")
 
@@ -57,20 +56,20 @@ Sample Data:
 ┌──────────┬──────────────┬───────────┐
 │ id       │ name         │ managerId │
 ├──────────┼──────────────┼───────────┤
-│ u_001    │ Rohan (CEO)  │ NULL      │  ← Koi manager nahi
-│ u_002    │ Amit (VP)    │ u_001     │  ← Rohan ka reportee
-│ u_003    │ Priya (Lead) │ u_002     │  ← Amit ka reportee
-│ u_004    │ Rahul (Dev)  │ u_003     │  ← Priya ka reportee
-│ u_005    │ Sara (Dev)   │ u_003     │  ← Priya ka reportee
+│ u_001    │ Rohan (CEO)  │ NULL      │  ← No manager
+│ u_002    │ Amit (VP)    │ u_001     │  ← Rohan's reportee
+│ u_003    │ Priya (Lead) │ u_002     │  ← Amit's reportee
+│ u_004    │ Rahul (Dev)  │ u_003     │  ← Priya's reportee
+│ u_005    │ Sara (Dev)   │ u_003     │  ← Priya's reportee
 └──────────┴──────────────┴───────────┘
 
-Query — Priya ke saare reportees:
+Query — All of Priya's reportees:
 const reportees = await prisma.user.findMany({
   where: { managerId: 'u_003' }
 })
 // Returns: Rahul, Sara
 
-Query — Rahul ka manager kaun hai:
+Query — Who is Rahul's manager:
 const rahul = await prisma.user.findUnique({
   where: { id: 'u_004' },
   include: { manager: true }  // ← Priya
@@ -101,7 +100,7 @@ Sample Data:
 │ cat_005  │ Silver Necklace│cat_002 │  ← Under Necklaces
 └──────────┴──────────────┴──────────┘
 
-Query — Jewellery ke direct children:
+Query — Direct children of Jewellery:
 const subcategories = await prisma.category.findMany({
   where: { parentId: 'cat_001' }
 })
@@ -113,15 +112,15 @@ const subcategories = await prisma.category.findMany({
 ## Case 2 — Multiple Relations Between Same Two Tables
 
 ```
-Kab hota hai?
-Jab do tables ke beech mein 2 ya zyada alag alag reasons se relation ho.
+When does this happen?
+When two tables have 2 or more different relationships for different reasons.
 
 Real Example — StaffSync:
-Task mein DO relations hain User ke saath:
-1. assignedTo → kaun karega kaam
-2. createdBy  → kisne banaya task
+Task has TWO relations with User:
+1. assignedTo → who will do the work
+2. createdBy  → who created the task
 
-Dono User table ko refer karte hain — par alag alag reasons se!
+Both reference User table — but for different reasons!
 ```
 
 ```prisma
@@ -129,7 +128,7 @@ model User {
   id            String @id @default(cuid())
   name          String
 
-  // DO ALAG relations — named hone chahiye!
+  // TWO different relations — must be named!
   assignedTasks Task[] @relation("AssignedTasks")
   createdTasks  Task[] @relation("CreatedTasks")
 }
@@ -140,7 +139,7 @@ model Task {
   assignedToId String
   createdById  String
 
-  // Named relations — same name dono jagah
+  // Named relations — same name on both sides
   assignedTo   User   @relation("AssignedTasks", fields: [assignedToId], references: [id])
   createdBy    User   @relation("CreatedTasks",  fields: [createdById],  references: [id])
 }
@@ -163,13 +162,13 @@ Task table:
 ├──────────┼───────────────────┼──────────────┼─────────────┤
 │ t_001    │ Fix login bug     │ u_002        │ u_001       │
 │ t_002    │ Design dashboard  │ u_003        │ u_001       │
-│ t_003    │ Write tests       │ u_002        │ u_003       │ ← Priya ne Rahul ko assign kiya
+│ t_003    │ Write tests       │ u_002        │ u_003       │ ← Priya assigned to Rahul
 └──────────┴───────────────────┴──────────────┴─────────────┘
 
 Notice:
-→ t_003 mein createdById = u_003 (Priya ne task create kiya)
-  aur assignedToId = u_002 (Rahul ko assign kiya)
-→ Dono alag columns, alag purposes, same User table reference
+→ t_003: createdById = u_003 (Priya created the task)
+  and assignedToId = u_002 (assigned to Rahul)
+→ Two different columns, different purposes, same User table reference
 ```
 
 ---
@@ -177,9 +176,9 @@ Notice:
 ## Case 3 — Junction Table With Extra Columns
 
 ```
-Kab zaroori hai?
-Jab Many-to-Many relationship mein extra information store karni ho
-about the relationship itself — not about either entity.
+When is it necessary?
+When the Many-to-Many relationship itself has extra information to store
+— not about either entity, but about the relationship itself.
 
 Real Examples:
 → User ↔ Project: role in project (owner, member, viewer)
@@ -211,13 +210,13 @@ model OrderItem {
   id          String  @id @default(cuid())
   orderId     String
   productId   String
-  quantity    Int             // ← Extra: kitne kharide
+  quantity    Int             // ← Extra: how many purchased
   unitPrice   Decimal @db.Decimal(10, 2)  // ← Extra: price at time of purchase (SNAPSHOT!)
 
   order       Order   @relation(fields: [orderId],   references: [id])
   product     Product @relation(fields: [productId], references: [id])
 
-  @@unique([orderId, productId])  // ← Ek order mein ek product sirf ek row
+  @@unique([orderId, productId])  // ← One product per order only once
   @@index([orderId])
   @@index([productId])
 }
@@ -252,15 +251,15 @@ OrderItem table (Junction):
 │ oi_004   │ ord_002  │ p_001    │ 1        │ 499.00    │  ← Silver Ring x1
 └──────────┴──────────┴──────────┴──────────┴───────────┘
 
-ORDER TOTAL VERIFY KARO:
+ORDER TOTAL VERIFY:
 ord_001: 499 + 2999 + (799 × 2) = 499 + 2999 + 1598 = 5096 ✓
-(Slight diff — shipping etc. ho sakta hai)
+(Slight diff — shipping etc. possible)
 
-IMPORTANT — unitPrice snapshot kyun?
-→ Aaj Silver Ring 499 hai
-→ Kal price 599 ho gayi
-→ ord_002 ka orderItem abhi bhi 499 dikhata hai ← CORRECT!
-→ Agar productId se current price lete → 599 dikhata → WRONG!
+IMPORTANT — why unitPrice snapshot?
+→ Today Silver Ring is 499
+→ Tomorrow price becomes 599
+→ ord_002's orderItem still shows 499 ← CORRECT!
+→ If we took current price via productId → would show 599 → WRONG!
 ```
 
 ---
@@ -268,20 +267,20 @@ IMPORTANT — unitPrice snapshot kyun?
 ## Case 4 — Soft Delete Pattern
 
 ```
-Kya hai?
-Data actually delete nahi karte — ek flag set karte hain.
-"Deleted" rows query se hide ho jaati hain, par database mein rehti hain.
+What is it?
+Data isn't actually deleted — a flag is set.
+"Deleted" rows are hidden from queries, but remain in the database.
 
-Kyun use karo?
-→ Audit trail — pata chale ki kya delete hua tha
+Why use it?
+→ Audit trail — know what was deleted
 → Recovery — "Undo delete" feature possible
-→ Analytics — deleted data bhi count mein aata hai historical reports mein
-→ Legal compliance — kuch industries mein data delete karna allowed nahi
+→ Analytics — deleted data still counts in historical reports
+→ Legal compliance — some industries don't allow data deletion
 
-Kyun use MAT karo?
-→ Table size badhti rehti hai — kabhi clean nahi hoti
-→ Queries mein HAMESHA deletedAt IS NULL lagana padta hai — forget karna easy
-→ Unique constraints tricky ho jaate hain (deleted email reuse karna chahein)
+Why NOT use it?
+→ Table size keeps growing — never cleans up
+→ Must ALWAYS add deletedAt IS NULL in queries — easy to forget
+→ Unique constraints get tricky (want to reuse deleted email)
 ```
 
 ```prisma
@@ -306,31 +305,31 @@ Sample Data:
 └──────────┴─────────────────────┴─────────────┴──────────────────────┘
 
 Prisma queries:
-// Active users sirf:
+// Active users only:
 const activeUsers = await prisma.user.findMany({
-  where: { deletedAt: null }  // ← HAMESHA YE LAGANA HAI
+  where: { deletedAt: null }  // ← MUST ALWAYS ADD THIS
 })
 
-// "Delete" karna (actually sirf flag set karo):
+// "Delete" (actually just set flag):
 await prisma.user.update({
   where: { id: userId },
   data: { deletedAt: new Date() }
 })
 
-// Restore karna:
+// Restore:
 await prisma.user.update({
   where: { id: userId },
   data: { deletedAt: null }
 })
 
-PRO TIP: Prisma middleware se automatically filter karo:
+PRO TIP: Auto-filter via Prisma middleware:
 prisma.$use(async (params, next) => {
   if (params.model === 'User' && params.action === 'findMany') {
     params.args.where = { ...params.args.where, deletedAt: null }
   }
   return next(params)
 })
-// Ab hamesha sirf active users milenge automatically!
+// Now only active users come automatically!
 ```
 
 ---
@@ -338,12 +337,12 @@ prisma.$use(async (params, next) => {
 ## Case 5 — Status Machine Pattern
 
 ```
-Kab use karo?
-Jab koi entity different states mein hoti hai aur transitions defined hain.
+When to use?
+When an entity exists in different states and transitions are defined.
 
 Real Examples:
 → Order: PENDING → PAID → PROCESSING → SHIPPED → DELIVERED
-                                               ↘ CANCELLED
+                                                ↘ CANCELLED
 → Task: TODO → IN_PROGRESS → DONE
 → Application: APPLIED → REVIEWED → SHORTLISTED → REJECTED/HIRED
 → Post: DRAFT → REVIEW → PUBLISHED → ARCHIVED
@@ -351,12 +350,12 @@ Real Examples:
 
 ```prisma
 enum OrderStatus {
-  PENDING     // Order create hua, payment nahi
+  PENDING     // Order created, no payment
   PAID        // Payment successful
-  PROCESSING  // Warehouse mein pack ho raha hai
-  SHIPPED     // Courier ko diya
-  DELIVERED   // Customer ke paas pahuncha
-  CANCELLED   // Cancel ho gaya
+  PROCESSING  // Being packed in warehouse
+  SHIPPED     // Given to courier
+  DELIVERED   // Reached customer
+  CANCELLED   // Cancelled
   REFUNDED    // Refund processed
 }
 
@@ -365,19 +364,19 @@ model Order {
   status    OrderStatus @default(PENDING)
   // ...
   
-  // Status history track karne ke liye (optional but powerful):
+  // Status history tracking (optional but powerful):
   statusHistory OrderStatusHistory[]
 }
 
-// Audit trail — kab kya status tha
+// Audit trail — what status when
 model OrderStatusHistory {
-  id        String      @id @default(cuid())
-  orderId   String
-  fromStatus OrderStatus?  // Pehla status (null for initial)
-  toStatus  OrderStatus   // Naya status
-  changedBy String?       // Kaun ne change kiya (userId)
-  note      String?       // Optional reason
-  createdAt DateTime      @default(now())
+  id         String      @id @default(cuid())
+  orderId    String
+  fromStatus OrderStatus?  // Previous status (null for initial)
+  toStatus   OrderStatus   // New status
+  changedBy  String?       // Who changed it (userId)
+  note       String?       // Optional reason
+  createdAt  DateTime      @default(now())
 
   order     Order @relation(fields: [orderId], references: [id])
 
@@ -397,10 +396,10 @@ Sample Data — OrderStatusHistory:
 │ h_005  │ ord_001  │ SHIPPED    │ DELIVERED    │ system   │ 2024-03-04 14:30    │
 └────────┴──────────┴────────────┴──────────────┴──────────┴─────────────────────┘
 
-Is se pata chalta hai:
-→ Order kitne time mein process hua
-→ Kaun ne kya change kiya
-→ Customer ke saath dispute ho toh proof hai
+This shows:
+→ How long order took to process
+→ Who changed what
+→ Proof in case of customer dispute
 ```
 
 ---
@@ -408,24 +407,24 @@ Is se pata chalta hai:
 ## Case 6 — Polymorphic Relationship (Advanced)
 
 ```
-Kya hai?
-Ek table multiple different tables ko refer kar sakti hai.
+What is it?
+One table can reference multiple different tables.
 
 Real Example:
-→ Comment Post pe bhi ho sakti hai, Video pe bhi, Product pe bhi.
-→ Like User ne kisi bhi cheez pe laga sakta hai.
-→ Notification kisi bhi event ke baare mein ho sakti hai.
+→ Comment can be on Post, Video, or Product.
+→ User can like any entity.
+→ Notification can be about any event.
 ```
 
 ```
-APPROACH A — Multiple FK columns (Simple, Recommended for small cases):
+APPROACH A — Multiple FK columns (Simple, recommended for small cases):
 
 model Comment {
   id        String  @id @default(cuid())
   text      String
   authorId  String
 
-  // Sirf ek populated hoga, baaki null
+  // Only one will be populated, others null
   postId    String?
   videoId   String?
   productId String?
@@ -435,7 +434,7 @@ model Comment {
   product   Product? @relation(fields: [productId], references: [id])
 }
 
-Problem: Har nayi entity pe naya column add karna padega.
+Problem: Need to add new column for every new entity.
 ```
 
 ```prisma
@@ -445,13 +444,13 @@ model Comment {
   text         String
   authorId     String
   targetType   String      // "POST" | "VIDEO" | "PRODUCT"
-  targetId     String      // Jo bhi entity ka id hai
+  targetId     String      // Whatever entity's id
 
   author       User        @relation(fields: [authorId], references: [id])
 
-  // NOTE: targetId pe foreign key constraint NAHI hoga
-  // Application level pe ensure karna padega integrity
-  @@index([targetType, targetId])  // ← Yahan comments fetch karne ke liye
+  // NOTE: No foreign key constraint on targetId
+  // Must ensure integrity at application level
+  @@index([targetType, targetId])  // ← For fetching comments
 }
 ```
 
@@ -466,7 +465,7 @@ Sample Data (Approach B):
 │ c_004    │ "Helpful post"   │ POST       │ post_123 │
 └──────────┴──────────────────┴────────────┴──────────┘
 
-Query — Post ke saare comments:
+Query — All comments of a Post:
 const comments = await prisma.comment.findMany({
   where: {
     targetType: "POST",
@@ -481,33 +480,33 @@ const comments = await prisma.comment.findMany({
 ## 🎯 Relationship Decision Guide
 
 ```
-QUESTION: Kaunsa relationship type use karun?
+QUESTION: Which relationship type to use?
 
-1. "Kya A ka sirf ek B hoga, aur B ka sirf ek A?"
+1. "Will A have only one B, and B have only one A?"
    → One-to-One
-   → FK "optional" side pe rakho with @unique
+   → Put FK on "optional" side with @unique
 
-2. "Kya A ke many B honge, par B ka sirf ek A hoga?"
-   → One-to-Many (sabse common!)
-   → FK "many" (B) side pe rakho
+2. "Will A have many B's, but B have only one A?"
+   → One-to-Many (most common!)
+   → Put FK on "many" (B) side
 
-3. "Kya A ke many B honge AUR B ke many A honge?"
+3. "Will A have many B's AND B have many A's?"
    → Many-to-Many
-   → Junction table banao
+   → Create junction table
 
-4. "Kya relationship ke baare mein extra data store karna hai?"
-   → Explicit junction table (extra columns ke saath)
-   → Implicit Prisma junction avoid karo is case mein
+4. "Does the relationship itself have extra data to store?"
+   → Explicit junction table (with extra columns)
+   → Avoid implicit Prisma junction in this case
 
-5. "Kya ek table apne aap ko refer karti hai?"
+5. "Does a table reference itself?"
    → Self-referential
    → managerId? (nullable FK → same table)
 
-6. "Kya ek cheez multiple different tables ko refer kar sakti hai?"
+6. "Can one thing reference multiple different tables?"
    → Polymorphic
-   → Multiple nullable FKs (simple) ya targetType + targetId (flexible)
+   → Multiple nullable FKs (simple) or targetType + targetId (flexible)
 ```
 
 ---
 
-**Next →** `db-03-indexes-performance.md` — Indexes ka full deep dive, composite indexes, EXPLAIN ANALYZE
+**Next →** `db-03-indexes-performance.md` — Full deep dive on indexes, composite indexes, EXPLAIN ANALYZE

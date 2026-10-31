@@ -3,8 +3,8 @@ import type { Subject } from "../coding-data";
 export const pythonSubject: Subject = {
   id: "python",
   title: "Python",
-  description:
-    "Python basics se backend tak — fundamentals (7 lectures + practice + solutions), backend mindset, phir FastAPI + SQLite + pandas se apna trading backend. TradeStack backend pe apply.",
+    description:
+    "Python basics to backend — fundamentals (7 lectures + practice + solutions), backend mindset, then FastAPI + SQLite + pandas for your own trading backend. Apply to TradeStack backend.",
   lectures: [
     {
       id: "py-roadmap",
@@ -175,7 +175,7 @@ export const pythonSubject: Subject = {
       lectures: [
         {
           id: "fp-0.0",
-          title: "0.0 Course Kaise Chalega - Backend Ki Map",
+          title: "0.0 How the Course Works - Backend Map",
           path: "docs/coding/Backend (Python)/Phase 0 - Backend Mindset/0.0 Course Kaise Chalega - Backend Ki Map.md",
         },
         {
@@ -200,7 +200,7 @@ export const pythonSubject: Subject = {
         },
         {
           id: "fp-0.5",
-          title: "0.5 Setup + Pehla FastAPI App (Hello World)",
+          title: "0.5 Setup + First FastAPI App (Hello World)",
           path: "docs/coding/Backend (Python)/Phase 0 - Backend Mindset/0.5 Setup and First FastAPI App.md",
         },
       ],
@@ -212,7 +212,7 @@ export const pythonSubject: Subject = {
       lectures: [
         {
           id: "fp-1.0",
-          title: "1.0 Phase 1 - Kya Seekhenge + Project Preview",
+          title: "1.0 Phase 1 - What We'll Learn + Project Preview",
           path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/1.0 Phase 1 - Kya Seekhenge + Project Preview.md",
         },
         {
@@ -232,7 +232,7 @@ export const pythonSubject: Subject = {
         },
         {
           id: "fp-1.4",
-          title: "1.4 SQLite se Jodo",
+          title: "1.4 Connect to SQLite",
           path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/1.4 SQLite se Jodo.md",
         },
         {
@@ -268,7 +268,7 @@ export const pythonSubject: Subject = {
           lectures: [
             {
               id: "fp-2.0",
-              title: "A.0 Docker Kya Hai + Overview",
+              title: "A.0 What Is Docker + Overview",
               path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.0 Docker Kya Hai + Overview.md",
             },
             {
@@ -283,7 +283,7 @@ export const pythonSubject: Subject = {
             },
             {
               id: "fp-2.3",
-              title: "A.3 Test Karo + TradeStack Bridge",
+              title: "A.3 Test + TradeStack Bridge",
               path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.3 Test Karo + TradeStack Bridge.md",
             },
           ],

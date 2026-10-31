@@ -1,77 +1,77 @@
-# 23 — API: Umbrella Kya Hai
+# 23 — API: What Is It
 
-> Database umbrella complete hua — PostgreSQL, Prisma, Models.
-> Ab paanchwa bada umbrella — **API Design**.
-> Frontend aur backend kaise baat karte hain?
-
----
-
-## API Kya Hota Hai
-
-**API (Application Programming Interface)** — ek set of rules jo batata hai ki frontend server se kaise maange data.
-
-Priya products dekh rahi hai:
-
-```
-Browser → "Mujhe products chahiye" → Server
-Server → Database se nikala → "Lo yeh products" → Browser
-Browser → Screen pe dikhaya
-```
-
-Yeh conversation API ke through hoti hai. API ek **contract** hai — frontend jaanta hai kahan request bhejni hai, server jaanta hai kya dena hai.
+> Database umbrella complete — PostgreSQL, Prisma, Models.
+> Now the fifth big umbrella — **API Design**.
+> How do frontend and backend talk to each other?
 
 ---
 
-## API Umbrella Ke Andar Kya Kya
+## What Is an API
+
+**API (Application Programming Interface)** — a set of rules that says how frontend asks the server for data.
+
+Priya is browsing products:
+
+```
+Browser → "I need products" → Server
+Server → Fetches from DB → "Here are the products" → Browser
+Browser → Shows on screen
+```
+
+This conversation happens through the API. API is a **contract** — frontend knows where to send the request, server knows what to return.
+
+---
+
+## What's Inside the API Umbrella
 
 ```
 API DESIGN
 │
-├── REST → Sabse common tarika — Doc 24
-├── GraphQL → REST ka alternative — Doc 25
-└── ShopKaro ke endpoints → Doc 26
+├── REST → Most common way — Doc 24
+├── GraphQL → REST's alternative — Doc 25
+└── ShopKaro endpoints → Doc 26
 ```
 
 ---
 
 ## HTTP Methods — Request Types
 
-API requests alag types ki hoti hain:
+API requests come in different types:
 
-| Method | Matlab | Example |
-|--------|--------|---------|
-| `GET` | Data maango | Products ki list do |
-| `POST` | Naya data banao | Naya order banao |
-| `PUT` | Poora data replace karo | Profile update karo |
-| `PATCH` | Kuch fields update karo | Order status change karo |
-| `DELETE` | Delete karo | Cart item remove karo |
+| Method | Meaning | Example |
+|--------|---------|---------|
+| `GET` | Ask for data | Give me products list |
+| `POST` | Create new data | Create new order |
+| `PUT` | Replace entire data | Update profile |
+| `PATCH` | Update some fields | Change order status |
+| `DELETE` | Delete | Remove cart item |
 
 ---
 
 ## HTTP Status Codes — Response Types
 
-Server response ke saath ek number bhejta hai:
+Server sends a number along with the response:
 
-| Code | Matlab | Kab |
-|------|--------|-----|
+| Code | Meaning | When |
+|------|---------|------|
 | `200` | OK | Request successful |
-| `201` | Created | Naya resource bana |
-| `400` | Bad Request | Request mein kuch galat hai |
-| `401` | Unauthorized | Login nahi hai |
-| `403` | Forbidden | Permission nahi |
-| `404` | Not Found | Resource nahi mila |
-| `500` | Server Error | Server side kuch toot gaya |
+| `201` | Created | New resource created |
+| `400` | Bad Request | Something wrong in request |
+| `401` | Unauthorized | Not logged in |
+| `403` | Forbidden | No permission |
+| `404` | Not Found | Resource not found |
+| `500` | Server Error | Something broke server-side |
 
 ---
 
-## Ek Simple API Call — ShopKaro Mein
+## A Simple API Call — In ShopKaro
 
 ```javascript
-// Frontend — Priya products maang rahi hai
+// Frontend — Priya wants products
 const response = await fetch('/api/products')
 const products = await response.json()
 
-// Backend — Server respond karta hai
+// Backend — Server responds
 // /app/api/products/route.js
 export async function GET() {
   const products = await prisma.product.findMany()
@@ -81,6 +81,6 @@ export async function GET() {
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`24-api-rest.md` — **REST** kya hai — sabse common API style. ShopKaro ke REST endpoints kaise design karein — naming conventions, structure — sab samjhenge.
+`24-api-rest.md` — **REST** — the most common API style. How to design ShopKaro's REST endpoints — naming conventions, structure — we'll understand.

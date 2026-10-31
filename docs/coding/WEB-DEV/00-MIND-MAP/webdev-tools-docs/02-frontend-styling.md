@@ -1,20 +1,20 @@
-# 02 — Styling: Tailwind, CSS Modules, Styled Components aur Baaki
+# 02 — Styling: Tailwind, CSS Modules, Styled Components and the Rest
 
 > Umbrella: Frontend → Styling
-> Kaam: App kaisi dikhegi — colors, layout, typography, responsive design
-> Har tool ka alag approach hai — utility, module, CSS-in-JS
+> Purpose: How the app looks — colors, layout, typography, responsive design
+> Each tool has a different approach — utility, module, CSS-in-JS
 
 ---
 
-## Yeh Category Kya Solve Karti Hai
+## What This Category Solves
 
-CSS likhna simple lagta hai — lekin bade apps mein:
-- Class names clash karte hain (`.button` globally apply ho jaata hai)
-- Dead CSS pile up hoti hai (koi remove nahi karta)
-- Responsive design maintain karna mushkil hota hai
-- Dark mode, theming — complex ho jaata hai
+Writing CSS seems simple — but in large apps:
+- Class names clash (`.button` applies globally)
+- Dead CSS piles up (nobody removes it)
+- Maintaining responsive design gets hard
+- Dark mode, theming — becomes complex
 
-Yeh tools in problems ko solve karte hain — alag alag tarike se.
+These tools solve these problems — in different ways.
 
 ---
 
@@ -26,39 +26,39 @@ Yeh tools in problems ko solve karte hain — alag alag tarike se.
 **Tag: 🟢 Most Popular 2024 | Industry Shifting Here | Recommended**
 
 ```
-Kya hai: Utility-first CSS — pre-defined classes seedha HTML mein use karo
-Kab use karo:
-  → Naya project — almost always
-  → Jaldi prototype banana ho
-  → Design system nahi hai, khud banana hai
+What it is: Utility-first CSS — use pre-defined classes directly in HTML
+When to use:
+  → New project — almost always
+  → Need to prototype quickly
+  → No design system, building your own
   → Next.js / React projects
 
-Kab mat use karo:
-  → Team ko Tailwind nahi aata aur deadline tight hai
+When NOT to use:
+  → Team doesn't know Tailwind and deadline is tight
   → Highly custom animations (GSAP + plain CSS better)
 
 Real app example:
-  → Vercel ka website: Poora Tailwind
+  → Vercel's website: Entirely Tailwind
   → Linear (project management): Tailwind
-  → Naye Indian startups 2023+: Tailwind everywhere
+  → New Indian startups 2023+: Tailwind everywhere
 
 Code feel:
   <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">
     Add to Cart
   </button>
-  (Koi alag CSS file nahi — sab yahan)
+  (No separate CSS file — everything here)
 
 Pros:
-  → Class likhte waqt CSS file switch nahi karna
-  → Responsive: md:text-lg lg:text-xl — ek line mein
+  → No switching CSS files while writing classes
+  → Responsive: md:text-lg lg:text-xl — in one line
   → Dark mode: dark:bg-gray-800 — built-in
-  → Bundle size small — sirf used classes
+  → Small bundle — only used classes
 
 Cons:
-  → HTML mein bahut saari classes — "ugly" lagti hai pehle
-  → Learning curve — class names yaad karne padte hain
+  → Lots of classes in HTML — looks "ugly" at first
+  → Learning curve — have to remember class names
 
-India mein: 2022 ke baad almost standard ban gaya naye projects mein
+In India: Became almost standard in new projects after 2022
 ```
 
 ---
@@ -67,10 +67,10 @@ India mein: 2022 ke baad almost standard ban gaya naye projects mein
 **Tag: 🟢 Built-in | Safe | Always Valid**
 
 ```
-Kya hai: Regular CSS — lekin file ke scope mein (class names globally clash nahi karte)
-Kab use karo:
-  → Tailwind nahi seekhna
-  → Traditional CSS approach prefer karte ho
+What it is: Regular CSS — but scoped to the file (class names don't clash globally)
+When to use:
+  → Don't want to learn Tailwind
+  → Prefer traditional CSS approach
   → Legacy project
 
 Code feel:
@@ -82,17 +82,17 @@ Code feel:
   <button className={styles.button}>Click</button>
 
 Pros:
-  → Regular CSS — koi naya syntax nahi seekhna
-  → Scoped — .button sirf is component mein
+  → Regular CSS — no new syntax to learn
+  → Scoped — .button only in this component
 
 Cons:
-  → Alag file switch karna padta hai
-  → Responsive zyada verbose
+  → Have to switch files
+  → Responsive more verbose
   → Dark mode manual
 
 Real app example:
-  → Next.js ke default examples CSS Modules use karte hain
-  → Conservative teams jo plain CSS prefer karte hain
+  → Next.js default examples use CSS Modules
+  → Conservative teams that prefer plain CSS
 ```
 
 ---
@@ -101,11 +101,11 @@ Real app example:
 **Tag: 🟢 Classic | Variables + Nesting | Still Valid**
 
 ```
-Kya hai: CSS ka superpower — variables, nesting, mixins, functions
-Kab use karo:
-  → Bada design system banana hai
-  → Variables chahiye (colors, spacing) — CSS variables se zyada powerful
-  → Loops, functions, mixins chahiye
+What it is: CSS superpower — variables, nesting, mixins, functions
+When to use:
+  → Building a large design system
+  → Need variables (colors, spacing) — more powerful than CSS variables
+  → Need loops, functions, mixins
   → Large team with dedicated designers
 
 Code feel:
@@ -122,29 +122,31 @@ Code feel:
   }
 
 Real app example:
-  → Bootstrap ka source SCSS mein
-  → Purani enterprise projects
-  → Design agencies jo complex theming karte hain
+  → Bootstrap's source is in SCSS
+  → Older enterprise projects
+  → Design agencies with complex theming
 
-Tailwind ke saath:
-  → Usually ya Tailwind ya SCSS — dono ek saath rarely
+With Tailwind:
+  → Usually either Tailwind or SCSS — both together rarely
 ```
+
 ---
+
 ### Styled Components
-**Tag: 🟡 Legacy CSS-in-JS | Existing projects mein milega**
+**Tag: 🟡 Legacy CSS-in-JS | Found in existing projects**
 
 ```
-Kya hai: CSS JavaScript mein — template literals se
-Kab use karo:
+What it is: CSS in JavaScript — via template literals
+When to use:
   → Existing styled-components codebase
-  → Highly dynamic styles (props pe depend karte hain)
+  → Highly dynamic styles (depend on props)
 
-Kab mat use karo:
-  → Naya project — Tailwind lo
+When NOT to use:
+  → New project — use Tailwind
 
 Performance note:
-  → Runtime CSS generation — thoda slow (SSR pe issues)
-  → Next.js ke saath setup complex
+  → Runtime CSS generation — a bit slow (SSR issues)
+  → Complex setup with Next.js
 
 Code feel:
   const Button = styled.button`
@@ -154,10 +156,10 @@ Code feel:
   <Button primary>Click</Button>
 
 Real app example:
-  → 2019-2022 era ke React projects
-  → Airbnb, Atlassian (purane versions)
+  → React projects from 2019-2022
+  → Airbnb, Atlassian (older versions)
 
-India mein: Purane projects mein milega — naye mein avoid
+In India: Found in older projects — avoid in new ones
 ```
 
 ---
@@ -166,30 +168,30 @@ India mein: Purane projects mein milega — naye mein avoid
 **Tag: 🟡 CSS-in-JS | MUI uses it**
 
 ```
-Kya hai: Styled Components jaisa — Material UI internally use karta hai
-Kab use karo:
-  → MUI use kar rahe ho — already included
+What it is: Like Styled Components — Material UI uses it internally
+When to use:
+  → Using MUI — already included
   → Otherwise: Avoid in new projects
 
-Styled Components se fark:
-  → Thoda better performance
-  → MUI ecosystem mein standard
+Difference from Styled Components:
+  → Slightly better performance
+  → Standard in the MUI ecosystem
 ```
 
 ---
 
 ### Vanilla CSS
-**Tag: 🟢 Always Valid | Learning ke liye best**
+**Tag: 🟢 Always Valid | Best for learning**
 
 ```
-Kya hai: Plain browser CSS — koi tool nahi
-Kab use karo:
-  → Seekhne ke liye — pehle yeh
-  → Bahut simple static page
-  → Email templates (email clients mein sirf plain CSS)
+What it is: Plain browser CSS — no tool
+When to use:
+  → For learning — start here
+  → Very simple static page
+  → Email templates (email clients only support plain CSS)
 
-Production mein:
-  → Akela kaafi nahi usually — koi tool ke saath use karo
+In production:
+  → Usually not enough alone — use with some tool
 ```
 
 ---
@@ -197,35 +199,35 @@ Production mein:
 ## Quick Decision
 
 ```
-Naya React/Next.js project?
+New React/Next.js project?
   → Tailwind CSS (almost always)
 
-Traditional CSS prefer karte ho?
+Prefer traditional CSS?
   → CSS Modules
 
-Bada design system with complex theming?
-  → SCSS ya Tailwind + CSS variables
+Large design system with complex theming?
+  → SCSS or Tailwind + CSS variables
 
-MUI use kar rahe ho?
-  → Emotion already included — ya Tailwind override
+Using MUI?
+  → Emotion already included — or override with Tailwind
 
 Existing styled-components project?
-  → Rehne do — rewrite ki zaroorat nahi
+  → Leave it — no need to rewrite
 ```
 
 ---
 
-## India Mein Reality
+## India Reality
 
 ```
 Startup / Agency (2024):     Tailwind — almost standard
-Product companies:           Tailwind ya CSS Modules
-Enterprise / Purani company: SCSS ya Styled Components
-Freelance:                   Tailwind — jaldi kaam
+Product companies:           Tailwind or CSS Modules
+Enterprise / Old company:    SCSS or Styled Components
+Freelance:                   Tailwind — fast work
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`03-frontend-components.md` — UI Component Libraries — shadcn, MUI, Ant Design, Chakra — Zomato ka UI kaisa banaa, kab ready-made components lo kab khud banao.
+`03-frontend-components.md` — UI Component Libraries — shadcn, MUI, Ant Design, Chakra — how Zomato's UI is built, when to use ready-made components vs build your own.

@@ -1,21 +1,21 @@
 # 14 — SQL Databases: PostgreSQL, MySQL, SQLite, Neon, Supabase
 
 > Umbrella: Database → SQL (Relational)
-> Kaam: Structured data store karna — tables, rows, relationships
-> ShopKaro docs mein: Doc 19-20 mein cover hua
+> Job: Store structured data — tables, rows, relationships
+> ShopKaro docs: Covered in Docs 19-20
 
 ---
 
-## SQL Databases Do Categories
+## SQL Databases Come in Two Categories
 
 ```
 DATABASE ENGINE (Actual database software):
   → PostgreSQL, MySQL, SQLite
-  → Tum install karte ho / manage karte ho
+  → You install / manage it
 
-MANAGED DATABASE SERVICE (Cloud pe hosted):
+MANAGED DATABASE SERVICE (Hosted on cloud):
   → Neon, Supabase, PlanetScale, Railway
-  → Koi company manage karti hai — tum sirf use karo
+  → A company manages it — you just use it
 ```
 
 ---
@@ -28,25 +28,25 @@ MANAGED DATABASE SERVICE (Cloud pe hosted):
 **Tag: 🟢 Industry Standard | Most Recommended | Feature-rich**
 
 ```
-Kya hai: Most advanced open-source relational database
-Kab use karo:
+What it is: Most advanced open-source relational database
+When to use:
   → Almost always — default choice
-  → Complex queries chahiye
-  → JSON data bhi store karna ho (JSONB support)
-  → Full-text search chahiye (without Elasticsearch)
+  → Complex queries needed
+  → JSON data also needs storing (JSONB support)
+  → Full-text search needed (without Elasticsearch)
   → Geospatial data (location-based apps)
 
 Real app example:
   → Swiggy, Zomato: Orders, restaurants, reviews
   → CRED: Financial transactions (ACID compliance critical)
-  → ShopKaro: Users, products, orders — sab kuch
+  → ShopKaro: Users, products, orders — everything
 
-MySQL se fark:
+Difference from MySQL:
   → PostgreSQL: More standards-compliant, better JSON support, better for complex queries
   → MySQL: Simpler, WordPress ecosystem, slightly faster for simple reads
   → 2024 recommendation: PostgreSQL (almost always)
 
-India mein: Growing rapidly — especially Next.js + Prisma + Neon combo
+In India: Growing rapidly — especially Next.js + Prisma + Neon combo
 ```
 
 ---
@@ -55,24 +55,24 @@ India mein: Growing rapidly — especially Next.js + Prisma + Neon combo
 **Tag: 🟢 Widely Used | WordPress/PHP ecosystem**
 
 ```
-Kya hai: Most popular relational database (historically)
-Kab use karo:
+What it is: Most popular relational database (historically)
+When to use:
   → WordPress site (MySQL only)
   → Existing MySQL codebase
   → PHP/Laravel projects
   → Simple reads, high traffic (slightly faster than Postgres for reads)
 
-PostgreSQL se kya kam:
-  → JSON support poor (PostgreSQL ka JSONB much better)
+What it lacks vs PostgreSQL:
+  → JSON support poor (PostgreSQL's JSONB is much better)
   → Window functions limited
-  → Standards compliance lower
+  → Lower standards compliance
 
 Real app example:
   → Most WordPress sites
   → Older PHP/Laravel Indian apps
   → Facebook (historically MySQL at extreme scale with custom patches)
 
-India mein: Purane projects mein bahut milega — PHP era
+In India: Very common in older projects — PHP era
 ```
 
 ---
@@ -81,25 +81,25 @@ India mein: Purane projects mein bahut milega — PHP era
 **Tag: 🟢 Local/Small | File-based | No server**
 
 ```
-Kya hai: File-based database — koi server nahi, ek .db file
-Kab use karo:
+What it is: File-based database — no server, a single .db file
+When to use:
   → Local development
   → Desktop apps (Electron)
   → Mobile apps (React Native)
   → Very small apps, prototypes
   → Edge databases (Turso)
 
-Production mein:
-  → Single server apps mein use hota hai
-  → Multiple servers mein? Problem — file shared nahi hoti
+In production:
+  → Used in single-server apps
+  → Multiple servers? Problem — the file isn't shared
 
 Real app example:
   → WhatsApp local message store
-  → VS Code ka extension data
+  → VS Code extension data
   → Electron apps
 
 Turso (SQLite at edge):
-  → Cloudflare Workers pe SQLite
+  → SQLite on Cloudflare Workers
   → Replicated SQLite — growing concept
 ```
 
@@ -113,23 +113,23 @@ Turso (SQLite at edge):
 **Tag: 🟢 Serverless PostgreSQL | Vercel-friendly | Recommended for Next.js**
 
 ```
-Kya hai: Serverless PostgreSQL — scale to zero, branch databases
-Kab use karo:
+What it is: Serverless PostgreSQL — scale to zero, branch databases
+When to use:
   → Next.js + Vercel project
-  → Serverless chahiye (pay for what you use)
-  → Development branches chahiye (separate DB for PR previews)
+  → Serverless needed (pay for what you use)
+  → Development branches needed (separate DB for PR previews)
 
 Special features:
-  → Branching: Har PR ke liye alag database branch — testing ke liye
-  → Scale to zero: Koi traffic nahi → Database so jaata hai → Bill nahi
+  → Branching: Separate database branch for every PR — for testing
+  → Scale to zero: No traffic → database sleeps → no bill
   → Vercel integration: Seamless
 
-Free tier: Generous — side projects ke liye perfect
+Free tier: Generous — perfect for side projects
 
 Connection string:
   DATABASE_URL="postgresql://user:pass@ep-xyz.neon.tech/shopkaro"
 
-India mein: Next.js community mein most popular choice 2024
+In India: Most popular choice in 2024 in the Next.js community
 ```
 
 ---
@@ -138,20 +138,20 @@ India mein: Next.js community mein most popular choice 2024
 **Tag: 🟢 PostgreSQL + Everything | Firebase Alternative**
 
 ```
-Kya hai: PostgreSQL + Auth + Storage + Realtime + Edge Functions — sab ek mein
-Kab use karo:
-  → Firebase replace karna hai (open-source alternative)
-  → Quick backend chahiye — backend code kam likhna
-  → Real-time features chahiye
-  → Auth, storage sab ek jagah chahiye
+What it is: PostgreSQL + Auth + Storage + Realtime + Edge Functions — all in one
+When to use:
+  → Replacing Firebase (open-source alternative)
+  → Quick backend needed — less backend code
+  → Real-time features needed
+  → Auth, storage all in one place
 
-Firebase se fark:
+Difference from Firebase:
   → Supabase: Open-source, PostgreSQL (SQL), self-host possible
   → Firebase: Google, proprietary, NoSQL
 
 Real app example:
-  → Indie developers ki apps — backend quickly banana
-  → Startups ka MVP — ek platform pe sab
+  → Indie developers' apps — backend quickly built
+  → Startup MVPs — everything on one platform
 
 Code feel:
   const { data } = await supabase
@@ -160,10 +160,10 @@ Code feel:
     .eq('featured', true)
 
 Cons:
-  → Vendor lock-in (lekin open-source hai, self-host possible)
-  → Complex apps mein limitations
+  → Vendor lock-in (but it's open-source, self-host possible)
+  → Limitations in complex apps
 
-India mein: Indie devs, small startups mein growing
+In India: Growing among indie devs, small startups
 ```
 
 ---
@@ -172,11 +172,11 @@ India mein: Indie devs, small startups mein growing
 **Tag: 🟡 MySQL serverless | Was popular 2022-23 | Free tier removed**
 
 ```
-Kya hai: Serverless MySQL — branching like Neon
-Status: 2024 mein free tier remove kar diya → Many users left
-Neon (PostgreSQL) prefer karo instead
+What it is: Serverless MySQL — branching like Neon
+Status: Free tier removed in 2024 → Many users left
+Prefer Neon (PostgreSQL) instead
 
-Kab use karo: Existing PlanetScale codebase ya MySQL required specifically
+When to use: Existing PlanetScale codebase or MySQL required specifically
 ```
 
 ---
@@ -185,14 +185,14 @@ Kab use karo: Existing PlanetScale codebase ya MySQL required specifically
 **Tag: 🟢 Simple | Full platform | Good for starters**
 
 ```
-Kya hai: Deploy everything platform — PostgreSQL + Redis + backend sab ek jagah
-Kab use karo:
-  → Vercel jaisi simplicity chahiye lekin backend bhi
-  → Database + Node server ek saath chahiye
-  → Neon ya Supabase se alag feel chahiye
+What it is: Deploy everything platform — PostgreSQL + Redis + backend all in one place
+When to use:
+  → Want Vercel-like simplicity but for backend too
+  → Database + Node server together needed
+  → Want something different from Neon or Supabase
 
-Free tier: Limited lekin good for prototyping
-India mein: Growing — especially full-stack projects
+Free tier: Limited but good for prototyping
+In India: Growing — especially full-stack projects
 ```
 
 ---
@@ -200,8 +200,8 @@ India mein: Growing — especially full-stack projects
 ## Quick Decision
 
 ```
-Naya project, PostgreSQL chahiye?
-  → Neon (Vercel ke saath) ya Supabase (sab ek jagah)
+New project, need PostgreSQL?
+  → Neon (with Vercel) or Supabase (all-in-one)
 
 WordPress/PHP?
   → MySQL (required)
@@ -209,11 +209,11 @@ WordPress/PHP?
 Local development / prototype?
   → SQLite
 
-Firebase replace karna hai?
+Replacing Firebase?
   → Supabase
 
 Enterprise, full control?
-  → Self-hosted PostgreSQL (AWS RDS ya DigitalOcean)
+  → Self-hosted PostgreSQL (AWS RDS or DigitalOcean)
 
 Edge database?
   → Turso (SQLite at edge)
@@ -221,18 +221,18 @@ Edge database?
 
 ---
 
-## India Mein Reality
+## India Reality
 
 ```
-Next.js startups (2024):    Neon ya Supabase
-Traditional apps:           MySQL (purana) ya PostgreSQL (naya)
-Firebase users:             Supabase mein migrate kar rahe hain
-Enterprise:                 AWS RDS PostgreSQL ya MySQL
+Next.js startups (2024):    Neon or Supabase
+Traditional apps:           MySQL (old) or PostgreSQL (new)
+Firebase users:             Migrating to Supabase
+Enterprise:                 AWS RDS PostgreSQL or MySQL
 Learning:                   SQLite (local) → Neon (deploy)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`15-database-nosql.md` — NoSQL Databases — MongoDB, Redis, DynamoDB, Firestore — kab SQL se hatna chahiye, Redis cache vs database, Firebase vs Supabase.
+`15-database-nosql.md` — NoSQL Databases — MongoDB, Redis, DynamoDB, Firestore — when to leave SQL, Redis cache vs database, Firebase vs Supabase.

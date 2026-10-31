@@ -1,32 +1,32 @@
-# File IO — Data ko Bahar Rakhna aur Wapas Lena
+# File IO — Keeping Data Outside and Getting It Back
 
-Tum ab tak sirf `print()` use kar rahe the. Har baar program chalao, data nikal gaya. Band karo, khatam. Pichle run ka kuch nahi bacha.
+So far you've only used `print()`. Every time you run the program, the data is gone. Stop it, it's over. Nothing from the previous run survives.
 
-Aaj se ye badlega. Aaj se tum **program ke andar se, disk pe file banaoge** — data likhoge, band karoge, agle din kholo, wapas padhoge.
+From today that changes. From today you'll **create a file on disk from inside your program** — write data, close it, open it the next day, read it back.
 
-Ye sirf "file padhna seekhna" nahi hai. **Ye backend ka pehla kadam hai.** Kyunki backend ka poora kaam hi yahi hai — data ko memory se bahar rakhna taaki program band hone pe bhi bache. Aur wahi zaroorat hai jo tumhare TradeStack me poori backend banati hai — wo bhi ek hi file me data rakhta hai.
+This isn't just "learning to read files." **This is the first step of backend development.** Because the entire job of a backend is to keep data outside of memory so it survives even after the program stops. And that same need is what builds your entire backend in TradeStack — it also keeps data in a single file.
 
-Chalo shuru karte hain.
-
----
-
-## Sochо (Sochne Wala Scene)
-
-Socho tumhara **phone ka notes app**.
-
-Woh app kya karta hai? Type karo, save karo. App band karo. Dobara kholo — sab data wahi hai. Kyun? Kyunki wo data **phone ke storage me file ki tarah** pada hai, sirf memory me nahi.
-
-Ab ek aisa app socho jo **save button hi na ho**. Type karo, app band karo, kholo — sab gayab. Bizarre na? Yehi hota hai agar tumhara program sirf memory me data rakhe.
-
-Python ka memory = woh app jisme save button nahi hai. `print()` toh sirf screen pe dikhata hai. Data rakhne ke liye **file** chahiye.
-
-Aur yahi `open()` hai.
+Let's begin.
 
 ---
 
-## Manual Tareeka (dard wala)
+## Think About It (A Thinking Scene)
 
-Sabse pehle samajhte hain ki bina file ke kya hota hai. Yeh tumhara code hai — 3 naam input lo, phir print karo:
+Imagine your **phone's notes app**.
+
+What does that app do? Type, save. Close the app. Open it again — all the data is still there. Why? Because the data is stored **like a file in the phone's storage**, not just in memory.
+
+Now imagine an app that **doesn't even have a save button**. Type, close the app, open it — everything's gone. Bizarre, right? That's exactly what happens if your program keeps data only in memory.
+
+Python's memory = that app with no save button. `print()` only shows on screen. To keep data you need a **file**.
+
+And that's what `open()` is.
+
+---
+
+## The Manual Way (The Painful Way)
+
+First understand what happens without a file. Here's your code — take 3 names as input, then print them:
 
 ```python
 names = []
@@ -38,7 +38,7 @@ for name in sorted(names):
     print(f"hello, {name}")
 ```
 
-Chal karte hain:
+Run it:
 
 ```
 What's your name? Harry
@@ -49,23 +49,23 @@ hello, Hermione
 hello, Ron
 ```
 
-Program chala. Output mila. Ab **dobara chalao** — kya hoga?
+Program ran. Output received. Now **run it again** — what happens?
 
 ```
-What's your name? <input dobara>
+What's your name? <input again>
 ```
 
-Haan. Tumhe **dobara type** karna padega. Kyunki `names = []` ek RAM variable hai — program band hote hi khatam.
+Yes. You have to **type again**. Because `names = []` is a RAM variable — it's gone the moment the program stops.
 
-**Yahi dard hai.** Ab socho: agar tumhe 100 naam chahiye hon, aur har baar program chalane pe? 100 baar type karna padega. Unbearable.
+**That's the pain.** Now imagine: you need 100 names, and every time you run the program? You'd have to type 100 times. Unbearable.
 
-File se ye hota hai — ek baar likho, **baar baar padho**. Bas itna fayda.
+Files fix this — write once, **read many times**. That's the whole benefit.
 
 ---
 
-## Concept: `open()` — File ko Kholna
+## Concept: `open()` — Opening a File
 
-File kholne ka tareeka hai `open()`. Ye ek **file object** (ya handle) return karta hai — matlab ek "chitthi" jisse tum file pe kaam kar sakte ho.
+The way to open a file is `open()`. It returns a **file object** (or handle) — a "letter" through which you can work on the file.
 
 ### Syntax
 
@@ -73,48 +73,48 @@ File kholne ka tareeka hai `open()`. Ye ek **file object** (ya handle) return ka
 file = open("filename.txt", "mode")
 ```
 
-- **`"filename.txt"`** — kaunsi file. Ye path hai.
-- **`"mode"`** — kya karna hai us file se. Ye sabse important hissa hai.
+- **`"filename.txt"`** — which file. This is the path.
+- **`"mode"`** — what to do with that file. This is the most important part.
 
-**Yahan pehle ek baat samajh lo** — mode hi decide karta hai ki tum file me likhoge ya padhoge, aur purana data bachayega ya mita doge.
+**First understand one thing here** — the mode decides whether you'll write to the file or read from it, and whether old data is preserved or wiped.
 
 ### Visual Mapping
 
 ```
 open("names.txt", "w")
       |          |    |
-      |          |    └── mode: "w" = write (nayi file bana / purana overwrite)
-      |          └─────── kaunsi file
-      └────────────────── kahan hai ye command chal rahi hai (current folder)
+      |          |    └── mode: "w" = write (create new file / overwrite old)
+      |          └─────── which file
+      └────────────────── where this command is running (current folder)
 ```
 
 ---
 
-## Concept: Modes — Ye Sabse Zaroori Table Hai
+## Concept: Modes — This Is The Most Important Table
 
-Ye table rat lo. Interview me bhi poochha jaata hai, aur daily life me bhi kaam aata hai.
+Memorize this table. It's asked in interviews, and used in daily life too.
 
-| Mode | Kya karta hai | Purana data? | Kab use karna hai |
-|------|---------------|--------------|-------------------|
-| **`"r"`** | **read** — padhna | Bacha rehta hai | Data dekhna hai |
-| **`"w"`** | **write** — likhna | **MITA DETA HAI** | Nayi file banana hai |
-| **`"a"`** | **append** — peeche likhna | Bacha rehta hai, naya end me | Add karna hai |
-| **`"x"`** | **exclusive create** | File ho to error | "Ye file pehle se nahi honi chahiye" |
+| Mode | What it does | Old data? | When to use |
+|------|--------------|-----------|-------------|
+| **`"r"`** | **read** — reading | Preserved | You want to view data |
+| **`"w"`** | **write** — writing | **WIPED OUT** | You want to create a new file |
+| **`"a"`** | **append** — write at the end | Preserved, new data added at end | You want to add data |
+| **`"x"`** | **exclusive create** | Error if file exists | "This file must not already exist" |
 
-**`"w"` aur `"a"` ka farak sabse important hai.** Logon ko yahi mix-up hota hai. Samjho:
+**The difference between `"w"` and `"a"` is the most important.** This is where people get confused. Understand:
 
 ```python
-with open("names.txt", "w") as file:      # file kholi, andar kuch nahi likha
+with open("names.txt", "w") as file:      # opened the file, wrote nothing
     pass
 with open("names.txt", "a") as file:
-    file.write("Harry\n")                 # Harry add hua
+    file.write("Harry\n")                 # Harry added
 with open("names.txt", "a") as file:
-    file.write("Ron\n")                   # Ron PEECHE add hua — dono safe
+    file.write("Ron\n")                   # Ron added AT THE END — both safe
 ```
 
-Result: `Harry` aur `Ron` dono file me hain. `"a"` kabhi purana data nahi marta.
+Result: both `Harry` and `Ron` are in the file. `"a"` never destroys old data.
 
-Ab agar beech me `"w"` daal do:
+Now if you put `"w"` in the middle:
 
 ```python
 with open("names.txt", "a") as file:
@@ -123,17 +123,17 @@ with open("names.txt", "w") as file:      # <-- DANGER
     file.write("Ron\n")
 ```
 
-Result file me sirf `Ron` hai. **Harry mita gaya.** Kyunki `"w"` file kholte hi purana content truncate (kaat) deta hai.
+Result: only `Ron` is in the file. **Harry is gone.** Because `"w"` truncates (cuts) the old content the moment it opens the file.
 
-> **Maine bhi pehli baar yahi galti ki thi** — ek project me setting file overwrite kar di poori ki poori, aur pura data gaya tha. Uske baad se mujhe `with open(..., "w")` dekhke thoda extra sochne deta hai: *"kya main sach me sab kuch marna chahta hoon?"*
+> **I made this mistake the first time too** — overwrote an entire settings file in a project, and all the data was gone. Since then, whenever I see `with open(..., "w")`, I think a little extra: *"Do I really want to destroy everything?"*
 
 ---
 
-## Concept: `with` — Kyun Zaroori Hai
+## Concept: `with` — Why It's Necessary
 
-Python me file kholne ke **do tareeke** hain. Pehle dono dekh lete hain, phir samajhte hain `with` kyun better hai.
+There are **two ways** to open a file in Python. Let's look at both first, then understand why `with` is better.
 
-### Tareeka 1 — Manual (purana tareeka)
+### Way 1 — Manual (the old way)
 
 ```python
 file = open("names.txt", "w")
@@ -142,127 +142,127 @@ file.write("Ron\n")
 file.close()
 ```
 
-Kaam karta hai. Lekin socho — beech me koi line aise likhi jo **error de de**. Jaise `file.write(some_variable)` aur `some_variable` defined hi nahi hai:
+Works. But think — what if some line in between **throws an error**? Like `file.write(some_variable)` where `some_variable` isn't defined:
 
 ```python
 file = open("names.txt", "w")
 file.write("Harry\n")
-file.write(user_input)     # <-- NameError yahan!
-file.write("Ron\n")        # <-- ye line kabhi execute hi nahi hogi
-file.close()               # <-- ye bhi nahi!
+file.write(user_input)     # <-- NameError here!
+file.write("Ron\n")        # <-- this line never executes
+file.close()               # <-- this never executes either!
 ```
 
-Ab kya hoga? `NameError` aaya aur program ruk gaya. **`file.close()` kabhi call hi nahi hua.** File abhi bhi open hai.
+What happens now? `NameError` occurred and the program stopped. **`file.close()` was never called.** The file is still open.
 
-Iska matlab hai — file handle open reh gaya. Ab agar same file dobara `open("names.txt", "w")` karoge, to Windows me error aayega *"file in use by another process"*. Aur file ka data flush nahi hua — matlab jo likha wo bhi shayad gayab.
+Meaning — the file handle is still open. Now if you `open("names.txt", "w")` again on the same file, Windows will throw an error "file in use by another process". And the file data wasn't flushed — the written data may also be gone.
 
-**Ye `try/finally` se solve hota hai:**
+**This is solved by `try/finally`:**
 
 ```python
 file = open("names.txt", "w")
 try:
     file.write("Harry\n")
-    file.write(user_input)     # yahan error aaya
+    file.write(user_input)     # error here
 finally:
-    file.close()               # but ye CHALEGA — chahe upar kuch bhi ho
+    file.close()               # but this RUNS — no matter what happened above
 ```
 
-Ye sahi hai, par dekhne me bhaari lag raha hai. Har file ke liye `try/finally` likhna? Mehnaat hai.
+This is correct, but it looks heavy. Write `try/finally` for every file? Effort.
 
-### Tareeka 2 — `with` (sahi tareeka)
+### Way 2 — `with` (the right way)
 
 ```python
 with open("names.txt", "w") as file:
     file.write("Harry\n")
-    file.write(user_input)     # yahan error aaya
+    file.write(user_input)     # error here
     file.write("Ron\n")
-# yahan tak aate hi file AUTOMATICALLY band ho jayegi
-# chahe andar kuch bhi hua ho
+# the file is AUTOMATICALLY closed by the time we reach here
+# no matter what happened inside
 ```
 
-**`with` block ke andar kuch bhi ho — error aaye ya na aaye — file band ho jayegi.** Ye `try/finally` ka hi kaam hai, bas Python likh raha hai tumhare liye.
+**No matter what happens inside the `with` block — error or no error — the file gets closed.** This is exactly what `try/finally` does, just Python writes it for you.
 
-`with open(...) as file:` ka matlab hai:
-1. File kholo
-2. Block chalao
-3. **Block khatam hote hi (ya crash hone pe) file band kar do**
+`with open(...) as file:` means:
+1. Open the file
+2. Run the block
+3. **Close the file the moment the block ends (or crashes)**
 
-Yehi `with` FastAPI Phase 1 me SQLite ke saath bhi aayega — wahan bhi same rule hai (`with get_conn() as conn:`). Toh ye concept ek baar dhang se samajh lo, do jagah kaam aayega.
+This same `with` will also appear in FastAPI Phase 1 with SQLite — same rule applies there (`with get_conn() as conn:`). So understand this concept properly once, it'll be useful in two places.
 
 ---
 
-## Coder's Perspective Flow: `open()` se Start
+## Coder's Perspective Flow: Starting from `open()`
 
-Naya feature introduce kar rahe hain to step by step chalo — ek saath sab kuch mat daal do.
+When introducing a new feature, go step by step — don't dump everything at once.
 
 ### Step 1 — Concept
 
-`open()` file ka path leta hai aur ek file object deta hai. Us object pe `.write()`, `.read()`, `.readlines()` jaise methods hain.
+`open()` takes a file path and returns a file object. That object has methods like `.write()`, `.read()`, `.readlines()`.
 
 ### Step 2 — Syntax
 
 ```python
 file = open("path/to/file.txt", "mode")
-file.write("data")      # likho
-file.read()             # saara padho (string)
-file.readlines()        # lines ki list
-file.close()            # band karo
+file.write("data")      # write
+file.read()             # read everything (string)
+file.readlines()        # list of lines
+file.close()            # close
 ```
 
-### Step 3 — Minimal Example (sirf ek cheez)
+### Step 3 — Minimal Example (just one thing)
 
-Sirf ek line likhne ka kam:
+Just writing one line:
 
 ```python
 with open("test.txt", "w") as file:
     file.write("Hello")
 ```
 
-**Chalake dekho** — folder me `test.txt` ban gaya. Andar sirf `Hello` hai (bina newline ke — isliye `open` karke dekho toh file cursor ke saath chipak jayega).
+**Run it** — `test.txt` is created in the folder. Inside there's only `Hello` (no newline — so if you open the file, the cursor will stick to it).
 
-### Step 4 — Flow (jab ye chalta hai, kya hota hai)
+### Step 4 — Flow (what happens when this runs)
 
-1. Python `test.txt` dhoondta hai current folder me
-2. Nahi mila to **naya banata hai**. Mila to `"w"` mode me **truncate** kar deta hai (khali kar deta hai)
-3. File object milta hai — ab `.write()` us pe kaam karta hai
-4. Data **buffer** me jaata hai (disk pe turant nahi) — isliye `.close()` zaroori hai, tab flush hota hai
-5. `with` block khatam — file band, buffer flush
+1. Python looks for `test.txt` in the current folder
+2. If not found, **creates a new one**. If found, in `"w"` mode it **truncates** (empties it)
+3. The file object is obtained — now `.write()` works on it
+4. Data goes into a **buffer** (not to disk immediately) — that's why `.close()` is necessary, that's when flush happens
+5. `with` block ends — file closes, buffer flushes
 
-**Point 4 samajh le** — isiliye `close()` bhoolna data loss cause karta hai. Buffer matlab data abhi disk pe nahi, tumhare program ke paas hi parking me hai. Band karoge to parking khaali.
+**Understand point 4** — that's why forgetting `close()` causes data loss. Buffer means the data is still in parking, at your program's place, not on disk yet. When you close, parking empties.
 
 ### Step 5 — Build Up (full program)
 
-Ab poora program. Yehi tumhara `names1.py` hai — comments hata ke dekho:
+Now the complete program. This is your `names1.py` — look at it without comments:
 
 ```python
-# Step 1: naam input lo
+# Step 1: take names as input
 names = []
 for _ in range(3):
     names.append(input("What's your name? "))
 
-# Step 2: file me likho
+# Step 2: write to file
 with open("names.txt", "a") as file:
     for name in names:
         file.write(f"{name}\n")
 
-# Step 3: wapas padho
+# Step 3: read back
 with open("names.txt", "r") as file:
     for line in file:
         print("hello,", line.rstrip())
 ```
 
-Chalake dekho:
-- 3 naam input karo (Harry, Hermione, Ron)
-- Program dobara chalao, 3 aur naam daalo (Draco) — **file me 4 naam honge, pehle 3 bhi safe**
-- Har run me **saare** naam print honge
+Run it:
+- Enter 3 names (Harry, Hermione, Ron)
+- Run the program again, enter 3 more names (Draco) — **4 names in the file, the first 3 also safe**
+- Every run prints **all** names
 
-Yehi cheez hai — data ab RAM se bahar hai.
+This is it — the data is now outside RAM.
 
 ---
 
-## Newline Ka Chakkar (ye zaroori hai)
+## The Newline Story (this is important)
 
-Ek subtle baat jo pehle confuse karta hai. Dekho:
+One subtle thing that confuses people at first. Look:
 
 ```python
 with open("names.txt", "w") as file:
@@ -270,41 +270,41 @@ with open("names.txt", "w") as file:
     file.write("Ron")
 ```
 
-File kholo — andar kya hai?
+Open the file — what's inside?
 
 ```
 HarryRon
 ```
 
-**Dono chipke hue hain!** Kyunki `write()` kuch nahi jodta — jo diya wahi likha.
+**Both are stuck together!** Because `write()` adds nothing — it writes exactly what you give it.
 
-Ab agar likha ho:
+Now if written as:
 
 ```python
 with open("names.txt", "w") as file:
     file.write(f"{name}\n")
 ```
 
-Tab file me hai:
+Then the file has:
 
 ```
 Harry
 Ron
 ```
 
-Kyunki `\n` newline character hai — "\n" kehte hain "line yahan khatam, agli line yahan se shuru".
+Because `\n` is the newline character — "\n" means "line ends here, next line starts here".
 
-> Yahan pehle maine bhi galti ki — bina `\n` likha aur phir socha *"file me data kyun nahi hai?"* Actually data tha, bas dono lines chipke hue the. Ek `rstrip()` bhi nahi lagaya tha padhte waqt, to ek hi line me sab dikha.
+> I made this mistake too the first time — didn't write `\n` and then wondered *"why is there no data in the file?"* Actually the data was there, just both lines stuck together. And I hadn't added `rstrip()` while reading either, so everything showed on one line.
 
-**Rule yaad rakh:** har line ke baad `\n` likho. Aadat bana lo.
+**Rule to remember:** write `\n` after every line. Make it a habit.
 
 ---
 
-## Read Karke Samajhna: `read()`, `readlines()`, aur Loop
+## Understanding Reading: `read()`, `readlines()`, and Loop
 
-File me se data nikalne ke teen tareeke hain.
+There are three ways to pull data out of a file.
 
-### Tareeka 1 — `read()` — sab ek string me
+### Way 1 — `read()` — everything in one string
 
 ```python
 with open("names.txt", "r") as file:
@@ -312,9 +312,9 @@ with open("names.txt", "r") as file:
     print(content)
 ```
 
-Pura file ek **string** ban jayega, `\n` ke saath. Chhote files ke liye theek. Bada file (100MB) to memory me load hoga aur program crash kar sakta hai.
+The whole file becomes one **string**, with `\n`. Fine for small files. A big file (100MB) loads into memory and the program can crash.
 
-### Tareeka 2 — `readlines()` — lines ki list
+### Way 2 — `readlines()` — list of lines
 
 ```python
 with open("names.txt", "r") as file:
@@ -322,15 +322,15 @@ with open("names.txt", "r") as file:
     print(lines)
 ```
 
-Output dikhega kuch aisa:
+Output looks something like:
 
 ```python
 ['Harry\n', 'Hermione\n', 'Ron\n']
 ```
 
-Dekh raha hai? **Har string ke end me `\n` hai.** Isliye `print` karne pe double newline dikhta hai ya odd output aata hai.
+See? **There's `\n` at the end of every string.** That's why `print` shows a double newline or weird output.
 
-### Tareeka 3 — Seedha loop (sabse saaf)
+### Way 3 — Direct loop (cleanest)
 
 ```python
 with open("names.txt", "r") as file:
@@ -338,9 +338,9 @@ with open("names.txt", "r") as file:
         print("hello,", line.rstrip())
 ```
 
-`file` khud iterable hai — tum directly `for line in file` likh sakte ho. Aur `rstrip()` newline hatata hai.
+The file itself is iterable — you can write `for line in file` directly. And `rstrip()` removes the newline.
 
-**`rstrip()` kyun zaroori?** Kyunki `line` ke end me `\n` hota hai. Agar nahi hataya to:
+**Why is `rstrip()` necessary?** Because `line` has `\n` at the end. If you don't remove it:
 
 ```python
 print("hello,", "Harry\n")
@@ -348,15 +348,15 @@ print("hello,", "Harry\n")
 #
 ```
 
-`\n` print ke baad ek extra newline maarta hai, to output me gap dikhta hai. Ya `sorted()` karne to `"Ron\n"` aur `"Ron "` alag maan lega.
+The `\n` after print adds an extra newline, so there's a gap in the output. Or with `sorted()`, `"Ron\n"` and `"Ron "` would be treated as different.
 
-**`rstrip()` = right side se whitespace hatana.** Left side ke liye `lstrip()`, dono ke liye `strip()`.
+**`rstrip()` = remove whitespace from the right side.** For the left side there's `lstrip()`, for both sides `strip()`.
 
 ---
 
-## Sorting Files Ka Data
+## Sorting File Data
 
-Ab ye le lo `names1.py` ka last part:
+Now take the last part of `names1.py`:
 
 ```python
 names = []
@@ -369,14 +369,14 @@ for name in sorted(names, reverse=True):
     print(f"hello, {name}")
 ```
 
-**Ye teen kaam saath me ho rahe hain:**
-1. File khol rahe hain (default mode `"r"` — likha nahi hai to read hai)
-2. Har line padh ke `rstrip()` kar rahe hain (newline hatake) aur list me daal rahe hain
-3. List ko `sorted()` se sort karke print kar rahe hain
+**Three things happening together:**
+1. Open the file (default mode `"r"` — since no mode is written, it's read)
+2. Read each line, `rstrip()` it (remove newline) and put it in the list
+3. Sort the list and print
 
-**`sorted(names, reverse=True)`** — `reverse=True` matlab **Ulta sort** (Z se A). Hatao `reverse=True`, to A se Z.
+**`sorted(names, reverse=True)`** — `reverse=True` means **reverse sort** (Z to A). Remove `reverse=True` and it's A to Z.
 
-Ek chhoti optimization bhi hai — `names` list banane ki zaroorat nahi. Seedha sorted file ko de sakte ho:
+There's also a small optimization — you don't need the `names` list. You can pass the sorted file directly:
 
 ```python
 with open("names.txt") as file:
@@ -384,13 +384,13 @@ with open("names.txt") as file:
         print("hello,", line.rstrip())
 ```
 
-`sorted(file)` poori file read karke sorted list banata hai, phir iterate karte ho. Chhote files me theek hai. Bada file hua to `names` list banana better hai — kyunki `sorted()` already memory me sab le leta hai, list banake ek extra reference toh banti hi hai but structure saaf rehta hai.
+`sorted(file)` reads the whole file and makes a sorted list, then iterates. Fine for small files. For a big file, making a `names` list is better — since `sorted()` already loads everything into memory, making a list adds an extra reference but keeps the structure clean.
 
 ---
 
 ## CSV — Comma Separated Values
 
-Ab `students.csv` dekho:
+Now look at `students.csv`:
 
 ```
 Harry,Gryffindor
@@ -399,11 +399,11 @@ Ron,Gryffindor
 Draco,Slytherin
 ```
 
-Ye **CSV** hai — **C**omma **S**eparated **V**alues. Har line me ek record, aur fields comma se alag.
+This is **CSV** — **C**omma **S**eparated **V**alues. One record per line, fields separated by commas.
 
-CSV bahut common format hai — Excel export, database export, trading data, sab yahi format use karte hain. Tumhara TradeStack bhi stock data CSV (bhavcopy) me hi aata hai.
+CSV is a very common format — Excel exports, database exports, trading data, all use this format. Your TradeStack also receives stock data as CSV (bhavcopy).
 
-### CSV Padhna
+### Reading CSV
 
 ```python
 with open("students.csv") as file:
@@ -412,7 +412,7 @@ with open("students.csv") as file:
         print(f"{name} is in {house}")
 ```
 
-Chalake dekho:
+Run it:
 
 ```
 Harry is in Gryffindor
@@ -421,144 +421,144 @@ Ron is in Gryffindor
 Draco is in Slytherin
 ```
 
-**`split(",")` kya kar raha hai?** Line ko comma ke hisaab se tod ke list banata hai:
+**What is `split(",")` doing?** It splits the line by comma and makes a list:
 
 ```python
 "Hermione,Gryffindor".split(",")
 # → ['Hermione', 'Gryffindor']
 ```
 
-Phir `name, house = ...` unboxing kar deta hai — list ke pehle element ko `name`, doosre ko `house`.
+Then `name, house = ...` unpacks it — first element goes to `name`, second to `house`.
 
-**Yahan bhi `rstrip()` zaroori hai** — warna `house` me `\n` aa jayega aur print me gap dikhega.
+**`rstrip()` is necessary here too** — otherwise `house` will have `\n` and the print will show a gap.
 
-> **Dhyan rakh** — real CSV me quoted fields hote hain: `"Gryffindor, but reformed"`. Aise me `split(",")` galat dega. Python ka `csv` module iske liye hai. Abhi ke liye simple CSV me `split(",")` kaafi hai, par production me `import csv` use karo.
+> **Be careful** — real CSV has quoted fields: `"Gryffindor, but reformed"`. In that case `split(",")` gives wrong results. Python's `csv` module is for that. For now simple CSV is fine with `split(",")`, but in production use `import csv`.
 
 ---
 
 ## Common Mistakes
 
-1. **Newline bhoolna.** `file.write(name)` bina `\n` — sab kuch ek line me chipak jayega. **Har write ke baad `\n` likho.**
+1. **Forgetting the newline.** `file.write(name)` without `\n` — everything sticks to one line. **Write `\n` after every write.**
 
-2. **`"w"` use karna jahan `"a"` chahiye.** Purana data mita jayega. Jab tak pata nahi ki overwrite karna hai, `"a"` behtar hai — overwrite kabhi bhi kar sakte ho, mita hua data wapas nahi aata.
+2. **Using `"w"` where `"a"` is needed.** Old data gets wiped. Until you're sure you want to overwrite, `"a"` is better — you can always overwrite later, but wiped data doesn't come back.
 
-3. **`with` ke bajaye `open()` + `close()`.** Error aaya to `close()` skip ho jayega. Hamesha `with` use karo.
+3. **Using `open()` + `close()` instead of `with`.** If an error occurs, `close()` gets skipped. Always use `with`.
 
-4. **`rstrip()` bhoolna padhte waqt.** `line` me `\n` hota hai. Print me gap, `sorted()` me galat order.
+4. **Forgetting `rstrip()` while reading.** `line` has `\n`. Gap in print, wrong order in `sorted()`.
 
-5. **`open()` ke baad `.close()` likhna aur `with` bhi use karna.** Double close se koi fayda nahi — `with` khud sambhal leta hai.
+5. **Using `with` and also writing `close()`.** No benefit to double close — `with` handles it itself.
 
-6. **`open("file.txt")` me mode na likhna.** Default `"r"` hota hai, to likhne ki koshish karoge to error aayega. Mode hamesha saaf likho — `"r"` ya `"w"`, confusion se bachata hai.
+6. **Not writing the mode in `open()`.** Default is `"r"`, so if you try to write, you'll get an error. Always write the mode clearly — `"r"` or `"w"` — it avoids confusion.
 
-7. **File path galat folder me.** `open("names.txt")` likha to file **current working directory** me banti hai — jahan se `python names1.py` chalaya. VS Code me `.` terminal me ho to `docs/coding/python/7 Lec File IO/code` hoga. `print(open("names.txt").name)` se confirm kar sakte ho.
+7. **File path in the wrong folder.** `open("names.txt")` creates the file in the **current working directory** — where `python names1.py` was run. In VS Code if `.` is the terminal, it'll be `docs/coding/python/7 Lec File IO/code`. You can confirm with `print(open("names.txt").name)`.
 
-8. **`split(",")` result me trailing spaces.** CSV me kabhi `Harry, Gryffindor` (space ke saath) hota hai. `line.strip().split(",")` ya `split(", ")` use karo, warna `house` me space aa jayega.
+8. **Trailing spaces in `split(",")` result.** Sometimes CSV has `Harry, Gryffindor` (with a space). Use `line.strip().split(",")` or `split(", ")`, otherwise `house` will have a space.
 
 ---
 
-## Test: Kaise Verify Karein
+## Test: How to Verify
 
-Ye sab **actually chala ke** dekho, sirf padh ke nahi.
+Don't just read these — actually run them.
 
-**Test 1 — File banti hai?**
+**Test 1 — Does the file get created?**
 ```python
 with open("test.txt", "w") as file:
     file.write("Hello\n")
 ```
-Chalao, phir folder me `test.txt` dekho. Aur `open("test.txt")` se contents check karo.
+Run it, then check `test.txt` in the folder. Also check contents with `open("test.txt")`.
 
-**Test 2 — Append vs Write ka farak**
+**Test 2 — Append vs Write difference**
 ```python
-# 3 baar chalao ek hi program
+# Run this program 3 times
 with open("log.txt", "a") as file:
     file.write("line\n")
 ```
-Ab `log.txt` me **3 lines** honi chahiye. Fir `"w"` se chalao — **1 line** ho jayegi. Ye farak khud dekh ke samajh aayega.
+`log.txt` should now have **3 lines**. Run it with `"w"` — now there should be **1 line**. Watch the difference yourself to understand.
 
-**Test 3 — Newline ka effect**
-Bina `\n` ke 2 line likh ke file kholo — chipke hue dikhenge. Phir `\n` ke saath likho — alag lines. **Ye visually dekhna zaroori hai.**
+**Test 3 — Newline effect**
+Write 2 lines without `\n` and open the file — they'll appear stuck together. Then write with `\n` — separate lines. **You must see this visually.**
 
 **Test 4 — Error + with**
 ```python
 with open("err.txt", "w") as file:
-    file.write("pehli line\n")
+    file.write("first line\n")
     file.write(undefined_variable)   # NameError
 ```
-Ye crash hoga. Phir `open("err.txt")` se dekho — kya **"pehli line"** save hui? `with` hone se kuch bhi to save hona chahiye. Agar nahi hui to `with` ki zaroorat samajh lo.
+This will crash. Then check with `open("err.txt")` — was **"first line"** saved? If not, you'll understand why `with` is needed.
 
-**Test 5 — `names1.py` poora chalao**
-Teen baar chalao, teen naam each time. File me **9 lines** honi chahiye. Ye persistence ka proof hai.
+**Test 5 — Run `names1.py` fully**
+Run it 3 times, 3 names each time. The file should have **9 lines**. That's proof of persistence.
 
 ---
 
 ## Nutshell
 
-- **`open(path, mode)`** — file kholta hai, file object deta hai. Mode decide karta hai read/write/append.
-- **`"r"` padhta hai, `"w"` mita deta hai, `"a"` peeche judta hai.** Ye teen ghar yaad rakhne wale hain.
-- **`with open(...) as f:`** — block khatam pe file automatically band. Error ho tab bhi. Hamesha isko use karo.
-- **`file.write("...\n")`** — har line ke baad newline, warna sab chipak jayega.
-- **Padhte waqt `line.rstrip()`** — warna `\n` tera output aur `sorted()` dono kharab karega.
-- **`split(",")`** — CSV me fields alag karta hai. Unpacking `name, house = ...` se variables me jaata hai.
+- **`open(path, mode)`** — opens a file, returns a file object. Mode decides read/write/append.
+- **`"r"` reads, `"w"` wipes, `"a"` appends.** These three you must remember.
+- **`with open(...) as f:`** — file closes automatically when block ends. Even on error. Always use this.
+- **`file.write("...\n")`** — newline after every line, else everything sticks together.
+- **`line.rstrip()` while reading** — else `\n` ruins your output and `sorted()`.
+- **`split(",")`** — separates fields in CSV. Unpacking `name, house = ...` sends them into variables.
 
 ---
 
 ## In Your Own Words
 
 <details>
-<summary>1. `"w"` aur `"a"` me kya farak hai? Real example do.</summary>
+<summary>1. What's the difference between `"w"` and `"a"`? Give a real example.</summary>
 
-**`"w"` (write)** file kholte hi purana content **truncate** (kaat) kar deta hai — chahe tum kuch likho ya na likho. Matlab purana data permanently mita jata hai. **`"a"` (append)** purana data bilkul chhodta hai aur naya data **end me juda** deta hai. Real example — ek log file jisme har din entry add hoti hai. `"a"` use karoge to pichle 100 din ka data safe rahega. `"w"` use kiya to kal ka data mita jayega, sirf aaj ka bachega. Isliye jab tak overwrite karne ka pakka reason na ho, `"a"` behtar hai.
+**`"w"` (write)** truncates (cuts) the old content the moment it opens the file — whether you write anything or not. Old data is permanently wiped. **`"a"` (append)** leaves old data completely untouched and adds new data **at the end**. Real example — a log file where an entry is added every day. Use `"a"` and the past 100 days' data stays safe. Use `"w"` and yesterday's data is wiped, only today's remains. So unless there's a definite reason to overwrite, `"a"` is better.
 
 </details>
 
 <details>
-<summary>2. `with` statement kyun zaroori hai? `file.close()` toh likh sakte hain na?</summary>
+<summary>2. Why is the `with` statement necessary? Can't we just write `file.close()`?</summary>
 
-Likh sakte ho, par problem tab aati hai jab beech me **error** aa jaye. Manual tareeke me code aisa hai:
+You can write it, but the problem comes when an **error** occurs in between. In the manual way:
 
 ```python
 file = open("names.txt", "w")
 file.write("Harry\n")
-file.write(undefined_var)   # NameError yahan
-file.close()                 # ye line kabhi chalega hi nahi
+file.write(undefined_var)   # NameError here
+file.close()                 # this line never runs
 ```
 
-Error aaya to `close()` skip ho gaya — file open reh gayi, buffer flush nahi hua. Ye file handle leak hota hai. `with` statement automatically `try/finally` ka kaam karta hai — chahe error aaye ya na aaye, block khatam hote hi file band kar deta hai. Tumhe `try/finally` likhne ki zaroorat nahi, aur bhool ke chhodne ka chance bhi nahi.
+Error occurred, `close()` skipped — file stays open, buffer not flushed. That's a file handle leak. The `with` statement does the work of `try/finally` automatically — whether an error occurs or not, the file closes the moment the block ends. You don't need to write `try/finally`, and there's no chance of forgetting.
 
 </details>
 
 <details>
-<summary>3. `file.write(name)` aur `file.write(f"{name}\n")` me kya farak hai?</summary>
+<summary>3. What's the difference between `file.write(name)` and `file.write(f"{name}\n")`?</summary>
 
-`file.write(name)` wahi likhta hai jo diya — agar `name = "Harry"` hai to `Harry`. Koi newline add nahi hota. Do baar likhoge `write("Harry")` aur `write("Ron")` to file me `HarryRon` likha hoga — dono chipke hue, ek hi line me. `write(f"{name}\n")` wahi likhta hai **plus** ek newline character `\n` end me. Isliye dono alag lines me aate hain. Rule: har line ke baad `\n` likhna hi chahiye, warna output aur aage ka processing dono gadbad hoga.
-
-</details>
-
-<details>
-<summary>4. `rstrip()` kyun lagana padta hai padhte waqt?</summary>
-
-File me har line ke end me `\n` (newline character) hota hai — chahe tumne likhte waqt `\n` lagaya ho. Jab `for line in file` se padhte ho to `line` variable me woh newline included rehta hai. Agar `print("hello,", line)` kiya bina `rstrip()` ke to `print` apne baad ek newline aur `line` ke andar ka newline dono print ho jayenge — output me extra gap dikhega. `sorted()` karne pe bhi problem hoti hai kyunki `"Harry\n"` aur `"Harry"` ko Python alag strings samajhta hai. `rstrip()` se trailing whitespace (aur newline) hat jaata hai, string saaf ho jati hai.
+`file.write(name)` writes exactly what's given — if `name = "Harry"`, it writes `Harry`. No newline added. Write `write("Harry")` and `write("Ron")` twice and the file will have `HarryRon` — both stuck, on one line. `write(f"{name}\n")` writes the same plus a newline character `\n` at the end. So both end up on separate lines. Rule: you must write `\n` after every line, otherwise both output and further processing will be messed up.
 
 </details>
 
 <details>
-<summary>5. `read()`, `readlines()`, aur `for line in file` me kya farak hai?</summary>
+<summary>4. Why do we need to add `rstrip()` while reading?</summary>
 
-**`read()`** poori file ko ek **string** banake deta hai. Chhoti files ke liye theek, badi file pe memory me load ho jayegi. **`readlines()`** poori file ki saari lines ko ek **list** me return karta hai — jaise `['Harry\n', 'Ron\n']`. **`for line in file`** — file object khud iterable hai, to seedha iterate kar sakte ho. Ye sabse saaf tareeka hai aur badi file pe memory bhi bachata hai kyunki ek line ek baar me process hoti hai, poori file nahi. Roommate example: `read()` poori kitab ek saath uthana, `for line in file` ek ek page padhna.
-
-</details>
-
-<details>
-<summary>6. CSV file me `split(",")` kya karta hai? Aur real production me kya better hai?</summary>
-
-`split(",")` string ko comma ke basis pe tod ke list banata hai. `"Hermione,Gryffindor".split(",")` → `['Hermione', 'Gryffindor']`. Phir `name, house = line.rstrip().split(",")` unpacking se list ke har element alag variable me chala jata hai. **Real production me** Python ka built-in `csv` module better hai (`import csv; csv.reader(file)`) kyunki real CSV me quoted fields hote hain — jaise `"Gryffindor, reformed"` — aur aise case me `split(",")` galat result dega. Simple data ke liye `split(",")` kaafi hai, par production me `csv` module use karo.
+Every line in the file has `\n` (newline character) at the end — whether you added `\n` while writing or not. When you read with `for line in file`, that newline stays included in the `line` variable. If you `print("hello,", line)` without `rstrip()`, both the newline inside `line` and the newline that `print` adds will print — an extra gap shows in the output. `sorted()` also has a problem because Python treats `"Harry\n"` and `"Harry"` as different strings. `rstrip()` removes trailing whitespace (and the newline), so the string becomes clean.
 
 </details>
 
 <details>
-<summary>7. Ye File IO backend se kaise connected hai?</summary>
+<summary>5. What's the difference between `read()`, `readlines()`, and `for line in file`?</summary>
 
-Backend ka poora kaam hi data ko memory se bahar rakhna hai. Jab user ek request bhejta hai, data aata hai, use process karo, aur permanent jagah store karo — taaki agli request pe wahi data mile. File IO wahi base concept hai. Isi ko aage badha ke SQLite aata hai — jo basically ek **structured** file hai jismein tables, indexing, aur queries ka support hai (raw file me hum CSV padh ke khud parse karte hain, SQLite me `SELECT` karte ho). FastAPI Phase 1 me isi `sqlite3` module se database banayenge, aur wo module bhi internally file pe hi kaam karta hai. Toh ye lecture foundation hai.
+**`read()`** turns the whole file into one **string**. Fine for small files, loads into memory on a big file. **`readlines()`** returns all the lines of the file as a **list** — like `['Harry\n', 'Ron\n']`. **`for line in file`** — the file object itself is iterable, so you can iterate directly. This is the cleanest way and saves memory on big files because one line is processed at a time, not the whole file. Roommate example: `read()` is lifting the whole book at once, `for line in file` is reading one page at a time.
+
+</details>
+
+<details>
+<summary>6. What does `split(",")` do in a CSV file? And what's better in real production?</summary>
+
+`split(",")` splits a string by comma and makes a list. `"Hermione,Gryffindor".split(",")` → `['Hermione', 'Gryffindor']`. Then with unpacking `name, house = line.rstrip().split(",")`, each element of the list goes into a separate variable. **In real production** Python's built-in `csv` module is better (`import csv; csv.reader(file)`) because real CSV has quoted fields — like `"Gryffindor, reformed"` — and in such cases `split(",")` gives wrong results. `split(",")` is enough for simple data, but in production use the `csv` module.
+
+</details>
+
+<details>
+<summary>7. How is this File IO connected to backend?</summary>
+
+The entire job of a backend is to keep data outside of memory. When a user sends a request, data comes in, gets processed, and is stored in a permanent place — so that the same data is available on the next request. File IO is that base concept. Building on it comes SQLite — which is basically a **structured** file with support for tables, indexing, and queries (in a raw file we parse CSV ourselves, in SQLite we run `SELECT`). In FastAPI Phase 1 we'll create a database with this `sqlite3` module, and that module also works on a file internally. So this lecture is the foundation.
 
 </details>
 
@@ -566,24 +566,24 @@ Backend ka poora kaam hi data ko memory se bahar rakhna hai. Jab user ek request
 
 ## What It Is NOT
 
-- ❌ **Database nahi** — ye raw file hai. Koi indexing nahi, koi query language nahi, koi concurrent write handling nahi. Woh sab SQLite me aayega (Phase 1).
-- ❌ **JSON nahi** — CSV ek simple text format hai. JSON structured hota hai (nested objects ke liye). Real data interchange me JSON zyada use hota hai.
-- ❌ **Excel nahi** — `.xlsx` ek complex format hai jo Python me padhne ke liye extra library (`openpyxl`) chahiye. CSV uska simple bhai hai.
-- ❌ **Concurrent write safe nahi** — do programs ek hi file pe likh rahe ho to data corrupt ho sakta hai. Iske liye file locking ya database chahiye.
-- ❌ **Security nahi** — `open()` kisi bhi file khol sakta hai. Production me careful path validation zaroori hai (path traversal attacks se bachna).
+- ❌ **Not a database** — this is a raw file. No indexing, no query language, no concurrent write handling. All that comes in SQLite (Phase 1).
+- ❌ **Not JSON** — CSV is a simple text format. JSON is structured (for nested objects). JSON is used more in real data interchange.
+- ❌ **Not Excel** — `.xlsx` is a complex format that needs an extra library (`openpyxl`) to read in Python. CSV is its simple sibling.
+- ❌ **Not concurrent-write safe** — if two programs write to the same file at once, data can corrupt. For that you need file locking or a database.
+- ❌ **Not secure** — `open()` can open any file. In production, careful path validation is essential (to avoid path traversal attacks).
 
 ---
 
-## Agle Step Mein Kya Hoga
+## What Happens Next
 
-Tumne seekha — **data ko file me likhna aur file se padhna**. Ye **raw** file tha — plain text, commas, nahi jaante ki kis kaunsa data hai.
+You learned to **write data to a file and read it back**. That was a **raw** file — plain text, commas, no idea which data is which.
 
-Agle phase me **structured** storage aayega — jaha database khud batayega ki data ke columns kaunse hain, kaunsa primary key hai, aur tum SQL se query kar sakte ho bina manually parse kiye.
+In the next phase **structured** storage comes — where the database itself tells you what the columns are, which is the primary key, and you can query with SQL without manually parsing.
 
-Par usse pehle ek **zaroori soch** clear karni padegi — **backend kya hota hai**. Kyunki jab tak tum nahi jaante ki backend hai kya, to ye sab sirf "files me likhna" lagega. Backend mindset ke baad samajh aayega ki ye file IO **kyun** zaroori thi, aur FastAPI me kahan fit hoti hai.
+But before that, one **necessary thought** needs to be clear — **what is a backend**. Until you know what a backend is, all this will feel like "writing to files". After the backend mindset, you'll understand why this File IO was **necessary**, and where it fits in FastAPI.
 
-**Agla: Phase 0 — Backend Mindset (0.1 Client-Server Model)**
+**Next: Phase 0 — Backend Mindset (0.1 Client-Server Model)**
 
 ---
 
-**Related:** `COURSE-OVERVIEW.md` · Lec 6 (Unit Testing) — errors handle karna seekha tha, ye uske natural next step hai · `Phase 0 - Backend Mindset/0.1 Client-Server Model.md` · `Phase 1 - FastAPI Basics (CRUD + SQLite)/1.4 SQLite se Jodo.md`
+**Related:** `COURSE-OVERVIEW.md` · Lec 6 (Unit Testing) — you learned to handle errors there, this is its natural next step · `Phase 0 - Backend Mindset/0.1 Client-Server Model.md` · `Phase 1 - FastAPI Basics (CRUD + SQLite)/1.4 SQLite se Jodo.md`

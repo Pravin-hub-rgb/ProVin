@@ -1,198 +1,198 @@
 # 🗄️ Phase 4: Topic 23 - Handling Missing Data & Schema Migrations
 
-> **Interview Question:** "Production mein database mein missing values kaise handle karte ho? Schema migrations kaise karte hai downtime ke bina? Kya approach follow karte ho?"
+> **Interview Question:** "How do you handle missing values in the database in production? How do you do schema migrations without downtime? What approach do you follow?"
 
 ---
 
-## 🚨 **The Golden Rule — Sabse Pehle Samjho!**
+## 🚨 **The Golden Rule — Understand This First!**
 
-> **"Ghar mein naya kamra banate waqt tum rehte hue banate hai. Log ghar se nahi nikalte. Waise hi schema migrations bhi live chalte hue karni padti hai downtime ke bina."**
+> **"While building a new room in your house, you build it while people are still living there. Nobody moves out. Similarly, schema migrations have to be done while the system is live, without downtime."**
 
-Production mein database kabhi bhi band nahi hota. Tumhe chalte hue changes karne hote hai.
+The production database never shuts down. You have to make changes while it's running.
 
 ---
 
 ## 💡 Beginner-Friendly Explanation (House Renovation Analogy)
 
 ```
-🏠 Ghar ko badalna hai:
+🏠 Changing the house:
 
-❌ Galat tareeka:
-Ghar ko poora band karo. Sabko bahar nikal lo. 1 din poora ghar badlo. Phir log ko andar aane do. 24 ghanta ghar band rahega. Sab log naraz ho jayenge.
+❌ Wrong way:
+Shut down the house completely. Make everyone leave. Change the whole house in 1 day. Then let people back in. The house stays closed for 24 hours. Everyone gets upset.
 
-✅ Sahi tareeka:
-1.  Pehle naya wall banalo side mein jab log andar reh rahe hai
-2.  Sab ko naye hisse mein shift karo
-3.  Phir purana hissa hatao
-4.  Kabhi bhi ghar band nahi hua. Koi nahi pata ki badlaav hua bhi hai.
+✅ Right way:
+1.  First build the new wall on the side while people are still inside
+2.  Shift everyone to the new section
+3.  Then remove the old section
+4.  The house was never closed. Nobody even noticed the change.
 
 ⚡ Database Migration:
-Bilkul yahi hota hai. Production mein 0 downtime migration karni padti hai. Kabhi bhi database band nahi kar sakte. User hamesha aate rahte hai.
+Exactly the same thing. In production you have to do 0 downtime migration. You can never shut down the database. Users keep coming continuously.
 ```
 
 ---
 
 ## 🎯 Missing Data Handling Strategies
 
-Jab tum naya column add karte hai toh purane rows mein usme value nahi hoti. Ye missing values hai.
+When you add a new column, the old rows don't have a value in it. These are missing values.
 
-### ✅ Strategy 1: Default Value Set Karo
-Simplest aur best approach.
+### ✅ Strategy 1: Set a Default Value
+Simplest and best approach.
 
 ```sql
--- ✅ Sabse best tareeka
+-- ✅ Best way
 ALTER TABLE users ADD COLUMN phone VARCHAR(20) DEFAULT '' NOT NULL;
 ```
 
 ✅ **Pros:**
-- Missing values nahi honge
-- Koi application change nahi chahiye
-- Sab existing queries kaam karenge
+- No missing values
+- No application change needed
+- All existing queries keep working
 
 ❌ **Cons:**
-- Har naye column ke liye sensible default chahiye
+- Every new column needs a sensible default
 
 ---
 
 ### ✅ Strategy 2: Backfill Data
-Default nahi mil raha toh purane rows ko update karo background mein.
+If no default is available, update the old rows in the background.
 
 ```sql
--- Step 1: Add column nullable
+-- Step 1: Add column as nullable
 ALTER TABLE users ADD COLUMN phone VARCHAR(20);
 
--- Step 2: Background job se sab purane rows ko update karo
+-- Step 2: Update all old rows via background job
 UPDATE users SET phone = '' WHERE phone IS NULL;
 
--- Step 3: Ab column ko NOT NULL karo
+-- Step 3: Now make the column NOT NULL
 ALTER TABLE users ALTER COLUMN phone SET NOT NULL;
 ```
 
 ✅ **Pros:**
-- Koi default nahi chahiye
-- Slow speed par kar sakte hai load nahi hoga
+- No default needed
+- Can be done at slow speed without load
 
 ❌ **Cons:**
-- Thoda time lagta hai
+- Takes some time
 
 ---
 
 ### ✅ Strategy 3: Application Level Handling
-Application mein check karo agar null hai toh default dikhao.
+Check in the application — if it's null, show a default.
 
 ```tsx
 function UserProfile(user) {
-  // ✅ Agar phone nahi hai toh default dikhao
+  // ✅ If phone isn't there, show default
   return <div>Phone: {user.phone || 'Not provided'}</div>
 }
 ```
 
 ✅ **Pros:**
-- Database mein koi change nahi karna
-- Sabse fast implement hota hai
+- No change in database
+- Fastest to implement
 
 ❌ **Cons:**
-- Har jagah check karna padta hai
-- Bhool jaoge toh bug aa jayega
+- Have to check everywhere
+- If you forget, a bug appears
 
 ---
 
 ## 🚨 Never Do These Mistakes
 
-### ❌ Mistake 1: Naya column NOT NULL bina default ke add karo
+### ❌ Mistake 1: Add a new column as NOT NULL without a default
 ```sql
--- ❌ SUPER DANGEROUS! Production mein ye poore database ko lock kar dega
+-- ❌ SUPER DANGEROUS! This will lock the entire database in production
 ALTER TABLE users ADD COLUMN phone VARCHAR(20) NOT NULL;
 ```
 
-1 crore rows wale table par ye query 10 minute tak lock rakhega. Poora site down ho jayega.
+On a table with 1 crore rows this query will hold the lock for 10 minutes. The entire site goes down.
 
-### ❌ Mistake 2: Big table par ALTER TABLE peak time par chalao
-Kabhi bhi 12 baje dopahar ko migration mat chalao. Raat ko 2 baje chalao jab traffic kam hai.
+### ❌ Mistake 2: Run ALTER TABLE on a big table at peak time
+Never run a migration at 12 noon. Run it at 2 AM when traffic is low.
 
-### ❌ Mistake 3: Ek baar mein saare changes karo
-Ek baar mein 10 column mat add karo. Ek ek karke karo. Har change ke baad monitor karo.
+### ❌ Mistake 3: Make all changes at once
+Don't add 10 columns at once. Do them one by one. Monitor after each change.
 
-### ❌ Mistake 4: Migration ke baad rollback plan nahi banana
-Kuch galat ho gaya toh wapas kaise jaoge. Hamesha rollback script ready rakho.
+### ❌ Mistake 4: No rollback plan after migration
+If something goes wrong, how do you go back? Always keep a rollback script ready.
 
 ---
 
 ## 📋 Zero Downtime Migration Steps
 
-Ye industry standard pattern hai har company follow karti hai:
+This is the industry standard pattern every company follows:
 
 ```
-✅ STEP 1: Add new column nullable
-- Koi existing code ko koi farak nahi padega
-- Sab kuch kaam karta hai jaise pehle tha
+✅ STEP 1: Add new column as nullable
+- No existing code is affected
+- Everything works just like before
 
-✅ STEP 2: Update application code to write both old and new column
-- Ab naye entries dono jagah aa rahi hai
-- Abhi bhi purana column hi use ho raha hai read ke liye
+✅ STEP 2: Update application code to write to both old and new column
+- New entries now go to both places
+- Old column is still used for reads
 
-✅ STEP 3: Backfill all old rows new column mein
-- Background job se purane data ko naye column mein copy karo
-- Slow slow karo taaki load nahi aaye
+✅ STEP 3: Backfill all old rows into the new column
+- Copy old data into the new column via background job
+- Do it slowly so there's no load
 
-✅ STEP 4: Update application to read from new column
-- Ab sab kuch naye column se ho raha hai
-- Purana column ab koi use nahi kar raha
+✅ STEP 4: Update application to read from the new column
+- Now everything happens from the new column
+- Old column is no longer used
 
-✅ STEP 5: Delete old column
-- Ab purana column delete kar sakte ho
-- Poora migration poora ho gaya
+✅ STEP 5: Delete the old column
+- Now the old column can be deleted
+- The entire migration is complete
 
-✅ RESULT: Kabhi bhi app down nahi hua! Koi user ko nahi pata ki kuch badla hai.
+✅ RESULT: The app never went down! No user even knew something changed.
 ```
 
 ---
 
 ## 🎙️ Interview Articulation (How to Answer)
 
-### Q: "Production mein missing values kaise handle karte ho?"
+### Q: "How do you handle missing values in production?"
 
-**Answer:** "Sir missing values handle karne ke liye hum hamesha 3 steps follow karte hai: pehle naya column nullable add karo, phir background job se backfill karo, phir usko not null karo. Kabhi bhi bina default ke not null column nahi add karte production mein."
+**Answer:** "Sir, for handling missing values we always follow 3 steps: first add the new column as nullable, then backfill via background job, then make it not null. We never add a not null column without a default in production."
 
-### Q: "Zero downtime schema migration kaise karte hai?"
+### Q: "How do you do zero downtime schema migration?"
 
-**Answer:** "Zero downtime migration ke liye hum multi step approach follow karte hai. Pehle naya column add karo, phir dono jagah write karo, phir purane data ko backfill karo, phir naye se read karo, last mein purana column delete karo. Isme kabhi bhi app down nahi hota."
+**Answer:** "For zero downtime migration we follow a multi-step approach. First add the new column, then write to both places, then backfill the old data, then read from the new one, and finally delete the old column. The app never goes down in this."
 
-### Q: "Kabhi tumne migration se production down kiya hai?"
+### Q: "Have you ever brought production down with a migration?"
 
-**Answer:** "Haan bhai initial days mein kiya tha. Main ek baar bina default ke not null column add kiya tha 80 lakh rows wale table par. Poora site 15 minute ke liye down hua tha. Uske baad main kabhi bhi aisa nahi karta."
+**Answer:** "Yes, in the initial days. Once I added a not null column without a default on a table with 80 lakh rows. The entire site was down for 15 minutes. After that I never do that."
 
-### Q: "Backfill kaise karte ho bina load ke?"
+### Q: "How do you backfill without load?"
 
-**Answer:** "Backfill hum hamesha batch mein karte hai. 1000 rows ek baar mein update karo phir 1 second wait karo. Aise karoge toh database par koi load nahi aayega. Sab background mein chalta hai."
+**Answer:** "We always do backfill in batches. Update 1000 rows at once, then wait 1 second. This way no load comes on the database. Everything runs in the background."
 
-### Q: "Default value kaun sa rakhna chahiye?"
+### Q: "Which default value should you keep?"
 
-**Answer:** "Hamesha sensible default rakho. String ke liye empty string, number ke liye 0, boolean ke liye false. Kabhi bhi NULL ko valid value mat rakho. NULL ka matlab unknown hai na ki empty."
+**Answer:** "Always keep a sensible default. Empty string for strings, 0 for numbers, false for booleans. Never keep NULL as a valid value. NULL means unknown, not empty."
 
-### Q: "Migration kab chalao production mein?"
+### Q: "When do you run a migration in production?"
 
-**Answer:** "Hamesha lowest traffic time par. Hum raat ko 2 baje migration chalte hai. Us time 5% log hi hote hai. Agar kuch galat ho jaye toh impact kam hoga."
+**Answer:** "Always at the lowest traffic time. We run migrations at 2 AM. At that time only 5% of users are there. If something goes wrong, the impact is less."
 
-### Q: "Large table par alter table kaise karte hai?"
+### Q: "How do you alter a large table?"
 
-**Answer:** "Bade table par hum directly alter table nahi karte. Hum naya table banate hai, data copy karte hai, phir rename karte hai. Isme koi lock nahi hota. GitHub aur Instagram bhi yahi tareeka use karte hai."
+**Answer:** "We don't directly alter large tables. We create a new table, copy the data, then rename. No lock happens in this. GitHub and Instagram also use this approach."
 
-### Q: "Migration se pehle kya check karte ho?"
+### Q: "What do you check before a migration?"
 
-**Answer:** "Migration se pehle hum staging par poora test karte hai. Rollback script ready rakhte hai. Monitoring open rakhte hai. Sab log ko inform kar dete hai ki migration chala rahe hai."
+**Answer:** "Before migration we test everything on staging. We keep the rollback script ready. We keep monitoring open. We inform everyone that the migration is running."
 
 ---
 
 ## ✅ **Key Takeaways**
 
-1.  Kabhi bhi production mein bina default ke NOT NULL column mat add karo
-2.  Har migration ko multi step mein karo zero downtime ke liye
-3.  Backfill hamesha batch mein karo slow speed se
-4.  Hamesha lowest traffic time par migration chalao
-5.  Rollback script hamesha ready rakho
-6.  Kabhi bhi ek baar mein ek se zyada change mat karo
-7.  NULL ko mat use karo actual value ke roop mein
-8.  Har migration ke baad 1 ghanta monitor karo
+1.  Never add a NOT NULL column without a default in production
+2.  Do every migration in multiple steps for zero downtime
+3.  Always backfill in batches at slow speed
+4.  Always run migration at the lowest traffic time
+5.  Always keep rollback script ready
+6.  Never make more than one change at a time
+7.  Don't use NULL as an actual value
+8.  Monitor for 1 hour after every migration
 
-> **Final Tip:** Interview mein hamesha ye line bol dena: "Production database ek running train hai. Tum chalte hue wheel badal rahe ho. Train ko kabhi bhi nahi rok sakte."
+> **Final Tip:** Always say this line in an interview: "A production database is a running train. You're changing the wheels while it's moving. You can never stop the train."

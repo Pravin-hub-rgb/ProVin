@@ -1,25 +1,25 @@
 # Lec 7 - File IO — Solutions
 
-> **Dhyan rakh:** Ye answers reference ke liye hain. Pehle `practice_set.md` ke saare questions khud attempt karo. Phir yahan aakar compare karo.
+> **Keep in mind:** These answers are for reference. First attempt all questions in `practice_set.md` yourself. Then come here and compare.
 >
-> Agar tumhara answer alag hai par **kaam kar raha hai** — to tum sahi ho. Python me ek se zyada tarike hote hain.
+> If your answer is different but **it works** — you're right. Python has more than one way.
 
 ---
 
 ## Level 1 — Basics
 
-### Q1. Ek line likho
+### Q1. Write one line
 
 ```python
 with open("output.txt", "w") as file:
     file.write("Hello, World!")
 ```
 
-`"w"` mode naya file banata hai ya purana overwrite karta hai. Check karne ke liye `open("output.txt").read()` chalao.
+`"w"` mode creates a new file or overwrites an existing one. To check, run `open("output.txt").read()`.
 
 ---
 
-### Q2. 5 lines likho
+### Q2. Write 5 lines
 
 ```python
 with open("numbers.txt", "w") as file:
@@ -27,11 +27,11 @@ with open("numbers.txt", "w") as file:
         file.write(f"{i}\n")
 ```
 
-**Dekh raha hai `\n`** — har line ke baad newline. Bina iske sab ek line me chipak jayenge.
+**Notice the `\n`** — newline after every line. Without it everything sticks to one line.
 
 ---
 
-### Q3. File padho
+### Q3. Read a file
 
 ```python
 with open("numbers.txt") as file:
@@ -39,7 +39,7 @@ with open("numbers.txt") as file:
         print(line.rstrip())
 ```
 
-`rstrip()` isliye ki `line` ke end me `\n` hota hai. Bina iske print me extra gap dikhta.
+`rstrip()` is needed because `line` has `\n` at the end. Without it there's an extra gap in print.
 
 ---
 
@@ -69,20 +69,20 @@ with open("notes.txt") as file:
 print(f"Total words: {count}")
 ```
 
-`split()` (bina argument) whitespace ke hisaab se todta hai — spaces, tabs, newlines sab. Isliye `line.split()` sahi hai, `line.split(" ")` nahi (usme `\n` bhi ek "word" ban jayega).
+`split()` (without argument) splits by whitespace — spaces, tabs, newlines. So `line.split()` is right, `line.split(" ")` is not (in that case `\n` would also become a "word").
 
 ---
 
-## Level 2 — Modes aur read/write
+## Level 2 — Modes and read/write
 
 ### Q6. Append test
 
 ```
-"a" mode, 3 baar chalaya  →  3 lines
-"w" mode, 1 baar chalaya   →  1 line
+"a" mode, run 3 times  →  3 lines
+"w" mode, run 1 time   →  1 line
 ```
 
-**Kya hua:** `"a"` file ke end me nayi line jodta hai, purana data safe rehta hai. `"w"` file kholte hi purana content truncate kar deta hai — chahe tum ek line likho ya kuch bhi na likho. `"w"` ke baad file me sirf naya content hota hai.
+**What happened:** `"a"` adds a new line at the end of the file, old data stays safe. `"w"` truncates the old content the moment it opens the file — whether you write one line or nothing. After `"w"`, the file has only the new content.
 
 ---
 
@@ -105,7 +105,7 @@ with open("data.txt", "w") as file:
 # -> content: Bye
 ```
 
-**Step 3 me `Hello World` permanently mita.** Isliye jab tak pakka reason na ho, `"a"` use karo.
+**In step 3, `Hello World` is permanently wiped.** That's why unless there's a definite reason, use `"a"`.
 
 ---
 
@@ -123,7 +123,7 @@ with open("sales.csv", "a") as file:
     file.write("samosa,15\n")
 ```
 
-`os.path.exists()` se check kar rahe hain ki file pehle se hai ya nahi. Pehli baar header likhenge (`"w"`), aage sirf append karenge (`"a"`).
+`os.path.exists()` checks whether the file already exists. First time write the header (`"w"`), afterwards only append (`"a"`).
 
 ---
 
@@ -135,7 +135,7 @@ with open("source.txt") as src, open("copy.txt", "w") as dst:
         dst.write(line)
 ```
 
-Ek hi line me do `with` statements — dono files ka reference ek saath. Dhyan rahe: `dst` ko `"w"` (nayi file bana), `src` ko `"r"`.
+Two `with` statements in one line — references to both files at once. Note: `dst` is `"w"` (new file), `src` is `"r"`.
 
 ---
 
@@ -149,13 +149,13 @@ for line in sorted(lines, reverse=True):
     print(line.rstrip())
 ```
 
-`sorted(..., reverse=True)` matlab Z se A. `rstrip()` taaki newline na dikhe.
+`sorted(..., reverse=True)` means Z to A. `rstrip()` so the newline doesn't show.
 
 ---
 
 ## Level 3 — CSV
 
-### Q11. students.csv parse karo
+### Q11. Parse students.csv
 
 ```python
 with open("students.csv") as file:
@@ -164,7 +164,7 @@ with open("students.csv") as file:
         print(f"{name} is in {house}")
 ```
 
-Flow: line padhi → `rstrip()` se `\n` hata → `split(",")` se list → unpacking se `name` aur `house`.
+Flow: read line → remove `\n` with `rstrip()` → split into list with `split(",")` → unpack into `name` and `house`.
 
 ---
 
@@ -188,11 +188,11 @@ Gryffindor: 3
 Slytherin: 1
 ```
 
-`counts.get(house, 0)` ka matlab — agar house pehle se dict me hai to uski value lo, warna `0` se shuru karo. Phir `+ 1` karke badha do.
+`counts.get(house, 0)` means — if the house is already in the dict, take its value, otherwise start from `0`. Then increment by `+ 1`.
 
 ---
 
-### Q13. Sirf ek house ke students
+### Q13. Only one house's students
 
 ```python
 with open("students.csv") as file:
@@ -204,7 +204,7 @@ with open("students.csv") as file:
 
 ---
 
-### Q14. Apna CSV banao + average
+### Q14. Make your own CSV + average
 
 ```python
 with open("grades.csv", "w") as file:
@@ -240,13 +240,13 @@ Maths: 63.33
 Science: 73.33
 ```
 
-`if parts[0] == "name": continue` — header line skip karne ke liye. Bina iske `int("marks")` crash kar dega.
+`if parts[0] == "name": continue` — to skip the header line. Without it `int("marks")` would crash.
 
 ---
 
-## Level 4 — Thoda mushkil
+## Level 4 — A bit harder
 
-### Q15. Line number ke saath
+### Q15. Line numbers
 
 ```python
 with open("numbers.txt") as file:
@@ -254,11 +254,11 @@ with open("numbers.txt") as file:
         print(f"{i}. {line.rstrip()}")
 ```
 
-`enumerate(iterable, start=1)` — index deta hai aur 1 se shuru karta hai. Zero se nahi chahiye isliye `start=1`.
+`enumerate(iterable, start=1)` — gives the index and starts from 1. `start=1` because we don't want zero.
 
 ---
 
-### Q16. Word ki frequency
+### Q16. Word frequency
 
 ```python
 with open("text.txt", "w") as file:
@@ -284,11 +284,11 @@ easy: 1
 and: 1
 ```
 
-`sorted(counts.items(), key=lambda x: x[1], reverse=True)` — items me `(word, count)` tuples hote hain. `key=lambda x: x[1]` matlab count ke hisaab se sort karo. Phir `[:5]` se top 5.
+`sorted(counts.items(), key=lambda x: x[1], reverse=True)` — items contain `(word, count)` tuples. `key=lambda x: x[1]` means sort by count. Then `[:5]` for top 5.
 
 ---
 
-### Q17. Data validate karo
+### Q17. Validate data
 
 ```python
 with open("emails.txt", "w") as file:
@@ -321,7 +321,7 @@ print(f"Valid: {len(valid)}, Invalid: {invalid}")
 
 ---
 
-### Q18. CSV se CSV
+### Q18. CSV to CSV
 
 ```python
 with open("students.csv") as src, open("slytherin.csv", "w") as dst:
@@ -331,7 +331,7 @@ with open("students.csv") as src, open("slytherin.csv", "w") as dst:
             dst.write(f"{name},{house}\n")
 ```
 
-Do files ek saath khul rahe hain — ek read (`"r"` default), ek write (`"w"`).
+Both files open at once — one for read (`"r"` default), one for write (`"w"`).
 
 ---
 
@@ -359,7 +359,7 @@ Hermione
 Ron
 ```
 
-`strip()` dono taraf se whitespace hatata hai. `if clean:` — empty string Python me **falsy** hoti hai, isliye blank lines apne aap skip ho jayengi. `if line:` bhi kaam karega.
+`strip()` removes whitespace from both sides. `if clean:` — empty string is **falsy** in Python, so blank lines skip themselves. `if line:` would also work.
 
 ---
 
@@ -373,7 +373,7 @@ with open("data.txt", "w") as file:
 with open("data.txt") as file:
     data = file.read()
 print(repr(data))
-# Output: 'alpha\nbeta\n'   ← ek string
+# Output: 'alpha\nbeta\n'   ← one string
 
 # readlines()
 with open("data.txt") as file:
@@ -382,7 +382,7 @@ print(lines)
 # Output: ['alpha\n', 'beta\n']   ← list of strings
 ```
 
-**Farak:** `read()` poori file ko **ek string** banata hai (newlines included). `readlines()` har line ko **alag string** banake list me deta hai. Isliye jab line-by-line process karna ho, `readlines()` ya loop behtar hai — aur badi file pe memory bhi bachta hai.
+**Difference:** `read()` turns the whole file into **one string** (newlines included). `readlines()` gives each line as a separate string in a list. So when you want to process line by line, `readlines()` or a loop is better — and on a big file it also saves memory.
 
 ---
 
@@ -403,7 +403,7 @@ with open("grades.csv") as file:
             out.write(f"{name}: {marks} ({status})\n")
 ```
 
-**Note:** `report.txt` `"a"` mode se khul raha hai — warna har line ke baad file overwrite ho jayegi aur sirf last student bachega. Ye wahi Q6 wala trap hai.
+**Note:** `report.txt` is opened in `"a"` mode — otherwise the file would get overwritten after every line and only the last student would remain. This is the same trap from Q6.
 
 ---
 
@@ -417,9 +417,9 @@ with open("test.txt", "r") as file:
 print(len(data))
 ```
 
-**`"abc"` ke liye output: `3`**
+**Output for `"abc"`: `3`**
 
-Ab non-ASCII try karo:
+Now try non-ASCII:
 ```python
 with open("test.txt", "w", encoding="utf-8") as file:
     file.write("é")
@@ -428,11 +428,11 @@ with open("test.txt", "r", encoding="utf-8") as file:
 print(len(data))     # 1
 ```
 
-**`read()` ke baad: `1` — par `open("test.txt", "rb").read()` se dekho to `b'\xc3\xa9'` milega, jo 2 bytes hai.**
+**After `read()`: `1` — but if you check with `open("test.txt", "rb").read()` you'll get `b'\xc3\xa9'`, which is 2 bytes.**
 
-**Farak kyun:** File bytes me store hoti hai, characters nahi. "a", "b", "c" ASCII hain — har ek 1 byte. Par "é" ek **multi-byte character** hai — UTF-8 me 2 bytes (`0xC3 0xA9`). Text mode me `read()` ye dono bytes ko decode karke ek character "é" bana deta hai, isliye `len()` = 1. Binary mode me raw bytes milte hain, isliye `len()` = 2.
+**Why the difference:** Files are stored in bytes, not characters. "a", "b", "c" are ASCII — 1 byte each. But "é" is a **multi-byte character** — 2 bytes in UTF-8 (`0xC3 0xA9`). In text mode, `read()` decodes those 2 bytes into one character "é", so `len()` = 1. In binary mode you get raw bytes, so `len()` = 2.
 
-**Practical lesson:** Jab `len(data)` se file size guess kar rahe ho ya binary data handle kar rahe ho, ya character count chahiye to text mode sahi hai. Par **encoding hamesha specify karo** (`encoding="utf-8"`) — warna Windows pe default encoding alag ho sakta hai aur Hindi text jaise characters Unicode error de sakte hain.
+**Practical lesson:** When you're guessing file size from `len(data)` or handling binary data, or when you want character count, text mode is right. But **always specify encoding** (`encoding="utf-8"`) — otherwise on Windows the default encoding can be different and characters like Hindi text can throw Unicode errors.
 
 ---
 
@@ -450,32 +450,32 @@ with open("merged.txt", "w") as out:
 print("Merged!")
 ```
 
-**Dhyan:** `out` ko `"w"` (ek nayi file, ek hi baar likho), lekin har `src` ko default (`"r"`) se khol rahe hain. Agar `src` ko bhi `"w"` se kholte to source files khatam ho jati!
+**Note:** `out` is `"w"` (one new file, written once), but every `src` is opened with default (`"r"`). If you opened `src` with `"w"` too, the source files would be wiped!
 
 ---
 
-## Common Galtiyan Jo Sab Karte Hain (Solutions se seekhi hui)
+## Common Mistakes Everyone Makes (learned from solutions)
 
-Ye patterns mere aur tumhare dono ke kaam se nikle hain:
+These patterns came from my work and yours:
 
-1. **Bina `rstrip()` ke `sorted()`** — newline ki wajah se order bigad jaata hai. Hamesha pehle trim karo, phir sort.
+1. **`sorted()` without `rstrip()`** — the newline messes up the order. Always trim first, then sort.
 
-2. **`"w"` jahan `"a"` chahiye tha** — Q6 aur C1 dono me yahi trap hai. File banne ke liye ek baar `"w"`, baaki me hamesha `"a"`.
+2. **`"w"` where `"a"` was needed** — the trap from both Q6 and C1. Create the file once with `"w"`, afterwards always `"a"`.
 
-3. **Header line process karna** — CSV me pehli line header hoti hai (`name,subject,marks`). Use process karoge to `int("marks")` crash dega. `if parts[0] == "name": continue` ya `next(file)` se skip karo.
+3. **Processing the header line** — the first line of a CSV is the header (`name,subject,marks`). Process it and `int("marks")` crashes. Skip with `if parts[0] == "name": continue` or `next(file)`.
 
-4. **`next(file)` ka use** — Q14 aur C1 me header skip karne ka aur tarika:
+4. **Using `next(file)`** — another way to skip the header in Q14 and C1:
    ```python
    with open("grades.csv") as file:
-       next(file)          # pehli line (header) skip
+       next(file)          # skip first line (header)
        for line in file:
            ...
    ```
-   Ye thoda cleaner hai `if` check se.
+   This is a bit cleaner than the `if` check.
 
-5. **Binary mode me `len()`** — C2 wala issue. Characters aur bytes ka fark yaad rakh.
+5. **Binary mode `len()`** — the C2 issue. Remember the difference between characters and bytes.
 
-6. **Encoding specify na karna** — Non-ASCII text (Hindi, emoji) Windows pe crash kar sakta hai. Hamesha `encoding="utf-8"` likho jab tak specific reason na ho.
+6. **Not specifying encoding** — non-ASCII text (Hindi, emoji) can crash on Windows. Always write `encoding="utf-8"` unless there's a specific reason.
 
 ---
 

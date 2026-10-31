@@ -1,16 +1,16 @@
-# 28 — Local State vs Global State: Fark Kya Hai
+# 28 — Local State vs Global State: What's the Difference
 
-> Pichle doc mein State Management umbrella samjha.
-> Ab seedha fark — **Local State kab, Global State kab**.
+> Previous doc covered the State Management umbrella.
+> Now the direct difference — **Local state when, Global state when**.
 
 ---
 
 ## Local State — useState
 
-Jab state sirf ek component aur uske direct children ke liye ho.
+When state is needed only by one component and its direct children.
 
 ```jsx
-// Password field show/hide toggle — sirf is component ko chahiye
+// Password field show/hide toggle — only this component needs it
 function PasswordInput() {
   const [showPassword, setShowPassword] = useState(false)
 
@@ -25,13 +25,13 @@ function PasswordInput() {
 }
 ```
 
-Koi aur component ko `showPassword` ki zaroorat nahi — local state perfect hai.
+No other component needs `showPassword` — local state is perfect.
 
 ---
 
-## Jab Local State Kafi Nahi Hoti — Prop Drilling
+## When Local State Isn't Enough — Prop Drilling
 
-Maan lo cart item count Navbar mein dikhana hai:
+Say cart item count needs to show in Navbar:
 
 ```jsx
 // App
@@ -40,8 +40,8 @@ function App() {
 
   return (
     <div>
-      <Navbar cartCount={cartCount} />           {/* Prop pass kiya */}
-      <ProductPage setCartCount={setCartCount} /> {/* Setter pass kiya */}
+      <Navbar cartCount={cartCount} />           {/* Prop passed */}
+      <ProductPage setCartCount={setCartCount} /> {/* Setter passed */}
     </div>
   )
 }
@@ -52,55 +52,55 @@ function Navbar({ cartCount }) {
 }
 
 // ProductPage → ProductList → ProductCard → AddToCartButton
-function AddToCartButton({ setCartCount }) {  // Prop 3 levels neeche
+function AddToCartButton({ setCartCount }) {  // Prop 3 levels down
   return <button onClick={() => setCartCount(prev => prev + 1)}>Add</button>
 }
 ```
 
-Yeh **prop drilling** hai — state upar hai, data kai levels neeche jaana chahiye. Messy aur hard to maintain.
+This is **prop drilling** — state is up top, data needs to go many levels down. Messy and hard to maintain.
 
 ---
 
-## Global State — Solution
+## Global State — The Solution
 
-Global state ko **koi bhi component seedha access** kar sakta hai — props se pass karne ki zaroorat nahi.
+With global state, **any component can access it directly** — no prop passing needed.
 
 ```jsx
-// Global store mein cart hai
-// Navbar seedha access karta hai
+// Cart is in global store
+// Navbar accesses directly
 function Navbar() {
   const cartCount = useCartStore(state => state.items.length)
   return <div>Cart ({cartCount})</div>
 }
 
-// AddToCartButton seedha access karta hai
+// AddToCartButton accesses directly
 function AddToCartButton({ product }) {
   const addItem = useCartStore(state => state.addItem)
   return <button onClick={() => addItem(product)}>Add</button>
 }
 
-// Dono ko props se kuch pass nahi karna — seedha store se
+// Nothing passed via props to either — both read from store directly
 ```
 
 ---
 
-## Decision — Local ya Global?
+## Decision — Local or Global?
 
 ```
-Kya yeh state sirf ek component use karti hai?
-  → Haan → useState (local)
+Is this state used by only one component?
+  → Yes → useState (local)
 
-Kya 2-3 levels neeche jaana hai props se?
-  → Thoda → Context theek hai
-  → Zyada → Zustand
+Does it need to go 2-3 levels down via props?
+  → A little → Context is fine
+  → A lot → Zustand
 
-Kya poori app mein chahiye (cart, user)?
+Needed across the whole app (cart, user)?
   → Zustand
 ```
 
 ---
 
-## ShopKaro Mein Local State Examples
+## Local State Examples in ShopKaro
 
 ```jsx
 // Form input values — local
@@ -122,16 +122,16 @@ const [isExpanded, setIsExpanded] = useState(false)
 
 ---
 
-## ShopKaro Mein Global State Examples
+## Global State Examples in ShopKaro
 
 ```
 Cart items → Navbar + Cart page + Checkout = Zustand
-User info → Protected routes + Profile = Zustand ya Context
-Toast notifications → Har jagah se trigger = Zustand
+User info → Protected routes + Profile = Zustand or Context
+Toast notifications → Triggered from anywhere = Zustand
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`29-state-context.md` — **React Context** — built-in global state solution. Kab kaafi hai, kab Zustand chahiye — yeh decision samjhenge.
+`29-state-context.md` — **React Context** — built-in global state solution. When it's enough, when Zustand is needed — we'll understand that decision.

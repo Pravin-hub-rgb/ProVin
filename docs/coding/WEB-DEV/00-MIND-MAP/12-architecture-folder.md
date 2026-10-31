@@ -1,22 +1,22 @@
-# 12 — Folder Structure: ShopKaro Ki File Tree
+# 12 — Folder Structure: ShopKaro's File Tree
 
-> Pichle doc mein MVC pattern samjha — View, Controller, Model.
-> Ab woh theory practice mein — **ShopKaro ka actual folder structure.**
+> In the previous doc we understood the MVC pattern — View, Controller, Model.
+> Now that theory in practice — **ShopKaro's actual folder structure.**
 
 ---
 
-## ShopKaro Ki Complete Folder Structure
+## ShopKaro's Complete Folder Structure
 
 ```
 shopkaro/
 │
-├── /app                          → Next.js App Router — sab kuch yahan
+├── /app                          → Next.js App Router — everything is here
 │   │
-│   ├── layout.jsx                → Root layout — har page ke around wrapper
+│   ├── layout.jsx                → Root layout — wrapper around every page
 │   ├── page.jsx                  → Homepage (/)
 │   │
-│   ├── /(auth)                   → Auth pages — grouped, alag layout
-│   │   ├── layout.jsx            → Auth pages ka layout (simple, no navbar)
+│   ├── /(auth)                   → Auth pages — grouped, separate layout
+│   │   ├── layout.jsx            → Layout for auth pages (simple, no navbar)
 │   │   ├── /login/page.jsx       → Login page (/login)
 │   │   ├── /signup/page.jsx      → Signup page (/signup)
 │   │   └── /forgot-password/page.jsx
@@ -64,8 +64,8 @@ shopkaro/
 │   ├── /layout                   → Layout components
 │   │   ├── Navbar.jsx
 │   │   └── Footer.jsx
-│   ├── ProductCard.jsx           → Ek product ka card
-│   ├── CartItem.jsx              → Cart mein ek item
+│   ├── ProductCard.jsx           → Card for one product
+│   ├── CartItem.jsx              → One item in the cart
 │   └── OrderSummary.jsx          → Order summary UI
 │
 ├── /lib                          → Business logic + utilities
@@ -81,53 +81,53 @@ shopkaro/
 │   └── utils.js                  → Generic helper functions
 │
 ├── /prisma                       → Database schema
-│   ├── schema.prisma             → Data models define karna
-│   └── /migrations               → DB changes history (auto-generated)
+│   ├── schema.prisma             → Define data models
+│   └── /migrations               → DB change history (auto-generated)
 │
 ├── /public                       → Static files
 │   ├── /images                   → Static images
 │   └── favicon.ico
 │
-├── /types                        → TypeScript types (agar use karo)
+├── /types                        → TypeScript types (if you use them)
 │   └── index.ts
 │
-├── .env                          → Secret keys — KABHI git mein mat daalo
-├── .env.example                  → Example env file — yeh git mein daalo
-├── .gitignore                    → .env yahan add karo
+├── .env                          → Secret keys — NEVER put this in git
+├── .env.example                  → Example env file — put this in git
+├── .gitignore                    → Add .env here
 ├── next.config.js
 └── package.json
 ```
 
 ---
 
-## Kuch Important Cheezein Explain Karein
+## A Few Important Things Explained
 
-### (auth) — Parentheses Kyun?
+### (auth) — Why Parentheses?
 
 ```
-/(auth)/login/page.jsx    → URL: /login (parentheses URL mein nahi aate)
+/(auth)/login/page.jsx    → URL: /login (parentheses don't appear in the URL)
 ```
 
-Parentheses wale folders **Route Groups** hain Next.js mein — sirf grouping ke liye, URL mein nahi aate. Fayda: Alag layout de sakte ho.
+Folders with parentheses are **Route Groups** in Next.js — only for grouping, they don't appear in the URL. Benefit: you can give them a different layout.
 
 ---
 
-### /lib Folder — Kya Jaata Hai Yahan?
+### /lib Folder — What Goes Here?
 
 ```
-/lib mein woh cheezein jaati hain jo:
-✓ Koi bhi part use kar sake (API aur page dono)
-✓ Framework se independent ho (no req, no res)
-✓ Test karna aasan ho
+/lib holds things that:
+✓ Any part can use (both API and pages)
+✓ Are framework-independent (no req, no res)
+✓ Are easy to test
 ```
 
 ```javascript
-// /lib/db/products.js — THEEK HAI yahan
+// /lib/db/products.js — CORRECT here
 export async function getProductById(id) {
   return prisma.product.findUnique({ where: { id } })
 }
 
-// /app/api/products/[id]/route.js — THEEK HAI yahan
+// /app/api/products/[id]/route.js — CORRECT here
 import { getProductById } from '@/lib/db/products'
 export async function GET(req, { params }) {
   const product = await getProductById(params.id)
@@ -137,23 +137,23 @@ export async function GET(req, { params }) {
 
 ---
 
-### .env File — Kya Hota Hai Ismein?
+### .env File — What's in It?
 
 ```bash
-# .env — yeh git mein KABHI mat daalo
+# .env — NEVER put this in git
 
 DATABASE_URL="postgresql://..."
-SESSION_SECRET="ek-bahut-lamba-random-string"
+SESSION_SECRET="a-very-long-random-string"
 RESEND_API_KEY="re_..."
 RAZORPAY_KEY_ID="rzp_test_..."
 RAZORPAY_KEY_SECRET="..."
 ```
 
-Yeh **secrets** hain — API keys, database passwords. Agar GitHub pe gaye toh koi bhi misuse kar sakta hai.
+These are **secrets** — API keys, database passwords. If they go on GitHub, anyone can misuse them.
 
-`.env.example` file banao jisme sirf keys hoon, values nahi:
+Create a `.env.example` file with only the keys, no values:
 ```bash
-# .env.example — yeh git mein daalo
+# .env.example — put this in git
 DATABASE_URL=
 SESSION_SECRET=
 RESEND_API_KEY=
@@ -163,17 +163,17 @@ RESEND_API_KEY=
 
 ## Summary
 
-| Folder | Kya Jaata Hai |
+| Folder | What Goes In |
 |--------|--------------|
 | `/app/(pages)` | UI — React pages |
 | `/app/api` | Backend — API routes |
 | `/components` | Reusable UI pieces |
 | `/lib` | Business logic, DB queries |
 | `/prisma` | Database schema |
-| `.env` | Secret keys — git mein nahi |
+| `.env` | Secret keys — not in git |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`13-architecture-bff.md` — Ek last architecture concept — **BFF (Backend For Frontend)**. ShopKaro Next.js API routes use kar raha hai — kab alag backend banana padta hai? Kab Next.js kaafi hai? Yeh decision samjhenge.
+`13-architecture-bff.md` — One last architecture concept — **BFF (Backend For Frontend)**. ShopKaro uses Next.js API routes — when do you need a separate backend? When are Next.js API routes enough? We'll understand that decision.

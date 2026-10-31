@@ -1,19 +1,19 @@
 # 16 — Search: Algolia, Typesense, Elasticsearch, MeiliSearch
 
 > Umbrella: Database → Search
-> Kaam: Fast full-text search — "Nike shoes size 10" → Relevant results instantly
+> Job: Fast full-text search — "Nike shoes size 10" → Relevant results instantly
 
 ---
 
-## Normal Database Search Ki Problem
+## The Problem with Normal Database Search
 
 ```sql
--- PostgreSQL mein:
+-- In PostgreSQL:
 SELECT * FROM products WHERE name LIKE '%nike shoes%'
 -- Slow on large data, no relevance ranking, no typo tolerance
 ```
 
-Search engines:
+Search engines provide:
 - Typo tolerance ("nkie shoes" → "nike shoes")
 - Relevance ranking
 - Faceted search (filter by brand, price, size simultaneously)
@@ -25,11 +25,11 @@ Search engines:
 **Tag: 🟢 Most Popular Managed Search | Best DX | Expensive**
 
 ```
-Kya hai: Managed search — fast, feature-rich, easy setup
-Kab use karo:
+What it is: Managed search — fast, feature-rich, easy setup
+When to use:
   → E-commerce search (most common use case)
-  → Infra manage nahi karna
-  → Instant search results chahiye
+  → Don't want to manage infra
+  → Instant search results needed
 
 Real app example:
   → Nykaa: Product search with facets (brand, price, rating)
@@ -42,8 +42,8 @@ Code feel:
     hitsPerPage: 12
   })
 
-Cons: Expensive at scale — per search pay karo
-India mein: E-commerce mein standard
+Cons: Expensive at scale — pay per search
+In India: Standard in e-commerce
 ```
 
 ---
@@ -52,12 +52,12 @@ India mein: E-commerce mein standard
 **Tag: 🟢 Open-source Algolia | Self-host | Growing**
 
 ```
-Kya hai: Algolia jaisa — lekin open-source, self-host
-Kab use karo:
-  → Algolia ka bill bahut aa raha hai
-  → Self-host kar sakte ho
+What it is: Like Algolia — but open-source, self-hosted
+When to use:
+  → Algolia bill is too high
+  → Can self-host
 
-Algolia se fark: Open-source, cheaper, slightly less features
+Difference from Algolia: Open-source, cheaper, slightly fewer features
 ```
 
 ---
@@ -66,14 +66,14 @@ Algolia se fark: Open-source, cheaper, slightly less features
 **Tag: 🟡 Powerful | Complex | Enterprise**
 
 ```
-Kya hai: Most powerful search engine — logs, analytics, search
-Kab use karo:
+What it is: Most powerful search engine — logs, analytics, search
+When to use:
   → Complex search requirements
   → Log analytics (ELK stack)
   → Large scale, dedicated team
 
-Complex setup — small teams ke liye Algolia ya Typesense better
-India mein: Large enterprises, log analytics
+Complex setup — Algolia or Typesense is better for small teams
+In India: Large enterprises, log analytics
 ```
 
 ---
@@ -82,9 +82,9 @@ India mein: Large enterprises, log analytics
 **Tag: 🟢 Easy Self-host | Growing**
 
 ```
-Kya hai: Simple, fast self-hosted search
-Kab use karo:
-  → Typesense jaisa — easy self-host
+What it is: Simple, fast self-hosted search
+When to use:
+  → Like Typesense — easy self-host
   → Internal tools, docs search
 ```
 
@@ -94,13 +94,13 @@ Kab use karo:
 **Tag: 🟢 Already have it | Good enough for many cases**
 
 ```
-Kab use karo:
-  → Already PostgreSQL use kar rahe ho
-  → Search requirements basic hain
-  → Extra infra nahi chahiye
+When to use:
+  → Already using PostgreSQL
+  → Search requirements are basic
+  → No extra infra needed
 
-ShopKaro V1: PostgreSQL full-text search kaafi hai
-ShopKaro V2 (zyada products): Algolia ya Typesense
+ShopKaro V1: PostgreSQL full-text search is enough
+ShopKaro V2 (more products): Algolia or Typesense
 
 Code feel:
   -- PostgreSQL
@@ -111,6 +111,6 @@ Code feel:
 
 ---
 
-## Agla Doc
+## Next Doc
 
 `17-auth-libraries.md` — Auth Libraries — NextAuth, Clerk, Lucia, Auth0, Better Auth.

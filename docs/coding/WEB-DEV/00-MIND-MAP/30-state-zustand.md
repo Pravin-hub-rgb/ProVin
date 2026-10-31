@@ -1,13 +1,13 @@
-# 30 — Zustand: Global State Jo Context Se Better Hai
+# 30 — Zustand: Global State Better Than Context
 
-> Pichle doc mein Context dekha — stable data ke liye theek hai.
-> Ab **Zustand** — cart jaisi frequently changing state ke liye.
+> Previous doc covered Context — fine for stable data.
+> Now **Zustand** — for frequently changing state like cart.
 
 ---
 
-## Zustand Kya Hai
+## What Is Zustand
 
-Zustand ek **lightweight state management library** hai. Ek store banate hain jisme state aur actions dono hoti hain — koi bhi component use kar sakta hai.
+Zustand is a **lightweight state management library**. You create a store that holds both state and actions — any component can use it.
 
 ```bash
 npm install zustand
@@ -15,7 +15,7 @@ npm install zustand
 
 ---
 
-## Zustand Ka Basic Structure
+## Zustand's Basic Structure
 
 ```javascript
 import { create } from 'zustand'
@@ -24,14 +24,14 @@ const useStore = create((set) => ({
   // State
   count: 0,
 
-  // Actions — state ko kaise change karein
+  // Actions — how to change state
   increment: () => set((state) => ({ count: state.count + 1 })),
   decrement: () => set((state) => ({ count: state.count - 1 })),
 }))
 ```
 
 ```jsx
-// Koi bhi component mein use karo
+// Use in any component
 function Counter() {
   const { count, increment } = useStore()
   return <button onClick={increment}>{count}</button>
@@ -40,7 +40,7 @@ function Counter() {
 
 ---
 
-## ShopKaro Ka Cart Store — Zustand Se
+## ShopKaro's Cart Store — With Zustand
 
 ```javascript
 // /store/cartStore.js
@@ -48,7 +48,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 export const useCartStore = create(
-  persist(  // persist → localStorage mein save hoga — page refresh pe cart nahi jaayega
+  persist(  // persist → saves to localStorage — cart survives page refresh
     (set, get) => ({
 
       // ─── State ───
@@ -56,12 +56,12 @@ export const useCartStore = create(
 
       // ─── Actions ───
 
-      // Cart mein item add karo
+      // Add item to cart
       addItem: (product) => set((state) => {
         const existing = state.items.find(item => item.id === product.id)
 
         if (existing) {
-          // Pehle se hai → quantity badhao
+          // Already there → increase quantity
           return {
             items: state.items.map(item =>
               item.id === product.id
@@ -70,14 +70,14 @@ export const useCartStore = create(
             )
           }
         } else {
-          // Naya item → add karo
+          // New item → add it
           return {
             items: [...state.items, { ...product, quantity: 1 }]
           }
         }
       }),
 
-      // Quantity update karo
+      // Update quantity
       updateQuantity: (productId, quantity) => set((state) => ({
         items: quantity === 0
           ? state.items.filter(item => item.id !== productId)  // 0 → remove
@@ -86,15 +86,15 @@ export const useCartStore = create(
             )
       })),
 
-      // Item remove karo
+      // Remove item
       removeItem: (productId) => set((state) => ({
         items: state.items.filter(item => item.id !== productId)
       })),
 
-      // Cart clear karo (order place hone ke baad)
+      // Clear cart (after order placed)
       clearCart: () => set({ items: [] }),
 
-      // Total calculate karo (derived value)
+      // Calculate total (derived value)
       getTotal: () => {
         const { items } = get()
         return items.reduce((total, item) => total + (item.price * item.quantity), 0)
@@ -109,7 +109,7 @@ export const useCartStore = create(
 
 ---
 
-## Components Mein Use Karo
+## Using in Components
 
 ### Navbar — Cart Count:
 ```jsx
@@ -117,7 +117,7 @@ export const useCartStore = create(
 import { useCartStore } from '@/store/cartStore'
 
 function Navbar() {
-  const items = useCartStore(state => state.items)  // Sirf items subscribe karo
+  const items = useCartStore(state => state.items)  // Subscribe only to items
   const count = items.reduce((sum, item) => sum + item.quantity, 0)
 
   return (
@@ -138,7 +138,7 @@ function AddToCartButton({ product }) {
 
   return (
     <button onClick={() => addItem(product)}>
-      Cart Mein Daalo
+      Add to Cart
     </button>
   )
 }
@@ -176,13 +176,13 @@ function CartPage() {
 | | Context | Zustand |
 |--|---------|---------|
 | Setup | Built-in, no install | `npm install zustand` |
-| Re-renders | Sab consumers re-render | Sirf subscribed parts |
+| Re-renders | All consumers re-render | Only subscribed parts |
 | Async actions | Manual | Easy |
-| persist (localStorage) | Manual | Middleware se easy |
+| persist (localStorage) | Manual | Easy via middleware |
 | Best for | Stable data (user, theme) | Dynamic data (cart, notifications) |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`31-state-server.md` — **Server State** — React Query / TanStack Query. Products list, order history — yeh server se aata hai. Yeh alag tarah ki state hai — caching, loading, error sab React Query handle karta hai automatically.
+`31-state-server.md` — **Server State** — React Query / TanStack Query. Products list, order history — this comes from server. This is a different kind of state — caching, loading, error are all handled automatically by React Query.

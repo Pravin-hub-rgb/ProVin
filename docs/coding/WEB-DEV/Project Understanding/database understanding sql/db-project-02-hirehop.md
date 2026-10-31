@@ -1,20 +1,20 @@
 # 🗄️ DB Project 2 — HireHop: Job Board
-### Complete Database Design — PRD se Final Schema Tak
+### Complete Database Design — From PRD to Final Schema
 
 ---
 
-## Brief se Entities Nikaalte Hain
+## Extracting Entities from the Brief
 
 ```
-Brief: "Employers jobs post karein, seekers apply karein with resume.
+Brief: "Employers post jobs, seekers apply with resume.
         Email notifications. SEO optimized job pages."
 
-NOUNS extract karo:
+Extract NOUNS:
 → Employer      → User (role = EMPLOYER)
-→ Job Seeker    → User (role = SEEKER) — SAME TABLE, alag role
+→ Job Seeker    → User (role = SEEKER) — SAME TABLE, different role
 → Job           → Job entity
 → Application   → Application entity (junction between Seeker + Job)
-→ Resume        → Application ka column (URL), alag entity nahi
+→ Resume        → Column in Application (URL), not separate entity
 → Email         → Side effect, not a stored entity
 
 ENTITIES: User, Job, Application
@@ -30,8 +30,8 @@ JOB             (1) ──────── (N) APPLICATION    [job gets many a
 USER (Seeker)   (1) ──────── (N) APPLICATION    [seeker submits many applications]
 
 Job ↔ Seeker is Many-to-Many → Application is the JUNCTION TABLE
-(Par Application mein extra data hai — resumeUrl, coverNote, status)
-So explicit junction table banate hain.
+(But Application has extra data — resumeUrl, coverNote, status)
+So we create an explicit junction table.
 ```
 
 ---
@@ -48,8 +48,8 @@ name          | String   | NO       | —         | Display name
 email         | String   | NO       | —         | Login, @unique
 password      | String   | NO       | —         | Hashed
 role          | UserRole | NO       | —         | EMPLOYER or SEEKER
-companyName   | String   | YES      | —         | Employer ke liye only
-companyWebsite| String   | YES      | —         | Employer ke liye only
+companyName   | String   | YES      | —         | For employer only
+companyWebsite| String   | YES      | —         | For employer only
 resumeUrl     | String   | YES      | —         | Seeker profile resume
 createdAt     | DateTime | NO       | now()     |
 updatedAt     | DateTime | NO       | auto      |
@@ -63,12 +63,12 @@ id            | String  | NO       | cuid()   | PK
 slug          | String  | NO       | —        | URL-friendly, @unique (SEO!)
 title         | String  | NO       | —        | Job title
 description   | String  | NO       | —        | Full JD
-location      | String  | NO       | —        | City ya "Remote"
+location      | String  | NO       | —        | City or "Remote"
 jobType       | JobType | NO       | —        | Full-time, Remote etc.
 salaryRange   | String  | YES      | —        | Optional "₹8-12 LPA"
 employerId    | String  | NO       | —        | FK → User (employer)
 status        | JobStatus| NO      | ACTIVE   | Active, Closed, Draft
-expiresAt     | DateTime| YES      | —        | Job expire hogi kab
+expiresAt     | DateTime| YES      | —        | When job expires
 createdAt     | DateTime| NO       | now()    |
 updatedAt     | DateTime| NO       | auto     |
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -85,7 +85,7 @@ coverNote     | String  | YES      | —        | Optional message
 status        | AppStatus| NO      | APPLIED  | Application state
 appliedAt     | DateTime| NO       | now()    |
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-UNIQUE: (jobId, seekerId) — seeker ek job pe sirf ek baar apply kare
+UNIQUE: (jobId, seekerId) — seeker can apply to a job only once
 ```
 
 ---
@@ -171,7 +171,7 @@ model Job {
   applications Application[]
 
   // Indexes
-  @@index([employerId])           // Employer ki jobs
+  @@index([employerId])           // Employer's jobs
   @@index([status])               // Active jobs filter
   @@index([jobType])              // Type filter
   @@index([status, jobType])      // "Active remote jobs"
@@ -197,8 +197,8 @@ model Application {
   @@unique([jobId, seekerId])
 
   // Indexes
-  @@index([jobId])    // "Is job ke saare applications" — employer view
-  @@index([seekerId]) // "Mere applications" — seeker view
+  @@index([jobId])    // "All applications for this job" — employer view
+  @@index([seekerId]) // "My applications" — seeker view
   @@index([status])   // Filter by status
 
   @@map("applications")
@@ -243,16 +243,16 @@ applications table:
 └───────────┴────────┴─────────────┴───────────────────────────────┴─────────────┘
 
 NOTICE:
-→ u_seek_002 (Priya) ne 2 jobs pe apply kiya (app_002, app_003) — allowed!
-→ u_seek_001 (Rahul) j_001 pe sirf ek baar apply kar sakta hai — @@unique enforces it
-→ j_001 (Senior UI Designer) ke 2 applications hain — employer dekhega
-→ j_004 (CLOSED) pe naya application nahi aana chahiye — app mein check karo
+→ u_seek_002 (Priya) applied to 2 jobs (app_002, app_003) — allowed!
+→ u_seek_001 (Rahul) can apply to j_001 only once — @@unique enforces it
+→ j_001 (Senior UI Designer) has 2 applications — employer will view
+→ j_004 (CLOSED) shouldn't receive new applications — checked in app
 
 Duplicate check:
-Agar Rahul dubara j_001 pe apply karne ki koshish kare:
-→ @@unique([jobId, seekerId]) fail hoga
-→ Prisma PrismaClientKnownRequestError throw karega (P2002 — unique constraint)
-→ App mein catch karo aur "Already applied" message dikhao
+If Rahul tries to apply to j_001 again:
+→ @@unique([jobId, seekerId]) fails
+→ Prisma throws PrismaClientKnownRequestError (P2002 — unique constraint)
+→ Catch in app and show "Already applied" message
 ```
 
 ---
@@ -260,16 +260,16 @@ Agar Rahul dubara j_001 pe apply karne ki koshish kare:
 ## Slug Generation
 
 ```typescript
-// Job create karte waqt slug generate karo:
+// Generate slug when creating a job:
 import { slugify } from 'your-util'
 
 function generateSlug(title: string, companyName: string): string {
   const base = `${title}-at-${companyName}`
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '-')    // Special chars → dash
-    .replace(/(^-|-$)/g, '')         // Leading/trailing dashes remove
+    .replace(/(^-|-$)/g, '')         // Remove leading/trailing dashes
 
-  // Uniqueness ensure karne ke liye random suffix add karo
+  // Add random suffix to ensure uniqueness
   const suffix = Math.random().toString(36).substring(2, 7)
   return `${base}-${suffix}`
 }
@@ -284,7 +284,7 @@ function generateSlug(title: string, companyName: string): string {
 ## Common Queries
 
 ```typescript
-// 1. Public job listing (ISR page ke liye):
+// 1. Public job listing (for ISR page):
 const activeJobs = await prisma.job.findMany({
   where: {
     status: 'ACTIVE',
@@ -312,7 +312,7 @@ const job = await prisma.job.findUnique({
   }
 })
 
-// 3. Employer ki jobs aur unke application counts:
+// 3. Employer's jobs with application counts:
 const myJobsWithCounts = await prisma.job.findMany({
   where: { employerId: currentUserId },
   include: {
@@ -320,7 +320,7 @@ const myJobsWithCounts = await prisma.job.findMany({
   }
 })
 
-// 4. Ek job ke applications (employer view):
+// 4. Applications for a job (employer view):
 const applications = await prisma.application.findMany({
   where: { jobId: jobId },
   include: {
@@ -331,7 +331,7 @@ const applications = await prisma.application.findMany({
   orderBy: { appliedAt: 'desc' }
 })
 
-// 5. Seeker ne apply kiya kya? (duplicate check before showing "Apply" button):
+// 5. Has seeker applied? (duplicate check before showing "Apply" button):
 const existingApplication = await prisma.application.findUnique({
   where: {
     jobId_seekerId: {        // Composite unique field name — Prisma auto-generates
@@ -345,4 +345,4 @@ const hasApplied = !!existingApplication
 
 ---
 
-**Next →** `db-project-03-talkspace.md` — Chat App schema (MongoDB wala nahi — agar SQL use karte toh)
+**Next →** `db-projects-03-04-05.md` — Chat, E-commerce, Analytics schemas

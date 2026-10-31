@@ -1,39 +1,39 @@
-# 37 — Payment Flow: Razorpay ShopKaro Mein
+# 37 — Payment Flow: Razorpay in ShopKaro
 
-> Pichle doc mein payment umbrella overview hua.
-> Ab **Razorpay integration** — step by step.
+> Previous doc gave an overview of the payments umbrella.
+> Now **Razorpay integration** — step by step.
 
 ---
 
-## Poora Payment Flow
+## The Complete Payment Flow
 
 ```
-1. Priya "Place Order" dabati hai
+1. Priya clicks "Place Order"
 
-2. ShopKaro Backend → Razorpay ko batata hai:
-   "₹2999 ka payment create karo"
-   Razorpay → "Okay, yeh lo order_id: rzp_order_abc123"
+2. ShopKaro Backend → tells Razorpay:
+   "Create a payment of ₹2999"
+   Razorpay → "Okay, here's order_id: rzp_order_abc123"
 
-3. ShopKaro Frontend → Razorpay checkout open karta hai
-   (Razorpay ka apna UI — card/UPI/netbanking)
+3. ShopKaro Frontend → opens Razorpay checkout
+   (Razorpay's own UI — card/UPI/netbanking)
 
-4. Priya pay karti hai Razorpay ke UI mein
+4. Priya pays in Razorpay's UI
 
-5. Razorpay → ShopKaro Frontend ko batata hai:
-   "Payment hua — payment_id: pay_xyz789"
+5. Razorpay → tells ShopKaro Frontend:
+   "Payment done — payment_id: pay_xyz789"
 
-6. ShopKaro Frontend → ShopKaro Backend ko bhejta hai:
+6. ShopKaro Frontend → sends to ShopKaro Backend:
    { orderId, paymentId, signature }
 
-7. ShopKaro Backend → Verify karta hai signature
-   (Confirm karo yeh genuinely Razorpay se aaya, fake nahi)
+7. ShopKaro Backend → verifies the signature
+   (Confirms it genuinely came from Razorpay, not fake)
 
 8. Verified → Order status "PAID" → Done
 ```
 
 ---
 
-## Step 2 — Backend: Razorpay Order Banao
+## Step 2 — Backend: Create a Razorpay Order
 
 ```javascript
 // /app/api/orders/route.js
@@ -46,34 +46,34 @@ const razorpay = new Razorpay({
 
 export async function POST(req) {
   const session = await getSession()
-  if (!session) return Response.json({ error: "Login karo" }, { status: 401 })
+  if (!session) return Response.json({ error: "Please log in" }, { status: 401 })
 
-  // Cart items lo
+  // Get cart items
   const cartItems = await prisma.cartItem.findMany({
     where: { userId: session.userId },
     include: { product: true }
   })
 
-  // Total calculate karo
+  // Calculate total
   const total = cartItems.reduce((sum, item) =>
     sum + (item.product.price * item.quantity), 0
   )
 
-  // Razorpay order banao
+  // Create Razorpay order
   const razorpayOrder = await razorpay.orders.create({
-    amount: total * 100,  // Razorpay paise mein chahiye (100 = ₹1)
+    amount: total * 100,  // Razorpay wants paise (100 = ₹1)
     currency: 'INR',
     receipt: `order_${Date.now()}`
   })
 
-  // DB mein order save karo (status: PENDING)
+  // Save order in DB (status: PENDING)
   const order = await prisma.order.create({
     data: {
       userId: session.userId,
       total,
       status: 'PENDING',
       paymentId: razorpayOrder.id,
-      address: "...",  // req.body se lena
+      address: "...",  // get from req.body
     }
   })
 
@@ -82,14 +82,14 @@ export async function POST(req) {
     razorpayOrderId: razorpayOrder.id,
     amount: razorpayOrder.amount,
     currency: 'INR',
-    keyId: process.env.RAZORPAY_KEY_ID  // Frontend ko chahiye
+    keyId: process.env.RAZORPAY_KEY_ID  // Frontend needs this
   })
 }
 ```
 
 ---
 
-## Step 3-5 — Frontend: Razorpay Checkout
+## Steps 3-5 — Frontend: Razorpay Checkout
 
 ```jsx
 // /components/CheckoutButton.jsx
@@ -99,11 +99,11 @@ import Script from 'next/script'
 
 export default function CheckoutButton() {
   async function handlePayment() {
-    // Backend se order banao
+    // Create order on backend
     const { razorpayOrderId, amount, keyId, orderId } =
       await fetch('/api/orders', { method: 'POST', ... }).then(r => r.json())
 
-    // Razorpay checkout open karo
+    // Open Razorpay checkout
     const options = {
       key: keyId,
       amount,
@@ -113,7 +113,7 @@ export default function CheckoutButton() {
       description: 'Order Payment',
 
       handler: async function(response) {
-        // Payment ho gayi — verify karo backend se
+        // Payment done — verify on backend
         await fetch('/api/payments/verify', {
           method: 'POST',
           body: JSON.stringify({
@@ -124,7 +124,7 @@ export default function CheckoutButton() {
           })
         })
 
-        // Order confirmation page pe jaao
+        // Go to order confirmation page
         window.location.href = `/orders/${orderId}`
       }
     }
@@ -144,7 +144,7 @@ export default function CheckoutButton() {
 
 ---
 
-## Step 7 — Backend: Verify Karo
+## Step 7 — Backend: Verify
 
 ```javascript
 // /app/api/payments/verify/route.js
@@ -154,7 +154,7 @@ export async function POST(req) {
   const { orderId, razorpayOrderId, razorpayPaymentId, razorpaySignature } =
     await req.json()
 
-  // Signature verify karo
+  // Verify signature
   const body = razorpayOrderId + "|" + razorpayPaymentId
   const expectedSignature = crypto
     .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET)
@@ -165,7 +165,7 @@ export async function POST(req) {
     return Response.json({ error: "Invalid payment" }, { status: 400 })
   }
 
-  // Verified! Order update karo
+  // Verified! Update order
   await prisma.order.update({
     where: { id: orderId },
     data: {
@@ -174,7 +174,7 @@ export async function POST(req) {
     }
   })
 
-  // Cart clear karo
+  // Clear cart
   await prisma.cartItem.deleteMany({
     where: { userId: session.userId }
   })
@@ -185,6 +185,6 @@ export async function POST(req) {
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`38-payments-webhooks.md` — **Webhooks** — agar Priya ne pay kiya lekin browser band ho gaya verify hone se pehle? Webhook backup ke taur pe kaam karta hai. Zaroori concept.
+`38-payments-webhooks.md` — **Webhooks** — what if Priya paid but the browser closed before verification? The webhook works as a backup. An important concept.

@@ -1,144 +1,144 @@
-03 mein humne dekha ki packages npm se aate hain. Ab ek aur asli sawaal — **Node ek hi thread pe chalta hai, phir bhi itne saare requests kaise handle karta hai?** Ek restaurant soch lo.
+In the previous file we saw that packages come via npm. Now another real question — **Node runs on a single thread, so how does it handle so many requests?** Think of a restaurant.
 
-## Waiter Wala Example — Khada Hoke Wait Nahi Karta
+## The Waiter Example — Standing and Waiting Is Not the Job
 
-Ek restaurant mein ek **waiter (Node)** hai. Table 1 ne order diya — pasta. Waiter kitchen mein order de deta hai aur **wahin khada ho kar wait nahi karta** — Table 2 ke paas jata hai, unka order leta hai (coffee), kitchen mein deta hai, Table 3 ke paas jata hai... Jab pasta ban jaata hai, kitchen se utha kar Table 1 pe serve karta hai.
+A restaurant has one **waiter (Node)**. Table 1 orders pasta. The waiter takes the order to the kitchen and **doesn't stand there waiting** — he goes to Table 2, takes their order (coffee), takes it to the kitchen, goes to Table 3... When the pasta is ready, he picks it up from the kitchen and serves Table 1.
 
-Yeh waiter ek hi hai, par **kabhi kisi ke liye block nahi hota** — wait karta nahi, agla kaam karta rehta hai. Yeh hi hai Node.js ka model.
+This waiter is one person, but **he never blocks for anyone** — he doesn't wait, he keeps doing the next task. That's Node.js's model.
 
-## Single-Threaded, Lekin Non-Blocking
+## Single-Threaded, But Non-Blocking
 
-Node.js JavaScript ko **ek hi thread** pe run karta hai (ek hi kaam ek samay pe). Par phir bhi multiple cheezein saath mein hoti dikhti hain — **kaise?**
+Node.js runs JavaScript on **a single thread** (one thing at a time). Yet multiple things seem to happen together — **how?**
 
-**Event Loop** ki wajah se. Basic idea:
+Because of the **Event Loop**. The basic idea:
 
-1. Jab koi **slow operation** aati hai (file read, network request, database query, timer) — Node use **background mein bhej deta hai** (os se)
-2. Node wait nahi karta — **agli line turant chala leta hai**
-3. Jab background wala kaam complete hota hai, uska result ek queue mein aata hai
-4. **Event Loop** us queue ko dekh ke callback ko process karta hai
+1. When a **slow operation** comes (file read, network request, database query, timer) — Node **sends it to the background** (to the OS)
+2. Node doesn't wait — **it runs the next line immediately**
+3. When the background work completes, its result goes into a queue
+4. The **Event Loop** watches that queue and processes the callback
 
-Matlab — **blocking (wait karna) karta nahi, non-blocking rehta hai.** Waiter jaisa.
+In short — it **doesn't block (wait), it stays non-blocking.** Like the waiter.
 
-## Blocking vs Non-Blocking — Code Se Dekho
+## Blocking vs Non-Blocking — See It in Code
 
-Yeh code hai jo **block** karta hai (wait karta hai):
+This code **blocks** (waits):
 
 ```javascript
-// sync.js — BLOCKING (galat tarika slow kaam ke liye)
+// sync.js — BLOCKING (wrong way for slow work)
 const fs = require('node:fs');
 
-const data = fs.readFileSync('data.txt', 'utf8');  // yahan wait karega!
+const data = fs.readFileSync('data.txt', 'utf8');  // waits here!
 console.log('File:', data);
-console.log('Ye baad mein print hoga');
+console.log('This prints after');
 ```
 
-`readFileSync` — "Sync" naam mein hi hai — ye **wait karega** jab tak file read nahi ho jaati. Is dauran Node kuch aur nahi kar sakta — poora program block.
+`readFileSync` — "Sync" is right in the name — it **waits** until the file is read. During that time Node can't do anything else — the whole program blocks.
 
-Ab **non-blocking** wala:
+Now the **non-blocking** version:
 
 ```javascript
-// async.js — NON-BLOCKING (sahi tarika)
+// async.js — NON-BLOCKING (right way)
 const fs = require('node:fs');
 
 fs.readFile('data.txt', 'utf8', (err, data) => {
-  console.log('File:', data);   // baad mein chalega, jab file read ho
+  console.log('File:', data);   // runs later, when file is read
 });
 
-console.log('Ye PEHLE print hoga');  // file ka wait nahi kiya
+console.log('This prints FIRST');  // didn't wait for the file
 ```
 
-`readFile` (bina Sync ke) — ye file read **background mein** karta hai aur callback deta hai. Turant agli line chalti hai. Output:
+`readFile` (without Sync) — reads the file **in the background** and gives a callback. The next line runs immediately. Output:
 
 ```
-Ye PEHLE print hoga
+This prints FIRST
 File: <content>
 ```
 
-**Notice order:** "Ye PEHLE print hoga" pehle aaya, file ka content baad mein. Kyunki `readFile` ne wait nahi kiya — callback queue mein gaya, main code chala, phir event loop ne callback chalaya.
+**Notice the order:** "This prints FIRST" came first, file content later. Because `readFile` didn't wait — the callback went into the queue, the main code ran, and then the event loop ran the callback.
 
-## Event Loop Ka Flow — Step by Step
+## The Event Loop Flow — Step by Step
 
 ```
-main code chalta hai
+main code runs
   ↓
-slow operation (readFile) mili → background mein bheji
+slow operation (readFile) found → sent to background
   ↓
-main code agli lines chalta rehta hai (wait nahi)
+main code keeps running next lines (no wait)
   ↓
-background kaam complete → callback queue mein gaya
+background work completes → callback goes into queue
   ↓
-Event Loop queue dekhta hai → callback process karta hai
+Event Loop checks queue → processes callback
   ↓
-callback chalaya → file content print
+callback runs → file content printed
 ```
 
-**Event Loop** ek loop hai jo hamesha chek karta rehta hai — "koi task queue mein aaya? haan? chalao." Jab tak queue khali na ho.
+The **Event Loop** is a loop that keeps checking — "any task in the queue? yes? run it." Until the queue is empty.
 
-## Why Isko Samajhna Zaroori Hai
+## Why You Need to Understand This
 
-React/Next.js mein data fetching har jagah hai — `fetch`, database queries, API calls — sab async (non-blocking). Agar ye concept clear nahi hai:
+React/Next.js have data fetching everywhere — `fetch`, database queries, API calls — all async (non-blocking). If this concept isn't clear:
 
-- `await` kya kar raha hai samajh nahi aayega
-- `useEffect` mein fetch kyun karte hain samajh nahi aayega
-- Race conditions, "ye order mein print kyun nahi hua" — confuse honge
+- You won't understand what `await` is doing
+- You won't understand why we fetch inside `useEffect`
+- Race conditions, "why didn't this print in order" — you'll be confused
 
-`await` wahi karta hai jo yeh non-blocking magic organize karta hai — Promise ke saath. Par abhi Event Loop ka base idea chahiye tha. Asli async patterns (callbacks, Promises, async/await) agle topic mein detail mein.
+`await` is what organizes this non-blocking magic — with Promises. But for now the base idea of the Event Loop is enough. The real async patterns (callbacks, Promises, async/await) come in detail in the next topic.
 
 ## Common Mistakes
 
-- ❌ Slow kaam ke liye `readFileSync`/`Sync` versions use karna — blocking hota hai, server freeze kar sakta hai. Non-blocking (`readFile`) use karo.
-- ❌ Output order se confuse hona — "main code pehle, callback baad" ye non-blocking ka normal behavior hai, bug nahi.
-- ❌ Sochna ki "single-threaded = ek saath ek hi request" — single thread pe code chalta hai, par I/O background mein hota hai, isliye bahut saare requests handle ho sakte hain.
-- ❌ CPU-heavy kaam (large computation) Event Loop pe chhodna — wo background nahi jaata, poora thread block kar deta hai. I/O hi background mein jaata hai.
+- ❌ Using `readFileSync`/`Sync` versions for slow work — they block and can freeze the server. Use non-blocking (`readFile`).
+- ❌ Getting confused by output order — "main code first, callback later" is normal non-blocking behavior, not a bug.
+- ❌ Thinking "single-threaded = one request at a time" — code runs on one thread, but I/O happens in the background, so many requests can be handled.
+- ❌ Leaving CPU-heavy work (large computation) on the Event Loop — it doesn't go to the background and blocks the whole thread. Only I/O goes to the background.
 
 ## In Your Own Words
 
-1. Node single-threaded hai phir bhi multiple requests handle kaise karta hai?
+1. How does Node handle multiple requests when it's single-threaded?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Kyunki I/O (file read, network, database) background mein bhej di jaati hai aur Node wait nahi karta — agli line turant chalta hai. Background wala kaam complete hone pe Event Loop callback ko process karta hai. Ek thread, par kabhi block nahi.
+**Answer:** Because I/O (file read, network, database) is sent to the background and Node doesn't wait — it runs the next line immediately. When background work completes, the Event Loop processes the callback. One thread, but never blocked.
 
 </details>
 
-2. `readFileSync` aur `readFile` mein kya fark hai?
+2. What's the difference between `readFileSync` and `readFile`?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** `readFileSync` blocking hai — wait karta hai jab tak file read na ho, us dauran program aage nahi badhta. `readFile` non-blocking hai — background mein read karta hai, callback deta hai, main code turant aage chalta hai.
+**Answer:** `readFileSync` is blocking — it waits until the file is read and the program doesn't move forward. `readFile` is non-blocking — it reads in the background, gives a callback, and the main code runs immediately.
 
 </details>
 
-3. Event Loop kya karta hai?
+3. What does the Event Loop do?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Event Loop ek continuous loop hai jo background tasks ke results ko queue se utha kar process karta hai. Jab koi async operation complete hoti hai, uska callback queue mein aata hai, aur Event Loop use execute karta hai.
+**Answer:** The Event Loop is a continuous loop that picks up results of background tasks from the queue and processes them. When an async operation completes, its callback goes into the queue, and the Event Loop executes it.
 
 </details>
 
-4. Waiter analogy se samjhao Node kya karta hai?
+4. Explain what Node does using the waiter analogy?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Waiter (Node) order kitchen mein deta hai (background I/O) aur wahin khada ho kar wait nahi karta — agli table ka order leta hai. Jab khana ready hota hai (I/O complete), serve karta hai (callback). Ek waiter, par kabhi block nahi.
+**Answer:** The waiter (Node) takes the order to the kitchen (background I/O) and doesn't stand there waiting — he goes to the next table for the next order. When the food is ready (I/O complete), he serves it (callback). One waiter, never blocked.
 
 </details>
 
 ## What It Is NOT
 
-⚠️ **Single-threaded = sirf ek request handle kar sakta = NAHI.** Single thread code execution ke liye hai. I/O operations OS/background mein hoti hain — isliye Node hazaron concurrent requests handle kar sakta hai.
+⚠️ **Single-threaded does NOT mean "can handle only one request".** Single thread is for code execution. I/O operations happen in the OS/background — that's why Node can handle thousands of concurrent requests.
 
-⚠️ **Event Loop = CPU-intensive kaam bhi background mein bhej deta hai = NAHI.** File/network I/O background mein jaata hai. Heavy computation (loops, JSON processing bada) main thread ko block karta hai — iske liye worker threads/queues chahiye.
+⚠️ **The Event Loop does NOT send CPU-intensive work to the background.** File/network I/O goes to the background. Heavy computation (loops, large JSON processing) blocks the main thread — for that you need worker threads/queues.
 
-⚠️ **Non-blocking = har jagah callback, koi await nahi = NAHI.** Callbacks purana tarika hai. Promises aur async/await (agla topic) isko clean banate hain.
+⚠️ **Non-blocking does NOT mean "callbacks everywhere, no await".** Callbacks are the old way. Promises and async/await (next topic) make this clean.
 
-⚠️ **"Sync = galat, async = sahi" hamesha nahi.** Chhote startup scripts mein Sync fine hai. Server mein (jahan concurrency chahiye) non-blocking zaroori hai.
+⚠️ **"Sync = wrong, async = right" is NOT always true.** For small startup scripts, Sync is fine. In a server (where concurrency matters), non-blocking is essential.
 
 ---
 
-Ab tum jaante ho ki Node wait nahi karta — background mein bhejta hai aur baad mein callback se result deta hai. Par callbacks ke saath ek dikkat hai — jab multiple async kaam ek ke baad ek karna ho, toh code kaise likhte hain? **Callback Hell** aur uska solution (Promises, async/await) — agla topic. Chal karte hain.
+Now you know Node doesn't wait — it sends work to the background and returns the result later via a callback. But with callbacks there's a problem — when multiple async tasks must run one after another, how do you write the code? **Callback Hell** and its solution (Promises, async/await) — next topic. Let's go.

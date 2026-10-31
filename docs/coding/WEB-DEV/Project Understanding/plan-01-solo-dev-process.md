@@ -1,20 +1,20 @@
 # 📋 Plan Phase — Doc 1: The Solo Dev Process
-### MNC ka Lite Version — Ek Bhi Line Code Likhne Se Pehle
+### The MNC's Lite Version — Before Writing a Single Line of Code
 
 ---
 
-## 🤔 Pehle Ye Samjho — MNC Mein Kya Hota Hai?
+## 🤔 First, Understand This — What Happens in an MNC?
 
-Ek MNC mein jab koi project aata hai, toh pura ek system hota hai. Seedha code nahi likhte. Ek bada team hoti hai — Product Manager, Architects, Designers, Developers, QA — sab milke pehle **plan** karte hain, tab code hota hai.
+When a project comes into an MNC, there's a whole system. Code isn't written directly. There's a big team — Product Manager, Architects, Designers, Developers, QA — everyone **plans** first, then code happens.
 
 ```
-MNC ka typical flow:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Client requirement aaya
+Typical MNC flow:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Client requirement arrives
         ↓
-Product Manager → PRD banata hai (Product Requirements Doc)
+Product Manager → Creates PRD (Product Requirements Doc)
         ↓
-Architect → Tech stack decide karta hai
+Architect → Decides tech stack
         ↓
 Designer → Wireframes / Mockups
         ↓
@@ -25,11 +25,11 @@ Developers → Code
 QA → Testing
         ↓
 DevOps → Deploy
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ```
 
-**Tu akela hai — toh kya kare?**
-Ye saara kaam khud karna hai, par lightweight version mein. Ghabrana nahi — ye 5 step process hai. Ek baar samajh gaya toh second nature ban jaayega.
+**You're alone — so what do you do?**
+You have to do all this work yourself, but in a lightweight version. Don't panic — it's a 5-step process. Once you understand it, it becomes second nature.
 
 ---
 
@@ -39,22 +39,22 @@ Ye saara kaam khud karna hai, par lightweight version mein. Ghabrana nahi — ye
 
 ### Step 1 — PRD Lite (Product Requirements Doc)
 
-PRD matlab **"Kya banana hai"** — clearly, in writing.
+PRD means **"What to build"** — clearly, in writing.
 
-Ye likhne ki wajah ye hai ki jab tum code karte karte bhatkoge, ye doc tumhe ground pe rakhega.
+The reason to write this is that when you get lost while coding, this doc keeps you grounded.
 
-**Structure hona chahiye:**
+**It should have this structure:**
 
 ```
 PROJECT NAME: ___________________
 
 ONE LINE DESCRIPTION:
-"Ye ek [type of app] hai jo [target user] ke liye
- [main kaam] karta hai."
+"This is a [type of app] that does [main task]
+ for [target user]."
 
 TARGET USER:
-- Kaun use karega? (Student, Business Owner, Admin)
-- Technical hain ya non-technical?
+- Who will use it? (Student, Business Owner, Admin)
+- Are they technical or non-technical?
 
 CORE FEATURES (Must Have — MVP):
 - [ ] Feature 1
@@ -65,46 +65,46 @@ STRETCH FEATURES (Nice to Have — V2):
 - [ ] Feature A
 - [ ] Feature B
 
-OUT OF SCOPE (Kya NAHI banana):
-- X nahi banana
-- Y nahi banana
+OUT OF SCOPE (What NOT to build):
+- X not to be built
+- Y not to be built
 
 SUCCESS CRITERIA:
-- Kab bolenge ki project complete hua?
+- When will we say the project is complete?
 ```
 
-> **Interview Tip:** "Out of Scope" wala section bahut powerful hai interview mein.
-> Jab tum ye bolte ho — *"Maine scope clearly define kiya tha, aur in features ko V2 mein push kiya"* —
-> ye dikhata hai ki tum production-level sochte ho. Junior devs scope nahi socha karte.
+> **Interview Tip:** The "Out of Scope" section is very powerful in an interview.
+> When you say — *"I clearly defined the scope and pushed these features to V2"* —
+> it shows you think at a production level. Junior devs don't think about scope.
 
 ---
 
 ### Step 2 — Architecture Decision Doc
 
-PRD padhne ke baad, tool selection karo. Par sirf **"maine ye choose kiya"** nahi — **"maine ye choose kiya KYUNKI..."** — ye important hai.
+After reading the PRD, select the tools. But not just **"I chose this"** — **"I chose this BECAUSE..."** — that's what matters.
 
-Ye questions khud se poochho:
+Ask yourself these questions:
 
 ```
 PLATFORM:
-→ Sirf web app hai?                  Yes → Next.js
-→ Mobile bhi chahiye?                Yes → React Native ya PWA
-→ Pure static site hai?              Yes → Astro
+→ Is it only a web app?                  Yes → Next.js
+→ Mobile also needed?                    Yes → React Native or PWA
+→ Pure static site?                      Yes → Astro
 
 DATA LAYER:
-→ API endpoints chahiye bahar ke liye?   Yes → REST / tRPC
-→ Sirf internal web app use karega?      Yes → Server Actions (simpler!)
-→ Real-time data chahiye?                Yes → WebSockets / SSE
-→ Complex queries / multiple resources?  Yes → GraphQL consider karo
+→ Need API endpoints for external use?   Yes → REST / tRPC
+→ Only internal web app will use it?     Yes → Server Actions (simpler!)
+→ Need real-time data?                   Yes → WebSockets / SSE
+→ Complex queries / multiple resources?  Yes → Consider GraphQL
 
 STATE MANAGEMENT:
-→ Sirf local component state?            useState enough
-→ 2-3 components share karte hain?      Context API enough
+→ Only local component state?            useState is enough
+→ 2-3 components share it?               Context API is enough
 → Complex global state, many components? Zustand
 → Enterprise, time-travel debug?         Redux Toolkit
 
 DATABASE:
-→ Data structured aur relational?        PostgreSQL
+→ Structured and relational data?        PostgreSQL
 → Flexible schema, documents?            MongoDB
 → Caching / sessions / real-time?        Redis
 → Simple, local / small app?             SQLite
@@ -115,11 +115,11 @@ AUTH:
 → Enterprise SSO?                        Auth0
 
 RENDERING STRATEGY:
-→ SEO important hai?                     SSG / SSR
+→ SEO important?                         SSG / SSR
 → User-specific data?                    SSR
 → Rarely changing content?               SSG / ISR
 → Dashboard, no SEO needed?              CSR
-→ Mix of above?                          Next.js (mix karo)
+→ Mix of above?                          Next.js (mix them)
 
 FILE UPLOADS:
 → Images with transformations?           Cloudinary
@@ -139,43 +139,43 @@ HOSTING:
 → Enterprise?                            AWS / GCP
 ```
 
-> **Interview Tip:** Har decision ke saath reason likho.
-> "Maine Zustand choose kiya **kyunki** cart state multiple unrelated components
-> share karte the, aur Context se re-render issues aa rahe the" —
-> ye answer junior ko senior se alag karta hai.
+> **Interview Tip:** Write the reason along with every decision.
+> "I chose Zustand **because** cart state was shared by multiple unrelated components,
+> and Context was causing re-render issues" —
+> this is what separates a junior from a senior.
 
 ---
 
 ### Step 3 — Data Model
 
-Code likhne se pehle **database schema** socho. Ye ek aur jagah hai jahan beginners skip karte hain aur baad mein pachtate hain.
+Before writing code, think about the **database schema**. This is another place beginners skip and regret later.
 
 ```
-HAR ENTITY KE LIYE SOCHO:
+THINK FOR EACH ENTITY:
 
-1. Kya entities hain mere app mein?
+1. What entities are in my app?
    (User, Product, Order, Post, Comment...)
 
-2. Har entity ke kya fields hain?
+2. What fields does each entity have?
    (id, name, email, created_at...)
 
-3. Entities ke beech kya relations hain?
+3. What relations exist between entities?
    - One to One:    User → Profile
-   - One to Many:   User → Orders (ek user ke many orders)
-   - Many to Many:  Student → Courses (ek student many courses, ek course many students)
+   - One to Many:   User → Orders (one user has many orders)
+   - Many to Many:  Student → Courses (one student many courses, one course many students)
 
-4. Kya indexes lagungi?
-   (Email pe — login ke liye, Product name pe — search ke liye)
+4. What indexes will I put?
+   (On email — for login, on Product name — for search)
 
-5. Kya soft delete chahiye?
-   (deleted_at field — data permanently delete nahi hoti)
+5. Do I need soft delete?
+   (deleted_at field — data isn't permanently deleted)
 ```
 
 **Example template:**
 
 ```
 ENTITY: User
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 id           UUID / SERIAL (PK)
 name         VARCHAR(100)
 email        VARCHAR(255) UNIQUE
@@ -186,7 +186,7 @@ updated_at   TIMESTAMP
 deleted_at   TIMESTAMP [nullable — soft delete]
 
 ENTITY: Post
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 id           UUID / SERIAL (PK)
 title        VARCHAR(255)
 content      TEXT
@@ -195,16 +195,16 @@ status       ENUM (draft, published)
 created_at   TIMESTAMP
 ```
 
-> **Interview Tip:** Agar interviewer pooche "database kaise design ki?" —
-> tum entity relationships aur indexes ka mention karo.
-> "Maine email column pe index lagaya kyunki login query frequent thi" —
-> ye dikhata hai DB optimization awareness.
+> **Interview Tip:** If the interviewer asks "how did you design the database?" —
+> mention entity relationships and indexes.
+> "I put an index on the email column because the login query was frequent" —
+> this shows DB optimization awareness.
 
 ---
 
 ### Step 4 — Feature Breakdown (Task List)
 
-Pura project ek saath mat socho. Toro isko:
+Don't think about the whole project at once. Break it down:
 
 ```
 PHASE 1 — Core (MVP):
@@ -221,7 +221,7 @@ PHASE 1 — Core (MVP):
   └── [ ] Delete
 
   Edge Cases
-  ├── [ ] Empty state (koi data nahi toh kya dikhega?)
+  ├── [ ] Empty state (what shows when there's no data?)
   ├── [ ] Loading state
   ├── [ ] Error state
   └── [ ] Form validation
@@ -233,17 +233,17 @@ PHASE 2 — Polish:
   └── [ ] Mobile responsive
 ```
 
-> **Ye kyun important hai?**
-> Jab interviewer pooche "project mein kya challenges aaye?" —
-> tum keh sakte ho "Maine feature breakdown pehle kiya tha,
-> toh main clearly jaanta tha ki MVP mein kya hai aur kya baad mein."
-> Ye planning maturity dikhata hai.
+> **Why is this important?**
+> When the interviewer asks "what challenges came up in the project?" —
+> you can say "I broke down features first,
+> so I clearly knew what was in MVP and what came later."
+> This shows planning maturity.
 
 ---
 
 ### Step 5 — Folder Structure Decision
 
-Next.js App Router ke saath:
+With Next.js App Router:
 
 ```
 src/
@@ -252,9 +252,9 @@ src/
 │   │   ├── login/page.tsx
 │   │   └── signup/page.tsx
 │   ├── (dashboard)/         ← Route group — protected pages
-│   │   ├── layout.tsx       ← Auth check yahan
+│   │   ├── layout.tsx       ← Auth check here
 │   │   └── dashboard/page.tsx
-│   ├── api/                 ← API routes (agar chahiye)
+│   ├── api/                 ← API routes (if needed)
 │   └── layout.tsx           ← Root layout
 │
 ├── components/
@@ -266,7 +266,7 @@ src/
 │   ├── auth.ts              ← Auth config
 │   └── utils.ts             ← Helper functions
 │
-├── actions/                 ← Server Actions (agar Server Actions use kar rahe)
+├── actions/                 ← Server Actions (if using Server Actions)
 │   ├── auth.actions.ts
 │   └── product.actions.ts
 │
@@ -279,12 +279,12 @@ src/
 
 ---
 
-## 🎯 The Complete Checklist — Har Project Ke Liye
+## 🎯 The Complete Checklist — For Every Project
 
 ```
 PRE-CODE CHECKLIST:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-[ ] PRD Lite likha?
+[ ] PRD Lite written?
     [ ] One line description
     [ ] Target user defined
     [ ] Core features listed
@@ -297,27 +297,27 @@ PRE-CODE CHECKLIST:
     [ ] Database chosen
     [ ] Auth solution chosen
 
-[ ] Data model banaya?
+[ ] Data model created?
     [ ] Entities identified
     [ ] Relations mapped
     [ ] Indexes noted
 
-[ ] Feature breakdown kiya?
-    [ ] MVP features only Phase 1 mein
+[ ] Feature breakdown done?
+    [ ] MVP features only in Phase 1
     [ ] Edge cases listed
 
 [ ] Folder structure decided?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-AB CODE LIKHNA SHURU KAR SAKTE HO! 🚀
+NOW YOU CAN START WRITING CODE! 🚀
 ```
 
 ---
 
-> **Remember:** Interview mein jab koi pooche "apna project explain karo" —
-> tum PRD se shuru karo, architecture decision pe aao, phir challenges pe.
-> **Seedha features mat ginao.** Wo sab koi kar sakta hai.
-> Planning + reasoning dikhana hi tumhe alag karta hai.
+> **Remember:** In an interview, when someone asks "explain your project" —
+> start with the PRD, move to architecture decisions, then challenges.
+> **Don't just list features.** That anyone can do.
+> Showing planning + reasoning is what sets you apart.
 
 ---
 
-**Next Doc →** `plan-02-prd-template.md` — Blank PRD template jo har project mein use kar sako.
+**Next Doc →** `plan-02-prd-template.md` — Blank PRD template you can use for every project.

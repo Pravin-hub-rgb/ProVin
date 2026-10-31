@@ -1,18 +1,18 @@
 # 📋 Plan Phase — Doc 3: Architecture Cheatsheet
-### Kaunsi Situation Mein Kaunsa Tool — Quick Reference
+### Which Tool in Which Situation — Quick Reference
 
 ---
 
-> Ye doc ek decision guide hai.
-> PRD fill karne ke baad yahan aao — tool choices quickly lock karo with reasons.
+> This doc is a decision guide.
+> After filling the PRD, come here — lock tool choices quickly with reasons.
 
 ---
 
 ## 🖥️ Framework Decision
 
 ```
-KYA BANANA HAI?                              TOOL
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+WHAT TO BUILD?                              TOOL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Full-stack web app (React + Backend together)  → Next.js ✅
 Pure frontend SPA (React only, separate API)   → Vite + React
 Content-heavy site (blogs, docs, marketing)    → Astro
@@ -20,8 +20,8 @@ Vue ecosystem                                  → Nuxt.js
 Web standards focused, remix routes            → Remix
 ```
 
-**Real Talk:** Next.js App Router is the standard 2024-25.
-Agar full-stack banana hai toh Next.js — period.
+**Real Talk:** Next.js App Router is the standard for 2024-25.
+If you're building full-stack, it's Next.js — period.
 
 ---
 
@@ -29,19 +29,19 @@ Agar full-stack banana hai toh Next.js — period.
 
 ```
 PAGE TYPE                                    STRATEGY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 User-specific data (dashboard, profile)      → SSR
 Real-time data (stock, live scores)          → SSR
 Public + rarely changing (blog, docs)        → SSG
 Public + regular updates (news, e-commerce)  → ISR
 Internal tool, no SEO needed                 → CSR
 Landing page + marketing                     → SSG
-Mix of above                                 → Next.js (har page alag)
+Mix of above                                 → Next.js (each page different)
 ```
 
 ```
-Next.js mein kaise karte hain:
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+How to do it in Next.js:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 SSG (default):   async function Page() { await fetch(url) }
 SSR:             await fetch(url, { cache: 'no-store' })
 ISR:             await fetch(url, { next: { revalidate: 60 } })
@@ -54,7 +54,7 @@ CSR:             'use client' + useEffect
 
 ```
 SITUATION                                    TOOL
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Single component state (form, modal toggle)  → useState
 2-3 components share state                   → useState + props / Context
 Global state, medium complexity              → Context API (built-in!)
@@ -65,16 +65,15 @@ Enterprise, complex logic, time-travel debug → Redux Toolkit
 
 **Real Talk:**
 - Zustand + React Query = sweet spot for most projects
-- Context API underrated hai — medium projects ke liye bilkul enough
-- Redux = overkill unless company already use kar rahi hai
+- Context API is underrated — absolutely enough for medium projects
+- Redux = overkill unless the company already uses it
 
 ```
 INTERVIEW ANSWER TEMPLATE:
-"Maine [Context/Zustand] choose kiya kyunki [reason].
- Server state ke liye React Query use kiya —
- kyunki wo caching, background refetching, aur loading/error
- states automatically handle karta hai, jisse mujhe
- wo sab manually likhna nahi pada."
+"I chose [Context/Zustand] because [reason].
+ For server state I used React Query —
+ because it automatically handles caching, background refetching,
+ and loading/error states, so I didn't have to write all that manually."
 ```
 
 ---
@@ -83,23 +82,23 @@ INTERVIEW ANSWER TEMPLATE:
 
 ```
 SITUATION                                    STYLE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Next.js web app, no external consumers       → Server Actions ✅
-Mobile app ya external clients bhi hain      → REST API routes
+Mobile app or external clients also exist     → REST API routes
 Full type safety, Next.js monorepo           → tRPC
 Complex data requirements, multiple clients  → GraphQL
 ```
 
-**Server Actions kab choose karo:**
+**When to choose Server Actions:**
 ```
-✅ Sirf web app hai (no mobile, no third-party)
+✅ Only a web app (no mobile, no third-party)
 ✅ Form submissions, CRUD operations
-✅ Less boilerplate chahiye
-✅ Type safety automatic (TypeScript ke saath)
+✅ Less boilerplate needed
+✅ Type safety automatic (with TypeScript)
 
-❌ External API consumers hain
-❌ Mobile app bhi hai
-❌ Webhook endpoints banana hai
+❌ External API consumers exist
+❌ Mobile app also exists
+❌ Need to build webhook endpoints
 ```
 
 ---
@@ -108,7 +107,7 @@ Complex data requirements, multiple clients  → GraphQL
 
 ```
 SITUATION                                    DATABASE
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Structured data, relations important         → PostgreSQL ✅
 Document-based, flexible schema              → MongoDB
 Caching, sessions, real-time pub/sub         → Redis
@@ -117,14 +116,14 @@ Managed PostgreSQL (serverless)              → Neon / Supabase
 ```
 
 **Real Talk:** PostgreSQL + Prisma = default choice for 90% of apps.
-MongoDB tab le jab data genuinely unstructured ho — social media posts, logs, etc.
+Use MongoDB only when data is genuinely unstructured — social media posts, logs, etc.
 
 ```
 ORM CHOICE:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Prisma   → TypeScript-first, great DX, migrations easy  [Recommended]
-Drizzle  → Lightweight, SQL-like syntax, bundle size kam
-Mongoose → MongoDB ke liye
+Prisma   → TypeScript-first, great DX, easy migrations  [Recommended]
+Drizzle  → Lightweight, SQL-like syntax, smaller bundle
+Mongoose → For MongoDB
 ```
 
 ---
@@ -133,7 +132,7 @@ Mongoose → MongoDB ke liye
 
 ```
 SITUATION                                    TOOL
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Fastest setup, UI components included        → Clerk ✅
 Full control, open source, self-hosted       → NextAuth / Auth.js
 TypeScript-first, modern, flexible           → Better Auth
@@ -142,18 +141,18 @@ Enterprise SSO (SAML, LDAP)                  → Auth0
 Supabase users                               → Supabase Auth
 ```
 
-**RBAC kab chahiye:**
+**When is RBAC needed:**
 ```
-Project mein RBAC zaroor tab:
-→ Multiple user types hain (Admin, User, Guest, Manager)
-→ Alag alag permissions hain
-→ "Ye kaam sirf admin kar sakta hai" type requirements hain
+RBAC is definitely needed in a project when:
+→ There are multiple user types (Admin, User, Guest, Manager)
+→ There are different permissions
+→ There are requirements like "only admin can do this"
 
 Implementation:
-→ User model mein `role` field rakho
-→ Middleware mein role check karo
-→ Server Actions / API routes mein bhi check karo
-   (client-side check sirf UX ke liye, security nahi)
+→ Put a `role` field in the User model
+→ Check role in middleware
+→ Check in Server Actions / API routes too
+   (client-side check is only for UX, not security)
 ```
 
 ---
@@ -162,10 +161,10 @@ Implementation:
 
 ```
 NEED                    TOOL                    WHY
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 Form handling           React Hook Form         Performant, less re-renders
 Validation              Zod                     TypeScript-first, reuse server/client
-Image upload            Uploadthing             Next.js ke liye easiest
+Image upload            Uploadthing             Easiest for Next.js
 Image CDN + transform   Cloudinary              Resize, crop, optimize
 Emails                  Resend                  Modern API, React email templates
 Charts                  Recharts                React-native charts
@@ -221,4 +220,4 @@ JOB BOARD:
 
 ---
 
-**Next Doc →** `plan-04-star-method.md` — Project ko interview mein kaise explain karo: STAR framework with examples.
+**Next Doc →** `plan-04-star-method.md` — How to explain a project in an interview: STAR framework with examples.

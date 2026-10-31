@@ -1,21 +1,21 @@
-    # 11 — Email: Resend, Nodemailer, SendGrid, Postmark
+# 11 — Email: Resend, Nodemailer, SendGrid, Postmark
 
 > Umbrella: Backend → Email
-> Kaam: Transactional emails bhejhna — OTP, order confirmation, password reset
-> Note: Marketing emails (newsletter) alag category hai — yahan transactional emails
+> Job: Send transactional emails — OTP, order confirmation, password reset
+> Note: Marketing emails (newsletter) are a separate category — this doc covers transactional emails
 
 ---
 
-## Seedha Gmail Se Kyun Nahi Bhejte
+## Why Not Send Directly via Gmail
 
 ```
-Gmail se seedha:
-  → Spam mein jaayega
-  → Rate limits hain (500/day)
-  → Deliverability poor
+Directly via Gmail:
+  → Lands in spam
+  → Rate limits (500/day)
+  → Poor deliverability
 
 Professional email service:
-  → Inbox mein aayega
+  → Lands in inbox
   → High deliverability
   → Analytics, tracking
   → Unsubscribe handling
@@ -23,14 +23,14 @@ Professional email service:
 
 ---
 
-## Do Types — Transactional vs Marketing
+## Two Types — Transactional vs Marketing
 
 ```
-TRANSACTIONAL: User action pe trigger
+TRANSACTIONAL: Triggered by a user action
   → OTP, password reset, order confirmation, invoice
-  → Yeh docs isi ke baare mein hain
+  → This doc is about these
 
-MARKETING: Company ki taraf se bulk
+MARKETING: Bulk, from the company side
   → Newsletter, offers, announcements
   → Tools: Mailchimp, SendGrid Marketing, Klaviyo
 ```
@@ -45,20 +45,20 @@ MARKETING: Company ki taraf se bulk
 **Tag: 🟢 Most Popular 2024 | Developer-first | Recommended**
 
 ```
-Kya hai: Modern email API — developers ke liye, React Email ke saath perfect
-Kab use karo:
-  → Naya project — almost always
+What it is: Modern email API — built for developers, perfect with React Email
+When to use:
+  → New project — almost always
   → Next.js / React project
-  → React se email templates banana ho
+  → When you want to write email templates in React
 
 Special feature — React Email:
-  → Email templates React components se banta hain
-  → JSX mein email likhna — HTML email nahi
+  → Email templates are built as React components
+  → Write email in JSX — no HTML emails
 
 Real app example:
-  → Vercel ki notification emails (Resend use karte hain)
-  → Naye Indian startups
-  → ShopKaro ka password reset, order confirmation
+  → Vercel's notification emails (they use Resend)
+  → New Indian startups
+  → ShopKaro's password reset, order confirmation
 
 Code feel:
   import { Resend } from 'resend'
@@ -83,10 +83,10 @@ React Email template:
     )
   }
 
-Free tier: 3000 emails/month — kaafi hai starting ke liye
+Free tier: 3000 emails/month — plenty to start
 Cons: Newer service — less track record than SendGrid
 
-India mein: 2023 ke baad rapidly adopted
+In India: Rapidly adopted after 2023
 ```
 
 ---
@@ -95,16 +95,16 @@ India mein: 2023 ke baad rapidly adopted
 **Tag: 🟡 Classic | Self-configured | Free**
 
 ```
-Kya hai: Node.js library — Gmail, SMTP, any mail server se email bhejo
-Kab use karo:
-  → Free solution chahiye
-  → Apna SMTP server hai
-  → Chhota project, emails bahut kam
+What it is: Node.js library — send email via Gmail, SMTP, any mail server
+When to use:
+  → Free solution needed
+  → You have your own SMTP server
+  → Small project, very few emails
 
-Gmail ke saath:
-  → Free lekin limits hain
-  → App Password setup karna padta hai
-  → Production mein reliable nahi (spam, limits)
+With Gmail:
+  → Free but with limits
+  → App Password setup required
+  → Not reliable in production (spam, limits)
 
 Code feel:
   const transporter = nodemailer.createTransport({
@@ -124,36 +124,36 @@ Real app example:
   → Internal tools with low email volume
 
 Cons:
-  → Production ke liye unreliable (Gmail limits)
-  → HTML templates manually likhna
+  → Unreliable for production (Gmail limits)
+  → HTML templates written manually
   → No analytics
 
-India mein: Bootcamp projects, personal apps
+In India: Bootcamp projects, personal apps
 ```
 
 ---
 
 ### SendGrid
-**Tag: 🟢 Enterprise Standard | Twilio owns it**
+**Tag: 🟢 Enterprise Standard | Owned by Twilio**
 
 ```
-Kya hai: Established email service — both transactional + marketing
-Kab use karo:
-  → Large scale (lakhs emails/month)
-  → Marketing + transactional dono chahiye
-  → Enterprise compliance chahiye
+What it is: Established email service — both transactional + marketing
+When to use:
+  → Large scale (lakhs of emails/month)
+  → Both marketing + transactional needed
+  → Enterprise compliance needed
 
-Resend se fark:
+Difference from Resend:
   → SendGrid: Older, more features, complex setup
   → Resend: Developer-friendly, simpler API, newer
 
 Free tier: 100 emails/day
 
 Real app example:
-  → Flipkart, Amazon India type scale
+  → Flipkart, Amazon India scale
   → Enterprise SaaS
 
-India mein: Established companies mein zyada
+In India: More common in established companies
 ```
 
 ---
@@ -162,13 +162,13 @@ India mein: Established companies mein zyada
 **Tag: 🟢 Transactional Specialist | High Deliverability**
 
 ```
-Kya hai: Transactional email specialist — only transactional, no marketing
-Kab use karo:
-  → Highest deliverability chahiye
-  → Transactional emails critical hain (bank OTPs, payment receipts)
-  → Marketing emails nahi bhejne
+What it is: Transactional email specialist — only transactional, no marketing
+When to use:
+  → Highest deliverability needed
+  → Transactional emails are critical (bank OTPs, payment receipts)
+  → No marketing emails to send
 
-Resend se fark:
+Difference from Resend:
   → Postmark: Older, more proven deliverability, expensive
   → Resend: Newer, developer-friendly, cheaper
 
@@ -176,7 +176,7 @@ Real app example:
   → Fintech apps (payment confirmations)
   → B2B SaaS (critical notifications)
 
-India mein: Fintech, banking type apps
+In India: Fintech, banking type apps
 ```
 
 ---
@@ -185,20 +185,20 @@ India mein: Fintech, banking type apps
 **Tag: 🟢 Cheapest at Scale | AWS ecosystem**
 
 ```
-Kya hai: AWS ka email service — bahut sasta at scale
-Kab use karo:
-  → AWS already use kar rahe ho
-  → Very high volume (lakhs emails)
-  → Cost critical hai
+What it is: AWS's email service — very cheap at scale
+When to use:
+  → Already using AWS
+  → Very high volume (lakhs of emails)
+  → Cost is critical
 
-Pricing: $0.10 per 1000 emails — bahut sasta
+Pricing: $0.10 per 1000 emails — very cheap
 
 Cons:
-  → Setup complex
-  → Sandbox mode se bahar nikalna — AWS approval chahiye
-  → Developer experience poor compared to Resend
+  → Complex setup
+  → Getting out of sandbox mode needs AWS approval
+  → Poor developer experience compared to Resend
 
-India mein: Large companies jo AWS pe hain (Zomato, Swiggy type scale)
+In India: Large companies on AWS (Zomato, Swiggy scale)
 ```
 
 ---
@@ -206,35 +206,35 @@ India mein: Large companies jo AWS pe hain (Zomato, Swiggy type scale)
 ## Quick Decision
 
 ```
-Naya project?
+New project?
   → Resend (best DX, React Email support)
 
 Free, learning project?
-  → Nodemailer + Gmail (limits samajh ke)
+  → Nodemailer + Gmail (understand the limits)
 
 Enterprise, high volume?
-  → SendGrid ya AWS SES
+  → SendGrid or AWS SES
 
 Fintech, critical emails?
   → Postmark (highest deliverability)
 
-AWS ecosystem pehle se?
+Already on AWS ecosystem?
   → AWS SES
 ```
 
 ---
 
-## India Mein Reality
+## India Reality
 
 ```
 Startups (2024):          Resend
 Learning / personal:      Nodemailer
-Enterprise / funded:      SendGrid ya Postmark
+Enterprise / funded:      SendGrid or Postmark
 AWS shops:                AWS SES
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`12-backend-queues.md` — Background Jobs + Queues — BullMQ, Inngest, Trigger.dev — Swiggy ka "order placed" ke baad email bhejhna, invoice generate karna — yeh sab queue mein hota hai.
+`12-backend-queues.md` — Background Jobs + Queues — BullMQ, Inngest, Trigger.dev — after "order placed" on Swiggy, sending email and generating invoice — all that happens in a queue.

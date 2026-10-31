@@ -1,23 +1,23 @@
 # 05 — HTTP Clients: fetch, Axios, React Query, SWR
 
 > Umbrella: Frontend → HTTP Client (API Calls)
-> Kaam: Server se data maangna, bhejhna
-> Note: Yahan do alag concepts hain — HTTP client (kaise request karo) + Data fetching library (state kaise manage karo)
+> Purpose: Fetching and sending data to the server
+> Note: Two separate concepts here — HTTP client (how to make the request) + Data fetching library (how to manage state)
 
 ---
 
-## Do Alag Cheezein
+## Two Separate Things
 
 ```
-HTTP CLIENT:          Request kaise bhejo
+HTTP CLIENT:          How to send the request
   → fetch (native), Axios, ky
 
-DATA FETCHING LIBRARY: Server state manage karo — loading, caching, refetch
+DATA FETCHING LIBRARY: Manage server state — loading, caching, refetch
   → React Query, SWR
 
 Combo:
-  → React Query internally fetch ya Axios use karta hai
-  → React Query = Axios + loading state + caching + retry — sab ek mein
+  → React Query internally uses fetch or Axios
+  → React Query = Axios + loading state + caching + retry — all in one
 ```
 
 ---
@@ -30,27 +30,27 @@ Combo:
 **Tag: 🟢 Built-in | No install | Always available**
 
 ```
-Kya hai: Browser ka built-in HTTP client — koi library nahi chahiye
-Kab use karo:
+What it is: Browser's built-in HTTP client — no library needed
+When to use:
   → Simple requests
-  → Next.js server components (Next.js ne fetch extend kiya hai — caching built-in)
-  → Bundle size zero rakhna ho
+  → Next.js server components (Next.js extended fetch — caching built-in)
+  → Keep bundle size zero
 
 Code feel:
   const response = await fetch('/api/products')
   const data = await response.json()
 
-  // Error handling manual hai
+  // Error handling is manual
   if (!response.ok) throw new Error('Failed')
 
 Cons:
-  → Error handling verbose — har baar check karo response.ok
-  → Interceptors nahi (har request pe token add karna manual)
+  → Verbose error handling — check response.ok every time
+  → No interceptors (adding token to every request manually)
   → Request cancellation complex
 
-Next.js mein special:
-  → Next.js ka fetch extended hai — caching, revalidation built-in
-  → Server components mein fetch use karo (Axios nahi)
+Special in Next.js:
+  → Next.js's fetch is extended — caching, revalidation built-in
+  → Use fetch in server components (not Axios)
 ```
 
 ---
@@ -59,22 +59,22 @@ Next.js mein special:
 **Tag: 🟢 Most Popular | Feature-rich | Client + Server**
 
 ```
-Kya hai: HTTP client library — fetch se zyada features
-Kab use karo:
-  → Browser mein API calls with interceptors
-  → Node.js backend mein bhi (isomorphic)
+What it is: HTTP client library — more features than fetch
+When to use:
+  → Browser API calls with interceptors
+  → Node.js backend too (isomorphic)
   → File upload with progress
   → Request/response transformation
 
 Pros:
-  → Interceptors: Har request pe automatically token add karo
+  → Interceptors: Automatically add token to every request
   → Automatic JSON parse
-  → Better error handling (non-2xx status → throw karta hai)
-  → Request cancellation easy
+  → Better error handling (non-2xx status → throws)
+  → Easy request cancellation
   → Timeout support
 
 Code feel:
-  // Interceptor — ek baar setup, har request mein token
+  // Interceptor — set once, token added to every request
   axios.interceptors.request.use(config => {
     config.headers.Authorization = `Bearer ${token}`
     return config
@@ -82,18 +82,18 @@ Code feel:
 
   // Request
   const { data } = await axios.get('/api/products')
-  // data already parsed JSON hai
+  // data is already parsed JSON
 
 Real app example:
-  → Zomato: Restaurant list fetch — interceptor mein location header add
-  → Ola: Ride requests — interceptor mein user token
-  → ShopKaro: CSR pages mein API calls
+  → Zomato: Restaurant list fetch — interceptor adds location header
+  → Ola: Ride requests — interceptor adds user token
+  → ShopKaro: API calls in CSR pages
 
-fetch se fark:
-  → Axios: Error throw karta hai non-2xx pe, automatic JSON parse
-  → fetch: Manual check karna padta hai, manual JSON parse
+Difference from fetch:
+  → Axios: Throws on non-2xx, automatic JSON parse
+  → fetch: Manual check needed, manual JSON parse
 
-India mein: Abhi bhi very popular — especially React + Express combo
+In India: Still very popular — especially React + Express combo
 ```
 
 ---
@@ -102,16 +102,16 @@ India mein: Abhi bhi very popular — especially React + Express combo
 **Tag: 🔵 Lightweight | fetch wrapper | Growing**
 
 ```
-Kya hai: Fetch ka wrapper — Axios se chhota, fetch se better
-Kab use karo:
-  → Bundle size matter karta hai
-  → Axios jaisi features chahiye, lighter package
+What it is: A wrapper around fetch — smaller than Axios, better than fetch
+When to use:
+  → Bundle size matters
+  → Want Axios-like features in a lighter package
 
-Axios se fark:
+Difference from Axios:
   → ky: ~3KB | Axios: ~15KB
   → Newer, TypeScript-first
 
-Status: Growing lekin Axios ka ecosystem zyada mature
+Status: Growing but Axios ecosystem more mature
 ```
 
 ---
@@ -122,27 +122,27 @@ Status: Growing lekin Axios ka ecosystem zyada mature
 
 ### TanStack Query (React Query)
 **Tag: 🟢 Industry Standard 2024 | Server State Management**
-**Full Form: TanStack = TypeScript + Stack (TanStack is the organization that maintains this library)**
+**Full Form: TanStack = TypeScript + Stack (TanStack is the organization maintaining this library)**
 **Also known as: React Query (old name, still commonly used)**
 
 ```
-Kya hai: Server state management — data fetching, caching, background updates
-Kab use karo:
-  → CSR pages mein server data chahiye
-  → Caching, background refresh chahiye
-  → Loading/error states automatically manage karna ho
+What it is: Server state management — data fetching, caching, background updates
+When to use:
+  → Need server data in CSR pages
+  → Need caching, background refresh
+  → Auto-manage loading/error states
   → Infinite scroll, pagination
   → Optimistic updates
 
-ShopKaro docs mein: Doc 31 mein cover hua
+Covered in ShopKaro docs: Doc 31
 
 Real app example:
-  → Swiggy: Restaurant list — background mein refresh hoti rehti hai
+  → Swiggy: Restaurant list — refreshes in background
   → Zomato: Search results with caching
   → CRED: Transaction history — stale while revalidate
 
 What it replaces:
-  → useState + useEffect + manual loading/error → React Query ek line mein
+  → useState + useEffect + manual loading/error → React Query in one line
 
 Code feel:
   const { data, isLoading, error } = useQuery({
@@ -157,31 +157,31 @@ Mutation (POST/PUT/DELETE):
     onSuccess: () => queryClient.invalidateQueries(['cart'])
   })
 
-India mein: Rapidly growing — 2022 ke baad standard
+In India: Rapidly growing — standard since 2022
 ```
 
 ---
 
 ### SWR
 **Tag: 🟢 Vercel | Lightweight | Simple**
-**Full Form: SWR = Stale While Revalidate (caching strategy name)**
-**Meaning: Pehle cached data dikhao (stale), background mein refresh karo (revalidate)**
+**Full Form: SWR = Stale While Revalidate (a caching strategy name)**
+**Meaning: Show cached data first (stale), refresh in background (revalidate)**
 
 ```
-Kya hai: Data fetching library — Vercel ne banaya, Next.js ke saath natural fit
-Kab use karo:
-  → Simple data fetching — React Query ka full power nahi chahiye
-  → Next.js project, lightweight solution chahiye
+What it is: Data fetching library — built by Vercel, natural fit with Next.js
+When to use:
+  → Simple data fetching — don't need full power of React Query
+  → Next.js project, want lightweight solution
 
-React Query se fark:
-  → SWR: Simpler API, lekin features kam
-  → React Query: Zyada features — mutations, devtools, infinite queries
-  → Production mein: React Query zyada versatile
+Difference from React Query:
+  → SWR: Simpler API, fewer features
+  → React Query: More features — mutations, devtools, infinite queries
+  → In production: React Query more versatile
 
 Code feel:
   const { data, error } = useSWR('/api/products', fetcher)
 
-Status: Still good — lekin React Query ne zyada adoption li
+Status: Still good — but React Query took more adoption
 ```
 
 ---
@@ -199,7 +199,7 @@ Next.js Client Components (CSR):
 
 Simple project, no complex caching:
   → Axios directly (without React Query)
-  → ya SWR for simple cases
+  → or SWR for simple cases
 ```
 
 ---
@@ -214,7 +214,7 @@ Client component, complex state (caching, background refresh)?
   → React Query
 
 Client component, simple fetch?
-  → Axios ya fetch directly
+  → Axios or fetch directly
 
 Bundle size critical?
   → ky (fetch wrapper)
@@ -222,6 +222,6 @@ Bundle size critical?
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`06-frontend-animation.md` — Animation tools — Framer Motion, GSAP, CSS Animations — Swiggy ka food card hover, Zomato ka loading animation kaise bana hoga.
+`06-frontend-animation.md` — Animation tools — Framer Motion, GSAP, CSS Animations — how Swiggy's food card hover, Zomato's loading animation would be built.

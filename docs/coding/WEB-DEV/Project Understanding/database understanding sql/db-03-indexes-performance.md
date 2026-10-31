@@ -1,45 +1,45 @@
 # 🗄️ DB Doc 3 — Indexes & Performance
-### Kab Lagao, Kab Nahi, Composite Indexes, Real Query Patterns
+### When to Add, When Not, Composite Indexes, Real Query Patterns
 
 ---
 
-## Index Kya Hai — Simple Explanation
+## What is an Index — Simple Explanation
 
 ```
 Book analogy:
-→ Ek 500 page book hai — "database design ke baare mein"
-→ Tum "normalization" dhundhna chahte ho
-→ Option A: Har page padho — page 1, 2, 3... 500 tak
-            → Slow! O(n) — poori table scan
-→ Option B: Book ke end mein index dekho — "Normalization: Page 234"
-            → Fast! O(log n) — direct jump
+→ There's a 500-page book — "about database design"
+→ You want to find "normalization"
+→ Option A: Read every page — page 1, 2, 3... 500
+             → Slow! O(n) — full table scan
+→ Option B: Check the index at the end of the book — "Normalization: Page 234"
+             → Fast! O(log n) — direct jump
 
-Database index bilkul yahi karta hai.
+Database index does exactly this.
 ```
 
 ```
 Technical reality:
-→ Index ek separate B-Tree data structure hai
-→ Column values sorted order mein store hoti hain
-→ Database quickly "jump" kar sakta hai relevant rows pe
-→ Bina index ke → Sequential Scan (har row check hoti hai)
-→ Index ke saath → Index Scan (sirf relevant rows)
+→ Index is a separate B-Tree data structure
+→ Column values stored in sorted order
+→ Database can quickly "jump" to relevant rows
+→ Without index → Sequential Scan (every row checked)
+→ With index → Index Scan (only relevant rows)
 
 COST:
-→ Read queries FAST hoti hain index ke saath ✅
-→ Write queries (INSERT/UPDATE/DELETE) SLOW hoti hain ❌
-   (kyunki index bhi update karna padta hai)
-→ Storage space extra lagti hai ❌
+→ Read queries become FAST with index ✅
+→ Write queries (INSERT/UPDATE/DELETE) become SLOW ❌
+   (because index also needs updating)
+→ Extra storage space ❌
 
-YE TRADEOFF HAI — blindly sab pe index mat lagao!
+THIS IS A TRADEOFF — don't blindly add index everywhere!
 ```
 
 ---
 
-## Automatic Indexes (Prisma mein)
+## Automatic Indexes (In Prisma)
 
 ```
-Ye automatically indexed hote hain — tumhe kuch nahi karna:
+These are automatically indexed — you don't need to do anything:
 
 1. @id → Primary key — always indexed
 2. @unique → Unique constraint — automatically indexed
@@ -53,37 +53,37 @@ model User {
 
 ---
 
-## Manually Index Kab Lagao
+## When to Manually Add Index
 
 ### Rule 1 — FK Columns (Almost Always!)
 
 ```
-Prisma automatically FK columns index NAHI karta.
-Par FK pe queries bahut frequent hoti hain.
+Prisma does NOT automatically index FK columns.
+But queries on FKs are very frequent.
 
 model Task {
-  assignedToId String  // ← FK — Prisma index nahi lagata!
+  assignedToId String  // ← FK — Prisma doesn't index this!
 
-  @@index([assignedToId])  // ← Manually lagao!
+  @@index([assignedToId])  // ← Add manually!
 }
 
-Kyun zaroori hai?
-Query: "Rahul ke saare tasks do"
+Why is it necessary?
+Query: "Give me all of Rahul's tasks"
 → WHERE assignedToId = 'u_rahul'
-→ Bina index: Full table scan — 10,000 tasks sab check hote hain
-→ Index ke saath: Direct jump — sirf Rahul ke tasks
+→ Without index: Full table scan — 10,000 tasks all checked
+→ With index: Direct jump — only Rahul's tasks
 ```
 
-### Rule 2 — Frequently WHERE Clause Mein Use Hone Wale Columns
+### Rule 2 — Columns Frequently Used in WHERE Clause
 
 ```
-Apni app ki common queries socho:
+Think of your app's common queries:
 
-"Active tasks dikhao"        → WHERE status = 'TODO'        → index on status
-"Aaj due tasks"              → WHERE dueDate = today        → index on dueDate
-"North region sales"         → WHERE region = 'north'       → index on region
-"Published posts"            → WHERE published = true       → index on published
-"Last 30 days orders"        → WHERE createdAt >= 30dAgo    → index on createdAt
+"Show active tasks"        → WHERE status = 'TODO'        → index on status
+"Due today tasks"          → WHERE dueDate = today        → index on dueDate
+"North region sales"       → WHERE region = 'north'       → index on region
+"Published posts"          → WHERE published = true       → index on published
+"Last 30 days orders"     → WHERE createdAt >= 30dAgo    → index on createdAt
 
 model Task {
   status   TaskStatus
@@ -97,15 +97,15 @@ model Task {
 ### Rule 3 — ORDER BY Columns
 
 ```
-"Latest orders pehle dikhao"    → ORDER BY createdAt DESC
-"Cheapest products pehle"       → ORDER BY price ASC
+"Show latest orders first"    → ORDER BY createdAt DESC
+"Show cheapest first"         → ORDER BY price ASC
 
-Agar frequently sort karte ho ek column pe → index lagao.
+If you frequently sort on a column → add index.
 
 model Order {
   createdAt DateTime @default(now())
 
-  @@index([createdAt])  // ← Sorting fast ho jaayegi
+  @@index([createdAt])  // ← Sorting becomes fast
 }
 ```
 
@@ -114,21 +114,21 @@ model Order {
 ## Composite Index — Multiple Columns Together
 
 ```
-Kab use karo?
-Jab ek query mein do ya zyada columns SAATH mein filter hote hain.
+When to use?
+When two or more columns are filtered together in a query.
 
 Common Example:
-"Rahul ke saare TODO tasks do"
+"Give me Rahul's TODO tasks"
 → WHERE assignedToId = 'u_rahul' AND status = 'TODO'
 
 Two separate indexes:
-→ @@index([assignedToId])  → Rahul ke tasks milte hain (bahut)
-→ @@index([status])        → TODO tasks milte hain (bahut)
-Database dono results ko intersect karta hai — still work
+→ @@index([assignedToId])  → Rahul's tasks (many)
+→ @@index([status])        → TODO tasks (many)
+Database intersects both results — still works
 
 ONE composite index:
 → @@index([assignedToId, status])
-→ Direct: Rahul ke TODO tasks → instant!
+→ Direct: Rahul's TODO tasks → instant!
 ```
 
 ```
@@ -136,14 +136,14 @@ COLUMN ORDER MATTERS IN COMPOSITE INDEX!
 
 @@index([assignedToId, status])
 
-Ye index kaam karega:
+This index will work for:
 ✅ WHERE assignedToId = X                      (first column)
 ✅ WHERE assignedToId = X AND status = Y       (both columns)
 ❌ WHERE status = Y                            (only second column — WON'T use this index)
 
 Rule: Left-most prefix rule
-→ Query mein leftmost column zaroor honi chahiye index use ke liye
-→ Most selective column pehle rakho (jis column ki values zyada unique hain)
+→ The leftmost column must be present in query for index to be used
+→ Put most selective column first (the one with more unique values)
 ```
 
 ```prisma
@@ -158,29 +158,29 @@ model Task {
   createdAt    DateTime   @default(now())
 
   // Single column indexes:
-  @@index([assignedToId])        // "Mere tasks"
+  @@index([assignedToId])        // "My tasks"
   @@index([status])              // "All TODO tasks"
-  @@index([dueDate])             // "Aaj due tasks"
+  @@index([dueDate])             // "Due today tasks"
   @@index([createdAt])           // "Latest tasks" sorting
 
-  // Composite indexes (specific query patterns ke liye):
-  @@index([assignedToId, status])   // "Mere TODO tasks"
-  @@index([assignedToId, dueDate])  // "Mere tasks sorted by deadline"
+  // Composite indexes (for specific query patterns):
+  @@index([assignedToId, status])   // "My TODO tasks"
+  @@index([assignedToId, dueDate])  // "My tasks sorted by deadline"
 }
 ```
 
 ---
 
-## Real Query Patterns — 5 Projects Ke Examples
+## Real Query Patterns — Examples from 5 Projects
 
 ### StaffSync (Task Manager)
 
 ```
 Frequent queries:
-1. "Employee apne tasks dekhta hai" → assignedToId
-2. "Admin status se filter karta hai" → status
+1. "Employee views their tasks" → assignedToId
+2. "Admin filters by status" → status
 3. "Overdue tasks" → dueDate < today
-4. "Rahul ke pending tasks" → assignedToId + status (composite!)
+4. "Rahul's pending tasks" → assignedToId + status (composite!)
 
 model Task {
   @@index([assignedToId])
@@ -194,24 +194,24 @@ model Task {
 
 ```
 Frequent queries:
-1. "Active jobs dikhao" → status = ACTIVE
+1. "Show active jobs" → status = ACTIVE
 2. "Remote jobs" → jobType = REMOTE
 3. "Search by title" → Full-text search (special index)
-4. "Employer ki jobs" → employerId
-5. "Seeker ki applications" → seekerId
+4. "Employer's jobs" → employerId
+5. "Seeker's applications" → seekerId
 
 model Job {
   @@index([employerId])
   @@index([status])
   @@index([jobType])
   @@index([status, jobType])  // "Active remote jobs"
-  // Full-text search ke liye special setup (PostgreSQL tsvector)
+  // Full-text search needs special setup (PostgreSQL tsvector)
 }
 
 model Application {
-  @@index([jobId])      // "Is job ke saare applications"
-  @@index([seekerId])   // "Mere saare applications"
-  @@index([jobId, seekerId])  // Duplicate check ke liye (+ @@unique)
+  @@index([jobId])      // "All applications for this job"
+  @@index([seekerId])   // "My applications"
+  @@index([jobId, seekerId])  // Duplicate check (+ @@unique)
 }
 ```
 
@@ -219,10 +219,10 @@ model Application {
 
 ```
 Frequent queries:
-1. "Category ke products" → categoryId
+1. "Products in category" → categoryId
 2. "Active products" → status = ACTIVE
-3. "Cheap to expensive sort" → price (ORDER BY)
-4. "Customer ke orders" → customerId (if user accounts)
+3. "Sort by price" → price (ORDER BY)
+4. "Customer's orders" → customerId (if user accounts)
 5. "Order items" → orderId
 
 model Product {
@@ -233,27 +233,27 @@ model Product {
 }
 
 model Order {
-  @@index([customerEmail])  // Customer orders history
+  @@index([customerEmail])  // Customer order history
   @@index([status])         // "Pending orders" admin view
   @@index([createdAt])      // Latest orders first
 }
 
 model OrderItem {
-  @@index([orderId])    // Order ke items fetch karo
-  @@index([productId])  // Product kitni baar order hua (analytics)
+  @@index([orderId])    // Fetch order's items
+  @@index([productId])  // How many times product ordered (analytics)
 }
 ```
 
 ### DataLens (Analytics Dashboard)
 
 ```
-Analytics queries MOST heavy hoti hain — indexes yahan CRITICAL hain.
+Analytics queries are MOST heavy — indexes are CRITICAL here.
 
 Frequent queries:
 1. "Last 30 days sales" → saleDate range
-2. "Region wise sales" → region
+2. "Region-wise sales" → region
 3. "Salesperson performance" → salespersonId
-4. "Product wise revenue" → productId
+4. "Product-wise revenue" → productId
 
 model Sale {
   @@index([saleDate])                    // Date range queries
@@ -265,61 +265,61 @@ model Sale {
 }
 
 IMPORTANT NOTE FOR ANALYTICS:
-Agar table bahut badi ho (millions of rows):
-→ Regular indexes enough nahi honge
-→ Materialized Views consider karo (precomputed aggregations)
-→ Partitioning consider karo (data by year/month)
-→ Ya dedicated analytics DB (ClickHouse, BigQuery)
+If table is very large (millions of rows):
+→ Regular indexes won't be enough
+→ Consider Materialized Views (precomputed aggregations)
+→ Consider partitioning (data by year/month)
+→ Or dedicated analytics DB (ClickHouse, BigQuery)
 ```
 
 ---
 
-## Kab Index MAT Lagao
+## When NOT to Add Index
 
 ```
-❌ AVOID INDEX JAB:
+❌ AVOID INDEX WHEN:
 
-1. Table chhoti ho (< 1000 rows):
-   → Full scan itna fast hai ki index overhead zyada hai
-   → Users table of a small app — index overkill
+1. Table is small (< 1000 rows):
+   → Full scan is so fast that index overhead is more
+   → Users table of a small app — index is overkill
 
-2. Column mein bahut kam unique values hon (Low Cardinality):
+2. Column has very few unique values (Low Cardinality):
    → Boolean column (true/false) — index useless
    → Gender column (3-4 values) — poor selectivity
-   → Exception: Agar ek value bahut rare ho ("isAdmin = true" — sirf 2 admins hain)
+   → Exception: If one value is very rare ("isAdmin = true" — only 2 admins)
 
-3. Column rarely queried ho:
-   → Internal notes field jo sirf admin dekhta hai kabhi kabhi
-   → Index maintain karna write performance hurt karega
+3. Column is rarely queried:
+   → Internal notes field only admin sees occasionally
+   → Index maintenance hurts write performance
 
-4. Sab columns pe index lagana:
+4. Index on every column:
    → ❌ WRONG approach
-   → Every write (INSERT/UPDATE/DELETE) SLOW ho jaayega
-   → Storage bahut badhegi
-   → Database optimizer confuse ho sakta hai
+   → Every write (INSERT/UPDATE/DELETE) becomes SLOW
+   → Storage grows a lot
+   → Database optimizer can get confused
 
 SIMPLE RULE:
-"Pehle bina index ke start karo. Slow queries pe index add karo."
-Premature optimization avoid karo.
+"Start without index first. Add index when queries are slow."
+Avoid premature optimization.
 ```
 
 ---
 
-## Index Check Kaise Karo (EXPLAIN)
+## How to Check Index (EXPLAIN)
 
 ```sql
--- PostgreSQL mein query plan dekho:
+-- Check query plan in PostgreSQL:
 EXPLAIN ANALYZE
 SELECT * FROM tasks
 WHERE "assignedToId" = 'u_rahul'
 AND status = 'TODO';
 
--- Output mein dekho:
--- "Seq Scan" → Full table scan — index nahi use ho raha ❌
--- "Index Scan" → Index use ho raha hai ✅
--- "Bitmap Heap Scan" → Index use ho raha, multiple rows ✅
+-- Look in output:
+-- "Seq Scan" → Full table scan — index not being used ❌
+-- "Index Scan" → Index is being used ✅
+-- "Bitmap Heap Scan" → Index used, multiple rows ✅
 
--- Prisma se raw SQL run karne ke liye:
+-- Run raw SQL via Prisma:
 const result = await prisma.$queryRaw`
   EXPLAIN ANALYZE
   SELECT * FROM tasks
@@ -333,22 +333,22 @@ const result = await prisma.$queryRaw`
 ## Summary — Index Checklist
 
 ```
-HAR TABLE KE LIYE YE SOCHO:
+FOR EVERY TABLE, THINK ABOUT:
 
-[ ] FK columns indexed hain? (Prisma auto nahi karta)
-[ ] Frequently WHERE mein use hone wale columns indexed hain?
-[ ] ORDER BY mein use hone wale columns indexed hain?
-[ ] Common query patterns ke liye composite indexes hain?
-[ ] Boolean / low cardinality columns pe unnecessary index toh nahi lagaya?
-[ ] Very small tables pe unnecessary index toh nahi?
+[ ] FK columns indexed? (Prisma doesn't auto-index)
+[ ] Frequently WHERE-used columns indexed?
+[ ] ORDER BY columns indexed?
+[ ] Composite indexes for common query patterns?
+[ ] No unnecessary index on boolean / low cardinality columns?
+[ ] No unnecessary index on very small tables?
 
 REMEMBER:
 → Read fast = write slow (tradeoff)
-→ Pehle bina index ke shuru karo
-→ Slow query mile → tab index add karo
-→ EXPLAIN ANALYZE se verify karo
+→ Start without index first
+→ When slow query found → add index
+→ Verify with EXPLAIN ANALYZE
 ```
 
 ---
 
-**Next →** `db-04-common-patterns.md` — Naming conventions, migrations, seeding, common mistakes
+**Next →** `db-04-naming-migrations.md` — Naming conventions, migrations, seeding, common mistakes

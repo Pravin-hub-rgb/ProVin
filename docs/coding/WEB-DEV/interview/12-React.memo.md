@@ -1,74 +1,74 @@
 # ⚛️ Phase 2: Topic 12 - React.memo
 
-> **Interview Question:** "React.memo aur useMemo mein kya difference hai? Component-level memoization kaise kaam karta hai? Kab React.memo use karna chahiye, kab nahi?"
+> **Interview Question:** "What's the difference between React.memo and useMemo? How does component-level memoization work? When should you use React.memo, and when not?"
 
 ---
 
-## 🚨 **The Golden Rule — Sabse Pehle Samjho!**
+## 🚨 **The Golden Rule — Understand This First!**
 
-> **"React.memo component-level memoization ke liye use hota hai, useMemo se alag hai kyunki useMemo values ko memoize karta hai, jabki React.memo pura component memoize karta hai. Dono sirf performance optimization ke liye hain — zaroori nahi ki har jagah use karo."**
+> **"React.memo is used for component-level memoization, and it's different from useMemo because useMemo memoizes values, while React.memo memoizes the entire component. Both are purely for performance optimization — you don't need to use them everywhere."**
 
-### **Sabse Important Baat — Kyun Zaroori Hain?**
+### **Most Important Thing — Why Do They Matter?**
 
 ```
-React mein har render pe:
-1. Component function dobara execute hota hai
-2. Saare child components dobara render hote hain
-3. Saare props dobara evaluate hote hain
+On every render in React:
+1. The component function executes again
+2. All child components re-render
+3. All props are re-evaluated
 
 Problem:
-- Expensive components har render pe re-render hote hain (performance issue)
-- Child components unnecessary re-render hote hain (performance issue)
-- Props same hain, lekin components dobara render hote hain
+- Expensive components re-render on every render (performance issue)
+- Child components re-render unnecessarily (performance issue)
+- Props are the same, but components still re-render
 
 Solution:
-- React.memo → Components ko cache karo
-- useMemo → Values ko cache karo
-- useCallback → Functions ko cache karo
+- React.memo → Cache components
+- useMemo → Cache values
+- useCallback → Cache functions
 
-Par ye sab React ko internally pata NAHI chalta — humein manually batana padta hai!
+But React doesn't know any of this internally — you have to tell it manually!
 ```
 
 ---
 
 ## 💡 **Beginner-Friendly Explanation**
 
-### 🎨 **React.memo = Expensive Painting ko Avoid Karna**
+### 🎨 **React.memo = Avoiding an Expensive Painting**
 
 ```
-Socho tum ek expensive painting bana rahe ho:
+Imagine you're making an expensive painting:
 
-❌ **Bina React.memo:**
-   - Har baar naya painting banao
-   - Pehle din: Expensive painting banaya (₹5000)
-   - Dusre din: Expensive painting banaya (₹5000) — SAME painting!
-   - Teesre din: Expensive painting banaya (₹5000) — SAME painting!
-   - Paise waste!
+❌ **Without React.memo:**
+   - Make a new painting every time
+   - Day 1: Made an expensive painting (₹5000)
+   - Day 2: Made an expensive painting (₹5000) — SAME painting!
+   - Day 3: Made an expensive painting (₹5000) — SAME painting!
+   - Wasted money!
 
-✅ **React.memo ke saath:**
-   - Pehli baar: Expensive painting banaya → Yaad rakho
-   - Dusri baar: Wahi purana painting dikhao (no new painting)
-   - Teesri baar: Wahi purana painting dikhao (no new painting)
-   - Paise bacha!
+✅ **With React.memo:**
+   - First time: Make the expensive painting → remember it
+   - Second time: Show the same old painting (no new painting)
+   - Third time: Show the same old painting (no new painting)
+   - Money saved!
 
-Par dhyan rahe:
-- Sirf tab painting yaad rakho jab colors change hon
-- Agar colors change hue, toh naya painting banayo
+But remember:
+- Only remember it when the colors change
+- If the colors change, make a new painting
 ```
 
-### 📦 **useMemo vs React.memo — Difference Kya Hai?**
+### 📦 **useMemo vs React.memo — What's the Difference?**
 
 ```
-useMemo = Calculator ka Result Yaad Rakhna
-React.memo = Expensive Painting ko Avoid Karna
+useMemo = Remembering the Calculator's Result
+React.memo = Avoiding an Expensive Painting
 
-useMemo: "Ye calculation expensive hai, result yaad rakho"
-React.memo: "Ye component expensive hai, re-render avoid karo"
+useMemo: "This calculation is expensive, remember the result"
+React.memo: "This component is expensive, avoid re-rendering"
 ```
 
 ---
 
-## 🔄 **React.memo — Components ko Memoize Karna**
+## 🔄 **React.memo — Memoizing Components**
 
 ### **Syntax:**
 
@@ -79,7 +79,12 @@ const MemoizedComponent = React.memo(Component, areEqual);
 ### **Example 1: Simple React.memo Usage**
 
 ```javascript
-// ❌ GALAT — Har render pe expensive component re-render hoga
+// ❌ WRONG — Expensive component re-renders on every render
 function Parent() {
   const [count, setCount] = useState(0);
   const [user, setUser] = useState
+```
+
+---
+
+> Note: The source file ends here.

@@ -1,181 +1,181 @@
 # Lec 7 - File IO — Practice Set
 
-> **Rule:** Solutions tabhi dekho jab saare questions attempt kar liye hon. Warna tum copy karoge, seekhoge nahi. Galat answer sahi hone se behtar hai — wo dikhata hai ki kahan atka.
+> **Rule:** Don't look at solutions until you've attempted all questions. Otherwise you'll just copy, not learn. A wrong answer is better than a right one — it shows where you got stuck.
 
-Har question ka answer notes.md ke concepts use karke likhna hai. Koi starter code nahi diya — tumhe khud sochna padega.
+Answer every question using concepts from notes.md. No starter code is given — you have to think it through yourself.
 
 ---
 
 ## Level 1 — Basics
 
-### Q1. Ek line likho
-`output.txt` naam ki file me `Hello, World!` likho. Fir file kholke check karo ki sach me likha gaya ya nahi.
+### Q1. Write one line
+Write `Hello, World!` to a file named `output.txt`. Then open the file and check that it was really written.
 
-**Hint:** `"w"` mode use karo.
+**Hint:** Use `"w"` mode.
 
 ---
 
-### Q2. 5 lines likho
-`numbers.txt` me 1 se 5 tak numbers **har ek alag line pe** likho.
+### Q2. Write 5 lines
+Write numbers 1 to 5 in `numbers.txt`, **each on a separate line**.
 
 **Hint:** Loop + `write` + `\n`.
 
 ---
 
-### Q3. File padho
-`numbers.txt` (jo tumne abhi banaya) padho aur har line print karo.
+### Q3. Read a file
+Read `numbers.txt` (the one you just made) and print each line.
 
-**Hint:** `for line in file:` — aur dhyan rakhna, `line` me kuch extra hota hai.
+**Hint:** `for line in file:` — and remember, `line` has something extra.
 
 ---
 
 ### Q4. Line count
-`numbers.txt` me kitni lines hain — count karke print karo.
+Count the lines in `numbers.txt` and print the count.
 
-**Hint:** Ek counter variable. Har line pe badhao.
+**Hint:** A counter variable. Increment it on every line.
 
 ---
 
 ### Q5. Word count
-`notes.txt` naam ki file me kuch text likho (3-4 lines), fir us file ke **total words** count karke print karo.
+Write some text in a file named `notes.txt` (3-4 lines), then count the **total words** in that file and print it.
 
-**Hint:** `line.split()` — space ke hisaab se tod deta hai list me.
+**Hint:** `line.split()` — it splits into a list by whitespace.
 
 ---
 
-## Level 2 — Modes aur read/write
+## Level 2 — Modes and read/write
 
 ### Q6. Append test
-Ye program **3 baar** chalao:
+Run this program **3 times**:
 ```python
 with open("log.txt", "a") as file:
     file.write("entry\n")
 ```
-Ab `log.txt` me kitni lines hain? Ab same program `"w"` mode ke saath chalao — ab kitni lines hain? Do numbers note karo aur samjhao kya hua.
+How many lines are in `log.txt` now? Now run the same program with `"w"` mode — how many lines now? Note the two numbers and explain what happened.
 
 ---
 
 ### Q7. Overwrite vs append
-`data.txt` me `"Hello"` likho. Fir `"a"` mode se `" World"` jodo. Fir `"w"` mode se `"Bye"` likho. **Har step ke baad file ka content dekho** aur 3 steps ka output ek saath likho.
+Write `"Hello"` to `data.txt`. Then append `" World"` using `"a"` mode. Then write `"Bye"` using `"w"` mode. **Check the file's content after each step** and write down the output of all 3 steps together.
 
 ---
 
 ### Q8. write vs append in one file
-Ek aisa banao jo har run me ek line jodo, lekin **pehli line header ho** (jaise `count,value`). Pehli run me sirf header aaye, aage ke runs me nayi lines jadte jaye.
+Make something that adds one line on every run, but the **first line is a header** (like `count,value`). On the first run only the header should appear; on later runs new lines get appended.
 
-**Hint:** `"a"` mode hi chahiye. Pehli baar ke liye alag se handle kar lo.
+**Hint:** You need `"a"` mode. Handle the first run separately.
 
 ---
 
 ### Q9. Copy a file
-`source.txt` ka content `copy.txt` me nayi file me copy karo — bina `shutil` use kiye. Sirf Python ke file operations se.
+Copy the contents of `source.txt` into a new file `copy.txt` — without using `shutil`. Use only Python file operations.
 
-**Hint:** source ko `"r"` se padho, dest ko `"w"` se likho.
+**Hint:** Read source with `"r"`, write dest with `"w"`.
 
 ---
 
 ### Q10. Reverse lines
-`names.txt` me 5 naam likho (alag alag lines me). Fir un lines ko **ulta order** me print karo — bina file me badle.
+Write 5 names in `names.txt` (each on a separate line). Then print those lines in **reverse order** — without modifying the file.
 
-**Hint:** `readlines()` ya list bana ke `sorted(lines, reverse=True)`.
+**Hint:** `readlines()` or build a list, then `sorted(lines, reverse=True)`.
 
 ---
 
 ## Level 3 — CSV
 
-### Q11. students.csv parse karo
-Ye CSV hai (already tere `code/` folder me hai):
+### Q11. Parse students.csv
+Here's the CSV (already in your `code/` folder):
 ```
 Harry,Gryffindor
 Hermione,Gryffindor
 Ron,Gryffindor
 Draco,Slytherin
 ```
-Har line padho aur print karo: `Harry is in Gryffindor`
+Read each line and print: `Harry is in Gryffindor`
 
 ---
 
 ### Q12. Students count by house
-Upar wala CSV padho aur print karo:
+Read the CSV above and print:
 - `Gryffindor: 3`
 - `Slytherin: 1`
 
-**Hint:** Ek dict banao jisme house naam = key, count = value. `get()` ya default use karo.
+**Hint:** Build a dict with house name = key, count = value. Use `get()` or a default.
 
 ---
 
-### Q13. Sirf ek house ke students
-CSV padho aur sirf `Gryffindor` ke students print karo.
+### Q13. Only one house's students
+Read the CSV and print only the `Gryffindor` students.
 
 ---
 
-### Q14. Apna CSV banao
-Ek `grades.csv` banao jisme 5 students ke data ho:
+### Q14. Make your own CSV
+Create a `grades.csv` with 5 students' data:
 ```
 name,subject,marks
 ```
-Phir use padho aur **har subject ka average marks** calculate karke print karo.
+Then read it and **calculate and print the average marks per subject**.
 
-**Hint:** Subject ke hisaab se marks collect karo (dict + list), phir `sum()/len()`.
-
----
-
-## Level 4 — Thoda mushkil
-
-### Q15. Line number ke saath
-`numbers.txt` padho aur `1. Harry` `2. Hermione` aise number ke saath print karo.
+**Hint:** Collect marks per subject (dict + list), then `sum()/len()`.
 
 ---
 
-### Q16. Word ki frequency
-`text.txt` me ek paragraph likho. Fir **har word kitni baar aaya** ye count karke print karo (top 5 shabd).
+## Level 4 — A bit harder
 
-**Hint:** Dict use karo — `count[word] = count.get(word, 0) + 1`
-
----
-
-### Q17. Data validate karo
-`emails.txt` me 6 email addresses likho, jisme 2 galat (missing `@`) hon. File padho aur **sirf valid emails** list me daalke valid.txt me likho, aur kitne invalid the wo print karo.
-
-**Hint:** `"@" in line` check kaafi hai iske liye.
+### Q15. Line numbers
+Read `numbers.txt` and print with numbers: `1. Harry` `2. Hermione` like that.
 
 ---
 
-### Q18. CSV se CSV
-`students.csv` padho aur ek nayi file `slytherin.csv` me sirf Slytherin ke students likho.
+### Q16. Word frequency
+Write a paragraph in `text.txt`. Then **count how many times each word appears** and print the top 5 words.
+
+**Hint:** Use a dict — `count[word] = count.get(word, 0) + 1`
+
+---
+
+### Q17. Validate data
+Write 6 email addresses in `emails.txt`, with 2 invalid (missing `@`). Read the file and **put only valid emails into valid.txt**, and print how many were invalid.
+
+**Hint:** `"@" in line` check is enough for this.
+
+---
+
+### Q18. CSV to CSV
+Read `students.csv` and write only the Slytherin students into a new file `slytherin.csv`.
 
 ---
 
 ### Q19. Line trim + filter
-`messy.txt` banao jisme kuch lines ke aage-peeche extra spaces hon, aur kuch blank lines hon. File padho aur **blank lines chhodke, trimmed lines** print karo.
+Create `messy.txt` with some lines having extra spaces around them, and some blank lines. Read the file and **print the trimmed lines, skipping blank lines**.
 
-**Hint:** `line.strip()` — aur check karo `if line:` (empty string falsy hoti hai Python me)
+**Hint:** `line.strip()` — and check `if line:` (empty string is falsy in Python)
 
 ---
 
-### Q20. Ek line ka data bana do
-Ye ek hi line me 2 chizein hai:
+### Q20. One line of data, two ways
+This single line has 2 things:
 ```python
 with open("data.txt", "w") as file:
     file.write("alpha\nbeta\n")
 ```
-ab `read()` se padho aur `readlines()` se padho — dono ka **result alag kyun** hai? Dono ka actual output likh ke samjhao.
+Now read with `read()` and read with `readlines()` — **why are the results different?** Write down the actual output of both and explain.
 
 ---
 
-## Challenge (optional, agar time bache)
+## Challenge (optional, if you have time)
 
 ### C1. Student pass/fail report
-`grades.csv` padho (Q14 wala format). Har student ke marks ke basis pe:
-- 40+ = Pass, warna Fail
-Ek `report.txt` me likho: `Harry: 85 (Pass)`
+Read `grades.csv` (Q14 format). Based on each student's marks:
+- 40+ = Pass, otherwise Fail
+Write to `report.txt`: `Harry: 85 (Pass)`
 
-**Hint:** CSV se 2 columns (name, marks) nikaalne ke liye `line.rstrip().split(",")` use karo aur last element lo.
+**Hint:** To extract 2 columns (name, marks) from CSV use `line.rstrip().split(",")` and take the last element.
 
 ---
 
-### C2. Binary concept samajho
-Ye code chala ke dekho:
+### C2. Binary concept — understand it
+Run this code and see:
 ```python
 with open("test.txt", "w") as file:
     file.write("abc")
@@ -183,13 +183,13 @@ with open("test.txt", "r") as file:
     data = file.read()
 print(len(data))
 ```
-`len(data)` kya aayega — 3 ya 6? Aur `"abc"` ke bajaye ek non-ASCII character jaise "é" likh ke dobara check karo. Farak kyun aaya?
+Will `len(data)` be 3 or 6? Also try writing a non-ASCII character like "é" instead of "abc" and check again. Why is there a difference?
 
-**Hint:** "é" ko encode karne me 2 bytes lagte hain.
+**Hint:** "é" takes 2 bytes to encode.
 
 ---
 
 ### C3. Merge two files
-`a.txt` aur `b.txt` dono me lines hain. Ek `merged.txt` banao jisme **dono ki saari lines** ho — `a.txt` ki pehle, phir `b.txt` ki. Dono files ke naam hi list me hain, loop chala ke handle karo.
+`a.txt` and `b.txt` both have lines. Create `merged.txt` containing **all lines from both** — `a.txt`'s lines first, then `b.txt`'s. The file names are in a list, handle it with a loop.
 
-**Hint:** `["a.txt", "b.txt"]` list pe loop. Har file ko `"a"` mode se kholo — taaki pehli wali na mike.
+**Hint:** Loop over the list `["a.txt", "b.txt"]`. Open each source with `"a"` mode — so the first one isn't wiped.

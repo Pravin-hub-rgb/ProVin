@@ -1,15 +1,15 @@
-# 24 — REST: API Design Ka Sabse Common Tarika
+# 24 — REST: The Most Common API Design Style
 
-> Pichle doc mein API umbrella ka overview hua.
-> Ab **REST** — ShopKaro mein yahi use karenge.
+> Previous doc gave the API umbrella overview.
+> Now **REST** — ShopKaro will use this.
 
 ---
 
-## REST Kya Hai
+## What Is REST
 
-**REST (Representational State Transfer)** — ek set of conventions jo batata hai API endpoints kaise name karo aur kaise structure karo.
+**REST (Representational State Transfer)** — a set of conventions that says how to name and structure API endpoints.
 
-REST mein har cheez ek **resource** hai — aur resource ke upar actions karte hain HTTP methods se.
+In REST, everything is a **resource** — and you act on resources using HTTP methods.
 
 ```
 Resource: products
@@ -20,35 +20,35 @@ Actions:  GET (list), GET (single), POST (create), PUT (update), DELETE
 
 ## REST URL Conventions
 
-### Pattern: `/api/resource` aur `/api/resource/:id`
+### Pattern: `/api/resource` and `/api/resource/:id`
 
 ```
-GET    /api/products          → Saare products ki list
-GET    /api/products/123      → Product ID 123 ka detail
-POST   /api/products          → Naya product banao
-PUT    /api/products/123      → Product 123 update karo
-DELETE /api/products/123      → Product 123 delete karo
+GET    /api/products          → List of all products
+GET    /api/products/123      → Detail of product 123
+POST   /api/products          → Create new product
+PUT    /api/products/123      → Update product 123
+DELETE /api/products/123      → Delete product 123
 ```
 
 ### Nested Resources:
 
 ```
-GET    /api/orders/5/items    → Order 5 ke saare items
-POST   /api/orders/5/items    → Order 5 mein item add karo
+GET    /api/orders/5/items    → All items of order 5
+POST   /api/orders/5/items    → Add item to order 5
 ```
 
 ---
 
-## ShopKaro Ke REST Endpoints
+## ShopKaro's REST Endpoints
 
 ### Auth:
 ```
 POST   /api/auth/signup            → Register
 POST   /api/auth/login             → Login
 POST   /api/auth/logout            → Logout
-POST   /api/auth/forgot-password   → Reset email bhejo
-POST   /api/auth/reset-password    → Naya password set karo
-POST   /api/auth/verify-email      → Email verify karo
+POST   /api/auth/forgot-password   → Send reset email
+POST   /api/auth/reset-password    → Set new password
+POST   /api/auth/verify-email      → Verify email
 ```
 
 ### Products:
@@ -59,29 +59,29 @@ GET    /api/products/:id           → Single product
 
 ### Cart:
 ```
-GET    /api/cart                   → Logged-in user ka cart
-POST   /api/cart                   → Item add karo
-PATCH  /api/cart/:itemId           → Quantity update karo
-DELETE /api/cart/:itemId           → Item remove karo
+GET    /api/cart                   → Logged-in user's cart
+POST   /api/cart                   → Add item
+PATCH  /api/cart/:itemId           → Update quantity
+DELETE /api/cart/:itemId           → Remove item
 ```
 
 ### Orders:
 ```
-GET    /api/orders                 → User ki orders list
+GET    /api/orders                 → User's orders list
 GET    /api/orders/:id             → Single order detail
-POST   /api/orders                 → Naya order banao
+POST   /api/orders                 → Create new order
 ```
 
 ### Payments:
 ```
-POST   /api/payments/create        → Payment initiate karo
-POST   /api/payments/verify        → Payment verify karo (Razorpay callback)
+POST   /api/payments/create        → Initiate payment
+POST   /api/payments/verify        → Verify payment (Razorpay callback)
 POST   /api/webhooks/razorpay      → Razorpay webhook
 ```
 
 ---
 
-## Request aur Response — Kaisa Dikhta Hai
+## Request and Response — What They Look Like
 
 ### POST /api/auth/login — Request:
 ```json
@@ -112,14 +112,14 @@ POST   /api/webhooks/razorpay      → Razorpay webhook
 
 ---
 
-## Next.js Mein REST — Route Handler
+## REST in Next.js — Route Handler
 
 ```javascript
 // /app/api/products/route.js
 
 // GET /api/products
 export async function GET(request) {
-  // URL se query params nikalo
+  // Get query params from URL
   const { searchParams } = new URL(request.url)
   const category = searchParams.get('category')  // /api/products?category=shoes
 
@@ -151,21 +151,21 @@ export async function GET(request, { params }) {
 
 ---
 
-## REST Ki Ek Limitation
+## One Limitation of REST
 
-Ek problem hai REST mein — **over-fetching aur under-fetching**:
+REST has one problem — **over-fetching and under-fetching**:
 
 ```
-Frontend ko chahiye: Product ka sirf naam aur price
-REST deta hai: Poora product — naam, price, description, stock, imageUrl, etc.
+Frontend needs: Only product name and price
+REST returns: Entire product — name, price, description, stock, imageUrl, etc.
 → Over-fetching
 
-Frontend ko chahiye: Product + seller info ek baar mein
-REST mein: 2 alag requests karne padenge
+Frontend needs: Product + seller info in one go
+REST: Need to make 2 separate requests
 → Under-fetching
 ```
 
-Yeh GraphQL solve karta hai — agla doc.
+GraphQL solves this — next doc.
 
 ---
 
@@ -173,12 +173,12 @@ Yeh GraphQL solve karta hai — agla doc.
 
 | | |
 |--|--|
-| **REST kya hai** | URL + HTTP Method se resources manage karna |
+| **What REST is** | Manage resources via URL + HTTP Method |
 | **Naming convention** | `/api/resource`, `/api/resource/:id` |
-| **ShopKaro mein** | Sab endpoints REST style mein |
+| **In ShopKaro** | All endpoints in REST style |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`25-api-graphql.md` — REST ka alternative — **GraphQL**. Kya hai, REST se kab better hai, aur ShopKaro mein use karein ya nahi.
+`25-api-graphql.md` — REST's alternative — **GraphQL**. What it is, when it's better than REST, and whether ShopKaro should use it.

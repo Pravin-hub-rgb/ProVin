@@ -1,126 +1,126 @@
-# 45 — Senior Dev Checklist: Project Banane Se Pehle Aur Baad
+# 45 — Senior Dev Checklist: Before and After Building a Project
 
-> Yeh poori series ka **aakhri doc** hai.
-> ShopKaro complete hua — Authentication se Deployment tak.
-> Ab ek checklist — jo senior devs mentally run karte hain har project pe.
+> This is the **last doc** of the entire series.
+> ShopKaro is complete — from Authentication to Deployment.
+> Now a checklist — what senior devs mentally run through on every project.
 
 ---
 
-## Phase 1 — Shuru Karne Se Pehle (Planning)
+## Phase 1 — Before Starting (Planning)
 
 ```
-□ Features list banai — Must have vs Nice to have
-□ Users define kiye — Buyer, Seller, Admin?
-□ Tech decisions liye —
+□ Feature list created — Must have vs Nice to have
+□ Users defined — Buyer, Seller, Admin?
+□ Tech decisions made —
   □ Framework: Next.js ✓
   □ Database: PostgreSQL ✓
-  □ Auth: Khud / NextAuth / Clerk?
+  □ Auth: Custom / NextAuth / Clerk?
   □ State: Zustand + React Query?
   □ Payments: Razorpay / Stripe?
   □ Deploy: Vercel?
-□ Rough folder structure socha
-□ Data models sketch kiye (tables + relations)
-□ API endpoints list banai
-□ Rendering strategy har page ke liye decide ki
+□ Rough folder structure thought out
+□ Data models sketched (tables + relations)
+□ API endpoints list created
+□ Rendering strategy decided per page
 ```
 
 ---
 
-## Phase 2 — Development Ke Dauran
+## Phase 2 — During Development
 
 ```
-□ .env file mein secrets hain — .gitignore mein .env hai
-□ .env.example file hai (keys hain, values nahi)
-□ Passwords hashed hain (bcrypt) — plain text nahi
-□ Auth check protected routes pe hai
-□ SQL injection nahi ho sakta (Prisma use kar rahe ho — safe)
-□ Error handling hai API routes mein
-□ Loading states hain
-□ Empty states hain (agar products nahi hain → "No products found")
+□ Secrets are in .env file — .env is in .gitignore
+□ .env.example file exists (keys present, values absent)
+□ Passwords are hashed (bcrypt) — not plain text
+□ Auth check on protected routes
+□ SQL injection not possible (using Prisma — safe)
+□ Error handling in API routes
+□ Loading states present
+□ Empty states present (if no products → "No products found")
 ```
 
 ---
 
-## Phase 3 — Deploy Karne Se Pehle
+## Phase 3 — Before Deploying
 
 ```
 SECURITY:
-□ Environment variables Vercel mein add kiye
-□ Test keys production mein nahi hain
-□ HttpOnly cookies use kar rahe ho auth ke liye
-□ CORS configured hai agar separate backend hai
+□ Environment variables added in Vercel
+□ Test keys are not in production
+□ HttpOnly cookies used for auth
+□ CORS configured if separate backend
 
 PERFORMANCE:
-□ next/image use kar rahe ho (regular img tag nahi)
-□ Console.log statements hata diye
-□ Unused dependencies hata diye
+□ Using next/image (not regular img tag)
+□ Console.log statements removed
+□ Unused dependencies removed
 
 DATABASE:
-□ Production database use kar rahe ho (Neon/Supabase)
-□ Migrations run ki hain production pe
+□ Production database in use (Neon/Supabase)
+□ Migrations run on production
 
 PAYMENTS:
-□ Razorpay live keys use kar rahe ho (test nahi)
-□ Webhook URL Razorpay dashboard mein set hai
-□ Payment flow end-to-end test kiya
+□ Razorpay live keys in use (not test)
+□ Webhook URL set in Razorpay dashboard
+□ Payment flow tested end-to-end
 ```
 
 ---
 
-## Phase 4 — Deploy Ke Baad
+## Phase 4 — After Deploying
 
 ```
-□ Live URL kholke manually test kiya
-□ Login/Signup kaam kar raha hai
-□ Product listing dikh rahi hai
-□ Cart add/remove kaam karta hai
-□ Payment end-to-end test kiya (Razorpay test mode mein)
-□ Mobile pe check kiya
-□ 404 page theek hai
-□ Error page theek hai
+□ Opened the live URL and tested manually
+□ Login/Signup working
+□ Product listing visible
+□ Cart add/remove working
+□ Payment tested end-to-end (in Razorpay test mode)
+□ Checked on mobile
+□ 404 page is fine
+□ Error page is fine
 ```
 
 ---
 
-## Poori Series Ka Map — Ek Baar Dekho
+## The Entire Series at a Glance
 
 ```
-00  Overview — ShopKaro ka poora picture
-01  Kaise Sochte Hain — Senior dev ki planning
+00  Overview — the complete picture of ShopKaro
+01  How to Think — a senior dev's planning
 
 AUTHENTICATION (02-09):
 02  Auth umbrella — overview
 03  bcrypt — password hashing
-04  Sessions — login ke baad yaad rakhna
-05  JWT — sessions ka alternative
-06  Cookies — session/JWT browser tak
-07  OAuth — Google se login
+04  Sessions — remembering after login
+05  JWT — alternative to sessions
+06  Cookies — getting session/JWT to the browser
+07  OAuth — login with Google
 08  Email verification + password reset
 09  Libraries — NextAuth, Clerk
 
 ARCHITECTURE (10-13):
 10  Architecture umbrella — overview
-11  MVC — code ko 3 parts mein todna
-12  Folder structure — kya kahan
-13  BFF layer — kab alag backend
+11  MVC — splitting code into 3 parts
+12  Folder structure — what goes where
+13  BFF layer — when to have a separate backend
 
 RENDERING (14-18):
 14  Rendering umbrella — overview
-15  CSR — browser mein render
-16  SSR — server pe render
-17  SSG — pehle se bana hua
-18  ShopKaro decisions — kaunsa page kaunsi strategy
+15  CSR — rendering in the browser
+16  SSR — rendering on the server
+17  SSG — pre-built
+18  ShopKaro decisions — which page uses which strategy
 
 DATABASE (19-22):
 19  Database umbrella — overview
 20  SQL vs NoSQL — PostgreSQL vs MongoDB
-21  Prisma — ORM, JavaScript se DB se baat
-22  Data models — ShopKaro ka complete schema
+21  Prisma — ORM, talking to DB from JavaScript
+22  Data models — ShopKaro's complete schema
 
 API DESIGN (23-26):
 23  API umbrella — overview
-24  REST — endpoints design karna
-25  GraphQL — REST ka alternative
+24  REST — designing endpoints
+25  GraphQL — alternative to REST
 26  ShopKaro APIs — complete reference
 
 STATE MANAGEMENT (27-31):
@@ -148,36 +148,36 @@ PERFORMANCE (39-42):
 42  Pagination vs Infinite scroll
 
 ACCESSIBILITY (43):
-43  Accessibility basics — sab ke liye
+43  Accessibility basics — for everyone
 
 DEPLOYMENT (44):
 44  Vercel deploy + Environment variables
 
 CHECKLIST (45):
-45  Senior dev checklist ← YEH
+45  Senior dev checklist ← THIS
 ```
 
 ---
 
-## Ek Aakhri Baat
+## One Last Thing
 
-Jab tumne yeh series shuru ki — tum ek cheez jaante the: Next.js mein todo app banana.
+When you started this series — you knew one thing: how to build a todo app in Next.js.
 
-Ab tum jaante ho:
+Now you know:
 
-- Authentication umbrella ke andar kya kya hota hai
-- Kab JWT, kab Sessions, kab Clerk
-- MVC kya hai aur Next.js mein kaise apply hota hai
-- SSR, CSR, SSG mein fark aur kab kya
+- What's inside the authentication umbrella
+- When JWT, when Sessions, when Clerk
+- What MVC is and how it applies in Next.js
+- The difference between SSR, CSR, SSG and when to use which
 - Database design — tables, relations, Prisma
 - API design — REST endpoints
 - State management — local, global, server state
-- Zustand se cart banana
-- Caching — browser se CDN tak
+- Building a cart with Zustand
+- Caching — from browser to CDN
 - Payment integration — Razorpay + Webhooks
 - Performance — images, lazy loading, pagination
-- Deployment — Vercel pe live karna
+- Deployment — going live on Vercel
 
-**Yeh "senior dev" ki vocabulary hai.** Ab jab tum koi feature banao — tum jaante ho kis umbrella ke andar ho, kya options hain, aur kab kya use karna hai.
+**This is "senior dev" vocabulary.** Now whenever you build a feature — you know which umbrella you're in, what options exist, and when to use what.
 
-Jao aur ShopKaro banao. 🚀
+Go build ShopKaro. 🚀

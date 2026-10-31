@@ -1,96 +1,96 @@
-# 13 — BFF Layer: Alag Backend Chahiye Ya Next.js Kaafi Hai?
+# 13 — BFF Layer: Do You Need a Separate Backend, or Are Next.js API Routes Enough?
 
-> Pichle doc mein ShopKaro ki folder structure dekhi.
-> Ab architecture ka aakhri concept — **BFF (Backend For Frontend)**.
-> Yeh tab relevant hota hai jab project bada hone lagta hai.
+> In the previous doc we saw ShopKaro's folder structure.
+> Now the last architecture concept — **BFF (Backend For Frontend)**.
+> This becomes relevant when the project starts getting big.
 
 ---
 
-## Pehle Samjho — Abhi Kya Hai
+## First Understand — What We Have Right Now
 
-ShopKaro abhi yeh hai:
+ShopKaro right now looks like this:
 
 ```
 Browser → Next.js (frontend + API routes) → Database
 ```
 
-Next.js mein **frontend aur backend dono** hain — pages bhi, API routes bhi. Yeh ek simple, clean setup hai.
+In Next.js, **both frontend and backend** live together — pages and API routes. This is a simple, clean setup.
 
 ---
 
-## BFF Kya Hota Hai
+## What Is BFF
 
-**Backend For Frontend** — matlab ek alag backend server jo specifically frontend ke liye banaya gaya hai.
+**Backend For Frontend** — meaning a separate backend server built specifically for the frontend.
 
 ```
-Bina BFF (ShopKaro v1 — abhi yahi hai):
+Without BFF (ShopKaro v1 — what we have now):
 Browser → Next.js (frontend + backend) → Database
 
-BFF ke saath:
-Browser → Next.js (sirf frontend) → BFF Server (Express/Node) → Database
-                                   ↗
-                          Mobile App bhi yahan
+With BFF:
+Browser → Next.js (frontend only) → BFF Server (Express/Node) → Database
+                                    ↗
+                          Mobile App also uses this
 ```
 
 ---
 
-## Kab BFF Chahiye — Practical Scenarios
+## When Do You Need BFF — Practical Scenarios
 
 ### Scenario 1 — Multiple Clients
 
 ```
-Sirf web app hai → BFF ki zaroorat nahi
-                   Next.js API routes kaafi hain
+Only a web app → no need for BFF
+                 Next.js API routes are enough
 
-Web app + Mobile app + Smart TV app → BFF sochna chahiye
-Kyunki teeno ko same API use karni hai — alag Next.js project mein
-yeh possible nahi hota cleanly
+Web app + Mobile app + Smart TV app → think about BFF
+Because all three need the same API — and that's not clean to do
+inside a single Next.js project
 ```
 
 ### Scenario 2 — Team Size
 
 ```
-1-2 developers → BFF overhead zyada hai, Next.js API routes kaafi
+1-2 developers → BFF overhead is too much, Next.js API routes are enough
 
-5+ developers, alag frontend aur backend team → BFF
-Kyunki teams independently kaam kar sakti hain
+5+ developers, separate frontend and backend teams → BFF
+Because teams can work independently
 ```
 
 ### Scenario 3 — Performance
 
 ```
-Simple data fetching → Next.js kaafi
+Simple data fetching → Next.js is enough
 
-Bahut complex data transformations, multiple microservices
-ek request mein combine karne hain → BFF helpful hota hai
+Very complex data transformations, multiple microservices
+that need to be combined in one request → BFF is helpful
 ```
 
 ---
 
-## ShopKaro Ke Liye Decision
+## The Decision for ShopKaro
 
-**ShopKaro v1 → BFF NAHI chahiye.**
+**ShopKaro v1 → NO BFF needed.**
 
 Reasons:
-- Sirf web app hai abhi
-- Ek developer
-- Database straightforward hai
-- Next.js API routes sab handle kar lenge
+- Only a web app for now
+- One developer
+- Straightforward database
+- Next.js API routes can handle everything
 
-Yeh future mein change ho sakta hai — lekin premature optimization nahi karni.
+This might change in the future — but don't do premature optimization.
 
 ---
 
-## Agar Baad Mein BFF Add Karna Ho
+## If You Need to Add BFF Later
 
-ShopKaro baada hua:
-- Mobile app aaya
-- 3 developers ho gaye
-- Seller dashboard alag app ban gaya
+ShopKaro grew:
+- A mobile app came
+- 3 developers now
+- A separate seller dashboard app
 
-Tab structure:
+Then the structure would be:
 ```
-/shopkaro-web      → Next.js (sirf frontend)
+/shopkaro-web      → Next.js (frontend only)
 /shopkaro-mobile   → React Native
 /shopkaro-api      → Express/Node BFF → Database
 ```
@@ -99,35 +99,35 @@ Tab structure:
 
 ## BFF vs Direct API vs Microservices
 
-Yeh teen terms kaafi sunoge:
+You'll hear these three terms a lot:
 
-| | Kya Hai | Kab |
+| | What It Is | When |
 |--|---------|-----|
-| **Next.js API Routes** | Backend same project mein | Small-medium apps, ek team |
-| **BFF** | Alag backend, frontend ke liye optimized | Multiple clients, medium teams |
-| **Microservices** | Har feature ka alag server | Large scale, large teams |
+| **Next.js API Routes** | Backend in the same project | Small-medium apps, one team |
+| **BFF** | Separate backend, optimized for the frontend | Multiple clients, medium teams |
+| **Microservices** | A separate server for each feature | Large scale, large teams |
 
-ShopKaro → Next.js API Routes → BFF → (kabhi zaroorat padi toh) Microservices
+ShopKaro → Next.js API Routes → BFF → (if ever needed) Microservices
 
 ---
 
-## Architecture Umbrella — Complete Hua
+## Architecture Umbrella — Complete
 
 ```
 ARCHITECTURE
 │
 ├── MVC Pattern      → Doc 11 ✓
 ├── Folder Structure → Doc 12 ✓
-└── BFF Layer        → Doc 13 ✓ (YEH)
+└── BFF Layer        → Doc 13 ✓ (THIS)
 ```
 
-Ab tum jaante ho:
-- Code kaise organize karna hai (MVC)
-- Files kahan rakhni hain (Folder Structure)
-- Kab alag backend chahiye (BFF)
+Now you know:
+- How to organize code (MVC)
+- Where files go (Folder Structure)
+- When you need a separate backend (BFF)
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`14-rendering-what-is-it.md` — Teesra bada umbrella — **Rendering**. SSR, CSR, SSG — yeh teen terms kaafi confusing lagte hain. Pehle overview mein samjhenge — phir har ek ki alag doc hogi. ShopKaro ka har page alag strategy use karega — woh kyun, woh bhi samjhenge.
+`14-rendering-what-is-it.md` — The third big umbrella — **Rendering**. SSR, CSR, SSG — these three terms feel confusing. First we'll understand them in the overview — then each gets its own doc. Every page in ShopKaro will use a different strategy — we'll understand why.

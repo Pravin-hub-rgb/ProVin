@@ -1,33 +1,33 @@
-j# 10 — Real-time: Socket.io, Pusher, SSE, Ably
+# 10 — Real-time: Socket.io, Pusher, SSE, Ably
 
 > Umbrella: Backend → Real-time
-> Kaam: Server → Client ko instantly update karna — bina page refresh
-> Example: Swiggy ka "Order picked up", Ola ka driver location
+> Purpose: Instantly updating the client from the server — without page refresh
+> Example: Swiggy's "Order picked up", Ola's driver location
 
 ---
 
-## Real-time Kyun Alag Hai
+## Why Real-time Is Different
 
 Normal HTTP:
 ```
 Client → Request → Server → Response → Done
-(Client ne maanga tabhi server ne diya)
+(Server responds only when client asks)
 ```
 
 Real-time:
 ```
-Server → Client ko khud data bhejta hai jab kuch change ho
-(Client ne nahi maanga — server ne push kiya)
+Server → pushes data to client when something changes
+(Client didn't ask — server pushed)
 ```
 
 ---
 
-## Teen Approaches
+## Three Approaches
 
 ```
-1. WebSocket:   Two-way — client aur server dono bhej sakte hain
-2. SSE:         One-way — sirf server → client
-3. Polling:     Client baar baar poochhe (fake real-time)
+1. WebSocket:   Two-way — both client and server can send
+2. SSE:         One-way — only server → client
+3. Polling:     Client asks repeatedly (fake real-time)
 ```
 
 ---
@@ -40,16 +40,16 @@ Server → Client ko khud data bhejta hai jab kuch change ho
 **Tag: 🟢 Most Popular WebSocket | Battle-tested**
 
 ```
-Kya hai: WebSocket library — client aur server dono ke liye
-Kab use karo:
-  → Two-way communication chahiye
+What it is: WebSocket library — for both client and server
+When to use:
+  → Two-way communication needed
   → Chat apps
   → Multiplayer games
-  → Collaborative tools (Google Docs jaisa)
-  → Ola/Uber driver tracking (location update dono taraf)
+  → Collaborative tools (like Google Docs)
+  → Ola/Uber driver tracking (location updates both ways)
 
 Real app example:
-  → Ola: Driver location update → User dekhe
+  → Ola: Driver location update → User sees it
   → Chat apps (WhatsApp Web type)
   → Collaborative editors
   → Live auction sites (BidBazaar type)
@@ -67,14 +67,14 @@ Code feel:
   socket.on('location-update', (location) => updateMap(location))
 
 Fallback:
-  → WebSocket nahi chala → Socket.io automatically polling pe switch karta hai
-  → Isliye reliable hai
+  → If WebSocket fails → Socket.io automatically switches to polling
+  → That's why it's reliable
 
 Cons:
-  → Serverless pe nahi chalta (Vercel) — dedicated server chahiye
-  → Scaling complex (multiple servers → Redis adapter chahiye)
+  → Doesn't run on serverless (Vercel) — needs dedicated server
+  → Scaling complex (multiple servers → need Redis adapter)
 
-India mein: Chat, logistics, ride-sharing apps mein standard
+In India: Standard in chat, logistics, ride-sharing apps
 ```
 
 ---
@@ -83,17 +83,17 @@ India mein: Chat, logistics, ride-sharing apps mein standard
 **Tag: 🟢 Managed | Easy | Serverless-friendly**
 
 ```
-Kya hai: Managed WebSocket service — khud server nahi chalana
-Kab use karo:
-  → Vercel pe deploy kar rahe ho (serverless)
-  → Socket.io ka infrastructure manage nahi karna
-  → Quick real-time feature add karna ho
+What it is: Managed WebSocket service — no need to run your own server
+When to use:
+  → Deploying on Vercel (serverless)
+  → Don't want to manage Socket.io infrastructure
+  → Need to add a quick real-time feature
 
-Socket.io se fark:
-  → Socket.io: Self-hosted — tumhara server
-  → Pusher: Managed service — Pusher ka server
+Difference from Socket.io:
+  → Socket.io: Self-hosted — your server
+  → Pusher: Managed service — Pusher's server
   → Pusher: Serverless-friendly, pay per connection
-  → Socket.io: Free, but infra manage karo
+  → Socket.io: Free, but you manage infra
 
 Real app example:
   → Notification systems
@@ -114,7 +114,7 @@ Cons:
   → Paid service — free tier limited (100 connections)
   → Vendor lock-in
 
-India mein: Startups jo Vercel + Pusher use karte hain
+In India: Startups using Vercel + Pusher
 ```
 
 ---
@@ -123,23 +123,23 @@ India mein: Startups jo Vercel + Pusher use karte hain
 **Tag: 🟢 Built-in | One-way | Simple**
 
 ```
-Kya hai: Browser ka built-in one-way streaming — server → client only
-Kab use karo:
-  → Sirf server → client updates chahiye (client server ko nahi bhejega)
+What it is: Browser's built-in one-way streaming — server → client only
+When to use:
+  → Only server → client updates needed (client won't send to server)
   → Live notifications
   → Progress updates (file upload, long processing)
-  → AI streaming responses (ChatGPT jaisa)
+  → AI streaming responses (like ChatGPT)
 
-Socket.io se fark:
-  → SSE: One-way only, HTTP pe chalta, simpler
+Difference from Socket.io:
+  → SSE: One-way only, runs on HTTP, simpler
   → Socket.io: Two-way, WebSocket protocol, complex
 
 Real app example:
-  → ChatGPT ka streaming response (text word by word aata hai) — SSE
-  → Order status updates (server push karta hai)
+  → ChatGPT's streaming response (text arrives word by word) — SSE
+  → Order status updates (server pushes)
   → Live sports scores
 
-Next.js mein:
+In Next.js:
   // API route — SSE response
   export async function GET() {
     const stream = new ReadableStream({
@@ -159,11 +159,11 @@ Next.js mein:
 
 Pros:
   → No extra library
-  → HTTP pe chalta — Vercel pe bhi
-  → Auto-reconnect built-in browser mein
+  → Runs on HTTP — works on Vercel too
+  → Auto-reconnect built into browser
 
-Kab mat use karo:
-  → Client bhi server ko data bhejega → WebSocket chahiye
+When NOT to use:
+  → Client also sends data to server → need WebSocket
 ```
 
 ---
@@ -172,21 +172,21 @@ Kab mat use karo:
 **Tag: 🟢 Enterprise Real-time | Managed | Global**
 
 ```
-Kya hai: Enterprise-grade managed real-time — Pusher ka competitor
-Kab use karo:
-  → High scale real-time chahiye
-  → Global presence chahiye (low latency worldwide)
-  → Enterprise SLA chahiye
+What it is: Enterprise-grade managed real-time — Pusher's competitor
+When to use:
+  → High scale real-time needed
+  → Global presence needed (low latency worldwide)
+  → Enterprise SLA needed
 
-Pusher se fark:
-  → Ably: More features, better scaling, zyada expensive
+Difference from Pusher:
+  → Ably: More features, better scaling, more expensive
   → Pusher: Simpler, cheaper, good for startups
 
 Real app example:
   → Trading platforms (real-time price updates)
   → Large-scale notification systems
 
-India mein: Enterprise / fintech companies mein
+In India: Enterprise / fintech companies
 ```
 
 ---
@@ -195,10 +195,10 @@ India mein: Enterprise / fintech companies mein
 **Tag: 🔵 New | Cloudflare-based | Collaborative apps**
 
 ```
-Kya hai: Cloudflare Durable Objects pe built — collaborative real-time
-Kab use karo:
-  → Figma jaisa collaborative tool banana hai
-  → Edge pe real-time chahiye
+What it is: Built on Cloudflare Durable Objects — collaborative real-time
+When to use:
+  → Building a Figma-like collaborative tool
+  → Real-time on the edge
 
 Status: New — interesting but niche
 ```
@@ -209,10 +209,10 @@ Status: New — interesting but niche
 
 ```
 Two-way communication (chat, games, collaborative)?
-  → Socket.io (self-hosted) ya Ably (managed)
+  → Socket.io (self-hosted) or Ably (managed)
 
 Serverless (Vercel), one-way updates?
-  → SSE (free) ya Pusher (easy managed)
+  → SSE (free) or Pusher (easy managed)
 
 Quick real-time feature, no infra?
   → Pusher
@@ -226,11 +226,11 @@ Enterprise, high scale?
 
 ---
 
-## India Mein Reality
+## India Reality
 
 ```
 Ride-sharing / Logistics:  Socket.io (two-way location)
-Notification systems:      Pusher ya SSE
+Notification systems:      Pusher or SSE
 Chat apps:                 Socket.io
 AI features:               SSE (streaming)
 Enterprise:                Ably
@@ -238,6 +238,6 @@ Enterprise:                Ably
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`11-backend-email.md` — Email tools — Resend, Nodemailer, SendGrid — Swiggy ka order confirmation email, OTP email kaise bhejte hain.
+`11-backend-email.md` — Email tools — Resend, Nodemailer, SendGrid — how Swiggy's order confirmation email, OTP email is sent.

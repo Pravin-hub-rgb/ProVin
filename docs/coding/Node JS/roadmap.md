@@ -1,38 +1,38 @@
-# Node.js Primer — Module 0 (React/Next Course se pehle)
+# Node.js Primer — Module 0 (Before the React/Next Course)
 
-> Scope: 2-3 din ka foundation — poora Node.js seekhna nahi hai, bas itna samajhna hai ki React/Next.js ke concepts (npm, modules, async, server-side execution) clear lagein jab unpe pahunchoge.
-> Approach: "Manual → Better" — pehle raw/manual tarike se karo, phir samjho shortcuts/libraries kyun exist karti hain.
+> Scope: A 2-3 day foundation — not learning all of Node.js, just enough to understand so that React/Next.js concepts (npm, modules, async, server-side execution) feel clear when you reach them.
+> Approach: "Manual → Better" — first do it the raw/manual way, then understand why shortcuts/libraries exist.
 
 ---
 
-## Day 1 — Node kya hai + Module System + npm
+## Day 1 — What Node Is + Module System + npm
 
-### 1. Node.js kya hai (concept, 15 min)
+### 1. What Node.js Is (concept, 15 min)
 
-JavaScript pehle sirf **browser ke andar** chalti thi. Node.js ek runtime hai jo JavaScript ko **browser ke bahar** — seedha tumhare computer/server pe — chalne deta hai. Chrome ke V8 engine pe based hai.
+JavaScript used to run **only inside the browser**. Node.js is a runtime that lets JavaScript run **outside the browser** — directly on your computer/server. It's based on Chrome's V8 engine.
 
-**Kyun important hai React/Next ke liye**: Next.js khud Node pe chalta hai (server-side rendering, API routes sab Node ke through hote hain). Jab tum `npm run dev` karte ho, wo Node hi hai jo background mein chal raha hota hai.
+**Why it matters for React/Next:** Next.js itself runs on Node (server-side rendering, API routes all happen through Node). When you run `npm run dev`, it's Node running in the background.
 
-**Practical**: Terminal mein `node` type karo — REPL (interactive shell) khul jayega. Wahan `1 + 1`, `console.log("hi")` try karo — ye JavaScript hi hai, bas browser ke bina chal rahi hai.
+**Practical:** Type `node` in the terminal — the REPL (interactive shell) opens. Try `1 + 1`, `console.log("hi")` there — it's JavaScript, just running without a browser.
 
-### 2. Running a file (15 min)
+### 2. Running a File (15 min)
 
 ```bash
 node app.js
 ```
 
-Ek simple `app.js` banao:
+Create a simple `app.js`:
 ```javascript
-console.log("Node se chal raha hai");
+console.log("Running from Node");
 ```
 
-Run karo aur dekho output. Simple hai, but ye tumhe samjhayega ki Next.js internally kya kar raha hai jab wo build/run hota hai.
+Run it and see the output. Simple, but this teaches you what Next.js is doing internally when it builds/runs.
 
-### 3. Module System — `require`/`module.exports` aur `import`/`export` (1-1.5 hours, IMPORTANT)
+### 3. Module System — `require`/`module.exports` and `import`/`export` (1-1.5 hours, IMPORTANT)
 
-Node mein do module systems hain — ye samajhna zaroori hai kyunki Next.js mein tum modern syntax use karoge, but purane Node code/tutorials mein purana syntax milega.
+Node has two module systems — understanding both is essential because you'll use the modern syntax in Next.js, but older Node code/tutorials will have the old syntax.
 
-**CommonJS (purana, `require`)**:
+**CommonJS (old, `require`)**:
 ```javascript
 // math.js
 function add(a, b) {
@@ -45,7 +45,7 @@ const { add } = require('./math');
 console.log(add(2, 3));
 ```
 
-**ES Modules (naya, `import`/`export`)** — ye wahi hai jo tum React/Next mein use karoge:
+**ES Modules (new, `import`/`export`)** — this is what you'll use in React/Next:
 ```javascript
 // math.js
 export function add(a, b) {
@@ -57,21 +57,21 @@ import { add } from './math.js';
 console.log(add(2, 3));
 ```
 
-**Practical exercise**: Ek chhota `utils.js` banao 2-3 functions ke saath (jaise `formatPrice`, `calculateDiscount`), export karo, dusri file mein import karke use karo. Dono syntax try karo taaki difference clear ho.
+**Practical exercise:** Build a small `utils.js` with 2-3 functions (like `formatPrice`, `calculateDiscount`), export them, import and use them in another file. Try both syntaxes so the difference is clear.
 
-**Interview/learning tip**: Next.js mein by default ES Modules use hote hain (`import`/`export`). Agar kabhi purana Node package dekho jisme `require` hai, ghabrana nahi — bas dusra syntax hai, kaam wahi hai.
+**Interview/learning tip:** Next.js uses ES Modules by default (`import`/`export`). If you ever see an old Node package using `require`, don't panic — it's just a different syntax, the job is the same.
 
 ### 4. npm — Node Package Manager (1 hour)
 
-**Kya hai**: Ek registry jahan se tum ready-made code (packages/libraries) install kar sakte ho, bina khud se likhe.
+**What it is:** A registry from which you can install ready-made code (packages/libraries) without writing it yourself.
 
 ```bash
-npm init -y          # naya project shuru karo (package.json banega)
-npm install express  # ek package install karo
-npm install -D nodemon  # dev dependency (sirf development ke liye chahiye)
+npm init -y          # start a new project (creates package.json)
+npm install express  # install a package
+npm install -D nodemon  # dev dependency (only needed in development)
 ```
 
-**`package.json` samjho**: Ye project ka "identity card" hai — naam, dependencies, scripts sab yahan.
+**Understand `package.json`:** This is the project's "identity card" — name, dependencies, scripts, all here.
 
 ```json
 {
@@ -85,27 +85,27 @@ npm install -D nodemon  # dev dependency (sirf development ke liye chahiye)
 }
 ```
 
-**`node_modules` folder**: Jahan actual package code download hota hai. Isko kabhi Git mein commit nahi karte (`.gitignore` mein daalte hain) — kyunki `package.json` se dobara install ho sakta hai.
+**`node_modules` folder:** Where the actual package code is downloaded. Never commit this to Git (put it in `.gitignore`) — because it can be reinstalled from `package.json`.
 
-**Direct relevance**: Jab tum Next.js project banaoge (`npx create-next-app`), ye sab wahi concepts hain — `package.json`, `node_modules`, `npm install` se dependencies aayengi.
+**Direct relevance:** When you create a Next.js project (`npx create-next-app`), these same concepts apply — `package.json`, `node_modules`, dependencies coming via `npm install`.
 
 ---
 
-## Day 2 — Async JavaScript in Node (Sabse Important Din)
+## Day 2 — Async JavaScript in Node (The Most Important Day)
 
-Ye din sabse zaroori hai kyunki React/Next mein har jagah async code milega (data fetching, API calls) — agar ye concept clear nahi hai, wahan confuse hoge.
+This day matters most because you'll find async code everywhere in React/Next (data fetching, API calls) — if this concept isn't clear, you'll be confused there.
 
-### 1. Node Single-Threaded hai, but Non-Blocking (30 min, concept)
+### 1. Node Is Single-Threaded, but Non-Blocking (30 min, concept)
 
-Node JavaScript ko **ek hi thread** pe run karta hai (unlike kuch languages jo multiple threads use karte hain), but phir bhi multiple cheezein "ek saath" hoti dikhti hain — kaise?
+Node runs JavaScript on **a single thread** (unlike some languages that use multiple threads), yet multiple things seem to happen "at once" — how?
 
-**Event Loop** ki wajah se. Jab koi slow operation hoti hai (file read, network request, database query), Node use background mein bhej deta hai aur **wait nahi karta** — turant next line pe chala jaata hai. Jab wo slow operation complete hoti hai, uska result "event queue" mein aata hai aur event loop use process karta hai.
+Because of the **Event Loop**. When a slow operation happens (file read, network request, database query), Node sends it to the background and **doesn't wait** — it immediately moves to the next line. When that slow operation completes, its result arrives in the "event queue" and the event loop processes it.
 
-**Analogy**: Ek waiter (Node) restaurant mein — order lekar kitchen (background) mein bhej deta hai, aur wait nahi karta wahin khada hoke. Doosre table ka order lene chala jaata hai. Jab khana ban jaata hai, wapas laake serve karta hai.
+**Analogy:** A waiter (Node) in a restaurant — takes the order to the kitchen (background) and doesn't stand there waiting. Goes to take the next table's order. When the food is ready, brings it back and serves.
 
 ### 2. Callbacks (30 min)
 
-Purana tarika async handle karne ka — ek function dusre function ko as argument pass karna, jo "baad mein" call hoga.
+The old way to handle async — passing a function as an argument to another function, which gets called "later".
 
 ```javascript
 const fs = require('fs');
@@ -118,14 +118,14 @@ fs.readFile('data.txt', 'utf8', (err, data) => {
   console.log("File content:", data);
 });
 
-console.log("Ye pehle print hoga"); // kyunki readFile async hai, wait nahi karta
+console.log("This prints first"); // because readFile is async, doesn't wait
 ```
 
-**Problem with callbacks**: Agar bahut saare async operations ek ke baad ek chahiye, "callback hell" ho jaata hai (nested callbacks ka pyramid). Isi problem ko solve karne ke liye Promises aaye.
+**Problem with callbacks:** If many async operations must run one after another, you get "callback hell" (a pyramid of nested callbacks). Promises were created to solve this problem.
 
 ### 3. Promises (45 min)
 
-Ek object jo represent karta hai ki koi async operation **eventually** complete hoga (success ya failure ke saath).
+An object that represents that some async operation **will eventually** complete (with success or failure).
 
 ```javascript
 const fetchData = () => {
@@ -146,14 +146,14 @@ fetchData()
   .catch((error) => console.error(error));
 ```
 
-### 4. Async/Await (45 min, MOST IMPORTANT — ye tum React/Next mein hardcore use karoge)
+### 4. Async/Await (45 min, MOST IMPORTANT — you'll use this heavily in React/Next)
 
-Promises ko likhne ka **cleaner** tarika — synchronous code jaisa dikhta hai, but async hi hota hai.
+A **cleaner** way to write Promises — looks like synchronous code, but is actually async.
 
 ```javascript
 async function getData() {
   try {
-    const result = await fetchData(); // yahan wait karega Promise resolve hone tak
+    const result = await fetchData(); // waits here until the Promise resolves
     console.log(result);
   } catch (error) {
     console.error(error);
@@ -163,9 +163,9 @@ async function getData() {
 getData();
 ```
 
-**Practical exercise**: Ek function banao jo `setTimeout` ke through 2 second baad "Order placed" print kare — pehle callback se, phir Promise se, phir async/await se. Teeno tarike se same kaam karke difference feel karo.
+**Practical exercise:** Build a function that prints "Order placed" after 2 seconds — first with a callback, then with a Promise, then with async/await. Do the same task all three ways to feel the difference.
 
-**Direct relevance**: Next.js mein tum ye likhoge baar-baar:
+**Direct relevance:** In Next.js you'll write this repeatedly:
 ```javascript
 async function getProducts() {
   const res = await fetch('/api/products');
@@ -173,15 +173,15 @@ async function getProducts() {
   return data;
 }
 ```
-Ye exactly wahi pattern hai jo abhi practice kiya.
+This is exactly the same pattern you're practicing now.
 
 ---
 
 ## Day 3 — HTTP Server Basics + Environment Concepts
 
-### 1. Raw HTTP Server (Manual, 1 hour) — "Manual → Better" wala part
+### 1. Raw HTTP Server (Manual, 1 hour) — the "Manual → Better" part
 
-Pehle bina kisi library ke, raw Node se ek server banao — taaki samjho Express/Next.js ke peeche kya ho raha hai.
+First build a server with raw Node, without any library — so you understand what's behind Express/Next.js.
 
 ```javascript
 const http = require('node:http');
@@ -200,17 +200,17 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(3000, () => {
-  console.log('Server chal raha hai port 3000 par');
+  console.log('Server running on port 3000');
 });
 ```
 
-Run karo (`node server.js`), browser mein `localhost:3000` aur `localhost:3000/products` visit karo.
+Run it (`node server.js`), visit `localhost:3000` and `localhost:3000/products` in the browser.
 
-**Ye kyun karaya**: Dekho kitna manual kaam hai — har route ke liye `if-else`, manually JSON stringify karna, headers set karna. Ab samjho Express jaisi library (aur Next.js ka poora routing system) **isi problem ko solve karta hai** — automatic routing, easier JSON handling, middleware system.
+**Why this exercise:** Look at how much manual work there is — an if-else for every route, manually stringifying JSON, setting headers. Now understand that libraries like Express (and Next.js's whole routing system) **solve this problem** — automatic routing, easier JSON handling, middleware system.
 
 ### 2. Environment Variables (30 min)
 
-Sensitive data (API keys, database URLs) code mein hardcode nahi karte — `.env` file mein rakhte hain.
+Sensitive data (API keys, database URLs) isn't hardcoded in code — it's kept in a `.env` file.
 
 ```bash
 # .env file
@@ -222,7 +222,7 @@ API_KEY=secret123
 console.log(process.env.DATABASE_URL);
 ```
 
-**Direct relevance**: Tum ye already DukaanOS mein (Supabase URL) aur trading bot mein (Upstox API keys) use kar rahe ho — ye wahi concept hai, sirf ab "kyun" samajh aayega.
+**Direct relevance:** You're already using this in DukaanOS (Supabase URL) and the trading bot (Upstox API keys) — now you'll understand *why*.
 
 ### 3. `package.json` scripts + `nodemon` (30 min)
 
@@ -233,33 +233,33 @@ console.log(process.env.DATABASE_URL);
 }
 ```
 
-`nodemon` file changes pe automatically server restart kar deta hai — development mein useful. Ye Next.js ke `npm run dev` jaisa hi concept hai (hot reload).
+`nodemon` automatically restarts the server on file changes — useful in development. This is the same concept as Next.js's `npm run dev` (hot reload).
 
-### 4. Quick intro — kya Next.js in sab ko automate karta hai (30 min, conceptual bridge)
+### 4. Quick intro — what Next.js automates of all this (30 min, conceptual bridge)
 
-Ab jab tumne manual server, routing, aur async dekh liya hai, ek quick mental note banao:
+Now that you've seen the manual server, routing, and async, make a quick mental note:
 
-- Raw Node mein routing manually likhi (`if req.url === ...`) → Next.js mein **file-based routing** hota hai (folder banao, wo route ban jaata hai)
-- Raw Node mein manual JSON handling → Next.js API routes mein built-in
-- `npm install` se packages → Next.js khud ek framework hai jo `create-next-app` se install hota hai
+- Manual routing in raw Node (`if req.url === ...`) → Next.js has **file-based routing** (create a folder, it becomes a route)
+- Manual JSON handling in raw Node → built-in API routes in Next.js
+- Packages via `npm install` → Next.js is itself a framework installed via `create-next-app`
 
-Ye bridge samajhna zaroori hai — taaki jab Next.js course start ho, tumhe pata ho "ye jo magic ho raha hai, iske peeche ye concept hai."
+This bridge matters to understand — so that when the Next.js course starts, you know "this magic that's happening, this concept is behind it."
 
 ---
 
-## Quick Revision Checklist (3 din ke baad)
+## Quick Revision Checklist (after 3 days)
 
-- [ ] Node.js kya hai, browser se kaise alag hai
-- [ ] `require` vs `import/export` — dono syntax likh sakte ho
-- [ ] `npm install`, `package.json`, `node_modules` ka role
-- [ ] Event loop ka basic idea — single-threaded but non-blocking kyun
-- [ ] Callback → Promise → async/await — teeno likh sakte ho, aur samajh ho ki async/await sabse clean hai
-- [ ] Raw `http` module se chhota server bana sakte ho
-- [ ] `.env` file kyun use karte hain
-- [ ] Mental bridge — "raw Node ka manual kaam Next.js kaise automate karta hai"
+- [ ] What Node.js is and how it differs from the browser
+- [ ] `require` vs `import/export` — you can write both
+- [ ] `npm install`, `package.json`, `node_modules` roles
+- [ ] Basic idea of the event loop — why single-threaded but non-blocking
+- [ ] Callback → Promise → async/await — you can write all three, and understand async/await is the cleanest
+- [ ] Build a small server with the raw `http` module
+- [ ] Why `.env` files are used
+- [ ] Mental bridge — "how raw Node's manual work is automated by Next.js"
 
 ---
 
 ## Next Step
 
-Jab ye 3 din complete ho jaayein aur checklist confident lage, seedha React/Next.js course shuru kar sakte ho — Module 1 se. Async/await wala part especially strong hona chahiye, kyunki data fetching mein wahi baar-baar aayega.
+Once these 3 days are complete and the checklist feels confident, you can start the React/Next.js course directly from Module 1. The async/await part especially needs to be strong, because it comes up repeatedly in data fetching.

@@ -1,77 +1,77 @@
-# 35 — Server-Side Caching: Database Ko Bar Bar Hit Mat Karo
+# 35 — Server-Side Caching: Don't Hit the Database Repeatedly
 
-> Pichle doc mein CDN — static files ka global distribution.
-> Ab **Server-Side Caching** — database results save karna.
-
----
-
-## Problem — Har Request Pe Database Hit
-
-ShopKaro pe 1000 users hain. Sab homepage kholte hain.
-
-Bina cache:
-```
-User 1 → Homepage → Database: "Featured products do" → Result
-User 2 → Homepage → Database: "Featured products do" → Same result
-User 3 → Homepage → Database: "Featured products do" → Same result
-... 1000 baar same query
-```
-
-1000 database queries — sab same result ke liye. Slow aur resource waste.
+> Previous doc covered CDN — global distribution of static files.
+> Now **Server-Side Caching** — saving database results.
 
 ---
 
-## Solution — Cache Karo
+## Problem — Hitting the Database on Every Request
 
-Pehli baar database se nikalo — save karo. Agli baar saved result do.
+ShopKaro has 1000 users. All of them open the homepage.
+
+Without cache:
+```
+User 1 → Homepage → Database: "Give me featured products" → Result
+User 2 → Homepage → Database: "Give me featured products" → Same result
+User 3 → Homepage → Database: "Give me featured products" → Same result
+... same query 1000 times
+```
+
+1000 database queries — all for the same result. Slow and a waste of resources.
+
+---
+
+## Solution — Cache It
+
+First time, fetch from the database — save it. Next time, return the saved result.
 
 ```
-User 1 → Homepage → Database → Result → Cache mein save karo
-User 2 → Homepage → Cache se do (database mat kholo)
-User 3 → Homepage → Cache se do
+User 1 → Homepage → Database → Result → Save in cache
+User 2 → Homepage → From cache (don't open DB)
+User 3 → Homepage → From cache
 ```
 
 ---
 
-## Next.js Mein Built-in Caching
+## Built-in Caching in Next.js
 
-Next.js App Router mein `fetch` automatically cache karta hai:
+In the Next.js App Router, `fetch` caches automatically:
 
 ```javascript
-// Yeh result cache ho jaata hai automatically
+// This result gets cached automatically
 const products = await fetch('/api/products', {
-  next: { revalidate: 3600 }  // 1 ghante mein refresh karo
+  next: { revalidate: 3600 }  // Refresh after 1 hour
 })
 
-// Kabhi cache mat karo — hamesha fresh
+// Never cache — always fresh
 const orders = await fetch('/api/orders', {
   cache: 'no-store'
 })
 ```
 
-Server components mein Prisma use karte ho toh — React memoization se thoda caching hoti hai, lekin explicit nahi.
+When you use Prisma in server components — React memoization gives some caching, but not explicitly.
 
 ---
 
-## Redis — Production Mein Cache
+## Redis — Cache in Production
 
-**Redis** ek in-memory database hai — super fast, cache ke liye perfect.
+**Redis** is an in-memory database — super fast, perfect for caching.
 
 ```javascript
-// Concept — actual setup thoda complex hai
+// Concept — actual setup is a bit more complex
 import redis from '@/lib/redis'
 
 async function getFeaturedProducts() {
-  // Pehle cache check karo
+  // First check the cache
   const cached = await redis.get('featured-products')
   if (cached) return JSON.parse(cached)
 
-  // Cache miss → Database se nikalo
+  // Cache miss → fetch from database
   const products = await prisma.product.findMany({
     where: { featured: true }
   })
 
-  // Cache mein save karo — 1 ghante ke liye
+  // Save in cache — for 1 hour
   await redis.setex('featured-products', 3600, JSON.stringify(products))
 
   return products
@@ -80,32 +80,32 @@ async function getFeaturedProducts() {
 
 ---
 
-## ShopKaro V1 Mein Caching Strategy
+## Caching Strategy for ShopKaro V1
 
 ```
-Homepage featured products → Next.js revalidate: 3600 (1 ghanta)
-Product listing → Next.js revalidate: 300 (5 minute)
-Product detail → Next.js revalidate: 60 (1 minute — stock fresh chahiye)
-Cart / Orders → cache: 'no-store' (hamesha fresh)
+Homepage featured products → Next.js revalidate: 3600 (1 hour)
+Product listing → Next.js revalidate: 300 (5 minutes)
+Product detail → Next.js revalidate: 60 (1 minute — stock must be fresh)
+Cart / Orders → cache: 'no-store' (always fresh)
 User data → cache: 'no-store'
 ```
 
-Redis — **baad mein** add karo jab traffic badhe. V1 mein Next.js built-in caching kaafi hai.
+Redis — **add it later** when traffic grows. Next.js built-in caching is enough for V1.
 
 ---
 
-## Caching Umbrella — Complete Hua
+## Caching Umbrella — Complete
 
 ```
 CACHING
 │
 ├── Browser Storage   → Doc 33 ✓
 ├── CDN               → Doc 34 ✓
-└── Server Cache      → Doc 35 ✓ (YEH)
+└── Server Cache      → Doc 35 ✓ (THIS)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`36-payments-what-is-it.md` — Aathwa umbrella — **Payments**. Priya pay karti hai — yeh flow exactly kaise kaam karta hai? Razorpay, Stripe, Webhooks — sab samjhenge. E-commerce ka sabse important part.
+`36-payments-what-is-it.md` — Eighth umbrella — **Payments**. Priya pays — how exactly does this flow work? Razorpay, Stripe, Webhooks — we'll understand all of it. The most important part of e-commerce.

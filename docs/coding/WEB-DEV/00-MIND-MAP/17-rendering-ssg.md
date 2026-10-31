@@ -1,51 +1,51 @@
 # 17 — SSG: Static Site Generation
 
-> Pichle doc mein SSR dekha — har request pe server render karta hai.
-> Ab **SSG** — sabse fast strategy. HTML pehle se bana hua.
+> Previous doc covered SSR — server renders on every request.
+> Now **SSG** — the fastest strategy. HTML is already built.
 
 ---
 
-## SSG Kya Hai
+## What Is SSG
 
-**Static Site Generation** — HTML **build time pe** ban jaata hai — deploy karne se pehle.
+**Static Site Generation** — HTML gets built **at build time** — before deploying.
 
 ```
-BUILD TIME (ek baar, jab deploy karte ho):
-Next.js → Database/data se HTML banao → Files save karo
+BUILD TIME (once, when you deploy):
+Next.js → Builds HTML from data → Saves files
 
-JAB PRIYA AATI HAI:
-Priya → Server → "homepage.html" file seedha do → Done
+WHEN PRIYA ARRIVES:
+Priya → Server → "homepage.html" file directly → Done
 ```
 
-Server kuch process nahi karta — file seedha deta hai. Isliye **bahut fast** hota hai.
+The server does no processing — it hands over the file directly. That's why it's **very fast**.
 
 ---
 
-## SSG Kab Sahi Hai
+## When SSG Is Right
 
-Sirf tab jab content **sab ke liye same ho** aur **baar baar change na ho.**
+Only when content is **the same for everyone** and **doesn't change frequently**.
 
 ```
 Homepage → SSG ✓
-  "ShopKaro — Best Deals Online" — sab ke liye same
+  "ShopKaro — Best Deals Online" — same for everyone
 
 About page → SSG ✓
-  Company info — baar baar nahi badle
+  Company info — doesn't change often
 
 Blog post → SSG ✓
-  Ek baar likha — sab padhte hain
+  Written once — everyone reads it
 
-Product listing → SSG? ← Sochna padega
-  Har ghante naya product aa sakta hai — toh stale ho jaayega
+Product listing → SSG? ← Think about it
+  New products can arrive every hour — would go stale
 ```
 
 ---
 
-## ShopKaro Mein SSG Kahan Use Karein
+## Where to Use SSG in ShopKaro
 
 ```
 Homepage → SSG ✓
-  Featured products show karo — daily ek baar rebuild karo
+  Show featured products — rebuild once a day
 
 /about → SSG ✓
   Static content
@@ -54,23 +54,23 @@ Homepage → SSG ✓
   Static content
 
 Category pages (/products/shoes) → Debatable
-  Agar products zyada nahi badle → SSG + Revalidation
-  Agar real-time chahiye → SSR
+  If products don't change much → SSG + Revalidation
+  If real-time needed → SSR
 ```
 
 ---
 
-## Next.js Mein SSG
+## SSG in Next.js
 
-Next.js App Router mein — agar component async nahi hai aur dynamic data nahi hai → automatically SSG:
+In Next.js App Router — if a component isn't async and uses no dynamic data → automatically SSG:
 
 ```jsx
-// /app/about/page.jsx — SSG automatically
+// /app/about/page.jsx — automatically SSG
 export default function AboutPage() {
   return (
     <div>
-      <h1>ShopKaro ke baare mein</h1>
-      <p>Hum best deals provide karte hain...</p>
+      <h1>About ShopKaro</h1>
+      <p>We provide the best deals...</p>
     </div>
   )
 }
@@ -78,13 +78,13 @@ export default function AboutPage() {
 
 ---
 
-## ISR — SSG Ka Smart Version
+## ISR — The Smart Version of SSG
 
 **ISR (Incremental Static Regeneration)** — SSG + automatic refresh.
 
 ```jsx
-// Yeh page SSG ki tarah fast hoga
-// lekin har 60 seconds mein dobara generate hoga
+// This page will be fast like SSG
+// but regenerates every 60 seconds
 export const revalidate = 60  // seconds
 
 export default async function HomePage() {
@@ -95,15 +95,15 @@ export default async function HomePage() {
 }
 ```
 
-Fayda:
-- Users ko fast load milta hai (cached HTML)
-- Data 60 seconds mein fresh ho jaata hai
+Advantage:
+- Users get fast load (cached HTML)
+- Data refreshes every 60 seconds
 
-ShopKaro homepage ke liye → **ISR with revalidate = 3600** (1 ghanta) perfect hai.
+For ShopKaro's homepage → **ISR with revalidate = 3600** (1 hour) is perfect.
 
 ---
 
-## Teen Strategies Summary
+## Three Strategies Summary
 
 | | SSG | ISR | SSR | CSR |
 |--|-----|-----|-----|-----|
@@ -115,6 +115,6 @@ ShopKaro homepage ke liye → **ISR with revalidate = 3600** (1 ghanta) perfect 
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`18-rendering-shopkaro.md` — Ab ShopKaro ka har page decide karte hain — kaunsi strategy, kyun. Yeh ek reference doc hai — project banate waqt kaam aayega.
+`18-rendering-shopkaro.md` — Now decide for every ShopKaro page — which strategy and why. This is a reference doc — useful while building the project.

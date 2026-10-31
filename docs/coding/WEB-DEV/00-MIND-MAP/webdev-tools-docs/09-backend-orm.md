@@ -1,12 +1,12 @@
 # 09 — ORMs: Prisma, Drizzle, Sequelize, TypeORM, Mongoose
 
 > Umbrella: Backend → ORM (Object Relational Mapper)
-> Kaam: Database se JavaScript mein baat karna — SQL likhne ki zaroorat nahi
-> ShopKaro docs mein: Doc 21 mein Prisma cover hua
+> Purpose: Talking to the database in JavaScript — no need to write SQL
+> ShopKaro docs: Prisma covered in Doc 21
 
 ---
 
-## ORM Kyun Use Karte Hain
+## Why Use an ORM
 
 ```
 Raw SQL:
@@ -22,10 +22,10 @@ Prisma (ORM):
   })
 
 ORM advantages:
-  → JavaScript/TypeScript mein likhna
+  → Write in JavaScript/TypeScript
   → Auto-complete, type safety
-  → Database switch karna easier
-  → Migrations manage karna
+  → Easier to switch databases
+  → Manage migrations
 ```
 
 ---
@@ -38,42 +38,42 @@ ORM advantages:
 **Tag: 🟢 Most Popular 2024 | TypeScript-first | Recommended**
 
 ```
-Kya hai: Next-generation ORM — schema-first, TypeScript-first
-Kab use karo:
+What it is: Next-generation ORM — schema-first, TypeScript-first
+When to use:
   → TypeScript project (Next.js, NestJS)
-  → PostgreSQL ya MySQL ya SQLite
-  → ShopKaro jaisa app — almost always
+  → PostgreSQL or MySQL or SQLite
+  → App like ShopKaro — almost always
 
 Real app example:
   → ShopKaro: User, Product, Order, Cart tables
-  → Naye Indian startups ka majority
-  → Vercel, Supabase examples — Prisma use karte hain
+  → Majority of new Indian startups
+  → Vercel, Supabase examples — use Prisma
 
 Unique features:
-  → Schema se types automatically generate hoti hain
+  → Types auto-generate from schema
   → Prisma Studio — visual database browser
   → Migrations built-in
 
 Code feel:
-  // Schema define karo
+  // Define schema
   model User {
     id    Int    @id @default(autoincrement())
     email String @unique
     name  String?
   }
 
-  // Query karo — fully typed
+  // Query — fully typed
   const user = await prisma.user.findUnique({
     where: { email: 'priya@gmail.com' }
   })
-  // user.email → TypeScript jaanta hai yeh string hai
+  // user.email → TypeScript knows it's a string
 
 Cons:
-  → Complex queries mein verbose
-  → Raw SQL zyada efficient kabhi kabhi
-  → Bundle size (Prisma Client bada hai)
+  → Verbose for complex queries
+  → Raw SQL sometimes more efficient
+  → Bundle size (Prisma Client is big)
 
-India mein: 2022 ke baad rapidly adopted — especially Next.js projects
+In India: Rapidly adopted after 2022 — especially Next.js projects
 ```
 
 ---
@@ -82,19 +82,19 @@ India mein: 2022 ke baad rapidly adopted — especially Next.js projects
 **Tag: 🟢 Growing Fast | Lightweight | SQL-like syntax**
 
 ```
-Kya hai: TypeScript ORM — SQL jaisi syntax, lightweight
-Kab use karo:
-  → Prisma se alag feel chahiye
-  → SQL comfort hai — Drizzle mein SQL expressions likhte ho
-  → Edge environments (Cloudflare Workers) — Prisma wahan nahi chalta
+What it is: TypeScript ORM — SQL-like syntax, lightweight
+When to use:
+  → Want a different feel from Prisma
+  → Comfortable with SQL — write SQL expressions in Drizzle
+  → Edge environments (Cloudflare Workers) — Prisma doesn't run there
   → Bundle size critical
 
-Prisma se fark:
+Difference from Prisma:
   → Drizzle: SQL-like syntax — SELECT, WHERE expressions
   → Prisma: Higher-level abstraction
   → Drizzle: Edge-ready (Cloudflare Workers)
   → Prisma: Not edge-compatible (yet)
-  → Drizzle: Chhota bundle
+  → Drizzle: Smaller bundle
 
 Code feel:
   // Schema
@@ -109,8 +109,8 @@ Code feel:
     .from(users)
     .where(eq(users.email, 'priya@gmail.com'))
 
-India mein: Growing — especially Hono + Cloudflare Workers combo mein
-Trend: 2024 mein Prisma vs Drizzle debate growing hai
+In India: Growing — especially in Hono + Cloudflare Workers combo
+Trend: Prisma vs Drizzle debate growing in 2024
 ```
 
 ---
@@ -119,17 +119,17 @@ Trend: 2024 mein Prisma vs Drizzle debate growing hai
 **Tag: 🟡 Legacy | Was popular 2016-2021**
 
 ```
-Kya hai: Oldest popular Node.js ORM
-Kab use karo:
+What it is: Oldest popular Node.js ORM
+When to use:
   → Existing Sequelize codebase
-  → Naye projects mein avoid
+  → Avoid in new projects
 
-Prisma se kya kharab:
-  → TypeScript support poor (afterthought tha)
-  → Complex queries bahut verbose
-  → Migration system clunky
+What's worse than Prisma:
+  → TypeScript support poor (afterthought)
+  → Complex queries very verbose
+  → Clunky migration system
 
-India mein: Purane projects mein bahut milega (bootcamp era)
+In India: Found a lot in older projects (bootcamp era)
 ```
 
 ---
@@ -138,14 +138,14 @@ India mein: Purane projects mein bahut milega (bootcamp era)
 **Tag: 🟡 NestJS common | Decorator-based**
 
 ```
-Kya hai: Decorator-based ORM — NestJS ke saath commonly used
-Kab use karo:
-  → NestJS project hai (common pair)
-  → Active Record ya Data Mapper pattern chahiye
+What it is: Decorator-based ORM — commonly used with NestJS
+When to use:
+  → NestJS project (common pair)
+  → Need Active Record or Data Mapper pattern
   → Existing TypeORM codebase
 
-NestJS ke bahar:
-  → Drizzle ya Prisma prefer karo
+Outside NestJS:
+  → Prefer Drizzle or Prisma
 
 Code feel:
   @Entity()
@@ -157,7 +157,7 @@ Code feel:
     email: string
   }
 
-India mein: NestJS ke saath enterprise projects mein
+In India: Enterprise projects with NestJS
 ```
 
 ---
@@ -166,11 +166,11 @@ India mein: NestJS ke saath enterprise projects mein
 **Tag: 🟢 MongoDB Standard | Almost required for MongoDB**
 
 ```
-Kya hai: MongoDB ke liye ODM (Object Document Mapper) — ORM ka NoSQL equivalent
-Kab use karo:
-  → MongoDB use kar rahe ho → Almost always Mongoose
+What it is: ODM (Object Document Mapper) for MongoDB — ORM's NoSQL equivalent
+When to use:
+  → Using MongoDB → almost always Mongoose
 
-MongoDB raw driver use karna complex hai — Mongoose simplify karta hai
+Using raw MongoDB driver is complex — Mongoose simplifies it
 
 Code feel:
   const userSchema = new Schema({
@@ -181,24 +181,24 @@ Code feel:
 
   const user = await User.findOne({ email: 'priya@gmail.com' })
 
-Prisma se fark:
+Difference from Prisma:
   → Mongoose: MongoDB only
   → Prisma: PostgreSQL, MySQL, MongoDB (beta) — multi-DB
 
-India mein: MongoDB use karne waale projects mein standard
+In India: Standard in projects using MongoDB
 ```
 
 ---
 
 ### Kysely
-**Tag: 🔵 SQL Query Builder | Type-safe | Not full ORM**
+**Tag: 🔵 SQL Query Builder | Type-safe | Not a full ORM**
 
 ```
-Kya hai: Type-safe SQL query builder — ORM nahi, raw SQL helper
-Kab use karo:
-  → Full ORM nahi chahiye — SQL control chahiye
-  → Complex queries jahan ORM abstract karta hai too much
-  → Drizzle jaisa lekin different API
+What it is: Type-safe SQL query builder — not an ORM, a raw SQL helper
+When to use:
+  → Don't want a full ORM — want SQL control
+  → Complex queries where ORM abstracts too much
+  → Like Drizzle but different API
 
 Code feel:
   const result = await db
@@ -217,36 +217,36 @@ PostgreSQL/MySQL, TypeScript project?
   → Prisma (default choice)
 
 Edge environment (Cloudflare Workers)?
-  → Drizzle (Prisma edge nahi chalti)
+  → Drizzle (Prisma doesn't run on edge)
 
 NestJS project?
-  → TypeORM ya Prisma (dono common)
+  → TypeORM or Prisma (both common)
 
 MongoDB?
   → Mongoose
 
-SQL comfort hai, full ORM nahi chahiye?
-  → Drizzle ya Kysely
+Comfortable with SQL, don't want full ORM?
+  → Drizzle or Kysely
 
 Existing codebase?
-  → Jo hai wahi — rewrite nahi
+  → Use whatever's there — don't rewrite
 ```
 
 ---
 
-## India Mein Reality
+## India Reality
 
 ```
 Next.js startups (2024):   Prisma (strong preference)
-NestJS enterprise:         TypeORM ya Prisma
+NestJS enterprise:         TypeORM or Prisma
 MongoDB projects:          Mongoose
 Edge/Cloudflare:           Drizzle
-Purane projects:           Sequelize (milega bahut)
+Older projects:            Sequelize (found a lot)
 Learning:                  Prisma (best docs, easiest start)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`10-backend-realtime.md` — Real-time tools — Socket.io, Pusher, SSE — Swiggy ka live order tracking, Ola ka driver location update kaise hota hai.
+`10-backend-realtime.md` — Real-time tools — Socket.io, Pusher, SSE — how Swiggy's live order tracking, Ola's driver location update works.

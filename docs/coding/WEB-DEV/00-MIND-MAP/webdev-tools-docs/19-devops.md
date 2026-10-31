@@ -1,17 +1,17 @@
 # 19 — DevOps: Hosting, CI/CD, Monitoring
 
 > Umbrella: DevOps / Infra
-> Kaam: App deploy karna, automatically test + deploy karna, errors track karna
-> ShopKaro docs mein: Doc 44 mein Vercel cover hua
+> Job: Deploy the app, automatically test + deploy, track errors
+> ShopKaro docs: Vercel covered in Doc 44
 
 ---
 
-## Teen Sub-categories
+## Three Sub-categories
 
 ```
-HOSTING:    App kahan chalegi? (Vercel, Railway, AWS)
+HOSTING:    Where does the app run? (Vercel, Railway, AWS)
 CI/CD:      Code push → Automatically test + deploy (GitHub Actions)
-MONITORING: Kya kuch toot gaya? Errors track karo (Sentry)
+MONITORING: Did something break? Track errors (Sentry)
 ```
 
 ---
@@ -24,20 +24,20 @@ MONITORING: Kya kuch toot gaya? Errors track karo (Sentry)
 **Tag: 🟢 Next.js Standard | Easiest | Recommended**
 
 ```
-Kya hai: Frontend + Serverless deployment platform — Next.js ke creators ka
-Kab use karo: Next.js project → Almost always Vercel
+What it is: Frontend + Serverless deployment platform — made by Next.js creators
+When to use: Next.js project → almost always Vercel
 
 Features:
   → GitHub push → Auto deploy
-  → Preview URLs har PR ke liye
+  → Preview URLs for every PR
   → Global CDN automatic
   → Serverless functions (Next.js API routes)
   → Analytics built-in
 
-Free tier: Generous — side projects ke liye kaafi
+Free tier: Generous — plenty for side projects
 Cons: Expensive at scale, serverless limitations (no WebSocket, no long processes)
 
-India mein: Next.js projects ka default choice
+In India: Default choice for Next.js projects
 ```
 
 ---
@@ -46,15 +46,15 @@ India mein: Next.js projects ka default choice
 **Tag: 🟢 Frontend | JAMstack | Static Sites**
 
 ```
-Kya hai: Static site + serverless platform
-Kab use karo:
+What it is: Static site + serverless platform
+When to use:
   → Static sites, Gatsby, Astro
   → Vercel alternative
 
-Vercel se fark:
-  → Netlify: Static sites pe better (historically)
-  → Vercel: Next.js pe better
-  → 2024: Dono similar features — Vercel Next.js ke liye prefer
+Difference from Vercel:
+  → Netlify: Historically better for static sites
+  → Vercel: Better for Next.js
+  → 2024: Both have similar features — prefer Vercel for Next.js
 ```
 
 ---
@@ -63,19 +63,19 @@ Vercel se fark:
 **Tag: 🟢 Full Stack | Simple | Good for beginners**
 
 ```
-Kya hai: Deploy everything — Node.js, PostgreSQL, Redis, everything ek jagah
-Kab use karo:
-  → Full backend server chahiye (WebSocket, long processes)
-  → Vercel ka serverless nahi chalega
-  → Sab ek platform pe chahiye (app + database)
+What it is: Deploy everything — Node.js, PostgreSQL, Redis, everything in one place
+When to use:
+  → Need a full backend server (WebSocket, long processes)
+  → Vercel's serverless won't work
+  → Want everything on one platform (app + database)
 
 Real app example:
   → Express/NestJS backends
-  → Socket.io apps (WebSocket chahiye)
-  → ShopKaro agar dedicated server chahiye
+  → Socket.io apps (need WebSocket)
+  → ShopKaro if a dedicated server is needed
 
 Free tier: Limited but good for learning
-India mein: Growing — especially backend developers
+In India: Growing — especially backend developers
 ```
 
 ---
@@ -84,12 +84,12 @@ India mein: Growing — especially backend developers
 **Tag: 🟢 Heroku Alternative | Simple**
 
 ```
-Kya hai: Web services, databases, cron jobs — Heroku replacement
-Kab use karo:
-  → Heroku se migrate kar rahe ho
+What it is: Web services, databases, cron jobs — Heroku replacement
+When to use:
+  → Migrating from Heroku
   → Simple server deployment
 
-Heroku: Free tier band ho gaya 2022 → Render sabse popular alternative
+Heroku: Free tier ended in 2022 → Render is the most popular alternative
 ```
 
 ---
@@ -98,13 +98,13 @@ Heroku: Free tier band ho gaya 2022 → Render sabse popular alternative
 **Tag: 🟢 Containers | Global | Docker**
 
 ```
-Kya hai: Docker containers globally deploy karo
-Kab use karo:
-  → Docker use kar rahe ho
-  → Global low-latency chahiye
-  → Vercel limitations face kar rahe ho
+What it is: Deploy Docker containers globally
+When to use:
+  → Using Docker
+  → Global low-latency needed
+  → Facing Vercel limitations
 
-Real app example: Apps jahan multiple regions mein deploy karna ho
+Real app example: Apps that need to deploy in multiple regions
 ```
 
 ---
@@ -113,14 +113,14 @@ Real app example: Apps jahan multiple regions mein deploy karna ho
 **Tag: 🟢 Enterprise | Everything | Complex**
 
 ```
-Kya hai: Full cloud platforms — infinite services
-Kab use karo:
+What it is: Full cloud platforms — infinite services
+When to use:
   → Enterprise scale
-  → Specific AWS services chahiye (Lambda, S3, SES, SQS)
+  → Specific AWS services needed (Lambda, S3, SES, SQS)
   → Existing cloud commitment
 
-Learning curve: High — dedicated DevOps/Cloud engineer chahiye usually
-India mein: Large companies, enterprise (Flipkart, Zomato at scale)
+Learning curve: High — usually needs a dedicated DevOps/Cloud engineer
+In India: Large companies, enterprise (Flipkart, Zomato at scale)
 ```
 
 ---
@@ -129,13 +129,13 @@ India mein: Large companies, enterprise (Flipkart, Zomato at scale)
 **Tag: 🟢 Edge | Fast | Growing**
 
 ```
-Kya hai: Edge deployment — globally distributed, ultra-fast
-Kab use karo:
-  → Edge computing chahiye
+What it is: Edge deployment — globally distributed, ultra-fast
+When to use:
+  → Edge computing needed
   → Hono + Drizzle + Cloudflare stack
 
-Workers = Serverless functions at edge (like Vercel but Cloudflare network)
-India mein: Growing — especially performance-conscious developers
+Workers = Serverless functions at the edge (like Vercel but on Cloudflare network)
+In India: Growing — especially performance-conscious developers
 ```
 
 ---
@@ -148,8 +148,8 @@ India mein: Growing — especially performance-conscious developers
 **Tag: 🟢 Most Popular | Free for public repos**
 
 ```
-Kya hai: Code push → Automatically run tests → Deploy
-Kab use karo: GitHub use kar rahe ho → GitHub Actions (default)
+What it is: Code push → Automatically run tests → Deploy
+When to use: Using GitHub → GitHub Actions (default)
 
 Code feel:
   # .github/workflows/deploy.yml
@@ -169,7 +169,7 @@ Code feel:
 Real app example:
   → ShopKaro: Push to main → Tests run → If pass → Vercel deploy
 
-India mein: Almost standard — especially Vercel + GitHub combo
+In India: Almost standard — especially Vercel + GitHub combo
 ```
 
 ---
@@ -182,19 +182,19 @@ India mein: Almost standard — especially Vercel + GitHub combo
 **Tag: 🟢 Error Tracking Standard**
 
 ```
-Kya hai: Error tracking — kab kya error aaya, kaun sa user, kya context
-Kab use karo: Production app → Hamesha Sentry (ya koi error tracker)
+What it is: Error tracking — when did what error happen, which user, what context
+When to use: Production app → Always Sentry (or some error tracker)
 
 Real app example:
-  → ShopKaro: Priya ke liye checkout crash → Sentry mein dikhega → Fix karo
+  → ShopKaro: Checkout crashes for Priya → Shows up in Sentry → Fix it
 
 Code feel:
   import * as Sentry from "@sentry/nextjs"
   Sentry.init({ dsn: process.env.SENTRY_DSN })
-  // Ab koi bhi unhandled error → Sentry dashboard mein
+  // Now any unhandled error → Sentry dashboard
 
-Free tier: 5000 errors/month — starting ke liye kaafi
-India mein: Production apps mein standard
+Free tier: 5000 errors/month — plenty to start
+In India: Standard in production apps
 ```
 
 ---
@@ -203,14 +203,14 @@ India mein: Production apps mein standard
 **Tag: 🟢 Analytics + Feature Flags | Privacy-friendly**
 
 ```
-Kya hai: Product analytics — user kya karta hai track karo + feature flags
-Feature flags: "20% users ko naya checkout dikhao" → A/B testing
+What it is: Product analytics — track what users do + feature flags
+Feature flags: "Show new checkout to 20% of users" → A/B testing
 
 Real app example:
-  → Swiggy: "Naya UI 10% users pe test karo" → Feature flag
-  → ShopKaro: "Kitne users cart pe aate hain, kitne checkout" → Analytics
+  → Swiggy: "Test new UI on 10% of users" → Feature flag
+  → ShopKaro: "How many users reach cart, how many checkout" → Analytics
 
-India mein: Growing — Google Analytics alternative (privacy-friendly)
+In India: Growing — Google Analytics alternative (privacy-friendly)
 ```
 
 ---
@@ -219,10 +219,10 @@ India mein: Growing — Google Analytics alternative (privacy-friendly)
 **Tag: 🟢 Session Replay | Frontend debugging**
 
 ```
-Kya hai: User ka session record karo — exactly kya hua error se pehle
-Kab use karo: Sentry se aage — error context chahiye visually
+What it is: Record the user's session — exactly what happened before the error
+When to use: Beyond Sentry — need visual error context
 
-Real app example: "Priya ka order fail hua — LogRocket mein dekho exactly kya click kiya"
+Real app example: "Priya's order failed — check LogRocket to see exactly what she clicked"
 ```
 
 ---
@@ -230,17 +230,17 @@ Real app example: "Priya ka order fail hua — LogRocket mein dekho exactly kya 
 ## Quick Decision
 
 ```
-Next.js deploy karna?
+Deploying Next.js?
   → Vercel (default)
 
 Full backend server (WebSocket, long processes)?
-  → Railway ya Render
+  → Railway or Render
 
-Docker use kar rahe ho?
+Using Docker?
   → Fly.io
 
 Enterprise?
-  → AWS ya GCP
+  → AWS or GCP
 
 CI/CD?
   → GitHub Actions (almost always)
@@ -249,11 +249,11 @@ Error tracking?
   → Sentry (always in production)
 
 Analytics?
-  → PostHog (privacy) ya Google Analytics (free)
+  → PostHog (privacy) or Google Analytics (free)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`20-meta-tools.md` — Meta Tools — TypeScript, tRPC, Zod, Monorepos, Package Managers — poori series ka aakhri doc.
+`20-meta-tools.md` — Meta Tools — TypeScript, tRPC, Zod, Monorepos, Package Managers — the final doc of the series.

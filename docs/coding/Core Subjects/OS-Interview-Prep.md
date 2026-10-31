@@ -1,115 +1,115 @@
 # Operating Systems — Interview Prep (Deep Dive)
 
 > Target: Full-stack developer roles, Gurgaon, 5–30 LPA range
-> Context: Ye lowest priority hai full-stack role ke liye (DBMS/CN se kam poocha jaata hai), isliye is file mein depth thodi kam rakhi hai — bas jo commonly poocha jaata hai wahi. GATE-level detail ki zaroorat nahi hai.
+> Context: This is the lowest priority subject for full-stack roles (asked less than DBMS/CN), so this file keeps depth a bit lower — just what's commonly asked. No GATE-level detail needed.
 
 ---
 
-## 1. Process vs Thread (Sabse common question is subject mein)
+## 1. Process vs Thread (Most common question in this subject)
 
-**Process**: Ek independently running program — apni khud ki memory space hoti hai.
+**Process**: An independently running program — has its own memory space.
 
-**Thread**: Ek process ke andar chalne wala lightweight execution unit — same process ke threads memory **share** karte hain.
+**Thread**: A lightweight execution unit running inside a process — threads of the same process **share** memory.
 
 | | Process | Thread |
 |---|---|---|
-| Memory | Apni alag memory space | Same process ke saath memory share karta hai |
-| Creation cost | Heavy (zyada resources lagte hain) | Light (fast banta hai) |
-| Communication | Slow (IPC — Inter-Process Communication zaroori) | Fast (shared memory ki wajah se) |
-| Crash impact | Ek process crash ho to dusre pe asar nahi | Ek thread crash ho sakta hai poore process ko affect kare |
+| Memory | Own separate memory space | Shares memory with the process |
+| Creation cost | Heavy (uses more resources) | Light (created fast) |
+| Communication | Slow (IPC — Inter-Process Communication needed) | Fast (due to shared memory) |
+| Crash impact | One process crashing doesn't affect others | One thread crashing can affect the whole process |
 
-**Real-world analogy**: Process = ek pura ghar. Thread = ghar ke andar alag-alag kamre jo same resources (kitchen, bathroom) share karte hain.
+**Real-world analogy**: Process = a whole house. Thread = separate rooms inside the house sharing the same resources (kitchen, bathroom).
 
-**Node.js angle (tumhara direct context)**: Node.js **single-threaded** hai (main JS execution ke liye), but background mein **libuv** thread pool use karta hai heavy I/O operations (file read, crypto) ke liye. Ye interview mein bol sakte ho agar Node.js ka concurrency model poochein.
+**Node.js angle (your direct context)**: Node.js is **single-threaded** (for main JS execution), but uses a **libuv thread pool** in the background for heavy I/O operations (file read, crypto). You can mention this in interviews if the Node.js concurrency model comes up.
 
 ---
 
 ## 2. Deadlock
 
-**Kya hai**: Do (ya zyada) processes ek-dusre ka resource release hone ka wait kar rahe hain, aur koi bhi release nahi kar raha — sab stuck ho jaate hain forever.
+**What it is**: Two (or more) processes are waiting for each other's resource to be released, and no one releases — everyone gets stuck forever.
 
-**Real example**: Process A ke paas Resource 1 hai, use Resource 2 chahiye (jo Process B ke paas hai). Process B ke paas Resource 2 hai, use Resource 1 chahiye (jo Process A ke paas hai). Dono infinite wait mein fas gaye.
+**Real example**: Process A has Resource 1, needs Resource 2 (held by Process B). Process B has Resource 2, needs Resource 1 (held by Process A). Both stuck in infinite wait.
 
-### 4 Conditions for Deadlock (sab ek saath honi chahiye tabhi deadlock hota hai)
+### 4 Conditions for Deadlock (all must hold together for deadlock to occur)
 
-1. **Mutual Exclusion**: Resource ek time pe sirf ek process use kar sakta hai
-2. **Hold and Wait**: Process ek resource pakde hue hai aur dusre ka wait kar raha hai
-3. **No Preemption**: Resource forcefully chheena nahi ja sakta, process khud release karega
-4. **Circular Wait**: Processes ek circular chain mein ek-dusre ka wait kar rahe hain
+1. **Mutual Exclusion**: A resource can be used by only one process at a time
+2. **Hold and Wait**: A process holds one resource and waits for another
+3. **No Preemption**: A resource cannot be forcefully taken away; the process releases it itself
+4. **Circular Wait**: Processes wait for each other in a circular chain
 
-**Prevention (one-liner, deep nahi)**: In 4 conditions mein se koi ek ko break kar do — jaise resources ko ek fixed order mein request karwana (circular wait rokta hai).
+**Prevention (one-liner, not deep)**: Break any one of these 4 conditions — like requesting resources in a fixed order (prevents circular wait).
 
-**Interview mein kitna deep**: Bas deadlock ka definition + real example + 4 conditions ke naam bata pao, itna kaafi hai. Prevention algorithms (Banker's algorithm etc.) full-stack role mein rarely poochte hain.
+**How deep in interviews**: Just the deadlock definition + real example + the 4 condition names is enough. Prevention algorithms (Banker's algorithm etc.) are rarely asked in full-stack roles.
 
 ---
 
 ## 3. Memory Management (Basics)
 
-**Kya hota hai**: OS decide karta hai kaunsa program kitni memory (RAM) use karega, aur kab.
+**What it is**: The OS decides which program uses how much memory (RAM), and when.
 
-### Key concepts (naam + one-liner)
+### Key concepts (name + one-liner)
 
-- **Virtual Memory**: OS har process ko lagta hai jaise use poori memory mili hai (isolated), asal mein OS background mein manage karta hai — RAM kam pade to disk (swap space) use hoti hai.
-- **Paging**: Memory ko fixed-size blocks (pages) mein divide karna, taaki management aasan ho aur fragmentation kam ho.
-- **Fragmentation**: Memory mein chhote-chhote unused gaps ban jaana jo use nahi ho paate — do types: **internal** (allocated block ke andar waste space) aur **external** (blocks ke beech gaps).
+- **Virtual Memory**: The OS makes each process feel like it has all the memory (isolated), while managing things behind the scenes — if RAM runs short, disk (swap space) is used.
+- **Paging**: Dividing memory into fixed-size blocks (pages), to make management easier and reduce fragmentation.
+- **Fragmentation**: Small unused gaps forming in memory that can't be used — two types: **internal** (waste space inside an allocated block) and **external** (gaps between blocks).
 
-**Interview mein kitna deep**: Sirf "virtual memory kya hai" aur "paging kyun karte hain" — one-liner level. Full-stack role mein OS internals ka deep dive nahi hota.
+**How deep in interviews**: Just "what is virtual memory" and "why do we page" — one-liner level. Deep OS internals aren't covered in full-stack roles.
 
 ---
 
 ## 4. Process States (Quick overview)
 
-Ek process apni lifetime mein in states se guzarta hai:
+A process goes through these states during its lifetime:
 
 **New → Ready → Running → Waiting → Terminated**
 
-- **New**: Process create ho raha hai
-- **Ready**: Execute hone ke liye taiyar, CPU ka wait kar raha hai
-- **Running**: Abhi CPU execute kar raha hai isko
-- **Waiting**: Kisi I/O operation ya event ka wait kar raha hai
-- **Terminated**: Execution complete ho gaya
+- **New**: Process being created
+- **Ready**: Ready to execute, waiting for CPU
+- **Running**: CPU is currently executing it
+- **Waiting**: Waiting for some I/O operation or event
+- **Terminated**: Execution complete
 
-**Interview mein kitna deep**: Bas diagram/flow bata pao, itna kaafi hai.
+**How deep in interviews**: Just the diagram/flow is enough.
 
 ---
 
 ## 5. Context Switching (Quick, one-liner level)
 
-**Kya hai**: Jab CPU ek process/thread se dusre pe switch karta hai — current process ka state (registers, memory pointers) save karta hai, aur naye process ka state load karta hai.
+**What it is**: When the CPU switches from one process/thread to another — it saves the current process's state (registers, memory pointers) and loads the new process's state.
 
-**Kyun important**: Ye overhead create karta hai — isliye zyada context switching (jaise bahut saare threads) performance ko slow kar sakta hai.
+**Why it matters**: This creates overhead — too much context switching (like too many threads) can slow down performance.
 
 ---
 
-## 6. CPU Scheduling (Sirf naam yaad rakho, algorithms deep nahi)
+## 6. CPU Scheduling (Just remember names, algorithms not deep)
 
-OS decide karta hai kaunsa process kab CPU pe chalega:
+The OS decides which process runs on the CPU when:
 
-- **FCFS** (First Come First Serve) — jo pehle aaya, pehle chalega
-- **SJF** (Shortest Job First) — sabse chhota job pehle
-- **Round Robin** — har process ko ek fixed time slice milta hai, phir next process
+- **FCFS** (First Come First Serve) — whoever arrives first runs first
+- **SJF** (Shortest Job First) — shortest job first
+- **Round Robin** — each process gets a fixed time slice, then next process
 
-**Interview mein kitna deep**: Full-stack role mein ye rarely poochte hain — bas naam pata hon to kaafi hai. Agar poochein, "Round Robin common hai time-sharing systems mein, jaha fairness important hai" itna bol dena.
+**How deep in interviews**: Full-stack roles rarely ask this — just knowing the names is enough. If asked, "Round Robin is common in time-sharing systems, where fairness matters" is enough to say.
 
 ---
 
 ## Quick Revision Checklist (before interview)
 
-- [ ] Process vs Thread — table wala difference + Node.js single-thread + libuv angle
-- [ ] Deadlock — definition + real example + 4 conditions ke naam
+- [ ] Process vs Thread — table difference + Node.js single-thread + libuv angle
+- [ ] Deadlock — definition + real example + 4 condition names
 - [ ] Virtual memory + paging — one-liner
-- [ ] Process states — 5 states ka flow
+- [ ] Process states — 5 states flow
 - [ ] Context switching — one-liner
-- [ ] CPU scheduling algorithms — sirf naam (FCFS, SJF, Round Robin)
+- [ ] CPU scheduling algorithms — just names (FCFS, SJF, Round Robin)
 
 ---
 
 ## Practice Approach
 
-1. Ye subject sabse kam priority hai — agar time tight ho raha hai DSA/project ke saath, isko sabse pehle compress/skip kar sakte ho baaki 3 subjects (DBMS, OOP, CN) ke comparison mein.
-2. Sirf Process vs Thread aur Deadlock — ye do topics hi zyada poochte hain full-stack interviews mein. Baaki (memory management, scheduling) sirf "one-liner ready rakhna" level pe rakho.
-3. Node.js ka concurrency model (single-threaded + event loop + libuv) OS aur JavaScript dono ko connect karta hai — is angle se practice karna extra fayda dega kyunki ye tumhare daily kaam se bhi juda hai.
+1. This is the lowest priority subject — if time is tight with DSA/project, compress/skip this first compared to the other 3 subjects (DBMS, OOP, CN).
+2. Just Process vs Thread and Deadlock — these two topics get asked the most in full-stack interviews. Keep the rest (memory management, scheduling) at "one-liner ready" level.
+3. Node.js's concurrency model (single-threaded + event loop + libuv) connects both OS and JavaScript — practicing from this angle gives extra benefit since it ties to your daily work.
 
 ---
 
-**Sab 4 subjects (DBMS, OOP, CN, OS) complete ho gaye.** Jab ready ho, mujhe bolna — chaaho to hum mock interview round kar sakte hain sabhi subjects mila ke, ya DSA roadmap pe wapas focus kar sakte hain.
+**All 4 subjects (DBMS, OOP, CN, OS) complete.** When ready, tell me — we can do a mock interview round covering all subjects together, or focus back on the DSA roadmap.

@@ -182,6 +182,11 @@ export const javascriptSubject: Subject = {
           id: "js-lec28",
           title: "4.9 Short-circuit Evaluation",
           path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.9 Short-circuit Evaluation.md",
+        },
+        {
+          id: "js-lec40",
+          title: "4.10 WeakMap & WeakSet",
+          path: "docs/coding/JS/Phase 4 - Arrays Objects & Functional Patterns/4.10 WeakMap & WeakSet.md",
         }
       ]
     },

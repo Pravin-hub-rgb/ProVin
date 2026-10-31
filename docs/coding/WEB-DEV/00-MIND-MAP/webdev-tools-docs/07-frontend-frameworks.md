@@ -1,19 +1,19 @@
-# 07 — Meta Frameworks: Next.js, Remix, Astro aur Baaki
+# 07 — Meta Frameworks: Next.js, Remix, Astro and the Rest
 
 > Umbrella: Frontend → Meta Frameworks
-> Kaam: React/Vue/Svelte ke upar full-stack framework — routing, SSR, API routes
-> Tum Next.js jaante ho — yeh doc alternatives ka context dega
+> Purpose: Full-stack framework on top of React/Vue/Svelte — routing, SSR, API routes
+> You know Next.js — this doc gives context on the alternatives
 
 ---
 
-## Meta Framework Kya Hota Hai
+## What Is a Meta Framework
 
-Plain React sirf UI banata hai — routing, SSR, API routes nahi.
+Plain React only builds UI — no routing, SSR, or API routes.
 
-Meta framework = React + Routing + SSR + API + Build tools — sab ek package mein.
+Meta framework = React + Routing + SSR + API + Build tools — all in one package.
 
 ```
-Plain React: Sirf UI
+Plain React: UI only
 Meta Framework: UI + Server + Routing + Build — complete solution
 ```
 
@@ -27,30 +27,30 @@ Meta Framework: UI + Server + Routing + Build — complete solution
 **Tag: 🟢 Industry Standard | Most Popular | You know this**
 
 ```
-Kya hai: React ka most popular meta framework — Vercel ne banaya
-Kab use karo:
-  → Almost always React project mein
-  → E-commerce, SaaS, blogs, dashboards — sab kuch
+What it is: React's most popular meta framework — built by Vercel
+When to use:
+  → Almost always in a React project
+  → E-commerce, SaaS, blogs, dashboards — everything
 
 Real app example:
-  → Notion ka marketing site
-  → Twitch ka web app
-  → Razorpay ka website
-  → Indian startups ki majority
+  → Notion's marketing site
+  → Twitch's web app
+  → Razorpay's website
+  → Majority of Indian startups
 
-Kyun popular:
-  → SSR + SSG + CSR — sab ek mein
-  → API routes — backend bhi same project
+Why popular:
+  → SSR + SSG + CSR — all in one
+  → API routes — backend in the same project
   → App Router (new) — powerful
-  → Vercel pe deploy → Seamless
+  → Deploy on Vercel → Seamless
   → Largest ecosystem
 
 App Router vs Pages Router:
-  → Pages Router: Purana (/pages/index.jsx)
-  → App Router: Naya (/app/page.jsx) — recommended
-  → Naye projects: App Router use karo
+  → Pages Router: Old (/pages/index.jsx)
+  → App Router: New (/app/page.jsx) — recommended
+  → New projects: Use App Router
 
-India mein: Almost default choice for React projects
+In India: Almost default choice for React projects
 ```
 
 ---
@@ -59,25 +59,25 @@ India mein: Almost default choice for React projects
 **Tag: 🟢 Growing | Web Standards | Different Philosophy**
 
 ```
-Kya hai: React meta framework — web fundamentals pe focus (forms, HTTP)
-Kab use karo:
-  → Web standards prefer karte ho
-  → Progressive enhancement chahiye (JS band ho toh bhi kaam kare)
-  → Forms-heavy apps
-  → Shopify use karta hai — enterprise credibility hai
+What it is: React meta framework — focused on web fundamentals (forms, HTTP)
+When to use:
+  → Prefer web standards
+  → Need progressive enhancement (works even if JS is off)
+  → Form-heavy apps
+  → Shopify uses it — enterprise credibility
 
-Next.js se fark:
-  → Remix: Web platform pe rely karta hai (native form actions, HTTP caching)
-  → Next.js: Custom solutions zyada (Server Actions, custom caching)
-  → Remix: Nested layouts better (ek page ke multiple loading states)
-  → Next.js: Ecosystem zyada bada
+Difference from Next.js:
+  → Remix: Relies on the web platform (native form actions, HTTP caching)
+  → Next.js: More custom solutions (Server Actions, custom caching)
+  → Remix: Better nested layouts (multiple loading states on one page)
+  → Next.js: Larger ecosystem
 
 Real app example:
   → Shopify Hydrogen (headless commerce)
-  → Remix.run ka apna site
+  → Remix's own site
 
-India mein: Growing — lekin Next.js dominant
-Kab consider: Already Next.js seekha → Explore Remix for different perspective
+In India: Growing — but Next.js dominant
+When to consider: Already learned Next.js → explore Remix for a different perspective
 ```
 
 ---
@@ -86,16 +86,16 @@ Kab consider: Already Next.js seekha → Explore Remix for different perspective
 **Tag: 🟢 Content Sites | Blogs | Zero JS by default**
 
 ```
-Kya hai: Content-first framework — HTML bhejta hai, JavaScript sirf jahan chahiye
-Kab use karo:
+What it is: Content-first framework — sends HTML, JavaScript only where needed
+When to use:
   → Blog, documentation site, marketing site, portfolio
-  → Content heavy, interactivity kam
-  → SEO critical, maximum performance chahiye
+  → Content heavy, low interactivity
+  → SEO critical, maximum performance needed
 
 Unique concept — Islands Architecture:
-  → Pura page static HTML
-  → Sirf interactive parts mein React/Vue/Svelte "islands" embed karo
-  → Result: Bahut fast — minimal JS
+  → Entire page is static HTML
+  → Only interactive parts get React/Vue/Svelte "islands" embedded
+  → Result: Very fast — minimal JS
 
 Real app example:
   → dev.to type blog
@@ -103,7 +103,7 @@ Real app example:
   → Company marketing sites
   → Indian developer portfolios
 
-Next.js se fark:
+Difference from Next.js:
   → Astro: Content sites, static-first, framework agnostic
   → Next.js: Apps, dynamic data, React-specific
 
@@ -113,27 +113,27 @@ Code feel:
   ---
   {posts.map(post => <PostCard {post} />)}  <!-- Zero JS unless needed -->
 
-Kab mat use karo:
+When NOT to use:
   → Complex web app (dashboard, e-commerce with lots of interactions)
-  → Next.js better tab
+  → Next.js better then
 ```
 
 ---
 
 ### Nuxt.js
-**Tag: 🟢 Vue Ecosystem | Vue ka Next.js**
+**Tag: 🟢 Vue Ecosystem | Vue's Next.js**
 
 ```
-Kya hai: Vue.js ka meta framework — Next.js jaisa lekin Vue mein
-Kab use karo:
-  → Vue.js use kar rahe ho
-  → React nahi chahiye
+What it is: Vue.js's meta framework — like Next.js but for Vue
+When to use:
+  → Using Vue.js
+  → Don't want React
 
-React ke saath irrelevant — lekin naam suno toh: "Vue ka Next.js" yaad rakho
+Irrelevant with React — but if you hear the name: "Vue's Next.js" — remember that
 
 Real app example:
   → Vue-based Indian projects (some fintech companies)
-  → GitLab ka frontend (historically)
+  → GitLab's frontend (historically)
 ```
 
 ---
@@ -142,15 +142,15 @@ Real app example:
 **Tag: 🔵 Svelte Ecosystem | Interesting | Niche**
 
 ```
-Kya hai: Svelte ka meta framework
-Svelte kya hai: React alternative — compile time framework, no virtual DOM
+What it is: Svelte's meta framework
+What is Svelte: React alternative — compile-time framework, no virtual DOM
 
-Kab use karo:
-  → Svelte seekhna chahte ho
+When to use:
+  → Want to learn Svelte
   → Performance-critical apps
 
-React/Next.js jaante ho → SvelteKit different mental model hai
-India mein: Very niche — mostly experimental projects
+Know React/Next.js → SvelteKit has a different mental model
+In India: Very niche — mostly experimental projects
 ```
 
 ---
@@ -159,10 +159,10 @@ India mein: Very niche — mostly experimental projects
 **Tag: 🔵 New | Growing | Worth watching**
 
 ```
-Kya hai: TanStack (React Query ke creators) ka meta framework
-Status: 2024 mein beta — production ready nahi abhi
+What it is: TanStack's (creators of React Query) meta framework
+Status: Beta in 2024 — not production ready yet
 Interesting because: TanStack Router + TanStack Query = seamless integration
-Watch karo — future mein relevant ho sakta hai
+Watch it — may become relevant in the future
 ```
 
 ---
@@ -179,7 +179,7 @@ Blog, documentation, marketing site?
 Vue project?
   → Nuxt.js
 
-Want different philosophy from Next.js?
+Want a different philosophy from Next.js?
   → Remix (worth learning)
 
 Want to explore?
@@ -188,17 +188,17 @@ Want to explore?
 
 ---
 
-## India Mein Reality
+## India Reality
 
 ```
 Startups / Product companies:  Next.js (90%+)
-Marketing / Blog sites:        Next.js ya Astro
+Marketing / Blog sites:        Next.js or Astro
 Agency work:                   Next.js (familiarity)
-Experimental:                  Remix ya SvelteKit
+Experimental:                  Remix or SvelteKit
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`08-backend-frameworks.md` — Backend Frameworks — Express, Fastify, Hono, NestJS — Zomato ka order service kaunse framework pe hoga, kab Express kab NestJS.
+`08-backend-frameworks.md` — Backend Frameworks — Express, Fastify, Hono, NestJS — which framework Zomato's order service would use, when Express when NestJS.

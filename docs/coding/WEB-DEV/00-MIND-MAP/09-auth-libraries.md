@@ -1,41 +1,41 @@
-# 09 — Auth Libraries: NextAuth, Clerk, Auth.js — Kab Kaunsa?
+# 09 — Auth Libraries: NextAuth, Clerk, Auth.js — Which One When?
 
-> Pichle docs mein humne authentication ka poora system khud banaya.
-> Ab ek important decision — **kab library use karein, kab khud banao?**
-> Yeh Authentication umbrella ka aakhri doc hai.
-
----
-
-## Humne Khud Kyun Banaya?
-
-Agar Clerk ya NextAuth 10 minutes mein sab solve kar deta hai — toh humne itna kyun padha?
-
-Kyunki jab tum library use karte ho bina andar samjhe — toh:
-- Kuch kaam nahi karta → pata nahi kyun
-- Customize karna hai → pata nahi kahan se shuru karein
-- Interview mein poochhte hain → "bas library use ki" ← yeh nahi chalega
-
-Ab jo tune seekha — woh **har library ke andar** hi hota hai. Tum ab samajhte ho library kya kar rahi hai.
+> In the previous docs we built the entire authentication system ourselves.
+> Now an important decision — **when to use a library, when to build it yourself?**
+> This is the last doc of the Authentication umbrella.
 
 ---
 
-## Teen Popular Options
+## Why Did We Build It Ourselves?
 
-### 1. Khud Banao (Jo Humne Kiya)
-**Kab:** Seekhna hai, full control chahiye, simple email/password hi kaafi hai
-**Pros:** Samajh aata hai, customize kar sakte ho
-**Cons:** Zyada code, security mistakes ho sakti hain
-**ShopKaro v1:** Yahi
+If Clerk or NextAuth can solve everything in 10 minutes — why did we spend so much time learning?
+
+Because when you use a library without understanding what's inside:
+- Something stops working → you don't know why
+- You need to customize → you don't know where to start
+- In an interview they ask → "I just used the library" ← that won't fly
+
+What you've learned now is **inside every library.** You now understand what the library is doing.
+
+---
+
+## Three Popular Options
+
+### 1. Build It Yourself (What We Did)
+**When:** You want to learn, you want full control, simple email/password is enough
+**Pros:** You understand it, you can customize
+**Cons:** More code, security mistakes are possible
+**ShopKaro v1:** This one
 
 ---
 
 ### 2. Auth.js / NextAuth
-**Kab:** OAuth providers chahiye (Google, GitHub), Next.js use kar rahe ho
-**Pros:** Multiple providers, flexible, free, Next.js ke saath perfect
-**Cons:** Config thoda complex, docs kabhi kabhi confusing
+**When:** You need OAuth providers (Google, GitHub), you're using Next.js
+**Pros:** Multiple providers, flexible, free, perfect with Next.js
+**Cons:** Config is a bit complex, docs can be confusing sometimes
 
 ```javascript
-// Sirf yeh karo — Google + GitHub + Email ready
+// Just do this — Google + GitHub + Email ready
 import NextAuth from 'next-auth'
 import Google from 'next-auth/providers/google'
 import GitHub from 'next-auth/providers/github'
@@ -46,30 +46,30 @@ export const { GET, POST } = NextAuth({
     Google({ clientId: "...", clientSecret: "..." }),
     GitHub({ clientId: "...", clientSecret: "..." }),
     Credentials({
-      // Apna email/password logic yahan
+      // Your email/password logic goes here
       async authorize(credentials) {
-        // bcrypt compare, user dhundo, return karo
+        // bcrypt compare, find user, return
       }
     })
   ]
 })
 ```
 
-**ShopKaro v2 mein** — Google login add karna ho toh NextAuth best choice.
+**In ShopKaro v2** — if you want to add Google login, NextAuth is the best choice.
 
 ---
 
 ### 3. Clerk
-**Kab:** Jaldi launch karna hai, UI bhi ready chahiye, team feature chahiye
-**Pros:** Poora UI ready (login page, signup page, profile page), multi-tenant support, magic links, MFA — sab out of the box
-**Cons:** Paid (free tier limited hai), less control, vendor lock-in
+**When:** You need to launch fast, you want ready-made UI, you need team features
+**Pros:** Full UI ready (login page, signup page, profile page), multi-tenant support, magic links, MFA — all out of the box
+**Cons:** Paid (free tier is limited), less control, vendor lock-in
 
 ```javascript
-// Clerk ke saath sirf yeh karo
+// With Clerk, you just do this
 import { SignIn } from '@clerk/nextjs'
 
 export default function LoginPage() {
-  return <SignIn />  // Poora login form ready — styling bhi
+  return <SignIn />  // Full login form ready — with styling
 }
 ```
 
@@ -84,45 +84,45 @@ export default async function Dashboard() {
 }
 ```
 
-**Kab use karein:** Startup, hackathon, jab time nahi hai auth pe — Clerk sab handle karta hai.
+**When to use it:** Startup, hackathon, when you don't want to waste time on auth — Clerk handles everything.
 
 ---
 
-## Decision Guide — ShopKaro Ke Liye
+## Decision Guide — For ShopKaro
 
 ```
-Kya seekhna hai auth andar se?
-  → Haan → Khud banao (ShopKaro v1)
+Do you want to learn auth from the inside?
+  → Yes → Build it yourself (ShopKaro v1)
 
-Kya Google/GitHub login chahiye?
-  → Haan → NextAuth
+Do you need Google/GitHub login?
+  → Yes → NextAuth
 
-Kya jaldi launch karna hai, auth pe time waste nahi karna?
-  → Haan → Clerk
+Do you need to launch fast, no time to spend on auth?
+  → Yes → Clerk
 
-Kya enterprise features chahiye (SSO, SAML, organizations)?
-  → Haan → Clerk ya WorkOS
+Do you need enterprise features (SSO, SAML, organizations)?
+  → Yes → Clerk or WorkOS
 ```
 
 ---
 
-## Ek Comparison Table
+## A Comparison Table
 
-| | Khud Banao | NextAuth | Clerk |
+| | Build Yourself | NextAuth | Clerk |
 |--|-----------|----------|-------|
-| Setup time | Ghante | 30 min | 10 min |
+| Setup time | Hours | 30 min | 10 min |
 | Learning | Maximum | Medium | Minimum |
 | Control | Full | High | Limited |
 | OAuth | Manual | Built-in | Built-in |
-| UI | Khud banao | Khud banao | Ready |
+| UI | Build yourself | Build yourself | Ready |
 | Cost | Free | Free | Freemium |
 | Best for | Learning | Production Next.js | Fast launch |
 
 ---
 
-## Authentication Umbrella — Complete Hua
+## Authentication Umbrella — Complete
 
-Ab tum Authentication umbrella ka poora map jaante ho:
+Now you know the full map of the Authentication umbrella:
 
 ```
 AUTHENTICATION
@@ -133,13 +133,13 @@ AUTHENTICATION
 ├── Cookies                          → Doc 06 ✓
 ├── OAuth                            → Doc 07 ✓
 ├── Email Verification + Reset       → Doc 08 ✓
-└── Libraries (NextAuth, Clerk)      → Doc 09 ✓ (YEH)
+└── Libraries (NextAuth, Clerk)      → Doc 09 ✓ (THIS)
 ```
 
-Jab bhi koi bole "Authentication karo" — ab tum jaante ho isके andar kya kya aata hai aur kab kya use karna hai.
+Whenever someone says "implement authentication" — you now know everything that's inside it and when to use what.
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`10-architecture-what-is-it.md` — Authentication poora hua. Ab dusra bada umbrella — **Architecture**. Matlab — tumhara project internally kaise organized hai? Folders, files, kaunsi cheez kahan jaati hai — yeh decisions kahin bhi nahi sikhaate, yahan sikhenge.
+`10-architecture-what-is-it.md` — Authentication is done. Now the second big umbrella — **Architecture**. How is your project organized internally? Folders, files, where does each thing go — these decisions aren't taught anywhere, we'll learn them here.

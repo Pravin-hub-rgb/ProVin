@@ -1,12 +1,12 @@
-# 22 — Data Models: ShopKaro Ka Poora Schema
+# 22 — Data Models: ShopKaro's Complete Schema
 
-> Pichle doc mein Prisma aur ORM samjha.
-> Ab ShopKaro ka **complete data model** — har table, har field, kyun.
-> Yeh ek reference doc hai.
+> Previous doc covered Prisma and ORM.
+> Now ShopKaro's **complete data model** — every table, every field, why.
+> This is a reference doc.
 
 ---
 
-## ShopKaro Ka Complete Prisma Schema
+## ShopKaro's Complete Prisma Schema
 
 ```prisma
 // prisma/schema.prisma
@@ -62,7 +62,7 @@ model PasswordResetToken {
 model Category {
   id       Int       @id @default(autoincrement())
   name     String    @unique
-  slug     String    @unique  // "mens-shoes" — URL mein use hoga
+  slug     String    @unique  // "mens-shoes" — used in URL
   products Product[]
 }
 
@@ -73,7 +73,7 @@ model Product {
   price       Float
   stock       Int       @default(0)
   imageUrl    String?
-  slug        String    @unique  // "nike-air-max-2024" — URL mein
+  slug        String    @unique  // "nike-air-max-2024" — in URL
   featured    Boolean   @default(false)
   categoryId  Int
   createdAt   DateTime  @default(now())
@@ -96,7 +96,7 @@ model CartItem {
   user      User    @relation(fields: [userId], references: [id])
   product   Product @relation(fields: [productId], references: [id])
 
-  @@unique([userId, productId])  // Ek user ek product ek baar cart mein
+  @@unique([userId, productId])  // One user, one product, once in cart
 }
 
 // ─── ORDER ──────────────────────────────────────────
@@ -120,7 +120,7 @@ model OrderItem {
   orderId   Int
   productId Int
   quantity  Int
-  price     Float   // Price at time of purchase — product price baad mein badal sakta hai
+  price     Float   // Price at time of purchase — product price can change later
 
   order     Order   @relation(fields: [orderId], references: [id])
   product   Product @relation(fields: [productId], references: [id])
@@ -140,26 +140,26 @@ enum OrderStatus {
 
 ---
 
-## Kuch Important Design Decisions
+## Some Important Design Decisions
 
-### OrderItem mein `price` kyun?
+### Why `price` in OrderItem?
 ```
-Product ki price kal ₹2999 thi → Priya ne kharida
-Aaj price ₹3499 ho gayi
+Product price was ₹2999 yesterday → Priya bought it
+Today price became ₹3499
 
-Agar OrderItem mein price store nahi kiya → Order history mein galat price dikhegi
-Isliye purchase time ki price OrderItem mein store karo
-```
-
-### Cart alag table kyun, session mein nahi?
-```
-Option 1: Cart localStorage mein → Browser clear = cart gone
-Option 2: Cart database mein → Priya laptop pe add kare, phone pe dekhe → Sab wahan
-
-ShopKaro → Database mein cart (better experience)
+If price isn't stored in OrderItem → Order history shows wrong price
+So store purchase-time price in OrderItem
 ```
 
-### Slug kya hai?
+### Why a separate cart table, not session?
+```
+Option 1: Cart in localStorage → Browser cleared = cart gone
+Option 2: Cart in database → Priya adds on laptop, sees on phone → All there
+
+ShopKaro → Cart in database (better experience)
+```
+
+### What is a slug?
 ```
 Product name: "Nike Air Max 2024"
 Slug: "nike-air-max-2024"
@@ -171,7 +171,7 @@ URL: /products/123  (not readable, bad SEO)
 
 ---
 
-## Tables Ka Relationship Map
+## Tables Relationship Map
 
 ```
 User
@@ -191,18 +191,18 @@ Order
 
 ---
 
-## Database Umbrella — Complete Hua
+## Database Umbrella — Complete
 
 ```
 DATABASE
 │
 ├── SQL vs NoSQL        → Doc 20 ✓
 ├── Prisma (ORM)        → Doc 21 ✓
-└── Data Models         → Doc 22 ✓ (YEH)
+└── Data Models         → Doc 22 ✓ (THIS)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`23-api-what-is-it.md` — Paanchwa bada umbrella — **API Design**. Frontend aur backend kaise baat karte hain? REST kya hai, endpoints kaise banate hain, request/response kaisa hota hai — yeh samjhenge.
+`23-api-what-is-it.md` — Fifth big umbrella — **API Design**. How do frontend and backend talk? What is REST, how to build endpoints, what request/response looks like — we'll understand.

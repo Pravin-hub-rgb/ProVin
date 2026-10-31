@@ -1,132 +1,132 @@
-# 02 — Authentication: Umbrella Kya Hai
+# 02 — Authentication: What Is the Umbrella
 
-> Pichle doc mein humne ShopKaro ka rough plan banaya.
-> Ab pehla bada umbrella — **Authentication**.
-> Yeh doc sirf overview hai — andar ki har cheez ke alag docs hain.
-
----
-
-## Authentication Kya Hai?
-
-Ek line mein: **"Yeh user kaun hai?" — yeh prove karna.**
-
-ShopKaro pe jab Priya aati hai aur bolti hai "main Priya hoon" — toh app ko kaise pata ki woh sach mein Priya hai? Koi aur toh nahi jo Priya ban ke aa raha?
-
-Yahi solve karta hai Authentication.
+> In the previous doc we made ShopKaro's rough plan.
+> Now the first big umbrella — **Authentication**.
+> This doc is just an overview — each thing inside has its own separate doc.
 
 ---
 
-## Authentication vs Authorization — Fark Kya Hai?
+## What Is Authentication?
 
-Yeh do words bohot confuse karte hain — ek baar clear kar lo:
+In one line: **proving "who this user is."**
 
-| | Matlab | ShopKaro Example |
-|--|--------|-----------------|
-| **Authentication** | "Tum kaun ho?" — Identity prove karna | Priya ne login kiya — haan, yeh Priya hai |
-| **Authorization** | "Tumhe kya karne ki permission hai?" — Access control | Priya apna hi order dekh sakti hai, kisi aur ka nahi |
+When Priya comes to ShopKaro and says "I'm Priya" — how does the app know she's really Priya and not someone pretending to be Priya?
 
-Pehle Authentication hoti hai, phir Authorization.
+That's what Authentication solves.
 
 ---
 
-## Authentication Umbrella Ke Andar Kya Kya Aata Hai
+## Authentication vs Authorization — What's the Difference?
+
+These two words confuse a lot of people — get them clear once:
+
+| | Meaning | ShopKaro Example |
+|--|---------|-----------------|
+| **Authentication** | "Who are you?" — proving identity | Priya logged in — yes, this is Priya |
+| **Authorization** | "What are you allowed to do?" — access control | Priya can only see her own orders, not someone else's |
+
+Authentication happens first, then Authorization.
+
+---
+
+## What's Inside the Authentication Umbrella
 
 ```
 AUTHENTICATION
 │
 ├── Password Hashing (bcrypt)
-│   → User ka password safe kaise store karein
+│   → How to store the user's password safely
 │
 ├── Sessions
-│   → Login ke baad user ko "yaad" kaise rakhein
+│   → How to "remember" the user after login
 │
 ├── JWT (JSON Web Tokens)
-│   → Sessions ka ek alternative tarika
+│   → An alternative to sessions
 │
 ├── Cookies
-│   → Session ya JWT ko browser tak kaise pohnchaayein
+│   → How to deliver the session or JWT to the browser
 │
 ├── OAuth
-│   → "Google se login karo" wala system
+│   → The "Login with Google" system
 │
 ├── Email Verification + Password Reset
-│   → Email pe link bhejna, token verify karna
+│   → Sending a link via email, verifying a token
 │
 └── Auth Libraries
     → NextAuth, Clerk, Auth.js — ready-made solutions
 ```
 
-ShopKaro mein hum **inhe sab use karenge** — ek ek karke samjhenge.
+In ShopKaro we'll **use all of these** — one at a time.
 
 ---
 
-## ShopKaro Ka Authentication Flow — Mota Mota
+## ShopKaro's Authentication Flow — Roughly
 
 ### Signup:
 ```
-1. Priya form fill karti hai → email + password
-2. Server password ko hash karta hai (bcrypt)
-3. Database mein save hota hai → email + hashed password
-4. Session create hoti hai
-5. Priya logged in hai ab
+1. Priya fills the form → email + password
+2. Server hashes the password (bcrypt)
+3. Saved in the database → email + hashed password
+4. Session is created
+5. Priya is now logged in
 ```
 
 ### Login:
 ```
-1. Priya email + password daalta hai
-2. Server database mein email dhundhta hai
-3. Password compare karta hai (bcrypt)
-4. Match → Session create karo → Cookie bhejo
-5. Priya logged in hai
+1. Priya enters email + password
+2. Server finds the email in the database
+3. Compares the password (bcrypt)
+4. Match → create Session → send Cookie
+5. Priya is logged in
 ```
 
-### Har Request:
+### Every Request:
 ```
-1. Priya koi page kholti hai
-2. Browser automatically cookie bhejta hai
-3. Server cookie check karta hai → "Haan yeh Priya hai"
-4. Data bhejta hai
+1. Priya opens a page
+2. Browser automatically sends the cookie
+3. Server checks the cookie → "Yes, this is Priya"
+4. Sends the data
 ```
 
 ### Logout:
 ```
-1. Priya logout dabati hai
-2. Server session delete karta hai
-3. Cookie clear hoti hai
-4. Priya logged out
+1. Priya clicks logout
+2. Server deletes the session
+3. Cookie is cleared
+4. Priya is logged out
 ```
 
 ---
 
-## Kya Kya Decisions Lene Hain ShopKaro Mein
+## Decisions to Make in ShopKaro
 
-**Decision 1 — Password kaise store karein?**
-- Plain text mein? ❌ (Kabhi nahi — agar database leak ho toh sab passwords expose)
-- Encrypted? (Reversible) — thoda better, lekin phir bhi risky
-- Hashed? (bcrypt) ✓ — Yahi karenge
+**Decision 1 — How to store the password?**
+- Plain text? ❌ (Never — if the DB leaks, all passwords are exposed)
+- Encrypted? (Reversible) — a bit better, but still risky
+- Hashed? (bcrypt) ✓ — This is what we'll do
 
-**Decision 2 — Login ke baad user ko kaise yaad rakhein?**
-- Sessions → Server pe store hota hai, cookie mein sirf ID
-- JWT → Sab kuch token mein hota hai, server pe kuch store nahi
+**Decision 2 — How to remember the user after login?**
+- Sessions → stored on the server, only the ID is in the cookie
+- JWT → everything is in the token, nothing stored on the server
 
-ShopKaro mein → **Sessions** use karenge (simple, beginner-friendly)
+In ShopKaro → we'll use **Sessions** (simple, beginner-friendly)
 
-**Decision 3 — Google/GitHub login chahiye?**
-- ShopKaro v1 mein nahi — sirf email/password
-- Baad mein add kar sakte ho → OAuth doc mein samjhenge
-
----
-
-## Ek Important Cheez
-
-Authentication ek aisa topic hai jahan **galti karna dangerous hota hai.**
-
-Agar tum galat tarike se passwords store karo ya sessions handle karo — user ka data unsafe ho sakta hai.
-
-Isliye yeh docs mein hum **kyun** bhi samjhenge — sirf "kaise" nahi.
+**Decision 3 — Is Google/GitHub login needed?**
+- Not in ShopKaro v1 — only email/password
+- Can be added later → we'll understand it in the OAuth doc
 
 ---
 
-## Agla Doc
+## One Important Thing
 
-`03-auth-password-hashing.md` — Priya ka password database mein kaise store hota hai? bcrypt kya hai, hashing kya hoti hai, aur plain text password kabhi kyun nahi store karna chahiye.
+Authentication is a topic where **making mistakes is dangerous.**
+
+If you store passwords the wrong way or handle sessions incorrectly — user data can become unsafe.
+
+That's why in these docs we'll understand the **why** too — not just the "how."
+
+---
+
+## Next Doc
+
+`03-auth-password-hashing.md` — How is Priya's password stored in the database? What is bcrypt, what is hashing, and why should a password never be stored in plain text.

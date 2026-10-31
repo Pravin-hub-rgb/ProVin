@@ -1,24 +1,24 @@
-02 mein humne dekha ki apna code modules mein baant sakte hain. Par ek asli sawaal bacha — **kya React Router, Express, zod jaise packages khud likhne padte hain?** Socho agar har project mein routing khud likhni ho, form validation khud banaani ho — toh ek project mein 2 mahine lagega aur sabka code alag hoga.
+In the previous file we saw that you can split your own code into modules. But one real question remains — **do you have to write packages like React Router, Express, zod yourself?** Imagine if every project needed routing written from scratch, form validation built from scratch — a project would take 2 months and everyone's code would be different.
 
-Solution? **Dusre developers ke bane packages use karo — bina khud likhe.** Aur un packages ko download karne ka manager hai **npm** (Node Package Manager).
+Solution? **Use packages other developers have built — without writing them yourself.** And the manager that downloads them is **npm** (Node Package Manager).
 
-## npm Kya Hai — Ek Line Mein
+## What Is npm — In One Line
 
-**npm** ek package manager hai — ek registry (online library) + command-line tool jo ready-made code packages ko download/install/update karta hai.
+**npm** is a package manager — an online registry (library) plus a command-line tool that downloads, installs, and updates ready-made code packages.
 
-Socho ek **mega kitchen warehouse** jahan har tarah ka ready-made ingredient milta hai. Tumhe pasta banane ke liye pasta khud banana nahi padta — warehouse se ready pasta laate ho. npm wahi warehouse hai JavaScript packages ka.
+Think of a **mega kitchen warehouse** where every kind of ready-made ingredient is available. You don't have to make pasta yourself to make pasta — you get ready pasta from the warehouse. npm is that warehouse for JavaScript packages.
 
-## Project Shuru — `npm init`
+## Starting a Project — `npm init`
 
-Har naya Node project `npm init` se shuru hota hai:
+Every new Node project starts with `npm init`:
 
 ```bash
 npm init -y
 ```
 
-`-y` matlab "haan, default answers se chalo" — nahi toh npm sawaal puchta hai (project name, version, description). Ye command ek **`package.json`** file banati hai.
+`-y` means "yes, go with default answers" — otherwise npm asks questions (project name, version, description). This command creates a **`package.json`** file.
 
-**`package.json` project ka identity card hai** — naam, version, dependencies, scripts sab yahan. Kuch aisa dikhta hai:
+**`package.json` is the project's identity card** — name, version, dependencies, scripts, all of it. It looks something like this:
 
 ```json
 {
@@ -34,21 +34,21 @@ npm init -y
 }
 ```
 
-## Package Install Karna — `npm install`
+## Installing a Package — `npm install`
 
-Ab koi package install karte hain. Example: ek **date formatting library** `date-fns`:
+Now install a package. Example: a **date formatting library** `date-fns`:
 
 ```bash
 npm install date-fns
 ```
 
-Kya hua?
-1. npm registry se package download hua
-2. `node_modules/` folder mein code aa gaya
-3. `package.json` ke `dependencies` mein entry add ho gayi
-4. `package-lock.json` ban gaya (exact versions ka record)
+What happened?
+1. The package was downloaded from the npm registry
+2. The code landed in the `node_modules/` folder
+3. An entry was added to `dependencies` in `package.json`
+4. `package-lock.json` was created (a record of exact versions)
 
-Ab code mein use karo:
+Now use it in code:
 
 ```javascript
 // app.js
@@ -57,43 +57,44 @@ import { format } from 'date-fns';
 console.log(format(new Date(), 'dd MMM yyyy'));  // 07 Aug 2026
 ```
 
-**Notice:** `import { format } from 'date-fns'` — bina `./` ke! Kyunki `date-fns` apni file nahi, ek **package** hai (node_modules se aata hai). Yahan `./` ka rule ulat jata hai — relative file = `./`, package = direct naam.
+**Notice:** `import { format } from 'date-fns'` — without `./`! Because `date-fns` is not your own file, it's a **package** (comes from node_modules). Here the `./` rule flips — relative file = `./`, package = direct name.
 
 ## Dependencies vs DevDependencies
 
-Do tarah ke packages hote hain:
+There are two kinds of packages:
 
 ```bash
-npm install express              # dependency — production mein bhi chahiye
-npm install -D nodemon           # devDependency — sirf development mein
+npm install express              # dependency — needed in production too
+npm install -D nodemon           # devDependency — only in development
 ```
 
 | | `dependencies` | `devDependencies` |
 |---|---|---|
-| Kab install karo | `npm install express` | `npm install -D nodemon` |
-| Kya hai | App chalne ke liye chahiye | Sirf development tools |
-| Example | express, react, zod | nodemon, typescript, eslint |
-| Production | Install hota hai | Install nahi hota |
+| How to install | `npm install express` | `npm install -D nodemon` |
+| What it is | Needed to run the app | Development tools only |
+| Examples | express, react, zod | nodemon, typescript, eslint |
+| Production | Installed | Not installed |
 
-**Example kyun:** `express` tumhara server hai — production mein bhi chalega. `nodemon` sirf dev mein file changes pe server restart karta hai — production mein koi use nahi.
+**Why the example:** `express` is your server — it runs in production too. `nodemon` only restarts the server on file changes during dev — no use in production.
 
-## `node_modules` — Kahan Code Aata Hai
+## `node_modules` — Where the Code Goes
 
-`npm install` se package code **`node_modules/`** folder mein download hota hai. Ye folder:
-- **Kabhi Git mein commit nahi karte** — kyunki hazaaron files hoti hain (kabhi 100MB+)
-- `.gitignore` mein daalte hain
-- **Kyun safe hai?** Kyunki `package.json` + `package-lock.json` se koi bhi `npm install` chala ke exact packages dobara la sakta hai
+Package code is downloaded into the **`node_modules/`** folder by `npm install`. This folder:
+
+- Is **never committed to Git** — it has thousands of files (sometimes 100MB+)
+- Goes in `.gitignore`
+- **Why it's safe:** anyone can recreate the exact packages from `package.json` + `package-lock.json` with `npm install`
 
 ```gitignore
 # .gitignore
 node_modules
 ```
 
-**Real relevance:** Jab tum Next.js project banate ho (`create-next-app`), toh wo package.json, node_modules, aur dependencies sab setup kar deta hai. React Router, Tailwind, zod — sab npm se hi aate hain. `npm install <package>` React course mein bhi har jagah use kiya tha — ab tumhe pata hai peeche kya hota hai.
+**Real relevance:** When you create a Next.js project (`create-next-app`), it sets up package.json, node_modules, and all dependencies for you. React Router, Tailwind, zod — all of them come via npm. You've used `npm install <package>` throughout the React course — now you know what happens behind it.
 
-## Scripts — Apne Commands Shortcut Karna
+## Scripts — Shortcutting Your Commands
 
-`package.json` mein `scripts` section se commands ko shortcut bana sakte hain:
+The `scripts` section in `package.json` lets you create shortcuts for commands:
 
 ```json
 {
@@ -105,68 +106,68 @@ node_modules
 ```
 
 ```bash
-npm run dev     # nodemon index.js chalega
-npm start       # node index.js chalega
+npm run dev     # runs nodemon index.js
+npm start       # runs node index.js
 ```
 
-**`npm start`** aur **`npm run dev`** — ye wahi commands hain jo Next.js mein `npm run dev`/`npm run build` hote hain. Har framework apne scripts package.json mein define karta hai.
+**`npm start`** and **`npm run dev`** — these are the same commands you use in Next.js as `npm run dev`/`npm run build`. Every framework defines its own scripts in package.json.
 
 ## Common Mistakes
 
-- ❌ `node_modules` ko Git commit karna — ye folder hazaaron files ka hai aur package.json se dobara banta hai. `.gitignore` mein daalo.
-- ❌ `npm install` ke bina project run karna — agar node_modules nahi hai, `npm install` pehle chalao.
-- ❌ Package ka naam galat likhna (`datefns` bina dash ke) — npm error dega "not found". Sahi naam registry mein check karo.
-- ❌ Production package ko `-D` se install karna — jo runtime chahiye wo `dependencies` mein hona chahiye.
-- ❌ `package-lock.json` delete karna — isme exact versions locked hain. Isse same versions reproducibility aati hai. Handle pe rakh lo.
+- ❌ Committing `node_modules` to Git — it's a huge folder and packages can be recreated from package.json. Put it in `.gitignore`.
+- ❌ Running the project without `npm install` — if node_modules is missing, run `npm install` first.
+- ❌ Wrong package name (`datefns` without the dash) — npm throws "not found". Check the correct name in the registry.
+- ❌ Installing a production package with `-D` — anything needed at runtime belongs in `dependencies`.
+- ❌ Deleting `package-lock.json` — it locks exact versions. Keep it for reproducibility.
 
 ## In Your Own Words
 
-1. npm kya karta hai?
+1. What does npm do?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** npm ek package manager hai — ek registry + tool jo ready-made JavaScript packages download/install/update karta hai. `npm install <package>` se dependency project mein aa jaati hai.
+**Answer:** npm is a package manager — a registry + tool that downloads, installs, and updates ready-made JavaScript packages. `npm install <package>` brings a dependency into your project.
 
 </details>
 
-2. `package.json` ki kya role hai?
+2. What is the role of `package.json`?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Ye project ka identity card hai — naam, version, dependencies (kaunse packages), aur scripts (npm run dev jaise commands) sab yahan. Isi se npm jaanta hai kya install karna hai.
+**Answer:** It's the project's identity card — name, version, dependencies (which packages), and scripts (commands like npm run dev). npm uses it to know what to install.
 
 </details>
 
-3. `node_modules` ko Git mein commit kyun nahi karte?
+3. Why don't we commit `node_modules` to Git?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Kyunki ye hazaaron files ka bada folder hai aur isse `package.json` + `package-lock.json` se koi bhi `npm install` chala ke dobara bana sakta hai. Commit karne se repo bhara jata hai bina kisi fayde ke.
+**Answer:** Because it's a huge folder of thousands of files, and anyone can recreate it by running `npm install` using `package.json` + `package-lock.json`. Committing it just bloats the repo for no benefit.
 
 </details>
 
-4. `dependencies` aur `devDependencies` mein kya fark hai?
+4. What's the difference between `dependencies` and `devDependencies`?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** `dependencies` app ko production mein chalne ke liye chahiye (express, react). `devDependencies` sirf development tools hain (nodemon, typescript) jo production mein install nahi hote. `npm install -D` se devDependency add hoti hai.
+**Answer:** `dependencies` are needed to run the app in production (express, react). `devDependencies` are development-only tools (nodemon, typescript) that aren't installed in production. Add a devDependency with `npm install -D`.
 
 </details>
 
 ## What It Is NOT
 
-⚠️ **npm = Node ke saath hi aata hai, alag install nahi karna.** Node install karte hi npm saath aa jata hai. `npm -v` se version check karo.
+⚠️ **npm comes with Node — you don't install it separately.** Installing Node brings npm along. Check the version with `npm -v`.
 
-⚠️ **`node_modules` delete karna safe hai (agar `.gitignore` mein hai).** `npm install` se dobara aa jata hai. Kuch log "node_modules delete karke reinstall karo" bolte hain — ye purani problem solve karne ka common trick hai.
+⚠️ **Deleting `node_modules` is safe (if it's in `.gitignore`).** `npm install` recreates it. "Delete node_modules and reinstall" is a common trick to fix old problems.
 
-⚠️ **npm = sirf "dependencies install" nahi.** Scripts (npm run), package management, versions, publishing — sab isi ka kaam hai. React course mein jo bhi `npm install` kiya, npm hi tha.
+⚠️ **npm is NOT only "installing dependencies".** Scripts (npm run), package management, versioning, publishing — all of that is npm's job. Everything you did with `npm install` in the React course was npm.
 
-⚠️ **`package.json` manually edit karna galat nahi, par carefully.** Dependencies ko npm commands se add/remove karna safest hai — npm lock file bhi sync karta hai.
+⚠️ **Manually editing `package.json` isn't wrong, but be careful.** Adding/removing dependencies via npm commands is safest — npm keeps the lock file in sync.
 
 ---
 
-Ab tumhare paas packages ka raasta hai. Par ek aur zaroori cheez bacha hai — **Node single-threaded hota hai, phir bhi multiple kaam ek saath kaise karta hai?** Yehi **Event Loop** hai — sabse samajhne wala par sabse important concept. Agla topic. Chal karte hain.
+Now you have a path to packages. But one more important thing remains — **Node is single-threaded, so how does it handle so many requests at once?** That's the **Event Loop** — the most important concept to understand. Next topic. Let's go.

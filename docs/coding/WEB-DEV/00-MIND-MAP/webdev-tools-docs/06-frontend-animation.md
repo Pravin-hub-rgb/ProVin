@@ -1,19 +1,19 @@
 # 06 — Animation: Framer Motion, GSAP, CSS Animations
 
 > Umbrella: Frontend → Animation
-> Kaam: Motion, transitions, interactions — app feel smooth aur alive
+> Purpose: Motion, transitions, interactions — making the app feel smooth and alive
 
 ---
 
-## Yeh Category Kya Solve Karti Hai
+## What This Category Solves
 
-Animation sirf "nice to have" nahi — yeh **UX communicate karta hai**:
+Animation isn't just "nice to have" — it **communicates UX**:
 - Button click → Loading animation → Done
 - Modal open/close → Smooth transition
 - Page change → Fade in
-- Cart item add → Bounce animation
+- Cart item added → Bounce animation
 
-Bina animation → App lifeless lagti hai. Too much animation → Annoying.
+Without animation → app feels lifeless. Too much animation → annoying.
 
 ---
 
@@ -25,14 +25,14 @@ Bina animation → App lifeless lagti hai. Too much animation → Annoying.
 **Tag: 🟢 Built-in | Simple Cases | No Install**
 
 ```
-Kab use karo:
+When to use:
   → Simple hover effects
   → Fade in/out
   → Loading spinners
   → Button states
 
 Code feel:
-  /* Tailwind se */
+  /* With Tailwind */
   <button className="transition-colors duration-200 hover:bg-blue-600">
   <div className="animate-spin">  /* Built-in spinner */
   <div className="animate-pulse">  /* Skeleton loading */
@@ -42,10 +42,10 @@ Code feel:
   .card:hover { transform: translateY(-4px); }
 
 Real app example:
-  → ShopKaro: Button hover effects, skeleton loading → CSS animations kaafi
+  → ShopKaro: Button hover effects, skeleton loading → CSS animations enough
   → Swiggy: Simple hover cards → CSS transitions
 
-Kab kaafi nahi:
+When not enough:
   → Complex sequences
   → Gesture-based (drag, swipe)
   → Scroll-triggered animations
@@ -58,8 +58,8 @@ Kab kaafi nahi:
 **Tag: 🟢 Most Popular React Animation | Recommended**
 
 ```
-Kya hai: React ke liye animation library — declarative, powerful
-Kab use karo:
+What it is: Animation library for React — declarative, powerful
+When to use:
   → React/Next.js project
   → Page transitions, modal animations
   → Drag and drop
@@ -67,7 +67,7 @@ Kab use karo:
   → List item add/remove animations
 
 Real app example:
-  → Swiggy: Cart item add hone pe bounce animation
+  → Swiggy: Bounce animation when cart item added
   → Zomato: Restaurant card hover — lift effect
   → CRED: Premium feel — buttery smooth transitions
   → Razorpay checkout: Payment success animation
@@ -99,16 +99,16 @@ Code feel:
   </AnimatePresence>
 
 Pros:
-  → Declarative — HTML attributes se animation
+  → Declarative — animation via HTML attributes
   → Gesture support (drag, pan, hover)
-  → AnimatePresence — exit animations (jab element remove ho tab bhi animate)
-  → Layout animations — element reposition smoothly
+  → AnimatePresence — exit animations (animates even when element removed)
+  → Layout animations — element repositions smoothly
 
 Cons:
   → Bundle size: ~45KB
-  → Complex cases mein learning curve
+  → Learning curve for complex cases
 
-India mein: Premium feel wali apps mein standard
+In India: Standard in apps wanting premium feel
 ```
 
 ---
@@ -117,20 +117,20 @@ India mein: Premium feel wali apps mein standard
 **Tag: 🟢 Complex Animations | Marketing Sites | Industry Pro**
 
 ```
-Kya hai: Most powerful JavaScript animation library — framework-agnostic
-Kab use karo:
+What it is: Most powerful JavaScript animation library — framework-agnostic
+When to use:
   → Complex scroll-based storytelling (landing pages)
   → SVG animations
-  → Timeline-based animations (sequence)
+  → Timeline-based animations (sequences)
   → Marketing/portfolio sites
-  → Animations jo Framer Motion se nahi hoti
+  → Animations not possible with Framer Motion
 
 Real app example:
-  → Apple ka website (iPhone launch pages)
-  → Stripe ka landing page
-  → Indian ed-tech companies ki marketing sites (fancy animations)
+  → Apple's website (iPhone launch pages)
+  → Stripe's landing page
+  → Indian ed-tech companies' marketing sites (fancy animations)
 
-Framer Motion se fark:
+Difference from Framer Motion:
   → GSAP: More powerful, complex timelines, framework-agnostic
   → Framer Motion: React-specific, declarative, easier for UI animations
 
@@ -146,11 +146,11 @@ Code feel:
     .from('.nav', { y: -50 })
     .from('.hero', { scale: 0.8 })
 
-Kab mat use karo:
+When NOT to use:
   → Simple UI animations — Framer Motion better
-  → Next.js SSR apps mein setup complex
+  → SSR apps in Next.js — setup complex
 
-India mein: Agency work, marketing sites, ed-tech landing pages
+In India: Agency work, marketing sites, ed-tech landing pages
 ```
 
 ---
@@ -159,13 +159,13 @@ India mein: Agency work, marketing sites, ed-tech landing pages
 **Tag: 🟡 Physics-based | Was popular 2020-21**
 
 ```
-Kya hai: Physics-based animations — spring (bouncy) feel
-Kab use karo:
+What it is: Physics-based animations — spring (bouncy) feel
+When to use:
   → Existing React Spring codebase
-  → Physics-based feel chahiye specifically
+  → Specifically need physics-based feel
 
-Status: Framer Motion ne zyada popularity le li
-Framer Motion mein bhi spring animations hain
+Status: Framer Motion took more popularity
+Framer Motion also has spring animations
 ```
 
 ---
@@ -174,16 +174,16 @@ Framer Motion mein bhi spring animations hain
 **Tag: 🔵 After Effects files | Specific use case**
 
 ```
-Kya hai: Adobe After Effects animations → Web/Mobile pe play karo
-Kab use karo:
-  → Designer ne After Effects mein complex animation banaya
-  → Onboarding illustrations animate karne hain
+What it is: Play Adobe After Effects animations on Web/Mobile
+When to use:
+  → Designer created a complex animation in After Effects
+  → Animate onboarding illustrations
   → Success/Error animations (check mark, X mark)
 
 Real app example:
-  → Phonepe ka payment success animation (spinning coin)
-  → CRED ka reward animation
-  → Swiggy ka "Order Placed" animation
+  → PhonePe's payment success animation (spinning coin)
+  → CRED's reward animation
+  → Swiggy's "Order Placed" animation
 
 Workflow:
   Designer → After Effects → Lottie export (.json) → Developer → lottie-react
@@ -194,9 +194,9 @@ Code feel:
 
   <Lottie animationData={successAnimation} loop={false} />
 
-Kab useful nahi:
-  → Designer nahi hai ya After Effects nahi
-  → Simple animations — CSS ya Framer Motion better
+When not useful:
+  → No designer or no After Effects
+  → Simple animations — CSS or Framer Motion better
 ```
 
 ---
@@ -213,26 +213,26 @@ React app, UI animations (modals, lists, page transitions)?
 Complex scroll storytelling, marketing site?
   → GSAP
 
-Designer ne After Effects mein banaya?
+Designer created it in After Effects?
   → Lottie
 
 Physics/bouncy feel?
-  → Framer Motion (spring option hai)
+  → Framer Motion (has spring option)
 ```
 
 ---
 
-## India Mein Reality
+## India Reality
 
 ```
 Startup apps:        Framer Motion (premium feel)
 Marketing sites:     GSAP (agency work)
-Simple apps:         CSS animations kaafi
+Simple apps:         CSS animations enough
 Fintech/Payments:    Lottie (success animations) + Framer Motion
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`07-frontend-frameworks.md` — Meta Frameworks — Next.js, Remix, Astro, Nuxt — kab Next.js, kab Astro, kab Remix — industry mein kya chal raha hai.
+`07-frontend-frameworks.md` — Meta Frameworks — Next.js, Remix, Astro, Nuxt — when Next.js, when Astro, when Remix — what's trending in the industry.

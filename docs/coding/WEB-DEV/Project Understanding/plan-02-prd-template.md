@@ -1,11 +1,11 @@
 # 📋 Plan Phase — Doc 2: PRD Template (Blank)
-### Har Naye Project Ke Liye — Copy Karo, Fill Karo
+### For Every New Project — Copy, Fill
 
 ---
 
-> Ye template hai jo har project shuru karne se pehle fill karna hai.
-> Copy karo, rename karo `prd-[project-name].md`, aur fill karo.
-> 20-30 minute lagao isme — baad mein ghanton ka confusion bachega.
+> This is a template to fill before starting any project.
+> Copy it, rename it to `prd-[project-name].md`, and fill it in.
+> Spend 20-30 minutes on this — it'll save hours of confusion later.
 
 ---
 
@@ -17,7 +17,7 @@ PROJECT NAME     : ___________________________________
 TYPE             : [ ] Web App   [ ] SaaS   [ ] Tool   [ ] Dashboard
                    [ ] E-commerce   [ ] Portfolio   [ ] Other: _______
 
-ONE LINE         : "Ye ek _______ hai jo _______ ke liye _______ karta hai."
+ONE LINE         : "This is a _______ that does _______ for _______."
 
 DEADLINE         : ___________________________________
 
@@ -30,30 +30,30 @@ SOLO / TEAM      : [ ] Solo   [ ] Team (size: ___)
 
 ```
 PRIMARY USER     : ___________________________________
-  Kaun hai?      : ___________________________________
+  Who is it?     : ___________________________________
   Technical?     : [ ] Yes   [ ] No   [ ] Mixed
   Use case?      : ___________________________________
 
-SECONDARY USER   : ___________________________________ (agar hai)
-  Kaun hai?      : ___________________________________
+SECONDARY USER   : ___________________________________ (if any)
+  Who is it?     : ___________________________________
 ```
 
 **Example:**
 ```
 PRIMARY USER     : Small business owners
-  Kaun hai?      : Kirana shop, boutique — 1-5 employees
+  Who is it?     : Kirana shop, boutique — 1-5 employees
   Technical?     : No
-  Use case?      : Apni inventory track karna, sales dekhna
+  Use case?      : Track their inventory, see sales
 
-SECONDARY USER   : Shop ka manager
-  Kaun hai?      : Owner ka trusted employee
+SECONDARY USER   : Shop manager
+  Who is it?     : Owner's trusted employee
 ```
 
 ---
 
 ## ✅ Core Features — MVP (Must Have)
 
-> Rule: Agar ye nahi hai toh app kaam nahi karta.
+> Rule: If this isn't there, the app doesn't work.
 
 ```
 FEATURE 1: ___________________________________
@@ -81,7 +81,7 @@ FEATURE 5: ___________________________________
 
 ## 🔮 Stretch Features — V2 (Nice to Have)
 
-> Rule: App inke bina bhi deliver kiya ja sakta hai.
+> Rule: The app can be delivered without these.
 
 ```
 [ ] ___________________________________
@@ -94,7 +94,7 @@ FEATURE 5: ___________________________________
 
 ## 🚫 Out of Scope
 
-> Rule: Explicitly likho kya NAHI banana. Ye scope creep rokta hai.
+> Rule: Explicitly write what NOT to build. This prevents scope creep.
 
 ```
 ❌ ___________________________________
@@ -106,7 +106,7 @@ FEATURE 5: ___________________________________
 
 ## 🏗️ Architecture Decisions
 
-> Har decision ke saath **reason** likho — sirf tool naam nahi.
+> Write the **reason** along with every decision — not just the tool name.
 
 ```
 FRAMEWORK        : ___________________________________
@@ -189,11 +189,11 @@ ROLES:
   Role 2: _____________ → Can: _________________ | Cannot: _________________
   Role 3: _____________ → Can: _________________ | Cannot: _________________
 
-PUBLIC ROUTES    : (login na hone pe bhi accessible)
+PUBLIC ROUTES    : (accessible without login)
   → ___________________________________
   → ___________________________________
 
-PROTECTED ROUTES : (login zaroor)
+PROTECTED ROUTES : (login required)
   → ___________________________________
   → ___________________________________
 ```
@@ -238,7 +238,7 @@ PHASE 3 — STRETCH:
 ## 🎯 Success Criteria
 
 ```
-Project complete hoga jab:
+Project is complete when:
 [ ] ___________________________________
 [ ] ___________________________________
 [ ] ___________________________________
@@ -253,32 +253,32 @@ Performance targets (optional):
 
 ## 🎙️ Interview Prep (STAR Method — Fill After Building)
 
-> Ye section project build hone ke BAAD fill karo.
-> Interview mein direct use karo.
+> Fill this section AFTER building the project.
+> Use it directly in the interview.
 
 ```
 SITUATION:
-"Maine [project type] banaya — [one line description].
- Problem ye tha ki [target user] ko [pain point] face karna padta tha."
+"I built [project type] — [one line description].
+ The problem was that [target user] had to face [pain point]."
 
 TASK:
-"Mujhe ek [solution] banana tha jo [requirements] fulfill kare.
- Scope mein ye features the: [MVP features].
- Maine consciously [X] out of scope rakha kyunki [reason]."
+"I had to build a [solution] that fulfills [requirements].
+ The scope included these features: [MVP features].
+ I consciously kept [X] out of scope because [reason]."
 
 ACTION (Technical Decisions):
-"Maine [framework] choose kiya kyunki [reason].
- State management ke liye [tool] use kiya kyunki [reason].
- Ek interesting challenge tha [describe challenge] —
- maine [approach A] aur [approach B] evaluate kiya,
- aur [approach A] choose kiya kyunki [reason]."
+"I chose [framework] because [reason].
+ For state management I used [tool] because [reason].
+ An interesting challenge was [describe challenge] —
+ I evaluated [approach A] and [approach B],
+ and chose [approach A] because [reason]."
 
 RESULT:
-"Final app mein [key features] the.
- [Specific metric ya outcome] achieve kiya.
- Agar dobara karta toh [reflection] differently karta."
+"Final app had [key features].
+ Achieved [specific metric or outcome].
+ If I did it again, I'd handle [reflection] differently."
 ```
 
 ---
 
-**Next Doc →** `plan-03-architecture-cheatsheet.md` — Quick reference: kaunsi situation mein kaunsa tool.
+**Next Doc →** `plan-03-architecture-cheatsheet.md` — Quick reference: which tool in which situation.

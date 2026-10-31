@@ -1,24 +1,24 @@
-06 mein humne raw HTTP server banaya aur dekha — har code change pe restart karna padta hai. Aur ek cheez jo humne abhi tak chhupayi hai — **API keys aur database URLs code mein hardcode nahi karne chahiye.**
+In the previous file we built a raw HTTP server and saw — you have to restart on every code change. And one more thing we've been hiding — **API keys and database URLs should not be hardcoded in code.**
 
-Socho agar tumne DukaanOS mein Supabase URL aur trading bot mein Upstox API keys code mein daal di hain, aur GitHub pe push kar diya — toh koi bhi tumhara code dekh ke tumhari secrets chura sakta hai. Iska fix hai **environment variables** (`.env`).
+Imagine you put the Supabase URL in DukaanOS and the Upstox API keys in your trading bot directly in code, and pushed to GitHub — anyone reading your code could steal your secrets. The fix is **environment variables** (`.env`).
 
-## Secret Hardcode Karna Galat Kyun
+## Why Hardcoding Secrets Is Wrong
 
 ```javascript
-// ❌ GALAT — secret code mein
+// ❌ WRONG — secret in code
 const DATABASE_URL = "postgresql://admin:password123@db.example.com:5432/mydb";
 ```
 
-Problem:
-- GitHub pe push karo → secret public ho gaya
-- Production aur development ka alag connection chahiye → code badalna padega
-- Kisi aur ko code do → tumhara database password mil gaya
+Problems:
+- Push to GitHub → the secret goes public
+- Production and development need different connections → you'd have to change code
+- Give the code to someone → they get your database password
 
-## Environment Variables — `.env` File
+## Environment Variables — The `.env` File
 
-Sensitive/config values ko alag file mein rakho — **`.env`** — jo code mein nahi hoti, environment se aati hai.
+Keep sensitive/config values in a separate file — **`.env`** — which isn't in the code; it comes from the environment.
 
-**Step 1:** `.env` file banao (project root mein):
+**Step 1:** Create a `.env` file (in the project root):
 
 ```bash
 # .env
@@ -27,7 +27,7 @@ API_KEY=secret123
 PORT=3000
 ```
 
-**Step 2:** Code mein `process.env` se read karo:
+**Step 2:** Read it in code via `process.env`:
 
 ```javascript
 // server.js
@@ -35,37 +35,37 @@ console.log(process.env.DATABASE_URL);
 console.log(process.env.API_KEY);
 ```
 
-**Kya hua:** `.env` file load hui (Node 20+ mein `--env-file` flag, ya `dotenv` package se), values `process.env` mein aa gayi, aur code se access ki.
+**What happened:** The `.env` file got loaded (via the `--env-file` flag in Node 20+, or via the `dotenv` package), the values landed in `process.env`, and the code accessed them.
 
-Node 20+ mein built-in:
+Node 20+ has it built in:
 
 ```bash
 node --env-file=.env server.js
 ```
 
-Ya `dotenv` package se (jo Next.js/Express projects mein common hai):
+Or via the `dotenv` package (common in Next.js/Express projects):
 
 ```bash
 npm install dotenv
 ```
 
 ```javascript
-require('dotenv').config();  // .env load karo
+require('dotenv').config();  // load .env
 ```
 
-## Yeh Values Kahan Se Aati Hain
+## Where Do These Values Come From
 
-Environment variables **code se alag** rehti hain — wo environment se milti hain:
+Environment variables **live outside the code** — they come from the environment:
 
-| Environment | Kahan se value |
+| Environment | Where the value comes from |
 |---|---|
-| Tumhara local machine | `.env` file |
+| Your local machine | `.env` file |
 | Vercel/Production | Vercel dashboard (Settings → Environment Variables) |
 | CI/CD (GitHub Actions) | GitHub secrets |
 
-**Same code, alag values.** Code mein `process.env.DATABASE_URL` likho — local mein apna DB, production mein production DB. Code change nahi karna padta.
+**Same code, different values.** Write `process.env.DATABASE_URL` in the code — local gets your DB, production gets the production DB. No code change needed.
 
-**Important:** `.env` file kabhi Git mein commit nahi karni:
+**Important:** The `.env` file is never committed to Git:
 
 ```gitignore
 # .gitignore
@@ -73,21 +73,21 @@ node_modules
 .env
 ```
 
-`.env.example` (bina real values ke) commit karte hain — taaki team ko pata ho kaunsi variables chahiye:
+Commit `.env.example` (without real values) — so the team knows which variables are needed:
 
 ```bash
-# .env.example (safe, commit karo)
+# .env.example (safe, commit this)
 DATABASE_URL=your-database-url-here
 API_KEY=your-api-key-here
 ```
 
-## Ye Tum Pehle Se Use Kar Rahe Ho
+## You're Already Using This
 
-Tumhara **DukaanOS** (Supabase URL/keys), **trading bot** (Upstox API keys) — wo sab `.env` mein hote hain. **Next.js** mein `NEXT_PUBLIC_` prefixed vars client ko dikhte hain, bina prefix ke sirf server pe rehte hain (Batch 7 security mein detail). Ab tumhe pata hai — *kyun* `.env` use karte hain: code alag, secrets alag, har environment apni values.
+Your **DukaanOS** (Supabase URL/keys) and **trading bot** (Upstox API keys) — all of that lives in `.env`. **Next.js** has `NEXT_PUBLIC_` prefixed vars visible to the client, while unprefixed ones stay server-only (detailed in Batch 7 security). Now you know **why** `.env` is used: code separate, secrets separate, each environment its own values.
 
-## Scripts + Nodemon — Restart Ki Takleef Khatam
+## Scripts + Nodemon — Ending the Restart Pain
 
-06 mein notice kiya tha — server change pe restart karna padta hai. Isko solve karta hai **nodemon** (development tool):
+Notice from file 06 — you have to restart the server on every code change. **nodemon** (a dev tool) solves this:
 
 ```bash
 npm install -D nodemon
@@ -102,105 +102,105 @@ npm install -D nodemon
 }
 ```
 
-Ab:
+Now:
 
 ```bash
 npm run dev
 ```
 
-`nodemon` file changes pe **automatically server restart** kar deta hai — Ctrl+C aur `node server.js` ki zaroorat nahi. Tum `server.js` save karo, woh khud restart hoke naya code run karta hai.
+`nodemon` **automatically restarts the server on file changes** — no need for Ctrl+C and `node server.js`. You save `server.js`, and it restarts and runs the new code on its own.
 
-> **Ye Next.js ke `npm run dev` jaisa hi concept hai** — hot reload. Next.js mein bhi file save karte hi page refresh hota hai. Framework wahi convenience built-in deta hai.
+> **This is the same concept as Next.js's `npm run dev`** — hot reload. In Next.js too, the page refreshes when you save a file. The framework gives the same convenience built in.
 
-## The Bridge — Raw Node se Next.js Tak
+## The Bridge — From Raw Node to Next.js
 
-Ab tumne sab kuch manual dekha hai. Ab ek quick mental bridge banao — **raw Node ka kaam Next.js kaise automate karta hai:**
+Now you've seen everything manually. Build a quick mental bridge — **how does Next.js automate raw Node's manual work:**
 
-| Raw Node (abhi kiya) | Next.js (aage use hoga) |
+| Raw Node (what we just did) | Next.js (what you'll use next) |
 |---|---|
-| Routing `if (req.url === '/')` | **File-based routing** — folder + `page.tsx` = route |
-| `res.end(JSON.stringify(...))` manual | API routes / Server Actions built-in |
-| `require`/`import` modules | Wahi modules system |
-| Async `await fetch()` manual | Server Components mein direct `await fetch()` |
-| `.env` manually (`dotenv`) | Next.js `.env` built-in support |
+| Routing with `if (req.url === '/')` | **File-based routing** — folder + `page.tsx` = route |
+| Manual `res.end(JSON.stringify(...))` | API routes / Server Actions built in |
+| `require`/`import` modules | Same module system |
+| Manual async `await fetch()` | Direct `await fetch()` in Server Components |
+| Manual `.env` (`dotenv`) | Next.js has `.env` support built in |
 | `nodemon` auto-restart | `npm run dev` hot reload |
 
-**Asli baat:** Next.js mein jo "magic" dikhta hai (folder = route, server components, API routes), uska seedha connection raw Node ke in manual kaam se hai. Ab jab Next.js course mein routing ya data fetching dekho, samjho — *"yeh wahi hai jo raw Node mein if/else aur JSON.stringify se karta tha, bas framework ne automate kar diya."*
+**The real point:** The "magic" you see in Next.js (folder = route, server components, API routes) connects directly to this manual work in raw Node. Now when you see routing or data fetching in the Next.js course, you'll think — *"this is the same thing I did with if/else and JSON.stringify in raw Node, just automated by the framework."*
 
 ## Quick Revision Checklist
 
-- [ ] Node.js kya hai, browser se alag kyun hai
-- [ ] `require` vs `import/export` — dono syntax likh sakte ho
-- [ ] npm, `package.json`, `node_modules`, `.gitignore` ka role
-- [ ] Event Loop — single-threaded but non-blocking kyun
-- [ ] Callback → Promise → async/await — teeno likh sakte ho
-- [ ] Raw `http` module se server bana sakte ho
-- [ ] `.env` file kyun use karte hain
-- [ ] Bridge — "raw Node ka manual kaam Next.js kaise automate karta hai"
+- [ ] What Node.js is and why it's different from the browser
+- [ ] `require` vs `import/export` — you can write both
+- [ ] npm, `package.json`, `node_modules`, `.gitignore` roles
+- [ ] Event Loop — why single-threaded but non-blocking
+- [ ] Callback → Promise → async/await — all three
+- [ ] Raw `http` module server
+- [ ] Why `.env` is used
+- [ ] Bridge — "how raw Node's manual work is automated by Next.js"
 
 ## Common Mistakes
 
-- ❌ `.env` ko Git commit karna — secrets leak. `.gitignore` mein daalo, `.env.example` commit karo.
-- ❌ Secret ko `console.log` karke debug karna aur bhoolna — log files mein secret reh gaya. Production logs se bachao.
-- ❌ `.env` mein spaces/quotes galat lagana (`API_KEY = x` vs `API_KEY=x`) — kuch parsers strict hain. Bina spaces, bina quotes likho.
-- ❌ `.env` ko change karke server restart na karna — dotenv startup pe load karta hai. Change ke baad restart zaroori (nodemon auto karega).
-- ❌ Production secrets ko bhi `process.env` ki jagah code mein daalna — `.env`/environment hi sahi jagah hai.
+- ❌ Committing `.env` to Git — secrets leak. Put it in `.gitignore`, commit `.env.example`.
+- ❌ Debugging by `console.log`-ing a secret and forgetting — the secret stays in log files. Keep secrets out of production logs.
+- ❌ Wrong spaces/quotes in `.env` (`API_KEY = x` vs `API_KEY=x`) — some parsers are strict. Write without spaces, without quotes.
+- ❌ Not restarting the server after changing `.env` — dotenv loads at startup. Restart after changes (nodemon will do it automatically).
+- ❌ Putting production secrets in code instead of `.env`/environment — `.env`/environment is the right place.
 
 ## In Your Own Words
 
-1. Secrets code mein hardcode karna galat kyun hai?
+1. Why is hardcoding secrets in code wrong?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Kyunki code GitHub pe push hota hai — secret public ho jata hai. Aur production vs development ke alag connections hain — code mein hardcode karoge toh har environment ke liye code badalna padega. `.env` mein rakho — code alag, secrets alag.
+**Answer:** Because code gets pushed to GitHub — the secret goes public. And production vs development need different connections — hardcoding means changing code for every environment. Keep them in `.env` — code separate, secrets separate.
 
 </details>
 
-2. `process.env.DATABASE_URL` kya karta hai?
+2. What does `process.env.DATABASE_URL` do?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Node ki environment variables se value read karta hai. `.env` file se (dotenv se load karke) ya deployed environment se value aati hai. Code mein value nahi, sirf reference hota hai.
+**Answer:** Reads the value from Node's environment variables. The value comes from the `.env` file (loaded via dotenv) or the deployed environment. The code holds only a reference, not the value.
 
 </details>
 
-3. `.env` ko `.gitignore` mein kyun daalte hain aur `.env.example` kyun commit karte hain?
+3. Why put `.env` in `.gitignore` and commit `.env.example`?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** `.env` mein real secrets hain isliye commit nahi karte — nahi toh leek honge. `.env.example` mein placeholder values hain jo safe hain — isse team ko pata chalta hai kaunsi variables set karni hain.
+**Answer:** `.env` has real secrets, so we don't commit it — otherwise they'd leak. `.env.example` has placeholder values that are safe — it tells the team which variables need to be set.
 
 </details>
 
-4. Nodemon kya karta hai aur ye Next.js ke `npm run dev` se kaise relate karta hai?
+4. What does nodemon do and how does it relate to Next.js's `npm run dev`?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Nodemon file changes pe automatically server restart karta hai — manually Ctrl+C + `node server.js` nahi karna padta. Next.js ka `npm run dev` bhi hot reload deta hai — same convenience, built-in.
+**Answer:** Nodemon automatically restarts the server on file changes — no manual Ctrl+C + `node server.js`. Next.js's `npm run dev` also gives hot reload — same convenience, built in.
 
 </details>
 
 ## What It Is NOT
 
-⚠️ **`.env` = secure storage nahi.** Ye file unencrypted hai. Iska protection `.gitignore` aur machine access control se hai. Service (Vercel, Supabase) ke secrets managers hi asli secure storage hain.
+⚠️ **`.env` is NOT secure storage.** The file is unencrypted. Its protection comes from `.gitignore` and machine access control. The service's own secret managers (Vercel, Supabase) are the real secure storage.
 
-⚠️ **Environment variables = sirf secrets nahi.** Config ke liye bhi use hoti hain — port number, environment name, feature flags. Koi bhi value jo environment se environment badalti hai.
+⚠️ **Environment variables are NOT only for secrets.** They're used for config too — port number, environment name, feature flags. Any value that changes from environment to environment.
 
-⚠️ **Nodemon = production tool nahi.** Ye sirf development mein use hota hai (`-D` devDependency). Production mein `node server.js` (ya `npm start`) chalta hai.
+⚠️ **Nodemon is NOT a production tool.** It's used only in development (`-D` devDependency). In production, `node server.js` (or `npm start`) runs.
 
-⚠️ **Node.js = pura backend nahi seekh liya.** Ye 3-din ka foundation tha — modules, async, server basics, env. Express, databases, auth, security — aage ke batches/courses mein. Par **base strong hai** — ab koi bhi JS server-side cheez padhoge, connect kar paoge.
+⚠️ **Node.js is NOT "all of backend learned".** This was a 3-day foundation — modules, async, server basics, env. Express, databases, auth, security — come in later batches/courses. But the **base is strong** — whatever JS server-side thing you read next, you'll be able to connect it.
 
 ---
 
-Node.js ka primer complete! Ab tumhare paas:
-- JavaScript browser ke bahar (Node)
-- Modules aur npm
-- Event Loop aur async patterns (callbacks, Promises, async/await)
+Node.js primer complete! Now you have:
+- JavaScript outside the browser (Node)
+- Modules and npm
+- Event Loop and async patterns (callbacks, Promises, async/await)
 - Raw HTTP server
 - Environment variables
 
-Yeh sab milke **wo foundation hai jispe Next.js khada hai**. Ab jab Next.js course chalao — Server Components, API routes, data fetching — har concept ke peeche tumhe wahi Node ki cheez dikhegi. Ready ho. Chalo, Next.js ke safar pe!
+All of this together is **the foundation Next.js stands on**. When you run the Next.js course — Server Components, API routes, data fetching — you'll see Node's concepts behind every one of them. You're ready. Let's go on the Next.js journey!

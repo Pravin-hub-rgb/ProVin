@@ -1,54 +1,54 @@
-# 06 — Cookies: Browser Aur Server Ki Baat
+# 06 — Cookies: How the Browser and Server Talk
 
-> Pichle doc mein JWT dekha — sessions ka alternative.
-> Ab yeh samjhte hain ki Session ID ya JWT **browser tak pohnchaata kaise hai** — **Cookies**.
-
----
-
-## Cookie Kya Hoti Hai
-
-Cookie browser mein store hone wala ek **chhota data piece** hai.
-
-Sabse important baat — cookie **automatically** har request ke saath server ko jaati hai. Tumhe manually kuch nahi karna.
-
-```
-Server → Cookie set karo → Browser save kar leta hai
-Browser → Har request mein cookie automatically bhejta hai → Server
-```
+> In the previous doc we saw JWT — an alternative to sessions.
+> Now we'll understand how a Session ID or JWT **gets delivered to the browser** — **Cookies**.
 
 ---
 
-## Cookie Kaise Set Hoti Hai
+## What Is a Cookie
 
-Server response mein ek header bhejta hai:
+A cookie is a **small piece of data stored in the browser.**
+
+The most important thing — a cookie is **automatically** sent to the server with every request. You don't have to do anything manually.
+
+```
+Server → sets the cookie → Browser saves it
+Browser → automatically sends the cookie with every request → Server
+```
+
+---
+
+## How a Cookie Gets Set
+
+The server sends a header in the response:
 
 ```
 Set-Cookie: sessionId=a3f9b2c1; HttpOnly; Secure; SameSite=Strict; Max-Age=604800
 ```
 
-Browser yeh dekh ke automatically cookie save kar leta hai.
+On seeing this, the browser automatically saves the cookie.
 
 ---
 
-## Cookie Ki Important Settings
+## Important Cookie Settings
 
-Yeh settings security ke liye bahut zaroori hain:
+These settings matter a lot for security:
 
 ### HttpOnly
 ```
 Set-Cookie: sessionId=abc; HttpOnly
 ```
 
-`HttpOnly` matlab — **JavaScript cookie nahi padh sakti.**
+`HttpOnly` means — **JavaScript can't read the cookie.**
 
 ```javascript
-// HttpOnly cookie hai toh yeh kaam nahi karega
+// If the cookie is HttpOnly, this won't work
 document.cookie  // → "" (empty)
 ```
 
-Kyun zaroori? — Agar kisi ne malicious JavaScript inject ki (XSS attack), toh woh cookie steal nahi kar sakta.
+Why is this needed? — If someone injects malicious JavaScript (XSS attack), they can't steal the cookie.
 
-**ShopKaro mein session cookie → hamesha HttpOnly.**
+**In ShopKaro, the session cookie is always HttpOnly.**
 
 ---
 
@@ -57,9 +57,9 @@ Kyun zaroori? — Agar kisi ne malicious JavaScript inject ki (XSS attack), toh 
 Set-Cookie: sessionId=abc; Secure
 ```
 
-`Secure` matlab — **sirf HTTPS pe bhejo cookie.** HTTP pe nahi.
+`Secure` means — **send the cookie only over HTTPS.** Not over HTTP.
 
-Development mein HTTP use hota hai — isliye sirf production mein `Secure` lagao.
+In development, HTTP is used — so `Secure` is applied only in production.
 
 ---
 
@@ -68,15 +68,15 @@ Development mein HTTP use hota hai — isliye sirf production mein `Secure` laga
 Set-Cookie: sessionId=abc; SameSite=Strict
 ```
 
-`SameSite` CSRF attacks se bachata hai (jab koi aur website tumhare naam pe request karti hai).
+`SameSite` protects against CSRF attacks (when another website makes requests on your behalf).
 
-| Value | Matlab |
-|-------|--------|
-| `Strict` | Sirf same site ki requests mein cookie jaaye |
+| Value | Meaning |
+|-------|---------|
+| `Strict` | Cookie is sent only with same-site requests |
 | `Lax` | Same site + top-level navigation (links) |
-| `None` | Sab jagah — `Secure` bhi zaroori |
+| `None` | Sent everywhere — `Secure` is also required |
 
-**ShopKaro mein → `SameSite=Lax`** (common default, works well)
+**In ShopKaro → `SameSite=Lax`** (common default, works well)
 
 ---
 
@@ -85,62 +85,62 @@ Set-Cookie: sessionId=abc; SameSite=Strict
 Set-Cookie: sessionId=abc; Max-Age=604800
 ```
 
-`Max-Age` seconds mein — kitne time baad cookie expire ho.
+`Max-Age` is in seconds — how long until the cookie expires.
 
-`604800` = 7 din (7 × 24 × 60 × 60)
+`604800` = 7 days (7 × 24 × 60 × 60)
 
-Agar yeh set nahi kiya → **Session cookie** — browser band hone pe delete ho jaati hai.
+If this isn't set → **Session cookie** — gets deleted when the browser closes.
 
 ---
 
-## ShopKaro Mein Cookie Setup
+## Cookie Setup in ShopKaro
 
-`iron-session` yeh automatically handle karta hai — config ek baar karni hai:
+`iron-session` handles this automatically — you just configure it once:
 
 ```javascript
 // /lib/session.js
 
 export const sessionOptions = {
-  password: process.env.SESSION_SECRET,  // Strong secret — env variable mein
+  password: process.env.SESSION_SECRET,  // Strong secret — in env variable
   cookieName: "shopkaro-session",
   cookieOptions: {
-    httpOnly: true,           // JavaScript se nahi padh sakti
-    secure: process.env.NODE_ENV === "production",  // Production pe HTTPS only
+    httpOnly: true,           // JavaScript can't read it
+    secure: process.env.NODE_ENV === "production",  // HTTPS only in production
     sameSite: "lax",          // CSRF protection
-    maxAge: 60 * 60 * 24 * 7  // 7 din
+    maxAge: 60 * 60 * 24 * 7  // 7 days
   }
 }
 ```
 
-Bas — ek baar yeh set karo, `iron-session` baaki sab handle karta hai.
+That's it — configure once, `iron-session` handles the rest.
 
 ---
 
-## Cookie vs localStorage — Kab Kya?
+## Cookie vs localStorage — When to Use Which?
 
-Yeh confusion bohot hoti hai — clear kar lo:
+This confuses a lot of people — get it clear:
 
 | | Cookie | localStorage |
 |--|--------|-------------|
-| Automatic request ke saath | Haan ✓ | Nahi — manually add karna |
-| JavaScript se readable | Depends (HttpOnly) | Haan |
-| Server set kar sakta hai | Haan | Nahi |
-| Expiry | Set kar sakte ho | Manual clear |
-| Security | Better (HttpOnly) | XSS attack vulnerable |
+| Sent automatically with request | Yes ✓ | No — must add manually |
+| Readable by JavaScript | Depends (HttpOnly) | Yes |
+| Can be set by server | Yes | No |
+| Expiry | Can be set | Manual clear |
+| Security | Better (HttpOnly) | Vulnerable to XSS |
 
-**Session/Auth ke liye → hamesha Cookie** (HttpOnly wali)
+**For session/auth → always use Cookie** (the HttpOnly kind)
 
-**Non-sensitive data ke liye** (theme preference, language) → localStorage theek hai
+**For non-sensitive data** (theme preference, language) → localStorage is fine
 
 ---
 
-## Ek Cheez Dhyan Mein Rakho
+## One Thing to Keep in Mind
 
-Cookies ke baare mein bohot confusion hoti hai kyunki:
-- Marketing cookies alag hoti hain (tracking, ads)
-- Auth cookies alag hoti hain
+Cookies cause a lot of confusion because:
+- Marketing cookies are different (tracking, ads)
+- Auth cookies are different
 
-Hum sirf **auth cookies** ki baat kar rahe hain — jo session ya JWT store karti hain.
+We're only talking about **auth cookies** — the ones that store the session or JWT.
 
 ---
 
@@ -148,14 +148,14 @@ Hum sirf **auth cookies** ki baat kar rahe hain — jo session ya JWT store kart
 
 | | |
 |--|--|
-| **Cookie kya hai** | Browser stored data, auto-send with requests |
-| **HttpOnly** | JavaScript se protect — hamesha on karo auth ke liye |
-| **Secure** | HTTPS only — production mein on karo |
+| **What is a cookie** | Data stored in the browser, auto-sent with requests |
+| **HttpOnly** | Protects from JavaScript — always on for auth |
+| **Secure** | HTTPS only — turn on in production |
 | **SameSite** | CSRF protection |
-| **ShopKaro mein** | iron-session automatically handle karta hai |
+| **In ShopKaro** | Handled automatically by iron-session |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`07-auth-oauth.md` — ShopKaro v1 mein nahi hai, lekin concept zaroori hai — **OAuth**. "Google se Login karo" kaise kaam karta hai? Tumhare app ko Google ka password kaise pata chalता hai? Yeh samjhenge.
+`07-auth-oauth.md` — Not in ShopKaro v1, but the concept is essential — **OAuth**. How does "Login with Google" work? Your app never gets your Google password. We'll understand how.

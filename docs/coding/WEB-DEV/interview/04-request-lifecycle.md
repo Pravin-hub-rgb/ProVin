@@ -1,56 +1,56 @@
 # 🌐 Phase 1: Topic 4 - The Request Lifecycle
 
-> **Interview Question:** "Exactly kya hota hai jab tum browser mein URL enter karke Enter dabate ho?"
+> **Interview Question:** "What exactly happens when you type a URL in the browser and press Enter?"
 
 ---
 
 ## 💡 Beginner-Friendly Explanation (The "Courier Service" Analogy)
 
-Socho tumne online **laptop order** kiya hai. Ab dekho ye journey kaise hoti hai:
+Imagine you ordered a **laptop** online. Let's see how the journey happens:
 
-**1. Address Dhundhna (DNS Lookup)**
-- Tumhe seller ka address chahiye (jaise "amazon.com")
-- Tum phone book (DNS) check karte ho → Address milta hai (IP: 54.239.28.85)
-- **Without address, package bhej hi nahi sakte!**
+**1. Finding the Address (DNS Lookup)**
+- You need the seller's address (like "amazon.com")
+- You check the phone book (DNS) → get the address (IP: 54.239.28.85)
+- **Without an address, you can't send the package at all!**
 
-**2. Phone Call Confirm Karna (TCP Handshake)**
-- Tum seller ko call karte ho: "Hello, main order karna chahta hoon"
-- Seller: "Haan main ready hoon, batao"
-- Tum: "Okay main bhej raha hoon details"
-- **Connection confirm ho gaya!**
+**2. Confirming the Phone Call (TCP Handshake)**
+- You call the seller: "Hello, I want to place an order"
+- Seller: "Yes I'm ready, go ahead"
+- You: "Okay I'm sending the details"
+- **Connection confirmed!**
 
 **3. Security Check (SSL/TLS Handshake)**
-- Seller: "Pehle identity verify kar lete hain"
-- Tum dono encryption keys exchange karte ho
-- Ab secure line pe baat hogi, koi spy nahi kar sakta
+- Seller: "Let's verify identity first"
+- You both exchange encryption keys
+- Now conversation happens on a secure line, no spy can listen
 
-**4. Order Bhejna (HTTP Request)**
-- Tum order details bhejte ho: "Laptop, quantity 1, address XYZ"
-- **GET** = Catalog dekhna, **POST** = Order place karna
+**4. Sending the Order (HTTP Request)**
+- You send order details: "Laptop, quantity 1, address XYZ"
+- **GET** = browsing catalog, **POST** = placing order
 
-**5. Seller Process Karta Hai (Server Processing)**
-- Seller inventory check karta hai
-- Payment verify karta hai
-- Package taiyar karta hai
+**5. Seller Processes It (Server Processing)**
+- Seller checks inventory
+- Verifies payment
+- Prepares the package
 
-**6. Package Receive Karna (HTTP Response)**
-- Seller package bhejta hai: "Order confirmed, tracking ID: ABC123"
+**6. Receiving the Package (HTTP Response)**
+- Seller sends package: "Order confirmed, tracking ID: ABC123"
 - Status code: 200 (Success), 404 (Item not found), 500 (Seller error)
 
-**7. Package Kholna (Rendering)**
-- Tum package kholte ho
-- Laptop assemble karte ho
-- Use karna shuru karte ho
+**7. Unboxing (Rendering)**
+- You open the package
+- Assemble the laptop
+- Start using it
 
-### Kyu Zaroori Hai? (Real Impact)
+### Why It Matters (Real Impact)
 
-**Context:** Request lifecycle ko optimize karna kyun zaroori hai? Kyunki har millisecond ka asar user experience aur business revenue pe padta hai.
+**Context:** Why optimize the request lifecycle? Because every millisecond affects user experience and business revenue.
 
 **Problem (Slow Request Lifecycle):**
 ```
 Slow Request Lifecycle (5 seconds):
 User enters URL → Waits... waits... waits... → Page finally loads
-User thinks: "Ye website bahut slow hai, chhod deta hoon"
+User thinks: "This website is too slow, I'm leaving"
 Result: User leaves, goes to competitor, lost revenue
 ```
 
@@ -58,50 +58,50 @@ Result: User leaves, goes to competitor, lost revenue
 ```
 Fast Request Lifecycle (0.5 seconds):
 User enters URL → Page loads instantly
-User thinks: "Wow, kitna fast hai!"
+User thinks: "Wow, so fast!"
 Result: User stays, explores, makes purchase
 ```
 
 **Real-world stats (Business Impact):**
-- **Amazon:** 100ms delay = 1% sales loss (har 100ms ka ₹crores mein loss)
-- **Google:** 400ms delay = 0.59% search volume decrease (users Google chhod dete hain)
+- **Amazon:** 100ms delay = 1% sales loss (crores of rupees lost per 100ms)
+- **Google:** 400ms delay = 0.59% search volume decrease (users leave Google)
 - **Walmart:** 1 second improvement = 2% conversion increase (₹1000 crore extra revenue)
-- **BBC:** 1 second delay = 10% users loss (har second ke 10,000 users chhod dete hain)
-- **Pinterest:** 40% improvement = 15% SEO traffic increase (Google fast sites ko prefer karta hai)
+- **BBC:** 1 second delay = 10% users lost (10,000 users leave per second)
+- **Pinterest:** 40% improvement = 15% SEO traffic increase (Google prefers fast sites)
 
 **Technical Impact:**
 - **User Experience:** Fast loading = happy users, slow loading = frustrated users
-- **SEO Rankings:** Google speed ko ranking factor maanta hai
+- **SEO Rankings:** Google considers speed a ranking factor
 - **Conversion Rate:** 1 second delay = 7% conversion loss
-- **Bounce Rate:** 3 second se zyada load time = 32% bounce rate increase
+- **Bounce Rate:** Load time over 3 seconds = 32% bounce rate increase
 - **Revenue:** Fast sites = more sales, slow sites = lost customers
 
-**Isliye Request Lifecycle ko optimize karna zaroori hai!**
+**That's why optimizing the Request Lifecycle is essential!**
 
 ---
 
-## 🛠️ Request Lifecycle ko Optimize Kaise karte hai?
+## 🛠️ How to Optimize the Request Lifecycle
 
-**Context:** Request lifecycle ko optimize karna matlab har step ko fast banana taaki overall page load time kam ho. Har step mein specific techniques use karke hum performance improve kar sakte hain.
+**Context:** Optimizing the request lifecycle means making every step fast so overall page load time is reduced. Using specific techniques at each step, we can improve performance.
 
 ### Step 1: DNS Lookup (Domain Name System)
 
-**Kya hota hai:**
-- Browser ko IP address chahiye (e.g., 54.239.28.85)
-- Domain name (e.g., google.com) ko IP mein convert karna padta hai
-- Ye process **DNS resolution** kehlata hai
+**What happens:**
+- Browser needs an IP address (e.g., 54.239.28.85)
+- Domain name (e.g., google.com) must be converted to IP
+- This process is called **DNS resolution**
 
-**Kaise kaam karta hai:**
-1. **Browser Cache Check:** Browser apne andar stored DNS records check karta hai (pehle se toh koi record hai?)
-2. **Operating System (OS) Cache Check:** Agar browser mein nahi mila, toh computer ke operating system (Windows, macOS, Linux) ke DNS cache mein check karta hai
-3. **Router Cache Check:** Agar OS mein nahi mila, toh ghar/office ke router ke DNS cache mein check karta hai
-4. **Internet Service Provider (ISP) DNS Server:** Agar router mein nahi mila, toh aapke internet provider (Jio, Airtel, ACT) ke DNS server se poochta hai
-5. **Root DNS Server:** Agar ISP ko nahi pata, toh internet ke root DNS server se poochta hai (13 root servers hain worldwide)
-6. **Top-Level Domain (TLD) Server:** Root server batata hai ki .com domain ke liye TLD server se poocho, phir TLD server (.com wala) authoritative server ki location batata hai
-7. **Authoritative DNS Server:** Ye server actually mein batata hai ki google.com ka IP address kya hai (e.g., 142.250.196.78)
-8. **IP Address Milta Hai:** Browser ko finally IP address mil jata hai, ab wo server se connect kar sakta hai
+**How it works:**
+1. **Browser Cache Check:** Browser checks its stored DNS records (is there already a record?)
+2. **Operating System (OS) Cache Check:** If not in browser, check the computer's OS (Windows, macOS, Linux) DNS cache
+3. **Router Cache Check:** If not in OS, check the home/office router's DNS cache
+4. **Internet Service Provider (ISP) DNS Server:** If not in router, ask your internet provider (Jio, Airtel, ACT) DNS server
+5. **Root DNS Server:** If ISP doesn't know, ask internet's root DNS server (13 root servers worldwide)
+6. **Top-Level Domain (TLD) Server:** Root server tells to ask TLD server for .com, then TLD server gives authoritative server's location
+7. **Authoritative DNS Server:** This server actually tells google.com's IP address (e.g., 142.250.196.78)
+8. **IP Address Obtained:** Browser finally gets IP address, can now connect to server
 
-**Time taken:** 20-200 milliseconds (ye depend karta hai ki cache mein record mila ya nahi)
+**Time taken:** 20-200 milliseconds (depends on whether record was in cache)
 
 **Flow Diagram:**
 ```
@@ -113,21 +113,21 @@ Browser Cache → OS Cache → Router Cache → ISP DNS → Root DNS → TLD DNS
 
 ### Step 2: TCP (Transmission Control Protocol) Handshake (3-Way Handshake)
 
-**Kya hota hai:**
-- Client aur server ke beech reliable connection establish hota hai
-- **3 steps** mein connection confirm hota hai
+**What happens:**
+- Reliable connection established between client and server
+- Connection confirmed in **3 steps**
 
-**Kaise kaam karta hai:**
+**How it works:**
 
 **Step 1: SYN (Synchronize)**
 ```
-Client → Server: "Hello server, main connect karna chahta hoon"
+Client → Server: "Hello server, I want to connect"
 (sequence number: 1000)
 ```
 
 **Step 2: SYN-ACK (Synchronize-Acknowledge)**
 ```
-Server → Client: "Haan main ready hoon, aur main bhi confirm karta hoon"
+Server → Client: "Yes I'm ready, and I confirm too"
 (acknowledgment: 1001, sequence number: 5000)
 ```
 
@@ -140,46 +140,46 @@ Client → Server: "Perfect! Connection established"
 **Time taken:** 1-2 RTT (Round Trip Time) = 20-200ms
 
 **Why 3 steps?**
-- **1 step** mein: Connection confirm nahi hota (packet loss ho sakta hai)
-- **2 steps** mein: Server ko pata nahi chalta ki client ready hai
-- **3 steps** mein: Dono taraf se confirmation milta hai
+- **1 step:** Connection not confirmed (packet loss possible)
+- **2 steps:** Server doesn't know if client is ready
+- **3 steps:** Confirmation from both sides
 
 **Real-world analogy:**
 ```
 Phone call:
 Person A: "Hello?" (SYN)
-Person B: "Hello, haan main sun raha hoon" (SYN-ACK)
-Person A: "Okay, main bol raha hoon" (ACK)
-→ Conversation start!
+Person B: "Hello, yes I'm listening" (SYN-ACK)
+Person A: "Okay, I'm speaking" (ACK)
+→ Conversation starts!
 ```
 
 ### Step 3: SSL (Secure Sockets Layer) / TLS (Transport Layer Security) Handshake (Secure Connection)
 
-**Kya hota hai:**
-- Client aur server encryption keys exchange karte hain
-- Ab se saara data encrypted hoga
-- Koi bich mein spy nahi kar sakta
+**What happens:**
+- Client and server exchange encryption keys
+- All data will now be encrypted
+- No one in between can spy
 
-**Kaise kaam karta hai:**
+**How it works:**
 
 **Step 1: Client Hello**
 ```
-Client → Server: "Main secure connection chahta hoon"
+Client → Server: "I want a secure connection"
 + Supported cipher suites (encryption algorithms)
 + Random number (client random)
 ```
 
 **Step 2: Server Hello**
 ```
-Server → Client: "Okay, ye cipher suite use karenge"
+Server → Client: "Okay, we'll use this cipher suite"
 + Server's SSL certificate (public key)
 + Random number (server random)
 ```
 
 **Step 3: Client Verification**
 ```
-Client: Certificate verify karta hai (trusted CA se signed hai?)
-Client: "Pre-master secret" encrypt karta hai server ke public key se
+Client: Verifies certificate (signed by trusted CA?)
+Client: Encrypts "pre-master secret" with server's public key
 Client → Server: Encrypted pre-master secret
 ```
 
@@ -193,7 +193,7 @@ Server: Same calculation = same session_key
 ```
 Client → Server: "Finished" (encrypted with session_key)
 Server → Client: "Finished" (encrypted with session_key)
-→ Ab secure communication shuru!
+→ Now secure communication starts!
 ```
 
 **Time taken:** 2 RTT (Round Trip Time) = 40-400ms (expensive!)
@@ -206,14 +206,14 @@ Server → Client: "Finished" (encrypted with session_key)
 **Optimization: TLS Session Resumption**
 ```
 First connection: Full handshake (expensive)
-Subsequent connections: Session ID use karke fast handshake (cheap)
+Subsequent connections: Use session ID for fast handshake (cheap)
 ```
 
 ### Step 4: HTTP Request
 
-**Kya hota hai:**
-- Client server ko request bhejta hai
-- Request mein method, URL, headers, body hote hain
+**What happens:**
+- Client sends request to server
+- Request contains method, URL, headers, body
 
 **Request Structure:**
 ```
@@ -229,23 +229,23 @@ Cookie: session_id=abc123
 2. **URL:** `/products/laptop` (Uniform Resource Locator)
 3. **HTTP Version:** HTTP/1.1, HTTP/2, HTTP/3 (HyperText Transfer Protocol versions)
 4. **Headers:** Metadata (cookies, content-type, etc.)
-5. **Body:** Data (POST/PUT requests mein)
+5. **Body:** Data (in POST/PUT requests)
 
 **Time taken:** 1 RTT (Round Trip Time) = 10-100ms
 
 ### Step 5: Server Processing
 
-**Kya hota hai:**
-- Server request receive karta hai
-- Business logic execute karta hai
-- Database queries chalta hai
-- Response taiyar karta hai
+**What happens:**
+- Server receives request
+- Executes business logic
+- Runs database queries
+- Prepares response
 
 **Server-side flow:**
 ```
-1. Request receive hua
-2. Authentication check (user logged in hai?)
-3. Authorization check (permission hai?)
+1. Request received
+2. Authentication check (is user logged in?)
+3. Authorization check (does user have permission?)
 4. Business logic execute
 5. Database query (if needed)
 6. Response format (JSON, HTML, XML)
@@ -262,9 +262,9 @@ Cookie: session_id=abc123
 
 ### Step 6: HTTP Response
 
-**Kya hota hai:**
-- Server response bhejta hai
-- Response mein status code, headers, body hote hain
+**What happens:**
+- Server sends response
+- Response contains status code, headers, body
 
 **Response Structure:**
 ```
@@ -287,11 +287,11 @@ Set-Cookie: session=new_session
 
 ### Step 7: Browser Rendering
 
-**Kya hota hai:**
-- Browser HTML parse karta hai
-- CSS apply karta hai
-- JavaScript execute karta hai
-- Final page render hoti hai
+**What happens:**
+- Browser parses HTML
+- Applies CSS
+- Executes JavaScript
+- Final page renders
 
 **Rendering flow:**
 ```
@@ -318,13 +318,13 @@ Set-Cookie: session=new_session
 
 ### Example 1: DNS Lookup Commands
 
-**Kya kar rahe hain:** DNS resolution ko manually check karna.
+**What we're doing:** Manually check DNS resolution.
 
 ```bash
-# Kya kar rahe hain:
-# 1. Domain name se IP address dhundhna
-# 2. DNS resolution time measure karna
-# 3. DNS server response dekhna
+# What we're doing:
+# 1. Find IP address from domain name
+# 2. Measure DNS resolution time
+# 3. See DNS server response
 
 # Method 1: nslookup
 nslookup google.com
@@ -359,13 +359,13 @@ dig google.com
 
 ### Example 2: TCP Connection Analysis
 
-**Kya kar rahe hain:** TCP handshake ko observe karna.
+**What we're doing:** Observe TCP handshake.
 
 ```bash
-# Kya kar rahe hain:
-# 1. TCP connection establish karna
-# 2. Handshake timing dekhna
-# 3. Connection details analyze karna
+# What we're doing:
+# 1. Establish TCP connection
+# 2. See handshake timing
+# 3. Analyze connection details
 
 # Method 1: curl with verbose output
 curl -v https://google.com
@@ -403,13 +403,13 @@ sudo tcpdump -i any -n 'tcp port 80 or tcp port 443'
 
 ### Example 3: SSL/TLS Handshake Analysis
 
-**Kya kar rahe hain:** SSL certificate aur encryption details check karna.
+**What we're doing:** Check SSL certificate and encryption details.
 
 ```bash
-# Kya kar rahe hain:
-# 1. SSL certificate verify karna
-# 2. Encryption details dekhna
-# 3. TLS version check karna
+# What we're doing:
+# 1. Verify SSL certificate
+# 2. See encryption details
+# 3. Check TLS version
 
 # Method 1: curl with SSL info
 curl -vI https://google.com 2>&1 | grep -E "SSL|TLS|subject|issuer"
@@ -436,19 +436,19 @@ echo | openssl s_client -connect google.com:443 -servername google.com 2>/dev/nu
 
 **Key Points:**
 - TLS 1.3 — Latest, fastest, most secure
-- Certificate validity — Expired toh nahi?
-- Issuer — Trusted CA se hai?
+- Certificate validity — Expired or not?
+- Issuer — Signed by trusted CA?
 - Cipher suite — Strong encryption?
 
 ### Example 4: HTTP Request/Response Analysis
 
-**Kya kar rahe hain:** HTTP request aur response ko detailed mein dekhna.
+**What we're doing:** See HTTP request and response in detail.
 
 ```bash
-# Kya kar rahe hain:
-# 1. Request headers dekhna
-# 2. Response headers dekhna
-# 3. Timing analysis karna
+# What we're doing:
+# 1. See request headers
+# 2. See response headers
+# 3. Perform timing analysis
 
 # Method 1: curl with headers
 curl -I https://google.com
@@ -482,8 +482,9 @@ curl -w "@curl-format.txt" -o /dev/null -s https://google.com
 # Method 3: Browser DevTools Network Tab
 # 1. Open DevTools (F12)
 # 2. Network tab
-# 3. Check "Waterfall" column
-# 4. Hover over each phase to see timing
+# 3. Refresh page
+# 4. Click on any request
+# 5. Check "Timing" section
 ```
 
 **Key Points:**
@@ -495,44 +496,44 @@ curl -w "@curl-format.txt" -o /dev/null -s https://google.com
 
 ### Example 5: Node.js HTTP Server
 
-**Kya kar rahe hain:** Server-side request lifecycle ko understand karna.
+**What we're doing:** Understand server-side request lifecycle.
 
 ```javascript
-// Kya kar rahe hain:
-// 1. HTTP server create karna
-// 2. Request receive karna
-// 3. Response send karna
-// 4. Timing measure karna
+// What we're doing:
+// 1. Create HTTP server
+// 2. Receive request
+// 3. Send response
+// 4. Measure timing
 
 const http = require('http');
 
 const server = http.createServer((req, res) => {
   const startTime = Date.now();
-  
+
   // Log request details
   console.log('=== Request Received ===');
   console.log('Method:', req.method);
   console.log('URL:', req.url);
   console.log('Headers:', JSON.stringify(req.headers, null, 2));
   console.log('Time:', new Date().toISOString());
-  
+
   // Simulate processing
   setTimeout(() => {
     const processingTime = Date.now() - startTime;
-    
+
     // Send response
     res.writeHead(200, {
       'Content-Type': 'application/json',
       'X-Processing-Time': `${processingTime}ms`,
       'Cache-Control': 'max-age=300'
     });
-    
+
     res.end(JSON.stringify({
       message: 'Hello World',
       processingTime: `${processingTime}ms`,
       timestamp: new Date().toISOString()
     }));
-    
+
     console.log(`Response sent in ${processingTime}ms`);
   }, 100); // Simulate 100ms processing
 });
@@ -554,36 +555,36 @@ server.listen(3000, () => {
 
 ### Example 6: Browser Performance API
 
-**Kya kar rahe hain:** Browser mein request timing measure karna.
+**What we're doing:** Measure request timing in the browser.
 
 ```javascript
-// Kya kar rahe hain:
-// 1. Resource loading timing measure karna
-// 2. DNS, TCP, SSL times calculate karna
-// 3. Performance analysis karna
+// What we're doing:
+// 1. Measure resource loading timing
+// 2. Calculate DNS, TCP, SSL times
+// 3. Perform performance analysis
 
 // Wait for page to load
 window.addEventListener('load', () => {
   // Get resource timing entries
   const resources = performance.getEntriesByType('resource');
-  
+
   resources.forEach(resource => {
     console.log(`\n=== ${resource.name} ===`);
     console.log('DNS Lookup:', resource.domainLookupEnd - resource.domainLookupStart, 'ms');
     console.log('TCP Connection:', resource.connectEnd - resource.connectStart, 'ms');
-    console.log('SSL Handshake:', resource.secureConnectionStart ? 
+    console.log('SSL Handshake:', resource.secureConnectionStart ?
       resource.connectEnd - resource.secureConnectionStart : 'N/A (HTTP)', 'ms');
     console.log('Time to First Byte (TTFB):', resource.responseStart - resource.requestStart, 'ms');
     console.log('Content Download:', resource.responseEnd - resource.responseStart, 'ms');
     console.log('Total Time:', resource.duration, 'ms');
   });
-  
+
   // Navigation timing (page load)
   const navigation = performance.getEntriesByType('navigation')[0];
   console.log('\n=== Page Load ===');
   console.log('DNS:', navigation.domainLookupEnd - navigation.domainLookupStart, 'ms');
   console.log('TCP:', navigation.connectEnd - navigation.connectStart, 'ms');
-  console.log('SSL:', navigation.secureConnectionStart ? 
+  console.log('SSL:', navigation.secureConnectionStart ?
     navigation.connectEnd - navigation.secureConnectionStart : 'N/A', 'ms');
   console.log('TTFB:', navigation.responseStart - navigation.requestStart, 'ms');
   console.log('DOM Content Loaded:', navigation.domContentLoadedEventEnd - navigation.fetchStart, 'ms');
@@ -613,36 +614,36 @@ window.addEventListener('load', () => {
 
 ### Problem 1: Slow DNS Resolution
 
-**Theory — Kya Hai Ye?**
+**Theory — What Is It?**
 
-DNS resolution slow hone ka matlab hai ki domain name se IP address dhundhne mein zyada time lag raha hai. Isse puri request slow ho jati hai.
+Slow DNS resolution means domain name to IP address lookup is taking too long. This slows down the entire request.
 
-**Kyun hota hai?**
-- **ISP DNS server slow hai** — Free DNS servers overloaded hote hain
-- **DNS cache miss** — Pehli baar domain query ho raha hai
-- **Multiple DNS lookups** — Page mein bahut saare external resources hain
-- **DNS server distance** — DNS server physically door hai
+**Why it happens:**
+- **ISP DNS server slow** — Free DNS servers get overloaded
+- **DNS cache miss** — Domain queried for first time
+- **Multiple DNS lookups** — Many external resources on page
+- **DNS server distance** — DNS server physically far
 
 **Real-world example:**
-- User ne pehli baar website visit ki
-- DNS cache empty hai
-- ISP DNS server 200ms response time deta hai
-- Page load time 200ms badh gaya!
+- User visits website for first time
+- DNS cache is empty
+- ISP DNS server responds in 200ms
+- Page load time increases by 200ms!
 
 **Impact:**
-- Initial page load slow
+- Slow initial page load
 - Poor user experience
 - Higher bounce rate
 
-**Scenario:** DNS lookup 200ms le raha hai, page load slow ho gaya.
+**Scenario:** DNS lookup takes 200ms, page load becomes slow.
 
 **Solution (Theory):**
 
 **Solution 1: Use Fast DNS Provider**
 
-**Concept:** Google DNS (8.8.8.8) ya Cloudflare DNS (1.1.1.1) use karo jo fast hain.
+**Concept:** Use Google DNS (8.8.8.8) or Cloudflare DNS (1.1.1.1) which are fast.
 
-**Kaise kaam karta hai:**
+**How it works:**
 1. **ISP DNS** — Slow, overloaded (200ms)
 2. **Google DNS** — Fast, optimized (20ms)
 3. **Cloudflare DNS** — Fastest, privacy-focused (10ms)
@@ -654,12 +655,12 @@ DNS resolution slow hone ka matlab hai ki domain name se IP address dhundhne mei
 
 **Solution 2: DNS Prefetching**
 
-**Concept:** Browser ko batao ki future mein kaunse domains ki zaroorat padegi, taaki wo pehle se DNS lookup kar le.
+**Concept:** Tell browser which domains will be needed in future, so it does DNS lookup in advance.
 
-**Kaise kaam karta hai:**
-1. HTML mein `<link rel="dns-prefetch" href="//cdn.example.com">` add karo
-2. Browser current page load karte waqt hi future domains ka DNS lookup kar leta hai
-3. Jab actually resource ki zaroorat hoti hai, DNS already resolved hota hai
+**How it works:**
+1. Add `<link rel="dns-prefetch" href="//cdn.example.com">` in HTML
+2. Browser does DNS lookup for future domains while current page loads
+3. When resource is actually needed, DNS is already resolved
 
 **Why This Works:**
 - DNS lookup happens in background
@@ -668,12 +669,12 @@ DNS resolution slow hone ka matlab hai ki domain name se IP address dhundhne mei
 
 **Solution 3: Increase DNS Cache TTL**
 
-**Concept:** DNS records ko zyada der tak cache mein rakho.
+**Concept:** Keep DNS records in cache longer.
 
-**Kaise kaam karta hai:**
-1. DNS provider pe TTL increase karo (e.g., 300 seconds → 3600 seconds)
-2. Browser/OS DNS cache mein record zyada der tak rahega
-3. Baar-baar DNS lookup nahi karna padega
+**How it works:**
+1. Increase TTL on DNS provider (e.g., 300 seconds → 3600 seconds)
+2. Record stays longer in browser/OS DNS cache
+3. No need to do DNS lookup repeatedly
 
 **Why This Works:**
 - Fewer DNS queries
@@ -707,40 +708,40 @@ resources.forEach(resource => {
 
 ### Problem 2: TCP Connection Overhead
 
-**Theory — Kya Hai Ye?**
+**Theory — What Is It?**
 
-Har naye request ke liye naya TCP connection establish karna expensive hai. 3-way handshake mein 1.5 RTT lagta hai, aur agar bahut saare connections honge toh performance impact padega.
+Establishing a new TCP connection for every request is expensive. 3-way handshake takes 1.5 RTT, and many connections impact performance.
 
-**Kyun hota hai?**
-- **Multiple domains** — Har domain ke liye alag connection
-- **No connection reuse** — Connection close karke naya bana rahe hain
-- **HTTP/1.1 limitations** — Sirf 6-8 parallel connections allowed
-- **Short-lived connections** — Connection turant close ho jata hai
+**Why it happens:**
+- **Multiple domains** — Separate connection for each domain
+- **No connection reuse** — Closing connection and creating new one
+- **HTTP/1.1 limitations** — Only 6-8 parallel connections allowed
+- **Short-lived connections** — Connection closes immediately
 
 **Real-world example:**
-- Page mein 50 resources hain (CSS, JS, images)
-- 5 alag domains se load ho rahe hain
-- Har domain ke liye naya TCP connection
-- 5 × 1.5 RTT = 7.5 RTT waste!
+- Page has 50 resources (CSS, JS, images)
+- Loading from 5 different domains
+- New TCP connection for each domain
+- 5 × 1.5 RTT = 7.5 RTT wasted!
 
 **Impact:**
 - Slow page load
 - High latency
 - Resource waste
 
-**Scenario:** Multiple TCP connections ki wajah se page load slow ho raha hai.
+**Scenario:** Multiple TCP connections causing slow page load.
 
 **Solution (Theory):**
 
 **Solution 1: HTTP Keep-Alive**
 
-**Concept:** Ek hi TCP connection ko reuse karo multiple requests ke liye.
+**Concept:** Reuse a single TCP connection for multiple requests.
 
-**Kaise kaam karta hai:**
-1. Pehli request ke liye TCP connection establish hota hai
-2. Request-response complete hone ke baad connection close nahi hota
-3. Agli request same connection pe bheji jati hai
-4. Connection timeout ke baad automatically close hota hai
+**How it works:**
+1. TCP connection established for first request
+2. Connection not closed after request-response
+3. Next request sent on same connection
+4. Connection auto-closes after timeout
 
 **Why This Works:**
 - Single handshake for multiple requests
@@ -749,14 +750,14 @@ Har naye request ke liye naya TCP connection establish karna expensive hai. 3-wa
 
 **Solution 2: HTTP/2 Multiplexing**
 
-**Concept:** Ek hi TCP connection pe multiple requests/responses bhejo simultaneously.
+**Concept:** Send multiple requests/responses simultaneously on a single TCP connection.
 
-**Kaise kaam karta hai:**
-1. Single TCP connection establish hota hai
-2. Multiple requests ko binary frames mein convert kiya jata hai
-3. Sab frames ek saath bheje jate hain
-4. Server frames receive karke responses bhejta hai
-5. Client frames ko reassemble karke responses parse karta hai
+**How it works:**
+1. Single TCP connection established
+2. Multiple requests converted to binary frames
+3. All frames sent together
+4. Server receives frames and sends responses
+5. Client reassembles frames and parses responses
 
 **Why This Works:**
 - No head-of-line blocking
@@ -765,20 +766,20 @@ Har naye request ke liye naya TCP connection establish karna expensive hai. 3-wa
 
 **Solution 3: Domain Sharding (Legacy)**
 
-**Concept:** Resources ko multiple subdomains pe distribute karo taaki parallel connections badh jayein.
+**Concept:** Distribute resources across multiple subdomains to increase parallel connections.
 
-**Kaise kaam karta hai:**
-1. Resources ko 2-4 subdomains pe distribute karo
+**How it works:**
+1. Distribute resources across 2-4 subdomains
    - `cdn1.example.com`
    - `cdn2.example.com`
    - `cdn3.example.com`
-2. Browser har domain ke liye 6-8 connections allow karta hai
+2. Browser allows 6-8 connections per domain
 3. Total 18-24 parallel connections possible
 
 **Why This Works:**
 - More parallel downloads
 - Faster resource loading
-- (Note: HTTP/2 mein ye technique obsolete hai)
+- (Note: This technique is obsolete in HTTP/2)
 
 **Solution:**
 ```javascript
@@ -810,41 +811,41 @@ app.listen(3000, () => {
 
 ### Problem 3: SSL/TLS Handshake Latency
 
-**Theory — Kya Hai Ye?**
+**Theory — What Is It?**
 
-SSL/TLS handshake mein 2 RTT lagte hain, jo significant latency add karta hai. Har naye connection ke liye ye overhead hota hai.
+SSL/TLS handshake takes 2 RTT, adding significant latency. This overhead happens for every new connection.
 
-**Kyun hota hai?**
+**Why it happens:**
 - **Full handshake** — 2 RTT required
 - **Certificate verification** — Heavy cryptographic operations
 - **Key exchange** — Complex mathematical calculations
-- **No session reuse** — Har baar naya handshake
+- **No session reuse** — Fresh handshake every time
 
 **Real-world example:**
-- Mobile network pe 1 RTT = 100ms
+- 1 RTT on mobile network = 100ms
 - SSL handshake = 2 RTT = 200ms
-- Page load time 200ms badh gaya!
+- Page load time increases by 200ms!
 
 **Impact:**
 - Slow initial connection
 - Poor mobile experience
 - Higher bounce rate
 
-**Scenario:** SSL handshake 200ms le raha hai, mobile users ko slow experience ho raha hai.
+**Scenario:** SSL handshake takes 200ms, mobile users get slow experience.
 
 **Solution (Theory):**
 
 **Solution 1: TLS Session Resumption**
 
-**Concept:** Pehle connection ki session information save karlo, aur next time use karke fast handshake karo.
+**Concept:** Save session information from first connection, use it for fast handshake next time.
 
-**Kaise kaam karta hai:**
+**How it works:**
 1. **First connection:** Full handshake (expensive)
-2. Server session ID generate karta hai
-3. Client session ID save kar leta hai
-4. **Next connection:** Client session ID bhejta hai
-5. Server session data retrieve karta hai
-6. Fast handshake (cheap) — sirf 1 RTT
+2. Server generates session ID
+3. Client saves session ID
+4. **Next connection:** Client sends session ID
+5. Server retrieves session data
+6. Fast handshake (cheap) — only 1 RTT
 
 **Why This Works:**
 - Skip expensive key exchange
@@ -853,14 +854,14 @@ SSL/TLS handshake mein 2 RTT lagte hain, jo significant latency add karta hai. H
 
 **Solution 2: TLS False Start**
 
-**Concept:** Handshake complete hone se pehle hi data bhejna shuru kar do.
+**Concept:** Start sending data before handshake completes.
 
-**Kaise kaam karta hai:**
-1. Client handshake messages bhejta hai
-2. Server handshake response aata hai
-3. Client wait nahi karta, data bhejna shuru kar deta hai
-4. Server handshake verify karte hue data process karta hai
-5. 1 RTT bach jata hai
+**How it works:**
+1. Client sends handshake messages
+2. Server handshake response arrives
+3. Client doesn't wait, starts sending data
+4. Server processes data while verifying handshake
+5. 1 RTT saved
 
 **Why This Works:**
 - Overlapping operations
@@ -869,40 +870,40 @@ SSL/TLS handshake mein 2 RTT lagte hain, jo significant latency add karta hai. H
 
 **Solution 3: OCSP Stapling**
 
-**Concept:** Server certificate revocation check ko optimize karna.
+**Concept:** Optimize server certificate revocation check.
 
-**Kaise kaam karta hai:**
-1. Normally, client certificate verify karne ke liye CA server se poochta hai (extra RTT)
-2. OCSP stapling mein, server pehle se hi OCSP response attach kar deta hai
-3. Client ko alag se poochne ki zaroorat nahi
-4. 1 RTT bach jata hai
+**How it works:**
+1. Normally, client asks CA server to verify certificate (extra RTT)
+2. In OCSP stapling, server pre-attaches OCSP response
+3. Client doesn't need to ask separately
+4. 1 RTT saved
 
 **Why This Works:**
 - No extra network request
 - Faster certificate verification
-- Better privacy (CA ko query nahi jata)
+- Better privacy (no query to CA)
 
 **Solution:**
 ```nginx
 # Nginx configuration for TLS optimization
 server {
     listen 443 ssl http2;
-    
+
     # Enable session resumption
     ssl_session_cache shared:SSL:10m;
     ssl_session_timeout 10m;
     ssl_session_tickets on;
-    
+
     # Enable OCSP stapling
     ssl_stapling on;
     ssl_stapling_verify on;
     resolver 8.8.8.8 8.8.4.4 valid=300s;
     resolver_timeout 5s;
-    
+
     # Modern cipher suites
     ssl_ciphers 'ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256';
     ssl_prefer_server_ciphers on;
-    
+
     # Enable TLS 1.3 (fastest)
     ssl_protocols TLSv1.2 TLSv1.3;
 }
@@ -912,21 +913,21 @@ server {
 
 ### Problem 4: Large Request/Response Payloads
 
-**Theory — Kya Hai Ye?**
+**Theory — What Is It?**
 
-Jab request ya response ka size bahut bada hota hai, toh usse transfer hone mein zyada time lagta hai. Isse page load slow ho jata hai.
+When request or response size is very large, it takes more time to transfer. This slows down page load.
 
-**Kyun hota hai?**
-- **Uncompressed data** — Gzip/Brotli compression nahi hai
-- **Large images** — Optimized images nahi hain
-- **Verbose APIs** — API response mein unnecessary data hai
-- **No pagination** — Saara data ek saath bhej rahe hain
+**Why it happens:**
+- **Uncompressed data** — No Gzip/Brotli compression
+- **Large images** — Images not optimized
+- **Verbose APIs** — Unnecessary data in API response
+- **No pagination** — All data sent at once
 
 **Real-world example:**
 - API response: 5MB JSON
 - Mobile network speed: 1 Mbps
 - Download time: 40 seconds!
-- User chhod ke chala gaya
+- User leaves
 
 **Impact:**
 - Slow page load
@@ -934,19 +935,19 @@ Jab request ya response ka size bahut bada hota hai, toh usse transfer hone mein
 - Poor mobile experience
 - Increased costs
 
-**Scenario:** API response 5MB hai, mobile users ko load hone mein 40 seconds lag rahe hain.
+**Scenario:** API response is 5MB, mobile users take 40 seconds to load.
 
 **Solution (Theory):**
 
 **Solution 1: Compression (Gzip/Brotli)**
 
-**Concept:** Data ko compress karke bhejo, size kam ho jayega.
+**Concept:** Compress data before sending, reduces size.
 
-**Kaise kaam karta hai:**
-1. Client request mein `Accept-Encoding: gzip, br` bhejta hai
-2. Server data compress karta hai
-3. Compressed data bhejta hai
-4. Client decompress karta hai
+**How it works:**
+1. Client sends `Accept-Encoding: gzip, br` in request
+2. Server compresses data
+3. Compressed data sent
+4. Client decompresses
 5. Typical compression ratio: 70-90%
 
 **Why This Works:**
@@ -956,13 +957,13 @@ Jab request ya response ka size bahut bada hota hai, toh usse transfer hone mein
 
 **Solution 2: Image Optimization**
 
-**Concept:** Images ko optimize karke size kam karo.
+**Concept:** Optimize images to reduce size.
 
-**Kaise kaam karta hai:**
-1. **Resize** — Actual display size ke hisaab se resize karo
-2. **Compress** — Quality thoda kam karo (80-90% sufficient)
-3. **Format** — WebP/AVIF use karo (better compression)
-4. **Lazy load** — Jab zaroorat ho tab load karo
+**How it works:**
+1. **Resize** — Resize according to actual display size
+2. **Compress** — Slightly reduce quality (80-90% is sufficient)
+3. **Format** — Use WebP/AVIF (better compression)
+4. **Lazy load** — Load only when needed
 
 **Why This Works:**
 - Images typically 50-80% of page weight
@@ -971,13 +972,13 @@ Jab request ya response ka size bahut bada hota hai, toh usse transfer hone mein
 
 **Solution 3: API Response Optimization**
 
-**Concept:** API response mein sirf necessary data bhejo.
+**Concept:** Send only necessary data in API response.
 
-**Kaise kaam karta hai:**
-1. **Field selection** — Client ko sirf needed fields chahiye
-2. **Pagination** — Large datasets ko chunks mein bhejo
-3. **Filtering** — Unnecessary data filter out karo
-4. **Caching** — Same data baar-baar nahi bhejna
+**How it works:**
+1. **Field selection** — Client gets only needed fields
+2. **Pagination** — Send large datasets in chunks
+3. **Filtering** — Filter out unnecessary data
+4. **Caching** — Don't send same data repeatedly
 
 **Why This Works:**
 - Smaller responses
@@ -1002,7 +1003,7 @@ app.get('/image/:id', async (req, res) => {
     .resize(800, 600, { fit: 'inside' }) // Resize
     .webp({ quality: 80 }) // Convert to WebP
     .toBuffer();
-  
+
   res.set('Content-Type', 'image/webp');
   res.send(image);
 });
@@ -1012,7 +1013,7 @@ app.get('/api/users', async (req, res) => {
   const page = parseInt(req.query.page) || 1;
   const limit = parseInt(req.query.limit) || 20;
   const fields = req.query.fields || 'id,name,email'; // Field selection
-  
+
   const users = await db.users
     .findMany({
       skip: (page - 1) * limit,
@@ -1022,7 +1023,7 @@ app.get('/api/users', async (req, res) => {
         return acc;
       }, {})
     });
-  
+
   res.json({
     data: users,
     pagination: {
@@ -1209,11 +1210,11 @@ User → ISP → CDN Edge (near user) → Cached Response
 
 ## 🚀 Next Steps
 
-Ab tum **Topic 5: Web Storage & Security** ke liye ready ho! Ye topic explain karega ki Cookies, LocalStorage, aur SessionStorage mein kya difference hai, aur security implications kya hain.
+Now you're ready for **Topic 5: Web Storage & Security**! This topic explains the difference between Cookies, LocalStorage, and SessionStorage, and their security implications.
 
 ---
 
-> **Pro Tip:** Interview mein request lifecycle discuss karte waqt **specific numbers** zaroor batao — "DNS lookup typically takes 20-200ms, TCP handshake takes 1.5 RTT" — ye dikhata hai ki tum practical understanding rakhte ho! 💡
+> **Pro Tip:** When discussing request lifecycle in an interview, always give **specific numbers** — "DNS lookup typically takes 20-200ms, TCP handshake takes 1.5 RTT" — this shows you have practical understanding! 💡
 
 ---
 
@@ -1221,14 +1222,14 @@ Ab tum **Topic 5: Web Storage & Security** ke liye ready ho! Ye topic explain ka
 
 ### Browser DevTools Network Tab
 
-**Kaise use karte hain:**
-1. **Open DevTools** — F12 ya Right-click → Inspect
-2. **Network tab** — Saare requests dikhenge
-3. **Refresh page** — Requests capture honge
-4. **Filter** — Type (XHR, JS, CSS, Img) se filter kar sakte hain
-5. **Waterfall** — Har request ka timing breakdown
-6. **Headers** — Request/response headers dekh sakte hain
-7. **Preview** — Response content dekh sakte hain
+**How to use:**
+1. **Open DevTools** — F12 or Right-click → Inspect
+2. **Network tab** — All requests shown
+3. **Refresh page** — Requests captured
+4. **Filter** — Filter by type (XHR, JS, CSS, Img)
+5. **Waterfall** — Timing breakdown for each request
+6. **Headers** — See request/response headers
+7. **Preview** — See response content
 
 **Important columns:**
 - **Status** — HTTP status code

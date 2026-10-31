@@ -1,32 +1,32 @@
 # 15 — CSR: Client Side Rendering
 
-> Pichle doc mein Rendering umbrella ka overview hua.
-> Ab pehli strategy — **CSR**. Yeh tum pehle se jaante ho — React mein yahi karte the.
+> Previous doc covered the Rendering umbrella overview.
+> Now the first strategy — **CSR**. You already know this — it's what you do in React.
 
 ---
 
-## CSR Kya Hai
+## What Is CSR
 
-**Client Side Rendering** — HTML browser mein JavaScript ke through banta hai.
+**Client Side Rendering** — HTML gets built in the browser through JavaScript.
 
 ```
-1. Priya /cart kholti hai
-2. Server → Bhejta hai: khali HTML + JavaScript bundle
-3. Browser JavaScript run karta hai
-4. JavaScript → API call karta hai → Cart data aata hai
-5. JavaScript → HTML banata hai → Page dikhta hai
+1. Priya opens /cart
+2. Server → Sends: empty HTML + JavaScript bundle
+3. Browser runs JavaScript
+4. JavaScript → Makes API call → Cart data arrives
+5. JavaScript → Builds HTML → Page shows
 ```
 
-Pehle blank/loading screen → phir content.
+Blank/loading screen first → then content.
 
 ---
 
-## Tum Yeh Pehle Se Jaante Ho
+## You Already Know This
 
-React mein tum yeh karte ho:
+In React you do this:
 
 ```jsx
-'use client'  // Next.js mein yeh likhna padta hai CSR ke liye
+'use client'  // In Next.js this is required for CSR
 
 import { useState, useEffect } from 'react'
 
@@ -35,7 +35,7 @@ function CartPage() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // Yeh CSR hai — browser mein data fetch ho raha hai
+    // This is CSR — data is being fetched in the browser
     fetch('/api/cart')
       .then(r => r.json())
       .then(data => {
@@ -54,72 +54,72 @@ function CartPage() {
 }
 ```
 
-Yeh pure CSR hai — data browser mein fetch ho raha hai.
+This is pure CSR — data is fetched in the browser.
 
 ---
 
-## CSR Ke Fayde
+## Advantages of CSR
 
-**Fast interactions** — page load hone ke baad sab instant lagta hai
+**Fast interactions** — once the page loads, everything feels instant
 
-**User-specific data** — har user ka alag data, server pe cache nahi hota
+**User-specific data** — each user's data is different, not cached on the server
 
-**Real-time updates** — cart mein item add kiya → turant update, page refresh nahi
-
----
-
-## CSR Ki Problems
-
-**Pehle blank screen** — JavaScript load hone tak kuch nahi dikhta
-
-**SEO problem** — Google crawler JavaScript run karta hai lekin unreliable — content index nahi hota properly
-
-**Slow first load** — sabse pehle JavaScript download hota hai, phir API call, phir render
+**Real-time updates** — add an item to cart → updates instantly, no page refresh
 
 ---
 
-## ShopKaro Mein CSR Kahan Use Karein
+## Problems With CSR
+
+**Blank screen first** — nothing shows until JavaScript loads
+
+**SEO problem** — Google's crawler does run JavaScript but unreliably — content doesn't get indexed properly
+
+**Slow first load** — JavaScript downloads first, then API call, then render
+
+---
+
+## Where to Use CSR in ShopKaro
 
 ```
 /cart → CSR ✓
-  Kyun: Sirf logged-in user ka data, fast add/remove chahiye,
-        SEO ki zaroorat nahi (private page)
+  Why: Only the logged-in user's data, fast add/remove needed,
+       no SEO needed (private page)
 
 /checkout → CSR ✓
-  Kyun: User interaction heavy, real-time price updates, private page
+  Why: Heavy user interactions, real-time price updates, private page
 
-Counter, quantity buttons → CSR ✓
-  Kyun: Instant feedback chahiye, UI interactions
+Counters, quantity buttons → CSR ✓
+  Why: Instant feedback needed, UI interactions
 ```
 
 ---
 
-## CSR Kahan Use MAT Karo
+## Where NOT to Use CSR
 
 ```
-/products → Mat karo
-  Kyun: SEO chahiye, Google ko products index karne hain
+/products → Don't use
+  Why: SEO needed, Google needs to index products
 
-/products/[id] → Mat karo
-  Kyun: SEO important hai — log Google pe "Nike shoes" search karte hain
+/products/[id] → Don't use
+  Why: SEO important — people search "Nike shoes" on Google
 
-Homepage → Mat karo
-  Kyun: Fast load zaroori hai, SEO important
+Homepage → Don't use
+  Why: Fast load needed, SEO important
 ```
 
 ---
 
-## Next.js Mein 'use client'
+## 'use client' in Next.js
 
-Next.js by default **server components** use karta hai. CSR ke liye `'use client'` likhna padta hai file ke top pe:
+Next.js uses **server components** by default. For CSR you must write `'use client'` at the top of the file:
 
 ```jsx
-'use client'  // Yeh file browser mein run hogi
+'use client'  // This file runs in the browser
 
-// Ab useState, useEffect, onClick sab kaam karenge
+// Now useState, useEffect, onClick all work
 ```
 
-Bina `'use client'` ke — `useState` ya `useEffect` use karo → Error aayega.
+Without `'use client'` — using `useState` or `useEffect` gives an error.
 
 ---
 
@@ -127,13 +127,13 @@ Bina `'use client'` ke — `useState` ya `useEffect` use karo → Error aayega.
 
 | | |
 |--|--|
-| **CSR kya hai** | Browser mein JavaScript se HTML banana |
-| **Kab use karein** | Private pages, heavy interactions, real-time updates |
-| **Kab mat karo** | Public pages, SEO important ho |
-| **Next.js mein** | `'use client'` directive |
+| **What CSR is** | Building HTML in the browser using JavaScript |
+| **When to use** | Private pages, heavy interactions, real-time updates |
+| **When not to** | Public pages where SEO matters |
+| **In Next.js** | `'use client'` directive |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`16-rendering-ssr.md` — Ab **SSR** — Server Side Rendering. Request aane pe server fresh HTML banata hai. ShopKaro ke product pages yahi use karenge — kyun, kaise — samjhenge.
+`16-rendering-ssr.md` — Now **SSR** — Server Side Rendering. The server builds fresh HTML on request. ShopKaro's product pages will use this — why and how, we'll understand.

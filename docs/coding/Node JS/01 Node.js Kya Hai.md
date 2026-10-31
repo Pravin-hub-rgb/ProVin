@@ -1,33 +1,33 @@
-Soch, jab tumne JavaScript seekhi thi, toh wo hamesha browser mein chalti thi — `console.log` browser ke console mein dikhta tha, `document` browser ka page dikhata tha. JavaScript ka apna koi home nahi tha — wo hamesha kisi aur ke ghar (browser) mein rehti thi.
+Think about it — when you first learned JavaScript, it always ran inside a browser. `console.log` showed up in the browser console, `document` represented the browser page. JavaScript had no home of its own — it always lived in someone else's house (the browser).
 
-Ab imagine karo kisi ne JavaScript ko **apna alag ghar** de diya — jahan wo browser ke bina seedha computer pe chal sakti hai. Wo ghar hai **Node.js**.
+Now imagine someone gave JavaScript its **own separate home** — a place where it can run directly on a computer, without any browser. That home is **Node.js**.
 
-## JavaScript Ab Browser Ke Bahar Bhi Chalti Hai
+## JavaScript Now Runs Outside the Browser Too
 
-**Node.js ek JavaScript runtime hai** — ek aisa program jo JavaScript code ko browser ke bahar, seedha tumhare computer/server pe chala deta hai.
+**Node.js is a JavaScript runtime** — a program that runs JavaScript code directly on your computer or server, without a browser.
 
-Chrome ka **V8 engine** hi JavaScript ko fast run karta hai (wohi engine jo Chrome browser use karta hai). Node.js ne usi V8 engine ko browser se nikaal kar ek standalone program bana diya. Isliye:
+Chrome's **V8 engine** is what runs JavaScript fast (the same engine Chrome uses). Node.js took that V8 engine out of the browser and turned it into a standalone program. That's why:
 
-- Browser mein: JS browser ke andar (DOM, window, document ke saath)
-- Node mein: JS computer/server pe (files, network, database ke saath)
+- In the browser: JS runs inside the browser (with DOM, window, document)
+- In Node: JS runs on the computer/server (with files, network, database)
 
-Yeh wo code hai jo dono jagah chalega:
+This code runs in both places:
 
 ```javascript
-// console.log har jagah chalta hai
+// console.log works everywhere
 console.log("Hello, JavaScript!");
 ```
 
-Ab socho — agar tum next.js ka koi app chalaoge (`npm run dev`), background mein kaun chal raha hota hai? **Node.js.** Next.js, React ka server-side rendering, API routes — sab Node ke through chalta hai. Isliye Node samajhna = Next.js ke peeche ka engine samajhna.
+Now think — when you run a Next.js app (`npm run dev`), what's running in the background? **Node.js.** Next.js, React's server-side rendering, API routes — all of it runs through Node. So understanding Node = understanding the engine behind Next.js.
 
-## Node.js Samajhne Se Next.js Clear Kyun Hoga
+## Why Understanding Node Makes Next.js Clear
 
-React course mein tumne jo bhi banaya tha — browser ke andar ka UI. Par Next.js mein code server pe bhi chalta hai (Server Components, API routes, data fetching). Aur server pe code chalane wala engine **Node.js hi hai**.
+In the React course, everything you built ran inside the browser — the UI. But in Next.js, code also runs on the server (Server Components, API routes, data fetching). And the engine that runs code on the server is **Node.js itself**.
 
-Jab tum Next.js mein likhte ho:
+When you write this in Next.js:
 
 ```javascript
-// Ye code server pe chalega (Node.js)
+// This code runs on the server (Node.js)
 async function getProducts() {
   const res = await fetch('/api/products');
   const data = await res.json();
@@ -35,17 +35,17 @@ async function getProducts() {
 }
 ```
 
-`await`, `fetch`, files read karna, `.env` se secrets padhna — ye sab **Node.js ki duniya** hai. Browser walo ko isse koi matlab nahi (browser mein `window`, `document` hota hai). Isliye pehle Node ka base samjho, phir Next.js ka magic transparent ho jata hai.
+`await`, `fetch`, reading files, reading secrets from `.env` — all of that is **Node.js territory**. Browser developers have nothing to do with it (in the browser there's `window` and `document`). So first understand the Node base, and then Next.js's magic becomes transparent.
 
-## Practical — Node REPL (Pehli Baar Browser Ke Bina JS)
+## Practical — Node REPL (JavaScript Without a Browser for the First Time)
 
-Terminal kholo aur type karo:
+Open a terminal and type:
 
 ```bash
 node
 ```
 
-Enter dabate hi **REPL** khul jayega — ek interactive shell jahan tum JS likh kar turant output dekh sakte ho, bilkul browser console jaisa.
+The moment you press Enter, the **REPL** opens — an interactive shell where you can write JS and see the output instantly, just like the browser console.
 
 ```
 > 1 + 1
@@ -56,22 +56,22 @@ Hi from Node
 10
 ```
 
-Yeh **asli JavaScript hai**, bas browser ke bina chal rahi hai. Isi chhote se fark se poora Node.js ka fayda shuru hota hai — ab tum JS se files bhi khol sakte ho, server bhi bana sakte ho, database bhi hit kar sakte ho.
+This is **real JavaScript**, just running without a browser. This tiny difference is what unlocks all of Node's power — now you can open files with JS, build a server, hit a database.
 
-REPL se bahar aane ke liye Ctrl+C do baar (ya `.exit` type karo).
+To exit the REPL, press Ctrl+C twice (or type `.exit`).
 
-## Practical — Pehli JS File Chalana
+## Practical — Running Your First JS File
 
-REPL chhote sawal-jawab ke liye hai. Asli kaam ke liye ek file banate hain.
+REPL is for small question-answer experiments. For real work, you create a file.
 
-**Step 1:** Ek folder banao aur usme `app.js` file banao:
+**Step 1:** Create a folder and an `app.js` file inside it:
 
 ```javascript
 // app.js
-console.log("Node se chal raha hai");
+console.log("Running from Node");
 ```
 
-**Step 2:** Terminal mein (us folder mein) run karo:
+**Step 2:** In the terminal (inside that folder), run:
 
 ```bash
 node app.js
@@ -80,80 +80,80 @@ node app.js
 Output:
 
 ```
-Node se chal raha hai
+Running from Node
 ```
 
-Bas. Itna hi. Par yeh chhota sa step hi woh hai jo `npm run dev` ke peeche hota hai — Next.js bhi kisi entry file se JavaScript run karta hai, bas framework ke saath.
+That's it. But this tiny step is exactly what happens behind `npm run dev` — Next.js also runs JavaScript from an entry file, just with the framework on top.
 
-> **Kyun yeh karna zaroori hai:** Jab tum Next.js ka `npm run build` ya `npm run dev` chalate ho, node hi background mein code execute karta hai. Yeh file chalana tumhe yeh body-feel deta hai ki "node X.js" kya hota hai — baaki sab isi ke upar bana hai.
+> **Why this is necessary:** When you run Next.js's `npm run build` or `npm run dev`, node executes the code in the background. Running a file gives you the body-feel of what "node X.js" is — everything else is built on top of this.
 
 ## Browser Environment vs Node Environment
 
-| Cheez | Browser | Node.js |
+| Thing | Browser | Node.js |
 |---|---|---|
-| Code kahan chalta hai | Browser (client) | Computer/Server |
-| Window/Document | Hota hai (UI) | Nahi hota |
-| Files read/write | Direct nahi (browser security) | Hota hai (`fs` module) |
-| Network requests | `fetch` | `fetch` + aur bahut kuch |
+| Where code runs | Browser (client) | Computer/Server |
+| Window/Document | Exists (UI) | Doesn't exist |
+| Files read/write | Not directly (browser security) | Yes (`fs` module) |
+| Network requests | `fetch` | `fetch` + much more |
 | Console | Browser dev tools | Terminal |
 
-Isliye jab tum Node mein `window` use karne ki koshish karoge, error aayega — kyunki window browser ka concept hai, Node mein nahi. `process` (Node ka global) browser mein nahi hota. **Dono alag environments hain, bas language same hai.**
+That's why if you try to use `window` in Node, you'll get an error — window is a browser concept, not a Node one. `process` (Node's global) doesn't exist in the browser. **Both are different environments, the language is the same.**
 
 ## Common Mistakes
 
-- ❌ `node app.js` bhool ke browser mein `app.js` kholna — file browser mein script ki tarah chalti hai, par Node ki features (`require`, `process`, `fs`) kaam nahi karenge. Node code ko **terminal se** `node` se chalana hai.
-- ❌ REPL mein lamba program likhna — REPL chhote tests ke liye hai. Asli program file mein likho aur `node` se chalao.
-- ❌ `window` ya `document` Node mein use karna — ye browser ke globals hain. Node mein `process`, `__dirname`, `require` jaise globals hote hain.
-- ❌ Sochna ki "Node = ek web framework" — Node framework nahi, runtime hai. Express/Next.js frameworks hain jo Node pe chalti hain.
+- ❌ Forgetting `node app.js` and opening `app.js` in the browser — the file runs like a script in the browser, but Node features (`require`, `process`, `fs`) won't work. Node code must be run **from the terminal** with `node`.
+- ❌ Writing long programs in the REPL — REPL is for small tests. Write real programs in files and run with `node`.
+- ❌ Using `window` or `document` in Node — these are browser globals. Node has globals like `process`, `__dirname`, `require`.
+- ❌ Thinking "Node = a web framework" — Node is not a framework, it's a runtime. Express/Next.js are frameworks that run **on Node**.
 
 ## In Your Own Words
 
-1. Node.js kya hai — ek line mein?
+1. What is Node.js — in one line?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Node.js ek JavaScript runtime hai jo JavaScript ko browser ke bahar — seedha computer/server pe — chalane deta hai. Chrome ke V8 engine pe based hai.
+**Answer:** Node.js is a JavaScript runtime that lets JavaScript run outside the browser — directly on your computer/server. It's based on Chrome's V8 engine.
 
 </details>
 
-2. Browser JavaScript aur Node JavaScript mein kya fark hai?
+2. What's the difference between browser JavaScript and Node JavaScript?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Language same hai (JavaScript), par environment alag hai. Browser mein `window`/`document`/DOM milta hai, Node mein `process`, `fs` (files), server-side features. Browser UI ke liye, Node server/backend ke liye.
+**Answer:** The language is the same (JavaScript), but the environment is different. In the browser you get `window`/`document`/DOM; in Node you get `process`, `fs` (files), and server-side features. Browser is for UI, Node is for server/backend.
 
 </details>
 
-3. REPL kya hai aur kahan use hota hai?
+3. What is the REPL and where is it used?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** REPL (Read-Eval-Print Loop) ek interactive shell hai jo `node` type karte hi khulta hai. Chhote experiments ke liye — line likho, turant output dekho. Lambi files ke liye file bana kar `node app.js` chalao.
+**Answer:** REPL (Read-Eval-Print Loop) is an interactive shell that opens when you type `node`. Use it for small experiments — type a line, see the output instantly. For long files, create a file and run `node app.js`.
 
 </details>
 
-4. Next.js ka server-side code kaun chalata hai?
+4. Who runs Next.js's server-side code?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Node.js. Server Components, API routes, data fetching — sab server pe chalta hai, aur server pe JavaScript chalane wala runtime Node.js hai. `npm run dev` ke peeche bhi node hi hota hai.
+**Answer:** Node.js. Server Components, API routes, data fetching — all of it runs on the server, and the runtime that runs JavaScript on the server is Node.js. `npm run dev` is also backed by node.
 
 </details>
 
 ## What It Is NOT
 
-⚠️ **Node.js = JavaScript framework nahi.** Wo ek runtime hai (program jo JS chalata hai). Express, Next.js frameworks hain jo **Node pe** chalti hain.
+⚠️ **Node.js is NOT a JavaScript framework.** It's a runtime (a program that runs JS). Express, Next.js are frameworks that run **on Node**.
 
-⚠️ **Node.js = JavaScript ki nayi language nahi.** Language wahi hai, bas naya environment. Jo JS tumhe aati hai, wahi chalti hai — files, server, database ke saath.
+⚠️ **Node.js is NOT a new JavaScript language.** The language is the same — your existing JS knowledge works, now with files, server, and database.
 
-⚠️ **Node.js sirf backend ke liye nahi.** Backend iska sabse popular use hai, par Node se build tools, CLI tools, desktop apps (Electron) sab ban sakte hain. Tumhara Vite, webpack — sab Node pe chalta hai.
+⚠️ **Node.js is NOT only for backends.** Backend is its most popular use, but Node can build build tools, CLI tools, desktop apps (Electron). Your Vite, webpack — all run on Node.
 
-⚠️ **`node app.js` sirf chhoti files ke liye nahi.** Yeh production mein bhi wahi command hai — `npm start` aksar `node server.js` hi hota hai internally.
+⚠️ **`node app.js` is not only for small files.** This same command is used in production — `npm start` is often `node server.js` internally.
 
 ---
 
-Ab tumhara Node chalta hai. Agla sawaal — jab files bada hoti hai, code ko multiple files mein kaise baant te hain, aur ek file ka code dusri file mein kaise use karte hain? Yehi **Module System** hai — agla topic. Chal karte hain.
+Now your Node runs. The next question — when files get big, how do you split code across multiple files, and how does one file use another's code? That's the **Module System** — the next topic. Let's go.

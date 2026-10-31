@@ -1,14 +1,14 @@
 # 12 — Background Jobs + Queues: BullMQ, Inngest, Trigger.dev
 
 > Umbrella: Backend → Background Jobs / Queues
-> Kaam: Heavy/slow tasks ko background mein karo — user wait na kare
-> Example: Order place → User ko response milo → Background mein email bhejo
+> Job: Move heavy/slow tasks to the background — don't make the user wait
+> Example: Order placed → User gets response → Background sends email
 
 ---
 
-## Storage Types - Poora Detail Mein
+## Storage Types — In Full Detail
 
-Web development mein **3 tarah ke storage** hote hain — har ek ka alag kaam:
+There are **3 types of storage** in web development — each with a different job:
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
@@ -22,19 +22,19 @@ Web development mein **3 tarah ke storage** hote hain — har ek ka alag kaam:
 
 ---
 
-### 1. Client Side Storage (Browser Mein)
+### 1. Client Side Storage (In the Browser)
 
-**Kahan Store Hota Hai:** User ke browser mein
-**Kab Use Karein:** User-specific temporary data
+**Where it's stored:** In the user's browser
+**When to use:** User-specific temporary data
 
 #### A. Cookies
 ```javascript
 // Size: 4KB max
-// Lifetime: Set kar sakte ho (days, months, years)
+// Lifetime: Can be set (days, months, years)
 // Use: Authentication tokens, preferences
 
 document.cookie = "token=abc123; max-age=86400; path=/";
-// Server se set karna (Next.js):
+// Set from server (Next.js):
 res.setHeader('Set-Cookie', 'token=abc123; HttpOnly; Secure');
 ```
 
@@ -43,14 +43,14 @@ res.setHeader('Set-Cookie', 'token=abc123; HttpOnly; Secure');
 // next.config.js
 export const middleware = (request) => {
   const token = request.cookies.get('auth-token')?.value;
-  // Token check karo
+  // Check token
 };
 ```
 
 #### B. LocalStorage
 ```javascript
 // Size: 5-10MB (browser dependent)
-// Lifetime: Forever (jab tak clear na karo)
+// Lifetime: Forever (until cleared)
 // Use: User preferences, cached data, cart items
 
 localStorage.setItem('cart', JSON.stringify([item1, item2]));
@@ -59,13 +59,13 @@ const cart = JSON.parse(localStorage.getItem('cart'));
 
 **Next.js Example:**
 ```javascript
-// Client component mein
+// In a client component
 'use client';
 import { useEffect, useState } from 'react';
 
 export default function Cart() {
   const [cart, setCart] = useState([]);
-  
+
   useEffect(() => {
     const savedCart = localStorage.getItem('cart');
     if (savedCart) setCart(JSON.parse(savedCart));
@@ -76,11 +76,11 @@ export default function Cart() {
 #### C. SessionStorage
 ```javascript
 // Size: 5-10MB
-// Lifetime: Tab close hote hi delete
+// Lifetime: Deleted when tab closes
 // Use: Temporary session data
 
 sessionStorage.setItem('currentPage', 'checkout');
-// Tab band kiya → sab delete
+// Close tab → everything deleted
 ```
 
 #### D. IndexedDB
@@ -89,7 +89,7 @@ sessionStorage.setItem('currentPage', 'checkout');
 // Lifetime: Forever
 // Use: Large structured data, offline apps
 
-// Example: PWA mein offline data store karna
+// Example: Storing offline data in a PWA
 const db = await indexedDB.open('MyAppDB', 1);
 ```
 
@@ -97,8 +97,8 @@ const db = await indexedDB.open('MyAppDB', 1);
 
 ### 2. Server Side - Permanent Database
 
-**Kahan Store Hota Hai:** Server/Cloud pe
-**Kab Use Karein:** Permanent, structured data
+**Where it's stored:** On server/cloud
+**When to use:** Permanent, structured data
 
 #### A. SQL Databases (PostgreSQL, MySQL)
 ```javascript
@@ -109,7 +109,7 @@ const db = await indexedDB.open('MyAppDB', 1);
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
-// User create karna
+// Create a user
 const user = await prisma.user.create({
   data: {
     email: 'priya@gmail.com',
@@ -165,13 +165,13 @@ export async function POST(req) {
 
 ### 3. Server Side - Cache/Queue (Temporary Fast Storage)
 
-**Kahan Store Hota Hai:** Server/Cloud pe (RAM based)
-**Kab Use Karein:** Temporary data, fast access, background jobs
+**Where it's stored:** On server/cloud (RAM based)
+**When to use:** Temporary data, fast access, background jobs
 
 #### A. Redis (In-Memory Data Store)
 ```
 Redis = In-memory key-value database
-Speed: RAM based → Milliseconds mein response
+Speed: RAM based → Response in milliseconds
 Use Cases:
   → Cache (frequently accessed data)
   → Queue (background jobs)
@@ -179,21 +179,21 @@ Use Cases:
   → Rate limiting
 ```
 
-**Redis Kya Hai Simple Bhasha Mein:**
+**What Redis Is in Simple Words:**
 ```
 Normal Database (MongoDB/PostgreSQL):
-  → Disk pe store hota hai
+  → Stored on disk
   → Slow (milliseconds to seconds)
-  → Permanent data ke liye
+  → For permanent data
 
 Redis:
-  → RAM mein store hota hai
+  → Stored in RAM
   → Super fast (microseconds)
-  → Temporary data ke liye
-  → Restart pe data chala jata hai (unless persisted)
+  → For temporary data
+  → Data is lost on restart (unless persisted)
 ```
 
-**Redis Ke Main Use Cases:**
+**Main Redis Use Cases:**
 
 ```javascript
 // 1. CACHE - Frequently accessed data
@@ -208,12 +208,12 @@ await redis.lpush('email-queue', JSON.stringify({
   to: 'user@gmail.com',
   subject: 'Welcome!'
 }));
-// Worker process karega
+// Worker will process it
 
 // 3. SESSION STORE - User sessions
 await redis.setex(`session:${sessionId}`, 86400, userData);
 
-// 4. RATE LIMITING - API calls limit
+// 4. RATE LIMITING - API call limits
 const count = await redis.incr(`rate:${userId}`);
 if (count > 100) {
   // Block user for 1 minute
@@ -226,7 +226,7 @@ if (count > 100) {
 ```bash
 # Install Redis client
 npm install redis
-# Ya serverless ke liye
+# Or for serverless
 npm install @upstash/redis
 ```
 
@@ -248,17 +248,17 @@ import { prisma } from '@/lib/prisma';
 export async function GET() {
   // Check cache first
   let products = await redis.get('products');
-  
+
   if (!products) {
-    // Cache miss - database se lao
+    // Cache miss - fetch from database
     products = await prisma.product.findMany();
-    // Cache mein daal do for 5 minutes
+    // Store in cache for 5 minutes
     await redis.setex('products', 300, JSON.stringify(products));
   } else {
-    // Cache hit - Redis se wapas lao
+    // Cache hit - get back from Redis
     products = JSON.parse(products);
   }
-  
+
   return Response.json(products);
 }
 ```
@@ -287,9 +287,9 @@ export async function GET() {
 
 ---
 
-### Next.js Default Setup (Bina Redis Ke)
+### Next.js Default Setup (Without Redis)
 
-**Zyadatar Next.js apps shuru mein bina Redis ke chal sakte hain:**
+**Most Next.js apps can run without Redis at the start:**
 
 ```javascript
 // Typical Next.js setup:
@@ -303,29 +303,29 @@ import { prisma } from '@/lib/prisma';
 
 export async function POST(req) {
   const order = await prisma.order.create({...});
-  
-  // Email sync bhej do (thoda slow but okay for small apps)
+
+  // Send email synchronously (a bit slow but okay for small apps)
   await sendEmail(order);
-  
+
   return Response.json(order);
 }
 ```
 
-**Kab Redis Add Karein:**
+**When to Add Redis:**
 
 ```
 ✅ Add Redis when:
   → 1000+ daily active users
   → Background jobs needed (email, notifications)
-  → High traffic, database pe load kam karna hai
-  → Rate limiting chahiye
+  → High traffic, to reduce load on the database
+  → Rate limiting needed
   → Real-time features (chat, notifications)
 
 ❌ Don't need Redis when:
   → < 1000 daily users
   → Simple CRUD app
-  → Sab kuch sync kar sakte ho
-  → Budget tight hai (Redis managed service costs)
+  → Everything can be done synchronously
+  → Budget is tight (managed Redis costs money)
 ```
 
 ---
@@ -338,7 +338,7 @@ export async function POST(req) {
 // 1. LIST - Simple queue (FIFO)
 await redis.lpush('queue', 'job1');
 await redis.lpush('queue', 'job2');
-const job = await redis.rpop('queue'); // job1 milega
+const job = await redis.rpop('queue'); // job1 comes back
 
 // 2. SORTED SET - Priority queue
 await redis.zadd('priority-queue', 10, 'high-priority-job');
@@ -353,44 +353,44 @@ const events = await redis.xread({ key: 'events', id: '0' });
 ### Redis Persistence
 
 ```javascript
-// Redis data RAM mein hota hai, lekin persist bhi kar sakte hain:
+// Redis data lives in RAM, but can be persisted too:
 
 // RDB (Snapshot)
-// → Periodic snapshots le leta hai
+// → Takes periodic snapshots
 // → Fast recovery
-// → Thoda data loss ho sakta hai
+// → Some data loss possible
 
 // AOF (Append Only File)
-// → Har operation log hota hai
+// → Logs every operation
 // → Zero data loss
 // → Slow recovery
 
 // Managed Redis (Upstash, Redis Cloud):
-// → Dono RDB + AOF default on
+// → Both RDB + AOF on by default
 // → Automatic backups
 // → No configuration needed
 ```
 
 ---
 
-## Yeh Kyun Chahiye
+## Why This Is Needed
 
-Priya ne order place kiya:
+Priya placed an order:
 
 ```
-Bina queue:
-Order save karo → Email bhejo → Invoice banao → SMS bhejo → Response do
-User 5 second wait karta hai → Bad UX
+Without a queue:
+Order save → Send email → Generate invoice → Send SMS → Return response
+User waits 5 seconds → Bad UX
 
-Queue ke saath:
-Order save karo → Response do turant → Background mein: email, invoice, SMS
-User turant "Order placed!" dekhta hai → Good UX
+With a queue:
+Order save → Return response immediately → Background: email, invoice, SMS
+User immediately sees "Order placed!" → Good UX
 ```
 
-Background jobs ka fayda:
-- User ko slow tasks ka wait nahi karna
-- Failure pe retry automatic
-- Heavy tasks spread out karo
+Benefits of background jobs:
+- User doesn't have to wait for slow tasks
+- Automatic retry on failure
+- Heavy tasks can be spread out
 
 ---
 
@@ -402,44 +402,44 @@ Background jobs ka fayda:
 **Tag: 🟢 Most Popular | Redis-based | Battle-tested**
 
 ```
-Kya hai: Redis-based job queue — Node.js ke liye most popular
-Kab use karo:
+What it is: Redis-based job queue — most popular for Node.js
+When to use:
   → Self-hosted backend (Express, Fastify, NestJS)
-  → Redis already hai ya add kar sakte ho
+  → Redis already there or can be added
   → Complex queue logic — priorities, delayed jobs, repeatable jobs
 
 Real app example:
-  → Swiggy: Order placed → Queue mein daalo → Worker process kare:
+  → Swiggy: Order placed → pushed to queue → Worker processes:
     - Restaurant notification
     - Driver assignment
     - Customer confirmation email
     - Analytics event
-  → Zomato: Image processing queue (restaurant photos resize karna)
+  → Zomato: Image processing queue (resize restaurant photos)
 
 Code feel:
-  // Job add karo (producer)
+  // Add a job (producer)
   const emailQueue = new Queue('emails', { connection: redis })
   await emailQueue.add('order-confirmation', {
     userId: 1, orderId: 123, email: 'priya@gmail.com'
   })
 
-  // Worker — job process karo
+  // Worker — process the job
   const worker = new Worker('emails', async (job) => {
     await sendOrderConfirmationEmail(job.data)
   }, { connection: redis })
 
 Features:
   → Retry on failure — automatic
-  → Delayed jobs — "1 ghante baad reminder bhejo"
-  → Repeatable jobs — "Har raat 2 baje report generate karo"
+  → Delayed jobs — "send a reminder after 1 hour"
+  → Repeatable jobs — "generate the report every night at 2 AM"
   → Job priorities
   → Concurrency control
 
 Cons:
   → Redis required — extra infra
-  → Serverless pe nahi chalta directly
+  → Doesn't run directly on serverless
 
-India mein: Production apps mein most common choice
+In India: Most common choice in production apps
 ```
 
 ---
@@ -448,18 +448,18 @@ India mein: Production apps mein most common choice
 **Tag: 🟢 Managed | Serverless-friendly | Growing**
 
 ```
-Kya hai: Managed background job service — serverless mein bhi chalta hai
-Kab use karo:
-  → Vercel pe deploy kar rahe ho (serverless)
-  → Redis manage nahi karna
+What it is: Managed background job service — works on serverless too
+When to use:
+  → Deploying on Vercel (serverless)
+  → Don't want to manage Redis
   → Event-driven workflows
 
-BullMQ se fark:
+Difference from BullMQ:
   → Inngest: Managed service, no Redis needed, serverless-friendly
   → BullMQ: Self-hosted, Redis required, traditional servers
 
 Code feel:
-  // Function define karo
+  // Define a function
   const sendWelcomeEmail = inngest.createFunction(
     { id: 'send-welcome-email' },
     { event: 'user.signup' },
@@ -474,7 +474,7 @@ Code feel:
     }
   )
 
-  // Event trigger karo
+  // Trigger an event
   await inngest.send({ name: 'user.signup', data: { email: 'priya@gmail.com' } })
 
 Special:
@@ -483,10 +483,10 @@ Special:
   → Dashboard for monitoring
 
 Real app example:
-  → Vercel pe Next.js + Inngest → Serverless background jobs
+  → Next.js on Vercel + Inngest → Serverless background jobs
   → SaaS onboarding flows (welcome email → day 1 tips → day 7 check-in)
 
-India mein: Growing — especially Vercel users
+In India: Growing — especially Vercel users
 ```
 
 ---
@@ -495,22 +495,22 @@ India mein: Growing — especially Vercel users
 **Tag: 🟢 Modern | TypeScript-first | Growing**
 
 ```
-Kya hai: Background jobs for modern stack — TypeScript-first
-Kab use karo:
+What it is: Background jobs for the modern stack — TypeScript-first
+When to use:
   → TypeScript project
-  → Long-running tasks (minutes ya ghante)
-  → AI tasks (LLM calls jo slow hain)
+  → Long-running tasks (minutes or hours)
+  → AI tasks (slow LLM calls)
 
-Inngest se fark:
-  → Similar concept — dono managed, serverless-friendly
+Difference from Inngest:
+  → Similar concept — both managed, serverless-friendly
   → Trigger.dev: Better for long-running tasks (minutes/hours)
   → Inngest: Better for event-driven short workflows
 
 Real app example:
-  → AI processing jobs (PDF parse karo → AI se summarize karo → Store karo)
+  → AI processing jobs (parse PDF → summarize with AI → store)
   → Data sync jobs
 
-India mein: Growing — AI apps mein popular
+In India: Growing — popular in AI apps
 ```
 
 ---
@@ -519,30 +519,30 @@ India mein: Growing — AI apps mein popular
 **Tag: 🟢 Simple | Cron jobs | No queue**
 
 ```
-Kya hai: Cron job scheduler — specific time pe task run karo
-Kab use karo:
-  → Simple scheduled tasks — queue nahi chahiye
-  → "Har raat 12 baje database clean karo"
-  → "Har ghante report generate karo"
+What it is: Cron job scheduler — run a task at a specific time
+When to use:
+  → Simple scheduled tasks — no queue needed
+  → "Clean the database every night at midnight"
+  → "Generate a report every hour"
 
 Cron syntax:
   cron.schedule('0 0 * * *', async () => {
-    // Har raat 12 baje
+    // Every night at midnight
     await cleanExpiredSessions()
   })
 
   cron.schedule('*/5 * * * *', async () => {
-    // Har 5 minute mein
+    // Every 5 minutes
     await syncInventory()
   })
 
-BullMQ se fark:
+Difference from BullMQ:
   → node-cron: Scheduled tasks only (time-based)
   → BullMQ: Queue — event-based, retry, priorities
 
 Cons:
   → Multiple servers → Multiple cron instances → Problem
-  → Serverless pe nahi chalta
+  → Doesn't run on serverless
 ```
 
 ---
@@ -551,16 +551,16 @@ Cons:
 **Tag: 🟡 MongoDB-based | Older**
 
 ```
-Kya hai: MongoDB-based job queue
-Kab use karo:
-  → MongoDB use kar rahe ho, Redis nahi hai
+What it is: MongoDB-based job queue
+When to use:
+  → Using MongoDB, no Redis
   → Existing Agenda codebase
 
-BullMQ se kya kharab:
-  → MongoDB MongoDB se slow queue operations ke liye
-  → BullMQ Redis → Much faster
+Why it's worse than BullMQ:
+  → MongoDB is slow for queue operations
+  → BullMQ on Redis → Much faster
 
-Status: Maintained lekin BullMQ preferred
+Status: Maintained, but BullMQ is preferred
 ```
 
 ---
@@ -569,7 +569,7 @@ Status: Maintained lekin BullMQ preferred
 
 ```
 Serverless (Vercel)?
-  → Inngest ya Trigger.dev
+  → Inngest or Trigger.dev
 
 Traditional server, Redis available?
   → BullMQ
@@ -580,31 +580,31 @@ Simple time-based tasks only?
 Long-running AI/processing tasks?
   → Trigger.dev
 
-MongoDB pe queue chahiye?
-  → Agenda (lekin Redis add karo BullMQ ke liye)
+Need a queue on MongoDB?
+  → Agenda (but add Redis for BullMQ instead)
 ```
 
 ---
 
-## ShopKaro Mein Kab Use Karein
+## When to Use This in ShopKaro
 
 ```
-V1 mein: Queue ki zaroorat nahi
-  → Email bhejhna sync kar sakte hain (thoda slow but okay)
+In V1: No queue needed
+  → Sending email synchronously is okay (a bit slow but fine)
 
-V2 mein (zyada users):
-  → BullMQ (self-hosted) ya Inngest (Vercel)
+In V2 (more users):
+  → BullMQ (self-hosted) or Inngest (Vercel)
   → Order placed → Queue → Email, notification, analytics
 
-Jobs jo queue mein jaayenge:
+Jobs that will go into the queue:
   → Order confirmation email
-  → Low stock alert (admin ko)
-  → Invoice PDF generate karna
+  → Low stock alert (to admin)
+  → Invoice PDF generation
   → Payment failure retry notification
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`13-backend-storage.md` — File Upload + Storage — Cloudinary, S3, Uploadthing — ShopKaro ka product image upload, Swiggy ka restaurant photo kahan store hota hai.
+`13-backend-storage.md` — File Upload + Storage — Cloudinary, S3, Uploadthing — where ShopKaro's product images and Swiggy's restaurant photos are stored.

@@ -8,22 +8,22 @@
 
 ---
 
-## 1. Architecture One-Pager (ye poora project hai, 60 seconds me)
+## 1. Architecture One-Pager (the whole project in 60 seconds)
 
-TradeStack **teen hisson** se bana hai, aur har hissa alag kaam karta hai:
+TradeStack is built from **three parts**, and each part does a different job:
 
 ```
 ┌─────────────────────────────────────────────────────────┐
 │  Next.js Frontend (TypeScript + React 19 + MUI)         │
 │  Scanner page · Breadth page · Live-trading page        │
-│  Settings page (70 params ka UI)                        │
+│  Settings page (UI for 70 params)                        │
 └──────────────┬──────────────────────────┬───────────────┘
                │ REST (fetch)             │ SSE /api/live/events
                ▼                          ▼
 ┌────────────────────────────┐  ┌──────────────────────────┐
 │  Python FastAPI (port 8001)│  │  Node Live-Trader        │
-│  • 49 REST endpoints       │  │  (Next.js route handler  │
-│  • pandas/numpy indicators │  │   ke andar, process me)  │
+│  • 49 REST endpoints       │  │  (inside a Next.js route │
+│  • pandas/numpy indicators │  │   handler, in-process)   │
 │  • NSE bhavcopy ingestion  │  │  • Upstox WebSocket V3   │
 │  • custom indicator set   │  │  • protobuf decode        │
 │  • continuation + reversal │  │  • state machines        │
@@ -33,52 +33,52 @@ TradeStack **teen hisson** se bana hai, aur har hissa alag kaam karta hai:
                │                            │
                └────────► SQLite (WAL) ◄────┘
                     data/settings.db
-                    (dono runtimes ek hi file)
+                    (both runtimes, one file)
                │
                └──► data/cache/*.pkl  (2000+ stocks, per-stock pickle)
 ```
 
-### Teen hisse aur unka kaam
+### The three parts and what each does
 
-| Hissa | Tech | Kyun yahan | Kaam |
+| Part | Tech | Why here | Job |
 |---|---|---|---|
-| **Frontend** | Next.js + React + MUI | UI ke liye sabse mature | Screens, forms, charts |
-| **Python service** | FastAPI + pandas + numpy | Data-heavy kaam ka best ecosystem | Indicators, scanners, breadth, bhavcopy data |
-| **Node live-trader** | Next.js route handler + Upstox SDK | Real-time event handling JS me natural hai | WebSocket feed, state machines, order/paper trade |
-| **Shared DB** | SQLite (WAL mode) | Zero-config, do processes ek file | Settings, trade log, cache index |
-| **Cache** | `.pkl` files | pandas ka native format | Per-stock historical OHLCV (2000+ files) |
+| **Frontend** | Next.js + React + MUI | most mature for UI | Screens, forms, charts |
+| **Python service** | FastAPI + pandas + numpy | best ecosystem for data-heavy work | Indicators, scanners, breadth, bhavcopy data |
+| **Node live-trader** | Next.js route handler + Upstox SDK | real-time event handling is natural in JS | WebSocket feed, state machines, order/paper trade |
+| **Shared DB** | SQLite (WAL mode) | zero-config, two processes one file | Settings, trade log, cache index |
+| **Cache** | `.pkl` files | pandas' native format | Per-stock historical OHLCV (2000+ files) |
 
-### Ek line me answer (interview me yahi bolna)
+### One-line answer (say this in the interview)
 
-> *"TradeStack ek polyglot trading platform hai — data-heavy computation Python me hai kyunki pandas/numpy best hai uske liye, aur real-time streaming Node me hai kyunki WebSocket event handling JS me natural hai. Dono ek SQLite file share karte hain. Ye separation of concerns hai — har layer ka apna kaam."*
+> *"TradeStack is a polyglot trading platform — data-heavy computation is in Python because pandas/numpy are best for it, and real-time streaming is in Node because WebSocket event handling is natural in JavaScript. Both share one SQLite file. That's separation of concerns — each layer does its own job."*
 
 ---
 
-## 2. "2-Minute TradeStack Pitch" (rehearse karo — record karke suno)
+## 2. "2-Minute TradeStack Pitch" (rehearse — record and listen back)
 
-> *"TradeStack ek personal NSE swing-trading platform hai jo 2000+ stocks me continuation aur reversal patterns scan karta hai.*
+> *"TradeStack is a personal NSE swing-trading platform that scans 2000+ stocks for continuation and reversal patterns.*
 >
-> *Architecture tri-partite hai: ek Next.js frontend, ek Python FastAPI microservice, aur ek Node-based live trading engine. Data-heavy kaam — technical indicators, stock scanning, market breadth — Python me hai, kyunki pandas/numpy uske liye best hai. Real-time market data streaming Node me hai, kyunki WebSocket event handling JavaScript me natural hai. Dono ek SQLite database share karte hain, WAL mode me — isse ek process likhe aur doosra padhe, bina server ke.*
+> *The architecture is tri-partite: a Next.js frontend, a Python FastAPI microservice, and a Node-based live trading engine. Data-heavy work — technical indicators, stock scanning, market breadth — is in Python because pandas/numpy are best for it. Real-time market data streaming is in Node because WebSocket event handling is natural in JavaScript. Both share a single SQLite database in WAL mode — so one process writes and the other reads without a server.*
 >
-> *Data pipeline NSE bhavcopy download karke har stock ka pickle cache banata hai — 2000+ stocks ke liye. Usi cache se custom indicators compute hote hain — SMA (20/50), MA angle, ADR, price-change, high-low distances. Scanners multiprocessing pool use karte hain kyunki 2000 stocks ka indicator math CPU-bound hai, aur processes hi Python me true parallelism deta hai.*
+> *The data pipeline downloads NSE bhavcopy and builds a pickle cache per stock — 2000+ stocks. From that same cache the custom indicators are computed — SMA (20/50), MA angle, ADR, price-change, high-low distances. Scanners use a multiprocessing pool because indicator math across 2000 stocks is CPU-bound, and processes are what give real parallelism in Python.*
 >
-> *Live side pe Upstox WebSocket V3 se 5-minute candles stream hoti hain, protobuf decode hoke har stock ke liye state machine chalata hai — 11 states, jaise entry signal aaya, stock standby me gaya; entry fill hui, to position. Position management, paper trading, aur P&L tracking sab automated hai. Trade log SQLite me persist hota hai.*
+> *On the live side, Upstox WebSocket V3 streams 5-minute candles, protobuf-decoded, driving a state machine per stock — 11 states, like: entry signal came, stock went to standby; entry filled, then position. Position management, paper trading, and P&L tracking are all automated. The trade log persists in SQLite.*
 >
-> *Pichle 6 mahine me maine isme refactoring ki — 47 hardcoded URLs ko central api.ts me consolidate kiya, type safety add ki, aur architecture documentation likhi."*
+> *Over the last 6 months I refactored it — consolidated 47 hardcoded URLs into a central api.ts, added type safety, and wrote the architecture documentation."*
 
 ---
 
 ## 3. Concept Cards (one card per sitting, unhurried)
 
-### Card 1 — FastAPI: kya hai aur route kya hota hai
+### Card 1 — FastAPI: what it is and what a route is
 
-FastAPI ek **Python web framework** hai jo API banane ke liye use hota hai. Tumhara `server.py` uska app banata hai:
+FastAPI is a **Python web framework** used to build APIs. Your `server.py` creates its app:
 
 ```python
 app = FastAPI(title="TradeStack", version="0.1.0", lifespan=lifespan)
 ```
 
-**Route = ek URL jo kuch karta hai.** Jaise `/api/settings/{key}` pe GET karo to wo setting ka value milega, PUT karo to wo change ho jayega.
+**Route = a URL that does something.** Hitting `/api/settings/{key}` with GET returns that setting's value; PUT changes it.
 
 ```python
 @app.get("/api/settings/{key}")
@@ -90,13 +90,13 @@ def set_setting(key: str, value: str):
     ...
 ```
 
-**Bonus:** FastAPI automatically **Swagger docs** banata hai — `http://localhost:8001/docs`. Saare endpoints wahan dikhte hain with example requests. Isliye `47 endpoints` likhne me time nahi lagta — pattern hi ek jaisa hai.
+**Bonus:** FastAPI automatically generates **Swagger docs** — `http://localhost:8001/docs`. All endpoints show up there with example requests. That's why "47 endpoints" isn't a lot of work — the pattern is the same everywhere.
 
-**Interview answer:** *"FastAPI Python ka modern async web framework hai. Isme route ek function hai jo URL se map hota hai — woh function request leta hai aur JSON response deta hai. FastAPI Pydantic models se automatic validation aur documentation banata hai, isliye meri 49 endpoints ka Swagger docs auto-generated hai."*
+**Interview answer:** *"FastAPI is Python's modern async web framework. A route is a function mapped to a URL — it takes a request and returns a JSON response. FastAPI builds automatic validation and documentation from Pydantic models, so my 49 endpoints get auto-generated Swagger docs."*
 
-### Card 2 — Pydantic: response ka shape
+### Card 2 — Pydantic: the shape of a response
 
-Pydantic ek library hai jo Python me **data ko validate** karti hai. Tumhare server me:
+Pydantic is a library that **validates data** in Python. In your server:
 
 ```python
 class UpdateRequest(BaseModel):
@@ -107,24 +107,24 @@ class BatchHistoryRequest(BaseModel):
     days: int = 200
 ```
 
-Ye classes batati hain ki *"is endpoint ka input aisa dikhna chahiye"*. FastAPI inhe padhke:
-1. **Validate** karta hai — agar `symbols` string bhej do to 422 error de dega
-2. **Docs** me schema show karta hai
-3. **Response typing** deta hai — `ScanResult` jaisi class se pata chalta hai response me kya fields hongi
+These classes say *"the input for this endpoint should look like this"*. FastAPI reads them to:
+1. **Validate** — if you send `symbols` as a string, it returns a 422 error
+2. **Show the schema in the docs**
+3. **Type the response** — a class like `ScanResult` tells you which fields the response will have
 
-**Interview answer:** *"Pydantic data classes hain jo validation aur serialization handle karti hain. FastAPI inhe request/response schemas ke liye use karta hai. Isse malformed input apne aap reject ho jata hai aur Swagger docs me schema auto-generate hota hai."*
+**Interview answer:** *"Pydantic data classes handle validation and serialization. FastAPI uses them for request/response schemas. That way malformed input is rejected automatically and the schema auto-generates in Swagger docs."*
 
-### Card 3 — SQLite + WAL: ye tumhara sabse strong point hai
+### Card 3 — SQLite + WAL: your strongest point
 
-**SQLite** ek **file-based database** hai — server nahi chahiye, bas ek `.db` file. Tumhara `data/settings.db`.
+**SQLite** is a **file-based database** — no server needed, just a `.db` file. Your `data/settings.db`.
 
-**WAL mode** (Write-Ahead Logging) ka matlab:
+**WAL mode** (Write-Ahead Logging) means:
 
-> *"Reader aur writer ek dusre ko block nahi karte. Writer pehle changes ek alag `-wal` file me likhta hai, phir main file me apply karta hai. Isse read bahut fast rehta hai, aur ek process likh raha ho tab bhi doosra padh sakta hai."*
+> *"Reader and writer don't block each other. The writer first writes changes to a separate `-wal` file, then applies them to the main file. Reads stay fast, and one process can write while another reads."*
 
-**Tumhare project me ye kyun zaroori tha:** Python FastAPI process settings/trades likhta hai, Node live-trader unhe padhta hai. WAL mode ki wajah se dono ek hi file pe peacefully coexist kar sakte hain. Iske bina ek writer aate hi readers block ho jaate.
+**Why this mattered in your project:** the Python FastAPI process writes settings/trades, and the Node live-trader reads them. WAL mode is what lets both coexist peacefully on the same file. Without it, a writer blocks all readers.
 
-**Interview answer:** *"SQLite file-based embedded database hai — zero configuration, no server. Main WAL mode use kar raha hoon kyunki ye read aur write ko parallel kar deta hai, jo zaroori tha kyunki Python service aur Node live-trader dono ek hi file pe kaam karte hain — ek likhta hai, doosra padhta hai, bina block kiye."*
+**Interview answer:** *"SQLite is an embedded file-based database — zero configuration, no server. I use WAL mode because it parallelizes reads and writes, which was necessary since the Python service and the Node live-trader both work on the same file — one writes, the other reads, without blocking."*
 
 ### Card 4 — pandas/numpy: the real indicator set
 
@@ -157,9 +157,9 @@ sma = prices.rolling(window=20).mean()
 
 **Interview answer:** *"My indicator layer has five groups — simple moving averages, an MA-angle slope computed with np.correlate, ADR in percent and absolute rupees, multi-day price changes, and distance from period highs/lows — plus scanner filters for price range, ADR floor and liquidity. I leaned on pandas' vectorized rolling operations so the math runs at C speed across 2,000+ stocks, with each stock's OHLCV cached as a pickle for fast reload."*
 
-### Card 5 — Multiprocessing: scanners me kyun
+### Card 5 — Multiprocessing: why in the scanners
 
-Tumhare `scanner.py` me:
+Your `scanner.py`:
 
 ```python
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -168,21 +168,22 @@ with ProcessPoolExecutor(max_workers=num_workers) as pool:
     futures = {pool.submit(scan_stock, symbol): symbol for symbol in symbols}
 ```
 
-**Ye kyun:** Scanner CPU-bound hai — pure math, indicators compute karna. 2000 stocks ek ek karke scan karna slow hai. `ProcessPoolExecutor` multiple **processes** spawn karta hai jo parallel me kaam karte hain. CPU-bound kaam ke liye process better hai thread se kyunki Python me GIL (Global Interpreter Lock) threads ko parallel nahi hone deta — processes alag alag Python interpreter chalate hain.
+**Why:** scanning is CPU-bound — pure math, computing indicators. Scanning 2000 stocks one at a time is slow. `ProcessPoolExecutor` spawns multiple **processes** that work in parallel. For CPU-bound work, processes beat threads because Python's GIL (Global Interpreter Lock) doesn't let threads run in true parallel — separate processes run separate Python interpreters.
 
-**ThreadPool kaun use karta hai?** `bhavcopy_updater.py` me — kyunki wo I/O-bound hai (network downloads), aur threads me I/O wait overlap ho sakta hai.
+**Who uses ThreadPool?** `bhavcopy_updater.py` — because that work is I/O-bound (network downloads), and threads can overlap the I/O waits.
 
-**Interview answer:** *"Scanning CPU-bound hai — pure indicator math — isliye ProcessPoolExecutor use kiya, jo multiple processes spawn karke parallel compute karta hai. Ye threads se zyada fast hai kyunki Python me GIL threads ko true parallelism nahi deta. Bhavcopy download me however ThreadPool use kiya kyunki wo I/O-bound hai — network waits overlap ho sakte hain."*
+**Interview answer:** *"Scanning is CPU-bound — pure indicator math — so I used ProcessPoolExecutor, which spawns multiple processes for parallel compute. That's faster than threads because Python's GIL blocks true thread parallelism. For bhavcopy downloads I used ThreadPool instead, because that's I/O-bound — network waits can overlap."*
 
 ### Card 6 — WebSocket vs SSE: real-time streaming
 
-Tumhare project me **SSE (Server-Sent Events)** use hota hai (`/api/live/events`), **WebSocket nahi**.
+Your project uses **SSE (Server-Sent Events)** (`/api/live/events`), **not WebSocket**.
 
-**SSE:** Server → Client one-way stream, plain HTTP. Text/JSON push karta hai. Simple, auto-reconnect built-in, HTTP/2 pe kaam karta hai.
+**SSE:** Server → Client one-way stream, plain HTTP. Pushes text/JSON. Simple, built-in auto-reconnect, works over HTTP/2.
 
-**WebSocket:** Full duplex — dono taraf se live messages. Upstox se market data ke liye tum **WebSocket** use karte ho (protobuf frames), browser tak apna data SSE se bhejte ho.
+**WebSocket:** Full duplex — messages both ways. You use **WebSocket** for the Upstox market data (protobuf frames); you send your own data to the browser over SSE.
 
-Tumhara SSE route (`frontend/src/app/api/live/events/route.ts`):
+Your SSE route (`frontend/src/app/api/live/events/route.ts`):
+
 ```typescript
 const clients = new Set<(data: string) => void>();
 
@@ -193,39 +194,39 @@ export function broadcast(data: string): void {
 }
 ```
 
-Ye basically:
-1. Har connected browser ek function add karta hai `clients` set me
-2. Live-trader jab bhi naya signal bhejta hai, `broadcast()` sabko bhej deta hai
-3. Browser disconnect ho to `req.signal` abort listener use karke client remove ho jata hai
+This basically:
+1. Each connected browser adds a function to the `clients` set
+2. Whenever the live-trader has a new signal, `broadcast()` sends it to everyone
+3. When a browser disconnects, the `req.signal` abort listener removes the client — no memory leak
 
-**Interview answer:** *"Broker (Upstox) se WebSocket feed aati hai kyunki wo full-duplex high-frequency data hai. Uske baad Node live-trader usse process karke signals generate karta hai, aur browser tak maine SSE use kiya kyunki signal push ek one-way stream hai — SSE simpler hai, auto-reconnect deta hai, aur plain HTTP me rehta hai. Client disconnect hone pe abort listener use karke client set se remove kar deta hai, taaki memory leak na ho."*
+**Interview answer:** *"Market data comes over WebSocket from the broker (Upstox) because it's full-duplex high-frequency data. After that, the Node live-trader processes it and generates signals, and I push those to the browser over SSE because signal push is a one-way stream — SSE is simpler, gives auto-reconnect, and stays plain HTTP. On client disconnect I use an abort listener to remove the client from the set, so there's no memory leak."*
 
 ### Card 7 — Upstox WebSocket + protobuf (bonus depth)
 
-Tumhara live-trader Upstox **WebSocket V3** se 5-minute candles stream karta hai:
-- WebSocket handshake → auth token ke saath subscribe message
-- Frames **protobuf-encoded** aate hain (binary) → `protobufjs` se decode
-- SDK prototype patching ki thi connect reliability ke liye
-- Reconnect logic: disconnect pe auto-retry with backoff
+Your live-trader streams Upstox **WebSocket V3** 5-minute candles:
+- WebSocket handshake → subscribe message with auth token
+- Frames arrive **protobuf-encoded** (binary) → decoded with `protobufjs`
+- You patched the SDK prototype for connect reliability
+- Reconnect logic: auto-retry with backoff on disconnect
 
-**Interview answer:** *"Live market data WebSocket se aata hai kyunki wo persistent bidirectional connection hai — HTTP polling me har 5 second naya request overhead hota. Upstox protobuf format me binary bhejta hai jo decode karna padta hai. Reconnect handling critical hai — network drop ho to auto-retry with backoff, warna live trading ruk jaati."*
+**Interview answer:** *"Live market data comes over WebSocket because it's a persistent bidirectional connection — HTTP polling would add request overhead every 5 seconds. Upstox sends binary in protobuf format, which has to be decoded. Reconnect handling is critical — if the network drops, auto-retry with backoff, otherwise live trading stops."*
 
-### Card 8 — State Machines: paper trader ka dimaag
+### Card 8 — State Machines: the brain of the paper trader
 
-Tumhare live-trader me har stock ka apna **finite state machine** hai (11 states). Example:
-- `IDLE` → entry signal aaya → `WATCHING`
-- `WATCHING` → entry fill hui → `IN_POSITION`
+Your live-trader has a **finite state machine** per stock (11 states). Example:
+- `IDLE` → entry signal arrived → `WATCHING`
+- `WATCHING` → entry filled → `IN_POSITION`
 - `IN_POSITION` → target/stop hit → `EXITED`
 
-**Kyun state machine?** Real trading me ek stock ek hi time pe ek hi "phase" me hota hai. State machine ye enforce karta hai — double-entry nahi hogi, invalid transitions block ho jaate hain.
+**Why a state machine?** In real trading a stock is in exactly one "phase" at a time. The state machine enforces that — no double entries, invalid transitions get blocked.
 
-**Interview answer:** *"Live trading me har stock ko ek finite state machine me rakha — IDLE, WATCHING, IN_POSITION, EXITED. Ye ensure karta hai ki ek stock ek time pe ek hi phase me ho, double entry na ho, aur invalid state transitions block ho jayein. Position sizing aur exit rules bhi state ke hisaab se apply hote hain."*
+**Interview answer:** *"I kept each stock in a finite state machine — IDLE, WATCHING, IN_POSITION, EXITED. That ensures a stock is in exactly one phase at a time, prevents double entries, and blocks invalid state transitions. Position sizing and exit rules apply according to the state."*
 
 ---
 
 ### Card 9 — Why the live side is Node: concurrent I/O, NOT parallelism (the memory-fix card)
 
-The old fuzzy memory said *"JS is better at parallelism than Python."* **Never say that sentence** — Node is single-threaded, so it has literally zero parallelism, and an interviewer will light a candle and probe.
+The old fuzzy memory said *"JS is better at parallelism than Python."* **Never say that sentence** — Node is single-threaded, so it has literally zero parallelism, and an interviewer will probe hard.
 
 The correct story has three clean parts:
 1. **Tooling fit:** the Upstox SDK and protobuf decoding are JavaScript-native. The live trader runs *inside the Next.js app itself* (route handlers) — no second service to deploy, no inter-process plumbing.
@@ -237,122 +238,122 @@ The correct story has three clean parts:
 
 > *"The live side isn't about parallelism at all — it's a single process subscribing to a push feed; the state machines ensure each stock is in exactly one phase at a time."*
 
-**Bonus war story this card unlocks (you wrote it yourselves, `streamer.ts`):** the Upstox SDK loaded its protobuf schema from a disk path that broke under Turbopack/Next bundling — so you patched the SDK's `MarketDataFeederV3.prototype.initProtobuf` to share one pre-loaded root, and wrapped the connection with reconnect-with-backoff. A genuinely rare, hands-dirty story — use it.
+**Bonus war story this card unlocks (you wrote it yourself, `streamer.ts`):** the Upstox SDK loaded its protobuf schema from a disk path that broke under Turbopack/Next bundling — so you patched the SDK's `MarketDataFeederV3.prototype.initProtobuf` to share one pre-loaded root, and wrapped the connection with reconnect-with-backoff. A genuinely rare, hands-dirty story — use it.
 
 ---
 
 ## 4. Top 15 Python-Backend Interview Questions (model answers)
 
-Yeh wahi hain jo fullstack interviews me TradeStack ke baare me poochhe jaate hain. Inka jawab **bol ke** practice karo.
+These are exactly the questions fullstack interviews ask about TradeStack. Practice answering them **out loud**.
 
-### Q1. TradeStack ka backend kyun Python me hai, Node me kyun nahi?
-**A:** Data-heavy computation (indicators, scanners) Python me hai kyunki pandas/numpy best-in-class hai iske liye — vectorized operations C-level pe chalti hain. Real-time streaming aur UI Node/Next me hai kyunki WebSocket event handling aur SSR JS me natural hai. Ye separation of concerns hai — har layer apne strength me.
+### Q1. Why is TradeStack's backend in Python and not Node?
+**A:** Data-heavy computation (indicators, scanners) is in Python because pandas/numpy are best-in-class for it — vectorized operations run at C level. Real-time streaming and the UI are in Node/Next because WebSocket event handling and SSR are natural in JS. This is separation of concerns — each layer in its strength.
 
-### Q2. FastAPI vs Flask — kyun FastAPI?
-**A:** FastAPI async support deta hai (Flask sync hai by default), Pydantic se automatic request/response validation aur type hints, aur auto-generated Swagger/OpenAPI docs. 49 endpoints likhne me Swagger free mil gaya — Flask me manually document karna padta.
+### Q2. FastAPI vs Flask — why FastAPI?
+**A:** FastAPI gives async support (Flask is sync by default), automatic request/response validation and type hints via Pydantic, and auto-generated Swagger/OpenAPI docs. With 49 endpoints, Swagger came free — in Flask I'd have had to document manually.
 
-### Q3. SQLite me kaise concurrent reads/writes handle karte ho?
-**A:** WAL (Write-Ahead Logging) mode use kiya. Ye writer aur reader ko parallelize karta hai — writer changes pehle `-wal` file me likhta hai, main DB file readers ke liye consistent rehti hai. Isse Python service (writer) aur Node live-trader (reader) ek hi file pe kaam kar sakte hain bina block kiye.
+### Q3. How do you handle concurrent reads/writes in SQLite?
+**A:** I use WAL (Write-Ahead Logging) mode. It parallelizes reader and writer — the writer first writes changes to a `-wal` file, while the main DB file stays consistent for readers. This lets the Python service (writer) and the Node live-trader (reader) work on the same file without blocking.
 
-### Q4. Kya SQLite production ke liye sahi hai?
-**A:** TradeStack ek personal, single-user tool hai — isliye SQLite perfect hai (zero-config, no server). Multi-user ya high-write production system me Postgres jaata. Maine isliye `db.py` me DB path centralized rakha aur abstraction rakhi, taaki baad me Postgres pe migrate karna simple ho.
+### Q4. Is SQLite right for production?
+**A:** TradeStack is a personal, single-user tool — so SQLite is perfect (zero-config, no server). For multi-user or high-write production systems I'd go to Postgres. That's why I kept the DB path centralized in `db.py` with an abstraction, so migrating to Postgres later stays simple.
 
 ### Q5. How do you vectorize indicators in pandas?
-**A:** Every rolling-window computation — SMA 20/50, ADR, high-low distances — is a single pandas expression that runs at C level. The best example is MA angle: the original code computed the regression slope with a polyfit loop in Python; I replaced it with a vectorized `np.correlate` — my own code comment says ~100x faster. Replacing manual loops with rolling windows is the core of vectorization. (Truth-check note: TradeStack has no RSI/EMA/MACD — claiming them dies on follow-up; the honest set is SMA, MA angle, ADR, price change, high-low distances.)
+**A:** Every rolling-window computation — SMA 20/50, ADR, high-low distances — is a single pandas expression running at C level. The best example is MA angle: the original code computed the regression slope with a polyfit loop in Python; I replaced it with a vectorized `np.correlate` — my own code comment says ~100x faster. Replacing manual loops with rolling windows is the core of vectorization. (Truth-check note: TradeStack has no RSI/EMA/MACD — claiming them dies on follow-up; the honest set is SMA, MA angle, ADR, price change, high-low distances.)
 
-### Q6. Multiprocessing vs threading vs async — kab kya?
+### Q6. Multiprocessing vs threading vs async — when which?
 **A:** Rule of thumb:
-- **CPU-bound** (indicator math, scanning) → `ProcessPoolExecutor` (multiprocessing). GIL threads ko parallel nahi hone deta.
-- **I/O-bound** (network downloads, API calls) → `ThreadPoolExecutor` ya async. Threads me waits overlap hote hain.
-- TradeStack me scanners `ProcessPoolExecutor`, bhavcopy downloader `ThreadPoolExecutor` use karta hai.
+- **CPU-bound** (indicator math, scanning) → `ProcessPoolExecutor` (multiprocessing). The GIL keeps threads from true parallelism.
+- **I/O-bound** (network downloads, API calls) → `ThreadPoolExecutor` or async. Waits overlap in threads.
+- In TradeStack, scanners use `ProcessPoolExecutor`, the bhavcopy downloader uses `ThreadPoolExecutor`.
 
-### Q7. WebSocket vs SSE — live data ke liye kya choose kiya?
-**A:** Broker (Upstox) se WebSocket — full-duplex high-frequency binary (protobuf) data hai. Browser tak SSE — kyunki signal push one-way hai, SSE simpler hai, auto-reconnect deta hai, aur plain HTTP me rehta hai (proxy-friendly). WebSocket browser me bhi theek chalta lekin SSE ka setup simpler hai jab full-duplex zaroorat na ho.
+### Q7. WebSocket vs SSE — what did you choose for live data?
+**A:** WebSocket from the broker (Upstox) — full-duplex high-frequency binary (protobuf) data. To the browser, SSE — because signal push is one-way, SSE is simpler, gives auto-reconnect, and stays plain HTTP (proxy-friendly). WebSocket would also work in the browser, but SSE's setup is simpler when full-duplex isn't needed.
 
-### Q8. Pydantic kahan use hota hai aur kyun?
-**A:** Request/response schemas ke liye. Example: `BatchHistoryRequest(symbols: list[str], days: int)`. FastAPI inhe padhke malformed input reject karta hai (422), response me field types enforce karta hai, aur Swagger docs me schema auto-generate hota hai. Isse mujhe manually validate karne ki zaroorat nahi parti.
+### Q8. Where is Pydantic used and why?
+**A:** For request/response schemas. Example: `BatchHistoryRequest(symbols: list[str], days: int)`. FastAPI reads these to reject malformed input (422), enforce field types in the response, and auto-generate the schema in Swagger docs. I don't have to validate manually.
 
-### Q9. Cache kyu banaya, direct file read karte to?
-**A:** Per-stock pickle cache (`data/cache/*.pkl`) me historical OHLCV store hai, saath me SQLite `cache_index` table me metadata (row count, first/last date, file size). Isse:
-1. Indicator compute karte waqt file read fast hai (pickle = pandas native)
-2. Cache index se list/stats query SQLite se instant hota hai (filesystem glob scan slow hota)
-3. Har stock ka cache independently update hota hai
+### Q9. Why a cache — why not read the file directly?
+**A:** The per-stock pickle cache (`data/cache/*.pkl`) stores historical OHLCV, with a SQLite `cache_index` table holding metadata (row count, first/last date, file size). This gives:
+1. Fast file reads when computing indicators (pickle = pandas native)
+2. Instant list/stats queries from the cache index via SQLite (filesystem glob scan would be slow)
+3. Independent cache updates per stock
 
-### Q10. Background task kaise handle karte ho?
-**A:** FastAPI ka `BackgroundTasks` ya thread use karke background me operation chala dete hain. Operation ID generate karke `active_operations` dict me status rakh dete hain (`running`/`done`/`error` + logs). Frontend polling se status dekhta hai. Isse user ka request time out nahi hota.
+### Q10. How do you handle background tasks?
+**A:** Run the operation in the background via FastAPI's `BackgroundTasks` or a thread. Generate an operation ID and store status in an `active_operations` dict (`running`/`done`/`error` + logs). The frontend polls for status. This keeps the user's request from timing out.
 
-### Q11. Reconnect/logging/error handling kaise kiya?
-**A:** Central Python logging (console + file), har module me `logger = logging.getLogger(__name__)`. Scanners/operations me structured logs with timestamps. Background operations ka status stuck `"running"` na rahe — uske liye exception pe status update. Upstox WebSocket me reconnect with backoff.
+### Q11. How did you handle reconnect/logging/error handling?
+**A:** Central Python logging (console + file), with `logger = logging.getLogger(__name__)` in every module. Structured logs with timestamps in scanners/operations. Background operation status updates on exception so it doesn't stay stuck at `"running"`. Reconnect-with-backoff on the Upstox WebSocket.
 
-### Q12. 47 hardcoded URLs refactor kyu kiya?
-**A:** Solidify plan ke Phase 1 me — pehle 12-13 files me API URLs hardcoded the. Backend port change karne pe 47 jagah edit karne padte. Ek central `api.ts` banaya (`PY_API` env var se port read karta hai), typed `apiGet`/`apiPost` helpers, endpoint groups. Ab port ek jagah se change hota hai, aur TypeScript types bhi ek jagah defined hain (`lib/types.ts`).
+### Q12. Why refactor 47 hardcoded URLs?
+**A:** In Solidify phase 1 — 12-13 files had API URLs hardcoded. Changing the backend port meant editing 47 places. I built a central `api.ts` (reads the port from the `PY_API` env var), typed `apiGet`/`apiPost` helpers, and endpoint groups. Now the port changes in one place, and TypeScript types are defined once (`lib/types.ts`).
 
-### Q13. Python me async kahan use hota hai tumhare project me?
-**A:** Honestly — FastAPI framework async hai (route handlers async context me chalti hain), lekin heavy computation (scanners) sync `ProcessPoolExecutor` me daali hai kyunki wo CPU-bound hai aur async se nahi, parallel processes se fast hoga. I/O-heavy parts (data fetch) threads me. Realistic hybrid approach.
+### Q13. Where is async used in Python in your project?
+**A:** Honestly — the FastAPI framework is async (route handlers run in an async context), but heavy computation (scanners) goes into a sync `ProcessPoolExecutor` because it's CPU-bound and gets faster from parallel processes, not async. I/O-heavy parts (data fetch) use threads. A realistic hybrid approach.
 
-### Q14. Testing kaise kiya?
-**A:** Is project me abhi automated tests nahi hain — that's the gap I'm fixing (Phase 4 plan me pytest + Vitest). Currently health-check aur manual smoke test se verify karta hoon. Architecture pure functions hai (indicators, state machines) jahan unit tests easy add honge.
+### Q14. How did you test?
+**A:** This project has no automated tests yet — that's the gap I'm fixing (Phase 4 plan: pytest + Vitest). Currently I verify with health checks and manual smoke tests. The architecture uses pure functions (indicators, state machines) where unit tests are easy to add.
 
-**Note:** Ye answer honestly dena — "abhi tests nahi hain, add kar raha hoon" > "haan fully tested hai" (jo follow-up me pakad lete hain).
+**Note:** answer this honestly — "no tests yet, adding them" > "fully tested" (which gets caught on follow-up).
 
-### Q15. Is project ka sabse bada technical dard kya tha?
-**A:** Upstox WebSocket V3 ka SDK prototype issues — SDK internally apne tarike se connect/reconnect karta tha jo kabhi kabhi stuck ho jata. Isko debug karna padha — SDK prototype patching se custom reconnect logic add kiya with backoff. Doosra — bhavcopy me gap-fill logic (missing trading days ke liye backfill), jo ab `fill_cache_gaps` se handle hota hai.
+### Q15. What was the biggest technical pain in this project?
+**A:** The Upstox WebSocket V3 SDK prototype issues — the SDK connected/reconnected internally in its own way, sometimes getting stuck. I had to debug it and add custom reconnect logic with backoff via SDK prototype patching. Second — the bhavcopy gap-fill logic (backfilling missing trading days), now handled by `fill_cache_gaps`.
 
 ---
 
-## 5. server.py Reading Map (3 din, 1.5h/day)
+## 5. server.py Reading Map (3 days, 1.5h/day)
 
-Ye tumhara **deep-dive plan** hai. Poora code padhne ki zaroorat nahi — structure samajhna hai.
+This is your **deep-dive plan**. You don't need to read all the code — you need to understand the structure.
 
 ### Sitting 1 — Skeleton + routes
-- Top 60 lines padho: imports, `lifespan` (startup pe cache rebuild), `app = FastAPI(...)`, CORS middleware
-- **Kaam:** Sab 49 route signatures ek baar list karo (path + method). Bas dekhna hai kaunsa endpoint kya karta hai — implementation nahi.
+- Read the top 60 lines: imports, `lifespan` (cache rebuild on startup), `app = FastAPI(...)`, CORS middleware
+- **Goal:** list all 49 route signatures once (path + method). Just see what each endpoint does — not the implementation.
 - Command: `grep '^@app\.' backend/server.py`
 
 ### Sitting 2 — Data layer
 - `src/db.py` — SQLite schema (`cache_index`, `settings`, `upstox_config`, `stock_list_items`, trade log tables), thread-local connections
-- `src/cache_manager.py` — pickle save/load, SQLite index fallback to glob
+- `src/cache_manager.py` — pickle save/load, SQLite index with glob fallback
 - `src/settings.py` — key-value settings with types/categories/validation
-- **Samajhne ka point:** Data kahaan aata hai, kaise store hota hai, kaise retrieve hota hai.
+- **Point to grasp:** where data comes from, how it's stored, how it's retrieved.
 
 ### Sitting 3 — Scanners + breadth
 - `src/indicators.py` — the real indicator set (SMA 20/50, MA angle via `np.correlate`, ADR % / absolute, price change 1/5/20d, distance from period high/low) + the three scanner filters (price range, ADR threshold, liquidity). **No RSI/EMA/MACD — don't claim them.**
 - `src/scanner.py` — ContinuationScanner, ReversalScanner, `ProcessPoolExecutor` usage
 - `src/market_breadth.py` — breadth calculation, `ProcessPoolExecutor`
-- **Samajhne ka point:** Pure computation kaise parallel hota hai, indicators ka output kaise use hota hai.
+- **Point to grasp:** how pure computation parallelizes, how indicator output gets used.
 
 ### Bonus — Live trader (short optional read)
 - `frontend/src/app/api/live/route.ts` + `events/route.ts` — SSE broadcast
 - `frontend/src/lib/` — Upstox WebSocket client, state machines
-- **Samajhne ka point:** Python se Node side real-time data kaise jaati hai.
+- **Point to grasp:** how data goes from the Python side to the Node side in real time.
 
 ---
 
-## 6. Kya SEEKHNA NAHI HAI (explicit out of scope)
+## 6. What NOT to learn (explicitly out of scope)
 
-Ye 3 hafte me **zarurat nahi hai** — resume/interview ke liye:
+These are **not needed** in these 3 weeks — for the resume/interview:
 
 - ❌ Advanced asyncio (async generators, async context managers)
 - ❌ FastAPI `Depends` dependency injection (advanced patterns)
-- ❌ ORMs (SQLAlchemy) — tum raw `sqlite3` use karte ho, wo bhi theek hai
+- ❌ ORMs (SQLAlchemy) — you use raw `sqlite3`, which is fine
 - ❌ Deep pandas time-series (rolling window internals)
 - ❌ Celery/RQ task queues
-- ❌ Kubernetes, cloud deployment (Docker bhi bonus hai, must nahi)
+- ❌ Kubernetes, cloud deployment (Docker is bonus, not required)
 
-**Kyun:** Interview me "ye maine kiya, yeh seekha" bolne ka confidence chahiye — wo Defense Kit rehearse karne se aata hai. Ye "out of scope" cheezein bolne se zyada risk hain (follow-up me atak jaoge). Also note: TradeStack-Mini ab nahi banega — uski jagah CAREER-FOCUS-PLAN ke Labs A/B hain (already-built ground floor).
+**Why:** interviews need the confidence of "I built this, I learned this" — that comes from rehearsing the Defense Kit. The "out of scope" items are higher risk to mention (you'll get stuck on follow-ups). Also note: TradeStack-Mini is no longer being built — its place is taken by Labs A/B in `CAREER-FOCUS-PLAN.md` (the already-built ground floor).
 
 ---
 
 ## 7. Rehearsal Checklist (one question spoken + recorded per sitting)
 
-Har raat 19:30 slot me — ek question bol ke record karo:
+Every night in the 19:30 slot — speak one question and record it:
 
-- [ ] Q1: Backend Python me kyun, Node me kyun nahi
+- [ ] Q1: Why the backend is in Python, not Node
 - [ ] Q3: SQLite WAL concurrency
 - [ ] Q6: Multiprocessing vs threading vs async
 - [ ] Q7: WebSocket vs SSE
 - [ ] Q12: 47 URL refactor
-- [ ] Q15: Sabse bada technical dard
+- [ ] Q15: Biggest technical pain
 
 Reading the remaining cards once is enough — that part is passive; speaking them is the active proof.
 

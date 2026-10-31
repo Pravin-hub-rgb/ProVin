@@ -1,55 +1,55 @@
-# 34 — CDN: Static Files Ko Fast Deliver Karna
+# 34 — CDN: Delivering Static Files Fast
 
-> Pichle doc mein browser storage samjha.
-> Ab **CDN** — Content Delivery Network.
+> Previous doc covered browser storage.
+> Now **CDN** — Content Delivery Network.
 
 ---
 
-## Problem — Sab Requests Ek Server Pe
+## Problem — All Requests to One Server
 
-ShopKaro ka server Mumbai mein hai.
+ShopKaro's server is in Mumbai.
 
-Priya Mumbai mein hai → Request → Mumbai server → Fast ✓
-Rahul Delhi mein hai → Request → Mumbai server → Thoda slow
-Anita New York mein hai → Request → Mumbai server → Bahut slow ✗
+Priya in Mumbai → Request → Mumbai server → Fast ✓
+Rahul in Delhi → Request → Mumbai server → A bit slow
+Anita in New York → Request → Mumbai server → Very slow ✗
 
-Images, JS files, CSS — yeh sab har user ko bhejne padte hain. Duniya bhar ke users ke liye slow ho sakta hai.
+Images, JS files, CSS — all of these have to be sent to every user. Can be slow for users worldwide.
 
 ---
 
 ## Solution — CDN
 
-**CDN (Content Delivery Network)** — duniya mein kai jagah servers hote hain. Static files sab jagah copy hoti hain. User apne **nearest server** se files paata hai.
+**CDN (Content Delivery Network)** — there are servers in many places around the world. Static files are copied everywhere. The user gets files from their **nearest server**.
 
 ```
-Bina CDN:
+Without CDN:
 Anita (New York) → Mumbai server → Image (slow)
 
-CDN ke saath:
+With CDN:
 Anita (New York) → New York CDN server → Image (fast)
 ```
 
 ---
 
-## CDN Kya Cache Karta Hai
+## What the CDN Caches
 
-**Static files** — jo baar baar change nahi hoti:
+**Static files** — things that don't change often:
 - Product images
 - JavaScript bundles
 - CSS files
 - Fonts
 
-**Dynamic data** (API responses) — CDN usually nahi karta. Yeh server se aata hai.
+**Dynamic data** (API responses) — CDN usually doesn't cache these. That comes from the server.
 
 ---
 
-## ShopKaro Mein CDN — Automatic
+## CDN in ShopKaro — Automatic
 
-Good news — **Vercel pe deploy karo toh CDN automatic hai.**
+Good news — **if you deploy on Vercel, the CDN is automatic.**
 
-Vercel globally distributed hai — Next.js ki static files automatically CDN se serve hoti hain. Tumhe kuch extra nahi karna.
+Vercel is globally distributed — Next.js static files are automatically served via CDN. You don't need to do anything extra.
 
-Product images ke liye — **Cloudinary ya AWS S3 + CloudFront** use kar sakte ho:
+For product images — you can use **Cloudinary or AWS S3 + CloudFront**:
 
 ```jsx
 // Next.js Image component — automatic optimization + CDN
@@ -63,10 +63,10 @@ function ProductCard({ product }) {
       width={300}
       height={300}
       // Next.js automatically:
-      // - WebP format mein convert karta hai
-      // - Resize karta hai device ke hisaab se
-      // - Lazy load karta hai
-      // - CDN se serve karta hai (Vercel pe)
+      // - Converts to WebP format
+      // - Resizes based on device
+      // - Lazy loads
+      // - Serves from CDN (on Vercel)
     />
   )
 }
@@ -74,13 +74,13 @@ function ProductCard({ product }) {
 
 ---
 
-## CDN vs Browser Cache — Fark
+## CDN vs Browser Cache — Difference
 
 | | CDN | Browser Cache |
 |--|-----|---------------|
-| Kahan | Server ke paas (network level) | User ke browser mein |
-| Kiske liye | Sab users | Sirf us user ke liye |
-| Control | Tum control karte ho | Browser control karta hai |
+| Where | Near the server (network level) | In the user's browser |
+| For whom | All users | Only that user |
+| Control | You control it | Browser controls it |
 
 ---
 
@@ -88,12 +88,12 @@ function ProductCard({ product }) {
 
 | | |
 |--|--|
-| **CDN kya hai** | Files globally distribute karna — nearest server se serve |
-| **ShopKaro mein** | Vercel pe automatic, Images ke liye Next/Image |
-| **Kya cache hota hai** | Images, JS, CSS — static files |
+| **What is CDN** | Distribute files globally — serve from the nearest server |
+| **In ShopKaro** | Automatic on Vercel, Next/Image for images |
+| **What gets cached** | Images, JS, CSS — static files |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`35-caching-server.md` — **Server-side caching** — database results save karna taaki baar baar DB hit na ho. Redis concept aur Next.js mein built-in caching.
+`35-caching-server.md` — **Server-side caching** — saving database results so the DB isn't hit repeatedly. The Redis concept and built-in caching in Next.js.

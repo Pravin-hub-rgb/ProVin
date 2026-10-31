@@ -1,47 +1,47 @@
 # 29 — React Context: Built-in Global State
 
-> Pichle doc mein local vs global state ka fark samjha.
-> Ab **React Context** — React ka apna global state solution.
+> Previous doc covered local vs global state difference.
+> Now **React Context** — React's own global state solution.
 
 ---
 
-## Context Kya Hai
+## What Is Context
 
-Context React ka built-in tarika hai kisi bhi component ko data accessible banana ka — bina prop drilling ke.
+Context is React's built-in way to make data accessible to any component — without prop drilling.
 
 ```jsx
-// Context banao
+// Create context
 const UserContext = createContext(null)
 
-// Provider se wrap karo — data yahan se aata hai
+// Wrap with provider — data comes from here
 function App() {
   const [user, setUser] = useState(null)
 
   return (
     <UserContext.Provider value={{ user, setUser }}>
-      <Navbar />        {/* Koi bhi component */}
-      <ProductPage />   {/* Nested kitna bhi ho */}
+      <Navbar />        {/* Any component */}
+      <ProductPage />   {/* Nested as deep as you want */}
     </UserContext.Provider>
   )
 }
 
-// Koi bhi component seedha access kar sakta hai
+// Any component can access directly
 function Navbar() {
   const { user } = useContext(UserContext)
-  return <div>{user ? `Hi ${user.name}` : 'Login Karo'}</div>
+  return <div>{user ? `Hi ${user.name}` : 'Login'}</div>
 }
 ```
 
 ---
 
-## Context Kab Theek Hai
+## When Context Is Fine
 
 ```
 User login status → Context ✓
-  Poori app mein chahiye, baar baar change nahi hota
+  Needed across app, doesn't change often
 
 Theme (dark/light mode) → Context ✓
-  Stable, sab jagah chahiye
+  Stable, needed everywhere
 
 Language preference → Context ✓
   Stable data
@@ -49,9 +49,9 @@ Language preference → Context ✓
 
 ---
 
-## Context Ki Problem — Re-renders
+## Context's Problem — Re-renders
 
-Context ka ek issue hai — **jab bhi context value change hoti hai, saare consumers re-render hote hain.**
+Context has one issue — **whenever context value changes, all consumers re-render.**
 
 ```jsx
 const CartContext = createContext()
@@ -61,23 +61,23 @@ function App() {
 
   return (
     <CartContext.Provider value={{ cartItems, setCartItems }}>
-      <Navbar />      // Cart count ke liye consume karta hai
-      <Sidebar />     // Kisi cheez ke liye consume karta hai
-      <ProductPage /> // Cart add karne ke liye consume karta hai
-      <Footer />      // Bhi consume karta hai
+      <Navbar />      // Consumes for cart count
+      <Sidebar />     // Consumes for something
+      <ProductPage /> // Consumes to add to cart
+      <Footer />      // Also consumes
     </CartContext.Provider>
   )
 }
 
-// Ek item add kiya → cartItems change → SARE components re-render
-// Footer ko koi matlab nahi cart se — phir bhi re-render
+// Add one item → cartItems changes → ALL components re-render
+// Footer has nothing to do with cart — still re-renders
 ```
 
-Agar cart baar baar change ho (user + karta hai, - karta hai) → bahut re-renders → slow UI.
+If cart changes frequently (user adding +, -) → many re-renders → slow UI.
 
 ---
 
-## Kab Context, Kab Zustand?
+## Context vs Zustand — When?
 
 | Situation | Context | Zustand |
 |-----------|---------|---------|
@@ -89,10 +89,10 @@ Agar cart baar baar change ho (user + karta hai, - karta hai) → bahut re-rende
 
 ---
 
-## ShopKaro Mein Context Use Karein?
+## Should ShopKaro Use Context?
 
-**User info ke liye → Context ✓**
-User login/logout baar baar nahi hota — re-render problem nahi.
+**For user info → Context ✓**
+User login/logout doesn't happen often — re-render problem doesn't arise.
 
 ```jsx
 // /lib/context/UserContext.jsx
@@ -117,11 +117,11 @@ export function useUser() {
 }
 ```
 
-**Cart ke liye → Zustand (agla doc)**
-Cart baar baar change hoti hai — Zustand better hai.
+**For cart → Zustand (next doc)**
+Cart changes frequently — Zustand is better.
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`30-state-zustand.md` — **Zustand** — lightweight global state library. Cart, notifications jaise frequently changing state ke liye perfect. Zustand exactly kya hai, kaise kaam karta hai — ShopKaro ke cart example ke saath.
+`30-state-zustand.md` — **Zustand** — lightweight global state library. Perfect for frequently changing state like cart and notifications. What Zustand is and how it works — with ShopKaro's cart example.

@@ -1,43 +1,43 @@
-# 38 — Webhooks: Payment Confirmation Ka Backup
+# 38 — Webhooks: Payment Confirmation Backup
 
-> Pichle doc mein Razorpay payment flow dekha.
-> Ab **Webhooks** — ek important safety net.
+> Previous doc covered the Razorpay payment flow.
+> Now **Webhooks** — an important safety net.
 
 ---
 
-## Problem — Agar Browser Band Ho Jaaye?
+## Problem — What If the Browser Closes?
 
-Priya ne Razorpay pe pay kiya. Payment successful.
+Priya paid on Razorpay. Payment successful.
 
-Lekin payment ke baad — **internet cut gaya ya browser close ho gaya.**
+But after payment — **internet cut off or browser closed.**
 
-Frontend ne kabhi `/api/payments/verify` call nahi ki. Order PENDING hi raha.
+The frontend never called `/api/payments/verify`. The order stayed PENDING.
 
-Priya ka paisa gaya — order confirm nahi hua. Problem!
+Priya's money is gone — order not confirmed. Problem!
 
 ---
 
 ## Solution — Webhook
 
-**Webhook** = Razorpay khud tumhare server ko batata hai jab payment hoti hai.
+**Webhook** = Razorpay itself tells your server when a payment happens.
 
 ```
-Normal flow (frontend se):
+Normal flow (from frontend):
 Payment → Frontend → /api/payments/verify → Order PAID
 
-Webhook flow (Razorpay se directly):
+Webhook flow (directly from Razorpay):
 Payment → Razorpay → /api/webhooks/razorpay → Order PAID
 ```
 
-Webhook **backup** hai — agar frontend fail bhi ho, Razorpay directly server ko batayega.
+The webhook is a **backup** — even if the frontend fails, Razorpay directly informs the server.
 
 ---
 
-## Webhook Kaise Kaam Karta Hai
+## How a Webhook Works
 
-1. Razorpay Dashboard mein webhook URL set karo: `https://shopkaro.com/api/webhooks/razorpay`
-2. Koi bhi payment ho → Razorpay us URL pe POST request bhejta hai automatically
-3. Tumhara server receive karta hai, order update karta hai
+1. Set the webhook URL in the Razorpay Dashboard: `https://shopkaro.com/api/webhooks/razorpay`
+2. Whenever any payment happens → Razorpay automatically sends a POST request to that URL
+3. Your server receives it, updates the order
 
 ---
 
@@ -49,10 +49,10 @@ Webhook **backup** hai — agar frontend fail bhi ho, Razorpay directly server k
 import crypto from 'crypto'
 
 export async function POST(req) {
-  const body = await req.text()  // Raw body chahiye signature verify ke liye
+  const body = await req.text()  // Raw body needed for signature verification
   const signature = req.headers.get('x-razorpay-signature')
 
-  // Verify karo yeh genuinely Razorpay se aaya
+  // Verify this genuinely came from Razorpay
   const expectedSignature = crypto
     .createHmac('sha256', process.env.RAZORPAY_WEBHOOK_SECRET)
     .update(body)
@@ -69,7 +69,7 @@ export async function POST(req) {
     const payment = event.payload.payment.entity
     const razorpayOrderId = payment.order_id
 
-    // Order dhundo aur update karo
+    // Find and update the order
     const order = await prisma.order.findFirst({
       where: { paymentId: razorpayOrderId }
     })
@@ -88,33 +88,33 @@ export async function POST(req) {
 
 ---
 
-## Idempotency — Double Update Mat Karo
+## Idempotency — Don't Update Twice
 
-Webhook aur frontend dono `verify` call karein — order do baar PAID na ho.
+Both the webhook and the frontend may call `verify` — the order shouldn't become PAID twice.
 
 ```javascript
-// Check karo pehle se PAID toh nahi
-if (order && order.status === 'PENDING') {  // Sirf PENDING ko update karo
+// Check if already PAID first
+if (order && order.status === 'PENDING') {  // Only update PENDING ones
   await prisma.order.update(...)
 }
-// Agar already PAID hai → Skip karo — no problem
+// If already PAID → Skip — no problem
 ```
 
-Yeh **idempotency** hai — same operation kai baar karo toh same result mile.
+This is **idempotency** — doing the same operation multiple times gives the same result.
 
 ---
 
-## Payments Umbrella — Complete Hua
+## Payments Umbrella — Complete
 
 ```
 PAYMENTS
 │
 ├── Payment Flow (Razorpay) → Doc 37 ✓
-└── Webhooks                → Doc 38 ✓ (YEH)
+└── Webhooks                → Doc 38 ✓ (THIS)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`39-performance-what-is-it.md` — Nawa umbrella — **Performance**. App fast kaise karo — images, lazy loading, pagination. ShopKaro ko smooth banane ke techniques.
+`39-performance-what-is-it.md` — New umbrella — **Performance**. How to make the app fast — images, lazy loading, pagination. Techniques to make ShopKaro smooth.

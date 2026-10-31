@@ -1,44 +1,44 @@
-# 19 — Database: Umbrella Kya Hai
+# 19 — Database: What Is It
 
-> Rendering poora hua — SSG, SSR, CSR, ShopKaro decisions.
-> Ab chautha bada umbrella — **Database**.
-> Data permanently kahan aur kaise store hoga?
-
----
-
-## Database Kyun Chahiye
-
-Jab Priya ShopKaro close karti hai aur wapas aati hai — uska account, orders, sab kuch wahan hona chahiye.
-
-Yeh possible hai kyunki sab kuch **database mein permanently store** hota hai.
-
-Server ki memory (RAM) mein store karo → Server restart → Sab gone.
-Database mein store karo → Hamesha wahan.
+> Rendering is complete — SSG, SSR, CSR, ShopKaro decisions.
+> Now the fourth big umbrella — **Database**.
+> Where and how will data be stored permanently?
 
 ---
 
-## Database Umbrella Ke Andar Kya Kya
+## Why a Database Is Needed
+
+When Priya closes ShopKaro and comes back — her account, orders, everything should still be there.
+
+This is possible because everything is **stored permanently in the database**.
+
+Store in server memory (RAM) → Server restarts → Everything gone.
+Store in database → Always there.
+
+---
+
+## What's Inside the Database Umbrella
 
 ```
 DATABASE
 │
 ├── SQL vs NoSQL (PostgreSQL vs MongoDB)
-│   → Kaunsa type choose karein
+│   → Which type to choose
 │
 ├── Prisma (ORM)
-│   → JavaScript mein database se kaise baat karein
+│   → How to talk to the database from JavaScript
 │
 └── Data Models
-    → ShopKaro ka data kaise structure hoga
+    → How ShopKaro's data will be structured
     → User, Product, Order, Cart tables
 ```
 
 ---
 
-## Do Types Hote Hain — SQL aur NoSQL
+## Two Types — SQL and NoSQL
 
 ### SQL Database (PostgreSQL, MySQL)
-Data **tables** mein hota hai — rows aur columns.
+Data lives in **tables** — rows and columns.
 
 ```
 Users Table:
@@ -54,12 +54,12 @@ id | name          | price  | stock
 2  | Adidas Cap    | 999    | 100
 ```
 
-Tables ek dusre se **related** ho sakti hain — isliye "Relational Database."
+Tables can be **related** to each other — hence "Relational Database."
 
 ---
 
 ### NoSQL Database (MongoDB)
-Data **documents** mein hota hai — JSON jaisa.
+Data lives in **documents** — JSON-like.
 
 ```javascript
 // MongoDB document
@@ -73,36 +73,36 @@ Data **documents** mein hota hai — JSON jaisa.
 }
 ```
 
-Flexible — har document alag structure ka ho sakta hai.
+Flexible — each document can have a different structure.
 
 ---
 
-## ShopKaro Ke Liye — PostgreSQL Kyun?
+## Why PostgreSQL for ShopKaro?
 
-ShopKaro ka data **structured aur related** hai:
+ShopKaro's data is **structured and related**:
 
 ```
-User → Order (ek user ke kai orders)
-Order → Product (ek order mein kai products)
-Product → Category (ek product ek category mein)
+User → Order (one user has many orders)
+Order → Product (one order has many products)
+Product → Category (one product belongs to one category)
 ```
 
-Yeh relationships SQL mein bahut cleanly handle hoti hain.
+These relationships are handled very cleanly in SQL.
 
-**PostgreSQL choose karo jab:**
-- Data ka structure pehle se pata ho (User, Product, Order)
-- Data ke beech relationships hoon
-- Data consistent rehna chahiye (payment data inconsistent nahi hona chahiye)
+**Choose PostgreSQL when:**
+- The data structure is known beforehand (User, Product, Order)
+- There are relationships between data
+- Data must stay consistent (payment data must not be inconsistent)
 
-**MongoDB choose karo jab:**
-- Data schema baar baar badle
-- Bohot flexible structure chahiye
-- Document-style data ho (blog posts, user profiles with varying fields)
+**Choose MongoDB when:**
+- The data schema changes frequently
+- A very flexible structure is needed
+- Document-style data (blog posts, user profiles with varying fields)
 
 ShopKaro → **PostgreSQL.**
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`20-database-sql-vs-nosql.md` — SQL aur NoSQL ki thodi aur detail — kab kya, aur ShopKaro mein specifically PostgreSQL kaise setup hoga.
+`20-database-sql-vs-nosql.md` — A bit more depth on SQL vs NoSQL — when to pick what, and how PostgreSQL will be set up in ShopKaro.

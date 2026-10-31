@@ -1,26 +1,26 @@
 # 31 — Server State: React Query
 
-> Pichle doc mein Zustand — client-side global state.
-> Ab **Server State** — data jo server se aata hai.
-> React Query / TanStack Query yeh handle karta hai.
+> Previous doc covered Zustand — client-side global state.
+> Now **Server State** — data that comes from the server.
+> React Query / TanStack Query handles this.
 
 ---
 
-## Server State Alag Kyun Hai
+## Why Server State Is Different
 
-Cart state — browser mein hai, browser control karta hai.
+Cart state — lives in the browser, browser controls it.
 
-Products list — server pe hai. Frontend sirf ek copy rakhta hai. Problems:
-- Data stale ho sakta hai (server pe update hua, frontend pe purana)
-- Loading state handle karo
-- Error handle karo
-- Baar baar same data fetch mat karo (cache karo)
+Products list — lives on the server. Frontend only keeps a copy. Problems:
+- Data can go stale (updated on server, old on frontend)
+- Need to handle loading state
+- Need to handle errors
+- Don't fetch the same data repeatedly (cache it)
 
-Yeh sab manually karna tedious hai — React Query automatically karta hai.
+All of this manually is tedious — React Query does it automatically.
 
 ---
 
-## Bina React Query — Manual Approach
+## Manual Approach Without React Query
 
 ```jsx
 function ProductsPage() {
@@ -48,11 +48,11 @@ function ProductsPage() {
 }
 ```
 
-Yeh pattern har jagah repeat hota hai — boring aur error prone.
+This pattern repeats everywhere — boring and error-prone.
 
 ---
 
-## React Query Se — Same Cheez
+## Same Thing With React Query
 
 ```bash
 npm install @tanstack/react-query
@@ -63,7 +63,7 @@ import { useQuery } from '@tanstack/react-query'
 
 function ProductsPage() {
   const { data: products, isLoading, error } = useQuery({
-    queryKey: ['products'],           // Unique key — caching ke liye
+    queryKey: ['products'],           // Unique key — for caching
     queryFn: () => fetch('/api/products').then(r => r.json())
   })
 
@@ -73,15 +73,15 @@ function ProductsPage() {
 }
 ```
 
-Chhota, clean. Aur React Query automatically:
-- **Cache karta hai** — same data dobara fetch nahi karta jaldi
-- **Background refresh** — stale data quietly update karta hai
-- **Loading/error state** — automatically manage
-- **Retry** — request fail ho toh dobara try karta hai
+Short, clean. And React Query automatically:
+- **Caches** — doesn't fetch the same data again quickly
+- **Background refresh** — quietly updates stale data
+- **Loading/error state** — managed automatically
+- **Retry** — retries if the request fails
 
 ---
 
-## ShopKaro Mein React Query
+## ShopKaro With React Query
 
 ```jsx
 // Products list — with filters
@@ -92,7 +92,7 @@ function useProducts(filters) {
       const params = new URLSearchParams(filters)
       return fetch(`/api/products?${params}`).then(r => r.json())
     },
-    staleTime: 5 * 60 * 1000,  // 5 minute tak fresh maano — dobara fetch mat karo
+    staleTime: 5 * 60 * 1000,  // Treat as fresh for 5 minutes — don't refetch
   })
 }
 
@@ -110,16 +110,16 @@ function useOrders() {
   return useQuery({
     queryKey: ['orders'],
     queryFn: () => fetch('/api/orders').then(r => r.json()),
-    staleTime: 0,  // Hamesha fresh chahiye — order status change ho sakta hai
+    staleTime: 0,  // Always fresh — order status can change
   })
 }
 ```
 
 ---
 
-## Mutation — Data Change Karna
+## Mutation — Changing Data
 
-React Query mutations se POST/PUT/DELETE bhi handle hoti hai:
+React Query handles POST/PUT/DELETE with mutations too:
 
 ```jsx
 import { useMutation, useQueryClient } from '@tanstack/react-query'
@@ -134,7 +134,7 @@ function AddToCartButton({ product }) {
         body: JSON.stringify({ productId, quantity: 1 })
       }),
     onSuccess: () => {
-      // Cart data refresh karo
+      // Refresh cart data
       queryClient.invalidateQueries({ queryKey: ['cart'] })
     }
   })
@@ -144,7 +144,7 @@ function AddToCartButton({ product }) {
       onClick={() => mutation.mutate(product.id)}
       disabled={mutation.isPending}
     >
-      {mutation.isPending ? 'Adding...' : 'Cart Mein Daalo'}
+      {mutation.isPending ? 'Adding...' : 'Add to Cart'}
     </button>
   )
 }
@@ -156,19 +156,19 @@ function AddToCartButton({ product }) {
 
 ```
 Local State (useState):
-  → Sirf ek component: form inputs, toggles, loading
+  → Single component: form inputs, toggles, loading
 
 Global Client State (Zustand):
-  → Poori app mein, baar baar change: cart, notifications
+  → Whole app, changes frequently: cart, notifications
 
 Global Stable State (Context):
-  → Poori app mein, kam change: user info, theme
+  → Whole app, changes rarely: user info, theme
 
 Server State (React Query):
-  → Server se aaya data: products, orders, user profile
+  → Data from server: products, orders, user profile
 ```
 
-## State Management Umbrella — Complete Hua
+## State Management Umbrella — Complete
 
 ```
 STATE MANAGEMENT
@@ -176,11 +176,11 @@ STATE MANAGEMENT
 ├── Local State     → Doc 28 ✓
 ├── Context         → Doc 29 ✓
 ├── Zustand         → Doc 30 ✓
-└── React Query     → Doc 31 ✓ (YEH)
+└── React Query     → Doc 31 ✓ (THIS)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`32-caching-what-is-it.md` — Saatwa umbrella — **Caching**. Data bar bar fetch karna slow karta hai — cache karne se speed milti hai. localStorage, sessionStorage, CDN, server cache — yeh sab samjhenge.
+`32-caching-what-is-it.md` — Seventh umbrella — **Caching**. Fetching the same data repeatedly is slow — caching makes it fast. localStorage, sessionStorage, CDN, server cache — we'll understand all of them.

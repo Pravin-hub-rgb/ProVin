@@ -1,34 +1,34 @@
-# Python Course Roadmap — Zero Se Backend Tak
+# Python Course Roadmap — Zero to Backend
 
-Socho tum ek restaurant jaoge. Kitchen (backend) mein andar kabhi nahi gaye ho — par ab samajhna chahiye ki order kaise banata hai. Tum bolo — *"Flask kya hai, FastAPI kya hai, server kahan se aata hai."* Yeh course pura wahi banaya gaya hai: **zero se backend tak**, Python se shuru karke FastAPI + SQLite + pandas + Docker tak.
+Imagine you go to a restaurant. You've never been inside the kitchen (backend) — but now you need to understand how an order is prepared. You say — *"What is Flask, what is FastAPI, where does the server come from."* This whole course is built around exactly that: **zero to backend**, starting from Python, going all the way to FastAPI + SQLite + pandas + Docker.
 
-**Zaroori requirement:** Python basics chahiye (variables, functions, loops, lists, dicts). Agar nahi aati, pehle `docs/coding/python/` ke 7 lectures kar lo. Is course mein Python syntax nahi sikhaayenge — FastAPI ke andar Python *use* karenge.
+**Required prerequisite:** Python basics needed (variables, functions, loops, lists, dicts). If you don't know them, first do the 7 lectures in `docs/coding/python/`. This course won't teach Python syntax — we'll *use* Python inside FastAPI.
 
 ---
 
 # Backend Framework Jungle Map
 
-Pehla sawaal: sabse pehle *"Flask, FastAPI, Django — kya hota hai, kaunsa seekhua?"* Ek hi jagah poora map:
+First question: *"Flask, FastAPI, Django — what are they, which one to learn?"* One place, complete map:
 
 ```
-BACKEND FRAMEWORKS (toolbox jo server sambhalta hai)
+BACKEND FRAMEWORKS (toolbox that handles the server)
 ├── Python family
-│   ├── Flask    → simple, purana — easy, lekin modern cheezein khud likhni
-│   ├── FastAPI  → MODERN — auto docs + validation + real-time + YAHI PROJECT
-│   └── Django   → "batteries included" — enterprise, powerful par bhaari
+│   ├── Flask    → simple, old — easy, but modern things you build yourself
+│   ├── FastAPI  → MODERN — auto docs + validation + real-time + THIS PROJECT
+│   └── Django   → "batteries included" — enterprise, powerful but heavy
 └── Node.js family
-    ├── Express  → sabse famous (React/Node stream mein milega)
-    ├── Fastify  → naya, fast, TypeScript-friendly
+    ├── Express  → most famous (you'll see it in React/Node stream)
+    ├── Fastify  → new, fast, TypeScript-friendly
     └── NestJS   → enterprise TypeScript
 ```
 
-**Ek line mein:** Flask too old, Django too big — **FastAPI = perfect beginner + real project (TradeStack).**
+**One line:** Flask too old, Django too big — **FastAPI = perfect beginner + real project (TradeStack).**
 
 ---
 
-# Course Ka Structure — Phases
+# Course Structure — Phases
 
-Course 4 phases mein hua. Har phase apna complete mini-project. Koi phase chhota nahi.
+The course has 4 phases. Each phase has its own complete mini-project. No phase is small.
 
 | Phase | Topic | Project |
 |-------|-------|---------|
@@ -42,7 +42,7 @@ Course 4 phases mein hua. Har phase apna complete mini-project. Koi phase chhota
 
 ## PHASE 0 — Python Basics (Lec 1 to 7)
 
-Variables, functions, loops, exceptions, modules, unit testing, file IO. Notes + practice sets + solutions — har lecture ka alag folder. Is phase me project nahi — bas syntax build karo.
+Variables, functions, loops, exceptions, modules, unit testing, file IO. Notes + practice sets + solutions — each lecture has its own folder. No project in this phase — just build syntax.
 
 | # | Topic |
 |---|-------|
@@ -58,24 +58,25 @@ Variables, functions, loops, exceptions, modules, unit testing, file IO. Notes +
 
 ## PHASE 1 — Trading Backend Basic (FastAPI + SQLite + pandas)
 
-Yeh woh mini-project hai jisme FastAPI ke core features aate hain — aur data save hota hai (SQLite).
+This is the mini-project where FastAPI's core features come — and data gets saved (SQLite).
 
-**Project TradeStack ka basic shape hai.** Jab tum interview me TradeStack explain karo ge, toh tumhe pata hoga: ek Python service me stocks aate hain, settings save hoti hain, pandas indicators compute hote hain, scan endpoint results deta hai.
+**This is TradeStack's basic shape.** When you explain TradeStack in an interview, you'll know: a Python service where stocks come in, settings get saved, pandas indicators compute, scan endpoint returns results.
 
 | # | Concept | File |
 |---|---------|------|
-| 1.0 | Phase kya seekhenge + project preview | Kya Seekhenge.md |
-| 1.1 | Path & Query params | URL se data lena |
-| 1.2 | Pydantic + Request Body | Data validate karna |
+| 1.0 | What we'll learn + project preview | What We'll Learn.md |
+| 1.1 | Path & Query params | Getting data from URL |
+| 1.2 | Pydantic + Request Body | Validating data |
 | 1.3 | CRUD | Create/Read/Update/Delete |
-| 1.4 | SQLite | Data save (restart pe bhi rahe) |
+| 1.4 | SQLite | Saving data (survives restart) |
 | 1.5 | Trading Backend Project | 5-part series |
 
-### Combined Project — 5 part series
-| # | Part | Kya banta hai |
-|---|------|---------------|
-| 1.5.1 | Planning | Kya banana, endpoints, data shape |
-| 1.5.2 | Server Khada | venv + FastAPI app + /health + /docs |
+### Combined Project — 5-part series
+
+| # | Part | What gets built |
+|---|------|-----------------|
+| 1.5.1 | Planning | What to build, endpoints, data shape |
+| 1.5.2 | Server setup | venv + FastAPI app + /health + /docs |
 | 1.5.3 | Data Layer | SQLite — stocks/settings tables + endpoints |
 | 1.5.4 | Indicators | pandas SMA + RSI |
 | 1.5.5 | Scan + Wrap-up | /scan endpoint, Pydantic, README |
@@ -84,67 +85,67 @@ Yeh woh mini-project hai jisme FastAPI ke core features aate hain — aur data s
 
 ## Appendix A — Docker Basics
 
-Phase 1 ka project containerize karo taaki koi bhi machine pe ek command mein chale. Interview ke room mein demo ke liye bhi kaam aayega.
+Containerize the Phase 1 project so it runs on any machine with one command. Also useful for interview demos.
 
 | # | Topic | File |
 |---|-------|------|
-| A.0 | Docker kya hai + overview | 2.0 Docker Kya Hai + Overview.md |
-| A.1 | Dockerfile + .dockerignore | Image banana |
-| A.2 | docker-compose + volume mount | SQLite persist |
+| A.0 | What is Docker + overview | 2.0 Docker What Is It + Overview.md |
+| A.1 | Dockerfile + .dockerignore | Building the image |
+| A.2 | docker-compose + volume mount | SQLite persistence |
 | A.3 | Test + TradeStack bridge | Deploy verification |
 
 ---
 
 ## PHASE 2 — Real-time (WebSocket)
 
-Jo Appendix A (Docker) + Phase 0, 1 mein seekha, usko real-time streaming mein lagao:
-- `~/Desktop/Main/TradeStack/backend/src/streaming.py` kholo
+Apply what you learned in Appendix A (Docker) + Phases 0, 1 to real-time streaming:
+- Open `~/Desktop/Main/TradeStack/backend/src/streaming.py`
 - `WebSocket`, `ConnectionManager`, live market ticks
 
-**Dhyan:** Phase 2 mein production code change nahi — sirf reading + notes + chhota experiment.
+**Note:** Phase 2 doesn't change production code — just reading + notes + small experiment.
 
 ### Combined Project — Chat Room App
 
-WebSocket + ConnectionManager + chat rooms. Multiple browser tabs ek room mein connect hote hain, message turant sabko pahunchta hai.
+WebSocket + ConnectionManager + chat rooms. Multiple browser tabs connect to one room, messages reach everyone instantly.
 
 ---
 
 ## PHASE 3 — TradeStack Backend Deep-Dive
 
-Jo Phase 0, 1, Appendix A, 2 mein seekha, use real project pe lagao:
-- `~/Desktop/Main/TradeStack/backend/server.py` kholo
-- `backend/src/db.py`, `cache_manager.py` — SQLite production mein
-- Ek isolated experiment karo
+Apply what you learned in Phases 0, 1, Appendix A, 2 to the real project:
+- Open `~/Desktop/Main/TradeStack/backend/server.py`
+- `backend/src/db.py`, `cache_manager.py` — SQLite in production
+- One isolated experiment
 
-**Dhyan:** Phase 3 mein production code change nahi — sirf reading + notes + chhota experiment.
+**Note:** Phase 3 doesn't change production code — just reading + notes + small experiment.
 
 ---
 
 ## "Manual → Better" Pairs
 
-| Pehle (dard) | Phir (Better) |
-|---|---|
-| URL params khud parse karna | FastAPI path/query params |
-| Data khud validate if/else | Pydantic models (auto 422) |
-| Data memory mein (restart pe khatam) | SQLite persistence |
-| Manual venv setup har machine pe | Docker volume mount (data survives) |
+| Before (pain) | After (Better) |
+|---------------|----------------|
+| Parsing URL params manually | FastAPI path/query params |
+| Validating data with if/else | Pydantic models (auto 422) |
+| Data in memory (gone on restart) | SQLite persistence |
+| Manual venv setup on every machine | Docker volume mount (data survives) |
 
 ---
 
 ## What This Course Is NOT
 
-- ❌ **Flask course** — Flask sirf comparison ke liye, build FastAPI se
-- ❌ **Django course** — sirf jungle map
-- ❌ **Advanced SQL** — sirf SQLite basics
-- ❌ **Frontend course** — sirf /docs Swagger
-- ❌ **Production deployment** — alag phase baad mein (Docker basics sirf learn ke liye)
+- ❌ **Flask course** — Flask only for comparison, build with FastAPI
+- ❌ **Django course** — just in the jungle map
+- ❌ **Advanced SQL** — just SQLite basics
+- ❌ **Frontend course** — just /docs Swagger
+- ❌ **Production deployment** — separate phase later (Docker basics just for learning)
 
 ---
 
-## Har Note Ka Standard Form
+## Standard Format for Every Note
 
-1. Relatable cheez se open
-2. Pichli file se connect
+1. Open with something relatable
+2. Connect to previous file
 3. CONCEPT → CODE → TEST
 4. Nutshell
 5. Common Mistakes
@@ -152,20 +153,20 @@ Jo Phase 0, 1, Appendix A, 2 mein seekha, use real project pe lagao:
 7. What It Is NOT
 8. Next-file bridge
 
-**Register:** Har phase khatam hone pe `lib/subjects/python.subject.ts` mein update karo.
+**Register:** After each phase, update `lib/subjects/python.subject.ts`.
 
 ---
 
-## Agla Kya Hai?
+## What's Next?
 
-- Phase 0: `python/1 Lec variables & functions/notes.md` se shuru karo
-- Phase 1: `1.0 Phase 1 - Kya Seekhenge + Project Preview.md`
-- Appendix A: `Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.0 Docker Kya Hai + Overview.md`
+- Phase 0: Start with `python/1 Lec variables & functions/notes.md`
+- Phase 1: `1.0 What We'll Learn + Project Preview.md`
+- Appendix A: `Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.0 Docker What Is It + Overview.md`
 
 ---
 
 **Related files:**
 - `lib/subjects/python.subject.ts` (sidebar registration)
-- `Phase 0 - Backend Mindset/0.0 Course Kaise Chalega.md` (full backend journey)
-- `Phase 1 - FastAPI Basics (CRUD + SQLite)/1.0 Phase 1 - Kya Seekhenge.md`
+- `Phase 0 - Backend Mindset/0.0 Course How It Works - Backend Map.md` (full backend journey)
+- `Phase 1 - FastAPI Basics (CRUD + SQLite)/1.0 What We'll Learn.md`
 - `Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.1 Dockerfile + .dockerignore.md`

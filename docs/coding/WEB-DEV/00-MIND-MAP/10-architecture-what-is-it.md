@@ -1,46 +1,46 @@
-# 10 — Architecture: Umbrella Kya Hai
+# 10 — Architecture: What Is the Umbrella
 
-> Authentication poora hua — bcrypt se Clerk tak.
-> Ab dusra bada umbrella — **Architecture**.
-> Yeh decide karta hai ki tumhara project internally kaise organized hai.
-
----
-
-## Architecture Kya Hota Hai
-
-Jab tum ek project banate ho — files aur folders hote hain. Sawaal yeh hai:
-
-- Kaunsi file kahan hogi?
-- Login logic kahan likhenge — same file mein jo UI hai ya alag?
-- Database se baat kaunsi file karegi?
-- Agar kal naya developer aaye toh kya woh bina poochhe samajh payega?
-
-**Architecture** inhi sawaalon ka jawab hai — ek **structure** ya **pattern** jo batata hai ki code kahan jaata hai.
+> Authentication is done — from bcrypt to Clerk.
+> Now the second big umbrella — **Architecture**.
+> This decides how your project is organized internally.
 
 ---
 
-## Architecture Umbrella Ke Andar Kya Kya Aata Hai
+## What Is Architecture
+
+When you build a project — there are files and folders. The question is:
+
+- Which file goes where?
+- Should the login logic be written in the same file as the UI, or separately?
+- Which file talks to the database?
+- If a new developer joins tomorrow, can they understand it without asking?
+
+**Architecture** answers these questions — a **structure** or **pattern** that says where the code goes.
+
+---
+
+## What's Inside the Architecture Umbrella
 
 ```
 ARCHITECTURE
 │
 ├── MVC Pattern
-│   → Code ko 3 parts mein divide karna: Model, View, Controller
+│   → Divide code into 3 parts: Model, View, Controller
 │
 ├── Folder Structure
-│   → Next.js mein files kahan rakhein
+│   → Where files go in Next.js
 │
 └── BFF Layer (Backend For Frontend)
-    → Kya alag backend chahiye ya Next.js API routes kaafi hain?
+    → Do you need a separate backend, or are Next.js API routes enough?
 ```
 
 ---
 
-## Kyun Zaroori Hai?
+## Why Is It Necessary?
 
-Todo app mein sab ek file mein likh sakte ho — 50 lines ka app hai.
+In a todo app, you can write everything in a single file — it's a 50-line app.
 
-ShopKaro mein:
+In ShopKaro:
 - 10+ pages
 - 20+ API endpoints
 - Database models
@@ -48,26 +48,26 @@ ShopKaro mein:
 - Payment logic
 - Email logic
 
-Agar sab ek jagah rakh do — 3 mahine baad tum khud nahi samjhoge ki kya likha hai.
+If you put everything in one place — 3 months later, even you won't understand what you wrote.
 
 ---
 
-## Ek Simple Example — Bina Architecture Ke Problem
+## A Simple Example — The Problem Without Architecture
 
 ```javascript
-// /app/products/page.jsx — GALAT TARIKA
-// Ek file mein sab kuch
+// /app/products/page.jsx — WRONG WAY
+// Everything in one file
 
 export default async function ProductsPage() {
-  // Database se seedha yahan
+  // Database directly here
   const db = new PrismaClient()
   const products = await db.product.findMany()
 
-  // Auth check bhi yahan
+  // Auth check here too
   const session = await getSession()
   if (!session) redirect('/login')
 
-  // Business logic bhi yahan
+  // Business logic here too
   const discountedProducts = products.map(p => ({
     ...p,
     price: p.price * 0.9  // 10% discount
@@ -77,55 +77,55 @@ export default async function ProductsPage() {
 }
 ```
 
-Problem: Database logic, auth logic, business logic, UI — sab ek jagah. Ek cheez change karo — poora file padho.
+Problem: Database logic, auth logic, business logic, UI — all in one place. Change one thing — read the whole file.
 
 ---
 
-## Architecture Se Kya Fark Padta Hai
+## What Architecture Changes
 
 ```
-/app/products/page.jsx      → Sirf UI
-/app/api/products/route.js  → Sirf API
+/app/products/page.jsx      → Only UI
+/app/api/products/route.js  → Only API
 /lib/products.js            → Business logic
 /lib/db/products.js         → Database queries
 ```
 
-Har file ka ek kaam. Dhundhna aasan, change karna aasan.
+Each file has one job. Easy to find, easy to change.
 
 ---
 
-## ShopKaro Ka Architecture — Overview
+## ShopKaro's Architecture — Overview
 
 ```
-FRONTEND (Jo user dekhta hai):
-/app/(pages)          → React pages — sirf UI
+FRONTEND (What the user sees):
+/app/(pages)          → React pages — UI only
 
 BACKEND (API):
-/app/api/             → API routes — request handle karna
+/app/api/             → API routes — request handling
 
 BUSINESS LOGIC:
-/lib/                 → Pure functions — koi framework dependency nahi
+/lib/                 → Pure functions — no framework dependency
 
 DATABASE:
-/prisma/              → Schema aur queries
+/prisma/              → Schema and queries
 
 SHARED:
 /components/          → Reusable UI pieces
-/types/               → TypeScript types (agar use karo)
+/types/               → TypeScript types (if you use them)
 ```
 
 ---
 
-## Aage Kya Hai
+## What's Ahead
 
-Teeno parts alag alag cover karenge:
+We'll cover all three parts separately:
 
-- **Doc 11** → MVC pattern kya hai aur Next.js mein kaise apply hota hai
-- **Doc 12** → Folder structure — ShopKaro ki actual file tree
-- **Doc 13** → BFF layer — kab alag backend chahiye, kab nahi
+- **Doc 11** → What is the MVC pattern and how it applies in Next.js
+- **Doc 12** → Folder structure — ShopKaro's actual file tree
+- **Doc 13** → BFF layer — when do you need a separate backend, when are Next.js API routes enough?
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`11-architecture-mvc.md` — MVC kya hota hai? Model, View, Controller — yeh teeno kya hain? Next.js mein yeh exactly kaise dikhta hai? Ek concrete ShopKaro example ke saath samjhenge.
+`11-architecture-mvc.md` — What is MVC? Model, View, Controller — what are these three? How exactly does it look in Next.js? We'll understand with a concrete ShopKaro example.

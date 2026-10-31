@@ -1,24 +1,24 @@
 # 08 — Backend Frameworks: Express, Fastify, Hono, NestJS
 
 > Umbrella: Backend → Frameworks
-> Kaam: HTTP server — requests receive karo, process karo, respond karo
-> Note: Next.js use kar rahe ho → API routes use karo, alag backend optional hai
+> Purpose: HTTP server — receive requests, process them, respond
+> Note: If using Next.js → use API routes, separate backend is optional
 
 ---
 
-## Kab Alag Backend Framework Chahiye
+## When You Need a Separate Backend Framework
 
 ```
-Next.js API routes kaafi hain jab:
-  → Ek team, ek codebase
+Next.js API routes are enough when:
+  → One team, one codebase
   → Simple to medium complexity
-  → ShopKaro jaisa app
+  → App like ShopKaro
 
-Alag backend framework kab:
-  → Multiple frontends (web + mobile) same API use karein
+When you need a separate backend framework:
+  → Multiple frontends (web + mobile) use the same API
   → Microservices architecture
-  → Backend team alag hai
-  → Next.js se zyada control chahiye
+  → Backend team is separate
+  → Need more control than Next.js provides
 ```
 
 ---
@@ -31,20 +31,20 @@ Alag backend framework kab:
 **Tag: 🟡 Legacy | Most Known | Huge ecosystem**
 
 ```
-Kya hai: Minimal, unopinionated Node.js framework — most popular tha 2015-2022
-Kab use karo:
+What it is: Minimal, unopinionated Node.js framework — most popular 2015-2022
+When to use:
   → Existing Express codebase
-  → Sikhne ke liye — concepts clear hote hain
-  → Bahut saari Express-specific libraries chahiye
+  → For learning — concepts become clear
+  → Need many Express-specific libraries
 
-Kab mat use karo:
-  → Naya project — Fastify ya Hono better performance
-  → TypeScript-first project — NestJS ya Hono better
+When NOT to use:
+  → New project — Fastify or Hono better for performance
+  → TypeScript-first project — NestJS or Hono better
 
 Real app example:
-  → Purani Zomato backend (hypothetically)
+  → Older Zomato backend (hypothetically)
   → Majority of Indian startups 2015-2022
-  → npm ki aadhi packages Express examples mein hain
+  → Half of npm packages have Express examples
 
 Code feel:
   const express = require('express')
@@ -60,9 +60,9 @@ Code feel:
 Cons:
   → Slow compared to Fastify/Hono
   → TypeScript setup manual
-  → No structure — tum decide karo sab
+  → No structure — you decide everything
 
-India mein: Bahut purane projects mein milega — aaj bhi taught in bootcamps
+In India: Found in many old projects — still taught in bootcamps
 ```
 
 ---
@@ -71,30 +71,30 @@ India mein: Bahut purane projects mein milega — aaj bhi taught in bootcamps
 **Tag: 🟢 Express Alternative | Fast | TypeScript-friendly**
 
 ```
-Kya hai: Express jaisa lekin 2x fast, TypeScript support better
-Kab use karo:
-  → New Node.js backend chahiye, Express nahi banana
-  → Performance matter karta hai
+What it is: Like Express but 2x fast, better TypeScript support
+When to use:
+  → New Node.js backend, don't want Express
+  → Performance matters
   → TypeScript project
 
-Express se fark:
+Difference from Express:
   → 2x faster than Express (benchmarks)
   → Schema-based validation built-in (Zod/JSON Schema)
-  → Plugin system better
-  → TypeScript support cleaner
+  → Better plugin system
+  → Cleaner TypeScript support
 
 Real app example:
-  → Medium-large Indian startups jo Express se migrate kare
-  → Mercurius (GraphQL on Fastify) — Nearform use karta hai
+  → Mid-large Indian startups migrating from Express
+  → Mercurius (GraphQL on Fastify) — used by Nearform
 
 Code feel:
   const fastify = require('fastify')()
 
   fastify.get('/products', async (request, reply) => {
-    return await getProducts()  // Automatically JSON serialize
+    return await getProducts()  // Automatically JSON serialized
   })
 
-India mein: Growing — purane projects mein Express, naye mein Fastify ya Hono
+In India: Growing — Express in old projects, Fastify or Hono in new ones
 ```
 
 ---
@@ -103,19 +103,19 @@ India mein: Growing — purane projects mein Express, naye mein Fastify ya Hono
 **Tag: 🟢 Modern | Edge-ready | TypeScript-first | Growing Fast**
 
 ```
-Kya hai: Ultra-fast, lightweight web framework — multiple runtimes (Node, Deno, Bun, Edge)
-Kab use karo:
-  → Naya backend, TypeScript project
+What it is: Ultra-fast, lightweight web framework — multiple runtimes (Node, Deno, Bun, Edge)
+When to use:
+  → New backend, TypeScript project
   → Edge functions (Cloudflare Workers)
-  → Modern stack chahiye
-  → Bun runtime use kar rahe ho
+  → Want modern stack
+  → Using Bun runtime
 
-Special: Cloudflare Workers pe bhi chalta hai — edge deployment
-TypeScript se: First-class support — types everywhere
+Special: Runs on Cloudflare Workers too — edge deployment
+TypeScript: First-class support — types everywhere
 
 Real app example:
-  → Cloudflare Workers pe API
-  → Modern startups ki new services
+  → API on Cloudflare Workers
+  → Modern startups' new services
   → Bun + Hono → Very fast backend
 
 Code feel:
@@ -129,11 +129,11 @@ Code feel:
 
   export default app
 
-Express se fark:
+Difference from Express:
   → Hono: Multi-runtime, TypeScript-first, smaller
   → Express: Node.js only, CommonJS, older
 
-India mein: Naye projects mein adopt ho raha hai — especially Cloudflare/edge users
+In India: Being adopted in new projects — especially Cloudflare/edge users
 ```
 
 ---
@@ -142,23 +142,23 @@ India mein: Naye projects mein adopt ho raha hai — especially Cloudflare/edge 
 **Tag: 🟢 Enterprise | TypeScript | Angular-like structure**
 
 ```
-Kya hai: Opinionated TypeScript framework — Angular jaise decorators, modules, DI
-Kab use karo:
+What it is: Opinionated TypeScript framework — decorators, modules, DI like Angular
+When to use:
   → Large enterprise backend
-  → Badi team — structure enforce karna ho
-  → Angular background hai
+  → Large team — need to enforce structure
+  → Angular background
   → Microservices
 
-Express/Fastify se fark:
-  → NestJS: Opinionated — structure pehle se decide
-  → Express: Unopinionated — tum structure decide karo
-  → NestJS: Zyada boilerplate lekin consistent
-  → NestJS internally Express ya Fastify use karta hai
+Difference from Express/Fastify:
+  → NestJS: Opinionated — structure decided beforehand
+  → Express: Unopinionated — you decide structure
+  → NestJS: More boilerplate but consistent
+  → NestJS internally uses Express or Fastify
 
 Real app example:
   → Large Indian product companies
   → Fintech backends
-  → Companies jahan multiple backend developers hain
+  → Companies with multiple backend developers
 
 Code feel:
   @Controller('products')
@@ -176,11 +176,11 @@ Code feel:
     }
   }
 
-Kab mat use karo:
-  → Chhota team, chhota project — overkill
-  → Angular background nahi hai — steep learning curve
+When NOT to use:
+  → Small team, small project — overkill
+  → No Angular background — steep learning curve
 
-India mein: Enterprise mein growing — Infosys, TCS type companies + funded startups
+In India: Growing in enterprise — Infosys, TCS type companies + funded startups
 ```
 
 ---
@@ -189,13 +189,13 @@ India mein: Enterprise mein growing — Infosys, TCS type companies + funded sta
 **Tag: 🔵 Bun runtime | Ultra fast | New**
 
 ```
-Kya hai: Bun ke liye optimized framework — extreme performance
-Kab use karo:
-  → Bun runtime use kar rahe ho
-  → Maximum performance chahiye
+What it is: Framework optimized for Bun — extreme performance
+When to use:
+  → Using Bun runtime
+  → Maximum performance needed
 
-Status: New — ecosystem chhota hai, production mein carefully use karo
-Bun kya hai: Node.js alternative — JavaScript runtime, package manager, bundler sab ek
+Status: New — small ecosystem, use carefully in production
+What is Bun: Node.js alternative — JavaScript runtime, package manager, bundler all in one
 ```
 
 ---
@@ -204,9 +204,9 @@ Bun kya hai: Node.js alternative — JavaScript runtime, package manager, bundle
 **Tag: 🟡 Express successor (same team) | Older**
 
 ```
-Kya hai: Express ke creators ne banaya — modern async support
-Status: Express se better tha 2018 mein — ab Fastify/Hono ne replace kar diya
-Kab use karo: Existing Koa codebase
+What it is: Express's creators built this — modern async support
+Status: Better than Express in 2018 — now replaced by Fastify/Hono
+When to use: Existing Koa codebase
 ```
 
 ---
@@ -214,37 +214,37 @@ Kab use karo: Existing Koa codebase
 ## Quick Decision
 
 ```
-Next.js se alag backend chahiye?
+Need a backend separate from Next.js?
   ↓
 TypeScript project?
-  → Haan → Hono ya Fastify ya NestJS
-  → Nahi → Express (lekin TypeScript seekho)
+  → Yes → Hono or Fastify or NestJS
+  → No → Express (but learn TypeScript)
 
 Team size?
-  → Chhoti team, startup → Hono ya Fastify
-  → Badi team, enterprise → NestJS
+  → Small team, startup → Hono or Fastify
+  → Large team, enterprise → NestJS
 
 Edge/Cloudflare deployment?
-  → Hono (only choice practically)
+  → Hono (practically the only choice)
 
 Existing codebase?
-  → Jo hai wahi use karo — rewrite ki zaroorat nahi
+  → Use whatever's there — no need to rewrite
 ```
 
 ---
 
-## India Mein Reality
+## India Reality
 
 ```
 Bootcamp / Learning:           Express (most tutorials)
-Startup (new 2024):            Hono ya Fastify ya Next.js API routes
-Mid-size company:              Express ya Fastify
+Startup (new 2024):            Hono or Fastify or Next.js API routes
+Mid-size company:              Express or Fastify
 Enterprise:                    NestJS
-Microservices:                 NestJS ya Hono per service
+Microservices:                 NestJS or Hono per service
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`09-backend-orm.md` — ORMs — Prisma, Drizzle, Sequelize, TypeORM — database se baat karne ke sab tarike, kab raw SQL, kab ORM, kab kaunsa ORM.
+`09-backend-orm.md` — ORMs — Prisma, Drizzle, Sequelize, TypeORM — all ways to talk to the database, when raw SQL, when ORM, when which ORM.

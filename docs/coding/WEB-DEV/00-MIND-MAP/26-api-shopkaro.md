@@ -1,8 +1,8 @@
 # 26 — ShopKaro: Complete API Reference
 
-> Pichle docs mein REST aur GraphQL concepts samjhe.
-> Ab ShopKaro ke **saare endpoints** — ek reference doc.
-> Project banate waqt yahan dekho.
+> Previous docs covered REST and GraphQL concepts.
+> Now all of ShopKaro's **endpoints** — a reference doc.
+> Check here while building the project.
 
 ---
 
@@ -11,7 +11,7 @@
 ### POST `/api/auth/signup`
 ```
 Request:  { email, password, name }
-Response: { message: "Account bana", user: { id, email, name } }
+Response: { message: "Account created", user: { id, email, name } }
 Errors:   400 (email already exists), 400 (invalid data)
 ```
 
@@ -24,21 +24,21 @@ Errors:   401 (wrong credentials), 403 (email not verified)
 
 ### POST `/api/auth/logout`
 ```
-Request:  (cookie mein session)
+Request:  (session in cookie)
 Response: { message: "Logged out" }
 ```
 
 ### POST `/api/auth/forgot-password`
 ```
 Request:  { email }
-Response: { message: "Reset email bhej diya" }
-Note:     Email exist na kare tab bhi same message — security ke liye
+Response: { message: "Reset email sent" }
+Note:     Same message even if email doesn't exist — for security
 ```
 
 ### POST `/api/auth/reset-password`
 ```
 Request:  { token, newPassword }
-Response: { message: "Password update ho gaya" }
+Response: { message: "Password updated" }
 Errors:   400 (invalid/expired token)
 ```
 
@@ -100,7 +100,7 @@ Response: {
 ### POST `/api/cart`
 ```
 Request:  { productId, quantity }
-Response: { message: "Cart mein add ho gaya", item: {...} }
+Response: { message: "Added to cart", item: {...} }
 Errors:   400 (insufficient stock), 401 (not logged in)
 ```
 
@@ -113,7 +113,7 @@ Errors:   400 (quantity > stock)
 
 ### DELETE `/api/cart/:itemId`
 ```
-Response: { message: "Remove ho gaya" }
+Response: { message: "Removed" }
 ```
 
 ---
@@ -139,20 +139,20 @@ Response: {
   items: [...],
   user: { name, email }
 }
-Errors: 403 (dusre ka order access karne ki koshish), 404
+Errors: 403 (trying to access someone else's order), 404
 ```
 
 ### POST `/api/orders`
 ```
 Request:  { address }
 Process:
-  1. Cart items lo
-  2. Stock check karo
-  3. Order banao
-  4. Cart clear karo
-  5. Payment initiate karo
+  1. Fetch cart items
+  2. Check stock
+  3. Create order
+  4. Clear cart
+  5. Initiate payment
 Response: { orderId, paymentData: { razorpayOrderId, amount, currency } }
-Errors:   400 (cart empty), 400 (stock nahi)
+Errors:   400 (cart empty), 400 (out of stock)
 ```
 
 ---
@@ -163,18 +163,18 @@ Errors:   400 (cart empty), 400 (stock nahi)
 ```
 Request:  { razorpayOrderId, razorpayPaymentId, razorpaySignature }
 Process:
-  1. Signature verify karo
-  2. Order status → PAID
-  3. Stock update karo
+  1. Verify signature
+  2. Update order status → PAID
+  3. Update stock
 Response: { message: "Payment successful", orderId }
 Errors:   400 (invalid signature)
 ```
 
 ### POST `/api/webhooks/razorpay`
 ```
-Razorpay se aata hai automatically jab payment hoti hai
-Process: Signature verify → Order update
-Note: Yeh backup hai — agar user browser band kar de payment ke baad
+Comes automatically from Razorpay when payment happens
+Process: Verify signature → Update order
+Note: This is a backup — in case user closes browser after payment
 ```
 
 ---
@@ -188,7 +188,7 @@ Note: Yeh backup hai — agar user browser band kar de payment ke baad
 
 ### Error:
 ```json
-{ "error": "Kya galat hua", "details": "Optional" }
+{ "error": "What went wrong", "details": "Optional" }
 ```
 
 ### Pagination:
@@ -206,18 +206,18 @@ Note: Yeh backup hai — agar user browser band kar de payment ke baad
 
 ---
 
-## API Umbrella — Complete Hua
+## API Umbrella — Complete
 
 ```
 API DESIGN
 │
 ├── REST          → Doc 24 ✓
 ├── GraphQL       → Doc 25 ✓
-└── ShopKaro APIs → Doc 26 ✓ (YEH)
+└── ShopKaro APIs → Doc 26 ✓ (THIS)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`27-state-what-is-it.md` — Chha umbrella — **State Management**. Yeh ek aisa topic hai jo bahut confuse karta hai beginners ko. Zustand, Context, useState — kab kaunsa, kyun — poori clarity yahan.
+`27-state-what-is-it.md` — Sixth big umbrella — **State Management**. This topic confuses many beginners. Zustand, Context, useState — when to use which and why — full clarity here.

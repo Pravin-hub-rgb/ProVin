@@ -8,10 +8,10 @@
 **Tag: 🟢 Next.js Standard | Most Popular**
 
 ```
-Kya hai: Next.js ke liye auth library
-Kab use karo: Google/GitHub login + email/password — Next.js project
+What it is: Auth library for Next.js
+When to use: Google/GitHub login + email/password — Next.js project
 Real app: Most Indian startups using Next.js
-Cons: Config verbose, docs confusing kabhi kabhi
+Cons: Config verbose, docs sometimes confusing
 ```
 
 ---
@@ -20,10 +20,10 @@ Cons: Config verbose, docs confusing kabhi kabhi
 **Tag: 🟢 Fastest Setup | UI Included | Paid**
 
 ```
-Kya hai: Complete auth platform — UI bhi, logic bhi
-Kab use karo: Jaldi launch karna, auth pe time waste nahi
+What it is: Complete auth platform — UI and logic both
+When to use: Launch fast, don't waste time on auth
 Cons: Paid, vendor lock-in
-India mein: Funded startups, hackathons
+In India: Funded startups, hackathons
 ```
 
 ---
@@ -32,9 +32,9 @@ India mein: Funded startups, hackathons
 **Tag: 🟢 Lightweight | DIY | TypeScript**
 
 ```
-Kya hai: Minimal auth library — sirf sessions, baki tum karo
-Kab use karo: Full control chahiye, Clerk costly laga, NextAuth complex laga
-ShopKaro approach: Khud banaya → Lucia jaisa approach hai
+What it is: Minimal auth library — only sessions, the rest you build
+When to use: Full control needed, Clerk felt costly, NextAuth felt complex
+ShopKaro approach: Built it ourselves → Lucia-like approach
 ```
 
 ---
@@ -43,9 +43,9 @@ ShopKaro approach: Khud banaya → Lucia jaisa approach hai
 **Tag: 🟢 New | TypeScript-first | Growing**
 
 ```
-Kya hai: Modern auth library — 2024 mein growing rapidly
-Kab use karo: NextAuth alternatives explore kar rahe ho
-Status: New but promising — watch karo
+What it is: Modern auth library — growing rapidly in 2024
+When to use: Exploring NextAuth alternatives
+Status: New but promising — watch it
 ```
 
 ---
@@ -54,9 +54,9 @@ Status: New but promising — watch karo
 **Tag: 🟢 Enterprise | Okta company**
 
 ```
-Kya hai: Enterprise auth platform — SSO, SAML, enterprise features
-Kab use karo: Enterprise clients, B2B SaaS, SSO required
-India mein: Enterprise companies, government projects
+What it is: Enterprise auth platform — SSO, SAML, enterprise features
+When to use: Enterprise clients, B2B SaaS, SSO required
+In India: Enterprise companies, government projects
 ```
 
 ---
@@ -65,9 +65,9 @@ India mein: Enterprise companies, government projects
 **Tag: 🟡 Express classic | Strategy-based**
 
 ```
-Kya hai: Express ke liye auth middleware
-Kab use karo: Express backend, existing Passport codebase
-Avoid in new projects: NextAuth ya Better Auth better for Next.js
+What it is: Auth middleware for Express
+When to use: Express backend, existing Passport codebase
+Avoid in new projects: NextAuth or Better Auth is better for Next.js
 ```
 
 ---
@@ -76,8 +76,8 @@ Avoid in new projects: NextAuth ya Better Auth better for Next.js
 **Tag: 🟢 Supabase users**
 
 ```
-Kya hai: Supabase ka built-in auth
-Kab use karo: Already Supabase use kar rahe ho
+What it is: Supabase's built-in auth
+When to use: Already using Supabase
 ```
 
 ---
@@ -86,8 +86,8 @@ Kab use karo: Already Supabase use kar rahe ho
 **Tag: 🟢 Mobile apps | Google**
 
 ```
-Kya hai: Google ka auth — mobile + web
-Kab use karo: React Native apps, Firebase ecosystem
+What it is: Google's auth — mobile + web
+When to use: React Native apps, Firebase ecosystem
 ```
 
 ---
@@ -95,27 +95,27 @@ Kab use karo: React Native apps, Firebase ecosystem
 ## Auth Quick Decision
 
 ```
-Next.js, Google/GitHub login chahiye?
+Next.js, want Google/GitHub login?
   → NextAuth / Auth.js
 
-Jaldi launch, UI bhi ready chahiye?
+Launch fast, ready-made UI needed?
   → Clerk
 
 Full control, lightweight?
-  → Lucia ya Better Auth
+  → Lucia or Better Auth
 
 Express backend?
-  → Passport.js ya khud banao
+  → Passport.js or build it yourself
 
 Enterprise, SSO?
   → Auth0
 
-Supabase use kar rahe ho?
+Using Supabase?
   → Supabase Auth
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`18-testing.md` — Testing tools — Vitest, Jest, Playwright, Cypress — Swiggy ka checkout test kaise hota hoga.
+`18-testing.md` — Testing tools — Vitest, Jest, Playwright, Cypress — how Swiggy's checkout gets tested.

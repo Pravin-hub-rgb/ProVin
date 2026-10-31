@@ -1,91 +1,91 @@
-# 04 — Sessions: Login Ke Baad User Ko Yaad Rakhna
+# 04 — Sessions: Remembering the User After Login
 
-> Pichle doc mein humne bcrypt se password hash karna seekha.
-> Ab agla sawaal — Priya login ho gayi, **ab kaise pata rahega ki woh logged in hai?**
+> In the previous doc we learned how to hash passwords with bcrypt.
+> The next question — Priya has logged in, **how will we know she's logged in from now on?**
 
 ---
 
-## Problem — HTTP Bhoolakkad Hai
+## Problem — HTTP Is Forgetful
 
-Web ka ek fundamental problem hai — **HTTP stateless hai.**
+A fundamental problem of the web — **HTTP is stateless.**
 
-Matlab har request independent hai. Server ko koi memory nahi hoti previous request ki.
+Meaning every request is independent. The server has no memory of the previous request.
 
 ```
 Request 1: POST /api/login → Server: "Okay, Priya logged in"
-Request 2: GET /api/orders → Server: "Kaun hai? Pata nahi 🤷"
+Request 2: GET /api/orders → Server: "Who's this? No idea 🤷"
 ```
 
-Server bhool jaata hai. Har baar fresh start.
+The server forgets. Every time is a fresh start.
 
-Toh problem yeh hai — Priya login kare, products dekhe, cart mein daale, order kare — har step pe server ko yaad rakhna hoga ki **yeh Priya hai.**
+So the problem is — Priya logs in, browses products, adds to cart, places an order — at every step the server needs to remember that **this is Priya.**
 
 ---
 
 ## Solution — Sessions
 
-Session ek tarika hai server ko "yaad" dilane ka.
+A session is a way to remind the server.
 
-Kaam kaise karta hai:
+Here's how it works:
 
 ```
-1. Priya login karti hai → Sahi credentials
+1. Priya logs in → correct credentials
 
-2. Server ek unique Session ID banata hai
+2. Server creates a unique Session ID
    sessionId = "a3f9b2c1d4e5..."  (random string)
 
-3. Server is Session ID ko apne paas store karta hai
-   (database ya memory mein)
+3. Server stores this Session ID on its side
+   (in the database or in memory)
    sessions = {
      "a3f9b2c1d4e5": { userId: 1, email: "priya@gmail.com" }
    }
 
-4. Yeh Session ID → Cookie mein bhej deta hai Priya ke browser ko
+4. This Session ID → sent to Priya's browser in a Cookie
 
-5. Ab Priya ka browser har request ke saath yeh cookie automatically bhejta hai
+5. Now Priya's browser automatically sends this cookie with every request
 
-6. Server cookie dekh ke → Session ID nikalta hai → "Haan yeh Priya hai"
+6. Server reads the cookie → extracts the Session ID → "Yes, this is Priya"
 ```
 
 ---
 
-## Cookie Kya Hoti Hai?
+## What Is a Cookie?
 
-Cookie browser mein store hone wala ek **chhota sa data piece** hai — jo har request ke saath automatically server ko jaata hai.
+A cookie is a **small piece of data stored in the browser** — that automatically goes to the server with every request.
 
 ```
-Browser ke paas:
+Browser has:
 Cookie: sessionId=a3f9b2c1d4e5
 
-Har request ke saath yeh header automatically jaata hai:
+With every request, this header is sent automatically:
 GET /api/orders
 Cookie: sessionId=a3f9b2c1d4e5
 ```
 
-Cookies ke baare mein alag doc hai — `06-auth-cookies.md` — wahan detail mein samjhenge.
+There's a separate doc on cookies — `06-auth-cookies.md` — we'll understand them in detail there.
 
 ---
 
-## Session Flow — Poora Picture
+## Session Flow — The Full Picture
 
 ```
 SIGNUP/LOGIN:
-Priya → POST /api/login → Server verifies → Session banao → Cookie bhejo
+Priya → POST /api/login → Server verifies → Create session → Send cookie
 
 PROTECTED PAGE:
 Priya → GET /dashboard
         Cookie: sessionId=abc123
-        → Server: sessionId se user dhundo → Priya hai → Data bhejo
+        → Server: find user from sessionId → It's Priya → Send data
 
 LOGOUT:
-Priya → POST /api/logout → Server: Session delete karo → Cookie clear karo
+Priya → POST /api/logout → Server: delete session → clear cookie
 ```
 
 ---
 
-## ShopKaro Mein Sessions — Kaise Karenge
+## Sessions in ShopKaro — How We'll Do It
 
-Next.js mein sessions ke liye hum **`iron-session`** ya **`express-session`** jaisi library use kar sakte hain. ShopKaro mein `iron-session` use karenge — yeh Next.js ke saath accha kaam karta hai.
+In Next.js, for sessions we can use libraries like **`iron-session`** or **`express-session`**. In ShopKaro we'll use `iron-session` — it works well with Next.js.
 
 ### Login API Route:
 
@@ -97,19 +97,19 @@ import { getIronSession } from 'iron-session'
 export async function POST(req) {
   const { email, password } = await req.json()
 
-  // 1. User dhundo
+  // 1. Find the user
   const user = await prisma.user.findUnique({ where: { email } })
   if (!user) return Response.json({ error: "User not found" }, { status: 401 })
 
-  // 2. Password compare karo
+  // 2. Compare the password
   const isMatch = await bcrypt.compare(password, user.password)
   if (!isMatch) return Response.json({ error: "Wrong password" }, { status: 401 })
 
-  // 3. Session banao
+  // 3. Create the session
   const session = await getIronSession(req, res, sessionOptions)
   session.userId = user.id
   session.email = user.email
-  await session.save()  // Cookie set ho jaati hai
+  await session.save()  // Cookie gets set
 
   return Response.json({ message: "Logged in!" })
 }
@@ -123,12 +123,12 @@ export async function POST(req) {
 export async function GET(req) {
   const session = await getIronSession(req, res, sessionOptions)
 
-  // Session check karo
+  // Check the session
   if (!session.userId) {
     return Response.json({ error: "Please login" }, { status: 401 })
   }
 
-  // User logged in hai — data bhejo
+  // User is logged in — send data
   const orders = await prisma.order.findMany({
     where: { userId: session.userId }
   })
@@ -144,46 +144,46 @@ export async function GET(req) {
 
 export async function POST(req) {
   const session = await getIronSession(req, res, sessionOptions)
-  session.destroy()  // Session delete
+  session.destroy()  // Delete the session
   return Response.json({ message: "Logged out" })
 }
 ```
 
 ---
 
-## Session Kahan Store Hoti Hai?
+## Where Is the Session Stored?
 
 ```
-Option 1 — Database mein (ShopKaro mein yahi karenge)
-  Pros: Reliable, logout pe turant delete
-  Cons: Har request pe database query
+Option 1 — In the database (we'll do this in ShopKaro)
+  Pros: Reliable, deleted instantly on logout
+  Cons: Database query on every request
 
-Option 2 — Memory mein (server RAM)
+Option 2 — In memory (server RAM)
   Pros: Fast
-  Cons: Server restart pe sab sessions gone
+  Cons: All sessions gone on server restart
 
 Option 3 — Redis (cache database)
   Pros: Fast + Persistent
-  Cons: Extra setup — baad mein seekhna
+  Cons: Extra setup — learn later
 ```
 
-ShopKaro v1 mein → **Database mein sessions store karenge** (simplest approach).
+ShopKaro v1 → **store sessions in the database** (simplest approach).
 
 ---
 
-## Ek Important Security Point
+## One Important Security Point
 
-Session ID ko guess karna **impossible** hona chahiye. Isliye:
+The Session ID must be **impossible to guess.** So:
 
 ```javascript
-// Yeh mat karo — predictable
+// Don't do this — predictable
 sessionId = user.id  // "1", "2", "3" — easily guessable
 
-// Yeh karo — random
+// Do this — random
 sessionId = crypto.randomUUID()  // "a3f9b2c1-d4e5-..." — impossible to guess
 ```
 
-`iron-session` aur similar libraries yeh automatically handle karti hain.
+`iron-session` and similar libraries handle this automatically.
 
 ---
 
@@ -191,13 +191,13 @@ sessionId = crypto.randomUUID()  // "a3f9b2c1-d4e5-..." — impossible to guess
 
 | | |
 |--|--|
-| **Session kya hai** | Server pe stored user info, linked via Session ID |
-| **Cookie ka kaam** | Session ID browser se server tak pohnchaana |
-| **ShopKaro mein** | Login pe session banao, har request pe check karo, logout pe delete karo |
-| **Store kahan** | Database (v1), Redis (baad mein) |
+| **What is a session** | User info stored on the server, linked via Session ID |
+| **What the cookie does** | Delivers the Session ID from browser to server |
+| **In ShopKaro** | Create session on login, check on every request, delete on logout |
+| **Where to store** | Database (v1), Redis (later) |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`05-auth-jwt.md` — Sessions ek tarika tha. Ek aur popular tarika hai — **JWT (JSON Web Token)**. Yeh sessions se kaafi alag hai. Kab kaunsa use karein — woh samjhenge.
+`05-auth-jwt.md` — Sessions were one way. There's another popular way — **JWT (JSON Web Token)**. It's quite different from sessions. When to use which — we'll understand that.

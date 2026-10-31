@@ -1,154 +1,154 @@
 # Computer Networks — Interview Prep (Deep Dive)
 
 > Target: Full-stack developer roles, Gurgaon, 5–30 LPA range
-> Context: Ye subject sabse directly web dev se connect hota hai — jo bhi tum daily API calls, WebSockets (Upstox wala), voice streaming karte ho DukaanOS/trading bot mein, sab isi ke concepts hain. Isliye deep cram nahi, "maine already use kiya hai" wali understanding banani hai.
+> Context: This subject connects most directly to web dev — everything you do daily, API calls, WebSockets (the Upstox one), voice streaming in DukaanOS/trading bot, all of it is concepts from here. So no deep cramming — build the "I've already used this" understanding.
 
 ---
 
-## 1. OSI Model (Naam yaad rakho, deep nahi)
+## 1. OSI Model (Remember the names, not the deep details)
 
-7 layers — data kaise ek device se dusre tak jaata hai, iska conceptual model.
+7 layers — the conceptual model of how data travels from one device to another.
 
-| Layer | Naam | Kaam (one-liner) |
+| Layer | Name | Job (one-liner) |
 |---|---|---|
 | 7 | Application | User-facing protocols (HTTP, FTP, SMTP) |
 | 6 | Presentation | Data format, encryption/decryption |
-| 5 | Session | Connections establish/maintain karta hai |
-| 4 | Transport | Reliable delivery (TCP) ya fast delivery (UDP) |
-| 3 | Network | Routing — data ka path decide karta hai (IP) |
+| 5 | Session | Establishes/maintains connections |
+| 4 | Transport | Reliable delivery (TCP) or fast delivery (UDP) |
+| 3 | Network | Routing — decides the data's path (IP) |
 | 2 | Data Link | Physical addressing (MAC address) |
 | 1 | Physical | Actual cables, signals, hardware |
 
-**Yaad rakhne ka trick**: "**A**ll **P**eople **S**eem **T**o **N**eed **D**ata **P**rocessing" (Application → Physical, top to bottom)
+**Memory trick**: "**A**ll **P**eople **S**eem **T**o **N**eed **D**ata **P**rocessing" (Application → Physical, top to bottom)
 
-**Interview mein kitna deep**: Bas layers ke naam order mein bol pao aur HTTP/TCP/IP kaunsi layer pe hain, itna kaafi hai. Full-stack role mein OSI model pe deep questions rare hain.
+**How deep in interviews**: Just be able to say the layer names in order and which layer HTTP/TCP/IP belong to — that's enough. Deep questions on the OSI model are rare for full-stack roles.
 
 ---
 
-## 2. TCP vs UDP (Very common — practical bhi relevant hai tumhare liye)
+## 2. TCP vs UDP (Very common — and practically relevant for you)
 
 | | TCP | UDP |
 |---|---|---|
-| Connection | Connection-oriented (handshake hota hai pehle) | Connectionless (seedha data bhej do) |
-| Reliability | Guaranteed delivery, order maintained | No guarantee — packet loss ho sakta hai |
-| Speed | Thoda slow (reliability ke overhead ki wajah se) | Fast |
-| Use case | Web browsing, file transfer, email — jahan data sahi order mein poora chahiye | Video streaming, gaming, live data feeds — jahan speed important hai, thoda data loss chalega |
+| Connection | Connection-oriented (handshake first) | Connectionless (send data directly) |
+| Reliability | Guaranteed delivery, order maintained | No guarantee — packet loss possible |
+| Speed | A bit slow (reliability overhead) | Fast |
+| Use case | Web browsing, file transfer, email — where data must arrive complete and in order | Video streaming, gaming, live data feeds — where speed matters and some data loss is okay |
 
-**3-Way Handshake (TCP connection kaise banta hai)**:
-1. Client → Server: **SYN** ("connect karna hai")
-2. Server → Client: **SYN-ACK** ("theek hai, main ready hoon")
-3. Client → Server: **ACK** ("confirm, connection ban gaya")
+**3-Way Handshake (how a TCP connection is formed)**:
+1. Client → Server: **SYN** ("I want to connect")
+2. Server → Client: **SYN-ACK** ("Okay, I'm ready")
+3. Client → Server: **ACK** ("Confirmed, connection established")
 
-**Tumhare context mein direct relevance**: Tumhara options trading bot **Upstox WebSocket** use karta hai — WebSocket TCP ke upar bana hota hai (reliable, ordered connection chahiye tick data ke liye, kyunki price data missed nahi hona chahiye). Agar interviewer poochein "WebSocket TCP hai ya UDP," confidently bolo **TCP-based** — kyunki reliability chahiye real-time trading data mein.
+**Direct relevance to your context**: Your options trading bot uses **Upstox WebSocket** — WebSocket is built on top of TCP (reliable, ordered connection needed for tick data, since price data must not be missed). If an interviewer asks "Is WebSocket TCP or UDP," confidently say **TCP-based** — because reliability is needed for real-time trading data.
 
 ---
 
 ## 3. HTTP vs HTTPS
 
-**HTTP**: Data plain text mein transfer hota hai — koi bhi beech mein intercept kar ke padh sakta hai.
+**HTTP**: Data is transferred in plain text — anyone in between can intercept and read it.
 
-**HTTPS**: HTTP + **SSL/TLS encryption**. Data encrypted form mein jaata hai, isliye secure hai.
+**HTTPS**: HTTP + **SSL/TLS encryption**. Data goes in encrypted form, so it's secure.
 
-### SSL/TLS Handshake (basic idea, deep math nahi)
-1. Client server se bolta hai "HTTPS connection chahiye"
-2. Server apna **SSL certificate** bhejta hai (jisme public key hota hai)
-3. Client certificate verify karta hai (trusted authority se signed hai ya nahi)
-4. Dono milke ek **symmetric session key** decide karte hain (encrypted communication ke liye) — ye asymmetric (public/private key) se shuru hoke symmetric pe switch hota hai speed ke liye
+### SSL/TLS Handshake (basic idea, no deep math)
+1. Client tells the server "I want an HTTPS connection"
+2. Server sends its **SSL certificate** (which contains the public key)
+3. Client verifies the certificate (is it signed by a trusted authority?)
+4. Both decide on a **symmetric session key** (for encrypted communication) — starts with asymmetric (public/private key), switches to symmetric for speed
 
-**Interview tip**: *"HTTPS kaise secure karta hai?"* — "SSL/TLS certificate ke through encryption hoti hai, data ko intercept karke bhi padh nahi sakte kyunki encrypted hai" — itna kaafi hai. Certificate authority, asymmetric vs symmetric encryption ka deep detail junior/mid role mein rare poochte hain.
+**Interview tip**: For *"How does HTTPS secure things?"* — "Encryption happens through SSL/TLS certificates, so even if someone intercepts the data they can't read it because it's encrypted" — that's enough. Certificate authorities, deep details of asymmetric vs symmetric encryption are rarely asked at junior/mid roles.
 
 ---
 
 ## 4. DNS (Domain Name System)
 
-**Kya karta hai**: Domain name (jaise `trishulinsurance.in`) ko IP address mein convert karta hai — kyunki computers domain names nahi, IP addresses samajhte hain.
+**What it does**: Converts a domain name (like `trishulinsurance.in`) into an IP address — because computers understand IP addresses, not domain names.
 
-**Step-by-step (jab tum browser mein URL type karte ho)**:
-1. Browser cache check karta hai — pehle se IP pata hai kya?
-2. Nahi to **OS cache** check hota hai
-3. Nahi to **DNS Resolver** (ISP ka) query karta hai
-4. Resolver **Root DNS Server** se pucchta hai
-5. Root server bata deta hai konsa **TLD server** (`.in`, `.com` ke liye) poochna hai
-6. TLD server bata deta hai konsa **Authoritative DNS server** (domain ka actual owner server) poochna hai
-7. Authoritative server IP address deta hai
-8. Browser us IP pe connect karta hai
+**Step-by-step (when you type a URL in the browser)**:
+1. Browser cache check — already know the IP?
+2. If not, **OS cache** check
+3. If not, **DNS Resolver** (ISP's) queries
+4. Resolver asks the **Root DNS Server**
+5. Root server tells which **TLD server** (.in, .com) to ask
+6. TLD server tells which **Authoritative DNS server** (the domain's actual owner server) to ask
+7. Authoritative server returns the IP address
+8. Browser connects to that IP
 
-**Direct relevance tumhare kaam se**: Trishul Insurance ka domain `trishulinsurance.in` hai (Hostinger se khareeda), aur tumhe DNS ko Vercel/GitHub deployment se connect karna hai. Ye exactly DNS records (A record, CNAME) set karne ka kaam hai:
-- **A Record**: Domain ko directly ek IP address se point karta hai
-- **CNAME Record**: Domain ko dusre domain (jaise Vercel ka `cname.vercel-dns.com`) se point karta hai — Vercel deployments mein generally CNAME use hota hai
+**Direct relevance to your work**: Trishul Insurance's domain is `trishulinsurance.in` (bought from Hostinger), and you need to connect DNS to the Vercel/GitHub deployment. That's exactly setting DNS records (A record, CNAME):
+- **A Record**: Points a domain directly to an IP address
+- **CNAME Record**: Points a domain to another domain (like Vercel's `cname.vercel-dns.com`) — generally CNAME is used for Vercel deployments
 
-**Interview mein bol sakte ho**: "Maine recently ek client project (Trishul Insurance) mein Hostinger domain ko Vercel deployment se DNS records ke through connect kiya hai" — real practical experience dikhana strong hota hai theory se zyada.
+**In interviews you can say**: "I recently connected a client project (Trishul Insurance) domain from Hostinger to a Vercel deployment through DNS records" — showing real practical experience is stronger than theory.
 
 ---
 
-## 5. REST API Basics (Sabse zyada relevant tumhare daily kaam se)
+## 5. REST API Basics (Most relevant to your daily work)
 
-**REST** = Representational State Transfer — ek architecture style APIs banane ke liye, jahan resources (data) ko URLs ke through access karte hain, aur HTTP methods se operations define karte hain.
+**REST** = Representational State Transfer — an architecture style for building APIs, where resources (data) are accessed through URLs, and operations are defined with HTTP methods.
 
 ### HTTP Methods
 
-| Method | Kaam | Example |
+| Method | Job | Example |
 |---|---|---|
-| **GET** | Data fetch karna (read-only, koi change nahi) | `GET /products` — sab products laao |
-| **POST** | Naya data create karna | `POST /orders` — naya order banao |
-| **PUT** | Poora resource update/replace karna | `PUT /products/101` — poora product replace karo |
-| **PATCH** | Resource ka sirf ek part update karna | `PATCH /products/101` — sirf price update karo |
-| **DELETE** | Resource delete karna | `DELETE /orders/55` — order delete karo |
+| **GET** | Fetch data (read-only, no change) | `GET /products` — fetch all products |
+| **POST** | Create new data | `POST /orders` — create a new order |
+| **PUT** | Update/replace the whole resource | `PUT /products/101` — replace the whole product |
+| **PATCH** | Update only a part of the resource | `PATCH /products/101` — update only the price |
+| **DELETE** | Delete the resource | `DELETE /orders/55` — delete the order |
 
-**PUT vs PATCH difference (common interview question)**: PUT poora object replace karta hai (agar koi field miss ho to wo null/default ho jayega), PATCH sirf jo fields bheje hain wahi update karta hai.
+**PUT vs PATCH difference (common interview question)**: PUT replaces the whole object (if a field is missing it becomes null/default), PATCH updates only the fields you send.
 
-### HTTP Status Codes (yaad rakho categories)
+### HTTP Status Codes (remember the categories)
 
-| Range | Matlab | Common codes |
+| Range | Meaning | Common codes |
 |---|---|---|
 | 2xx | Success | `200 OK`, `201 Created`, `204 No Content` |
 | 3xx | Redirection | `301 Moved Permanently`, `304 Not Modified` |
-| 4xx | Client error (tumhari request mein galti) | `400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `404 Not Found` |
-| 5xx | Server error (server ki taraf se galti) | `500 Internal Server Error`, `503 Service Unavailable` |
+| 4xx | Client error (mistake in your request) | `400 Bad Request`, `401 Unauthorized`, `403 Forbidden`, `404 Not Found` |
+| 5xx | Server error (mistake on server side) | `500 Internal Server Error`, `503 Service Unavailable` |
 
-**401 vs 403 (common confusion, interview mein poochte hain)**:
-- **401 Unauthorized**: Tum authenticated nahi ho (login nahi kiya / token invalid)
-- **403 Forbidden**: Tum authenticated ho, but is resource ko access karne ki permission nahi hai
+**401 vs 403 (common confusion, asked in interviews)**:
+- **401 Unauthorized**: You are not authenticated (not logged in / invalid token)
+- **403 Forbidden**: You are authenticated, but you don't have permission to access this resource
 
-**DukaanOS/TradeStack angle**: Jab tum Next.js API routes banate ho — `GET /api/products` (fetch), `POST /api/orders` (create) — ye exactly REST principles hain jo tum already use kar rahe ho practically.
+**DukaanOS/TradeStack angle**: When you build Next.js API routes — `GET /api/products` (fetch), `POST /api/orders` (create) — these are exactly the REST principles you already use in practice.
 
 ---
 
 ## 6. Client-Server Model (Basic, quick)
 
-**Client**: Request bhejta hai (browser, mobile app, tumhara Next.js frontend)
-**Server**: Request process karta hai, response bhejta hai (tumhara backend — Next.js API routes / FastAPI)
+**Client**: Sends the request (browser, mobile app, your Next.js frontend)
+**Server**: Processes the request, sends the response (your backend — Next.js API routes / FastAPI)
 
-Web ka pura architecture isi pe based hai — client kabhi directly database ko touch nahi karta, hamesha server ke through.
+The entire web architecture is based on this — the client never touches the database directly, always through the server.
 
 ---
 
-## 7. WebSockets (Bonus — tumhare real project se directly connect)
+## 7. WebSockets (Bonus — directly connects to your real project)
 
-**REST API ki limitation**: Client ko har baar khud request bhejni padti hai naya data lene ke liye (polling).
+**REST API limitation**: The client has to send a request every time to get new data (polling).
 
-**WebSocket**: Ek **persistent, two-way connection** client aur server ke beech — server khud bhi client ko data push kar sakta hai bina request ke.
+**WebSocket**: A **persistent, two-way connection** between client and server — the server can push data to the client without a request.
 
-**Kyun zaroori tumhare trading bot mein**: Stock prices real-time change hoti hain — agar REST API use karte (har second poll karte), bahut inefficient aur slow hota. WebSocket se Upstox server directly tick data push karta hai jaise hi price change hoti hai.
+**Why it's essential for your trading bot**: Stock prices change in real-time — if you used a REST API (polling every second), it would be very inefficient and slow. With WebSocket, the Upstox server pushes tick data directly as soon as the price changes.
 
-**Interview mein bol sakte ho**: "Maine ek options trading bot banaya hai jo Upstox WebSocket se real-time tick data receive karta hai — REST polling ke bajaye WebSocket isliye use kiya kyunki humein sub-second latency chahiye price updates ke liye."
+**In interviews you can say**: "I built an options trading bot that receives real-time tick data via Upstox WebSocket — I used WebSocket instead of REST polling because we need sub-second latency for price updates."
 
 ---
 
 ## Quick Revision Checklist (before interview)
 
-- [ ] OSI 7 layers — naam order mein
-- [ ] TCP vs UDP — difference + kab kaunsa (WebSocket example ready rakho)
-- [ ] HTTP vs HTTPS — SSL/TLS ka one-line role
-- [ ] DNS — step-by-step flow (apna Trishul Insurance domain example use karo)
+- [ ] OSI 7 layers — names in order
+- [ ] TCP vs UDP — difference + when to use which (WebSocket example ready)
+- [ ] HTTP vs HTTPS — one-line role of SSL/TLS
+- [ ] DNS — step-by-step flow (use your Trishul Insurance domain example)
 - [ ] REST — HTTP methods (GET/POST/PUT/PATCH/DELETE) + PUT vs PATCH
 - [ ] Status codes — 2xx/3xx/4xx/5xx categories + 401 vs 403
-- [ ] WebSocket vs REST — kab kaunsa (apna trading bot example ready rakho)
+- [ ] WebSocket vs REST — when to use which (keep your trading bot example ready)
 
 ---
 
 ## Practice Approach
 
-1. Ye subject tumhare liye sabse **easy** hona chahiye kyunki tum daily practically use kar rahe ho — bas terminology ko apne kaam se connect karo.
-2. Apne 2 real examples ready rakho interview ke liye: (1) DNS/Vercel deployment (Trishul Insurance), (2) WebSocket real-time data (trading bot). Ye "maine kiya hai" wala confidence deta hai.
-3. Jab confident ho, mujhe bolna — OS (last subject) ki file banata hoon.
+1. This subject should be the **easiest** for you since you use it practically every day — just connect the terminology to your work.
+2. Keep 2 real examples ready for interviews: (1) DNS/Vercel deployment (Trishul Insurance), (2) WebSocket real-time data (trading bot). The "I've done this" confidence beats theory.
+3. When confident, tell me — I'll create the OS (last subject) file.

@@ -1,89 +1,89 @@
 # 🗄️ DB Doc 1 — SQL Database Design Process
-### Har Project Ke Liye — Code Likhne Se Pehle Ye Karo
+### For Every Project — Do This Before Writing Code
 
 ---
 
 ## 🎯 The Core Idea
 
-> **Database design galat ho gayi toh baad mein fix karna BAHUT painful hai.**
-> Migration likhna padega, data transform karna padega, existing code tootega.
-> Isliye — pehle sochho, phir banao.
+> **If database design goes wrong, fixing it later is VERY painful.**
+> You'll have to write migrations, transform data, and existing code will break.
+> So — think first, then build.
 
-Ye 7-step process hai. Har project mein isko follow karo — chota ho ya bada.
+This is a 7-step process. Follow it in every project — small or large.
 
 ---
 
-## Step 1 — Entity Identification (Kya store karna hai?)
+## Step 1 — Entity Identification (What to store?)
 
-**Entity = Real-world cheez jo database mein store karni hai.**
+**Entity = A real-world thing that needs to be stored in the database.**
 
-PRD padhke entities nikaalte hain. Ek simple rule hai:
-
-```
-✅ Entity hai agar:
-→ Uske multiple attributes hain (name, email, price...)
-→ Uske baare mein queries karni hongi
-→ Dusri cheezein usse refer karengi
-
-❌ Entity NAHI hai agar:
-→ Wo sirf ek action hai (login, logout, click)
-→ Wo ek attribute hai kisi aur ka (user ka email → User entity ka column)
-→ Wo derived hai (age = today - birthdate → store mat karo, calculate karo)
-```
-
-**Example — StaffSync (Task Manager) ke liye entities dhundhna:**
+Entities are identified from the PRD. There's a simple rule:
 
 ```
-Client requirement padhte hain:
-"Business owner employees manage kare, tasks assign kare, deadlines track kare"
+✅ It's an entity if:
+→ It has multiple attributes (name, email, price...)
+→ You'll need to query about it
+→ Other things will reference it
 
-Nouns nikaalte hain brief se:
+❌ It's NOT an entity if:
+→ It's just an action (login, logout, click)
+→ It's an attribute of something else (user's email → column in User entity)
+→ It's derived (age = today - birthdate → don't store, calculate)
+```
+
+**Example — Finding entities for StaffSync (Task Manager):**
+
+```
+Read the client requirement:
+"Business owner manages employees, assigns tasks, tracks deadlines"
+
+Extract nouns from the brief:
 → Business Owner    → User entity (role = admin)
 → Employee          → User entity (role = employee) [SAME TABLE!]
 → Task              → Task entity
-→ Deadline          → Task ka attribute hai, alag entity nahi
-→ Status            → Task ka attribute hai
+→ Deadline          → Attribute of Task, not separate entity
+→ Status            → Attribute of Task
 
 Final entities:
 → User
 → Task
 
-Itna simple? Haan! Pehle minimal rakhho.
+That simple? Yes! Keep it minimal at first.
 ```
 
-**Ye Galti Mat Karo:**
+**Don't Make This Mistake:**
 
 ```
 ❌ WRONG — Over-engineering:
-"Login history track karni chahiye" → LoginHistory entity banao
-"Task comments chahiye" → Comment entity (ye V2 mein add karna theek hai)
+"Need to track login history" → Create LoginHistory entity
+"Need task comments" → Comment entity (fine to add this in V2)
 
-✅ RIGHT — MVP ke liye:
-Sirf wo entities jo core features ke liye ZAROORI hain.
-Baaki baad mein add karo — adding is easy, removing is hard.
+✅ RIGHT — For MVP:
+Only entities that are ESSENTIAL for core features.
+Add the rest later — adding is easy, removing is hard.
 ```
 
 ---
 
-## Step 2 — Attributes Define Karo (Columns Socho)
+## Step 2 — Define Attributes (Think of Columns)
 
-Har entity ke liye columns socho. **DO CATEGORIES** hain:
+For each entity, think of columns. There are **TWO CATEGORIES**:
 
-### Category A — Mandatory Columns (HAMESHA RAKHNA HAI)
+### Category A — Mandatory Columns (ALWAYS KEEP THESE)
 
 ```
-Ye columns har table mein hone chahiye — no exceptions:
+These columns should be in every table — no exceptions:
 
-id          → Primary key. UUID ya SERIAL/INT.
-created_at  → Kab create hua. TIMESTAMP DEFAULT NOW()
-updated_at  → Kab last update hua. AUTO-UPDATE karna hai.
+id          → Primary key. UUID or SERIAL/INT.
+created_at  → When it was created. TIMESTAMP DEFAULT NOW()
+updated_at  → When last updated. AUTO-UPDATE needed.
 
-Kyun zaroori hain?
-→ id: Har row uniquely identify hoti hai
+Why are they necessary?
+→ id: Uniquely identifies every row
 → created_at: Audit trail, sorting by creation, analytics
 → updated_at: "Recently updated" queries, cache invalidation
 
-Prisma mein:
+In Prisma:
 model User {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
@@ -94,98 +94,98 @@ model User {
 ### Category B — Domain Columns (Project-specific)
 
 ```
-Har attribute ke liye ye questions poochho:
+Ask these questions for each attribute:
 
-1. REQUIRED hai ya OPTIONAL?
+1. Is it REQUIRED or OPTIONAL?
    → Required = NOT NULL
    → Optional = nullable (?)
 
-2. UNIQUE hona chahiye?
-   → Email → unique (do users same email nahi rakh sakte)
+2. Should it be UNIQUE?
+   → Email → unique (two users can't have same email)
    → Name → usually not unique
 
-3. DEFAULT value hai?
+3. Is there a DEFAULT value?
    → status → default 'active'
    → role   → default 'user'
 
-4. KAUNSA TYPE?
+4. WHICH TYPE?
    → Short text (name, email)     → String / VARCHAR
    → Long text (description, bio) → String (TEXT in DB)
-   → Number (price, quantity)     → Int ya Float ya Decimal
+   → Number (price, quantity)     → Int or Float or Decimal
    → True/False                   → Boolean
-   → Date only                    → DateTime (just date part use karo)
+   → Date only                    → DateTime (just use date part)
    → Date + Time                  → DateTime
    → Fixed options (status, role) → Enum
    → JSON/Array                   → Json type (use sparingly)
 
-5. SENSITIVE hai?
-   → Password → kabhi plain text nahi, hashed store karo
-   → Aisa koi field jo log mat karna chahte → careful
+5. Is it SENSITIVE?
+   → Password → never plain text, store hashed
+   → Any field users don't want logged → be careful
 ```
 
-**Example — Task entity ke attributes:**
+**Example — Attributes for Task entity:**
 
 ```
-Requirement: "Task ka title, description, deadline, status, priority hoga.
-              Kisi employee ko assign hoga. Admin ne create kiya hoga."
+Requirement: "Task has title, description, deadline, status, priority.
+              Assigned to some employee. Created by admin."
 
-Attributes list karo:
-→ title       : String, REQUIRED (task ka naam)
+List attributes:
+→ title       : String, REQUIRED (task name)
 → description : String, OPTIONAL (extra details)
 → status      : Enum ('todo', 'in_progress', 'done'), DEFAULT 'todo'
 → priority    : Enum ('low', 'medium', 'high'), DEFAULT 'medium'
 → dueDate     : DateTime, OPTIONAL (deadline)
-→ assignedTo  : FK → User (kaun karega)
-→ createdBy   : FK → User (kisne banaya)
+→ assignedTo  : FK → User (who will do it)
+→ createdBy   : FK → User (who created it)
 + mandatory: id, createdAt, updatedAt
 
-❌ Jo include NAHI kiya aur kyun:
-→ assigneeName  : User table se JOIN se milega — duplicate mat rakho
-→ completedAt   : V1 mein nahi chahiye, V2 mein add karenge
-→ taskNumber    : Auto-increment ID enough hai
+❌ What NOT to include and why:
+→ assigneeName  : Will come from JOIN with User table — don't duplicate
+→ completedAt   : Not needed in V1, add in V2
+→ taskNumber    : Auto-increment ID is enough
 ```
 
 ---
 
-## Step 3 — Relationships Map Karo
+## Step 3 — Map Relationships
 
-Teen types hain. Ek ek clearly samjho:
+There are three types. Understand each one clearly:
 
 ---
 
 ### Type 1 — One-to-One (1:1)
 
 ```
-Definition: Ek row A ki exactly ek row B se match hoti hai.
+Definition: One row in A matches exactly one row in B.
 
 Real Example:
-→ User aur UserProfile
-   Ek user ka exactly ek profile hota hai.
-   Ek profile exactly ek user ka hota hai.
+→ User and UserProfile
+   One user has exactly one profile.
+   One profile belongs to exactly one user.
 
-Kab use karo?
-→ Jab koi cheez optional hai ya rarely accessed hai
-   (profile data sirf profile page pe chahiye, har query mein nahi)
-→ Jab table bahut wide ho jaaye — split karo
+When to use?
+→ When something is optional or rarely accessed
+   (profile data only needed on profile page, not every query)
+→ When table becomes too wide — split it
 
-DATABASE MEIN KAISE:
-User table mein kuch nahi badalta.
-UserProfile table mein → userId FK with UNIQUE constraint.
-UNIQUE kyun? Agar unique nahi hai toh one-to-MANY ban jaayega!
+HOW IN DATABASE:
+Nothing changes in User table.
+UserProfile table gets → userId FK with UNIQUE constraint.
+Why UNIQUE? Without it, it becomes one-to-MANY!
 
-Prisma mein:
+In Prisma:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 model User {
   id      String       @id @default(cuid())
   email   String       @unique
-  profile UserProfile?  // ← Optional kyunki profile baad mein banta hai
+  profile UserProfile?  // ← Optional because profile created later
 }
 
 model UserProfile {
   id        String   @id @default(cuid())
   bio       String?
   avatarUrl String?
-  userId    String   @unique  // ← UNIQUE = one-to-one enforce hota hai
+  userId    String   @unique  // ← UNIQUE = enforces one-to-one
   user      User     @relation(fields: [userId], references: [id])
 }
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -207,38 +207,38 @@ UserProfile table:
 │ prof_222     │ "Product Manager"    │ user_def456  │
 └──────────────┴──────────────────────┴──────────────┘
 
-Notice: userId column mein user_abc123 sirf ek baar appear hota hai.
-UNIQUE constraint ensure karta hai ki ek user ka sirf ek profile ho.
+Notice: userId column has user_abc123 only once.
+UNIQUE constraint ensures one user has only one profile.
 ```
 
 ---
 
-### Type 2 — One-to-Many (1:N) ← Sabse Common!
+### Type 2 — One-to-Many (1:N) ← Most Common!
 
 ```
-Definition: Ek row A ki MANY rows B se match hoti hain.
-            Ek row B ki exactly EK row A se match hoti hai.
+Definition: One row in A matches MANY rows in B.
+             One row in B matches exactly ONE row in A.
 
 Real Examples:
-→ User → Tasks    (ek user ke many tasks)
-→ Post → Comments (ek post ke many comments)
-→ Order → OrderItems (ek order ke many items)
-→ Category → Products (ek category ke many products)
+→ User → Tasks    (one user has many tasks)
+→ Post → Comments (one post has many comments)
+→ Order → OrderItems (one order has many items)
+→ Category → Products (one category has many products)
 
-DATABASE MEIN KAISE:
-"Many" wali table mein FK column add karo.
-Tasks mein assignedToId → User ka id.
+HOW IN DATABASE:
+Add FK column in the "Many" table.
+Tasks gets assignedToId → User's id.
 
-Rule: FK hamesha "MANY" side pe hota hai.
+Rule: FK always lives on the "MANY" side.
 
-Prisma mein:
+In Prisma:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 model User {
   id             String   @id @default(cuid())
   email          String   @unique
   assignedTasks  Task[]   @relation("AssignedTasks")
   createdTasks   Task[]   @relation("CreatedTasks")
-  // ↑ Ek user ke many tasks — dono relations!
+  // ↑ One user has many tasks — both relations!
 }
 
 model Task {
@@ -247,7 +247,7 @@ model Task {
   assignedToId String
   createdById  String
   assignedTo   User     @relation("AssignedTasks", fields: [assignedToId], references: [id])
-  createdBy    User     @relation("CreatedTasks", fields: [createdById], references: [id])
+  createdBy    User     @relation("CreatedTasks",  fields: [createdById],  references: [id])
 }
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -272,9 +272,9 @@ Task table:
 └──────────────┴──────────────────────┴──────────────┴──────────────┘
 
 Notice:
-→ user_def456 ke 2 tasks hain (task_001, task_002) — "many" side
-→ user_abc123 ne saare tasks create kiye — FK points back to "one" side
-→ user_abc123 ka id Task table mein REPEAT hota hai — ye normal hai!
+→ user_def456 has 2 tasks (task_001, task_002) — "many" side
+→ user_abc123 created all tasks — FK points back to "one" side
+→ user_abc123's id repeats in Task table — that's normal!
 ```
 
 ---
@@ -282,46 +282,46 @@ Notice:
 ### Type 3 — Many-to-Many (M:N)
 
 ```
-Definition: Ek row A ki MANY rows B se match hoti hain.
-            Ek row B ki bhi MANY rows A se match hoti hain.
+Definition: One row in A matches MANY rows in B.
+             One row in B also matches MANY rows in A.
 
 Real Examples:
-→ Student ↔ Course    (ek student many courses, ek course mein many students)
-→ Product ↔ Tag       (ek product ke many tags, ek tag many products pe)
-→ User ↔ Room (Chat)  (ek user many rooms mein, ek room mein many users)
-→ Order ↔ Product     (ek order mein many products, ek product many orders mein)
+→ Student ↔ Course    (one student many courses, one course many students)
+→ Product ↔ Tag       (one product many tags, one tag on many products)
+→ User ↔ Room (Chat)  (one user in many rooms, one room has many users)
+→ Order ↔ Product     (one order has many products, one product in many orders)
 
-DATABASE MEIN KAISE:
-Direct possible NAHI hai. Ek "Junction Table" (Bridge Table) banani padti hai.
-Junction table dono tables ko connect karti hai.
+HOW IN DATABASE:
+Directly impossible. Must create a "Junction Table" (Bridge Table).
+Junction table connects both tables.
 
-Junction table mein hamesha:
-→ Table A ka FK
-→ Table B ka FK
-→ Dono ka combination UNIQUE hona chahiye (ek student ek course mein sirf ek baar)
-→ Optional: Extra columns (jaise enrollment date, grade)
+Junction table always has:
+→ FK to Table A
+→ FK to Table B
+→ Combination of both should be UNIQUE (one student enrolls in one course only once)
+→ Optional: Extra columns (like enrollment date, grade)
 
-Prisma mein (implicit — Prisma auto junction table banata hai):
+In Prisma (implicit — Prisma auto-creates junction table):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 model Student {
   id      String   @id @default(cuid())
   name    String
-  courses Course[] // ← Prisma automatically junction table banata hai
+  courses Course[] // ← Prisma automatically creates junction table
 }
 
 model Course {
   id       String    @id @default(cuid())
   title    String
-  students Student[] // ← Dono side pe array
+  students Student[] // ← Array on both sides
 }
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-Prisma mein (explicit — jab extra columns chahiye):
+In Prisma (explicit — when extra columns needed):
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 model Student {
   id          String       @id @default(cuid())
   name        String
-  enrollments Enrollment[] // ← Junction table se connect
+  enrollments Enrollment[] // ← Connect via junction table
 }
 
 model Course {
@@ -340,7 +340,7 @@ model Enrollment {  // ← JUNCTION TABLE (explicit)
   student      Student  @relation(fields: [studentId], references: [id])
   course       Course   @relation(fields: [courseId], references: [id])
 
-  @@unique([studentId, courseId])  // ← Ek student ek course mein sirf ek baar
+  @@unique([studentId, courseId])  // ← One student enrolls in one course only once
 }
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -368,97 +368,94 @@ Enrollment table (Junction):
 │ id       │ studentId│ courseId │ enrolledAt  │ grade │
 ├──────────┼──────────┼──────────┼─────────────┼───────┤
 │ e_001    │ s_001    │ c_001    │ 2024-01-15  │ A     │
-│ e_002    │ s_001    │ c_002    │ 2024-01-15  │ B+    │  ← Rahul 2 courses mein
-│ e_003    │ s_002    │ c_001    │ 2024-01-20  │ A+    │  ← Priya React mein
-│ e_004    │ s_002    │ c_003    │ 2024-01-20  │ B     │  ← Priya DB mein bhi
-│ e_005    │ s_003    │ c_002    │ 2024-02-01  │ null  │  ← Arjun Next.js mein
+│ e_002    │ s_001    │ c_002    │ 2024-01-15  │ B+    │  ← Rahul in 2 courses
+│ e_003    │ s_002    │ c_001    │ 2024-01-20  │ A+    │  ← Priya in React
+│ e_004    │ s_002    │ c_003    │ 2024-01-20  │ B     │  ← Priya in DB too
+│ e_005    │ s_003    │ c_002    │ 2024-02-01  │ null  │  ← Arjun in Next.js
 └──────────┴──────────┴──────────┴─────────────┴───────┘
 
 Notice:
-→ s_001 (Rahul) → c_001 aur c_002 dono mein enrolled
-→ c_001 (React) mein s_001 aur s_002 dono enrolled
-→ Combination (s_001, c_001) sirf ek baar — UNIQUE constraint
+→ s_001 (Rahul) → enrolled in c_001 and c_002
+→ c_001 (React) has s_001 and s_002 both enrolled
+→ Combination (s_001, c_001) appears only once — UNIQUE constraint
 ```
 
 ---
 
 ## Step 4 — Normalization Check
 
-> Simple rule: **Har fact ek jagah store hona chahiye.**
+> Simple rule: **Every fact should be stored in one place.**
 
 ```
-NORMALIZATION KE 3 COMMON RULES (simplified):
+3 COMMON NORMALIZATION RULES (simplified):
 
-RULE 1 — Ek column mein ek hi value:
+RULE 1 — One value per column:
 ❌ WRONG:
-User table mein → phoneNumbers: "9876543210, 8765432109"
-Multiple values ek column mein = BAD
+User table has → phoneNumbers: "9876543210, 8765432109"
+Multiple values in one column = BAD
 
 ✅ RIGHT:
-PhoneNumber table banao → userId FK + phoneNumber column
+Create PhoneNumber table → userId FK + phoneNumber column
 
-RULE 2 — Non-key columns sirf primary key pe depend karein:
+RULE 2 — Non-key columns should depend only on primary key:
 ❌ WRONG:
-Order table mein → customerName, customerEmail (User table se bhi mil sakta hai!)
-Duplicate data = agar user name change kare → 2 jagah update karna padega
+Order table has → customerName, customerEmail (can also come from User table!)
+Duplicate data = if user name changes → update in 2 places
 
 ✅ RIGHT:
-Order table mein sirf userId rakho → JOIN se customerName milega
+Order table has only userId → customerName comes via JOIN
 
-RULE 3 — Columns ek dusre pe depend nahi karein:
+RULE 3 — Columns shouldn't depend on each other:
 ❌ WRONG:
-Product table mein → category: "Electronics", categoryDescription: "Gadgets & Devices"
-categoryDescription category pe depend karta hai, product pe nahi
+Product table has → category: "Electronics", categoryDescription: "Gadgets & Devices"
+categoryDescription depends on category, not on product
 
 ✅ RIGHT:
-Category alag table mein → Product mein sirf categoryId FK
+Category in separate table → Product has only categoryId FK
 
-INTENTIONAL DENORMALIZATION (ye okay hai):
-→ OrderItem mein unitPrice snapshot — product price change hone se order affect na ho
-→ Analytics table mein precomputed totals — frequent heavy queries avoid karne ke liye
-→ Ye decisions CONSCIOUS hone chahiye, accidental nahi
+INTENTIONAL DENORMALIZATION (this is okay):
+→ OrderItem has unitPrice snapshot — order shouldn't be affected by product price change
+→ Analytics table has precomputed totals — to avoid frequent heavy queries
+→ These decisions must be CONSCIOUS, not accidental
 ```
 
 ---
 
-## Step 5 — Indexes Decide Karo
+## Step 5 — Decide Indexes
 
 ```
-INDEX KYA HAI?
-→ Table ka ek "index" — jaise book ka index
-→ Database quickly find kar sakta hai bina poori table scan kiye
-→ Read queries fast, par write queries thodi slow (index bhi update hota hai)
+WHAT IS AN INDEX?
+→ An "index" of the table — like a book's index
+→ Database can find quickly without scanning the whole table
+→ Read queries fast, but write queries slightly slow (index also needs updating)
 
 AUTOMATIC INDEXES:
 → Primary key (@id) — always indexed automatically
 → @unique fields — always indexed automatically
 
-MANUALLY ADD KARO (@@index) JAB:
-→ Column pe frequently WHERE clause use hota hai
-→ Column pe frequently ORDER BY hota hai
-→ FK columns (Prisma automatically index nahi karta FK ko!)
-→ JOIN mein frequently use hota hai
+MANUALLY ADD (@@index) WHEN:
+→ Column is frequently used in WHERE clause
+→ Column is frequently used in ORDER BY
+→ FK columns (Prisma does NOT auto-index FKs!)
+→ Column is frequently used in JOIN
 
 EXAMPLE — Task table:
 model Task {
   id           String   @id // ← auto indexed
   status       TaskStatus
-  assignedToId String   // ← FK — manually index karo!
-  createdById  String   // ← FK — manually index karo!
-  dueDate      DateTime?
+  assignedToId String   // ← FK — manually index!
   createdAt    DateTime @default(now())
 
-  @@index([assignedToId])  // ← "Mere saare tasks" query ke liye
-  @@index([status])        // ← "Saare pending tasks" filter ke liye
-  @@index([dueDate])       // ← "Aaj due tasks" query ke liye
-  @@index([assignedToId, status])  // ← Composite: "Rahul ke pending tasks"
+  @@index([assignedToId])  // ← "My tasks" query
+  @@index([status])        // ← "All pending tasks" filter
+  @@index([assignedToId, status])  // ← Composite: "My pending tasks"
 }
 
-KAB INDEX MAT LAGAO:
-→ Har column pe index lagana WRONG hai
-→ Small tables pe (< 1000 rows) — full scan fast enough hai
-→ Columns jo rarely queried hain
-→ Boolean columns (low cardinality — sirf 2 values = index useless)
+WHEN NOT TO ADD INDEX:
+→ Don't index every column — WRONG
+→ Small tables (< 1000 rows) — full scan is fast enough
+→ Columns rarely queried
+→ Boolean columns (low cardinality — only 2 values = index useless)
 ```
 
 ---
@@ -466,12 +463,12 @@ KAB INDEX MAT LAGAO:
 ## Step 6 — Constraints & Validations
 
 ```
-DATABASE LEVEL VALIDATION — Application se zyada reliable hai!
-(Application bypass ho sakti hai — database nahi)
+DATABASE LEVEL VALIDATION — More reliable than application!
+(Application can be bypassed — database can't)
 
-PRISMA MEIN CONSTRAINTS:
+CONSTRAINTS IN PRISMA:
 
-1. NOT NULL (default in Prisma — ? lagane se nullable hota hai):
+1. NOT NULL (default in Prisma — ? makes it nullable):
    title  String    // ← NOT NULL — required
    bio    String?   // ← NULLABLE — optional
 
@@ -485,7 +482,7 @@ PRISMA MEIN CONSTRAINTS:
    status    Status   @default(ACTIVE)
    createdAt DateTime @default(now())
 
-4. ENUM (Fixed values only):
+4. ENUM (Only fixed values):
    enum TaskStatus {
      TODO
      IN_PROGRESS
@@ -494,21 +491,21 @@ PRISMA MEIN CONSTRAINTS:
    status TaskStatus @default(TODO)
 
 5. FOREIGN KEY BEHAVIOR (ON DELETE):
-   // Agar User delete ho toh uske Tasks ka kya?
+   // What happens to Tasks when User is deleted?
    
-   Cascade  → Tasks bhi delete ho jaayenge (risky!)
-   SetNull  → assignedToId null ho jaayega (user gone, task remains)
-   Restrict → User delete nahi hoga jab tak tasks hain (safe!)
+   Cascade  → Tasks also deleted (risky!)
+   SetNull  → assignedToId becomes null (user gone, task remains)
+   Restrict → User can't be deleted while tasks exist (safe!)
    
    assignedTo User @relation(fields: [assignedToId], references: [id], onDelete: SetNull)
-   createdBy  User @relation(fields: [createdById], references: [id], onDelete: Restrict)
+   createdBy  User @relation(fields: [createdById],  references: [id], onDelete: Restrict)
 ```
 
 ---
 
-## Step 7 — Final Schema Write Karo
+## Step 7 — Write Final Schema
 
-Ye sab steps ke baad Prisma schema likhte hain. Format:
+After all these steps, write the Prisma schema. Format:
 
 ```prisma
 // schema.prisma
@@ -588,30 +585,30 @@ model Task {
 ## ✅ The Complete Pre-Code DB Checklist
 
 ```
-[ ] Step 1: Entities identify ki? (nouns from PRD)
-[ ] Step 2: Har entity ke columns list kiye?
+[ ] Step 1: Entities identified? (nouns from PRD)
+[ ] Step 2: Columns listed for each entity?
     [ ] Mandatory columns (id, createdAt, updatedAt)?
-    [ ] Required vs nullable decide kiya?
-    [ ] Data types decide kiye?
-    [ ] Enums identify kiye?
-[ ] Step 3: Relationships map kiye?
+    [ ] Required vs nullable decided?
+    [ ] Data types decided?
+    [ ] Enums identified?
+[ ] Step 3: Relationships mapped?
     [ ] One-to-One?
-    [ ] One-to-Many? (FK "many" side pe hai?)
-    [ ] Many-to-Many? (Junction table banai?)
-[ ] Step 4: Normalization check?
-    [ ] Duplicate data toh nahi?
-    [ ] Snapshot fields intentional hain?
-[ ] Step 5: Indexes decide kiye?
+    [ ] One-to-Many? (FK on "many" side?)
+    [ ] Many-to-Many? (Junction table created?)
+[ ] Step 4: Normalization checked?
+    [ ] No duplicate data?
+    [ ] Snapshot fields intentional?
+[ ] Step 5: Indexes decided?
     [ ] FK columns indexed?
     [ ] Frequently filtered columns indexed?
-[ ] Step 6: Constraints set kiye?
-    [ ] Enums use kiye fixed values ke liye?
-    [ ] onDelete behavior decide kiya?
-[ ] Step 7: Final Prisma schema likha?
+[ ] Step 6: Constraints set?
+    [ ] Enums used for fixed values?
+    [ ] onDelete behavior decided?
+[ ] Step 7: Final Prisma schema written?
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-AB CODE LIKHNA SHURU KAR SAKTE HO! 🚀
+NOW YOU CAN START WRITING CODE! 🚀
 ```
 
 ---
 
-**Next →** `db-02-relationships-deep.md` — Relationships ka full deep dive with tricky cases
+**Next →** `db-02-relationships-deep.md` — Full deep dive on relationships with tricky cases

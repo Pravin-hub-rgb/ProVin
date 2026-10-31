@@ -1,53 +1,53 @@
 # 41 — Lazy Loading & Skeleton Screens
 
-> Pichle doc mein image optimization — Next.js Image component.
-> Ab **Lazy Loading aur Skeleton Screens** — perceived performance tricks.
+> Previous doc covered image optimization — Next.js Image component.
+> Now **Lazy Loading and Skeleton Screens** — perceived performance tricks.
 
 ---
 
-## Lazy Loading Kya Hai
+## What Is Lazy Loading
 
-**Lazy Loading** = sirf woh load karo jo user abhi dekh raha hai.
+**Lazy Loading** = only load what the user is currently looking at.
 
 ```
-Product listing page — 50 products hain
+Product listing page — 50 products
 
-Bina lazy load:
-Page open → 50 products ke saare images load → Slow
+Without lazy load:
+Page opens → All 50 product images load → Slow
 
-Lazy load ke saath:
-Page open → Sirf screen pe dikhne wale 8 images load
-Priya scroll karti hai → Agli 8 load
-Aur scroll → Aur load
+With lazy load:
+Page opens → Only the 8 images visible on screen load
+Priya scrolls → Next 8 load
+Scroll more → More load
 ```
 
-Network bandwidth save hoti hai — fast feel aata hai.
+Saves network bandwidth — feels fast.
 
 ---
 
-## Next.js Mein Lazy Loading — Automatic
+## Lazy Loading in Next.js — Automatic
 
 ```jsx
-// Next.js Image → By default lazy load
+// Next.js Image → lazy loads by default
 <Image src="..." alt="..." width={300} height={300} />
-// Jab viewport mein aaye tab hi load hoga
+// Loads only when it enters the viewport
 
-// Regular components ke liye — dynamic import
+// For regular components — dynamic import
 import dynamic from 'next/dynamic'
 
-// Yeh component sirf tab load hoga jab zaroorat ho
+// This component loads only when needed
 const HeavyChart = dynamic(() => import('./HeavyChart'), {
-  loading: () => <div>Chart load ho raha hai...</div>
+  loading: () => <div>Loading chart...</div>
 })
 ```
 
 ---
 
-## Skeleton Screens — Loading Ka Better UI
+## Skeleton Screens — Better Loading UI
 
-Jab data load ho raha ho — **blank screen ya spinning loader mat dikhao.**
+When data is loading — **don't show a blank screen or a spinning loader.**
 
-Skeleton screen dikhao — gray placeholder jo actual content ki shape mein hota hai.
+Show a skeleton screen — gray placeholders shaped like the actual content.
 
 ```jsx
 // /components/ProductCardSkeleton.jsx
@@ -81,12 +81,12 @@ export default function ProductCardSkeleton() {
 ```
 
 ```jsx
-// Products listing mein use karo
+// Use in product listing
 function ProductsPage() {
   const { data: products, isLoading } = useQuery(...)
 
   if (isLoading) {
-    // Real product cards ki jagah skeleton dikhao
+    // Show skeleton instead of real product cards
     return (
       <div className="products-grid">
         {Array(8).fill(0).map((_, i) => (
@@ -106,13 +106,13 @@ function ProductsPage() {
 
 ---
 
-## Next.js Loading.jsx — Built-in Skeleton Support
+## Next.js loading.jsx — Built-in Skeleton Support
 
-Next.js App Router mein — `loading.jsx` file banao, automatically use hoga:
+In the Next.js App Router — create a `loading.jsx` file, it gets used automatically:
 
 ```jsx
 // /app/products/loading.jsx
-// Yeh automatically tab dikhega jab products page load ho raha ho
+// This shows automatically while the products page loads
 
 export default function ProductsLoading() {
   return (
@@ -127,7 +127,7 @@ export default function ProductsLoading() {
 
 ---
 
-## Suspense — Component Level Loading
+## Suspense — Component-Level Loading
 
 ```jsx
 import { Suspense } from 'react'
@@ -136,18 +136,18 @@ function ProductPage() {
   return (
     <div>
       <h1>Product</h1>
-      <Suspense fallback={<div>Reviews load ho rahe hain...</div>}>
-        <ReviewsSection />  {/* Yeh slow hai → Separate load hoga */}
+      <Suspense fallback={<div>Loading reviews...</div>}>
+        <ReviewsSection />  {/* This is slow → loads separately */}
       </Suspense>
     </div>
   )
 }
 ```
 
-Page ready hai — reviews alag load ho rahe hain. User page use kar sakta hai.
+The page is ready — reviews load separately. The user can use the page.
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`42-performance-lists.md` — **Pagination vs Infinite Scroll** — 500 products ek saath mat dikhao. Kaunsa tarika kab sahi hai.
+`42-performance-lists.md` — **Pagination vs Infinite Scroll** — don't show 500 products at once. Which approach is right when.

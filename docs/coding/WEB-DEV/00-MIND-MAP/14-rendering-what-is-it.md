@@ -1,73 +1,73 @@
-# 14 — Rendering: Umbrella Kya Hai
+# 14 — Rendering: What Is It
 
-> Architecture umbrella complete hua — MVC, Folders, BFF.
-> Ab teesra bada umbrella — **Rendering**.
-> SSR, CSR, SSG — yeh confusion yahan khatam hogi.
-
----
-
-## Rendering Kya Hota Hai
-
-**Rendering** matlab — HTML page **kahan** aur **kab** banega.
-
-Jab Priya `shopkaro.com/products` kholti hai — ek HTML page uske browser mein dikhta hai. Yeh HTML:
-- Server pe bana? Ya browser mein bana?
-- Request ke time bana? Ya pehle se bana tha?
-
-Yahi rendering strategy decide karti hai.
+> Architecture umbrella complete — MVC, Folders, BFF.
+> Now the third big umbrella — **Rendering**.
+> SSR, CSR, SSG — the confusion ends here.
 
 ---
 
-## Teen Strategies — Ek Line Mein
+## What Is Rendering
 
-| Strategy | HTML Kahan Banta Hai | Kab Banta Hai |
-|----------|---------------------|---------------|
-| **SSG** — Static Site Generation | Server pe | Build time pe — deploy se pehle |
-| **SSR** — Server Side Rendering | Server pe | Har request pe — real-time |
-| **CSR** — Client Side Rendering | Browser mein | Browser mein JavaScript run hone ke baad |
+**Rendering** means — where and when the HTML page gets built.
 
----
+When Priya opens `shopkaro.com/products` — an HTML page shows up in her browser. That HTML:
+- Was it built on the server? Or in the browser?
+- Was it built at request time? Or built beforehand?
 
-## Simple Comparison — Teen Scenarios
-
-### SSG — Pehle Se Bana Hua
-
-```
-Build time (deploy karte waqt):
-Server → HTML banao → File save karo → "about.html", "homepage.html"
-
-Jab Priya request karti hai:
-Priya → Server → "homepage.html" file direct do → Done (bahut fast)
-```
-
-Sab ke liye same HTML — real-time data nahi.
+The rendering strategy decides exactly this.
 
 ---
 
-### SSR — Request Pe Bano
+## Three Strategies — In One Line Each
+
+| Strategy | Where HTML Is Built | When It's Built |
+|----------|---------------------|-----------------|
+| **SSG** — Static Site Generation | On the server | At build time — before deploy |
+| **SSR** — Server Side Rendering | On the server | On every request — real-time |
+| **CSR** — Client Side Rendering | In the browser | After JavaScript runs in the browser |
+
+---
+
+## Simple Comparison — Three Scenarios
+
+### SSG — Built Beforehand
 
 ```
-Jab Priya /products/123 kholti hai:
-Priya → Server → Database se product lo → HTML banao → Bhejo
+Build time (when deploying):
+Server → Build HTML → Save files → "about.html", "homepage.html"
 
-Har request pe fresh HTML — real-time data milta hai
+When Priya makes a request:
+Priya → Server → "homepage.html" file directly → Done (very fast)
+```
+
+Same HTML for everyone — no real-time data.
+
+---
+
+### SSR — Built On Request
+
+```
+When Priya opens /products/123:
+Priya → Server → Fetch product from DB → Build HTML → Send
+
+Fresh HTML on every request — real-time data available
 ```
 
 ---
 
-### CSR — Browser Mein Bano
+### CSR — Built In the Browser
 
 ```
-Priya /cart kholti hai:
-Priya → Server → Khali HTML bhejo + JavaScript bhejo
-Browser JavaScript run karta hai → API call kaarta hai → Data aata hai → Page dikhta hai
+Priya opens /cart:
+Priya → Server → Send empty HTML + JavaScript
+Browser runs JavaScript → Makes API call → Data arrives → Page shows
 ```
 
-Pehle blank page dikhta hai — phir data load hota hai.
+Blank page shows first — then data loads.
 
 ---
 
-## Rendering Umbrella Ke Andar Kya Kya
+## What's Inside the Rendering Umbrella
 
 ```
 RENDERING
@@ -75,25 +75,25 @@ RENDERING
 ├── SSG (Static Site Generation)   → Doc 17
 ├── SSR (Server Side Rendering)    → Doc 16
 ├── CSR (Client Side Rendering)    → Doc 15
-└── ShopKaro mein kaunsa kahan     → Doc 18
+└── Which strategy where in ShopKaro → Doc 18
 ```
 
 ---
 
-## ShopKaro Ka Quick Preview
+## ShopKaro Quick Preview
 
-| Page | Strategy | Kyun |
-|------|----------|------|
-| Homepage | SSG | Sab ke liye same, fast load |
-| /products | SSR | Products real-time chahiye |
-| /products/[id] | SSR | Stock real-time dikhana hai |
-| /cart | CSR | Sirf Priya ka data, fast interactions |
+| Page | Strategy | Why |
+|------|----------|-----|
+| Homepage | SSG | Same for everyone, fast load |
+| /products | SSR | Products need real-time data |
+| /products/[id] | SSR | Stock needs real-time display |
+| /cart | CSR | Only Priya's data, fast interactions |
 | /orders | SSR | Auth required, fresh data |
 
-Yeh decisions detail mein Doc 18 mein cover honge.
+These decisions are covered in detail in Doc 18.
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`15-rendering-csr.md` — Pehle **CSR** — Client Side Rendering. Tum abhi React mein jo karte ho — useState, useEffect se data fetch karna — yahi CSR hai. Familiar ground se shuru karte hain.
+`15-rendering-csr.md` — First **CSR** — Client Side Rendering. What you already do in React — fetching data with useState and useEffect — that's CSR. We start from familiar ground.

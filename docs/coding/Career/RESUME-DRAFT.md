@@ -2,9 +2,9 @@
 
 > **Status:** DRAFT. Finalized in Milestone M10 (`CAREER-FOCUS-PLAN.md`). Until then, treat it as a draft — do not send it anywhere.
 >
-> **Rules:** Har bullet FACT hai code se verified (M0 Truth Audit ke baad). Koi bhi cheez add karna hai jo tumne code me nahi likhi — mat likhna. Interview me "ye maine kiya" bolna hoga, har bullet pe follow-up aayega.
+> **Rules:** Every bullet is a FACT verified against the code (after the M0 Truth Audit). Do not add anything you did not actually write in code. You will have to say "I built this" for every bullet in an interview, and a follow-up will come on each one.
 >
-> **Format:** Standard fresher resume — single page (ya max 1.5 page). 3 sections: Summary → Projects → Skills → Education.
+> **Format:** Standard fresher resume — single page (or max 1.5 pages). 3 sections: Summary → Projects → Skills → Education.
 
 ---
 
@@ -18,7 +18,7 @@ Gurugram, Haryana · [phone] · [email] · [LinkedIn] · [GitHub]
 
 FULLSTACK DEVELOPER — React · Next.js · Node.js · TypeScript
 
-Final-year engineering student (ya fresher) with hands-on experience
+Final-year engineering student (or fresher) with hands-on experience
 building production-style web applications. Strongest in React/Next.js
 frontend and Node.js backend; comfortable with relational databases,
 authentication, and offline-first architecture. Ships side projects
@@ -92,9 +92,9 @@ continuation and reversal patterns and manages paper trades in real time.
 
 ---
 
-## VERSION 2 — Agar 1 page chahiye (chhota)
+## VERSION 2 — If you need 1 page (shorter)
 
-Projects section ke bullets 2-2 line me kat do:
+Trim the project bullets down to 2 lines each:
 
 ```
 DUKAANOS — Multi-Tenant Retail POS & Inventory System     [GitHub] [Live]
@@ -135,11 +135,11 @@ Practices      Responsive design, Offline-first architecture, Code refactoring
                and documentation, Problem solving (DSA)
 ```
 
-> **Note:** "Docker (basic)" ya jo nahi aata, usse hata do. Interview me poochte hain — agar nahi kar paya to bol dena "seekh raha hoon", jhooth mat bolna.
+> **Note:** Remove "Docker (basic)" or anything you can't actually do. They ask about it in interviews — if you can't do it, say "I'm still learning"; never lie.
 
 ---
 
-## Education Section (apni details bharo)
+## Education Section (fill in your details)
 
 ```
 EDUCATION
@@ -156,30 +156,32 @@ Computer Networks, Object-Oriented Programming
 | Project | GitHub | Live link | Status |
 |---|---|---|---|
 | DukaanOS | `[repo-url]` | `[vercel-url]` | Deploy in Milestone M9 |
-| TradeStack | `[repo-url]` | `[local-only — interviewer pehle chalega]` | Docker bonus ho to remote demo |
+| TradeStack | `[repo-url]` | `[local-only — interviewer runs it first]` | Remote demo if the Docker bonus is done |
 
 ---
 
-## Interview Pitch Scripts (resume ke saath jaane wale)
+## Interview Pitch Scripts (to go with the resume)
 
-### DukaanOS — 2 minute
-*"DukaanOS ek multi-tenant POS system hai jo maine Indian kirana stores ke liye banaya — billing, inventory, aur credit ledger (khata). Tech stack Next.js 14 App Router, PostgreSQL with Prisma, NextAuth.*
+### DukaanOS — 2 minutes
 
-*Sabse interesting kaam do cheezein tha. Pehla — offline-first billing. Kirana stores me internet unreliable hota hai, isliye maine Dexie se IndexedDB me product data cache kiya, sales locally queue hoti hain, aur jab internet aata hai woh ek sync endpoint se replay hoti hain — Prisma transaction ke saath, taaki stock decrement, audit trail, aur invoice number teeno atomic rahein. Doosra — Hinglish voice billing. Kirana wale customer ko Hindi-English me baat karne mein aasan hota hai, isliye maine Whisper speech-to-text se audio transcribe karke LLM se structured product data parse karwaaya, aur jab API available na ho tab regex-based fallback hai jo Hindi number words aur Devanagari conversions handle karta hai."*
+*"DukaanOS is a multi-tenant POS system I built for Indian kirana stores — billing, inventory, and credit ledger (khata). Tech stack: Next.js 14 App Router, PostgreSQL with Prisma, NextAuth.*
 
-**3 war stories ready rakho (rehearsed in Milestone M5):**
+*The two most interesting pieces of work were these. First — offline-first billing. Internet is unreliable in kirana stores, so I cached product data in IndexedDB via Dexie, sales are queued locally, and when internet returns they replay through a sync endpoint — with a Prisma transaction so stock decrement, audit trail, and invoice number all stay atomic. Second — Hinglish voice billing. Kirana owners find it easier to speak Hindi-English, so I transcribed audio with Whisper speech-to-text and parsed structured product data with an LLM, with a regex-based fallback that handles Hindi number words and Devanagari conversions when the API is unavailable."*
+
+**Keep 3 war stories ready (rehearsed in Milestone M5):**
 1. Offline queue sync — atomic replay + conflict handling
 2. Multi-tenant scoping — shopId enforcement across 162 points
-3. Voice parser — fallback design jab AI unavailable ho
+3. Voice parser — fallback design when AI is unavailable
 
-### TradeStack — 2 minute
-*"TradeStack ek personal NSE swing-trading platform hai jo 2,000 se zyada stocks me continuation aur reversal patterns scan karta hai aur real-time paper trading manage karta hai. Ye maine trading ke interest ke liye banaya tha.*
+### TradeStack — 2 minutes
 
-*Architecture polyglot hai — Python FastAPI data-heavy computation ke liye (technical indicators — SMA, MA angle, ADR, price-change, high-low distances — plus scanners aur market breadth), aur Node real-time event handling ke liye (Upstox WebSocket feed, state machines). Dono ek SQLite database share karte hain WAL mode me, jisse ek process likhta hai aur doosra padhta hai bina block kiye.*
+*"TradeStack is a personal NSE swing-trading platform that scans 2,000+ stocks for continuation and reversal patterns and manages real-time paper trading. I built it out of a trading interest.*
 
-*Sabse interesting technical dard Upstox WebSocket SDK ka tha — wo internally apne tarike se reconnect karta tha aur kabhi kabhi stuck ho jata. Us pe debug karna pada, custom reconnect-with-backoff logic add kiya. Aur scanners me ProcessPoolExecutor use kiya kyunki indicator math CPU-bound hai — Python ke GIL ko bypass karna tha parallel compute ke liye."*
+*The architecture is polyglot — Python FastAPI for data-heavy computation (technical indicators — SMA, MA angle, ADR, price-change, high-low distances — plus scanners and market breadth), and Node for real-time event handling (Upstox WebSocket feed, state machines). Both share a single SQLite database in WAL mode, so one process writes while the other reads without blocking.*
 
-**3 war stories ready rakho (rehearsed in Milestone M6):**
+*The biggest technical pain was the Upstox WebSocket SDK — it reconnected internally in its own way and sometimes got stuck. I had to debug it and add custom reconnect-with-backoff logic. And in the scanners I used ProcessPoolExecutor because indicator math is CPU-bound — I needed to bypass Python's GIL for parallel compute."*
+
+**Keep 3 war stories ready (rehearsed in Milestone M6):**
 1. Upstox WebSocket reconnect — SDK prototype patching + backoff
 2. State machine position cap — standby candidates staying subscribed
 3. SQLite WAL — polyglot concurrent access design
@@ -188,30 +190,30 @@ Computer Networks, Object-Oriented Programming
 
 ## Common Questions — Quick Answers
 
-**"Do projects se kya dikhta hai aapki capability?"**
-> "Dono full-stack hain. DukaanOS production-style hai — multi-tenancy, auth, transactions, offline sync. TradeStack real-time hai — WebSocket, streaming data, parallel compute. Ek me data integrity ka sawaal hai, doosre me performance aur reliability ka."
+**"What does building both projects show about your capability?"**
+> "Both are full-stack. DukaanOS is production-style — multi-tenancy, auth, transactions, offline sync. TradeStack is real-time — WebSocket, streaming data, parallel compute. One is about data integrity, the other about performance and reliability."
 
-**"DukaanOS me AI use kiya hai, kya?"**
-> "Haan — voice billing me Whisper speech-to-text aur LLM parse. But important point ye hai ki AI primary path nahi hai — ek regex-based fallback hai jo Hindi number words, Devanagari normalization, aur brand corrections handle karta hai, taaki system AI ke available na hone pe bhi kaam kare. Production me AI ko optional enhancement rakhna better hota hai."
+**"You used AI in DukaanOS — what for?"**
+> "Yes — voice billing uses Whisper speech-to-text and LLM parsing. But the important point is that AI is not the primary path — there's a regex-based fallback that handles Hindi number words, Devanagari normalization, and brand corrections, so the system keeps working even when the AI is unavailable. In production it's better to keep AI as an optional enhancement."
 
-**"TradeStack me Python ka kitna knowledge hai?"**
-> "Main Python full-stack nahi likhta — data layer aur concurrency use karta hoon. Pandas ka vectorization, FastAPI ke routes aur Pydantic schemas, ProcessPoolExecutor ki CPU-bound vs I/O-bound distinction. Interview me agar deep Python algorithm pucha jaye to honestly bolunga ki woh mera strong area nahi — but yeh pura apna system explain karna aur maintain karna aata hai."
+**"How much Python do you know for TradeStack?"**
+> "I don't write full-stack Python — I use it for the data layer and concurrency. Pandas vectorization, FastAPI routes and Pydantic schemas, the CPU-bound vs I/O-bound distinction with ProcessPoolExecutor. If a deep Python algorithm is asked in an interview, I'll honestly say that's not my strong area — but I can explain and maintain this whole system."
 
-**"Tests hain projects me?"**
-> Honestly: "TradeStack me abhi automated tests nahi hain — wo abhi add kar raha hoon (pytest + Vitest ke liye plan ready hai). DukaanOS pe maine kuch core server actions ke liye test likhne ka kaam kiya tha, wo bhi complete nahi hai. But architecture deliberately testable rakha hai — pure functions alag modules me hain (indicators, state machines), to unit tests add karna straightforward hai." — **ye honest answer zyada impression karta hai "fully tested" jhooth se.**
+**"Are there tests in the projects?"**
+> Honestly: "TradeStack doesn't have automated tests yet — I'm adding them now (a pytest + Vitest plan is ready). On DukaanOS I wrote tests for some core server actions, but that's not complete either. But the architecture is deliberately testable — pure functions live in separate modules (indicators, state machines), so adding unit tests is straightforward." — **this honest answer creates more impression than the lie "fully tested".**
 
 ---
 
 ## Milestone M10 Checklist — Resume Finalize
 
-- [ ] Dono bullet lists apne actual implementation se verify karo (koi bhi point jhooth mat rakhna)
-- [ ] Skills list se jo nahi aata hata do
-- [ ] GitHub + Vercel links add karo
-- [ ] Education details bharo
-- [ ] LinkedIn profile ka "About" aur "Featured" section same projects se bharo
-- [ ] PDF export karo (ATS-friendly — no tables, no columns, simple format)
-- [ ] 2 war stories per project verbally rehearse karo (record karke suno)
-- [ ] 5 companies ke founders ko LinkedIn pe connect request + short message
+- [ ] Verify both bullet lists against your actual implementation (keep no point that is a lie)
+- [ ] Remove from the skills list anything you can't do
+- [ ] Add GitHub + Vercel links
+- [ ] Fill in education details
+- [ ] Fill the "About" and "Featured" sections of the LinkedIn profile from the same projects
+- [ ] Export the PDF (ATS-friendly — no tables, no columns, simple format)
+- [ ] Verbally rehearse 2 war stories per project (record and listen)
+- [ ] Send connection requests + short messages to founders of 5 companies on LinkedIn
 
 ---
 

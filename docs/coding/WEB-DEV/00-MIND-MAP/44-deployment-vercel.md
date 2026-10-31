@@ -1,36 +1,36 @@
-# 44 — Deployment: App Ko Duniya Ko Dikhao
+# 44 — Deployment: Show the App to the World
 
-> Accessibility complete hua.
-> Ab gyarawa umbrella — **Deployment**.
-> Local pe kaam karta hai — ab live karo.
-
----
-
-## Deployment Kya Hai
-
-**Deployment** = tumhara app local machine se **internet pe** le jaana — taaki koi bhi access kar sake.
-
-Abhi: `localhost:3000` — sirf tumhare computer pe
-Baad mein: `shopkaro.com` — poori duniya ke liye
+> Accessibility is complete.
+> Now the eleventh umbrella — **Deployment**.
+> It works locally — now take it live.
 
 ---
 
-## Vercel — Next.js Ke Liye Best Choice
+## What Is Deployment
 
-Vercel ne hi Next.js banaya hai — integration perfect hai.
+**Deployment** = taking your app from your local machine **to the internet** — so anyone can access it.
 
-**Kyun Vercel:**
-- Free tier kaafi hai side projects ke liye
-- GitHub connect karo → Push karo → Automatic deploy
-- Next.js sab features support karta hai (SSR, SSG, API routes)
+Right now: `localhost:3000` — only on your computer
+Later: `shopkaro.com` — for the whole world
+
+---
+
+## Vercel — Best Choice for Next.js
+
+Vercel built Next.js itself — the integration is perfect.
+
+**Why Vercel:**
+- Free tier is enough for side projects
+- Connect GitHub → Push → Automatic deploy
+- Supports all Next.js features (SSR, SSG, API routes)
 - Global CDN automatic
-- Domain connection easy
+- Easy domain connection
 
 ---
 
-## Deploy Kaise Karo — Step by Step
+## How to Deploy — Step by Step
 
-### Step 1 — GitHub Pe Push Karo
+### Step 1 — Push to GitHub
 ```bash
 git init
 git add .
@@ -38,17 +38,17 @@ git commit -m "Initial commit"
 git push origin main
 ```
 
-### Step 2 — Vercel Pe Account Banao
-`vercel.com` → GitHub se sign up
+### Step 2 — Create an Account on Vercel
+`vercel.com` → Sign up with GitHub
 
-### Step 3 — Project Import Karo
-- "New Project" → GitHub repo select karo → Import
-- Vercel automatically detect karta hai Next.js
+### Step 3 — Import the Project
+- "New Project" → Select GitHub repo → Import
+- Vercel automatically detects Next.js
 
-### Step 4 — Environment Variables Add Karo
-Yeh **sabse important step** hai.
+### Step 4 — Add Environment Variables
+This is the **most important step**.
 
-`.env` file GitHub pe nahi daali — toh Vercel ko bhi nahi pata. Manually add karo:
+The `.env` file isn't pushed to GitHub — so Vercel doesn't know about it. Add them manually:
 
 ```
 Vercel Dashboard → Project → Settings → Environment Variables
@@ -62,7 +62,7 @@ NEXT_PUBLIC_APP_URL   = https://shopkaro.vercel.app
 ```
 
 ### Step 5 — Deploy
-"Deploy" click karo → 2-3 minute → Live!
+Click "Deploy" → 2-3 minutes → Live!
 
 ---
 
@@ -73,43 +73,43 @@ NEXT_PUBLIC_APP_URL   = https://shopkaro.vercel.app
 DATABASE_URL="postgresql://localhost:5432/shopkaro"
 RAZORPAY_KEY_ID="rzp_test_..."    # Test keys — fake payments
 
-# Vercel mein (production)
+# In Vercel (production)
 DATABASE_URL="postgresql://neon.tech/shopkaro"  # Real database
 RAZORPAY_KEY_ID="rzp_live_..."                  # Live keys — real payments
 ```
 
-**Test vs Live keys** — development mein test mode use karo. Production mein live mode. Kabhi test keys production mein mat daalo.
+**Test vs Live keys** — use test mode in development. Live mode in production. Never put test keys in production.
 
 ---
 
 ## NEXT_PUBLIC_ Prefix
 
 ```bash
-# Sirf server pe available — browser nahi dekh sakta
+# Available only on server — browser can't see
 SESSION_SECRET="abc123"
 DATABASE_URL="postgresql://..."
 
-# Browser mein bhi available — NEXT_PUBLIC_ prefix
+# Available in browser too — NEXT_PUBLIC_ prefix
 NEXT_PUBLIC_APP_URL="https://shopkaro.com"
 NEXT_PUBLIC_RAZORPAY_KEY_ID="rzp_live_..."
 ```
 
-Rule: Sensitive cheezein (passwords, secrets) kabhi `NEXT_PUBLIC_` nahi honi chahiye.
+Rule: Sensitive things (passwords, secrets) should never have `NEXT_PUBLIC_`.
 
 ---
 
 ## Automatic Deploys — Git Push = Auto Deploy
 
 ```
-Local mein kaam karo
+Work locally
 → git push origin main
-→ Vercel automatically new deploy karta hai
-→ 2 min mein live
+→ Vercel automatically creates a new deploy
+→ Live in 2 min
 
 Feature branch:
 → git push origin feature/cart-update
-→ Vercel preview URL deta hai — test karo pehle
-→ Merge karo main mein → Production deploy
+→ Vercel gives a preview URL — test first
+→ Merge to main → Production deploy
 ```
 
 ---
@@ -118,36 +118,36 @@ Feature branch:
 
 ```
 Vercel Dashboard → Project → Settings → Domains
-→ "shopkaro.com" add karo
-→ DNS settings configure karo (domain provider pe)
+→ Add "shopkaro.com"
+→ Configure DNS settings (on domain provider)
 → SSL/HTTPS automatic
 ```
 
 ---
 
-## Database — Production Ke Liye
+## Database — For Production
 
-Local: PostgreSQL tumhare computer pe
-Production: Cloud database chahiye
+Local: PostgreSQL on your computer
+Production: Cloud database needed
 
 Options:
-- **Neon** — Free tier, Vercel ke saath perfect integration
+- **Neon** — Free tier, perfect integration with Vercel
 - **Supabase** — Free tier, extra features
 - **Railway** — Simple, generous free tier
 
 ---
 
-## Deployment Umbrella — Complete Hua
+## Deployment Umbrella — Complete
 
 ```
 DEPLOYMENT
 │
-├── Vercel deploy → Doc 44 ✓ (YEH)
+├── Vercel deploy → Doc 44 ✓ (THIS)
 └── Environment variables → Covered ✓
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`45-senior-dev-checklist.md` — **Aakhri doc** — Senior Dev Checklist. Project banane se pehle aur baad — kya check karna hai. Poori series ka summary bhi yahan hai.
+`45-senior-dev-checklist.md` — **Last doc** — Senior Dev Checklist. Before and after building a project — what to check. The summary of the entire series is here too.

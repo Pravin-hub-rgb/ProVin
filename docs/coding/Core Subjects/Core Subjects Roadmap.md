@@ -2,24 +2,24 @@
 
 ### CS Fundamentals for Full-Stack Developer Roles
 
-**Prerequisite:** TypeScript basic aana chahiye (classes, interfaces, async/await). DukaanOS project mein Prisma + Supabase already use kar rahe ho — toh database, API calls, data structures ka practical experience hai.
+**Prerequisite:** TypeScript basics should be in place (classes, interfaces, async/await). You're already using Prisma + Supabase in the DukaanOS project — so you have practical experience with databases, API calls, and data structures.
 
-**Same philosophy as Next.js course:**
-1. Pehle concepts samjho, sirf ratta mat lagao.
-2. Har topic tumhare code se connect hai — DukaanOS, Trading Bot, Trishul Insurance.
-3. Interview-level depth — GATE-level nahi.
-4. Hinglish, dost-to-dost style, technical analogies.
+**Same philosophy as the Next.js course:**
+1. Understand concepts first, don't just memorize.
+2. Every topic connects to your code — DukaanOS, Trading Bot, Trishul Insurance.
+3. Interview-level depth — not GATE-level.
+4. Hinglish, peer-to-peer style, technical analogies.
 
 ---
 
 ## Priority Order
 
-| Batch | Subject | Priority | Kyun |
+| Batch | Subject | Priority | Why |
 |---|---|---|---|
-| 1 | **DBMS** | Highest | Tumhare project se directly connect hota hai (Postgres, Prisma) |
-| 2 | **Computer Networks** | High | Web dev ke liye directly relevant (HTTP, WebSocket, DNS) |
-| 3 | **OOP** | Medium | TypeScript se already familiar ho, vocabulary chahiye |
-| 4 | **Operating Systems** | Lowest | Full-stack roles mein kam poocha jaata hai, sirf basics |
+| 1 | **DBMS** | Highest | Directly connects to your project (Postgres, Prisma) |
+| 2 | **Computer Networks** | High | Directly relevant for web dev (HTTP, WebSocket, DNS) |
+| 3 | **OOP** | Medium | Already familiar from TypeScript, need the vocabulary |
+| 4 | **Operating Systems** | Lowest | Less asked in full-stack roles, just basics |
 
 ---
 
@@ -81,7 +81,7 @@
 ## Total: 23 notes across 4 batches
 
 ### Style Guide
-- **Tone:** Hinglish, dost-to-dost, senior dev explaining to junior
+- **Tone:** Hinglish, peer-to-peer, senior dev explaining to junior
 - **Analogies:** DBMS, CN, OS — pure technical, no programming language analogies. OOP — TypeScript code examples allowed (it IS a programming concept).
 - **Context:** DukaanOS, Trading Bot, Trishul Insurance
 - **Sections:** "What It Is NOT" + "In Your Own Words" (3-5 Qs with `<details>` sample answers)
@@ -89,4 +89,4 @@
 - **Bridge:** Each file ends by referencing the next file
 
 ### When to Study
-DSA Phase 2-3 ke aaspaas, short burst mein — 1-2 weeks total. DBMS + CN + OOP pehle, OS sabse last mein.
+Around DSA Phase 2-3, in a short burst — 1-2 weeks total. DBMS + CN + OOP first, OS last.

@@ -1,23 +1,23 @@
 # 🗄️ DB Project 1 — StaffSync: Task Manager
-### Complete Database Design — PRD se Final Schema Tak
+### Complete Database Design — From PRD to Final Schema
 
 ---
 
-## Brief se Entities Nikaalte Hain
+## Extracting Entities from the Brief
 
 ```
-Brief: "Business owner employees manage kare, tasks assign kare,
-        deadlines track kare, status dekhe."
+Brief: "Business owner manages employees, assigns tasks,
+        tracks deadlines, checks status."
 
-NOUNS extract karo:
+Extract NOUNS:
 → Business Owner → User (role = ADMIN)
-→ Employee       → User (role = EMPLOYEE) — SAME TABLE, alag role
+→ Employee       → User (role = EMPLOYEE) — SAME TABLE, different role
 → Task           → Task entity
-→ Deadline       → Task ka dueDate column
-→ Status         → Task ka status column (enum)
+→ Deadline       → dueDate column of Task
+→ Status         → status column of Task (enum)
 
 ENTITIES: User, Task
-(Simple! 2 tables. Beginners often over-engineer yahan.)
+(Simple! 2 tables. Beginners often over-engineer here.)
 ```
 
 ---
@@ -25,16 +25,16 @@ ENTITIES: User, Task
 ## Entity-Relationship Map
 
 ```
-USER (1) ──────────────── (N) TASK   [createdBy — Admin ne task create kiya]
-USER (1) ──────────────── (N) TASK   [assignedTo — Employee ko assign kiya]
+USER (1) ──────────────── (N) TASK   [createdBy — Admin created the task]
+USER (1) ──────────────── (N) TASK   [assignedTo — assigned to Employee]
 
-One User ke many Tasks hain (dono relations)
-Ek Task ka exactly ek creator aur ek assignee hai
+One User has many Tasks (both relations)
+One Task has exactly one creator and one assignee
 ```
 
 ---
 
-## Column Design — Har Field Ka Decision
+## Column Design — Decision for Each Field
 
 ```
 USER TABLE:
@@ -45,7 +45,7 @@ id           | String   | NO       | cuid()   | PK, unique identifier
 name         | String   | NO       | —        | Display name, required
 email        | String   | NO       | —        | Login, @unique
 password     | String   | NO       | —        | Hashed! Never plain text
-role         | UserRole | NO       | EMPLOYEE | Default employee jab signup
+role         | UserRole | NO       | EMPLOYEE | Default employee on signup
 clerkId      | String   | YES      | —        | Clerk auth sync (if using Clerk)
 createdAt    | DateTime | NO       | now()    | Audit trail
 updatedAt    | DateTime | NO       | auto     | Last modified tracking
@@ -56,13 +56,13 @@ TASK TABLE:
 Field        | Type       | Nullable | Default  | Why
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 id           | String     | NO       | cuid()   | PK
-title        | String     | NO       | —        | Task naam, required
+title        | String     | NO       | —        | Task name, required
 description  | String     | YES      | —        | Extra details, optional
 status       | TaskStatus | NO       | TODO     | Current state
 priority     | Priority   | NO       | MEDIUM   | Urgency level
 dueDate      | DateTime   | YES      | —        | Optional deadline
-assignedToId | String     | NO       | —        | FK → User (kaun karega)
-createdById  | String     | NO       | —        | FK → User (kisne banaya)
+assignedToId | String     | NO       | —        | FK → User (who will do it)
+createdById  | String     | NO       | —        | FK → User (who created it)
 createdAt    | DateTime   | NO       | now()    | Audit trail
 updatedAt    | DateTime   | NO       | auto     | Last modified
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -137,10 +137,10 @@ model Task {
   createdBy  User @relation("CreatedTasks",  fields: [createdById],  references: [id], onDelete: Restrict)
 
   // Indexes
-  @@index([assignedToId])           // Employee ke tasks fetch karna
+  @@index([assignedToId])           // Fetch employee's tasks
   @@index([status])                 // Status filter
   @@index([dueDate])                // Overdue tasks
-  @@index([assignedToId, status])   // "Mere pending tasks" — most common query
+  @@index([assignedToId, status])   // "My pending tasks" — most common query
 
   @@map("tasks")
 }
@@ -148,7 +148,7 @@ model Task {
 
 ---
 
-## Sample Data — Tables Kaise Fill Hongi
+## Sample Data — How Tables Will Be Filled
 
 ```
 users table:
@@ -173,23 +173,23 @@ tasks table:
 └──────────────┴──────────────────────────┴────────────┴──────────┴──────────────┴─────────────┘
 
 NOTICE:
-→ t_task005 → createdById = u_priya003 (Employee ne bhi task create ki)
-  Matlab koi bhi task create kar sakta hai, sirf admin nahi
-  (Ya tum restrict kar sakte ho Server Action mein role check se)
-→ u_rahul002 ke 2 tasks hain — t_task001, t_task002 (One-to-Many clearly visible)
-→ u_rohan001 kabhi assignedToId mein nahi — Admin khud tasks nahi karta
+→ t_task005 → createdById = u_priya003 (Employee also created a task)
+  Meaning anyone can create task, not just admin
+  (Or you can restrict via role check in Server Action)
+→ u_rahul002 has 2 tasks — t_task001, t_task002 (One-to-Many clearly visible)
+→ u_rohan001 never in assignedToId — Admin doesn't do tasks himself
 
-Queries aur results:
+Queries and results:
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-Query 1: "Rahul ke saare tasks"
+Query 1: "Rahul's all tasks"
 WHERE assignedToId = 'u_rahul002'
 Result: t_task001, t_task002
 
-Query 2: "Saare TODO tasks"
+Query 2: "All TODO tasks"
 WHERE status = 'TODO'
 Result: t_task001, t_task003, t_task005
 
-Query 3: "Rahul ke TODO tasks" (composite index use hoga)
+Query 3: "Rahul's TODO tasks" (composite index used)
 WHERE assignedToId = 'u_rahul002' AND status = 'TODO'
 Result: t_task001 only
 
@@ -203,11 +203,11 @@ Result: TODO: 3, IN_PROGRESS: 1, DONE: 1
 ## Prisma Queries — Common Operations
 
 ```typescript
-// 1. Employee ka tasks fetch karo:
+// 1. Fetch employee's tasks:
 const myTasks = await prisma.task.findMany({
   where: {
     assignedToId: currentUserId,
-    status: { not: 'DONE' }  // Done exclude karo
+    status: { not: 'DONE' }  // Exclude done
   },
   orderBy: [
     { priority: 'desc' },   // HIGH first
@@ -215,7 +215,7 @@ const myTasks = await prisma.task.findMany({
   ],
   include: {
     createdBy: {
-      select: { name: true }  // Sirf naam chahiye
+      select: { name: true }  // Only name needed
     }
   }
 })
@@ -238,7 +238,7 @@ const overdueTasks = await prisma.task.findMany({
   }
 })
 
-// 4. Task create karo:
+// 4. Create a task:
 const newTask = await prisma.task.create({
   data: {
     title: 'New task title',
@@ -250,7 +250,7 @@ const newTask = await prisma.task.create({
   }
 })
 
-// 5. Status update karo:
+// 5. Update status:
 const updatedTask = await prisma.task.update({
   where: { id: taskId },
   data: { status: 'IN_PROGRESS' }
@@ -259,20 +259,20 @@ const updatedTask = await prisma.task.update({
 
 ---
 
-## Interview Points — Ye Bolna Hai
+## Interview Points — What to Say
 
 ```
-"StaffSync ka database design mein ek interesting decision tha —
-User table ek hi hai Admin aur Employee dono ke liye.
-Do separate tables banane ki zaroorat nahi thi — role column se differentiate hota hai.
+"StaffSync's database design had one interesting decision —
+User table is a single table for both Admin and Employee.
+No need to create two separate tables — differentiated via role column.
 
-Task table mein do FK hain same User table pe —
-assignedToId aur createdById — dono alag relations hain.
-Prisma mein named relations use ki — 'AssignedTasks' aur 'CreatedTasks'.
+Task table has two FKs to the same User table —
+assignedToId and createdById — both are different relations.
+Used named relations in Prisma — 'AssignedTasks' and 'CreatedTasks'.
 
-Composite index lagayi @@index([assignedToId, status]) kyunki
-sabse frequent query thi 'mere pending tasks' — employee dashboard pe.
-Ye Prisma automatically nahi karta, manually add karna padta hai."
+Put composite index @@index([assignedToId, status]) because
+the most frequent query was 'my pending tasks' — on employee dashboard.
+Prisma doesn't do this automatically, had to add manually."
 ```
 
 ---

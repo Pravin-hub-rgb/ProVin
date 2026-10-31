@@ -1,26 +1,26 @@
 # 13 — File Storage: Cloudinary, S3, Uploadthing, Supabase Storage
 
 > Umbrella: Backend → File Upload / Storage
-> Kaam: Images, documents, videos store karna — database mein nahi, dedicated storage mein
+> Job: Store images, documents, videos — not in the database, in dedicated storage
 > Example: ShopKaro product images, Swiggy restaurant photos
 
 ---
 
-## Database Mein Image Kyun Nahi Store Karte
+## Why We Don't Store Images in the Database
 
 ```
-Database: Structured data ke liye — text, numbers, relationships
-File storage: Binary files ke liye — images, PDFs, videos
+Database: For structured data — text, numbers, relationships
+File storage: For binary files — images, PDFs, videos
 
-Database mein image store karo:
-  → Database slow ho jaata hai
-  → Backup complex
-  → CDN serve nahi kar sakta
+Store image in database:
+  → Database gets slow
+  → Backups get complex
+  → CDN can't serve it
 
-File storage mein:
-  → Database mein sirf URL store karo: "https://cdn.shopkaro.com/products/shoes.jpg"
-  → File storage pe actual file
-  → CDN se fast serve
+In file storage:
+  → Store only the URL in the database: "https://cdn.shopkaro.com/products/shoes.jpg"
+  → Actual file lives on file storage
+  → Fast serve via CDN
 ```
 
 ---
@@ -33,21 +33,21 @@ File storage mein:
 **Tag: 🟢 Images + Video | Transform | Most Popular for media**
 
 ```
-Kya hai: Media management platform — store + transform + deliver
-Kab use karo:
+What it is: Media management platform — store + transform + deliver
+When to use:
   → Image/video heavy app
-  → On-the-fly image transformation chahiye
+  → On-the-fly image transformation needed
   → E-commerce product images
 
 Special — On-the-fly transforms:
-  URL se hi image resize, crop, format change:
+  Resize, crop, change format from the URL itself:
   Original: https://res.cloudinary.com/demo/image/upload/shoes.jpg
   Resized:  https://res.cloudinary.com/demo/image/upload/w_300,h_300,c_fill/shoes.jpg
   WebP:     https://res.cloudinary.com/demo/image/upload/f_auto/shoes.jpg
 
 Real app example:
   → Swiggy: Restaurant photos — different sizes for listing vs detail page
-  → Zomato: Food photos — thumbnail, full size from same image
+  → Zomato: Food photos — thumbnail and full size from the same image
   → ShopKaro: Product images — main image, thumbnail, zoom
 
 Code feel (upload):
@@ -57,15 +57,15 @@ Code feel (upload):
     folder: 'products',
     transformation: [{ width: 800, height: 800, crop: 'fill' }]
   })
-  // result.secure_url → Database mein store karo
+  // result.secure_url → store this in the database
 
-Free tier: 25GB storage, 25GB bandwidth/month — kaafi for starting
+Free tier: 25GB storage, 25GB bandwidth/month — plenty to start
 
 Cons:
   → Vendor lock-in
-  → Large scale pe expensive
+  → Expensive at large scale
 
-India mein: E-commerce, food delivery, media apps mein popular
+In India: Popular in e-commerce, food delivery, media apps
 ```
 
 ---
@@ -74,16 +74,16 @@ India mein: E-commerce, food delivery, media apps mein popular
 **Tag: 🟢 Enterprise Standard | Cheapest at Scale**
 
 ```
-Kya hai: Amazon ka object storage — industry standard
-Kab use karo:
-  → AWS ecosystem already use kar rahe ho
+What it is: Amazon's object storage — industry standard
+When to use:
+  → Already using the AWS ecosystem
   → Very high scale
   → Any file type — images, PDFs, videos, backups, code
 
 S3 + CloudFront (CDN):
-  → S3: Store karo (cheap)
-  → CloudFront: Globally fast serve karo
-  → Yeh combo enterprise standard hai
+  → S3: Store (cheap)
+  → CloudFront: Serve fast globally
+  → This combo is the enterprise standard
 
 Real app example:
   → Flipkart, Amazon India: Product images (S3 + CloudFront)
@@ -102,10 +102,10 @@ Code feel:
   // URL: https://shopkaro-images.s3.amazonaws.com/products/shoes.jpg
 
 Cons:
-  → Setup complex — IAM roles, policies, CORS sab manually
-  → No built-in image transformation (CloudFront + Lambda@Edge chahiye)
+  → Complex setup — IAM roles, policies, CORS all manual
+  → No built-in image transformation (need CloudFront + Lambda@Edge)
 
-India mein: Large companies jo AWS pe hain
+In India: Large companies on AWS
 ```
 
 ---
@@ -114,11 +114,11 @@ India mein: Large companies jo AWS pe hain
 **Tag: 🟢 Next.js friendly | Simple | Growing**
 
 ```
-Kya hai: File upload service — specifically Next.js ke liye simple
-Kab use karo:
+What it is: File upload service — built specifically for Next.js simplicity
+When to use:
   → Next.js project
-  → S3 setup complexity nahi chahiye
-  → Simple file upload chahiye quickly
+  → Don't want S3 setup complexity
+  → Simple file upload needed quickly
 
 Code feel:
   // Route handler
@@ -134,13 +134,13 @@ Code feel:
   // Frontend — drag and drop ready
   <UploadButton endpoint="productImage" />
 
-Cloudinary se fark:
+Difference from Cloudinary:
   → Uploadthing: Simple upload, no transformations
   → Cloudinary: Upload + transform + optimize
 
-Free tier: 2GB storage — chhote projects ke liye kaafi
+Free tier: 2GB storage — plenty for small projects
 
-India mein: Growing — Next.js community mein popular
+In India: Growing — popular in the Next.js community
 ```
 
 ---
@@ -149,13 +149,13 @@ India mein: Growing — Next.js community mein popular
 **Tag: 🟢 Supabase users | Simple**
 
 ```
-Kya hai: Supabase ka file storage — S3 compatible
-Kab use karo:
-  → Already Supabase use kar rahe ho (database, auth)
-  → Sab ek platform pe rakhna hai
+What it is: Supabase's file storage — S3 compatible
+When to use:
+  → Already using Supabase (database, auth)
+  → Want everything on one platform
 
-Supabase = PostgreSQL + Auth + Storage + Realtime — sab ek mein
-Agar Supabase use karte ho → Storage bhi wahan raho
+Supabase = PostgreSQL + Auth + Storage + Realtime — all in one
+If you use Supabase → keep storage there too
 
 Free tier: 1GB storage
 ```
@@ -166,22 +166,22 @@ Free tier: 1GB storage
 **Tag: 🟢 S3 Alternative | No egress fees | Cheap**
 
 ```
-Kya hai: S3 jaisa storage — lekin egress fees nahi (data download free)
-Kab use karo:
-  → S3 ka bada bill aa raha hai egress se
+What it is: S3-like storage — but no egress fees (data download is free)
+When to use:
+  → S3 bill is too high because of egress
   → Cloudflare ecosystem
-  → Cost optimize karna hai
+  → Cost optimization needed
 
-S3 se fark:
-  → R2: Zero egress fees — data download karo, pay nahi karo
-  → S3: Egress fees — data download pe pay karo (expensive at scale)
-  → R2: S3-compatible API — same code kaam karta hai
+Difference from S3:
+  → R2: Zero egress fees — download data, pay nothing
+  → S3: Egress fees — pay for data download (expensive at scale)
+  → R2: S3-compatible API — same code works
 
 Real app example:
-  → High-traffic sites jo images serve karte hain
+  → High-traffic sites serving images
   → Video streaming platforms
 
-India mein: Growing — especially cost-conscious startups
+In India: Growing — especially cost-conscious startups
 ```
 
 ---
@@ -189,7 +189,7 @@ India mein: Growing — especially cost-conscious startups
 ## Quick Decision
 
 ```
-Image-heavy app, transformation chahiye?
+Image-heavy app, need transformation?
   → Cloudinary
 
 Next.js, simple upload quickly?
@@ -198,25 +198,25 @@ Next.js, simple upload quickly?
 Enterprise, AWS ecosystem?
   → S3 + CloudFront
 
-Already Supabase use kar rahe ho?
+Already using Supabase?
   → Supabase Storage
 
-Cost optimize karna hai, S3 se migrate?
+Cost optimization, migrating from S3?
   → Cloudflare R2
 ```
 
 ---
 
-## ShopKaro Mein
+## ShopKaro Plan
 
 ```
-V1: Uploadthing ya Cloudinary (simpler setup)
+V1: Uploadthing or Cloudinary (simpler setup)
 V2 (more users): Cloudinary (image optimization important)
 Enterprise: S3 + CloudFront
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`14-database-sql.md` — SQL Databases — PostgreSQL, MySQL, SQLite, Neon, Supabase — kaunsa database kab, hosted vs managed, India mein kya popular hai.
+`14-database-sql.md` — SQL Databases — PostgreSQL, MySQL, SQLite, Neon, Supabase — which database when, hosted vs managed, what's popular in India.

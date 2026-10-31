@@ -1,21 +1,21 @@
-# 25 — GraphQL: REST Ka Alternative
+# 25 — GraphQL: REST's Alternative
 
-> Pichle doc mein REST dekha — ShopKaro mein yahi use karenge.
-> Ab **GraphQL** — concept jaanna zaroori hai, kaafi jagah milega.
+> Previous doc covered REST — ShopKaro will use this.
+> Now **GraphQL** — knowing the concept is important, you'll find it in many places.
 
 ---
 
-## GraphQL Kya Solve Karta Hai
+## What GraphQL Solves
 
-REST mein ek problem thi — over-fetching aur under-fetching.
+REST had one problem — over-fetching and under-fetching.
 
-GraphQL mein **frontend decide karta hai** ki exactly kya chahiye:
+In GraphQL, **frontend decides** exactly what it needs:
 
 ```graphql
-# REST mein: GET /api/products/123
-# Poora product milta hai — chahe chahiye na chahiye
+# REST: GET /api/products/123
+# Returns entire product — whether you need it or not
 
-# GraphQL mein: Sirf jo chahiye woh maango
+# GraphQL: ask for only what you need
 query {
   product(id: 123) {
     name
@@ -23,7 +23,7 @@ query {
   }
 }
 
-# Response — sirf yeh, kuch extra nahi:
+# Response — only this, nothing extra:
 {
   "data": {
     "product": {
@@ -40,19 +40,19 @@ query {
 
 | | REST | GraphQL |
 |--|------|---------|
-| Endpoints | Kai alag endpoints | Ek endpoint (`/api/graphql`) |
-| Data control | Server decide karta hai | Client decide karta hai |
-| Over-fetching | Haan | Nahi |
+| Endpoints | Many separate endpoints | One endpoint (`/api/graphql`) |
+| Data control | Server decides | Client decides |
+| Over-fetching | Yes | No |
 | Learning curve | Low | High |
 | Caching | Easy (HTTP cache) | Complex |
 | Best for | Simple CRUD apps | Complex, data-heavy apps |
 
 ---
 
-## GraphQL Ek Request Mein Kai Cheezein
+## Multiple Things In One GraphQL Request
 
 ```graphql
-# Ek request mein: User + unke orders + har order ke products
+# In one request: User + their orders + products in each order
 query {
   user(id: 1) {
     name
@@ -72,31 +72,31 @@ query {
 }
 ```
 
-REST mein yeh 3 alag requests hoti:
+In REST this would be 3 separate requests:
 1. `GET /api/users/1`
 2. `GET /api/orders?userId=1`
 3. `GET /api/orders/1/items`
 
 ---
 
-## ShopKaro Mein GraphQL Use Karein?
+## Should ShopKaro Use GraphQL?
 
-**Nahi — ShopKaro v1 mein REST kaafi hai.**
+**No — REST is enough for ShopKaro v1.**
 
-GraphQL useful hai jab:
-- Bahut complex data relationships hain
-- Multiple clients (web, mobile) alag alag data maangte hain
-- Team badi hai, frontend/backend alag work karte hain
+GraphQL is useful when:
+- Very complex data relationships exist
+- Multiple clients (web, mobile) need different data
+- Team is large, frontend/backend work separately
 
-ShopKaro ke liye:
-- Simple CRUD operations hain
-- Ek hi client (web app)
-- Sikhna maksad hai — REST pehle master karo
+For ShopKaro:
+- Simple CRUD operations
+- One client (web app)
+- Goal is learning — master REST first
 
-GraphQL ka **concept** jaanna zaroori tha — kyunki job interviews mein poochha jaata hai aur doosre projects mein milega.
+Knowing the **concept** of GraphQL was necessary — it's asked in job interviews and you'll encounter it in other projects.
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`26-api-shopkaro.md` — ShopKaro ke **saare endpoints ek jagah** — complete reference. Har endpoint ka method, URL, request body, aur response.
+`26-api-shopkaro.md` — All of ShopKaro's **endpoints in one place** — complete reference. Method, URL, request body, and response for every endpoint.

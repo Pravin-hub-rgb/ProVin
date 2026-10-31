@@ -1,8 +1,8 @@
 # 20 — Meta Tools: TypeScript, tRPC, Zod, Monorepos, Package Managers
 
 > Umbrella: Meta Tools
-> Kaam: Type safety, full-stack APIs, code organization, package management
-> Yeh tools "ek category" mein fit nahi hote — poori stack pe kaam karte hain
+> Job: Type safety, full-stack APIs, code organization, package management
+> These tools don't fit into one category — they work across the whole stack
 
 ---
 
@@ -10,19 +10,19 @@
 **Tag: 🟢 Industry Standard | Learn ASAP**
 
 ```
-Kya hai: JavaScript + Types — variables ka type pehle se define karo
-Kab use karo: Almost every production project — 2024 mein default
+What it is: JavaScript + Types — define the type of variables beforehand
+When to use: Almost every production project — default in 2024
 
 Why important:
-  → Typos → Compile time error (runtime nahi)
-  → Autocomplete better
-  → Refactoring safe
-  → Team mein code samajhna easy
+  → Typos → Compile-time error (not runtime)
+  → Better autocomplete
+  → Safe refactoring
+  → Easy to understand code in a team
 
 Code feel:
-  // JavaScript — koi type safety nahi
+  // JavaScript — no type safety
   function addToCart(item) { ... }
-  addToCart(123)  // Mistake — number pass kiya, koi error nahi
+  addToCart(123)  // Mistake — passed a number, no error
 
   // TypeScript — type safe
   interface CartItem { id: number; name: string; price: number }
@@ -30,15 +30,15 @@ Code feel:
   addToCart(123)  // ❌ Error at compile time — "number is not CartItem"
 
 Real app:
-  → Almost every serious Indian startup TypeScript use karta hai
-  → Next.js mein .tsx files — TypeScript by default
+  → Almost every serious Indian startup uses TypeScript
+  → Next.js .tsx files — TypeScript by default
 
-Zod ke saath:
+With Zod:
   → Zod schema → TypeScript type automatically
-  → Frontend + backend same types
+  → Same types on frontend + backend
 
-India mein: 2022 ke baad almost mandatory for new projects
-Beginners: JavaScript pehle seekho → Phir TypeScript (1-2 mahine baad)
+In India: Almost mandatory for new projects after 2022
+Beginners: Learn JavaScript first → then TypeScript (1-2 months later)
 ```
 
 ---
@@ -47,20 +47,20 @@ Beginners: JavaScript pehle seekho → Phir TypeScript (1-2 mahine baad)
 **Tag: 🟢 End-to-end Type Safety | Next.js + TypeScript**
 
 ```
-Kya hai: API layer — frontend aur backend ke beech type-safe RPC calls
-Kab use karo:
+What it is: API layer — type-safe RPC calls between frontend and backend
+When to use:
   → TypeScript project
-  → Frontend aur backend same codebase mein (monorepo ya Next.js)
-  → REST endpoints manually likhna nahi chahte
+  → Frontend and backend in the same codebase (monorepo or Next.js)
+  → Don't want to write REST endpoints manually
 
-Kya solve karta hai:
+What it solves:
   REST API problem:
-    Backend: POST /api/orders return karta hai Order type
-    Frontend: Guess karna padta hai kya aayega — types manually maintain
+    Backend: POST /api/orders returns an Order type
+    Frontend: Has to guess what comes back — types maintained manually
 
   tRPC:
-    Backend mein procedure define karo → Frontend automatically types jaanta hai
-    Koi API contract manually nahi — type system handle karta hai
+    Define a procedure in the backend → frontend automatically knows the types
+    No manual API contract — the type system handles it
 
 Code feel:
   // Server
@@ -74,18 +74,18 @@ Code feel:
 
   // Client — fully typed, no API docs needed
   const order = await trpc.createOrder.mutate({ address: '123 MG Road' })
-  // TypeScript jaanta hai order ka type kya hai — automatically
+  // TypeScript knows the order's type automatically
 
 Real app example:
   → T3 Stack: Next.js + tRPC + Prisma + Tailwind + NextAuth — popular combo
   → Internal tools, SaaS dashboards
 
-Kab mat use karo:
-  → Public API banana hai (third-party use karegi) → REST ya GraphQL
-  → Mobile app separately → REST better
-  → tRPC sirf same-codebase frontend-backend ke liye
+When NOT to use:
+  → Building a public API (third parties will use it) → REST or GraphQL
+  → Separate mobile app → REST is better
+  → tRPC is only for same-codebase frontend-backend
 
-India mein: T3 Stack users mein popular — growing
+In India: Popular among T3 Stack users — growing
 ```
 
 ---
@@ -94,14 +94,14 @@ India mein: T3 Stack users mein popular — growing
 **Tag: 🟢 API Documentation | REST standard**
 
 ```
-Kya hai: REST API documentation format — automatically generate docs
-Kab use karo:
-  → Public API hai
-  → Multiple teams same API use karti hain
-  → API contract document karna hai
+What it is: REST API documentation format — auto-generate docs
+When to use:
+  → Public API
+  → Multiple teams use the same API
+  → Need to document the API contract
 
 Code feel:
-  // Zod-to-OpenAPI ya manual
+  // Zod-to-OpenAPI or manual
   /**
    * @openapi
    * /api/products:
@@ -113,10 +113,10 @@ Code feel:
    */
 
 Swagger UI:
-  → /api-docs pe interactive documentation
-  → Teams API test kar sakti hain bina Postman ke
+  → Interactive documentation at /api-docs
+  → Teams can test the API without Postman
 
-tRPC se fark:
+Difference from tRPC:
   → OpenAPI: Public REST APIs, multiple clients
   → tRPC: Internal, TypeScript-only, same codebase
 ```
@@ -126,8 +126,8 @@ tRPC se fark:
 ## Monorepos
 
 ```
-Kya hai: Multiple projects ek repository mein
-Kab chahiye:
+What it is: Multiple projects in one repository
+When needed:
   → Web app + Mobile app + Shared components
   → Multiple microservices
   → Shared types/utilities across projects
@@ -137,8 +137,8 @@ Kab chahiye:
 **Tag: 🟢 Most Popular | Vercel**
 
 ```
-Kya hai: Monorepo build system — fast builds, caching
-Kab use karo: Multiple Next.js apps, shared packages
+What it is: Monorepo build system — fast builds, caching
+When to use: Multiple Next.js apps, shared packages
 
 Structure:
   /apps
@@ -155,10 +155,10 @@ Structure:
 **Tag: 🟢 Enterprise Monorepo | More features**
 
 ```
-Kya hai: Enterprise monorepo tool — code generation, dependency graph
-Kab use karo: Large teams, complex monorepo
+What it is: Enterprise monorepo tool — code generation, dependency graph
+When to use: Large teams, complex monorepo
 
-Turborepo se fark: More features, more complex
+Difference from Turborepo: More features, more complex
 ```
 
 ---
@@ -171,8 +171,8 @@ Turborepo se fark: More features, more complex
 **Tag: 🟢 Default | Always available**
 
 ```
-Kya hai: Node.js ka default package manager
-Kab use karo: Simple projects, default theek hai
+What it is: Node.js's default package manager
+When to use: Simple projects, default is fine
 
 Cons: Slower than alternatives, larger node_modules
 ```
@@ -183,15 +183,15 @@ Cons: Slower than alternatives, larger node_modules
 **Tag: 🟢 Recommended | Fast | Disk efficient**
 
 ```
-Kya hai: Fast, disk-efficient package manager
-Kab use karo: Almost always — npm se better
+What it is: Fast, disk-efficient package manager
+When to use: Almost always — better than npm
 
 Pros:
   → 2x faster than npm
-  → Disk space: Packages share karta hai — total less space
+  → Disk space: shares packages → less total space
   → Monorepos: pnpm workspaces built-in
 
-India mein: Growing — especially monorepo users
+In India: Growing — especially monorepo users
 ```
 
 ---
@@ -200,8 +200,8 @@ India mein: Growing — especially monorepo users
 **Tag: 🟡 Older npm alternative | Declining**
 
 ```
-Status: pnpm ne le li popularity — naye projects mein avoid
-Existing: Yarn codebase hai → Rehne do
+Status: pnpm took its popularity — avoid in new projects
+Existing: Yarn codebase present → leave it
 ```
 
 ---
@@ -210,24 +210,24 @@ Existing: Yarn codebase hai → Rehne do
 **Tag: 🟢 All-in-one | Fastest | New**
 
 ```
-Kya hai: JavaScript runtime + package manager + bundler — sab ek mein
+What it is: JavaScript runtime + package manager + bundler — all in one
 Runtime: Node.js alternative — 3x faster
-Package manager: pnpm se bhi fast
+Package manager: Faster than pnpm too
 
-Kab use karo:
-  → Speed critical hai
-  → Elysia framework use kar rahe ho
-  → Experiment karna hai
+When to use:
+  → Speed is critical
+  → Using Elysia framework
+  → Experimenting
 
-Status: 1.0 release ho gaya — production mein use ho raha hai
-Cons: Ecosystem chhota — kuch packages Node.js specific hain → Bun pe kaam nahi karte
+Status: 1.0 released — being used in production
+Cons: Smaller ecosystem — some Node.js-specific packages don't work on Bun
 
-India mein: Experimental projects — watch karo
+In India: Experimental projects — watch it
 ```
 
 ---
 
-## Complete Series Summary — Ek Baar Dekho
+## Complete Series Summary — Look Once
 
 ```
 FRONTEND:
@@ -267,4 +267,4 @@ META:          TypeScript (always) | tRPC (internal APIs) | pnpm (package manage
 
 ---
 
-Yeh hai poori web dev duniya — har tool ka naam, umbrella, aur kab use karna hai. 🎯
+This is the entire web dev world — every tool's name, umbrella, and when to use it. 🎯

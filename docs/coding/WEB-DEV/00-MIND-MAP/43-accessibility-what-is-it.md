@@ -1,74 +1,74 @@
-# 43 — Accessibility: Sab Ke Liye Kaam Karo
+# 43 — Accessibility: Make It Work for Everyone
 
-> Performance complete hua.
-> Ab daswa umbrella — **Accessibility**.
-> App sirf mouse users ke liye nahi — sab ke liye accessible honi chahiye.
-
----
-
-## Accessibility Kya Hai
-
-**Accessibility (a11y)** = app itni design karo ki har koi use kar sake — chahe:
-- Keyboard se navigate kare (mouse nahi)
-- Screen reader use kare (aankhon ki problem)
-- Color blind ho
-- Slow internet pe ho
+> Performance is complete.
+> Now the tenth umbrella — **Accessibility**.
+> The app isn't just for mouse users — it should be accessible to everyone.
 
 ---
 
-## Kyun Zaroori Hai
+## What Is Accessibility
 
-1. **Users** — India mein crores log disabilities ke saath hain
-2. **Legal** — Kai deshon mein accessibility required hai
-3. **SEO** — Accessible HTML → Better search ranking
-4. **Everyone benefits** — Keyboard shortcuts, clear labels — sab ko fayda
+**Accessibility (a11y)** = design the app so anyone can use it — whether they:
+- Navigate with keyboard (no mouse)
+- Use a screen reader (vision impairment)
+- Are color blind
+- Are on slow internet
 
 ---
 
-## Basics — ShopKaro Mein Kya Karna Hai
+## Why It's Important
 
-### 1. Semantic HTML — Sahi Tags Use Karo
+1. **Users** — crores of people in India live with disabilities
+2. **Legal** — accessibility is required in many countries
+3. **SEO** — accessible HTML → better search ranking
+4. **Everyone benefits** — keyboard shortcuts, clear labels — helps all
+
+---
+
+## Basics — What to Do in ShopKaro
+
+### 1. Semantic HTML — Use the Right Tags
 
 ```jsx
-// ❌ Sab kuch div mein
+// ❌ Everything in divs
 <div onClick={handleLogin}>Login</div>
 <div className="heading">Products</div>
 
-// ✓ Sahi tags
-<button onClick={handleLogin}>Login</button>  // Keyboard accessible, screen reader samjhega
-<h1>Products</h1>                              // Screen reader announce karega
+// ✓ Correct tags
+<button onClick={handleLogin}>Login</button>  // Keyboard accessible, screen reader understands
+<h1>Products</h1>                              // Screen reader announces it
 ```
 
 ---
 
-### 2. Alt Text — Images Ke Liye
+### 2. Alt Text — For Images
 
 ```jsx
-// ❌ Alt text nahi
+// ❌ No alt text
 <Image src={product.imageUrl} alt="" />
 
 // ✓ Descriptive alt text
 <Image src={product.imageUrl} alt={`${product.name} - ${product.category.name}`} />
 
-// Decorative images ke liye — empty string (screen reader skip karega)
+// For decorative images — empty string (screen reader skips it)
 <Image src="/decoration.svg" alt="" />
 ```
 
 ---
 
-### 3. ARIA Labels — Jab HTML Kaafi Na Ho
+### 3. ARIA Labels — When HTML Isn't Enough
 
 ```jsx
-// Icon-only button — screen reader kya padhega?
+// Icon-only button — what will screen reader read?
 // ❌
 <button><CartIcon /></button>
 
-// ✓ aria-label add karo
-<button aria-label="Cart mein daalo">
+// ✓ Add aria-label
+<button aria-label="Add to cart">
   <CartIcon />
 </button>
 
-// Cart count ke liye
+// For cart count
 <button aria-label={`Cart, ${count} items`}>
   <CartIcon />
   <span>{count}</span>
@@ -80,10 +80,10 @@
 ### 4. Keyboard Navigation
 
 ```jsx
-// ✓ Buttons aur links automatically keyboard accessible hain
-<button onClick={handleAdd}>Add</button>  // Tab se focus, Enter se click
+// ✓ Buttons and links are automatically keyboard accessible
+<button onClick={handleAdd}>Add</button>  // Tab to focus, Enter to click
 
-// ✓ Custom components ke liye tabIndex add karo agar zaroorat ho
+// ✓ For custom components, add tabIndex if needed
 <div
   role="button"
   tabIndex={0}
@@ -99,7 +99,7 @@
 ### 5. Focus Visible
 
 ```css
-/* Default focus outline mat hataao — keyboard users ke liye zaroori hai */
+/* Don't remove the default focus outline — essential for keyboard users */
 
 /* ❌ */
 button:focus { outline: none; }
@@ -115,7 +115,7 @@ button:focus-visible {
 
 ### 6. Color Contrast
 
-Text aur background mein kaafi contrast hona chahiye — color blind users ke liye.
+There should be enough contrast between text and background — for color blind users.
 
 ```
 Minimum ratio: 4.5:1 (normal text)
@@ -129,31 +129,31 @@ Free tool: `webaim.org/resources/contrastchecker`
 
 ---
 
-## ShopKaro Mein Quick Checklist
+## Quick Checklist for ShopKaro
 
 ```
-✓ Sab buttons aur links keyboard se accessible
-✓ Saari images mein alt text
-✓ Headings proper order mein (h1 → h2 → h3)
-✓ Form inputs mein labels
-✓ Error messages clearly describe karein
-✓ Focus visible hai
-✓ Color sirf information convey nahi karta
-  (e.g., "Red = out of stock" ke saath "Out of Stock" text bhi)
+✓ All buttons and links accessible via keyboard
+✓ All images have alt text
+✓ Headings in proper order (h1 → h2 → h3)
+✓ Form inputs have labels
+✓ Error messages clearly describe the issue
+✓ Focus is visible
+✓ Color alone doesn't convey information
+  (e.g., alongside "Red = out of stock", also show "Out of Stock" text)
 ```
 
 ---
 
-## Accessibility Umbrella — Complete Hua
+## Accessibility Umbrella — Complete
 
 ```
 ACCESSIBILITY
 │
-└── Basics → Doc 43 ✓ (YEH)
+└── Basics → Doc 43 ✓ (THIS)
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`44-deployment-what-is-it.md` — Gyarawa umbrella — **Deployment**. App banai — ab duniya ko dikhao. Vercel pe deploy karna, environment variables — sab samjhenge.
+`44-deployment-what-is-it.md` — Eleventh umbrella — **Deployment**. The app works locally — now take it live. Deploying on Vercel, environment variables — we'll understand all of it.

@@ -1,14 +1,14 @@
-# 03 — Password Hashing: bcrypt Kya Hai
+# 03 — Password Hashing: What Is bcrypt
 
-> Pichle doc mein humne Authentication umbrella dekha.
-> Ab pehla andar wala concept — **Password Hashing**.
-> Priya ka password database mein kaise store hoga?
+> In the previous doc we saw the Authentication umbrella.
+> Now the first concept inside it — **Password Hashing**.
+> How will Priya's password be stored in the database?
 
 ---
 
-## Problem — Password Plain Text Mein Store Karo Toh Kya Hoga?
+## Problem — What Happens If You Store Passwords in Plain Text?
 
-Maan lo tumhara database hack ho gaya. Agar tumne passwords plain text mein store kiye hain:
+Imagine your database gets hacked. If you stored passwords in plain text:
 
 ```
 email              | password
@@ -17,108 +17,110 @@ priya@gmail.com    | mypassword123
 rahul@gmail.com    | iloveshopping
 ```
 
-Ab hacker ke paas **sabke passwords hain.** Aur kyunki log ek hi password kaafi jagah use karte hain — hacker ne ek jagah se sab unlock kar liya.
+Now the hacker has **everyone's passwords.** And since people reuse the same password in many places — the hacker has unlocked everything from one breach.
 
-Yeh real mein hota hai — bade bade companies ke saath bhi.
+This happens in real life — even with big companies.
 
 ---
 
 ## Solution — Hashing
 
-Hashing ek aisa process hai jo password ko ek **random-looking string** mein convert kar deta hai — jo **reverse nahi ho sakti.**
+Hashing is a process that converts a password into a **random-looking string** that **cannot be reversed.**
 
 ```
 "mypassword123"  →  bcrypt  →  "$2b$10$xK9mN3pQ..."
 ```
 
-Yeh `$2b$10$xK9mN3pQ...` wali string database mein store hoti hai — original password nahi.
+This `$2b$10$xK9mN3pQ...` string is what gets stored in the database — not the original password.
 
-**Key point:** Hashing **one-way** hai. Matlab:
+**Key point:** Hashing is **one-way**. Meaning:
 - Password → Hash: Possible ✓
-- Hash → Password: Possible nahi ✗
+- Hash → Password: Not possible ✗
 
 ---
 
-## Hashing vs Encryption — Fark
+## Hashing vs Encryption — The Difference
 
-Yeh dono alag hain:
+These two are different:
 
 | | Hashing | Encryption |
 |--|---------|------------|
-| Direction | One-way (reverse nahi) | Two-way (decrypt ho sakta hai) |
-| Use case | Passwords | Data jo baad mein padhna ho |
+| Direction | One-way (can't reverse) | Two-way (can be decrypted) |
+| Use case | Passwords | Data that needs to be read later |
 | Example | bcrypt | AES |
 
-Passwords ke liye **hashing use karo** — encryption nahi. Kyunki agar tum decrypt kar sakte ho, toh hacker bhi kar sakta hai.
+For passwords, **use hashing** — not encryption. Because if you can decrypt it, so can a hacker.
 
 ---
 
-## bcrypt Kya Hai
+## What Is bcrypt
 
-bcrypt ek popular **password hashing algorithm** hai. Yeh specially passwords ke liye banaya gaya hai.
+bcrypt is a popular **password hashing algorithm**. It was built specifically for passwords.
 
-Kuch special cheezein bcrypt mein:
+A few special things about bcrypt:
 
 ### 1. Salt
-Bcrypt automatically ek random "salt" add karta hai — matlab same password do alag users ka bhi alag hash banega:
+
+bcrypt automatically adds a random "salt" — meaning the same password for two different users produces a different hash:
 
 ```
 Priya:  "password123"  →  "$2b$10$abc..."
 Rahul:  "password123"  →  "$2b$10$xyz..."
 ```
 
-Dono ka same password hai, lekin hash alag hai. Isliye hacker "rainbow tables" use nahi kar sakta.
+Both have the same password, but the hash is different. This means a hacker can't use "rainbow tables."
 
 ### 2. Cost Factor (Slowness)
-bcrypt **intentionally slow** hai. Yeh bug nahi — feature hai.
+
+bcrypt is **intentionally slow.** This isn't a bug — it's a feature.
 
 ```javascript
 const saltRounds = 10  // Cost factor
 ```
 
-`saltRounds = 10` matlab bcrypt 2^10 = 1024 baar process karega. Aaj ke computers pe yeh ~100ms lagta hai.
+`saltRounds = 10` means bcrypt processes 2^10 = 1024 times. On today's computers this takes ~100ms.
 
-Tumhare liye 100ms okay hai. Lekin hacker jo **lakhs passwords** try kar raha hai — uske liye yeh impractical ho jaata hai.
+100ms is fine for you. But for a hacker trying **lakhs of passwords** — this becomes impractical.
 
 ---
 
-## ShopKaro Mein bcrypt — Kaise Use Hoga
+## bcrypt in ShopKaro — How It'll Be Used
 
-### Signup ke waqt — Password Hash Karo:
+### At Signup — Hash the Password:
 
 ```javascript
 import bcrypt from 'bcrypt'
 
-// User ne form submit kiya
+// User submitted the form
 const { email, password } = req.body
 
-// Hash karo — kabhi plain text store mat karo
+// Hash it — never store plain text
 const saltRounds = 10
 const hashedPassword = await bcrypt.hash(password, saltRounds)
 
-// Database mein save karo
+// Save to the database
 await prisma.user.create({
   data: {
     email: email,
-    password: hashedPassword  // original password nahi, hash store ho raha hai
+    password: hashedPassword  // storing the hash, not the original password
   }
 })
 ```
 
-### Login ke waqt — Password Compare Karo:
+### At Login — Compare the Password:
 
 ```javascript
-// User ne email + password diya
+// User provided email + password
 const { email, password } = req.body
 
-// Database se user dhundo
+// Find the user in the database
 const user = await prisma.user.findUnique({
   where: { email: email }
 })
 
-// Password compare karo
+// Compare the password
 const isMatch = await bcrypt.compare(password, user.password)
-// bcrypt.compare → plain text password ko hash se compare karta hai
+// bcrypt.compare → compares the plain text password against the hash
 
 if (isMatch) {
   // Login successful
@@ -127,11 +129,11 @@ if (isMatch) {
 }
 ```
 
-`bcrypt.compare` magic karta hai — yeh plain text password ko **dobara hash karke** stored hash se compare karta hai. Tum kabhi hash se original password nahi nikaal sakte — yeh compare karta hai internally.
+`bcrypt.compare` does the magic — it **re-hashes the plain text password** and compares it against the stored hash. You can never extract the original password from a hash — compare does the work internally.
 
 ---
 
-## Database Mein Kya Dikhega
+## What the Database Will Look Like
 
 ```
 id  | email              | password
@@ -140,7 +142,7 @@ id  | email              | password
 2   | rahul@gmail.com    | $2b$10$Ks3Vz7YhB4mR2pL9sJdTwuWQeXnNa5c8vFgH1iOzPtMqKjRlCbEdu
 ```
 
-Agar yeh database hack bhi ho jaaye — hacker ko sirf hashes milenge. Original passwords nahi.
+Even if this database gets hacked — the hacker only gets hashes. Not the original passwords.
 
 ---
 
@@ -148,13 +150,13 @@ Agar yeh database hack bhi ho jaaye — hacker ko sirf hashes milenge. Original 
 
 | | |
 |--|--|
-| **bcrypt kya karta hai** | Password → irreversible hash |
-| **Salt kyun** | Same password, alag hash |
-| **Slow kyun** | Hackers ke liye impractical |
-| **ShopKaro mein kab** | Signup pe hash, login pe compare |
+| **What bcrypt does** | Password → irreversible hash |
+| **Why salt** | Same password, different hash |
+| **Why slow** | Impractical for hackers |
+| **When in ShopKaro** | Hash at signup, compare at login |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`04-auth-sessions.md` — Theek hai, Priya login ho gayi. Ab server ko **har baar** kaise pata chalega ki yeh Priya hai? Har page pe dobara password nahi daalna — toh Sessions kaam aati hain.
+`04-auth-sessions.md` — Okay, Priya has logged in. How does the server **keep knowing** she's logged in? She shouldn't have to enter her password on every page — that's where Sessions come in.

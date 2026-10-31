@@ -1,85 +1,85 @@
 # ⚛️ Phase 2: Topic 11 - useMemo & useCallback
 
-> **Interview Question:** "useMemo aur useCallback mein kya difference hai? 'Expensive calculation' ka matlab kya hai? React ko nahi pata ki calculation expensive hai? Kab use karna chahiye, kab nahi?"
+> **Interview Question:** "What's the difference between useMemo and useCallback? What does 'expensive calculation' mean? Does React know a calculation is expensive? When should you use them, and when not?"
 
 ---
 
-## 🚨 **The Golden Rule — Sabse Pehle Samjho!**
+## 🚨 **The Golden Rule — Understand This First!**
 
-> **"useMemo values ko memoize karta hai, useCallback functions ko memoize karta hai. Dono sirf performance optimization ke liye hain — zaroori nahi ki har jagah use karo."**
+> **"useMemo memoizes values, useCallback memoizes functions. Both are purely for performance optimization — you don't need to use them everywhere."**
 
-### **Sabse Important Baat — Kyun Zaroori Hain?**
+### **Most Important Thing — Why Do They Matter?**
 
 ```
-React mein har render pe:
-1. Component function dobara execute hota hai
-2. Saare variables dobara create hote hain
-3. Saare functions dobara create hote hain
+On every render in React:
+1. The component function executes again
+2. All variables are recreated
+3. All functions are recreated
 
 Problem:
-- Expensive calculations har render pe hote hain (performance issue)
-- Functions har render pe naye hote hain (child components re-render)
+- Expensive calculations run on every render (performance issue)
+- Functions are recreated on every render (child components re-render)
 
 Solution:
-- useMemo → Expensive calculations ko cache karo
-- useCallback → Functions ko cache karo
+- useMemo → Cache expensive calculations
+- useCallback → Cache functions
 
-Par ye sab React ko internally pata NAHI chalta — humein manually batana padta hai!
+But React doesn't know any of this internally — you have to tell it manually!
 ```
 
 ---
 
 ## 💡 **Beginner-Friendly Explanation**
 
-### 🧮 **useMemo = Calculator ka Result Yaad Rakhna**
+### 🧮 **useMemo = Remembering the Calculator's Result**
 
 ```
-Socho tum ek complex math problem solve kar rahe ho:
+Imagine you're solving a complex math problem:
 
-❌ **Bina useMemo:**
-   - Har baar same problem solve karo
-   - 2 + 2 = 4 (pehli baar)
-   - 2 + 2 = 4 (dusri baar) — SAME calculation again!
-   - 2 + 2 = 4 (teesri baar) — SAME calculation again!
-   - Time waste!
+❌ **Without useMemo:**
+   - Solve the same problem every time
+   - 2 + 2 = 4 (first time)
+   - 2 + 2 = 4 (second time) — SAME calculation again!
+   - 2 + 2 = 4 (third time) — SAME calculation again!
+   - Wasted time!
 
-✅ **useMemo ke saath:**
-   - Pehli baar solve karo → Result yaad rakho
-   - Dusri baar → Yaad se result nikaalo (no calculation)
-   - Teesri baar → Yaad se result nikaalo (no calculation)
-   - Time bacha!
+✅ **With useMemo:**
+   - Solve it once → remember the result
+   - Second time → fetch result from memory (no calculation)
+   - Third time → fetch result from memory (no calculation)
+   - Time saved!
 
-Par dhyan rahe:
-- Sirf tab yaad rakho jab numbers change hon
-- Agar numbers change hue, toh dobara solve karo
+But remember:
+- Only remember it when the numbers change
+- If the numbers change, solve it again
 ```
 
-### 📦 **useCallback = Function ka Reference Yaad Rakhna**
+### 📦 **useCallback = Remembering a Function's Reference**
 
 ```
-Socho tumhare paas ek tool hai:
+Imagine you have a tool:
 
-❌ **Bina useCallback:**
-   - Har baar naya tool khareedo
-   - Pehle din: Hammer khareeda (₹500)
-   - Dusre din: Hammer khareeda (₹500) — SAME tool!
-   - Teesre din: Hammer khareeda (₹500) — SAME tool!
-   - Paise waste!
+❌ **Without useCallback:**
+   - Buy a new tool every time
+   - Day 1: Bought a hammer (₹500)
+   - Day 2: Bought a hammer (₹500) — SAME tool!
+   - Day 3: Bought a hammer (₹500) — SAME tool!
+   - Wasted money!
 
-✅ **useCallback ke saath:**
-   - Pehli baar: Hammer khareeda → Yaad rakho
-   - Dusri baar: Wahi purana hammer use karo
-   - Teesri baar: Wahi purana hammer use karo
-   - Paise bacha!
+✅ **With useCallback:**
+   - First time: Buy the hammer → remember it
+   - Second time: Use the same old hammer
+   - Third time: Use the same old hammer
+   - Money saved!
 
-Par dhyan rahe:
-- Sirf tab yaad rakho jab tool ki zaroorat change na ho
-- Agar zaroorat change hui, toh naya tool khareedo
+But remember:
+- Only remember it when the need doesn't change
+- If the need changes, buy a new tool
 ```
 
 ---
 
-## 🔄 **useMemo — Values ko Memoize Karna**
+## 🔄 **useMemo — Memoizing Values**
 
 ### **Syntax:**
 ```javascript
@@ -91,9 +91,9 @@ const memoizedValue = useMemo(() => {
 
 ### **Example 1: Expensive Calculation**
 ```javascript
-// ❌ GALAT — Har render pe expensive calculation
+// ❌ WRONG — Expensive calculation on every render
 function UserList({ users }) {
-  // Har render pe ye calculation hoga!
+  // This calculation runs on every render!
   const sortedUsers = users.sort((a, b) => a.name.localeCompare(b.name));
   const filteredUsers = users.filter(user => user.isActive);
 
@@ -107,26 +107,26 @@ function UserList({ users }) {
 }
 
 // Problem:
-// 1. users array same hai, lekin calculation har render pe ho rahi hai
-// 2. sort() aur filter() expensive operations hain (O(n log n) + O(n))
-// 3. Agar 1000 users hain, toh har render pe ~1500 operations!
+// 1. users array is the same, but the calculation runs on every render
+// 2. sort() and filter() are expensive operations (O(n log n) + O(n))
+// 3. With 1000 users, that's ~1500 operations per render!
 // 4. Performance issue!
 ```
 
-### **Example 2: useMemo ke Saath**
+### **Example 2: With useMemo**
 
 ```javascript
-// ✅ SAHI — Calculation ko memoize karo
+// ✅ CORRECT — Memoize the calculation
 function UserList({ users }) {
   const sortedUsers = useMemo(() => {
-    console.log("Sorting users...");  // Sirf jab users change honge
+    console.log("Sorting users...");  // Only when users change
     return users.sort((a, b) => a.name.localeCompare(b.name));
-  }, [users]);  // ← Sirf jab users array change hoga
+  }, [users]);  // ← Only when users array changes
 
   const filteredUsers = useMemo(() => {
-    console.log("Filtering users...");  // Sirf jab users change honge
+    console.log("Filtering users...");  // Only when users change
     return users.filter(user => user.isActive);
-  }, [users]);  // ← Sirf jab users array change hoga
+  }, [users]);  // ← Only when users array changes
 
   return (
     <div>
@@ -138,27 +138,27 @@ function UserList({ users }) {
 }
 
 // How it works:
-// 1. Pehle render pe: sort() + filter() execute honge
-// 2. Dusre render pe (agar users same hain): Cached result use hoga
-// 3. Teesre render pe (agar users same hain): Cached result use hoga
-// 4. Jab users change honge: Dobara sort() + filter() execute honge
+// 1. First render: sort() + filter() execute
+// 2. Second render (if users same): Cached result used
+// 3. Third render (if users same): Cached result used
+// 4. When users change: sort() + filter() execute again
 ```
 
 ### **Example 3: Derived State**
 
 ```javascript
-// ✅ SAHI — Derived state calculate karna
+// ✅ CORRECT — Calculating derived state
 function ShoppingCart({ items }) {
   const [quantity, setQuantity] = useState(1);
 
-  // ❌ GALAT — Har render pe calculation
+  // ❌ WRONG — Calculation on every render
   // const totalPrice = items.reduce((sum, item) => sum + (item.price * quantity), 0);
 
-  // ✅ SAHI — useMemo ke saath
+  // ✅ CORRECT — With useMemo
   const totalPrice = useMemo(() => {
     console.log("Calculating total...");
     return items.reduce((sum, item) => sum + (item.price * quantity), 0);
-  }, [items, quantity]);  // ← Jab items YA quantity change hoga
+  }, [items, quantity]);  // ← When items OR quantity changes
 
   return (
     <div>
@@ -171,7 +171,7 @@ function ShoppingCart({ items }) {
 
 ---
 
-## 🔄 **useCallback — Functions ko Memoize Karna**
+## 🔄 **useCallback — Memoizing Functions**
 
 ### **Syntax:**
 
@@ -184,11 +184,11 @@ const memoizedFunction = useCallback(() => {
 ### **Example 1: Child Component Re-render Problem**
 
 ```javascript
-// ❌ GALAT — Function har render pe naya hota hai
+// ❌ WRONG — A new function is created on every render
 function Parent() {
   const [count, setCount] = useState(0);
 
-  // Har render pe NAYA function create hota hai!
+  // A NEW function is created on every render!
   const handleClick = () => {
     console.log("Button clicked!");
   };
@@ -197,7 +197,7 @@ function Parent() {
     <div>
       <p>Count: {count}</p>
       <button onClick={() => setCount(count + 1)}>Increment</button>
-      <Child onClick={handleClick} />  // ← Har render pe naya function!
+      <Child onClick={handleClick} />  // ← New function on every render!
     </div>
   );
 }
@@ -208,24 +208,24 @@ function Child({ onClick }) {
 }
 
 // Problem:
-// 1. Parent render hota hai → handleClick NAYA function hai
-// 2. Child ko naya function prop milta hai → Child re-render hota hai
-// 3. Parent dobara render hota hai → handleClick NAYA function hai
-// 4. Child ko naya function prop milta hai → Child re-render hota hai
-// 5. Infinite re-renders! (agar Child bhi setState kare)
+// 1. Parent renders → handleClick is a NEW function
+// 2. Child receives a new function prop → Child re-renders
+// 3. Parent renders again → handleClick is a NEW function
+// 4. Child receives a new function prop → Child re-renders
+// 5. Infinite re-renders! (if Child also setState)
 ```
 
-### **Example 2: useCallback ke Saath**
+### **Example 2: With useCallback**
 
 ```javascript
-// ✅ SAHI — Function ko memoize karo
+// ✅ CORRECT — Memoize the function
 function Parent() {
   const [count, setCount] = useState(0);
 
-  // ✅ useCallback ke saath — Function reference SAME rehta hai
+  // ✅ With useCallback — Function reference stays the SAME
   const handleClick = useCallback(() => {
     console.log("Button clicked!");
-  }, []);  // ← Empty array — function kabhi change nahi hoga
+  }, []);  // ← Empty array — function never changes
 
   return (
     <div>
@@ -236,32 +236,32 @@ function Parent() {
   );
 }
 
-// React.memo ke saath Child:
+// Child with React.memo:
 const Child = React.memo(({ onClick }) => {
   console.log("Child rendered!");
   return <button onClick={onClick}>Click me</button>;
 });
 
 // How it works:
-// 1. Parent render hota hai → handleClick SAME function reference
-// 2. Child ko same function prop milta hai → Child re-render NAHI hota
-// 3. Parent dobara render hota hai → handleClick SAME function reference
-// 4. Child ko same function prop milta hai → Child re-render NAHI hota
-// ✅ Performance optimize!
+// 1. Parent renders → handleClick has SAME function reference
+// 2. Child receives same function prop → Child does NOT re-render
+// 3. Parent renders again → handleClick has SAME function reference
+// 4. Child receives same function prop → Child does NOT re-render
+// ✅ Performance optimized!
 ```
 
 ### **Example 3: useCallback with Dependencies**
 
 ```javascript
-// ✅ SAHI — Dependencies ke saath
+// ✅ CORRECT — With dependencies
 function SearchResults({ searchTerm }) {
   const [results, setResults] = useState([]);
 
-  // ✅ useCallback — jab searchTerm change hoga, tab naya function
+  // ✅ useCallback — new function only when searchTerm changes
   const fetchResults = useCallback(async () => {
     const data = await searchAPI(searchTerm);
     setResults(data);
-  }, [searchTerm]);  // ← jab searchTerm change hoga
+  }, [searchTerm]);  // ← When searchTerm changes
 
   useEffect(() => {
     fetchResults();
@@ -277,15 +277,15 @@ function SearchResults({ searchTerm }) {
 }
 
 // How it works:
-// 1. Pehle render pe: fetchResults create hua (searchTerm = "")
-// 2. searchTerm change hua: fetchResults dobara create hua (searchTerm = "React")
-// 3. searchTerm change hua: fetchResults dobara create hua (searchTerm = "Vue")
-// 4. searchTerm same raha: fetchResults SAME function reference use hua
+// 1. First render: fetchResults created (searchTerm = "")
+// 2. searchTerm changed: fetchResults recreated (searchTerm = "React")
+// 3. searchTerm changed: fetchResults recreated (searchTerm = "Vue")
+// 4. searchTerm same: fetchResults used SAME function reference
 ```
 
 ---
 
-## ⚖️ **useMemo vs useCallback — Difference Kya Hai?**
+## ⚖️ **useMemo vs useCallback — What's the Difference?**
 
 ### **Comparison Table:**
 
@@ -293,10 +293,10 @@ function SearchResults({ searchTerm }) {
 ┌─────────────────────┬─────────────────────┬─────────────────────┐
 │                     │      useMemo        │    useCallback      │
 ├─────────────────────┼─────────────────────┼─────────────────────┤
-│ Kya memoize karta   │    VALUES           │    FUNCTIONS        │
-│ hai?                │   (calculation)     │   (function ref)    │
+│ What it memoizes    │    VALUES           │    FUNCTIONS        │
+│                     │   (calculation)     │   (function ref)    │
 ├─────────────────────┼─────────────────────┼─────────────────────┤
-│ Return karta hai    │   memoizedValue     │   memoizedFunction  │
+│ Returns             │   memoizedValue     │   memoizedFunction  │
 ├─────────────────────┼─────────────────────┼─────────────────────┤
 │ Use case            │   Expensive         │   Function          │
 │                     │   calculations      │   references        │
@@ -309,17 +309,17 @@ function SearchResults({ searchTerm }) {
 ### **Code Comparison:**
 
 ```javascript
-// useMemo — VALUE ko memoize karta hai
+// useMemo — Memoizes the VALUE
 const expensiveValue = useMemo(() => {
-  return heavyCalculation(data);  // ← VALUE return karna hai
+  return heavyCalculation(data);  // ← Must RETURN a value
 }, [data]);
 
-// useCallback — FUNCTION ko memoize karta hai
+// useCallback — Memoizes the FUNCTION
 const handleClick = useCallback(() => {
-  heavyCalculation(data);  // ← Function logic, return nahi karna
+  heavyCalculation(data);  // ← Function logic, no return needed
 }, [data]);
 
-// Equivalent hai:
+// They are equivalent:
 // useCallback(fn, deps) === useMemo(() => fn, deps)
 ```
 
@@ -330,12 +330,12 @@ function Dashboard({ userId }) {
   const [user, setUser] = useState(null);
   const [stats, setStats] = useState(null);
 
-  // useMemo — VALUE calculate karo
+  // useMemo — CALCULATE the value
   const userStats = useMemo(() => {
-    return calculateStats(user);  // ← VALUE return hui
+    return calculateStats(user);  // ← Value returned
   }, [user]);
 
-  // useCallback — FUNCTION memoize karo
+  // useCallback — MEMOIZE the function
   const fetchUserStats = useCallback(() => {
     const stats = calculateStats(user);  // ← Function logic
     setStats(stats);
@@ -352,25 +352,25 @@ function Dashboard({ userId }) {
 
 ---
 
-## 🤔 **"Expensive Calculation" Ka Matlab Kya Hai?**
+## 🤔 **What Does "Expensive Calculation" Mean?**
 
-### **React Ko Nahi Pata Ki Calculation Expensive Hai!**
+### **React Doesn't Know a Calculation Is Expensive!**
 
 ```
 React internally:
-- Sirf reference comparison karta hai (===)
-- React ko NAHI pata ki tum kya calculation kar rahe ho
-- React ko NAHI pata ki tumhara function expensive hai ya cheap
+- Only does reference comparison (===)
+- Does NOT know what calculation you're doing
+- Does NOT know whether your function is expensive or cheap
 
-Humari zimmedari hai:
-- Hum khud decide karte hain ki kaunsi calculation expensive hai
-- Hum khud decide karte hain ki kaunsi calculation memoize karni hai
+It's our responsibility:
+- We decide which calculations are expensive
+- We decide which calculations to memoize
 ```
 
-### **Kaunsi Calculations Expensive Hain?**
+### **Which Calculations Are Expensive?**
 
 ```javascript
-// ✅ Expensive Calculations (memoize karo):
+// ✅ Expensive Calculations (memoize these):
 
 // 1. Array sorting (O(n log n))
 const sorted = useMemo(() => {
@@ -408,7 +408,7 @@ const processedData = useMemo(() => {
 ```
 
 ```javascript
-// ❌ Cheap Calculations (memoize MAT karo):
+// ❌ Cheap Calculations (don't memoize):
 
 // 1. Simple arithmetic
 const sum = a + b;  // No need to memoize!
@@ -429,28 +429,28 @@ const isActive = user.status === "active";  // No need to memoize!
 ### **Rule of Thumb:**
 
 ```
-Memoize karo agar:
-1. Calculation O(n) ya zyada complex hai (sort, filter, reduce, map)
-2. Data bada hai (100+ items)
-3. Calculation har render pe ho rahi hai
-4. Performance issue dikh raha hai
+Memoize when:
+1. The calculation is O(n) or more complex (sort, filter, reduce, map)
+2. The data is large (100+ items)
+3. The calculation runs on every render
+4. You can see a performance issue
 
-Mat karo agar:
-1. Calculation O(1) hai (simple arithmetic, string concat)
-2. Data chota hai (< 10 items)
-3. Calculation sirf kabhi kabhi ho rahi hai
-4. Performance issue nahi hai
+Don't memoize when:
+1. The calculation is O(1) (simple arithmetic, string concat)
+2. The data is small (< 10 items)
+3. The calculation only runs occasionally
+4. There's no performance issue
 
 Remember:
-- Memoization ka bhi overhead hota hai (memory + dependency tracking)
-- Har jagah useMemo/useCallback use karna performance WORSEN kar sakta hai!
+- Memoization has overhead too (memory + dependency tracking)
+- Using useMemo/useCallback everywhere can WORSEN performance!
 ```
 
 ---
 
-## ⚠️ **Kab Use Karna Chahiye, Kab Nahi?**
+## ⚠️ **When Should You Use Them, and When Not?**
 
-### **✅ Use Karna Chahiye:**
+### **✅ You Should Use Them:**
 
 ```javascript
 // 1. Expensive calculations
@@ -481,27 +481,27 @@ const config = useMemo(() => ({
 return <Child config={config} />;
 ```
 
-### **❌ Use Nahi Karna Chahiye:**
+### **❌ You Should Not Use Them:**
 
 ```javascript
 // 1. Simple calculations
 const sum = useMemo(() => a + b, [a, b]);  // ❌ Overkill!
-const sum = a + b;  // ✅ Sahi
+const sum = a + b;  // ✅ Correct
 
-// 2. Functions jo kabhi child ko nahi jaate
+// 2. Functions that never reach a child
 const handleClick = useCallback(() => {  // ❌ Overkill!
   console.log("Clicked!");
 }, []);
-// ✅ Bina useCallback ke bhi chalega
+// ✅ Works fine without useCallback
 
-// 3. Har render pe naye values ke saath
+// 3. New values on every render
 const result = useMemo(() => {
-  return Math.random();  // ❌ Har render pe naya value!
+  return Math.random();  // ❌ New value on every render!
 }, []);
 
-// 4. Jahan performance issue hi nahi hai
-const items = useMemo(() => [1, 2, 3], []);  // ❌ Chota array!
-const items = [1, 2, 3];  // ✅ Sahi
+// 4. Where there's no performance issue
+const items = useMemo(() => [1, 2, 3], []);  // ❌ Small array!
+const items = [1, 2, 3];  // ✅ Correct
 ```
 
 ---
@@ -511,7 +511,7 @@ const items = [1, 2, 3];  // ✅ Sahi
 ### **Pattern 1: Expensive List Processing**
 
 ```javascript
-// ✅ SAHI — List ko process karna
+// ✅ CORRECT — Processing a list
 function UserList({ users, filter, sortBy }) {
   const processedUsers = useMemo(() => {
     let result = users;
@@ -542,7 +542,7 @@ function UserList({ users, filter, sortBy }) {
 ### **Pattern 2: Event Handlers with Dependencies**
 
 ```javascript
-// ✅ SAHI — Event handlers ko memoize karna
+// ✅ CORRECT — Memoizing event handlers
 function Form({ onSubmit, initialValues }) {
   const [values, setValues] = useState(initialValues);
 
@@ -561,7 +561,7 @@ function Form({ onSubmit, initialValues }) {
 ### **Pattern 3: API Call Functions**
 
 ```javascript
-// ✅ SAHI — API call functions ko memoize karna
+// ✅ CORRECT — Memoizing API call functions
 function UserProfile({ userId }) {
   const [user, setUser] = useState(null);
 
@@ -581,7 +581,7 @@ function UserProfile({ userId }) {
 ### **Pattern 4: Derived State from Props**
 
 ```javascript
-// ✅ SAHI — Props se derived state calculate karna
+// ✅ CORRECT — Calculating derived state from props
 function ProductCard({ product }) {
   const [quantity, setQuantity] = useState(1);
 
@@ -606,21 +606,21 @@ function ProductCard({ product }) {
 
 ## 🎙️ **Interview Articulation**
 
-### **Q: "useMemo aur useCallback mein kya difference hai?"**
+### **Q: "What's the difference between useMemo and useCallback?"**
 
-**Answer:** "useMemo aur useCallback dono memoization hooks hain, lekin alag cheezo ko memoize karte hain:
+**Answer:** "useMemo and useCallback are both memoization hooks, but they memoize different things:
 
-- **useMemo** VALUES ko memoize karta hai — expensive calculations ka result cache karta hai
-- **useCallback** FUNCTIONS ko memoize karta hai — function references cache karta hai
+- **useMemo** memoizes VALUES — it caches the result of expensive calculations
+- **useCallback** memoizes FUNCTIONS — it caches function references
 
 Example:
 ```javascript
-// useMemo — VALUE return karta hai
+// useMemo — returns a VALUE
 const expensiveValue = useMemo(() => {
   return heavyCalculation(data);
 }, [data]);
 
-// useCallback — FUNCTION return karta hai
+// useCallback — returns a FUNCTION
 const handleClick = useCallback(() => {
   heavyCalculation(data);
 }, [data]);
@@ -629,51 +629,51 @@ const handleClick = useCallback(() => {
 // useCallback(fn, deps) === useMemo(() => fn, deps)
 ```
 
-useMemo tab use karte hain jab expensive calculation ka result cache karna ho. useCallback tab use karte hain jab function reference same rakhna ho (jaise child components ko pass karte waqt)."
+We use useMemo when we want to cache the result of an expensive calculation. We use useCallback when we want to keep a function reference stable (for example, when passing it to child components)."
 
-### **Q: "'Expensive calculation' ka matlab kya hai? React ko nahi pata ki calculation expensive hai?"**
+### **Q: "What does 'expensive calculation' mean? Does React know a calculation is expensive?"**
 
-**Answer:** "React ko internally NAHI pata ki calculation expensive hai. React sirf reference comparison karta hai (`===`), calculation complexity nahi dekhta. Humari zimmedari hai ki hum khud decide karein ki kaunsi calculation expensive hai.
+**Answer:** "React does NOT know internally whether a calculation is expensive. React only does reference comparison (`===`); it doesn't look at calculation complexity. It's our responsibility to decide which calculations are expensive.
 
-Expensive calculations hain:
+Expensive calculations include:
 - Array sorting (O(n log n))
 - Array filtering + mapping (O(n) + O(n))
 - Array reducing (O(n))
 - Complex object transformations
 - String operations on large data
 
-Cheap calculations hain:
+Cheap calculations include:
 - Simple arithmetic (a + b)
 - Simple string concatenation
 - Simple object/array access
 
-React ko manually batana padta hai ki kaunsi calculation memoize karni hai. Isliye hum useMemo/useCallback use karte hain."
+React has to be told manually which calculations to memoize. That's why we use useMemo/useCallback."
 
-### **Q: "Kab useMemo/useCallback use karna chahiye, kab nahi?"**
+### **Q: "When should you use useMemo/useCallback, and when not?"**
 
-**Answer:** "useMemo/useCallback use karna chahiye:
+**Answer:** "You should use useMemo/useCallback when:
 
 1. **Expensive calculations** — sort(), filter(), reduce(), map() on large data
-2. **Functions passed to optimized child components** — React.memo ke saath
-3. **Functions in dependency arrays** — useEffect mein
-4. **Objects/Arrays passed as props** — Taaki child components re-render na hon
+2. **Functions passed to optimized child components** — with React.memo
+3. **Functions in dependency arrays** — inside useEffect
+4. **Objects/Arrays passed as props** — so child components don't re-render
 
-Use nahi karna chahiye:
+You should NOT use them when:
 
 1. **Simple calculations** — a + b, string concat
-2. **Functions jo kabhi child ko nahi jaate**
-3. **Har render pe naye values** — Math.random()
-4. **Jahan performance issue hi nahi hai**
+2. **Functions that never reach a child**
+3. **New values on every render** — Math.random()
+4. **Where there's no performance issue**
 
-Remember: Memoization ka bhi overhead hota hai (memory + dependency tracking). Har jagah use karna performance WORSEN kar sakta hai. Sirf wahan use karo jahan actual performance benefit ho."
+Remember: Memoization has overhead too (memory + dependency tracking). Using it everywhere can WORSEN performance. Use it only where there's an actual performance benefit."
 
-### **Q: "useCallback kyun zaroori hai? Sirf useMemo use kar sakte hain?"**
+### **Q: "Why is useCallback necessary? Can we just use useMemo?"**
 
-**Answer:** "useCallback zaroori hai kyunki functions har render pe naye create hote hain. Agar function ko child component ko pass karte hain, toh child har baar re-render hoga kyunki naya function reference milega.
+**Answer:** "useCallback is necessary because functions are recreated on every render. If you pass a function to a child component, the child re-renders every time because it receives a new function reference.
 
-useCallback function reference ko cache karta hai, taaki child component ko same reference mile aur child re-render na ho.
+useCallback caches the function reference so the child component receives the same reference and doesn't re-render.
 
-Technically, useMemo use kar sakte hain:
+Technically, you could use useMemo:
 ```javascript
 // useCallback:
 const handleClick = useCallback(() => {
@@ -686,7 +686,7 @@ const handleClick = useMemo(() => () => {
 }, []);
 ```
 
-Lekin useCallback zyada readable hai aur specifically functions ke liye designed hai. Isliye functions ke liye useCallback use karna better hai."
+But useCallback is more readable and specifically designed for functions. So useCallback is better for functions."
 
 ---
 
@@ -695,10 +695,10 @@ Lekin useCallback zyada readable hai aur specifically functions ke liye designed
 ### **useMemo vs useCallback:**
 
 ```javascript
-// useMemo — VALUE ko memoize karta hai
+// useMemo — Memoizes the VALUE
 const value = useMemo(() => calculation(), [deps]);
 
-// useCallback — FUNCTION ko memoize karta hai
+// useCallback — Memoizes the FUNCTION
 const fn = useCallback(() => { /* logic */ }, [deps]);
 
 // Equivalent:
@@ -716,15 +716,15 @@ const fn = useCallback(() => { /* logic */ }, [deps]);
 
 ❌ DON'T USE:
 - Simple calculations (a + b)
-- Functions jo child ko nahi jaate
-- Har render pe naye values
-- Jahan performance issue hi nahi
+- Functions that don't reach a child
+- New values on every render
+- Where there's no performance issue
 ```
 
 ### **Expensive Calculations:**
 
 ```javascript
-// ✅ Memoize karo:
+// ✅ Memoize:
 - items.sort()
 - items.filter()
 - items.reduce()
@@ -732,7 +732,7 @@ const fn = useCallback(() => { /* logic */ }, [deps]);
 - Complex object transformations
 - API data processing
 
-// ❌ Mat karo:
+// ❌ Don't memoize:
 - a + b
 - firstName + " " + lastName
 - items[0]
@@ -742,13 +742,13 @@ const fn = useCallback(() => { /* logic */ }, [deps]);
 ### **Best Practices:**
 
 ```
-1. Pehle profile karo, phir optimize karo
-2. Memoization ka bhi overhead hota hai
-3. Sirf wahan use karo jahan actual benefit ho
-4. Dependencies array sahi se define karo
-5. Stale closures se bacho (sahi dependencies do)
+1. Profile first, then optimize
+2. Memoization has overhead too
+3. Use it only where there's an actual benefit
+4. Define the dependencies array correctly
+5. Avoid stale closures (pass correct dependencies)
 ```
 
 ---
 
-> **Pro Tip:** Interview mein useMemo/useCallback discuss karte waqt **"React ko internally nahi pata"** zaroor mention karna. Ye demonstrate karta hai ki tum sirf hooks use nahi karte, balki unke internal workings bhi samajhte ho! 🎯
+> **Pro Tip:** When discussing useMemo/useCallback in an interview, always mention that **"React doesn't know internally"**. This demonstrates that you don't just use hooks — you understand their internal workings too! 🎯

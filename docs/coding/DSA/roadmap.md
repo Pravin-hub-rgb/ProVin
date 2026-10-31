@@ -1,30 +1,31 @@
-Theek hai, beginner + self-paced — perfect, ab realistic roadmap banate hain jo phase-based ho (deadline pressure nahi, but har phase ka clear "yahan se aage badho" signal ho).
+Alright — beginner + self-paced — perfect. Let's build a realistic roadmap, phase-based (no deadline pressure, but each phase has a clear "you're ready to move on" signal).
 
-## Core Principle Pehle
+## Core Principle First
 
-Har phase me DSA + tumhara existing project/React work **parallel** chalega, sequentially nahi. Jaise:
-- DSA ke liye daily/alternate-day 1-2 ghante fixed
-- Baaki time React/Next/DukaanOS/TradeStack pe jo already chal raha hai
+In every phase, DSA + your existing project/React work run **in parallel**, not sequentially. Like:
 
-Isse resume bhi fresh rahega aur DSA bhi build hoga saath saath.
+- Fixed 1-2 hours daily/alternate-day for DSA
+- Remaining time on React/Next/DukaanOS/TradeStack — whatever's already running
+
+This keeps your resume fresh and builds DSA at the same time.
 
 ---
 
-## Phase 1 — Foundations (Beginner se yahan start)
+## Phase 1 — Foundations (Start Here as Beginner)
 
 **Topics:**
-- Time/Space complexity (Big O) — bas intuition, formal analysis nahi
+- Time/Space complexity (Big O) — just intuition, no formal analysis
 - Arrays: traversal, basic manipulation
 - Two Pointers
 - Sliding Window
-- Hashing (HashMap/HashSet) — yeh sabse zyada use hoga interviews me
+- Hashing (HashMap/HashSet) — most used in interviews
 - Basic string problems
 
-**Kaise karna hai:** Ek pattern lo (jaise Sliding Window) → concept samjho achhe se → uske 4-5 variations solve karo khud (Max Sum Subarray → Longest Substring w/o Repeat → Min Window Substring). Solution dekhne se pehle minimum 20-30 min genuinely atko.
+**How to do it:** Pick one pattern (like Sliding Window) → understand the concept well → solve 4-5 variations yourself (Max Sum Subarray → Longest Substring w/o Repeat → Min Window Substring). Genuinely get stuck for at least 20-30 min before looking at a solution.
 
-**Target:** ~50-60 questions (Easy zyada, thoda Medium)
+**Target:** ~50-60 questions (mostly Easy, some Medium)
 
-**Phase khatam kab maano:** Jab naya array/string/hashing problem dekh ke tumhe "yeh kis pattern ka hai" pehchan aa jaye, even agar solve karne me time lage.
+**When is the phase done:** When you see a new array/string/hashing problem and you can tell "which pattern this is," even if solving it takes time.
 
 ---
 
@@ -38,31 +39,31 @@ Isse resume bhi fresh rahega aur DSA bhi build hoga saath saath.
 
 **Target:** ~40 questions
 
-**Kyun important:** Interviews me LL reverse, cycle detection bahut common hai — asaan bhi hai ek baar samajh aa jaye.
+**Why important:** LL reverse and cycle detection are very common in interviews — easy once it clicks.
 
 ---
 
 ## Phase 3 — Recursion + Trees + BST
 
 **Topics:**
-- Recursion basics (tree recursion tak)
-- Backtracking: Subsets, Permutations (N-Queens/Sudoku skip kar sakte ho abhi, low-priority for Gurgaon startups)
+- Recursion basics (up to tree recursion)
+- Backtracking: Subsets, Permutations (N-Queens/Sudoku can be skipped for now — low priority for Gurgaon startups)
 - Binary Tree: all traversals, height, diameter, LCA
 - BST: insert/delete/validate
 
 **Target:** ~50 questions
 
-Yeh phase thoda heavy hai — self-paced hone ka fayda yahi hai, jitna time lage utna lo.
+This phase is a bit heavy — the benefit of self-paced is you take as much time as you need.
 
 ---
 
 ## Phase 4 — Heaps (light) + Graphs (basic) + DP (basic)
 
-Yahan roadmap ko trim karna hai jaise original discussion me bola gaya:
+Trim the roadmap here as discussed in the original conversation:
 
-- **Heaps:** sirf Top-K type, Priority Queue basics — deep nahi jaana
-- **Graphs:** BFS, DFS, Number of Islands, Course Schedule (cycle detection) — Dijkstra/MST tab tak skip jab tak Tier-1 company target na ho
-- **DP:** 1D DP (Climbing Stairs, House Robber) → 2D basics (Knapsack 0/1, LCS) — advanced DP on trees/graphs skip abhi
+- **Heaps:** only Top-K type, Priority Queue basics — don't go deep
+- **Graphs:** BFS, DFS, Number of Islands, Course Schedule (cycle detection) — skip Dijkstra/MST until targeting Tier-1
+- **DP:** 1D DP (Climbing Stairs, House Robber) → 2D basics (Knapsack 0/1, LCS) — skip advanced DP on trees/graphs for now
 
 **Target:** ~40-50 questions combined
 
@@ -70,13 +71,13 @@ Yahan roadmap ko trim karna hai jaise original discussion me bola gaya:
 
 ## Phase 5 — Interview-Ready Polish
 
-- JavaScript/TypeScript specific interview questions (closures, event loop, promises, hoisting — yeh Gurgaon full-stack rounds me DSA jitna hi poocha jata hai)
+- JavaScript/TypeScript specific interview questions (closures, event loop, promises, hoisting — asked as much as DSA in Gurgaon full-stack rounds)
 - SQL basics (joins, aggregations)
-- Resume finalize (DukaanOS, TradeStack already strong hain)
-- 3-4 mock interviews jab confidence aa jaye
+- Finalize resume (DukaanOS, TradeStack already strong)
+- 3-4 mock interviews once confidence builds
 
 ---
 
-**Total realistic number:** ~180-200 quality-solved problems, na ki 500. Yeh sufficient hai Gurgaon full-stack roles ke liye.
+**Total realistic number:** ~180-200 quality-solved problems, not 500. That's sufficient for Gurgaon full-stack roles.
 
-Ek suggestion — chaho to hum ek simple tracker bana sakte hain (artifact me) jisme tum daily/weekly progress log kar sako, phase-wise problem count ke saath. Chahiye?
+One suggestion — if you want, we can build a simple tracker (as an artifact) where you log daily/weekly progress with phase-wise problem counts. Want it?

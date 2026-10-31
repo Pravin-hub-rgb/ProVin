@@ -1,93 +1,93 @@
-# 27 — State Management: Umbrella Kya Hai
+# 27 — State Management: What Is It
 
-> API Design complete hua — REST, GraphQL, ShopKaro endpoints.
-> Ab chha umbrella — **State Management**.
-> Yeh topic bahut confuse karta hai — yahan clearly samjhenge.
-
----
-
-## State Kya Hoti Hai
-
-**State** = app ki **abhi ki situation** — kya data hai, kya dikhna chahiye.
-
-ShopKaro mein state ka matlab:
-- Cart mein kitne items hain abhi?
-- User logged in hai ya nahi?
-- Kaunsa modal open hai?
-- Products load ho rahe hain ya aa gaye?
-
-Yeh sab **state** hai — aur yeh **change hoti rehti hai** user ke actions se.
+> API Design complete — REST, GraphQL, ShopKaro endpoints.
+> Now the sixth big umbrella — **State Management**.
+> This topic confuses many — we'll get it crystal clear here.
 
 ---
 
-## State Management Umbrella Ke Andar Kya Kya
+## What Is State
+
+**State** = the app's **current situation** — what data exists, what should show.
+
+In ShopKaro, state means:
+- How many items in cart right now?
+- Is the user logged in or not?
+- Which modal is open?
+- Are products still loading or loaded?
+
+All of this is **state** — and it **keeps changing** with user actions.
+
+---
+
+## What's Inside the State Management Umbrella
 
 ```
 STATE MANAGEMENT
 │
 ├── Local State (useState)
-│   → Sirf ek component ke liye
+│   → For a single component
 │
 ├── Global State
 │   ├── React Context → Simple global state
 │   └── Zustand → Complex global state
 │
 └── Server State (React Query / TanStack Query)
-    → Server se aane wala data — alag concept
+    → Data coming from server — separate concept
 ```
 
 ---
 
-## Teen Tarah Ki State
+## Three Types of State
 
-### 1. Local State — Sirf Ek Component Ka Data
+### 1. Local State — Data for One Component Only
 
 ```jsx
 function SearchBar() {
-  const [query, setQuery] = useState('')  // Sirf SearchBar ko chahiye
+  const [query, setQuery] = useState('')  // Only SearchBar needs this
 
   return <input value={query} onChange={e => setQuery(e.target.value)} />
 }
 ```
 
-Yeh state sirf `SearchBar` mein use hoti hai — kisi aur ko nahi chahiye.
+This state is used only inside `SearchBar` — no one else needs it.
 
 ---
 
-### 2. Global State — Poori App Ka Data
+### 2. Global State — Data for the Whole App
 
 ```
-Cart items → Navbar mein count dikhna chahiye
-           → Cart page mein list dikhni chahiye
-           → Checkout mein total dikhna chahiye
+Cart items → Count must show in Navbar
+           → List must show on Cart page
+           → Total must show at Checkout
 
-Yeh teen alag components hain — unhe ek hi cart data chahiye
+These are three separate components — all need the same cart data
 ```
 
-Yeh **global state** hai — poori app mein accessible.
+This is **global state** — accessible across the whole app.
 
 ---
 
-### 3. Server State — Server Se Aaya Data
+### 3. Server State — Data That Came From Server
 
 ```
-Products list → Server se fetch ki
-User profile → Server se fetch ki
-Order history → Server se fetch ki
+Products list → Fetched from server
+User profile → Fetched from server
+Order history → Fetched from server
 ```
 
-Yeh data server pe hai — frontend sirf copy rakhta hai. Aur yeh **stale** ho sakta hai (server pe change ho gaya, frontend pe purana hai).
+This data lives on the server — frontend just keeps a copy. And it can go **stale** (changed on server but frontend still has old copy).
 
-Server state alag tarike se handle hoti hai — React Query se.
+Server state is handled differently — with React Query.
 
 ---
 
-## ShopKaro Mein Kaunsi State Kahan
+## Which State Where in ShopKaro
 
 | State | Type | Tool |
 |-------|------|------|
 | Cart items | Global | Zustand |
-| User login status | Global | Zustand ya Context |
+| User login status | Global | Zustand or Context |
 | Search input value | Local | useState |
 | Modal open/closed | Local | useState |
 | Products list | Server | React Query |
@@ -95,6 +95,6 @@ Server state alag tarike se handle hoti hai — React Query se.
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`28-state-local-vs-global.md` — Local state aur Global state ka fark ek concrete example ke saath — kab props se kaam chale, kab global chahiye.
+`28-state-local-vs-global.md` — The difference between Local and Global state with a concrete example — when props are enough, when global is needed.

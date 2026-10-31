@@ -33,6 +33,11 @@ export const nextjsSubject: Subject = {
           path: "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.0.5 React Essentials - Generic Revision.md",
         },
         {
+          id: "next-0.0.8",
+          title: "0.0.8 React Compiler — Automatic Optimization",
+          path: "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.0.8 React Compiler — Automatic Optimization.md",
+        },
+        {
           id: "next-0.0.6",
           title: "0.0.6 React Versions — Compatibility with Next.js",
           path: "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.0.6 React Versions - Next.js Ke Saath Compatibility.md",
@@ -134,6 +139,11 @@ export const nextjsSubject: Subject = {
           title: "1.5.5 States + Testing — Completing the Project",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.5 States + Testing — Project Complete Karna.md",
         },
+        {
+          id: "next-1.6",
+          title: "1.6 Search Params + Templates — template.tsx vs layout.tsx",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.6 Search Params + Template — URL Queries and State Reset.md",
+        },
       ],
     },
     {
@@ -186,6 +196,11 @@ export const nextjsSubject: Subject = {
           title: "2.5.4 States + ISR + Testing — V2 Complete",
           path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.4 States + ISR + Testing — V2 Complete.md",
         },
+        {
+          id: "next-2.6",
+          title: "2.6 Caching — use cache, cacheTag, cacheLife",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.6 Caching — use cache, cacheTag, cacheLife.md",
+        },
       ],
     },
     {
@@ -237,6 +252,16 @@ export const nextjsSubject: Subject = {
           id: "next-3.3.5",
           title: "3.3.5 Summary — Refactor Recap",
           path: "docs/coding/Next JS/Batch 3 - Mutations/3.3.5 Summary - What Did We Refactor.md",
+        },
+        {
+          id: "next-3.3.6",
+          title: "3.3.6 useFormStatus + next/form — Beyond useActionState",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.3.6 useFormStatus + next form — Beyond useActionState.md",
+        },
+        {
+          id: "next-3.3.7",
+          title: "3.3.7 useOptimistic — Instant UI Updates",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.3.7 useOptimistic — Instant UI Updates.md",
         },
         {
           id: "next-3.4.1",
@@ -481,6 +506,26 @@ export const nextjsSubject: Subject = {
           id: "next-5.5.5",
           title: "5.5.5 Testing + States + Summary",
           path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.5.5 Testing + States + Summary.md",
+        },
+        {
+          id: "next-5.6",
+          title: "5.6 Clerk Auth — Introduction & Why",
+          path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.6 Clerk Auth — Industry Standard Alternative.md",
+        },
+        {
+          id: "next-5.6-1",
+          title: "5.6.1 Clerk Setup — Install, Keys, ClerkProvider",
+          path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.6.1 Clerk Setup — Install, Keys, and ClerkProvider.md",
+        },
+        {
+          id: "next-5.6-2",
+          title: "5.6.2 Clerk Protected Routes — Sign-In UI + Protection",
+          path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.6.2 Clerk Protected Routes — Sign-In UI + Protection.md",
+        },
+        {
+          id: "next-5.6-3",
+          title: "5.6.3 Clerk vs Auth.js — When to Choose",
+          path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.6.3 Clerk vs Auth.js — When to Choose What.md",
         },
       ],
     },
@@ -732,6 +777,68 @@ export const nextjsSubject: Subject = {
           id: "next-8.5.4",
           title: "8.5.4 Deploy — Vercel",
           path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.5.4 Deploy — Vercel.md",
+        },
+        {
+          id: "next-8.6",
+          title: "8.6 Next.js MCP — What Is It & Why",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.6 Next.js MCP — AI Assistant That Reads Your Code.md",
+        },
+        {
+          id: "next-8.6-1",
+          title: "8.6.1 MCP Setup — Install, Configure, Connect",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.6.1 MCP Setup — Install, Configure, Connect.md",
+        },
+        {
+          id: "next-8.6-2",
+          title: "8.6.2 Using MCP Tools — get routes, Inspect, Edit",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.6.2 Using MCP Tools — get routes, Inspect, Edit.md",
+        },
+        {
+          id: "next-8.6-3",
+          title: "8.6.3 next-browser + Adapters — Inspect Without Browser",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.6.3 next-browser + Adapters — Inspect Without a Browser.md",
+        },
+        {
+          id: "next-8.6-4",
+          title: "8.6.4 Summary — MCP & AI-Assisted Development",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.6.4 Summary — MCP & AI-Assisted Development.md",
+        },
+      ],
+    },
+    {
+      id: "batch9",
+      title: "Batch 9 — State Management at Scale",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "next-9.0",
+          title: "9.0 Redux Toolkit — Why You Need It",
+          path: "docs/coding/Next JS/Batch 9 - State Management at Scale/9.0 Redux Toolkit — Problem & Why You Need It.md",
+        },
+        {
+          id: "next-9.1",
+          title: "9.1 Store + Slice + Provider",
+          path: "docs/coding/Next JS/Batch 9 - State Management at Scale/9.1 Store + Slice + Provider.md",
+        },
+        {
+          id: "next-9.2",
+          title: "9.2 Selectors + Typed Hooks",
+          path: "docs/coding/Next JS/Batch 9 - State Management at Scale/9.2 Selectors + Typed Hooks — Selective Re-renders.md",
+        },
+        {
+          id: "next-9.3",
+          title: "9.3 Mini-Project — Dashboard Todo App",
+          path: "docs/coding/Next JS/Batch 9 - State Management at Scale/9.3 Mini-Project — Dashboard Todo App.md",
+        },
+        {
+          id: "next-9.4",
+          title: "9.4 Next.js Integration — Server vs Client Boundary",
+          path: "docs/coding/Next JS/Batch 9 - State Management at Scale/9.4 Next.js Integration — Server vs Client Boundary.md",
+        },
+        {
+          id: "next-9.5",
+          title: "9.5 Summary — When Redux vs Context vs Zustand",
+          path: "docs/coding/Next JS/Batch 9 - State Management at Scale/9.5 Summary — When Redux vs Context vs Zustand.md",
         },
       ],
     },

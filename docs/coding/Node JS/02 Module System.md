@@ -1,30 +1,30 @@
-01 mein humne dekha ki Node.js JavaScript ko browser ke bahar chalata hai. Ab ek asli problem aati hai — jab program bada hota hai, toh ek hi file mein sab likhna bekar ho jata hai. Socho agar tumhara pura app ek file mein ho — hazaaron lines. Koi samjhe hi nahi, aur kisi ek cheez ko fix karna ho toh poora program toot jaaye.
+In the previous file we saw that Node.js runs JavaScript outside the browser. Now a real problem shows up — when a program grows big, writing everything in a single file becomes useless. Imagine your entire app in one file — thousands of lines. Nobody understands it, and if you need to fix one thing, the whole program breaks.
 
-Solution? **Code ko chhote-chhote hisson mein baanto — har hissa apni file mein — aur jaroorat pe ek hissa dusre ko use kare.** Isi ko kehte hain **modules**.
+Solution? **Split the code into small pieces — each piece in its own file — and let one piece use another when needed.** This is called **modules**.
 
-## Module Kya Hai — Ek Line Mein
+## What Is a Module — In One Line
 
-**Module** = ek file jo apna code export karti hai, taaki dusri files use kar sakein.
+**Module** = a file that exports its code so other files can use it.
 
-Jaise React course mein tumne components ko alag files mein rakha tha aur `import`/`export` se joda tha — **wahi concept Node mein hai**, sirf ek purana syntax bhi hai jise tumhe pehchan na hai.
+Just like in the React course where you kept components in separate files and connected them with `import`/`export` — **the same concept exists in Node**, only with an older syntax you also need to recognize.
 
-## Node Mein Do Module Systems Kyun?
+## Why Are There Two Module Systems in Node?
 
-Node ke itihaas mein pehle **CommonJS** aaya (purana), phir JavaScript mein officially **ES Modules** aaye (naya). Dono ka kaam same hai — code share karna — bas syntax alag.
+In Node's history, **CommonJS** came first (the old one), then JavaScript officially got **ES Modules** (the new one). Both do the same job — sharing code — just with different syntax.
 
-Aur tumhe dono jaanne padenge kyunki:
+And you'll need to know both because:
 
-- **Next.js/React mein** tum modern syntax use karoge → ES Modules (`import`/`export`)
-- **Purane Node code/tutorials/packages** mein purana syntax milega → CommonJS (`require`/`module.exports`)
-- Agar sirf ek jaante ho, doosra dekhte hi ghabra jaoge — "ye kya hai?"
+- **In Next.js/React** you'll use the modern syntax → ES Modules (`import`/`export`)
+- **In older Node code/tutorials/packages** you'll find the old syntax → CommonJS (`require`/`module.exports`)
+- If you know only one, you'll panic seeing the other — "what is this?"
 
-Dono samajh lo, kaam same hai.
+Learn both; the job is the same.
 
-## CommonJS — Purana Tarika (`require`)
+## CommonJS — The Old Way (`require`)
 
-Ye Node ka original module system hai. Ek file apna code `module.exports` se bhejti hai, dusri `require()` se maangti hai.
+This is Node's original module system. One file sends its code via `module.exports`, another receives it with `require()`.
 
-**Step 1:** `math.js` banate hain — isme code hai jo hum share karna chahte hain:
+**Step 1:** Create `math.js` — code we want to share:
 
 ```javascript
 // math.js
@@ -39,7 +39,7 @@ function multiply(a, b) {
 module.exports = { add, multiply };
 ```
 
-**Step 2:** `app.js` banate hain — ye math.js ka code use karta hai:
+**Step 2:** Create `app.js` — it uses math.js's code:
 
 ```javascript
 // app.js
@@ -49,17 +49,17 @@ console.log(add(2, 3));       // 5
 console.log(multiply(2, 3));  // 6
 ```
 
-**Samjho kya hua:**
-1. `math.js` mein functions banaye
-2. `module.exports = { add, multiply }` — isne functions ko "bahar bhej diya" (dusri files use kar sakein)
-3. `app.js` mein `require('./math')` — math.js ka exported content le aaya
-4. Destructuring se `add` aur `multiply` alag alag mil gaye
+**What happened:**
+1. Functions were defined in `math.js`
+2. `module.exports = { add, multiply }` — sent the functions "outside" (so other files can use them)
+3. `require('./math')` in `app.js` — fetched math.js's exported content
+4. Destructuring separated `add` and `multiply`
 
-**Notice:** `./math` — relative path hai. `.js` extension likhni zaroori nahi CommonJS mein.
+**Notice:** `./math` is a relative path. In CommonJS you don't need to write the `.js` extension.
 
-## ES Modules — Naya Tarika (`import`/`export`)
+## ES Modules — The New Way (`import`/`export`)
 
-Yeh wahi syntax hai jo React/Next.js mein use hota hai. `export` bhejta hai, `import` maangta hai.
+This is the same syntax used in React/Next.js. `export` sends, `import` receives.
 
 **Step 1:** `math.js`:
 
@@ -84,11 +84,11 @@ console.log(add(2, 3));       // 5
 console.log(multiply(2, 3));  // 6
 ```
 
-**Dono mein fark:**
+**Difference between the two:**
 - CommonJS: `module.exports = {...}` + `const { x } = require('./math')`
 - ES Modules: `export function x` + `import { x } from './math.js'`
 
-**Important:** ES Modules mein extension `.js` likhni padti hai (`'./math.js'`) aur `package.json` mein `"type": "module"` set karna padta hai. Agar ya nahi lagaoge, Node assume karega CommonJS aur `import` use karne pe error aayega.
+**Important:** In ES Modules you must write the `.js` extension (`'./math.js'`) and set `"type": "module"` in `package.json`. If you don't, Node assumes CommonJS and using `import` throws an error.
 
 ```json
 {
@@ -97,11 +97,11 @@ console.log(multiply(2, 3));  // 6
 }
 ```
 
-## Practical Exercise — Apna `utils.js` Banao
+## Practical Exercise — Build Your Own `utils.js`
 
-Ab khud banao. **Real-world scenario:** ek chhota utility file jisme price formatting aur discount calculation hai.
+Now build it yourself. **Real-world scenario:** a small utility file with price formatting and discount calculation.
 
-**`utils.js`** (ES Modules se):
+**`utils.js`** (using ES Modules):
 
 ```javascript
 // utils.js
@@ -128,91 +128,91 @@ const salePrice = calculateDiscount(price, 20);
 console.log(formatPrice(salePrice));        // Rs. 399.20
 ```
 
-Ab **wahi kaam CommonJS mein bhi karo** — dono syntax ka fark khud feel karo. `module.exports = { formatPrice, calculateDiscount }` aur `const { formatPrice } = require('./utils')`.
+Now **do the same thing in CommonJS** — feel the difference yourself. `module.exports = { formatPrice, calculateDiscount }` and `const { formatPrice } = require('./utils')`.
 
-> **Tip:** Kisi bhi cheez ko do alag files mein repeat karte dekh rahe ho, toh wo utility file banane layak hai. `formatPrice` aisi hi cheez hai — kahi bhi price dikhana ho, wahi function use karo, bar-bar code mat likho.
+> **Tip:** Whenever you see the same thing repeated across two files, that's a candidate for a utility file. `formatPrice` is exactly that kind of thing — wherever you show a price, use the same function, don't rewrite the code.
 
 ## Default Export vs Named Export
 
-ES Modules mein do tarah ke exports hain:
+ES Modules have two kinds of exports:
 
 ```javascript
-// Named export — multiple cheezein
+// Named export — multiple things
 export function add(a, b) { return a + b; }
 export const PI = 3.14;
 
-// Default export — ek main cheez
+// Default export — one main thing
 export default function multiply(a, b) { return a * b; }
 ```
 
-Import karte waqt fark:
+When importing, the difference:
 
 ```javascript
 import multiply, { add, PI } from './math.js';
 //     ^default       ^named
 ```
 
-- **Named export:** curly braces mein, exact naam se
-- **Default export:** bina curly braces, koi bhi naam de sakte ho
+- **Named export:** inside curly braces, by exact name
+- **Default export:** without curly braces, you can give any name you want
 
-React mein bhi yahi tha — `export default function Component()` aur `import Component`. Ek hi concept, ek hi rule.
+This is the same in React — `export default function Component()` and `import Component`. Same concept, same rule.
 
 ## Common Mistakes
 
-- ❌ ES Modules file mein `"type": "module"` set na karna — error: `Cannot use import statement outside a module`. `package.json` mein add karo.
-- ❌ CommonJS file mein `import` aur ES Modules file mein `require` mix karna — dono systems alag hain, ek file mein ek hi system.
-- ❌ `export` ki jagah `module.exports` likh kar dono mix karna — ye kaam nahi karega.
-- ❌ Export kiye bina dusri file se use karna — jo export nahi hua, wo bahar nahi jaata. `module.exports` ya `export` zaroori hai.
-- ❌ Path galat dena (`require('math')` bina `./` ke) — `./` = apni file ke paas wali file. Bina `./` ke Node package registry mein dhundta hai.
+- ❌ Not setting `"type": "module"` in an ES Modules file — error: `Cannot use import statement outside a module`. Add it to `package.json`.
+- ❌ Mixing `import` in a CommonJS file and `require` in an ES Modules file — the two systems are separate; one file uses one system.
+- ❌ Writing `module.exports` instead of `export` (or mixing both) — that won't work.
+- ❌ Using something from another file without exporting it — what isn't exported doesn't go out. `module.exports` or `export` is required.
+- ❌ Wrong path (`require('math')` without `./`) — `./` means "the file next to mine". Without `./`, Node searches the package registry.
 
 ## In Your Own Words
 
-1. Module kya hota hai aur iska fayda kya hai?
+1. What is a module and what's its benefit?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Module ek file hai jo apna code export karti hai taaki dusri files use kar sakein. Fayda — code chhota, reusable, organized. Same utility (jaise formatPrice) ek jagah likho, har jagah use karo.
+**Answer:** A module is a file that exports its code so other files can use it. Benefit — code stays small, reusable, organized. Write a utility like `formatPrice` once, use it everywhere.
 
 </details>
 
-2. CommonJS aur ES Modules mein kya fark hai?
+2. What's the difference between CommonJS and ES Modules?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** CommonJS purana syntax hai — `module.exports` se bhejte the, `require()` se maangte the. ES Modules naya official syntax hai — `export` se bhejte hain, `import` se maangte hain. Next.js/React mein ES Modules use hota hai.
+**Answer:** CommonJS is the old syntax — send with `module.exports`, receive with `require()`. ES Modules is the new official syntax — send with `export`, receive with `import`. Next.js/React use ES Modules.
 
 </details>
 
-3. `"type": "module"` kyun set karna padta hai?
+3. Why set `"type": "module"`?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Node ko batane ke liye ki project ES Modules use kar raha hai. Bina iske Node assume karta hai CommonJS, aur `import` use karne pe error deta hai.
+**Answer:** To tell Node the project uses ES Modules. Without it Node assumes CommonJS and throws an error when you use `import`.
 
 </details>
 
-4. Default export aur named export mein kya fark hai?
+4. What's the difference between default export and named export?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Named export se multiple cheezein export hoti hain aur import `{ naam }` se hota hai. Default export ek main cheez hoti hai, import bina curly braces ke hota hai aur naam khud de sakte ho.
+**Answer:** Named export sends multiple things and imports with `{ name }`. Default export sends one main thing, imports without curly braces, and you can name it anything.
 
 </details>
 
 ## What It Is NOT
 
-⚠️ **Modules = sirf Node ki cheez nahi.** Browser mein bhi ES Modules hote hain (script tag mein `type="module"`). Par file system, path resolution Node ki apni cheez hai.
+⚠️ **Modules are NOT only a Node thing.** Browsers also have ES Modules (with `type="module"` in the script tag). But file system and path resolution are Node's own.
 
-⚠️ **CommonJS = "galat/purana" nahi.** Wo ab bhi kaam karta hai aur kai packages use karte hain. Tumhe dono samajhne hain — jo bhi mile, use kar sako.
+⚠️ **CommonJS is NOT "wrong/outdated".** It still works and many packages use it. You need to understand both — whatever you encounter, you should be able to use it.
 
-⚠️ **`require` vs `import` = same cheez nahi exact.** Kaam same hai (code share karna), par beech ke rules alag hain (synchronous vs async loading, file extension rules). Ghabrana nahi — syntax pehchano, kaam wahi hai.
+⚠️ **`require` vs `import` are NOT exactly the same.** The job is the same (sharing code), but the rules differ (synchronous vs async loading, file extension rules). Don't panic — recognize the syntax, the job is the same.
 
-⚠️ **`module.exports` aur `exports` same nahi hain hamesha.** `module.exports` object ko replace karta hai; `exports` usi object ka reference hai. Confusion se bachne ke liye hamesha `module.exports` use karo.
+⚠️ **`module.exports` and `exports` are NOT always the same.** `module.exports` replaces the object; `exports` is a reference to that same object. To avoid confusion, always use `module.exports`.
 
 ---
 
-Ab tumhare paas code ko baant-ne ki power hai. Agla sawaal — jab project bada hota hai, dependencies kahan se aati hain? Kya React Router, Express jaise ready-made packages khud likhte hain? Nahi — **npm** se install karte hain. Agla topic: **npm — Node Package Manager**. Chal karte hain.
+Now you have the power to split code. The next question — when a project grows, where do dependencies come from? Do you write React Router, Express, zod yourself? No — you install them with **npm**. Next topic: **npm — Node Package Manager**. Let's go.

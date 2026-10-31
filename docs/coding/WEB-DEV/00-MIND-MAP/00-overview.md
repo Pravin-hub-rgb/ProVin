@@ -1,31 +1,31 @@
-# ShopKaro — Poora Picture, Ek Baar
+# ShopKaro — The Full Picture, At Once
 
-> Yeh doc ek trailer hai. Har cheez thodi thodi dikhegi — detail mein nahi jaayenge abhi.
-> Aage ki har doc is trailer ke kisi ek scene ko zoom in karegi.
-> Agar kuch samajh na aaye toh ghabrao mat — aage explain hoga sab.
-
----
-
-## ShopKaro kya hai?
-
-Hum ek **chhota e-commerce platform** bana rahe hain — jisme:
-- User **signup/login** kar sakta hai
-- **Products** dekh sakta hai, search kar sakta hai
-- **Cart** mein add kar sakta hai
-- **Order** place kar sakta hai
-- **Payment** kar sakta hai
-- Apne **orders track** kar sakta hai
-
-Bas. Simple. Lekin is simple cheez ke peeche ek poora system hai — jo hum step by step samjhenge.
+> This doc is a trailer. Everything will be shown a little — not in detail yet.
+> Every doc ahead zooms in on one scene from this trailer.
+> If something doesn't make sense yet, don't worry — it'll be explained ahead.
 
 ---
 
-## Ek User Ka Safar — Browser Se Database Tak
+## What is ShopKaro?
 
-Socho — Priya hai. Woh ShopKaro kholti hai apne phone mein.
+We're building a **small e-commerce platform** where:
+- A user can **signup/login**
+- Can **view** products, search them
+- Can **add to cart**
+- Can **place an order**
+- Can make **payment**
+- Can **track their orders**
+
+That's it. Simple. But behind this simple thing there's a whole system — which we'll understand step by step.
+
+---
+
+## A User's Journey — From Browser to Database
+
+Think — Priya. She opens ShopKaro on her phone.
 
 ```
-Priya ka phone (Browser)
+Priya's phone (Browser)
         ↓
    ShopKaro Website (Next.js — Frontend)
         ↓
@@ -34,51 +34,51 @@ Priya ka phone (Browser)
    Database (PostgreSQL)
 ```
 
-Yeh hai poora system — 4 layers. Har layer ka ek kaam hai.
+That's the whole system — 4 layers. Each layer has one job.
 
-Chalo har layer ko ek baar dekh lete hain mota mota.
-
----
-
-## Layer 1 — Browser (Priya ka Phone)
-
-Priya jo kuch bhi dekhti hai — products, cart, buttons — woh sab **HTML, CSS, JavaScript** hai jo uske browser mein chal raha hai.
-
-Yeh hissa **Frontend** kehlaata hai.
-
-Next.js mein yeh **React components** hote hain — jaise `ProductCard.jsx`, `CartPage.jsx`, etc.
-
-**Yahan hoti hain yeh cheezein:**
-- Page kaisi dikhegi — UI
-- User ne kya click kiya, kya type kiya — Events
-- Cart mein kya hai abhi — State (yaadaasht)
-- Kaunsa page server se fresh laana hai, kaunsa browser mein hi banana hai — Rendering Strategy
-
-Aage cover hoga: Rendering (Doc 14-18), State Management (Doc 27-31)
+Let's take a quick look at each layer.
 
 ---
 
-## Layer 2 — Next.js Frontend (Jo Priya Dekhti Hai)
+## Layer 1 — Browser (Priya's Phone)
 
-Jab Priya `shopkaro.com` kholti hai, uske browser mein pages load hote hain.
+Everything Priya sees — products, cart, buttons — is **HTML, CSS, JavaScript** running in her browser.
 
-Yeh pages **3 tarah se ban sakte hain:**
+This part is called the **Frontend**.
 
-| Page | Kaise banega | Kyun |
-|------|-------------|------|
-| Homepage | Pehle se bana hua (SSG) | Sab ke liye same hai |
-| Product Detail | Server se fresh (SSR) | Stock real-time dikhana hai |
-| Cart | Browser mein hi (CSR) | Sirf Priya ka data hai |
+In Next.js these are **React components** — like `ProductCard.jsx`, `CartPage.jsx`, etc.
 
-Yeh decision — **kaunsa page kaise banega** — ek important skill hai. Isko Rendering Strategy kehte hain.
+**Things that happen here:**
+- How the page looks — UI
+- What the user clicked, what they typed — Events
+- What's in the cart right now — State (memory)
+- Which page should be fetched fresh from the server, which should be built in the browser — Rendering Strategy
 
-Aage cover hoga: Doc 14-18
+Coming up: Rendering (Doc 14-18), State Management (Doc 27-31)
+
+---
+
+## Layer 2 — Next.js Frontend (What Priya Sees)
+
+When Priya opens `shopkaro.com`, pages load in her browser.
+
+These pages can be built in **3 ways:**
+
+| Page | How it's built | Why |
+|------|---------------|-----|
+| Homepage | Pre-built (SSG) | Same for everyone |
+| Product Detail | Fresh from server (SSR) | Need to show real-time stock |
+| Cart | Built in browser (CSR) | Only Priya's data |
+
+This decision — **how each page is built** — is an important skill. It's called Rendering Strategy.
+
+Coming up: Doc 14-18
 
 ---
 
 ## Layer 3 — Next.js Backend (API Routes)
 
-Jab Priya login karti hai ya order place karti hai — uska browser **ek request bhejta hai server ko.**
+When Priya logs in or places an order — her browser **sends a request to the server.**
 
 ```
 Browser → POST /api/auth/login → Server
@@ -86,113 +86,113 @@ Browser → GET /api/products → Server
 Browser → POST /api/orders → Server
 ```
 
-Yeh requests **API** kehlaati hain. Server in requests ko handle karta hai, database se baat karta hai, aur response bhejta hai.
+These requests are called **API**. The server handles these requests, talks to the database, and sends back a response.
 
-Next.js mein yeh `/app/api/` folder mein hota hai.
+In Next.js this lives in the `/app/api/` folder.
 
-**Yahan hoti hain yeh cheezein:**
+**Things that happen here:**
 - Login/Signup logic — Authentication
-- Product, Order, Cart ka data — Business Logic
-- Database se baat karna — Database calls
-- Payment process karna — Payment Integration
+- Product, Order, Cart data — Business Logic
+- Talking to the database — Database calls
+- Processing payment — Payment Integration
 
-Aage cover hoga: API Design (Doc 23-26), Authentication (Doc 02-09), Payments (Doc 36-38)
+Coming up: API Design (Doc 23-26), Authentication (Doc 02-09), Payments (Doc 36-38)
 
 ---
 
 ## Layer 4 — Database (PostgreSQL)
 
-Sab kuch yahan **permanently store** hota hai.
+Everything is **permanently stored** here.
 
-Priya ka account? Database mein.
-ShopKaro ke products? Database mein.
-Priya ka order? Database mein.
+Priya's account? In the database.
+ShopKaro's products? In the database.
+Priya's order? In the database.
 
-Hum **PostgreSQL** use kar rahe hain — ek popular relational database.
+We're using **PostgreSQL** — a popular relational database.
 
-Aur database se baat karne ke liye hum direct SQL nahi likhte — **Prisma** use karte hain. Prisma ek **ORM** hai — matlab ek tool jo JavaScript mein likhne deta hai aur woh SQL mein convert kar deta hai.
+And we don't write raw SQL to talk to the database — we use **Prisma**. Prisma is an **ORM** — a tool that lets you write in JavaScript and it converts it to SQL.
 
 ```javascript
-// Yeh Prisma hai — JavaScript mein
+// This is Prisma — written in JavaScript
 const user = await prisma.user.create({
   data: { email: "priya@gmail.com", password: hashedPassword }
 })
 
-// Prisma yeh SQL run karta hai peeche
+// Prisma runs this SQL under the hood
 // INSERT INTO users (email, password) VALUES ('priya@gmail.com', '...')
 ```
 
-Aage cover hoga: Database (Doc 19-22)
+Coming up: Database (Doc 19-22)
 
 ---
 
-## Poora Flow Ek Baar — Priya Login Karti Hai
+## The Full Flow Once — Priya Logs In
 
 ```
-1. Priya apna email + password daalti hai → Browser
+1. Priya enters her email + password → Browser
 
-2. Browser bhejta hai →
+2. Browser sends →
    POST /api/auth/login
    { email: "priya@gmail.com", password: "12345" }
 
-3. Server receive karta hai request →
-   - Database mein Priya ko dhundhta hai
-   - Password compare karta hai (bcrypt se)
-   - Sahi hai toh → Session banata hai
-   - Session ID → Cookie mein bhej deta hai browser ko
+3. Server receives the request →
+   - Finds Priya in the database
+   - Compares the password (using bcrypt)
+   - If correct → creates a Session
+   - Sends the Session ID → Cookie to the browser
 
-4. Browser save kar leta hai cookie →
-   Ab har request ke saath yeh cookie jaati hai automatically
+4. Browser saves the cookie →
+   Now this cookie goes along with every request automatically
 
-5. Priya dashboard dekhti hai →
-   Browser cookie bhejta hai → Server check karta hai → "Haan yeh Priya hai" → Data bhejta hai
+5. Priya sees the dashboard →
+   Browser sends the cookie → Server checks → "Yes, this is Priya" → Sends data
 ```
 
-Yeh poora flow **Authentication** kehlaata hai. Aage isko bahut detail mein samjhenge.
+This whole flow is called **Authentication**. We'll understand it in much more detail ahead.
 
-Aage cover hoga: Doc 02-09
+Coming up: Doc 02-09
 
 ---
 
-## Poora Flow Ek Baar — Priya Product Kharidti Hai
+## The Full Flow Once — Priya Buys a Product
 
 ```
-1. Priya "Buy Now" dabati hai
+1. Priya taps "Buy Now"
 
 2. Browser →
    POST /api/orders
    { productId: "123", quantity: 1 }
 
 3. Server →
-   - Check karo Priya logged in hai? (Authentication)
-   - Check karo product available hai? (Database)
-   - Order create karo (Database)
-   - Payment initiate karo (Razorpay)
+   - Check if Priya is logged in? (Authentication)
+   - Check if product is available? (Database)
+   - Create the order (Database)
+   - Initiate payment (Razorpay)
 
 4. Razorpay →
-   - Payment page dikhao
-   - Priya pay karti hai
-   - Razorpay → Server ko batata hai "payment successful" (Webhook)
+   - Shows the payment page
+   - Priya pays
+   - Razorpay → tells the Server "payment successful" (Webhook)
 
 5. Server →
-   - Order status update karo "paid"
-   - Confirmation email bhejo Priya ko
+   - Update order status to "paid"
+   - Send confirmation email to Priya
 
-6. Priya ko dikhta hai → "Order placed!"
+6. Priya sees → "Order placed!"
 ```
 
-Aage cover hoga: Payments (Doc 36-38)
+Coming up: Payments (Doc 36-38)
 
 ---
 
-## Umbrella Terms — Ek Quick Map
+## Umbrella Terms — A Quick Map
 
-Yeh poori series inhi umbrellas ke around hai. Ek baar dekh lo — detail baad mein aayegi.
+This whole series is built around these umbrellas. Look at them once — details will come later.
 
 ```
 AUTHENTICATION       → Login, Signup, Sessions, JWT, OAuth, bcrypt
 ARCHITECTURE         → Folder structure, MVC, BFF layer
-RENDERING            → SSR, CSR, SSG — kaunsa page kaise banega
+RENDERING            → SSR, CSR, SSG — how each page gets built
 DATABASE             → PostgreSQL, Prisma, Data Models
 API DESIGN           → REST, GraphQL, Endpoints
 STATE MANAGEMENT     → Zustand, Context, React Query
@@ -203,18 +203,18 @@ ACCESSIBILITY        → ARIA, Keyboard navigation
 DEPLOYMENT           → Vercel, Environment Variables
 ```
 
-Har umbrella ki apni docs hain. Aur har doc mein ShopKaro ka context rahega — taki kabhi na lage ki "yeh kahan se aaya."
+Each umbrella has its own docs. And every doc will keep ShopKaro's context — so it never feels like "where did this come from."
 
 ---
 
-## Yeh Series Kaise Padhni Hai
+## How to Read This Series
 
-1. **Pehli baar** — poori series ek baar padhlo, implementation mat karo
-2. **Doosri baar** — jab project banao, tab relevant doc kholo aur saath mein kaam karo
-3. **Confuse ho toh** — wapas is `00-overview.md` pe aao — yahan sab ka context hai
+1. **First time** — read the whole series once, don't implement anything
+2. **Second time** — when you're building the project, open the relevant doc and work alongside it
+3. **If confused** — come back to this `00-overview.md` — everything's context is here
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`01-how-to-think.md` — Project shuru karne se pehle ek senior dev kya sochta hai? Kaise decisions leta hai? Woh mental model kya hai jo todo app aur production app mein fark karta hai.
+`01-how-to-think.md` — What does a senior dev think before starting a project? How do they make decisions? What's the mental model that separates a todo app from a production app?

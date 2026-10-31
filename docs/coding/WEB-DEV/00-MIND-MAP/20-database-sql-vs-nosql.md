@@ -1,15 +1,15 @@
-# 20 — SQL vs NoSQL: Fark Aur Kab Kya
+# 20 — SQL vs NoSQL: The Difference and When to Use What
 
-> Pichle doc mein database umbrella ka overview hua.
-> Ab thodi aur depth — **SQL vs NoSQL**, aur ShopKaro mein PostgreSQL setup.
+> Previous doc gave the database umbrella overview.
+> Now a bit more depth — **SQL vs NoSQL**, and PostgreSQL setup for ShopKaro.
 
 ---
 
-## SQL Ka Core Concept — Relations
+## SQL's Core Concept — Relations
 
-SQL databases mein data tables mein hota hai, aur tables ek dusre se **connected** hoti hain.
+In SQL databases, data lives in tables, and tables are **connected** to each other.
 
-ShopKaro mein:
+In ShopKaro:
 
 ```
 USERS table          ORDERS table              PRODUCTS table
@@ -17,21 +17,21 @@ id | email           id | userId | status      id | name  | price
 ---|-------          ---|--------|--------     ---|-------|------
 1  | priya           1  | 1      | paid        1  | Shoes | 2999
 2  | rahul           2  | 1      | pending     2  | Cap   | 999
-                     3  | 2      | paid
+                      3  | 2      | paid
 ```
 
-Order 1 → userId: 1 → Yeh Priya ka order hai.
+Order 1 → userId: 1 → This is Priya's order.
 
-Yeh **foreign key** hai — ek table dusri table ko point karti hai. Isliye "Relational."
+This is a **foreign key** — one table points to another. Hence "Relational."
 
 ---
 
-## NoSQL Ka Core Concept — Documents
+## NoSQL's Core Concept — Documents
 
-MongoDB mein sab ek jagah hota hai:
+In MongoDB, everything sits in one place:
 
 ```javascript
-// Priya ka poora data ek document mein
+// Priya's complete data in one document
 {
   id: "1",
   email: "priya@gmail.com",
@@ -47,37 +47,37 @@ MongoDB mein sab ek jagah hota hai:
 }
 ```
 
-Fayda — ek query mein sab mil jaata hai.
-Problem — agar product ki price change ho toh har jagah update karna padega.
+Advantage — everything in one query.
+Problem — if a product's price changes, you must update it everywhere.
 
 ---
 
 ## Practical Comparison — ShopKaro Scenario
 
-**Scenario: Product ki price change ki ₹2999 se ₹3499**
+**Scenario: Product price changes from ₹2999 to ₹3499**
 
-**SQL mein:**
+**In SQL:**
 ```sql
 UPDATE products SET price = 3499 WHERE id = 1;
--- Ek jagah update → Sab jagah reflect hoga
+-- Update in one place → reflects everywhere
 ```
 
-**MongoDB mein:**
+**In MongoDB:**
 ```javascript
-// Har order document mein price stored hai
-// Sab update karne padenge — ya inconsistency rahegi
+// Price is stored in every order document
+// All must be updated — or inconsistency remains
 db.users.updateMany(
   { "orders.items.productName": "Nike Shoes" },
   { $set: { "orders.$[].items.$[item].price": 3499 } }
 )
-// Complex aur risky
+// Complex and risky
 ```
 
-SQL yahan winner hai — data ek jagah, consistency automatic.
+SQL wins here — data in one place, consistency automatic.
 
 ---
 
-## Kab Kya Choose Karein
+## When to Choose What
 
 | Situation | SQL (PostgreSQL) | NoSQL (MongoDB) |
 |-----------|-----------------|-----------------|
@@ -92,7 +92,7 @@ ShopKaro → SQL / PostgreSQL.
 
 ---
 
-## PostgreSQL Setup — ShopKaro Mein
+## PostgreSQL Setup — In ShopKaro
 
 ### 1. Local Development
 
@@ -102,26 +102,26 @@ brew install postgresql
 brew services start postgresql
 
 # Windows
-# PostgreSQL website se installer download karo
+# Download installer from PostgreSQL website
 ```
 
-Ya **Neon** ya **Supabase** use karo — free cloud PostgreSQL, setup instant.
+Or use **Neon** or **Supabase** — free cloud PostgreSQL, instant setup.
 
 ### 2. Connection String
 
 ```bash
-# .env mein
+# In .env
 DATABASE_URL="postgresql://username:password@localhost:5432/shopkaro"
 
-# Neon/Supabase use kar rahe ho toh woh dete hain URL
+# If using Neon/Supabase, they provide the URL
 DATABASE_URL="postgresql://user:pass@ep-xyz.neon.tech/shopkaro"
 ```
 
-### 3. Prisma Connect Karo
+### 3. Connect Prisma
 
 ```bash
 npx prisma init
-# Yeh /prisma/schema.prisma file banata hai
+# This creates /prisma/schema.prisma
 ```
 
 ```prisma
@@ -139,12 +139,12 @@ datasource db {
 | | SQL (PostgreSQL) | NoSQL (MongoDB) |
 |--|-----------------|-----------------|
 | Data structure | Tables + Relations | Documents (JSON) |
-| Schema | Fixed — pehle define karo | Flexible |
+| Schema | Fixed — define first | Flexible |
 | Consistency | Strong | Eventual |
-| ShopKaro | ✓ Use karenge | — |
+| ShopKaro | ✓ Will use | — |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`21-database-prisma.md` — Database choose kar liya. Ab **Prisma** — database se JavaScript mein baat karne ka tarika. ORM kya hota hai, schema kaise likhte hain, queries kaise karte hain — yeh sab.
+`21-database-prisma.md` — Database chosen. Now **Prisma** — how to talk to the database from JavaScript. What an ORM is, how to write the schema, how to run queries — all of it.

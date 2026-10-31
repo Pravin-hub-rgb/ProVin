@@ -1,27 +1,27 @@
 # 18 — Testing: Vitest, Jest, Playwright, Cypress, RTL
 
 > Umbrella: Testing
-> Kaam: Code sahi kaam karta hai ensure karna — automatically
-> Note: Beginners ke liye — testing baad mein seekhna theek hai, but concept pata hona chahiye
+> Job: Ensure code works correctly — automatically
+> Note: For beginners — it's fine to learn testing later, but the concept should be known
 
 ---
 
-## Teen Types Ki Testing
+## Three Types of Testing
 
 ```
-UNIT TEST:        Ek function sahi kaam karta hai?
-  → bcrypt.hash kaam kar raha hai?
-  → Cart total sahi calculate ho raha hai?
+UNIT TEST:        Does one function work correctly?
+  → Is bcrypt.hash working?
+  → Is cart total calculated correctly?
 
-INTEGRATION TEST: Do cheezein saath sahi kaam karti hain?
-  → Login API → Database → Session → Sab theek?
+INTEGRATION TEST: Do two things work together?
+  → Login API → Database → Session → All fine?
 
-E2E TEST (End-to-End): User ka poora flow kaam karta hai?
-  → Priya signup karti hai → Login karti hai → Product add karti hai → Pay karti hai
-  → Real browser mein, real app pe
+E2E TEST (End-to-End): Does the full user flow work?
+  → Priya signs up → logs in → adds product → pays
+  → In a real browser, on the real app
 
-↑ Jitna upar, utna fast aur cheap
-↓ Jitna neeche, utna slow aur expensive lekin realistic
+↑ Higher up = faster and cheaper
+↓ Lower down = slower and expensive but realistic
 ```
 
 ---
@@ -34,22 +34,22 @@ E2E TEST (End-to-End): User ka poora flow kaam karta hai?
 **Tag: 🟢 Most Popular 2024 | Fast | Vite-based**
 
 ```
-Kya hai: Modern unit testing framework — Vite ecosystem
-Kab use karo:
-  → Naye projects — almost always unit testing ke liye
+What it is: Modern unit testing framework — Vite ecosystem
+When to use:
+  → New projects — almost always for unit testing
   → Next.js, Vite projects
 
-Jest se fark:
+Difference from Jest:
   → Vitest: Vite-based — much faster, ESM native
   → Jest: Older, slower, CommonJS-first
-  → Almost same API — Jest jaanta hai → Vitest aata hai
+  → Almost the same API — if you know Jest, you know Vitest
 
 Code feel:
   import { describe, it, expect } from 'vitest'
   import { calculateCartTotal } from './cart'
 
   describe('Cart', () => {
-    it('total sahi calculate kare', () => {
+    it('calculates total correctly', () => {
       const items = [
         { price: 999, quantity: 2 },
         { price: 2999, quantity: 1 }
@@ -59,10 +59,10 @@ Code feel:
   })
 
 Real app example:
-  → ShopKaro: Cart total, discount calculation, password validation — unit test
+  → ShopKaro: Cart total, discount calculation, password validation — unit tests
   → Zomato: Delivery fee calculation logic — unit test
 
-India mein: 2023 ke baad Jest se shift ho raha hai
+In India: Shifting from Jest after 2023
 ```
 
 ---
@@ -71,13 +71,13 @@ India mein: 2023 ke baad Jest se shift ho raha hai
 **Tag: 🟡 Legacy Standard | Still widely used**
 
 ```
-Kya hai: Most popular unit testing framework — React Testing Library ke saath common
-Kab use karo:
+What it is: Most popular unit testing framework — common with React Testing Library
+When to use:
   → Existing Jest codebase
-  → Create React App projects (Jest default tha)
+  → Create React App projects (Jest was default)
 
-Vitest se fark: Slower, older — naye projects mein Vitest prefer
-Status: Maintained lekin Vitest ne momentum le li
+Difference from Vitest: Slower, older — prefer Vitest for new projects
+Status: Maintained, but Vitest has taken the momentum
 ```
 
 ---
@@ -86,22 +86,22 @@ Status: Maintained lekin Vitest ne momentum le li
 **Tag: 🟢 Component Testing Standard**
 
 ```
-Kya hai: React components test karna — user perspective se
-Kab use karo:
-  → React components test karne hain
-  → "User ne button dabaya → kya hua?" type tests
+What it is: Testing React components — from the user's perspective
+When to use:
+  → Testing React components
+  → "User clicked button → what happened?" type tests
 
 Code feel:
   import { render, screen, fireEvent } from '@testing-library/react'
   import AddToCartButton from './AddToCartButton'
 
-  test('add to cart button kaam kare', () => {
+  test('add to cart button works', () => {
     render(<AddToCartButton product={mockProduct} />)
-    fireEvent.click(screen.getByText('Cart Mein Daalo'))
+    fireEvent.click(screen.getByText('Add to Cart'))
     expect(screen.getByText('Added!')).toBeInTheDocument()
   })
 
-Vitest/Jest ke saath: RTL akela nahi use hota — Vitest + RTL common combo
+With Vitest/Jest: RTL isn't used alone — Vitest + RTL is the common combo
 ```
 
 ---
@@ -110,20 +110,20 @@ Vitest/Jest ke saath: RTL akela nahi use hota — Vitest + RTL common combo
 **Tag: 🟢 E2E Standard 2024 | Microsoft | Multi-browser**
 
 ```
-Kya hai: End-to-end testing — real browser mein real user actions simulate karo
-Kab use karo:
-  → Critical user flows test karne hain
+What it is: End-to-end testing — simulate real user actions in a real browser
+When to use:
+  → Testing critical user flows
   → Checkout, login, payment flow
   → Cross-browser testing (Chrome, Firefox, Safari)
 
 Real app example:
-  → Swiggy: "User restaurant search kare → Add to cart → Checkout" — E2E test
+  → Swiggy: "User searches restaurant → adds to cart → checkout" — E2E test
   → ShopKaro: "Signup → Login → Buy product → Order confirmation" — E2E
 
 Code feel:
   import { test, expect } from '@playwright/test'
 
-  test('user login kar sake', async ({ page }) => {
+  test('user can log in', async ({ page }) => {
     await page.goto('http://localhost:3000/login')
     await page.fill('[name="email"]', 'priya@gmail.com')
     await page.fill('[name="password"]', 'password123')
@@ -131,12 +131,12 @@ Code feel:
     await expect(page).toHaveURL('/dashboard')
   })
 
-Cypress se fark:
+Difference from Cypress:
   → Playwright: Multi-browser (Chrome, Firefox, Safari, Mobile)
   → Cypress: Chrome-first, older, JavaScript only
   → 2024: Playwright recommended over Cypress
 
-India mein: Growing — critical apps mein E2E tests
+In India: Growing — E2E tests in critical apps
 ```
 
 ---
@@ -145,11 +145,11 @@ India mein: Growing — critical apps mein E2E tests
 **Tag: 🟡 E2E | Was popular 2019-2022 | Declining vs Playwright**
 
 ```
-Kya hai: E2E testing framework
-Kab use karo: Existing Cypress codebase
-Playwright se kya kharab: Slower, single browser mostly, no mobile
+What it is: E2E testing framework
+When to use: Existing Cypress codebase
+Why it's worse than Playwright: Slower, single browser mostly, no mobile
 
-Status: Maintained lekin Playwright ne lead le li
+Status: Maintained, but Playwright has taken the lead
 ```
 
 ---
@@ -158,10 +158,10 @@ Status: Maintained lekin Playwright ne lead le li
 **Tag: 🟢 API Mocking | Testing + Development**
 
 ```
-Kya hai: API calls ko intercept karke mock responses dena
-Kab use karo:
-  → Testing mein real API call nahi karna
-  → Backend ready nahi — frontend test karna hai
+What it is: Intercept API calls and return mock responses
+When to use:
+  → Don't want real API calls in tests
+  → Backend not ready — test frontend anyway
 
 Code feel:
   const handlers = [
@@ -171,7 +171,7 @@ Code feel:
       ])
     })
   ]
-  // Ab /api/products call hogi → Real server nahi, mock response milega
+  // Now /api/products call happens → no real server, mock response returned
 ```
 
 ---
@@ -180,15 +180,15 @@ Code feel:
 **Tag: 🟢 Component Development | Design System**
 
 ```
-Kya hai: Components ko isolation mein develop aur document karo
-Kab use karo:
-  → Design system banana hai
-  → Components visually test karne hain
-  → Team ke saath component library share karna hai
+What it is: Develop and document components in isolation
+When to use:
+  → Building a design system
+  → Visually testing components
+  → Sharing component library with the team
 
 Real app example:
-  → Razorpay ki UI component library
-  → Large companies ki design systems
+  → Razorpay's UI component library
+  → Large companies' design systems
 
 Code feel:
   // Button.stories.jsx
@@ -198,7 +198,7 @@ Code feel:
   export const Disabled = {
     args: { label: 'Out of Stock', disabled: true }
   }
-  // Storybook mein visual browser milta hai sab stories ka
+  // Storybook gives a visual browser with all stories
 ```
 
 ---
@@ -222,35 +222,35 @@ Component documentation/development?
   → Storybook
 
 Existing Jest/Cypress codebase?
-  → Rehne do — rewrite nahi
+  → Leave it — don't rewrite
 ```
 
 ---
 
-## Beginner Ke Liye
+## For Beginners
 
 ```
 Priority order:
-1. Pehle app banao
-2. Phir unit tests seekho (Vitest)
-3. Phir E2E (Playwright)
+1. Build the app first
+2. Then learn unit tests (Vitest)
+3. Then E2E (Playwright)
 
-Testing mat chhodo completely — lekin priority last rakhna shuru mein theek hai
+Don't skip testing entirely — but keeping it last priority at the start is fine
 ```
 
 ---
 
-## India Mein Reality
+## India Reality
 
 ```
-Startups (small): Testing almost nahi — move fast
-Mid-size:         Kuch unit tests, E2E critical flows
+Startups (small): Testing almost none — move fast
+Mid-size:         Some unit tests, E2E for critical flows
 Enterprise:       Full testing — unit + integration + E2E
 Product companies: Testing culture growing
 ```
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`19-devops.md` — DevOps — Hosting, CI/CD, Monitoring — Vercel, Railway, GitHub Actions, Sentry — app deploy karna, errors track karna.
+`19-devops.md` — DevOps — Hosting, CI/CD, Monitoring — Vercel, Railway, GitHub Actions, Sentry — deploying the app and tracking errors.

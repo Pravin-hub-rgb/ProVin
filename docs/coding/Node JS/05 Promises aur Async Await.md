@@ -1,15 +1,15 @@
-04 mein humne dekha ki Node async kaam ko background mein bhejta hai aur **callback** se result deta hai. Par ek problem hai — jab bahut saare async kaam ek ke baad ek karne hote hain, toh kya hota hai?
+In the previous file we saw that Node sends async work to the background and returns the result via a **callback**. But there's a problem — when many async tasks must run one after another, what happens?
 
 ## Callback Hell — Pyramids of Doom
 
-Socho real scenario — **online order flow**:
+Think of a real scenario — **online order flow**:
 
-1. User order place kare
-2. Order database mein save karo
-3. Payment process karo
-4. Confirmation email bhejo
+1. User places an order
+2. Save the order to the database
+3. Process the payment
+4. Send a confirmation email
 
-Har step async hai aur agle step ko uske result ki zaroorat hai. Callbacks se aisa dikhega:
+Every step is async and the next step needs the result of the previous one. With callbacks it looks like this:
 
 ```javascript
 saveOrder(order, (orderErr, savedOrder) => {
@@ -33,22 +33,22 @@ saveOrder(order, (orderErr, savedOrder) => {
 });
 ```
 
-Dekh rahe ho kya hua? **Nested callbacks ka pyramid.** Har async step ek level andar. 5-6 steps ho toh code padhna impossible. Isi ko bolte hain **Callback Hell**.
+See what happened? **A pyramid of nested callbacks.** Every async step is one level deeper. With 5-6 steps the code becomes impossible to read. This is called **Callback Hell**.
 
-Problem siraf "ugly code" nahi — **error handling repeat**, nesting deep, aur jab har function `if (err)` likhna pade toh bugs. JavaScript community ne isi se takkar kha kar **Promises** banaye.
+The problem isn't just "ugly code" — **error handling repeats**, nesting gets deep, and when every function needs `if (err)` written, bugs creep in. The JavaScript community hit this wall and created **Promises**.
 
-## Promise — Ek "Eventually Complete Hoga" Ka Object
+## Promise — An Object That "Will Eventually Complete"
 
-**Promise** ek object hai jo represent karta hai ki koi async operation **eventually** complete hoga — ya to success (resolve) ke saath, ya failure (reject) ke saath.
+A **Promise** is an object that represents that some async operation **will eventually** complete — either with success (resolve) or failure (reject).
 
-Socho online order ka status — "Order placed. Processing..." — kuch na kuch hoga abhi, par abhi pending hai. Promise bhi wahi hai — ek **pending** state se shuru hota hai, phir **fulfilled** (resolve) ya **rejected** (reject) hota hai.
+Think of an online order's status — "Order placed. Processing..." — something will happen now, but it's pending for now. A Promise is the same — it starts in a **pending** state, then becomes **fulfilled** (resolve) or **rejected** (reject).
 
-## Promise Banana — `new Promise`
+## Creating a Promise — `new Promise`
 
 ```javascript
 const fetchData = () => {
   return new Promise((resolve, reject) => {
-    // async kaam (example: timer)
+    // async work (example: timer)
     setTimeout(() => {
       const success = true;
       if (success) {
@@ -61,21 +61,21 @@ const fetchData = () => {
 };
 ```
 
-- `new Promise((resolve, reject) => {...})` — ek executor function milta hai
-- `resolve(value)` — success hone pe value ke saath call karo
-- `reject(error)` — failure pe error ke saath call karo
+- `new Promise((resolve, reject) => {...})` — you get an executor function
+- `resolve(value)` — call with a value on success
+- `reject(error)` — call with an error on failure
 
-## Promise Use Karna — `.then` / `.catch`
+## Using a Promise — `.then` / `.catch`
 
 ```javascript
 fetchData()
-  .then((result) => console.log(result))   // resolve pe chalega
-  .catch((error) => console.error(error)); // reject pe chalega
+  .then((result) => console.log(result))   // runs on resolve
+  .catch((error) => console.error(error)); // runs on reject
 ```
 
-**Chaining — Callback Hell Ka Solution:**
+**Chaining — The Solution to Callback Hell:**
 
-Promises se sequential async kaam chain ki tarah likhte hain — **flat, nested nahi:**
+With Promises, sequential async work is written like a chain — **flat, not nested:**
 
 ```javascript
 saveOrder(order)
@@ -85,16 +85,16 @@ saveOrder(order)
   .catch((error) => console.error(error));
 ```
 
-Dekho — har step apne level pe hai, `.then` se chain ban rahi hai, aur **ek hi `.catch` sab errors handle karta hai.** Nested pyramid gayab. Har `.then` ka return value agle `.then` mein jaata hai.
+Look — every step is at its own level, the chain builds with `.then`, and **one `.catch` handles all errors.** The nested pyramid is gone. The return value of each `.then` goes into the next `.then`.
 
-## Async/Await — Promise Ka Cleaner Version
+## Async/Await — The Cleaner Version of Promises
 
-Promises flat toh hai, par `.then` chaining ab bhi "promise-style" hai. JavaScript ne aur clean tarika diya — **`async`/`await`**. Yeh synchronous code jaisa dikhta hai, par asli mein async hi hai.
+Promises are flat, but `.then` chaining is still "promise-style". JavaScript gave an even cleaner way — **`async`/`await`**. It looks like synchronous code, but it's actually async.
 
 ```javascript
 async function getData() {
   try {
-    const result = await fetchData();  // yahan wait karega resolve hone tak
+    const result = await fetchData();  // waits here until resolve
     console.log(result);
   } catch (error) {
     console.error(error);
@@ -104,11 +104,11 @@ async function getData() {
 getData();
 ```
 
-- `async` function — isko batata hai "andar await use hoga"
-- `await` — Promise ke resolve hone tak **wait karta hai** (par thread block nahi hota!)
-- `try/catch` — error handle karne ka cleaner tarika
+- `async` function — marks it as "await will be used inside"
+- `await` — **waits** for the Promise to resolve (but the thread doesn't block!)
+- `try/catch` — cleaner error handling
 
-**Same order flow, async/await se:**
+**The same order flow with async/await:**
 
 ```javascript
 async function placeOrder(order) {
@@ -123,11 +123,11 @@ async function placeOrder(order) {
 }
 ```
 
-Padho — **bilkul synchronous code jaisa lag raha hai**, par asli mein async hai. Har `await` us Promise ke settle hone tak line ko rok deta hai, par thread ko block nahi karta.
+Read it — **it looks exactly like synchronous code**, but it's actually async. Each `await` pauses that line until the Promise settles, but the thread is not blocked.
 
-## Teeno Tarike — Same Kaam, Compare Karo
+## All Three Ways — Same Task, Compared
 
-Ek function banao jo 2 second baad "Order placed" print kare — teeno tarike se:
+Create a function that prints "Order placed" after 2 seconds — in all three ways:
 
 **1. Callback:**
 
@@ -163,11 +163,11 @@ async function placeOrder() {
 placeOrder();
 ```
 
-**Dekho evolution:** Callback se Promise (chain-able) → async/await (jaisa synchronous, par async). Yehi **"Manual → Better"** ka asli example hai — kaam wahi, likhne ka tarika better hota gaya.
+**See the evolution:** Callback → Promise (chainable) → async/await (looks synchronous but is async). This is the real **"Manual → Better"** example — the job is the same, the way of writing it got better.
 
-## React/Next.js Mein Yeh Kahan Use Hoga
+## Where You'll Use This in React/Next.js
 
-Jab tum Next.js mein data fetch karte ho:
+When you fetch data in Next.js:
 
 ```javascript
 async function getProducts() {
@@ -177,64 +177,64 @@ async function getProducts() {
 }
 ```
 
-`await fetch()` — Promise hai, `await` se wait kiya. `res.json()` — ye bhi Promise hai, `await` se parse kiya. **Yeh pattern baar-baar aayega** — data fetching, form submission, mutations. Isliye yahan pakka karna.
+`await fetch()` — it's a Promise, waited with `await`. `res.json()` — also a Promise, parsed with `await`. **This pattern will come up again and again** — data fetching, form submission, mutations. Nail it here.
 
 ## Common Mistakes
 
-- ❌ `async` function ke andar `await` bhoolna — function async hai par await nahi lagaya toh Promise resolve hone ka wait nahi karega, seedha pending Promise mil jayega.
-- ❌ `await` ko non-async function mein use karna — error: "await is only valid in async function". Function ko `async` banao.
-- ❌ Promise mein `resolve`/`reject` call bhoolna — Promise hamesha pending rahega, `.then` kabhi nahi chalega, app hang feel hogi.
-- ❌ `.catch` nahi lagana ya `try/catch` na karna — rejected Promise ka error silently gayab ho jata hai ya unhandled rejection error aata hai.
-- ❌ `new Promise` mein sync kaam daalna — agar andar sync hai, Promise ki zaroorat nahi. Promise sirf async wrap karne ke liye.
+- ❌ Forgetting `await` inside an async function — the function is async but without await it won't wait for the Promise to resolve; you'll get a pending Promise directly.
+- ❌ Using `await` in a non-async function — error: "await is only valid in async function". Make the function `async`.
+- ❌ Forgetting to call `resolve`/`reject` in a Promise — the Promise stays pending forever, `.then` never runs, the app feels hung.
+- ❌ Not using `.catch` or `try/catch` — a rejected Promise's error silently disappears or throws an unhandled rejection error.
+- ❌ Putting synchronous work inside `new Promise` — if the inside is sync, you don't need a Promise. Promises are only for wrapping async.
 
 ## In Your Own Words
 
-1. Callback hell kya hai aur kyu hota hai?
+1. What is callback hell and why does it happen?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Jab multiple async kaam ek ke baad ek karna ho (order → payment → email), callback ke andar callback likhne se nested pyramid ban jaata hai. Isse code padhna mushkil aur error handling repeat hoti hai. Isi ko callback hell kehte hain.
+**Answer:** When multiple async tasks must run one after another (order → payment → email), nesting callbacks creates a pyramid. The code becomes hard to read and error handling repeats. That's callback hell.
 
 </details>
 
-2. Promise kya represent karta hai?
+2. What does a Promise represent?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Promise ek object hai jo async operation ke eventual result ko represent karta hai — pending state se shuru, phir resolve (fulfilled) ya reject (rejected). `.then`/`.catch` se handle karte hain.
+**Answer:** A Promise is an object representing the eventual result of an async operation — starts in pending state, then becomes resolve (fulfilled) or reject (rejected). Handled with `.then`/`.catch`.
 
 </details>
 
-3. `.then()` chaining callback hell ko kaise solve karti hai?
+3. How does `.then()` chaining solve callback hell?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** Har async step `.then()` se chain hota hai — flat structure, nested nahi. Har `.then` ka return value agle `.then` mein jaata hai, aur ek hi `.catch` saare errors handle karta hai.
+**Answer:** Every async step chains via `.then()` — flat structure, not nested. The return value of each `.then` goes into the next `.then`, and a single `.catch` handles all errors.
 
 </details>
 
-4. `async`/`await` kya karta hai aur `try/catch` kyun?
+4. What do `async`/`await` do and why `try/catch`?
 
 <details>
-<summary>Sample Jawab</summary>
+<summary>Sample Answer</summary>
 
-**Jawab:** `async` function ko mark karta hai ki andar `await` use hoga. `await` Promise ke resolve hone tak wait karta hai (thread block nahi). `try/catch` errors ko clean tarike se handle karta hai — Promise ka `.catch` jaisa.
+**Answer:** `async` marks a function as one where `await` will be used. `await` waits for the Promise to resolve (thread doesn't block). `try/catch` handles errors cleanly — like a Promise's `.catch`.
 
 </details>
 
 ## What It Is NOT
 
-⚠️ **`await` = thread block nahi karta.** Ye sirf us line ko wait karata hai Promise resolve hone tak, par Event Loop free rehta hai — baaki async kaam chalta rehta hai. Blocking (04 ka `readFileSync`) se yeh alag hai.
+⚠️ **`await` does NOT block the thread.** It only pauses that line until the Promise resolves, but the Event Loop stays free — other async work keeps running. This is different from blocking (04's `readFileSync`).
 
-⚠️ **Callback = "galat/purana" nahi.** Callbacks ab bhi exist karte hain (Event listeners, setTimeout). Problem sirf **nested callbacks** ki hai (callback hell). Simple callback use karna fine hai.
+⚠️ **Callback is NOT "wrong/outdated".** Callbacks still exist (Event listeners, setTimeout). The problem is only **nested callbacks** (callback hell). A simple callback is fine.
 
-⚠️ **Promise = async operation ka data nahi.** Promise "abhi future mein aayega" ka **contract/object** hai. Uska data tab milta hai jab `.then`/`await` se resolve value access karo.
+⚠️ **A Promise is NOT the data of the async operation.** The Promise is the **contract/object** of "will arrive in the future". You access its data when you get the resolved value via `.then`/`await`.
 
-⚠️ **async/await = synchronous nahi banata.** Code *dikhta* synchronous jaisa hai, par behave async hi karta hai. Race conditions wahi rehti hain.
+⚠️ **async/await does NOT make it synchronous.** The code *looks* synchronous, but it behaves async. Race conditions remain the same.
 
 ---
 
-Ab tumhare paas async ka poora power set hai — callbacks, Promises, async/await. Ab usse kuch asli banate hain — ek **HTTP server**. Jab tak tum server nahi banate, Node ka poora point adhura hai. Manual tarike se raw Node server banayenge — taaki samjho Express/Next.js ke peeche kya hota hai. Agla topic: **HTTP Server**. Chal karte hain.
+Now you have the full async power set — callbacks, Promises, async/await. Use it to build something real — an **HTTP server**. Until you build a server, Node's whole point is incomplete. We'll build a raw Node server manually — so you understand what's behind Express/Next.js. Next topic: **HTTP Server**. Let's go.

@@ -3,14 +3,14 @@
 
 ---
 
-## 💬 The Brief — Client Ne Kya Kaha
+## 💬 The Brief — What the Client Said
 
-> *"Bhai, ek niche job board banana hai — specifically for design professionals.
-> Employers jobs post karein, job seekers browse karein aur apply karein.
-> Resume upload honi chahiye. Email notification bhi chahiye when someone applies.
-> SEO important hai — Google pe jobs dikhne chahiye."*
+> *"Bro, I need to build a niche job board — specifically for design professionals.
+> Employers post jobs, job seekers browse and apply.
+> Resume upload must be there. Email notification too when someone applies.
+> SEO is important — jobs should show up on Google."*
 
-Okay. Ye pehle project se alag hai. Yahan **public-facing pages** hain, **SEO critical** hai, **file upload** hai, **email** hai, aur **do alag user types** hain — Employer aur Job Seeker.
+Okay. This is different from the first project. There are **public-facing pages**, **SEO is critical**, **file upload**, **email**, and **two different user types** — Employer and Job Seeker.
 
 ---
 
@@ -19,15 +19,15 @@ Okay. Ye pehle project se alag hai. Yahan **public-facing pages** hain, **SEO cr
 ```
 PROJECT NAME  : HireHop
 TYPE          : Public Web App / Job Board
-ONE LINE      : "Ye ek niche job board hai jo design professionals
-                 ko relevant job opportunities se connect karta hai."
+ONE LINE      : "This is a niche job board that connects design professionals
+                 with relevant job opportunities."
 
 TARGET USER:
   Primary A  → Employer
-               Company jo design roles hire karna chahti hai
+               Company that wants to hire design roles
                Posts jobs, reviews applications
   Primary B  → Job Seeker
-               Designer who is looking for work
+               Designer looking for work
                Browses jobs, applies with resume
 
 CORE FEATURES (MVP):
@@ -48,7 +48,7 @@ STRETCH (V2):
 
 OUT OF SCOPE:
   ❌ In-app messaging between employer and seeker
-  ❌ Payment gateway (featured listings V2 hai)
+  ❌ Payment gateway (featured listings is V2)
   ❌ Mobile app
   ❌ AI job matching
 ```
@@ -61,90 +61,90 @@ OUT OF SCOPE:
 
 **Framework → Next.js App Router**
 
-Same reason — full-stack chahiye. Par yahan ek extra reason hai: **SEO critical hai**. Next.js SSG/ISR support karta hai — job pages Google pe index honge. Ye Vite + React se possible nahi hota easily.
+Same reason — full-stack needed. But one extra reason here: **SEO is critical**. Next.js supports SSG/ISR — job pages will be indexed by Google. This isn't easily possible with Vite + React.
 
 ---
 
-**Rendering Strategy → MIXED (Ye interesting hai!)**
+**Rendering Strategy → MIXED (This is interesting!)**
 
 ```
-Alag alag pages ke liye alag strategy:
+Different strategies for different pages:
 
 PUBLIC JOB LISTINGS PAGE (/jobs)
 → ISR (revalidate: 3600 — 1 hour)
-→ Job listings frequently change — par second-by-second nahi
-→ CDN se serve hoga — fast for all users
+→ Job listings change frequently — but not second-by-second
+→ Served from CDN — fast for all users
 → SEO perfect ✅
 
 JOB DETAIL PAGE (/jobs/[slug])
 → ISR (revalidate: 1800 — 30 minutes)
-→ Individual job page Google pe index hoga
-→ Pre-built at build time, ISR se updated
+→ Individual job page gets indexed by Google
+→ Pre-built at build time, updated via ISR
 
 EMPLOYER DASHBOARD (/dashboard/employer)
-→ SSR — user-specific data (sirf unki posted jobs)
+→ SSR — user-specific data (only their posted jobs)
 → Sensitive — login required
 
 SEEKER DASHBOARD (/dashboard/seeker)
-→ SSR — user-specific (unki applications, profile)
+→ SSR — user-specific (their applications, profile)
 
 LOGIN / SIGNUP PAGES
 → SSG — static, no dynamic data
 
 WHY NOT SSG for job pages?
-→ Jobs roz change hote hain — new jobs post, old expire
-→ Full rebuild har baar nahi karna — impractical
+→ Jobs change every day — new jobs posted, old ones expire
+→ Full rebuild every time is impractical
 → ISR = static speed + automatic updates ✅
 ```
 
 ---
 
-**API Style → REST API Routes (Server Actions nahi)**
+**API Style → REST API Routes (not Server Actions)**
 
 ```
-Ye decision pehle project se alag hai. Kyun?
+This decision differs from the first project. Why?
 
-Pehle project mein: Sirf web app tha
-Is project mein: Future mein mobile app bhi ho sakta hai
+First project: Only a web app
+This project: A mobile app might come in the future
 
-Client ne mention kiya ki "kal mobile app bhi banana hai maybe"
-→ Toh REST API routes better investment hai
-→ Web aur mobile dono same API use kar sakenge
+Client mentioned "maybe build a mobile app tomorrow"
+→ REST API routes are a better investment
+→ Web and mobile can both use the same API
 
 Specific endpoints:
-POST   /api/jobs          ← Job post karna
+POST   /api/jobs          ← Post a job
 GET    /api/jobs          ← All jobs (with filters)
 GET    /api/jobs/[slug]   ← Single job
 POST   /api/apply         ← Apply to a job (with resume)
-GET    /api/applications  ← Employer ke applications
+GET    /api/applications  ← Employer's applications
 ```
 
 ---
 
-**Auth → NextAuth ✅ (Clerk nahi)**
+**Auth → NextAuth ✅ (not Clerk)**
 
 ```
-Kyun NextAuth?
-→ Do alag user types hain — Employer aur Job Seeker
-→ Signup form pe "Account type" select hoga
-→ Custom signup flow chahiye — Clerk isme rigid hota
+Why NextAuth?
+→ There are two different user types — Employer and Job Seeker
+→ Signup form has "Account type" selection
+→ Custom signup flow needed — Clerk is rigid here
 
-Kyun Clerk nahi?
-→ Clerk ka UI opinionated hai — custom onboarding hard hota
-→ NextAuth se custom callbacks easily likhte hain
+Why not Clerk?
+→ Clerk's UI is opinionated — custom onboarding is hard
+→ NextAuth lets us easily write custom callbacks
 
 Implementation:
-→ User model mein 'role' field: 'employer' | 'seeker'
-→ Signup pe role select karo
-→ Middleware mein role-based route protection
+→ 'role' field in User model: 'employer' | 'seeker'
+→ Select role at signup
+→ Role-based route protection in middleware
 ```
 
 ---
 
-**Search → PostgreSQL Full-Text Search (Algolia nahi for V1)**
+**Search → PostgreSQL Full-Text Search (not Algolia for V1)**
 
 ```
-Client ne search ka mention kiya. Options:
+Client mentioned search. Options:
 
 Option A: Algolia
 → Powerful managed search
@@ -152,16 +152,16 @@ Option A: Algolia
 → External service — extra complexity
 
 Option B: PostgreSQL Full-Text Search
-→ Already PostgreSQL use kar rahe hain
+→ Already using PostgreSQL
 → Free — no extra service
-→ Job title + description search ke liye kaafi hai
-→ Advanced faceted search nahi chahiye V1 mein
+→ Good enough for job title + description search
+→ Advanced faceted search not needed in V1
 
 Decision: PostgreSQL Full-Text for V1.
-Agar scale pe complex search chahiye → Algolia/Typesense V2 mein.
+If complex search needed at scale → Algolia/Typesense in V2.
 
 Implementation:
-→ Job model mein tsvector column (title + description indexed)
+→ tsvector column in Job model (title + description indexed)
 → GIN index on tsvector
 → Query: WHERE search_vector @@ plainto_tsquery('designer')
 ```
@@ -173,18 +173,18 @@ Implementation:
 ```
 Resume upload — options:
 → AWS S3: Powerful but complex setup
-→ Cloudinary: Images ke liye great, par documents ke liye overkill
-→ Uploadthing: Next.js ke liye specifically banaya gaya
+→ Cloudinary: Great for images, overkill for documents
+→ Uploadthing: Specifically built for Next.js
 
-Uploadthing kyun?
-→ Next.js integration seedha — ek route handler bas
-→ Type-safe — file types aur sizes define karo
-→ Free tier generous hai
-→ PDF aur DOCX support
+Why Uploadthing?
+→ Direct Next.js integration — just one route handler
+→ Type-safe — define file types and sizes
+→ Generous free tier
+→ PDF and DOCX support
 
 Resume storage:
-→ File Uploadthing pe store hoga
-→ Database mein sirf URL save hoga (resume_url field)
+→ File stored on Uploadthing
+→ Only URL saved in database (resume_url field)
 ```
 
 ---
@@ -192,37 +192,37 @@ Resume storage:
 **Email → Resend + React Email**
 
 ```
-Jab koi apply karta hai:
-→ Employer ko email jaayegi — "Someone applied to [Job Title]"
-→ Seeker ko confirmation email — "Application submitted"
+When someone applies:
+→ Employer gets email — "Someone applied to [Job Title]"
+→ Seeker gets confirmation email — "Application submitted"
 
-Resend kyun?
+Why Resend?
 → Modern API
-→ React Email ke saath HTML email templates likhte hain React mein
+→ Write HTML email templates in React with React Email
 → Free tier: 100 emails/day — enough for V1
 
 Implementation:
-→ /api/apply route mein — after application save
-→ Resend SDK se email trigger
-→ Template: applicant ka name, resume link, job title
+→ In /api/apply route — after application saved
+→ Trigger email via Resend SDK
+→ Template: applicant name, resume link, job title
 ```
 
 ---
 
-**State Management → React Query only (Zustand nahi for V1)**
+**State Management → React Query only (no Zustand for V1)**
 
 ```
-Kyun Zustand nahi?
-→ Is app mein complex global UI state nahi hai
+Why no Zustand?
+→ No complex global UI state in this app
 → No cart, no filters that multiple components share simultaneously
 
-React Query kahan use hoga:
+Where React Query is used:
 → Employer dashboard: useQuery('my-jobs', fetchMyJobs)
 → Seeker dashboard: useQuery('my-applications', fetchApplications)
 → Job listings: useQuery(['jobs', filters], fetchJobs)
 
 Simple state?
-→ Search input, filter dropdowns → useState enough hai
+→ Search input, filter dropdowns → useState is enough
 → Modal open/close → useState
 ```
 
@@ -238,14 +238,14 @@ name          VARCHAR(100)
 email         VARCHAR(255) UNIQUE  ← Index
 password_hash VARCHAR(255)
 role          ENUM        'employer' | 'seeker'
-company_name  VARCHAR(255) nullable  ← Employer ke liye
-resume_url    VARCHAR(500) nullable  ← Seeker ke liye
+company_name  VARCHAR(255) nullable  ← For employer
+resume_url    VARCHAR(500) nullable  ← For seeker
 created_at    TIMESTAMP
 
 JOB
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 id             UUID          PK
-slug           VARCHAR(255)  UNIQUE  ← Index (URL ke liye)
+slug           VARCHAR(255)  UNIQUE  ← Index (for URL)
 title          VARCHAR(255)
 description    TEXT
 location       VARCHAR(255)
@@ -253,7 +253,7 @@ job_type       ENUM          'full_time' | 'part_time' | 'contract' | 'remote'
 salary_range   VARCHAR(100)  nullable
 employer_id    UUID          FK → User.id
 status         ENUM          'active' | 'closed' | 'draft'
-search_vector  TSVECTOR      ← Full-text search ke liye (generated column)
+search_vector  TSVECTOR      ← For full-text search (generated column)
 expires_at     DATE
 created_at     TIMESTAMP
 updated_at     TIMESTAMP
@@ -268,7 +268,7 @@ cover_note   TEXT      nullable
 status       ENUM      'applied' | 'reviewed' | 'shortlisted' | 'rejected'
 applied_at   TIMESTAMP
 
-UNIQUE(job_id, seeker_id)  ← Ek seeker ek job pe sirf ek baar apply kar sakta hai
+UNIQUE(job_id, seeker_id)  ← A seeker can apply to a job only once
 
 RELATIONS:
 → User (employer) has many Jobs
@@ -278,11 +278,11 @@ RELATIONS:
 
 INDEXES:
 → Job.slug           (URL lookup — GET /jobs/[slug])
-→ Job.employer_id    (employer ke jobs fetch karna)
+→ Job.employer_id    (fetch employer's jobs)
 → Job.search_vector  (full-text search — GIN index)
-→ Job.status         (sirf active jobs dikhana)
-→ Application.job_id (employer apni job ke applications dekhta hai)
-→ Application.seeker_id (seeker apni applications dekhta hai)
+→ Job.status         (show only active jobs)
+→ Application.job_id (employer views applications for their job)
+→ Application.seeker_id (seeker views their applications)
 ```
 
 ---
@@ -332,47 +332,47 @@ PHASE 1 — MVP:
 
 ```
 SITUATION:
-"Maine HireHop banaya — ye ek niche job board hai design professionals ke liye.
-Problem ye thi ki existing generic job boards pe design-specific jobs dhundhna
-mushkil tha — sabke beech filtered nahi hota tha effectively."
+"I built HireHop — a niche job board for design professionals.
+The problem was that existing generic job boards made it hard
+to effectively filter for design-specific jobs."
 
 TASK:
-"Do user types the — Employer aur Job Seeker.
-Employers jobs post karte, seekers apply karte with resume.
-SEO critical tha — Google pe individual job pages index hone chahiye the."
+"There were two user types — Employer and Job Seeker.
+Employers post jobs, seekers apply with resume.
+SEO was critical — individual job pages needed to be indexed by Google."
 
 ACTION:
-"Teen interesting decisions liye —
+"I made three interesting decisions —
 
-Pehla: Mixed rendering strategy use ki.
-Public job listing aur detail pages ke liye ISR use kiya — revalidate: 1 hour.
-Ye isliye kyunki SSG se poora site rebuild karna padta har job ke liye,
-aur SSR se CDN caching nahi milti.
-ISR ne static speed + automatic updates dono diye.
-Dashboard pages SSR the — user-specific data tha.
+First: Used a mixed rendering strategy.
+Used ISR for public job listing and detail pages — revalidate: 1 hour.
+This is because SSG would require full site rebuild for every job,
+and SSR doesn't give CDN caching.
+ISR gave both static speed + automatic updates.
+Dashboard pages were SSR — user-specific data.
 
-Doosra: Full-text search PostgreSQL se implement ki instead of Algolia.
-V1 ke liye job title aur description search kaafi tha.
-Extra service aur cost avoid karna tha — PostgreSQL mein tsvector column
-aur GIN index se performance good thi. Agar scale pe complex faceted search
-chahiye hoti toh Typesense consider karta.
+Second: Implemented full-text search via PostgreSQL instead of Algolia.
+For V1, job title and description search was enough.
+I wanted to avoid extra service and cost — tsvector column + GIN index
+gave good performance in PostgreSQL. If complex faceted search were needed
+at scale, I'd consider Typesense.
 
-Teesra: File upload ke liye Uploadthing use kiya.
-Resume PDF upload karna tha — AWS S3 overkill tha is scale pe.
-Uploadthing Next.js ke liye specifically designed hai,
-type-safe file routes milte hain, aur free tier enough tha.
+Third: Used Uploadthing for file upload.
+Resume PDF upload was needed — AWS S3 was overkill at this scale.
+Uploadthing is specifically designed for Next.js,
+gives type-safe file routes, and free tier was enough.
 
-Ek challenge tha: Employer ko role ke hisaab se signup karna tha
-aur ek seeker ko different fields chahiye thi (resume) vs employer (company name).
-Maine NextAuth mein custom callbacks likhe jo signup pe role-based fields
-database mein save karte the."
+One challenge: Employer needed to signup with role selection,
+and seeker needed different fields (resume) vs employer (company name).
+I wrote custom callbacks in NextAuth that save role-based fields
+to the database on signup."
 
 RESULT:
-"App mein ISR-powered public job pages the jo Google pe index hote the,
-role-based dashboards the, resume upload tha, aur Resend se email notifications thi.
-Reflection: Search functionality aur pehle better design karta —
-beech mein search vector column add karna pada migration ke time, jo painful tha.
-Apfront schema design is lesson ka best example hai."
+"The app had ISR-powered public job pages indexed by Google,
+role-based dashboards, resume upload, and email notifications via Resend.
+Reflection: I'd design the search functionality better upfront —
+having to add a search vector column mid-project via migration was painful.
+Schema design upfront is the best example of this lesson."
 ```
 
 ---

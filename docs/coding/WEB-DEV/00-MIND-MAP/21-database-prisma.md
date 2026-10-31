@@ -1,14 +1,14 @@
-# 21 — Prisma: JavaScript Se Database Se Baat Karna
+# 21 — Prisma: Talking to the Database from JavaScript
 
-> Pichle doc mein PostgreSQL choose kiya.
-> Ab **Prisma** — database se baat karne ka tarika.
-> ORM kya hota hai aur Prisma kaise kaam karta hai.
+> Previous doc chose PostgreSQL.
+> Now **Prisma** — how to talk to the database.
+> What an ORM is and how Prisma works.
 
 ---
 
-## Problem — SQL Seedha Likhna Mushkil Hai
+## Problem — Writing Raw SQL Is Hard
 
-Database se baat karne ke liye SQL likhna padta hai:
+To talk to the database you had to write SQL:
 
 ```sql
 SELECT users.email, orders.id, orders.status
@@ -19,20 +19,20 @@ AND orders.status = 'paid'
 ORDER BY orders.createdAt DESC;
 ```
 
-Yeh kaam karta hai — lekin:
-- JavaScript developers ke liye unfamiliar syntax
-- Typo karo → Runtime error
-- Complex queries → Bahut lamba
-- Database change karo (PostgreSQL → MySQL) → Sab SQL rewrite
+This works — but:
+- Unfamiliar syntax for JavaScript developers
+- Typo → Runtime error
+- Complex queries → Very long
+- Change database (PostgreSQL → MySQL) → Rewrite all SQL
 
 ---
 
 ## Solution — ORM (Prisma)
 
-**ORM (Object Relational Mapper)** — JavaScript mein likhne do, SQL mein convert kar deta hai.
+**ORM (Object Relational Mapper)** — write in JavaScript, it converts to SQL.
 
 ```javascript
-// Prisma se yahi query — JavaScript mein
+// Same query — in JavaScript with Prisma
 const ordersWithUser = await prisma.order.findMany({
   where: {
     userId: 1,
@@ -47,13 +47,13 @@ const ordersWithUser = await prisma.order.findMany({
 })
 ```
 
-Same result — lekin JavaScript. Autocomplete milta hai, type errors pakde jaate hain.
+Same result — but JavaScript. You get autocomplete, and type errors get caught.
 
 ---
 
-## Prisma Ka Schema — Database Structure Define Karna
+## Prisma's Schema — Defining Database Structure
 
-Prisma mein ek `schema.prisma` file hoti hai jisme tables define karte hain:
+In Prisma there's a `schema.prisma` file where tables are defined:
 
 ```prisma
 // prisma/schema.prisma
@@ -62,10 +62,10 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
-  name      String?  // ? matlab optional
+  name      String?  // ? means optional
   createdAt DateTime @default(now())
 
-  orders    Order[]  // Ek user ke kai orders
+  orders    Order[]  // One user has many orders
 }
 
 model Product {
@@ -106,24 +106,24 @@ model OrderItem {
 
 ---
 
-## Schema Se Database Banana
+## Creating the Database from Schema
 
 ```bash
-# Schema se database tables banao
+# Create database tables from schema
 npx prisma migrate dev --name init
 
-# Yeh karta hai:
-# 1. SQL migration file banata hai
-# 2. Database mein tables create karta hai
-# 3. Prisma Client generate karta hai
+# This does:
+# 1. Creates SQL migration file
+# 2. Creates tables in database
+# 3. Generates Prisma Client
 ```
 
 ---
 
-## Prisma Client — Queries Kaise Karte Hain
+## Prisma Client — How to Query
 
 ```javascript
-// /lib/db/prisma.js — Ek baar instance banao, baar baar use karo
+// /lib/db/prisma.js — Create instance once, use everywhere
 import { PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
@@ -135,7 +135,7 @@ export default prisma
 ```javascript
 import prisma from '@/lib/db/prisma'
 
-// CREATE — Naya user banao
+// CREATE — Create new user
 const user = await prisma.user.create({
   data: {
     email: "priya@gmail.com",
@@ -144,19 +144,19 @@ const user = await prisma.user.create({
   }
 })
 
-// READ — User dhundo
+// READ — Find user
 const user = await prisma.user.findUnique({
   where: { email: "priya@gmail.com" }
 })
 
-// READ — Saare products
+// READ — All products
 const products = await prisma.product.findMany({
   where: { stock: { gt: 0 } },  // gt = greater than
   orderBy: { createdAt: 'desc' },
-  take: 10  // Sirf 10
+  take: 10  // Only 10
 })
 
-// UPDATE — Order status change karo
+// UPDATE — Change order status
 const order = await prisma.order.update({
   where: { id: 1 },
   data: { status: "paid" }
@@ -170,17 +170,17 @@ await prisma.user.delete({
 
 ---
 
-## Relations Ke Saath Query
+## Querying With Relations
 
 ```javascript
-// Order ke saath user aur items bhi chahiye
+// Order with user and items also needed
 const order = await prisma.order.findUnique({
   where: { id: 1 },
   include: {
-    user: true,          // User ka data bhi aao
+    user: true,          // Get user data too
     items: {
       include: {
-        product: true    // Har item ka product bhi
+        product: true    // Product for each item too
       }
     }
   }
@@ -198,13 +198,13 @@ const order = await prisma.order.findUnique({
 
 | | |
 |--|--|
-| **ORM kya hai** | JavaScript mein likhne do, SQL mein convert karo |
-| **Prisma schema** | Tables aur relations define karna |
-| **Migration** | Schema se actual database tables banana |
-| **Prisma Client** | JavaScript se queries — type-safe |
+| **What an ORM is** | Write in JavaScript, convert to SQL |
+| **Prisma schema** | Define tables and relations |
+| **Migration** | Create actual database tables from schema |
+| **Prisma Client** | Type-safe queries from JavaScript |
 
 ---
 
-## Agla Doc
+## Next Doc
 
-`22-database-models.md` — ShopKaro ka poora data model — User, Product, Order, Cart — sab ek saath. Kaunsa field kyun hai, relations kaise hain — poori picture.
+`22-database-models.md` — ShopKaro's complete data model — User, Product, Order, Cart — all together. Why each field exists, how relations work — the full picture.
