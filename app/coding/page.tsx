@@ -7,6 +7,7 @@ import { QuizViewer } from "@/components/quiz-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { subjects, loadMarkdownContent, type Subject, type Lecture, type LectureGroup } from "@/lib/coding-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
+import hinglishManifest from "@/docs/coding-hi/manifest.json"
 import { useLanguage } from "@/lib/language-context"
 import SubjectCard from "@/components/subject-card"
 import styles from "./page.module.css"
@@ -22,7 +23,6 @@ type CodingPageProps = {
 export default function CodingPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: CodingPageProps) {
 
   const { language, setHasHinglish } = useLanguage()
-  console.log("[DEBUG] CodingPage render, language:", language)
   
   // Lookup actual objects from ids
   const currentSubject = subjects.find(s => s.id === selectedSubject) ?? null
@@ -184,11 +184,6 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
         const content = await loadMarkdownContent(currentLecture.path, language)
         if (thisRequestId !== requestIdRef.current) return
         setMarkdownContent(content)
-        console.log("[DEBUG] setMarkdownContent called, language:", language, "content first 50:", content.substring(0, 50))
-        const hiPath = currentLecture.path.replace("docs/coding/", "docs/coding-hi/")
-        const hiRes = await fetch(`/api/notes?file=${encodeURIComponent(hiPath)}`)
-        if (thisRequestId !== requestIdRef.current) return
-        setHasHinglish(hiRes.ok)
       } catch (error) {
         if (thisRequestId !== requestIdRef.current) return
         setMarkdownContent(`# Error Loading Notes\n\n${error instanceof Error ? error.message : 'Unknown error'}`)
@@ -197,6 +192,10 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
       }
     }
     loadContent()
+
+    // Check if Hinglish version exists using manifest (no network fetch)
+    const hiPath = currentLecture.path.replace("docs/coding/", "docs/coding-hi/")
+    setHasHinglish(!!(hinglishManifest as Record<string, boolean>)[hiPath])
   }, [selectedLecture, language])
 
   // Render Dashboard View
