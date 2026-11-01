@@ -7,15 +7,20 @@ export type Language = "en" | "hi"
 interface LanguageContextValue {
   language: Language
   setLanguage: (lang: Language) => void
+  hasHinglish: boolean
+  setHasHinglish: (value: boolean) => void
 }
 
 const LanguageContext = createContext<LanguageContextValue>({
   language: "en",
   setLanguage: () => {},
+  hasHinglish: false,
+  setHasHinglish: () => {},
 })
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const [language, setLanguageState] = useState<Language>("en")
+  const [hasHinglish, setHasHinglish] = useState(false)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -37,7 +42,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
+    <LanguageContext.Provider value={{ language, setLanguage, hasHinglish, setHasHinglish }}>
       {children}
     </LanguageContext.Provider>
   )

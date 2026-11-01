@@ -1,6 +1,8 @@
 "use client"
 
 import { ThemeToggle } from "@/components/theme-toggle"
+import { LanguageToggle } from "@/components/language-toggle"
+import { useLanguage } from "@/lib/language-context"
 import { Zap, LayoutDashboard, Code2, Wallet, LayoutGrid, FlaskConical } from "lucide-react"
 
 type Tab = "Dashboard" | "Coding" | "Finance" | "General"
@@ -18,6 +20,7 @@ const tabs: { id: Tab; label: string; icon: React.ReactNode }[] = [
 ]
 
 export function Navbar({ activeTab, onTabChange }: NavbarProps) {
+  const { hasHinglish } = useLanguage()
   return (
     <>
       {/* Top navbar — desktop + mobile (tabs hidden on mobile) */}
@@ -70,6 +73,7 @@ export function Navbar({ activeTab, onTabChange }: NavbarProps) {
                 <span className="hidden sm:inline">Lab</span>
               </a>
               <ThemeToggle />
+              {activeTab === "Coding" && hasHinglish && <LanguageToggle />}
             </div>
           </div>
         </div>
