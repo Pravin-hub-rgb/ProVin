@@ -79,20 +79,30 @@ export const subjects: Subject[] = [
 
 /**
  * Helper function to load markdown content from API endpoint
+ * When language is 'hi', tries the Hinglish version first (docs/coding-hi/),
+ * falling back to English if the file doesn't exist.
  */
 export const loadMarkdownContent = async (
   filePath: string,
+  language: "en" | "hi" = "en",
 ): Promise<string> => {
+  const tryPath = (p: string) => `/api/notes?file=${encodeURIComponent(p)}`
+
+  const targetPath =
+    language === "hi" ? filePath.replace("docs/coding/", "docs/coding-hi/") : filePath
+
   try {
-    const response = await fetch(
-      `/api/notes?file=${encodeURIComponent(filePath)}`,
-    );
+    let response = await fetch(tryPath(targetPath))
+    if (!response.ok && language === "hi" && targetPath !== filePath) {
+      // Fallback to English if Hinglish version doesn't exist
+      response = await fetch(tryPath(filePath))
+    }
     if (response.ok) {
-      return await response.text();
+      return await response.text()
     } else {
-      return `# Error Loading Notes\n\nFailed to load: ${filePath}`;
+      return `# Error Loading Notes\n\nFailed to load: ${filePath}`
     }
   } catch (error) {
-    return `# Error Loading Notes\n\n${error instanceof Error ? error.message : "Unknown error"}`;
+    return `# Error Loading Notes\n\n${error instanceof Error ? error.message : "Unknown error"}`
   }
-};
+}

@@ -7,6 +7,8 @@ import { QuizViewer } from "@/components/quiz-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { subjects, loadMarkdownContent, type Subject, type Lecture, type LectureGroup } from "@/lib/coding-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
+import { LanguageToggle } from "@/components/language-toggle"
+import { useLanguage } from "@/lib/language-context"
 import SubjectCard from "@/components/subject-card"
 import styles from "./page.module.css"
 import type { Dispatch, SetStateAction } from "react"
@@ -20,6 +22,8 @@ type CodingPageProps = {
 
 export default function CodingPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: CodingPageProps) {
 
+  const { language } = useLanguage()
+  
   // Lookup actual objects from ids
   const currentSubject = subjects.find(s => s.id === selectedSubject) ?? null
   
@@ -75,6 +79,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const [isLoading, setIsLoading] = useState(false)
+  const [hasHinglish, setHasHinglish] = useState(false)
   const [progress, setProgress] = useState<Record<string, boolean>>({})
   const [allProgress, setAllProgress] = useState<Record<string, Record<string, boolean>>>({})
 
@@ -163,14 +168,20 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     }
   }, [selectedSubject, selectedLecture, currentSubject, setSelectedLecture])
 
-  // Load markdown content when lecture changes
+  // Load markdown content when lecture changes or language changes
   useEffect(() => {
     if (currentLecture) {
       const loadContent = async () => {
         setIsLoading(true)
         try {
-          const content = await loadMarkdownContent(currentLecture.path)
+          const content = await loadMarkdownContent(currentLecture.path, language)
           setMarkdownContent(content)
+          // Check if Hinglish version exists
+          if (language === "en") {
+            const hiPath = currentLecture.path.replace("docs/coding/", "docs/coding-hi/")
+            const hiRes = await fetch(`/api/notes?file=${encodeURIComponent(hiPath)}`)
+            setHasHinglish(hiRes.ok)
+          }
         } catch (error) {
           setMarkdownContent(`# Error Loading Notes\n\n${error instanceof Error ? error.message : 'Unknown error'}`)
         } finally {
@@ -178,8 +189,10 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
         }
       }
       loadContent()
+    } else {
+      setHasHinglish(false)
     }
-  }, [selectedLecture])
+  }, [selectedLecture, language])
 
   // Render Dashboard View
   if (!selectedSubject) {
@@ -442,9 +455,12 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
           {currentLecture ? (  
             <div className="max-w-4xl pb-12">
               <div className="mb-6">
-                <h1 className="text-3xl font-bold text-foreground mb-2">
-                  {currentLecture.title}
-                </h1>
+                <div className="flex items-center justify-between gap-4 mb-2">
+                  <h1 className="text-3xl font-bold text-foreground">
+                    {currentLecture.title}
+                  </h1>
+                  {hasHinglish && <LanguageToggle />}
+                </div>
                 <div className="w-24 h-1 bg-gradient-to-r from-primary to-blue-500 rounded-full" />
               </div>
               
