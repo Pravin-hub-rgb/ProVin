@@ -1,19 +1,19 @@
 # React Learning Platform — Agent Guidance Doc
 
-Yeh file poore platform ka technical spec hai. Agent isko follow karega jab bhi
-koi naya concept (doc + lab) build karna ho, ya platform ka koi infra part
-banana ho.
+This file is the technical spec for the entire platform. The agent will follow this
+whenever a new concept (doc + lab) needs to be built, or any infra part of the
+platform needs to be created.
 
 ---
 
-## 0. Project Kya Hai (One Line)
+## 0. What the Project Is (One Line)
 
-Ek free, public, no-login learning platform — React.js (TypeScript ke saath)
-seekhne ke liye. Har concept ka ek **doc** (padhne ke liye) aur ek **lab**
-(TypeScript mein live practice karne ke liye, in-browser sandbox) hota hai.
+A free, public, no-login learning platform — for learning React.js (with TypeScript).
+Every concept has a **doc** (for reading) and a **lab** (for live practice in
+TypeScript, in-browser sandbox).
 
-No database, no auth, no user accounts. Poora platform static content
-(MDX files + lab scenario files) se generate hota hai.
+No database, no auth, no user accounts. The entire platform is generated from
+static content (MDX files + lab scenario files).
 
 ---
 
@@ -21,27 +21,27 @@ No database, no auth, no user accounts. Poora platform static content
 
 | Layer | Tool | Reason |
 |---|---|---|
-| Framework | Next.js (existing app ka part) | Already project mein use ho raha hai |
-| Doc content | **MDX** (`.mdx` files) | Markdown + JSX embed ki flexibility — plain markdown se better |
-| Lab / Sandbox | **Sandpack** (`@codesandbox/sandpack-react`) | react.dev, tailwindcss.com production mein use karte hain. File explorer + editor + live preview + Tailwind template sab built-in |
-| Lab code language | **TypeScript** (`react-ts` Sandpack template) | Course TypeScript-first hai, isliye lab bhi `.tsx` files honge, `useState<T>` type hoga na ki plain JS |
-| Test/Validation runner | **Sandpack ka built-in test setup** (Vitest + React Testing Library, browser mein hi chalta hai) | Koi backend/server nahi chahiye. Actual rendered DOM check hota hai, code ka raw text nahi |
-| Hosting | Vercel free tier | No DB, static-ish content — free tier ke liye perfectly fit, scale hone pe bhi cost nahi badhega |
+| Framework | Next.js (part of existing app) | Already in use in the project |
+| Doc content | **MDX** (`.mdx` files) | Flexibility of Markdown + JSX embed — better than plain markdown |
+| Lab / Sandbox | **Sandpack** (`@codesandbox/sandpack-react`) | Used in production by react.dev and tailwindcss.com. File explorer + editor + live preview + Tailwind template all built-in |
+| Lab code language | **TypeScript** (`react-ts` Sandpack template) | The course is TypeScript-first, so labs will also be `.tsx` files, `useState<T>` will be typed rather than plain JS |
+| Test/Validation runner | **Sandpack's built-in test setup** (Vitest + React Testing Library, runs in the browser) | No backend/server needed. Checks the actual rendered DOM, not the raw code text |
+| Hosting | Vercel free tier | No DB, static-ish content — perfectly fits the free tier, cost won't grow even as it scales |
 
-**Important:** No login/tracking ka matlab hai koi progress save nahi hoga
-server pe. Yeh intentional hai — scope simple rakhne ke liye.
+**Important:** No login/tracking means no progress will be saved on the server. This
+is intentional — to keep scope simple.
 
 ---
 
 ## 2. Content Folder Structure
 
-Har concept apne folder mein — doc aur lab hamesha saath, same naam se:
+Every concept in its own folder — doc and lab always together, under the same name:
 
 ```
 content/react/
   module-0/
     0.1-virtual-dom/
-      doc.mdx                (sirf doc — Module 0 mein koi lab nahi hai)
+      doc.mdx                (doc only — no lab in Module 0)
     0.2-jsx-compilation/
       doc.mdx
     ...
@@ -50,7 +50,7 @@ content/react/
     1.1-jsx-components/
       doc.mdx
       lab.ts                 (Sandpack scenario config)
-      lab.test.tsx           (validation tests jo lab ke against chalenge)
+      lab.test.tsx           (validation tests that run against the lab)
     1.5-usestate-counter/
       doc.mdx
       lab.ts
@@ -64,10 +64,10 @@ content/react/
       lab.test.tsx
 ```
 
-Rule: agar concept **sirf conceptual/samajhne wala** hai (jaise Module 0 ke
-Virtual DOM, Fiber Architecture) → sirf `doc.mdx`, koi lab nahi.
-Agar concept **hands-on/mini-project** wala hai (Batch 1 onwards) → `doc.mdx`
-+ `lab.ts` + `lab.test.tsx` teeno honge.
+Rule: if a concept is **purely conceptual/understanding-based** (like Module 0's
+Virtual DOM, Fiber Architecture) → only `doc.mdx`, no lab. If a concept is
+**hands-on/mini-project** based (Batch 1 onwards) → all three: `doc.mdx` +
+`lab.ts` + `lab.test.tsx`.
 
 ---
 
@@ -78,9 +78,9 @@ Agar concept **hands-on/mini-project** wala hai (Batch 1 onwards) → `doc.mdx`
 /course/react/[batch]/[concept-slug]/practice     → Lab page (Sandpack + tests)
 ```
 
-Doc page ke end mein ek **"Practice Karo →"** button hota hai jo `/practice`
-route pe navigate karta hai. Doc aur lab **alag pages** hain (same page
-split-view nahi) — yeh confirmed decision hai.
+At the end of the doc page there is a **"Practice →"** button that navigates to
+the `/practice` route. Doc and lab are **separate pages** (not a same-page
+split-view) — this is a confirmed decision.
 
 ---
 
@@ -93,15 +93,15 @@ export const USESTATE_COUNTER_LAB = {
   template: "react-ts",              // Sandpack TypeScript template
 
   instructions: `
-    Ek counter component banao jisme:
-    - Ek number dikhe (starting 0 se)
-    - +1 button, -1 button, aur Reset button ho
+    Build a counter component where:
+    - A number is shown (starting from 0)
+    - There is a +1 button, -1 button, and a Reset button
   `,
 
   starterFiles: {
     "/App.tsx": `export default function App() {
-  // Yahan se shuru karo
-  return <div>Counter yahan banega</div>;
+  // Start here
+  return <div>Counter will be built here</div>;
 }`,
   },
 
@@ -125,16 +125,16 @@ export default function App() {
 
 ---
 
-## 5. Validation / Checking Approach (Important — Concept Type Ke Hisaab Se Alag)
+## 5. Validation / Checking Approach (Important — Different Per Concept Type)
 
-Do tarah ke concepts hain, aur unki checking ka tareeka alag hoga:
+There are two types of concepts, and their checking approach differs:
 
 ### Type A — Logic/Behavior concepts (state, events, conditionals, hooks)
-Check karo ki **behavior** sahi hai — code ka exact syntax match nahi karna.
+Check that the **behavior** is correct — don't match the exact code syntax.
 
 ```typescript
 // lab.test.tsx example
-test("increment button badhata hai count ko", () => {
+test("increment button increases the count", () => {
   render(<App />);
   const incrementBtn = screen.getByText("+1");
   fireEvent.click(incrementBtn);
@@ -143,12 +143,11 @@ test("increment button badhata hai count ko", () => {
 ```
 
 ### Type B — Structural styling concepts (Tailwind layout — Batch 4)
-Code ka text/class-name check **nahi** karna (kyunki `rounded-lg` vs
-`rounded-xl` dono sahi ho sakte hain). Iske bajaye **computed style** check
-karo:
+Don't check the code's text/class-name (since both `rounded-lg` and `rounded-xl`
+can be correct). Instead, check the **computed style**:
 
 ```typescript
-test("card rounded corners aur shadow ke saath hai", () => {
+test("card has rounded corners and shadow", () => {
   render(<App />);
   const card = screen.getByTestId("profile-card");
   const styles = getComputedStyle(card);
@@ -157,58 +156,60 @@ test("card rounded corners aur shadow ke saath hai", () => {
 });
 ```
 
-### Type C — Pure aesthetic/pixel-level cheezein
-Yeh automate **nahi** karna. Iske liye sirf:
-- Ek checklist do (manual self-check points)
-- Solution reveal button do — jisse compare kar sake
-- Koi forced pass/fail nahi
+### Type C — Pure aesthetic/pixel-level things
+Don't automate this. For this, only:
+- Provide a checklist (manual self-check points)
+- Provide a solution reveal button — to compare against
+- No forced pass/fail
 
-**Rule of thumb:** Agar check "kya yeh sahi kaam karta hai" hai → automate
-karo (Type A/B). Agar check "kya yeh achha dikhta hai" hai → automate mat
-karo (Type C), sirf guide karo.
+**Rule of thumb:** If the check is "does this work correctly" → automate it
+(Type A/B). If the check is "does this look good" → don't automate (Type C),
+just guide.
 
 ---
 
-## 6. Per-Concept Build Workflow (Agent Isko Follow Karega)
+## 6. Per-Concept Build Workflow (Agent Will Follow This)
 
-Har concept ke liye, is order mein:
+For every concept, in this order:
 
-1. **`doc.mdx` likho** — Master Teaching Prompt follow karke (Soch → Kyun →
-   Concept/Syntax → Code (gradual) → Test). Yeh alag file hai, uska poora
-   format wahi document define karta hai.
-2. **`lab.ts` banao** — starter code (bilkul minimal/incomplete) + solution
+1. **Write `doc.mdx`** — following the Master Teaching Prompt (Think → Why →
+   Concept/Syntax → Code (gradual) → Test). This is a separate file; its
+   complete format is defined by that document.
+2. **Create `lab.ts`** — starter code (completely minimal/incomplete) + solution
    code + instructions text
-3. **`lab.test.tsx` banao** — us concept ke expected behavior/structure ko
-   test karne wale assertions (Section 5 ke rules follow karke — Type A ya
-   Type B, jo bhi applicable ho)
-4. **Locally verify karo** — doc render ho raha hai sahi se? Lab mein
-   starter code load ho raha hai? Test solution code ke against pass ho raha
-   hai (sanity check)?
-5. Agla concept — isi order mein repeat
+3. **Create `lab.test.tsx`** — assertions testing the expected behavior/structure
+   of that concept (following Section 5's rules — Type A or Type B, whichever
+   applies)
+4. **Verify locally** — is the doc rendering correctly? Is the starter code
+   loading in the lab? Does the test pass against the solution code (sanity
+   check)?
+5. Next concept — repeat in the same order
 
-**Ek baar mein ek hi concept ka pura pipeline (doc+lab+test) complete karo,
-phir agla shuru karo.** Saare docs pehle, saare labs baad mein — aisa nahi
-karna, kyunki isse beech mein architecture mismatch pakadne mein der lagegi.
+**Complete the full pipeline (doc+lab+test) for one concept at a time, then
+start the next.** Don't do all docs first and all labs later — that would
+delay catching architecture mismatches in between.
 
 ---
 
 ## 7. Syllabus Reference
 
-Poora syllabus (Module 0 se Capstone tak, saare batches, saare concepts,
-saare mini-projects) is agent ke paas already available hai as reference
-(React Final Roadmap document). Yeh guidance doc sirf **kaise banana hai**
-define karta hai — **kya banana hai** ke liye syllabus doc dekho.
+The complete syllabus (from Module 0 to Capstone, all batches, all concepts, all
+mini-projects) is already available to the agent as reference (React Final
+Roadmap document). This guidance doc only defines **how to build** — for **what to
+build**, see the syllabus doc.
 
 Starting point: **Batch 1 - A: JSX + Functional Components** (Profile Card
-mini-project), kyunki yeh sabse simple/static hai, koi state/logic nahi —
-pipeline ko end-to-end test karne ke liye best pehla concept hai.
+mini-project), since it's the simplest/static — no state/logic — making it the
+best first concept to test the pipeline end-to-end.
 
 ---
 
-## 8. Cheezein Jo Is Doc Se Bahar Hain (Dusri Files Dekho)
+## 8. Things Outside This Doc (See Other Files)
 
-- **Doc content kaise likhna hai (tone, style, gradual reveal, problem-first
-  etc.)** → Master Teaching Prompt file dekho, yeh alag hai
-- **Kya-kya concepts/projects poore course mein hain** → React Final Roadmap
-  (syllabus) dekho
-- Yeh file sirf **technical/platform architecture** define karti hai
+- **How to write doc content (tone, style, gradual reveal, problem-first etc.)**
+  → See the Master Teaching Prompt file; that's separate
+- **Which concepts/projects are in the whole course** → See the React Final
+  Roadmap (syllabus)
+- This file only defines the **technical/platform architecture**
+
+(End of file - total 214 lines)

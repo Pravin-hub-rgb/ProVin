@@ -194,7 +194,10 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     loadContent()
 
     // Check if Hinglish version exists using manifest (no network fetch)
-    const hiPath = currentLecture.path.replace("docs/coding/", "docs/coding-hi/")
+    const hiPath = currentLecture.path
+      .replace("docs/coding/", "docs/coding-hi/")
+      .replace("docs/finance/", "docs/finance-hi/")
+      .replace("docs/general/", "docs/general-hi/")
     setHasHinglish(!!(hinglishManifest as Record<string, boolean>)[hiPath])
   }, [selectedLecture, language])
 

@@ -8,7 +8,7 @@
 
 - Vin already completed the **"Agentic AI — Introduction"** course (7 phases + AI News Aggregator capstone) in JavaScript/Node.js. That course taught the concepts from scratch: language models, tokens, context window, tool calling, memory, RAG concept. **This Production course uses Python and real frameworks** (LangChain, LangGraph) — the ones companies actually use.
 - Vin is a self-taught "vibe coder" based in India. He understands the *shape* of how things work but has no formal CS/ML background. He knows JavaScript well but is **not yet fluent in Python** — treat Python syntax like a new language he's learning.
-- **MOST IMPORTANT RULE — THE "GADHE KO BHI SAMAJH AA JAYE" STYLE:**
+- **MOST IMPORTANT RULE — THE "EVEN A BEGINNER CAN FOLLOW" STYLE:**
   - Teach like the reader has never heard this topic before. Zero assumed knowledge.
   - Explain every single line of code. If a code block has 5 lines, explain all 5 lines.
   - Define every term the moment you introduce it — in the same sentence.

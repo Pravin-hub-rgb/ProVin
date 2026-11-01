@@ -57,7 +57,9 @@ import { nodejsSubject } from "./subjects/nodejs.subject";
 import { dsaSubject } from "./subjects/dsa.subject";
 import { coreSubjectsSubject } from "./subjects/coresubjects.subject";
 import { csharpSubject } from "./subjects/csharp.subject";
-import { careerSubject } from "./subjects/career.subject";
+import { careerSubject } from "./subjects/career.subject"
+import { financeSubject } from "./subjects/finance.subject"
+import { generalSubject } from "./subjects/general.subject";
 
 export const subjects: Subject[] = [
   pythonSubject,
@@ -75,6 +77,8 @@ export const subjects: Subject[] = [
   coreSubjectsSubject,
   csharpSubject,
   careerSubject,
+  financeSubject,
+  generalSubject,
 ];
 
 /**
@@ -88,8 +92,14 @@ export const loadMarkdownContent = async (
 ): Promise<string> => {
   const tryPath = (p: string) => `/api/notes?file=${encodeURIComponent(p)}`
 
-  const targetPath =
-    language === "hi" ? filePath.replace("docs/coding/", "docs/coding-hi/") : filePath
+  const getHiPath = (p: string) => {
+    return p
+      .replace("docs/coding/", "docs/coding-hi/")
+      .replace("docs/finance/", "docs/finance-hi/")
+      .replace("docs/general/", "docs/general-hi/")
+  }
+
+  const targetPath = language === "hi" ? getHiPath(filePath) : filePath
 
   try {
     let response = await fetch(tryPath(targetPath))

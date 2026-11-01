@@ -1,48 +1,48 @@
-Jaise gym jaate waqt hum sirf “roz workout karunga” bol ke khatam nahi karte, waise chess mein bhi bina schedule ke kai games karke progress ka pata nahi chalta. Har din thoda sa tactical practice, thoda sa practical game, aur thoda sa review karne se mistakes ka pattern dikhta hai. Ab aapko chess ke piece rules already aate hain, isliye is roadmap mein un rules ko dobara lecture nahi karenge; hum unhe 1000-rating wale practical decisions ke liye use karna seekhenge. Roadmap ko ek map ki tarah padhna, har week ka output check karna, aur rating ko sirf direction ki tarah dekhna hai.
+Just like you would not say "I'll just work out every day" without a schedule at the gym, in chess too, playing many games without a plan does not tell you how you are progressing. Doing a little tactical practice, a little practical play, and a little review each day reveals patterns in your mistakes. Since you already know the chess piece rules, this roadmap will not re-teach those rules; instead, we will learn to use them for practical decisions at a 1000 rating. Read the roadmap like a map, check each week's output, and treat the rating only as a direction.
 
-# Chess 1000 — Basics Se 1000 Rating Tak
+# Chess 1000 — From Basics to a 1000 Rating
 
-## Target aur honest expectation
+## Target and honest expectations
 
-Is course ka target hai Lichess rapid 10+0 mein approximately 1000 rating tak structured practice karna. **1000 guaranteed nahi hai** — rating opponents, time, sleep, consistency, aur game review ki quality par badalti hai. Isliye target ko pressure nahi, direction ki tarah rakho; har week improvement ka evidence dekho.
+This course aims at structured practice toward approximately a 1000 rating in Lichess rapid 10+0. **1000 is not guaranteed** — rating changes with opponents, time, sleep, consistency, and the quality of game review. So keep the target as a direction, not pressure; look for evidence of improvement each week.
 
-Rapid ka matlab hai tez online game, aur `10+0` ka matlab hai har player ko shuru mein 10 minutes milte hain aur har move ke baad extra increment nahi milta. Yeh format daily practice ke liye practical hai kyunki game ke andar sochne ka limited time hota hai, lekin har move ko blindly click karne ka excuse nahi milta.
+Rapid means a fast online game, and `10+0` means each player gets 10 minutes at the start and gains no extra increment after each move. This format is practical for daily practice because there is limited thinking time inside the game, but you still cannot use "click blindly" as an excuse.
 
-1000 ke aas-paas ka player simple tactics jaise captures, forks, aur back-rank attacks aksar dekh leta hai, phir bhi ek moment mein apna king ya queen ghabarahat se expose kar sakta hai. Is course ka kaam wahi “ek move mein sab kuch” wali feeling ko train karna hai: pehle scan, phir tactic, phir safe move.
+Around a 1000 rating, a player often spots simple tactics like captures, forks, and back-rank attacks, yet can still expose a king or queen in a single moment of panic. This course trains exactly that "everything in one move" feeling: scan first, then tactic, then a safe move.
 
 ## 10-week route
 
-Har week 45-minute daily rhythm ko target karo, lekin weekly workload ko thoda adjust kar sakte ho. Neeche ka route Phase 0 through Phase 7 ke available course files ko cover karta hai. Isse tumhe poore 10-week direction ek nazar mein dikhega.
+Aim for a 45-minute daily rhythm each week, though you can adjust the weekly workload slightly. The route below covers the available course files from Phase 0 through Phase 7, so you can see the full 10-week direction at a glance.
 
 | Week | Focus | measurable outcome |
 |---|---|---|
-| Week 1 | Phase 0 — baseline, plan, study system | 6 baseline positions attempt karna aur 7-day log shuru karna |
-| Week 2 | Phase 1 — board scan and basic tactics | 6-position pack mein 4 ya zyada positions ke first attempts mein forcing move scan karna |
-| Week 3 | Phase 1 — fork, pin, skewer, discovered attack | pattern ko move se pehle identify karna |
-| Week 4 | Phase 1 — back rank, deflection, mates, exercise pack | 6-position pack mein 4 ya zyada correct first attempts |
-| Week 5 | Phase 2 — calculation and position choice | 3-move lines calculate karke compare karna |
-| Week 6 | Phase 3 — opening fundamentals and repertoire | 2-3 simple opening principles choose karna |
-| Week 7 | Phase 4 — middlegame plans | 10 games ke notes ek common plan gap batayen |
-| Week 8 | Phase 5 — essential endgames | basic king-and-pawn endings dekhna aur conversion drill karna |
-| Week 9 | Phase 6 — analysis, clock, tournament improvement | time pressure mein 5 games khelna aur review karna |
-| Week 10 | Phase 7 — 1000 rating project | 30 total game logs, including 20 comparable rated checkpoint games; 5 reviewed habits; aur next 4-week plan |
+| Week 1 | Phase 0 — baseline, plan, study system | Attempt 6 baseline positions and start a 7-day log |
+| Week 2 | Phase 1 — board scan and basic tactics | Scan for forcing moves in 4 or more of 6 positions on first attempt |
+| Week 3 | Phase 1 — fork, pin, skewer, discovered attack | Identify the pattern before the move |
+| Week 4 | Phase 1 — back rank, deflection, mates, exercise pack | 4 or more correct first attempts in the 6-position pack |
+| Week 5 | Phase 2 — calculation and position choice | Calculate and compare 3-move lines |
+| Week 6 | Phase 3 — opening fundamentals and repertoire | Choose 2–3 simple opening principles |
+| Week 7 | Phase 4 — middlegame plans | 10 games' notes reveal one common plan gap |
+| Week 8 | Phase 5 — essential endgames | Study basic king-and-pawn endings and run conversion drills |
+| Week 9 | Phase 6 — analysis, clock, tournament improvement | Play 5 games under time pressure and review them |
+| Week 10 | Phase 7 — 1000 rating project | 30 total game logs, including 20 comparable rated checkpoint games; 5 reviewed habits; and a next 4-week plan |
 
-Phase 2 se Phase 7 tak ke topics course files mein available hain, isliye is roadmap ke baad tum calculation, openings, middlegame, endgames, analysis, aur rating-project phases continue kar sakte ho. Week 10 ke end mein tumhari rating 1000 par pahunch chuki ho, toh bhi course ko successful maana jayega kyunki tumne apni improvement ko measurable habits bana liye hon.
+The topics from Phase 2 through Phase 7 are available in the course files, so after this roadmap you can continue through calculation, openings, middlegame, endgames, analysis, and the rating-project phases. Even if your rating reaches 1000 by the end of Week 10, the course counts as successful because you will have turned your improvement into measurable habits.
 
 ## 45-minute daily cadence
 
-Ek din ko 45 minute se zyada karke stretching aur tez panic se behtar hai ek repeatable routine ko consistent rakhna. Har session ke liye yeh order rakhna kaafi practical hai. Is sequence se pressure bhi manageable rehta hai.
+A consistent, repeatable routine is better than stretching sessions into rushed panic. Keeping this order for each session is practical and keeps pressure manageable.
 
-1. **5 minutes — warm-up scan:** ek blank board par apne aap se poochho, “check kahan hai, capture kahan hai, threat kahan hai?”
-2. **10 minutes — focused tactics:** ek pattern ya 3–5 positions solve karo, aur har answer ka ek-sentence reason likho.
-3. **25 minutes — practical games:** Lichess par ek ya do 10+0 games khelo; agar game length se time badhe, next day review catch up karo.
-4. **5 minutes — log:** result ke saath ek critical moment aur uska reason, phir kal ka ek action note karo.
+1. **5 minutes — warm-up scan:** ask yourself on a blank board, "where is the check, where is the capture, where is the threat?"
+2. **10 minutes — focused tactics:** solve one pattern or 3–5 positions, and write a one-sentence reason for each answer.
+3. **25 minutes — practical games:** play one or two 10+0 games on Lichess; if a game runs long, catch up on review the next day.
+4. **5 minutes — log:** record the result with one critical moment and its reason, then one action note for tomorrow.
 
-45 minutes ko apni available time ke hisaab se proportionally scale kar sakte ho, lekin sequence mat todo. Agar sirf 20 minutes mile, to 5 minutes scan, 8 minutes tactics, aur 7 minutes log/review rakhna safer hai; phir bhi daily feedback loop bana rahega. Flexible hona consistency ko replace nahi karta.
+You can scale the 45 minutes proportionally to your available time, but do not change the sequence. If you only have 20 minutes, a safer split is 5 minutes scan, 8 minutes tactics, and 7 minutes log/review; the daily feedback loop still survives. Being flexible does not replace consistency.
 
 ## Measurement
 
-Sirf rating ka number dekhna tumhe direction nahi deta. Har week teen numbers track karo: kitne tactical positions solve hue, kitne games khele, aur ek repeated habit kya tha. Game results se zyada useful signal yeh hai ki tum apni common mistake pehle pehchan rahe ho ya nahi.
+Looking only at the rating number does not give you direction. Track three numbers each week: how many tactical positions you solved, how many games you played, and what one repeated habit was. A more useful signal than game results is whether you are starting to spot your common mistake earlier.
 
 | Signal | Week 1 baseline | Weeks 2–4 target | Week 10 review |
 |---|---:|---:|---:|
@@ -50,54 +50,54 @@ Sirf rating ka number dekhna tumhe direction nahi deta. Har week teen numbers tr
 | Games with a written log | 3 | 5 or more | 30 total logs, including 20 comparable rated checkpoint games |
 | Repeated mistake named | 1 | 1 clear phrase per game | 3 habits with a counter-action |
 
-Yeh numbers pass/fail guarantee nahi hain; woh sirf course ke direction check hain. Agar numbers improve ho rahe hain lekin rating gir rahi hai, to strategy ya time-management ko adjust karna padega. Agar rating temporarily na badle, phir bhi tactical accuracy aur review quality ko continue rakho.
+These numbers are not pass/fail guarantees; they are direction checks for the course. If the numbers improve while the rating drops, you will need to adjust strategy or time management. Even if the rating does not change for a while, keep tactical accuracy and review quality going.
 
 ## What It Is NOT
 
-1000 rating guarantee nahi, personality test nahi, aur fixed skill certificate nahi hai. Yeh ek performance estimate hai jo opponents aur recent results ke saath badalta hai; isliye ek din ka result poore course ka natijna nahi hota.
+A 1000 rating is not a guarantee, not a personality test, and not a fixed skill certificate. It is a performance estimate that changes with opponents and recent results, so one day's result is not the outcome of the whole course.
 
-Course ka target sirf opening theory ya lambe variations yaad karna nahi hai. Practical games, safe decisions, aur blunder awareness bhi target mein hain, kyunki 1000 ke aas-paas ek missed tactic aksar bade theory knowledge se zyada rating cost karta hai.
+The course target is not just memorizing opening theory or long variations. Practical games, safe decisions, and blunder awareness are also in scope, because around 1000 a missed tactic usually costs more rating than a lack of theory knowledge.
 
-45-minute budget ko har din poori tarah intense banana zaroori nahi. Consistent small sessions, honest review, aur measurable checkpoints hi is roadmap ko useful banate hain.
+It is not necessary to make the 45-minute budget intense every single day. Consistent small sessions, honest review, and measurable checkpoints are what make this roadmap useful.
 
 ## Bridge to the next file
 
-Roadmap ke baad pehla concrete kaam `0.1 1000 Rating Ka Matlab.md` mein hai. Wahan tum rating ka matlab aur honest expectations set karoge, phir `0.2 Baseline Test.md` tumhari current situation ko measure karega.
+After the roadmap, the first concrete task is in `0.1 1000 Rating Ka Matlab.md`. There you will set the meaning of rating and honest expectations, then `0.2 Baseline Test.md` will measure your current situation.
 
 ## In Your Own Words
 
-1. Is course ke target ko apne words mein explain karo, aur 1000 rating ko guarantee nahi kyun samajhte ho?
+1. Explain this course's target in your own words, and why do you not treat a 1000 rating as guaranteed?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Target Lichess rapid 10+0 mein approximately 1000 rating tak structured practice karna hai. Rating ek estimate hai, isliye opponents, games, time, aur consistency par depend karti hai; koi bhi course fixed result guarantee nahi kar sakta. Main ise daily measurable habits ke roop mein dekhunga, final number ko apni identity nahi banaunga.
+**Sample Answer:** The target is structured practice toward approximately a 1000 rating in Lichess rapid 10+0. Rating is an estimate, so it depends on opponents, games, time, and consistency; no course can guarantee a fixed result. I will view it as daily measurable habits, not as a final number that defines me.
 
 </details>
 
-2. 45-minute daily cadence ke char important blocks kya hain aur har block ka purpose kya hai?
+2. What are the four important blocks of the 45-minute daily cadence and what is the purpose of each?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Tactical warm-up eye ko alert karta hai, focused positions pattern practice deti hain, practical games real decisions par test karti hain, aur log/review mistake ko measurable habit banata hai. Sequence isliye kaam karta hai kyunki theory ko immediately real board par apply kiya jaata hai.
+**Sample Answer:** The tactical warm-up keeps the eye alert, focused positions build pattern practice, practical games test real decisions, and the log/review turns a mistake into a measurable habit. The sequence works because theory is applied to a real board immediately.
 
 </details>
 
-3. Rating ke saath kaunse do ya teen non-rating signals tum weekly track karoge?
+3. Which two or three non-rating signals will you track each week?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Main tactical first attempts, games with written logs, aur ek repeated mistake ka counter-action track karunga. Isse pata chalega ki improvement sirf number mein nahi, decision quality aur review habit mein bhi ho rahi hai ya nahi.
+**Sample Answer:** I will track tactical first attempts, games with written logs, and a counter-action for one repeated mistake. This shows whether improvement is happening in decision quality and review habits, not just in the number.
 
 </details>
 
-4. “1000 guaranteed nahi hai” ka is roadmap ke liye practical matlab kya hai?
+4. What is the practical meaning of "1000 is not guaranteed" for this roadmap?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Iska matlab hai main plan ko process ke roop mein follow karunga, har week evidence check karunga, aur rating ko excuse ya identity nahi banaunga. Agar number na mile, to course ko adjust karna padega; guarantee ka wait karne ke bajaye daily actions par focus rahega.
+**Sample Answer:** It means I will follow the plan as a process, check evidence each week, and not use the rating as an excuse or an identity. If the number does not come, the course must be adjusted; the focus stays on daily actions rather than waiting for a guarantee.
 
 </details>

@@ -2,9 +2,9 @@
 
 ## What Is This Course?
 
-Manual trading se algorithmic trading tak — Python se automated strategies likho, backtest karo, aur paper trading pe live test karo. Ye course finance + code ka intersection hai.
+From manual trading to algorithmic trading — write automated strategies in Python, backtest them, and test them live on paper trading. This course sits at the intersection of finance + code.
 
-> **Status:** ✅ = notes ready | ⏳ = pending (audio transcription chal rahi hai)
+> **Status:** ✅ = notes ready | ⏳ = pending (audio transcription in progress)
 
 ---
 
@@ -115,13 +115,13 @@ Manual trading se algorithmic trading tak — Python se automated strategies lik
 ## Prerequisites
 
 - Basic Python knowledge (variables, functions, loops)
-- Stock market ka basic idea (buy/sell, price, volume)
+- Basic stock market idea (buy/sell, price, volume)
 - Computer with internet connection
 
 ---
 
 ## What This Course Is NOT
 
-- ❌ **Stock tips course** — hum strategies banayenge, tips nahi denge
-- ❌ **Get rich quick scheme** — algo trading bhi risk hai, guaranteed profit nahi
-- ❌ **Finance degree course** — sirf enough finance to build, not to become a CFA
+- ❌ **Stock tips course** — we'll build strategies, not give tips
+- ❌ **Get rich quick scheme** — algo trading also has risk, no guaranteed profit
+- ❌ **Finance degree course** — only enough finance to build, not to become a CFA
