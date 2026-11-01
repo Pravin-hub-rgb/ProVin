@@ -8,6 +8,8 @@ import { cfoSubject } from "@/lib/finance-subjects/cfo.subject"
 import { algotradingSubject } from "@/lib/finance-subjects/algotrading.subject"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/finance-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
+import { useLanguage } from "@/lib/language-context"
+import hinglishManifest from "@/docs/coding-hi/manifest.json"
 import SubjectCard from "@/components/subject-card"
 import styles from "../coding/page.module.css"
 
@@ -26,6 +28,7 @@ type FinancePageProps = {
 }
 
 export default function FinancePage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: FinancePageProps) {
+  const { language, setHasHinglish } = useLanguage()
 
   // ✅ DEBUG: Force render check
   console.log("FINANCE PAGE RENDERED ✅", selectedSubject, selectedLecture);
@@ -144,7 +147,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
       const loadContent = async () => {
         setIsLoading(true)
         try {
-          const content = await loadMarkdownContent(currentLecture.path)
+          const content = await loadMarkdownContent(currentLecture.path, language)
           setMarkdownContent(content)
         } catch (error) {
           setMarkdownContent(`# Error Loading Notes\n\n${error instanceof Error ? error.message : 'Unknown error'}`)
@@ -153,8 +156,12 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
         }
       }
       loadContent()
+      const hiPath = currentLecture.path.replace("docs/finance/", "docs/finance-hi/")
+      setHasHinglish(!!(hinglishManifest as Record<string, boolean>)[hiPath])
+    } else {
+      setHasHinglish(false)
     }
-  }, [selectedLecture])
+  }, [selectedLecture, language])
 
   // Render Dashboard View
   if (!selectedSubject) {

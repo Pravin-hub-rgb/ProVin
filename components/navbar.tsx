@@ -73,7 +73,7 @@ export function Navbar({ activeTab, onTabChange }: NavbarProps) {
                 <span className="hidden sm:inline">Lab</span>
               </a>
               <ThemeToggle />
-              {activeTab === "Coding" && hasHinglish && <LanguageToggle />}
+              {(activeTab === "Coding" || activeTab === "Finance" || activeTab === "General") && hasHinglish && <LanguageToggle />}
             </div>
           </div>
         </div>

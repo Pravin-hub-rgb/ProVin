@@ -32,15 +32,23 @@ export interface Subject {
   progress?: ProgressPhase[];
 }
 
-export async function loadMarkdownContent(path: string): Promise<string> {
+export async function loadMarkdownContent(
+  filePath: string,
+  language: "en" | "hi" = "en",
+): Promise<string> {
+  const tryPath = (p: string) => `/api/notes?file=${encodeURIComponent(p)}`
+  const targetPath = language === "hi" ? filePath.replace("docs/finance/", "docs/finance-hi/") : filePath
   try {
-    const res = await fetch(`/api/notes?file=${encodeURIComponent(path)}`);
-    if (!res.ok) {
-      throw new Error(`Failed to load ${path}`);
+    let response = await fetch(tryPath(targetPath))
+    if (!response.ok && language === "hi" && targetPath !== filePath) {
+      response = await fetch(tryPath(filePath))
     }
-    return await res.text();
+    if (response.ok) {
+      return await response.text()
+    } else {
+      return `# Error Loading Notes\n\nFailed to load: ${filePath}`
+    }
   } catch (error) {
-    console.error('Error loading markdown:', error);
-    throw error;
+    return `# Error Loading Notes\n\n${error instanceof Error ? error.message : "Unknown error"}`
   }
 }

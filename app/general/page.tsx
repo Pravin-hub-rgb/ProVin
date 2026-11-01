@@ -11,6 +11,8 @@ import { chessSubject } from "@/lib/general-subjects/chess-to-1000.subject"
 import { geopoliticsSubject } from "@/lib/general-subjects/geopolitics.subject"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/general-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
+import { useLanguage } from "@/lib/language-context"
+import hinglishManifest from "@/docs/coding-hi/manifest.json"
 import SubjectCard from "@/components/subject-card"
 import styles from "../coding/page.module.css"
 
@@ -26,6 +28,7 @@ type GeneralPageProps = {
 const subjects: Subject[] = [spokenEnglishSubject, chessSubject, geopoliticsSubject]
 
 export default function GeneralPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: GeneralPageProps) {
+  const { language, setHasHinglish } = useLanguage()
 
   const currentSubject = subjects.find(s => s.id === selectedSubject) ?? null
 
@@ -132,31 +135,28 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
   }, [currentSubject, selectedLecture])
 
   useEffect(() => {
-    let cancelled = false
-
-    if (!currentLecture) {
-      setMarkdownContent("")
-      setIsLoading(false)
-      return
-    }
-
-    setIsLoading(true)
-    const loadContent = async () => {
-      try {
-        const content = await loadMarkdownContent(currentLecture.path)
-        if (!cancelled) setMarkdownContent(content)
-      } catch {
-        if (!cancelled) setMarkdownContent("# Error loading content\n\nCould not load the lecture notes.")
-      } finally {
-        if (!cancelled) setIsLoading(false)
+    if (currentLecture) {
+      let cancelled = false
+      const loadContent = async () => {
+        setIsLoading(true)
+        try {
+          const content = await loadMarkdownContent(currentLecture.path, language)
+          if (!cancelled) setMarkdownContent(content)
+        } catch {
+          if (!cancelled) setMarkdownContent("# Error loading content\n\nCould not load the lecture notes.")
+        } finally {
+          if (!cancelled) setIsLoading(false)
+        }
       }
-    }
-    loadContent()
+      loadContent()
+      const hiPath = currentLecture.path.replace("docs/general/", "docs/general-hi/")
+      setHasHinglish(!!(hinglishManifest as Record<string, boolean>)[hiPath])
 
-    return () => {
-      cancelled = true
+      return () => { cancelled = true }
+    } else {
+      setHasHinglish(false)
     }
-  }, [currentLecture])
+  }, [selectedLecture, language])
 
   // Render Dashboard View
   if (!selectedSubject) {
