@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { ChevronDown, ChevronRight, Book, FileText, HelpCircle } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
 import { QuizViewer } from "@/components/quiz-viewer"
@@ -168,6 +168,8 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   }, [selectedSubject, selectedLecture, currentSubject, setSelectedLecture])
 
   // Load markdown content when lecture changes or language changes
+  const requestIdRef = useRef(0)
+
   useEffect(() => {
     console.log("[DEBUG] useEffect triggered, language:", language, "lecture:", currentLecture?.id)
     if (!currentLecture) {
@@ -175,29 +177,27 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
       return
     }
 
-    let cancelled = false
+    const thisRequestId = ++requestIdRef.current
 
     const loadContent = async () => {
       setIsLoading(true)
       try {
         const content = await loadMarkdownContent(currentLecture.path, language)
-        if (cancelled) return
+        if (thisRequestId !== requestIdRef.current) return
         setMarkdownContent(content)
-        // Check if Hinglish version exists
+        console.log("[DEBUG] setMarkdownContent called, language:", language, "content first 50:", content.substring(0, 50))
         const hiPath = currentLecture.path.replace("docs/coding/", "docs/coding-hi/")
         const hiRes = await fetch(`/api/notes?file=${encodeURIComponent(hiPath)}`)
-        if (cancelled) return
+        if (thisRequestId !== requestIdRef.current) return
         setHasHinglish(hiRes.ok)
       } catch (error) {
-        if (cancelled) return
+        if (thisRequestId !== requestIdRef.current) return
         setMarkdownContent(`# Error Loading Notes\n\n${error instanceof Error ? error.message : 'Unknown error'}`)
       } finally {
-        if (!cancelled) setIsLoading(false)
+        if (thisRequestId === requestIdRef.current) setIsLoading(false)
       }
     }
     loadContent()
-
-    return () => { cancelled = true }
   }, [selectedLecture, language])
 
   // Render Dashboard View
