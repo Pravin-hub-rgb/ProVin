@@ -22,6 +22,7 @@ type CodingPageProps = {
 export default function CodingPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: CodingPageProps) {
 
   const { language, setHasHinglish } = useLanguage()
+  console.log("[DEBUG] CodingPage render, language:", language)
   
   // Lookup actual objects from ids
   const currentSubject = subjects.find(s => s.id === selectedSubject) ?? null
@@ -168,6 +169,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
 
   // Load markdown content when lecture changes or language changes
   useEffect(() => {
+    console.log("[DEBUG] useEffect triggered, language:", language, "lecture:", currentLecture?.id)
     if (!currentLecture) {
       setHasHinglish(false)
       return
