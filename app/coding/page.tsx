@@ -20,6 +20,7 @@ type CodingPageProps = {
   setSelectedLecture: Dispatch<SetStateAction<string | null>>
 }
 
+console.log("[DEBUG] manifest keys count:", Object.keys(hinglishManifest).length)
 export default function CodingPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: CodingPageProps) {
 
   const { language, setHasHinglish } = useLanguage()
@@ -198,7 +199,9 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
       .replace("docs/coding/", "docs/coding-hi/")
       .replace("docs/finance/", "docs/finance-hi/")
       .replace("docs/general/", "docs/general-hi/")
-    setHasHinglish(!!(hinglishManifest as Record<string, boolean>)[hiPath])
+    const hasHi = !!(hinglishManifest as Record<string, boolean>)[hiPath]
+    console.log("[DEBUG] hasHinglish check:", hiPath, "->", hasHi)
+    setHasHinglish(hasHi)
   }, [selectedLecture, language])
 
   // Render Dashboard View
