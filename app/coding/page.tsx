@@ -171,7 +171,6 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   const requestIdRef = useRef(0)
 
   useEffect(() => {
-    console.log("[DEBUG] useEffect triggered, language:", language, "lecture:", currentLecture?.id)
     if (!currentLecture) {
       setHasHinglish(false)
       return
