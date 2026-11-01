@@ -9,6 +9,7 @@ interface LanguageContextValue {
   setLanguage: (lang: Language) => void
   hasHinglish: boolean
   setHasHinglish: (value: boolean) => void
+  mounted: boolean
 }
 
 const LanguageContext = createContext<LanguageContextValue>({
@@ -16,6 +17,7 @@ const LanguageContext = createContext<LanguageContextValue>({
   setLanguage: () => {},
   hasHinglish: false,
   setHasHinglish: () => {},
+  mounted: false,
 })
 
 export function LanguageProvider({ children }: { children: ReactNode }) {
@@ -36,13 +38,8 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("language", lang)
   }
 
-  // Avoid hydration mismatch: render children only after mount
-  if (!mounted) {
-    return <>{children}</>
-  }
-
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, hasHinglish, setHasHinglish }}>
+    <LanguageContext.Provider value={{ language, setLanguage, hasHinglish, setHasHinglish, mounted }}>
       {children}
     </LanguageContext.Provider>
   )

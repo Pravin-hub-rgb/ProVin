@@ -4,7 +4,9 @@ import { useLanguage } from "@/lib/language-context"
 import { Languages } from "lucide-react"
 
 export function LanguageToggle() {
-  const { language, setLanguage } = useLanguage()
+  const { language, setLanguage, mounted } = useLanguage()
+
+  if (!mounted) return null
 
   return (
     <button

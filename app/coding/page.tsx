@@ -168,26 +168,34 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
 
   // Load markdown content when lecture changes or language changes
   useEffect(() => {
-    if (currentLecture) {
-      const loadContent = async () => {
-        setIsLoading(true)
-        try {
-          const content = await loadMarkdownContent(currentLecture.path, language)
-          setMarkdownContent(content)
-          // Check if Hinglish version exists (always check, regardless of current language)
-          const hiPath = currentLecture.path.replace("docs/coding/", "docs/coding-hi/")
-          const hiRes = await fetch(`/api/notes?file=${encodeURIComponent(hiPath)}`)
-          setHasHinglish(hiRes.ok)
-        } catch (error) {
-          setMarkdownContent(`# Error Loading Notes\n\n${error instanceof Error ? error.message : 'Unknown error'}`)
-        } finally {
-          setIsLoading(false)
-        }
-      }
-      loadContent()
-    } else {
+    if (!currentLecture) {
       setHasHinglish(false)
+      return
     }
+
+    let cancelled = false
+
+    const loadContent = async () => {
+      setIsLoading(true)
+      try {
+        const content = await loadMarkdownContent(currentLecture.path, language)
+        if (cancelled) return
+        setMarkdownContent(content)
+        // Check if Hinglish version exists
+        const hiPath = currentLecture.path.replace("docs/coding/", "docs/coding-hi/")
+        const hiRes = await fetch(`/api/notes?file=${encodeURIComponent(hiPath)}`)
+        if (cancelled) return
+        setHasHinglish(hiRes.ok)
+      } catch (error) {
+        if (cancelled) return
+        setMarkdownContent(`# Error Loading Notes\n\n${error instanceof Error ? error.message : 'Unknown error'}`)
+      } finally {
+        if (!cancelled) setIsLoading(false)
+      }
+    }
+    loadContent()
+
+    return () => { cancelled = true }
   }, [selectedLecture, language])
 
   // Render Dashboard View
