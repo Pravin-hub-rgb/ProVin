@@ -20,7 +20,6 @@ type CodingPageProps = {
   setSelectedLecture: Dispatch<SetStateAction<string | null>>
 }
 
-console.log("[DEBUG] manifest keys count:", Object.keys(hinglishManifest).length)
 export default function CodingPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: CodingPageProps) {
 
   const { language, setHasHinglish } = useLanguage()
