@@ -1,0 +1,294 @@
+[
+  {
+    "old": "docs/coding/Backend (Python)/Phase 0 - Backend Mindset/0.0 Course Kaise Chalega - Backend Ki Map.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Backend (Python)\\Phase 0 - Backend Mindset\\0.0 Course How It Works - Backend Ki Map.md"
+  },
+  {
+    "old": "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/1.0 Phase 1 - Kya Seekhenge + Project Preview.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Backend (Python)\\Phase 1 - FastAPI Basics (CRUD + SQLite)\\1.0 Phase 1 - What We Will Learn + Project Preview.md"
+  },
+  {
+    "old": "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/1.4 SQLite se Jodo.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Backend (Python)\\Phase 1 - FastAPI Basics (CRUD + SQLite)\\1.4 Connect to SQLite.md"
+  },
+  {
+    "old": "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.0 Docker Kya Hai + Overview.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Backend (Python)\\Phase 1 - FastAPI Basics (CRUD + SQLite)\\Appendix A - Docker Basics\\2.0 Docker What Is + Overview.md"
+  },
+  {
+    "old": "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.3 Test Karo + TradeStack Bridge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Backend (Python)\\Phase 1 - FastAPI Basics (CRUD + SQLite)\\Appendix A - Docker Basics\\2.3 Test + TradeStack Bridge.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 0 - Shuruaat/0.1 C# aur .NET kya hai.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 0 - Shuruaat\\0.1 C# aur .NET What Is.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 1 - C# Basics/1.1 Variables aur Types.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 1 - C# Basics\\1.1 Variables and Types.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 1 - C# Basics/1.2 Input aur Operators.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 1 - C# Basics\\1.2 Input and Operators.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 1 - C# Basics/1.5 Arrays aur Lists.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 1 - C# Basics\\1.5 Arrays and Lists.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 2 - OOP in C#/2.1 Class aur Object.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 2 - OOP in C#\\2.1 Class and Object.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 2 - OOP in C#/2.2 Properties aur Encapsulation.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 2 - OOP in C#\\2.2 Properties and Encapsulation.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 2 - OOP in C#/2.3 Inheritance aur Polymorphism.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 2 - OOP in C#\\2.3 Inheritance and Polymorphism.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 2 - OOP in C#/2.4 Interfaces aur Namespaces.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 2 - OOP in C#\\2.4 Interfaces and Namespaces.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 3 - .NET Toolbox/3.1 BCL aur LINQ.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 3 - .NET Toolbox\\3.1 BCL and LINQ.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 3 - .NET Toolbox/3.3 JSON Files aur Generics.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 3 - .NET Toolbox\\3.3 JSON Files and Generics.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 4 - Database/4.1 SQL Recap aur C# se SQL.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 4 - Database\\4.1 SQL Recap and SQL from C#.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 4 - Database/4.3 Connection String aur appsettings.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 4 - Database\\4.3 Connection String and appsettings.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 5 - ASP.NET Core Web API/5.1 Web API kya hai — pehla API.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 5 - ASP.NET Core Web API\\5.1 Web API What Is — pehla API.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 5 - ASP.NET Core Web API/5.2 Endpoints Routing aur DTOs.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 5 - ASP.NET Core Web API\\5.2 Endpoints Routing and DTOs.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 5 - ASP.NET Core Web API/5.3 Validation aur Error Handling.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 5 - ASP.NET Core Web API\\5.3 Validation and Error Handling.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 5 - ASP.NET Core Web API/5.5 CORS aur React se connect.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 5 - ASP.NET Core Web API\\5.5 CORS and Connect with React.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 6 - Project Library API/6.1 Setup Models aur Database.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 6 - Project Library API\\6.1 Setup Models and Database.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 6 - Project Library API/6.3 Search Validation aur Errors.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 6 - Project Library API\\6.3 Search Validation and Errors.md"
+  },
+  {
+    "old": "docs/coding/C Sharp/Module 6 - Project Library API/6.4 Run Test aur README.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\C Sharp\\Module 6 - Project Library API\\6.4 Run Test and README.md"
+  },
+  {
+    "old": "docs/coding/Core Subjects/Batch 1 - DBMS/1.0 DBMS — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Core Subjects\\Batch 1 - DBMS\\1.0 DBMS — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Core Subjects/Batch 2 - Computer Networks/2.0 CN — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Core Subjects\\Batch 2 - Computer Networks\\2.0 CN — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Core Subjects/Batch 3 - OOP/3.0 OOP — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Core Subjects\\Batch 3 - OOP\\3.0 OOP — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Core Subjects/Batch 4 - Operating Systems/4.0 OS — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Core Subjects\\Batch 4 - Operating Systems\\4.0 OS — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.0 Routing Fundamentals — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 1 - Routing Fundamentals\\1.0 Routing Fundamentals — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.1 Planning — Code Likhne Se Pehle Sochna.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 1 - Routing Fundamentals\\1.5.1 Planning — Think Before Coding.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.2 Hardcoded UI — Pehle Dekho Kaise Dikhta Hai.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 1 - Routing Fundamentals\\1.5.2 Hardcoded UI — First See How It Looks.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.3 Data Layer — post.ts, Type Aur Functions.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 1 - Routing Fundamentals\\1.5.3 Data Layer — post.ts, Type and Functions.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.0 Rendering & Data Fetching — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 2 - Rendering & Data Fetching\\2.0 Rendering & Data Fetching — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.2 Client Components — Kab Zaroorat Padti Hai.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 2 - Rendering & Data Fetching\\2.2 Client Components — When Are They Needed.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.5.1 Planning V2 — Kya Upgrade Karna Hai.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 2 - Rendering & Data Fetching\\2.5.1 Planning V2 — What to Upgrade.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 3 - Mutations/3.0 - HTTP Methods Aur API Integration Ka Concept.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 3 - Mutations\\3.0 - HTTP Methods and API Integration Concept.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 3 - Mutations/3.0 Mutations — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 3 - Mutations\\3.0 Mutations — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.1 Proxy Kya Hai — Request Lifecycle.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 4 - Proxy (Middleware) Deep Dive\\4.1 Proxy What Is — Request Lifecycle.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.15 Edge Runtime Kya Hai — Next 16 Ka Badla Hua Default.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 4 - Proxy (Middleware) Deep Dive\\4.15 Edge Runtime What Is — Next 16 Ka Badla Hua Default.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.0 Authentication — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 5 - Authentication & Protected Access\\5.0 Authentication — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.1 Cookies aur Sessions — Auth ka Foundation.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 5 - Authentication & Protected Access\\5.1 Cookies and Sessions — Auth Foundation.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 6 - Database Integration/6.0 Database Integration — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 6 - Database Integration\\6.0 Database Integration — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 6 - Database Integration/6.1 Database Kya Hoti Hai — File vs Database.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 6 - Database Integration\\6.1 Database What Is — File vs Database.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 6 - Database Integration/6.3 ORM aur Providers — Database Se Baat Karne Ke Tools.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 6 - Database Integration\\6.3 ORM and Providers — Tools to Talk to Database.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 6 - Database Integration/6.8 Postman Testing — REST API Ko Proper Test Karna.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 6 - Database Integration\\6.8 Postman Testing — Properly Test REST API.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 6 - Database Integration/6.9 PostgreSQL + Neon Setup — SQL Database Banao.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 6 - Database Integration\\6.9 PostgreSQL + Neon Setup — Create SQL Database.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.0 Optimization & Production — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 7 - Optimization & Production Concerns\\7.0 Optimization & Production — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Batch 8 - Security & Deployment/8.0 Security & Deployment — Kya Seekhenge.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Batch 8 - Security & Deployment\\8.0 Security & Deployment — What We Will Learn.md"
+  },
+  {
+    "old": "docs/coding/Next JS/Final Capstone - Hiring Platform/C.0 Hiring Platform — Kya Banayenge (Course Ka Finale).md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Final Capstone - Hiring Platform\\C.0 Hiring Platform — What We Will Build (Course Finale).md"
+  },
+  {
+    "old": "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.0 Next.js Kya Hai aur Ye Course Kaise Chalega.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Next JS\\Module 0 - Next.js Kaise Kaam Karta Hai\\0.0 Next.js What It Is and How This Course Works.md"
+  },
+  {
+    "old": "docs/coding/Node JS/01 Node.js Kya Hai.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Node JS\\01 Node.js What Is.md"
+  },
+  {
+    "old": "docs/coding/Node JS/05 Promises aur Async Await.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Node JS\\05 Promises and Async Await.md"
+  },
+  {
+    "old": "docs/coding/Node JS/07 Environment aur Bridge to Next.js.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\Node JS\\07 Environment and Bridge to Next.js.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 1 - Core Building Blocks/1.1 JSX Kya Hai.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 1 - Core Building Blocks\\1.1 JSX What Is.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 1 - Core Building Blocks/1.1 Quiz — JSX Kya Hai.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 1 - Core Building Blocks\\1.1 Quiz — JSX What Is.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 1 - Core Building Blocks/1.10 Conditional Rendering aur Filter.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 1 - Core Building Blocks\\1.10 Conditional Rendering and Filter.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 1 - Core Building Blocks/1.11 Lists Keys aur TypeScript Arrays.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 1 - Core Building Blocks\\1.11 Lists Keys and TypeScript Arrays.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 1 - Core Building Blocks/1.5.3 Optional Props aur Destructuring.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 1 - Core Building Blocks\\1.5.3 Optional Props and Destructuring.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 1 - Core Building Blocks/1.5.4 Callback Props aur Event Handling.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 1 - Core Building Blocks\\1.5.4 Callback Props and Event Handling.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 1 - Core Building Blocks/1.6 Children aur Composition Pattern.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 1 - Core Building Blocks\\1.6 Children and Composition Pattern.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 1 - Core Building Blocks/1.7 useState aur Event Handling.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 1 - Core Building Blocks\\1.7 useState and Event Handling.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 1 - Core Building Blocks/1.9 Array State aur List Rendering.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 1 - Core Building Blocks\\1.9 Array State and List Rendering.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1.1 Quiz — Tailwind CSS aur Responsive Design.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 4 - Styling, Forms & Accessibility\\4.1.1 Quiz — Tailwind CSS and Responsive Design.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.1.1 Tailwind CSS aur Responsive Design.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 4 - Styling, Forms & Accessibility\\4.1.1 Tailwind CSS and Responsive Design.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.3 Forms — Manual Controlled Inputs aur Validation.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 4 - Styling, Forms & Accessibility\\4.3 Forms — Manual Controlled Inputs and Validation.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.5 Types aur Shared Data — E-Commerce Store.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 4 - Styling, Forms & Accessibility\\4.5.5 Types and Shared Data — E-Commerce Store.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 5 - Performance/5.6 Lazy Loading, Suspense aur Code Splitting.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 5 - Performance\\5.6 Lazy Loading, Suspense and Code Splitting.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.0 RTK Kya Hai aur Kyun — Zustand Ke Baad Kyun.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 6.7 - Redux Toolkit (Enterprise)\\6.7.0 RTK What Is aur Kyun — Why After Zustand.md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.1 Expense Tracker — Planning (Code Se Pehle Sochna).md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 6.7 - Redux Toolkit (Enterprise)\\6.7.5.1 Expense Tracker — Planning (Think Before Coding).md"
+  },
+  {
+    "old": "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.2 Expense Tracker — Hardcoded UI (Pehle Dekho Kaise Dikhta Hai).md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Batch 6.7 - Redux Toolkit (Enterprise)\\6.7.5.2 Expense Tracker — Hardcoded UI (First See How It Looks).md"
+  },
+  {
+    "old": "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.0 React Kya Hai aur Ye Course Kaise Chalega.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Module 0 - React Kaise Kaam Karta Hai\\0.0 React What It Is and How This Course Works.md"
+  },
+  {
+    "old": "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.3 Reconciliation, Diffing aur key Prop.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Module 0 - React Kaise Kaam Karta Hai\\0.3 Reconciliation, Diffing and key Prop.md"
+  },
+  {
+    "old": "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.7.5 React Versions - React 19, 18, 17, 16 Ka Kya Naya Hai.md",
+    "new": "C:\\Users\\Pravin\\Desktop\\main\\ProVin\\docs\\coding\\React JS\\Module 0 - React Kaise Kaam Karta Hai\\0.7.5 React Versions - React 19, 18, 17, 16 Ka What Is New.md"
+  }
+]

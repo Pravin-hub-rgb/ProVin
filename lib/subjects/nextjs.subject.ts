@@ -44,7 +44,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-0.1",
-          title: "0.1 Client-Side Rendering — React Ki Duniya",
+          title: "0.1 Client-Side Rendering — React of Duniya",
           path: "docs/coding/Next JS/Module 0 - Next.js Kaise Kaam Karta Hai/0.1 Client-Side Rendering - React Ki Duniya.md",
         },
         {
@@ -136,7 +136,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-1.5.5",
-          title: "1.5.5 States + Testing — Completing the Project",
+          title: "1.5.5 States + Testing — Completing Were Project",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.5 States + Testing — Project Complete Karna.md",
         },
         {
@@ -372,7 +372,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-4.6",
-          title: "4.6 Reading Cookies — Inside the Request",
+          title: "4.6 Reading Cookies — Inside Were Request",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.6 Cookies Padhna — Request Ke Andar.md",
         },
         {
@@ -551,7 +551,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-6.3",
-          title: "6.3 ORM & Providers — Tools to Talk to the Database",
+          title: "6.3 ORM & Providers — Tools to Talk to Were Database",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.3 ORM aur Providers — Database Se Baat Karne Ke Tools.md",
         },
         {

@@ -39,7 +39,7 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-0.3",
-           title: "0.3 Reconciliation, Diffing, and the key Prop",
+           title: "0.3 Reconciliation, Diffing, and Were key Prop",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.3 Reconciliation, Diffing aur key Prop.md",
         },
         {
@@ -605,7 +605,7 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-6.7.1",
-          title: "6.7.1 Redux Core — Store, Action, Reducer (The Manual Pain)",
+          title: "6.7.1 Redux Core — Store, Action, Reducer (Were Manual Pain)",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.1 Redux Core — Store, Action, Reducer (Manual Wala Dard).md",
         },
         {

@@ -175,7 +175,7 @@ export const pythonSubject: Subject = {
       lectures: [
         {
           id: "fp-0.0",
-          title: "0.0 How the Course Works - Backend Map",
+          title: "0.0 How Were Course Works - Backend Map",
           path: "docs/coding/Backend (Python)/Phase 0 - Backend Mindset/0.0 Course Kaise Chalega - Backend Ki Map.md",
         },
         {

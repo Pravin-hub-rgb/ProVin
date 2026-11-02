@@ -14,7 +14,7 @@ export const careerSubject: Subject = {
       lectures: [
         {
           id: "career-master-map",
-          title: "READ ME First — Master Map & Decision Log",
+          title: "READ in First — Master Map & Decision Log",
           path: "docs/coding/Career/README.md",
         },
         {
@@ -52,7 +52,7 @@ export const careerSubject: Subject = {
           lectures: [
             {
               id: "career-lab-c-readme",
-              title: "Read Me First",
+              title: "Read in First",
               path: "docs/coding/Career/Labs/Lab C — Simulated Feed + State Machine (TS)/README.md",
             },
             {

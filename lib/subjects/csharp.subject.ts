@@ -20,7 +20,7 @@ export const csharpSubject: Subject = {
       lectures: [
         {
           id: "csharp-0.1",
-          title: "0.1 C# aur .NET kya hai",
+          title: "0.1 C# and .NET What Is",
           path: "docs/coding/C Sharp/Module 0 - Shuruaat/0.1 C# aur .NET kya hai.md",
         },
         {
@@ -43,12 +43,12 @@ export const csharpSubject: Subject = {
       lectures: [
         {
           id: "csharp-1.1",
-          title: "1.1 Variables aur Types",
+          title: "1.1 Variables and Types",
           path: "docs/coding/C Sharp/Module 1 - C# Basics/1.1 Variables aur Types.md",
         },
         {
           id: "csharp-1.2",
-          title: "1.2 Input aur Operators",
+          title: "1.2 Input and Operators",
           path: "docs/coding/C Sharp/Module 1 - C# Basics/1.2 Input aur Operators.md",
         },
         {
@@ -63,7 +63,7 @@ export const csharpSubject: Subject = {
         },
         {
           id: "csharp-1.5",
-          title: "1.5 Arrays aur Lists",
+          title: "1.5 Arrays and Lists",
           path: "docs/coding/C Sharp/Module 1 - C# Basics/1.5 Arrays aur Lists.md",
         },
         {
@@ -86,22 +86,22 @@ export const csharpSubject: Subject = {
       lectures: [
         {
           id: "csharp-2.1",
-          title: "2.1 Class aur Object",
+          title: "2.1 Class and Object",
           path: "docs/coding/C Sharp/Module 2 - OOP in C#/2.1 Class aur Object.md",
         },
         {
           id: "csharp-2.2",
-          title: "2.2 Properties aur Encapsulation",
+          title: "2.2 Properties and Encapsulation",
           path: "docs/coding/C Sharp/Module 2 - OOP in C#/2.2 Properties aur Encapsulation.md",
         },
         {
           id: "csharp-2.3",
-          title: "2.3 Inheritance aur Polymorphism",
+          title: "2.3 Inheritance and Polymorphism",
           path: "docs/coding/C Sharp/Module 2 - OOP in C#/2.3 Inheritance aur Polymorphism.md",
         },
         {
           id: "csharp-2.4",
-          title: "2.4 Interfaces aur Namespaces",
+          title: "2.4 Interfaces and Namespaces",
           path: "docs/coding/C Sharp/Module 2 - OOP in C#/2.4 Interfaces aur Namespaces.md",
         },
       ],
@@ -119,7 +119,7 @@ export const csharpSubject: Subject = {
       lectures: [
         {
           id: "csharp-3.1",
-          title: "3.1 BCL aur LINQ",
+          title: "3.1 BCL and LINQ",
           path: "docs/coding/C Sharp/Module 3 - .NET Toolbox/3.1 BCL aur LINQ.md",
         },
         {
@@ -129,7 +129,7 @@ export const csharpSubject: Subject = {
         },
         {
           id: "csharp-3.3",
-          title: "3.3 JSON Files aur Generics",
+          title: "3.3 JSON Files and Generics",
           path: "docs/coding/C Sharp/Module 3 - .NET Toolbox/3.3 JSON Files aur Generics.md",
         },
       ],
@@ -147,7 +147,7 @@ export const csharpSubject: Subject = {
       lectures: [
         {
           id: "csharp-4.1",
-          title: "4.1 SQL Recap aur C# se SQL",
+          title: "4.1 SQL Recap and C# from SQL",
           path: "docs/coding/C Sharp/Module 4 - Database/4.1 SQL Recap aur C# se SQL.md",
         },
         {
@@ -157,7 +157,7 @@ export const csharpSubject: Subject = {
         },
         {
           id: "csharp-4.3",
-          title: "4.3 Connection String aur appsettings",
+          title: "4.3 Connection String and appsettings",
           path: "docs/coding/C Sharp/Module 4 - Database/4.3 Connection String aur appsettings.md",
         },
       ],
@@ -175,17 +175,17 @@ export const csharpSubject: Subject = {
       lectures: [
         {
           id: "csharp-5.1",
-          title: "5.1 Web API kya hai — pehla API",
+          title: "5.1 Web API What Is — pehla API",
           path: "docs/coding/C Sharp/Module 5 - ASP.NET Core Web API/5.1 Web API kya hai — pehla API.md",
         },
         {
           id: "csharp-5.2",
-          title: "5.2 Endpoints Routing aur DTOs",
+          title: "5.2 Endpoints Routing and DTOs",
           path: "docs/coding/C Sharp/Module 5 - ASP.NET Core Web API/5.2 Endpoints Routing aur DTOs.md",
         },
         {
           id: "csharp-5.3",
-          title: "5.3 Validation aur Error Handling",
+          title: "5.3 Validation and Error Handling",
           path: "docs/coding/C Sharp/Module 5 - ASP.NET Core Web API/5.3 Validation aur Error Handling.md",
         },
         {
@@ -195,7 +195,7 @@ export const csharpSubject: Subject = {
         },
         {
           id: "csharp-5.5",
-          title: "5.5 CORS aur React se connect",
+          title: "5.5 CORS and React from connect",
           path: "docs/coding/C Sharp/Module 5 - ASP.NET Core Web API/5.5 CORS aur React se connect.md",
         },
       ],
@@ -213,7 +213,7 @@ export const csharpSubject: Subject = {
       lectures: [
         {
           id: "csharp-6.1",
-          title: "6.1 Setup Models aur Database",
+          title: "6.1 Setup Models and Database",
           path: "docs/coding/C Sharp/Module 6 - Project Library API/6.1 Setup Models aur Database.md",
         },
         {
@@ -223,12 +223,12 @@ export const csharpSubject: Subject = {
         },
         {
           id: "csharp-6.3",
-          title: "6.3 Search Validation aur Errors",
+          title: "6.3 Search Validation and Errors",
           path: "docs/coding/C Sharp/Module 6 - Project Library API/6.3 Search Validation aur Errors.md",
         },
         {
           id: "csharp-6.4",
-          title: "6.4 Run Test aur README",
+          title: "6.4 Run Test and README",
           path: "docs/coding/C Sharp/Module 6 - Project Library API/6.4 Run Test aur README.md",
         },
       ],

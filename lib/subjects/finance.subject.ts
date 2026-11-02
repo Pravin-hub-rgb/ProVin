@@ -116,7 +116,7 @@ export const financeSubject: Subject = {
       openByDefault: false,
       lectures: [
         { id: "finance-algo-trading-module-9---advanced-smart-m", title: "9.1 SMC Intro - Institutional Soch", path: "docs/finance/Algo Trading/Module 9 - Advanced Smart Money Concepts/9.1 SMC Intro - Institutional Soch.md" },
-        { id: "finance-algo-trading-module-9---advanced-smart-m", title: "9.2 Liquidity - Stops Ka Khel", path: "docs/finance/Algo Trading/Module 9 - Advanced Smart Money Concepts/9.2 Liquidity - Stops Ka Khel.md" },
+        { id: "finance-algo-trading-module-9---advanced-smart-m", title: "9.2 Liquidity - Stops of Khel", path: "docs/finance/Algo Trading/Module 9 - Advanced Smart Money Concepts/9.2 Liquidity - Stops Ka Khel.md" },
         { id: "finance-algo-trading-module-9---advanced-smart-m", title: "9.3 Market Structure - BOS & CHoCH", path: "docs/finance/Algo Trading/Module 9 - Advanced Smart Money Concepts/9.3 Market Structure - BOS & CHoCH.md" },
         { id: "finance-algo-trading-module-9---advanced-smart-m", title: "9.4 Order Blocks", path: "docs/finance/Algo Trading/Module 9 - Advanced Smart Money Concepts/9.4 Order Blocks.md" },
         { id: "finance-algo-trading-module-9---advanced-smart-m", title: "9.5 Fair Value Gaps - FVG", path: "docs/finance/Algo Trading/Module 9 - Advanced Smart Money Concepts/9.5 Fair Value Gaps - FVG.md" },

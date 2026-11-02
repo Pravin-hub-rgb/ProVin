@@ -19,7 +19,7 @@ export const coreSubjectsSubject: Subject = {
       lectures: [
         {
           id: "cs-1.0",
-          title: "1.0 DBMS — Kya Seekhenge",
+          title: "1.0 DBMS — What We Will Learn",
           path: "docs/coding/Core Subjects/Batch 1 - DBMS/1.0 DBMS — Kya Seekhenge.md",
         },
         {
@@ -39,7 +39,7 @@ export const coreSubjectsSubject: Subject = {
         },
         {
           id: "cs-1.4",
-          title: "1.4 Indexing — Fast Lookup Ka Raaz",
+          title: "1.4 Indexing — Fast Lookup of Raaz",
           path: "docs/coding/Core Subjects/Batch 1 - DBMS/1.4 Indexing — Fast Lookup Ka Raaz.md",
         },
         {
@@ -60,12 +60,12 @@ export const coreSubjectsSubject: Subject = {
       lectures: [
         {
           id: "cs-2.0",
-          title: "2.0 CN — Kya Seekhenge",
+          title: "2.0 CN — What We Will Learn",
           path: "docs/coding/Core Subjects/Batch 2 - Computer Networks/2.0 CN — Kya Seekhenge.md",
         },
         {
           id: "cs-2.1",
-          title: "2.1 OSI Model — 7 Layers Ka Architecture",
+          title: "2.1 OSI Model — 7 Layers of Architecture",
           path: "docs/coding/Core Subjects/Batch 2 - Computer Networks/2.1 OSI Model — 7 Layers Ka Architecture.md",
         },
         {
@@ -80,7 +80,7 @@ export const coreSubjectsSubject: Subject = {
         },
         {
           id: "cs-2.4",
-          title: "2.4 DNS — Domain se IP Tak Ka Safar",
+          title: "2.4 DNS — Domain from IP Up To of Safar",
           path: "docs/coding/Core Subjects/Batch 2 - Computer Networks/2.4 DNS — Domain se IP Tak Ka Safar.md",
         },
         {
@@ -101,7 +101,7 @@ export const coreSubjectsSubject: Subject = {
       lectures: [
         {
           id: "cs-3.0",
-          title: "3.0 OOP — Kya Seekhenge",
+          title: "3.0 OOP — What We Will Learn",
           path: "docs/coding/Core Subjects/Batch 3 - OOP/3.0 OOP — Kya Seekhenge.md",
         },
         {
@@ -142,7 +142,7 @@ export const coreSubjectsSubject: Subject = {
       lectures: [
         {
           id: "cs-4.0",
-          title: "4.0 OS — Kya Seekhenge",
+          title: "4.0 OS — What We Will Learn",
           path: "docs/coding/Core Subjects/Batch 4 - Operating Systems/4.0 OS — Kya Seekhenge.md",
         },
         {

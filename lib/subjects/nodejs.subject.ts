@@ -19,7 +19,7 @@ export const nodejsSubject: Subject = {
       lectures: [
         {
           id: "node-01",
-          title: "01 Node.js Kya Hai",
+          title: "01 Node.js What Is",
           path: "docs/coding/Node JS/01 Node.js Kya Hai.md",
         },
         {
@@ -39,7 +39,7 @@ export const nodejsSubject: Subject = {
         },
         {
           id: "node-05",
-          title: "05 Promises aur Async Await",
+          title: "05 Promises and Async Await",
           path: "docs/coding/Node JS/05 Promises aur Async Await.md",
         },
         {
@@ -49,7 +49,7 @@ export const nodejsSubject: Subject = {
         },
         {
           id: "node-07",
-          title: "07 Environment aur Bridge to Next.js",
+          title: "07 Environment and Bridge to Next.js",
           path: "docs/coding/Node JS/07 Environment aur Bridge to Next.js.md",
         },
       ],

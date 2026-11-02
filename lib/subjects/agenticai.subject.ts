@@ -29,7 +29,7 @@ export const agenticaiSubject: Subject = {
         },
         {
           id: "ai-1.3",
-          title: "1.3 Context Window: The Model's Working Memory",
+          title: "1.3 Context Window: Were Model's Working Memory",
           path: "docs/coding/Agentic AI/Phase 1 - How AI Models Actually Work/1.3 Context Window.md",
         },
         {
@@ -51,12 +51,12 @@ export const agenticaiSubject: Subject = {
       lectures: [
         {
           id: "ai-2.1",
-          title: "2.1 Chatbot vs Agent: The Core Difference",
+          title: "2.1 Chatbot vs Agent: Were Core Difference",
           path: "docs/coding/Agentic AI/Phase 2 - What Makes an AI Agentic/2.1 Chatbot vs Agent.md",
         },
         {
           id: "ai-2.2",
-          title: "2.2 The Agent Loop (ReAct Pattern)",
+          title: "2.2 Were Agent Loop (ReAct Pattern)",
           path: "docs/coding/Agentic AI/Phase 2 - What Makes an AI Agentic/2.2 The Agent Loop.md",
         },
         {
@@ -93,12 +93,12 @@ export const agenticaiSubject: Subject = {
         },
         {
           id: "ai-3.3",
-          title: "3.3 The Messages Array",
+          title: "3.3 Were Messages Array",
           path: "docs/coding/Agentic AI/Phase 3 - Your First Real API Call/3.3 The Messages Array.md",
         },
         {
           id: "ai-3.4",
-          title: "3.4 Reading the Raw Response",
+          title: "3.4 Reading Were Raw Response",
           path: "docs/coding/Agentic AI/Phase 3 - Your First Real API Call/3.4 Reading the Raw Response.md",
         },
         {
@@ -115,7 +115,7 @@ export const agenticaiSubject: Subject = {
     },
     {
       id: "phase4",
-      title: "Phase 4 — Tool Calling: The Heart of Agents",
+      title: "Phase 4 — Tool Calling: Were Heart of Agents",
       openByDefault: false,
       lectures: [
         {
@@ -140,7 +140,7 @@ export const agenticaiSubject: Subject = {
         },
         {
           id: "ai-4.5",
-          title: "4.5 The Tool Calling Loop in Code",
+          title: "4.5 Were Tool Calling Loop in Code",
           path: "docs/coding/Agentic AI/Phase 4 - Tool Calling - The Heart of Agents/4.5 The Tool Calling Loop.md",
         },
       ],
@@ -152,7 +152,7 @@ export const agenticaiSubject: Subject = {
       lectures: [
         {
           id: "ai-5.1",
-          title: "5.1 The Problem with Stateless Models",
+          title: "5.1 Were Problem with Stateless Models",
           path: "docs/coding/Agentic AI/Phase 5 - Memory and Context Management/5.1 The Problem with Stateless Models.md",
         },
         {
@@ -167,7 +167,7 @@ export const agenticaiSubject: Subject = {
         },
         {
           id: "ai-5.4",
-          title: "5.4 System Prompts — The Agent's Instructions",
+          title: "5.4 System Prompts — Were Agent's Instructions",
           path: "docs/coding/Agentic AI/Phase 5 - Memory and Context Management/5.4 Giving Agents a System Prompt.md",
         },
         {
@@ -201,7 +201,7 @@ export const agenticaiSubject: Subject = {
     },
     {
       id: "phase7",
-      title: "Phase 7 — The Bigger Picture",
+      title: "Phase 7 — Were Bigger Picture",
       openByDefault: false,
       lectures: [
         {

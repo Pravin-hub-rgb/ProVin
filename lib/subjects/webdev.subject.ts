@@ -16,7 +16,7 @@ export const webdevSubject: Subject = {
           title: "🛠️ Web Dev Tools Reference",
           openByDefault: false,
           lectures: [
-            { id: "tool-00", title: "00 - Overview: Web Dev Ki Duniya", path: "docs/coding/WEB-DEV/00-MIND-MAP/webdev-tools-docs/00-overview.md" },
+            { id: "tool-00", title: "00 - Overview: Web Dev of Duniya", path: "docs/coding/WEB-DEV/00-MIND-MAP/webdev-tools-docs/00-overview.md" },
             { id: "tool-01", title: "01 - Frontend Tools: State Management", path: "docs/coding/WEB-DEV/00-MIND-MAP/webdev-tools-docs/01-frontend-state.md" },
             { id: "tool-02", title: "02 - Frontend Tools: Styling", path: "docs/coding/WEB-DEV/00-MIND-MAP/webdev-tools-docs/02-frontend-styling.md" },
             { id: "tool-03", title: "03 - Frontend Tools: Components", path: "docs/coding/WEB-DEV/00-MIND-MAP/webdev-tools-docs/03-frontend-components.md" },
