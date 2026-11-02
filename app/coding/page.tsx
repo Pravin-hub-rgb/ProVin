@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react"
 import { ChevronDown, ChevronRight, Book, FileText, HelpCircle } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
+import { ExcalidrawViewer } from "@/components/excalidraw-viewer"
 import { QuizViewer } from "@/components/quiz-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { subjects, loadMarkdownContent, type Subject, type Lecture, type LectureGroup } from "@/lib/coding-data"
@@ -478,6 +479,8 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                 </div>
                ) : isQuiz ? (
                   <QuizViewer content={markdownContent} />
+               ) : currentLecture?.isComponent ? (
+                  <ExcalidrawViewer file={currentLecture.path} />
                ) : (
                   <LectureViewer content={markdownContent} />
                )}

@@ -10,6 +10,12 @@ export const javascriptSubject: Subject = {
       title: "📋 Complete JS Course Roadmap",
       path: "docs/coding/JS/js-course-roadmap.md",
     },
+    {
+      id: "flowchart",
+      title: "📊 Course Flowchart (Excalidraw)",
+      path: "docs/coding/JS/JS-flowchart.excalidraw",
+      isComponent: true,
+    },
   ],
   phases: [
     {
