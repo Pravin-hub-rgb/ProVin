@@ -463,7 +463,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
         {/* Content Area */}
         <div className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
           {currentLecture ? (  
-            <div className="max-w-4xl pb-12">
+            <div className={currentLecture?.isComponent ? "w-full pb-12" : "max-w-4xl pb-12"}>
               <div className="mb-6">
                 <h1 className="text-3xl font-bold text-foreground mb-2">
                   {currentLecture.title}

@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { readFile, access, constants } from 'fs/promises'
+import { readFile, writeFile, access, constants } from 'fs/promises'
 import { join, resolve } from 'path'
 
 // This API route needs to run dynamically at request time
@@ -26,56 +26,84 @@ export async function GET(request: Request) {
     // Resolve the file path relative to the project root
     const filePath = join(process.cwd(), cleanFilePath)
     
-    console.log('Original file parameter:', file)
-    console.log('Decoded file path:', decodedFilePath)
-    console.log('Clean file path:', cleanFilePath)
-    console.log('Full file path:', filePath)
-    
-    // Validate that the file path is within the project directory (security check)
+    // Validate that the file path is within the project directory
     const projectRoot = process.cwd()
     const resolvedPath = resolve(filePath)
-    if (!resolvedPath.startsWith(projectRoot)) {
-      console.error('Security violation: Attempted directory traversal')
+    const resolvedRoot = resolve(projectRoot)
+    
+    if (!resolvedPath.startsWith(resolvedRoot)) {
       return NextResponse.json(
-        { 
-          error: 'Invalid file path',
-          details: 'Access to files outside project directory is not allowed'
-        },
-        { status: 400 }
+        { error: 'Access denied: file must be within project directory' },
+        { status: 403 }
       )
     }
     
-    // Check if file exists before attempting to read
-    try {
-      await access(filePath, constants.F_OK)
-    } catch (accessError) {
-      console.error('File does not exist:', filePath)
-      return NextResponse.json(
-        { 
-          error: 'File not found',
-          details: 'The requested file does not exist',
-          filePath: cleanFilePath
-        },
-        { status: 404 }
-      )
-    }
+    // Check if file exists and is readable
+    await access(filePath, constants.R_OK)
     
     // Read the file content
     const content = await readFile(filePath, 'utf-8')
     
+    // Return the content as plain text
     return new NextResponse(content, {
+      status: 200,
       headers: {
-        'Content-Type': 'text/markdown',
+        'Content-Type': 'text/plain; charset=utf-8',
       },
     })
+    
   } catch (error) {
     console.error('Error reading file:', error)
-    
     return NextResponse.json(
       { 
         error: 'File could not be read',
         details: error instanceof Error ? error.message : 'Unknown error',
         filePath: file
+      },
+      { status: 500 }
+    )
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json()
+    const { file, content } = body
+    
+    if (!file || content === undefined) {
+      return NextResponse.json(
+        { error: 'File and content parameters are required' },
+        { status: 400 }
+      )
+    }
+    
+    // Decode URL-encoded file path
+    const decodedFilePath = decodeURIComponent(file)
+    const cleanFilePath = decodedFilePath.startsWith('/') ? decodedFilePath.slice(1) : decodedFilePath
+    const filePath = join(process.cwd(), cleanFilePath)
+    
+    // Validate that the file path is within the project directory
+    const projectRoot = process.cwd()
+    const resolvedPath = resolve(filePath)
+    const resolvedRoot = resolve(projectRoot)
+    
+    if (!resolvedPath.startsWith(resolvedRoot)) {
+      return NextResponse.json(
+        { error: 'Access denied: file must be within project directory' },
+        { status: 403 }
+      )
+    }
+    
+    // Write the file
+    await writeFile(filePath, content, 'utf-8')
+    
+    return NextResponse.json({ success: true })
+  } catch (error) {
+    console.error('Error writing file:', error)
+    return NextResponse.json(
+      { 
+        error: 'File could not be written',
+        details: error instanceof Error ? error.message : 'Unknown error',
       },
       { status: 500 }
     )
