@@ -32,12 +32,8 @@ export function ExcalidrawViewer({ file }: { file: string }) {
   }
 
   return (
-    <div style={{ height: "80vh", width: "100%", position: "relative" }}>
-      <Excalidraw
-        initialData={initialData}
-        viewModeEnabled={false}
-        style={{ width: "100%", height: "100%" }}
-      />
+    <div style={{ height: "80vh", width: "100%" }}>
+      <Excalidraw initialData={initialData} viewModeEnabled={false} />
     </div>
   )
 }
