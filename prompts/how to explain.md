@@ -1,6 +1,6 @@
-# How to Explain — Guide for Writing "In Plain English" Sections
+# How to Explain — Guide for Writing "How to Explain" Sections
 
-This guide defines how to write the **"In Plain English"** section for any course topic. The goal is to help a learner explain the concept to an interviewer in a conversational, technical, jargon-free way — without rigid definitions or analogies.
+This guide defines how to write the **"How to Explain"** section for any course topic. The goal is to help a learner explain the concept to an interviewer in a conversational, technical, jargon-free way — without rigid definitions or analogies.
 
 ---
 
@@ -14,7 +14,7 @@ It should sound like a **senior dev talking to a junior** — natural, not scrip
 
 ## Structure (3 Parts Only)
 
-Every "In Plain English" section has these 3 parts in this order:
+Every "How to Explain" section has these 3 parts in this order:
 
 ### 1. The Opening
 The core explanation in 2-4 sentences. What it is, what it does, why it exists. This is what you say when the interviewer asks "What is X?" Start with what it does, not a definition.
@@ -44,7 +44,7 @@ The 2-3 things that trip people up. Not theoretical edge cases — practical mis
 ```markdown
 ---
 
-## In Plain English
+## How to Explain
 
 [2-4 sentences explaining what it is and why it exists. No jargon without explanation. No analogies. Start with what it does.]
 
@@ -81,7 +81,7 @@ Here's a complete example using `fetch`:
 
 ---
 
-## In Plain English
+## How to Explain
 
 fetch is how your JavaScript code talks to a server. You give it a URL, it sends a request to that server, and the server sends something back. The whole thing runs asynchronously — meaning JavaScript doesn't wait around, it keeps doing other things while fetch is out there getting your data. It returns a Promise, so you use `await` or `.then()` to handle the response when it arrives.
 
@@ -117,7 +117,7 @@ Three things to notice: `method` says POST, `headers` tells the server "I'm send
 
 ## When to Add This Section
 
-Add "In Plain English" to topics where:
+Add "How to Explain" to topics where:
 - The concept is commonly asked in interviews
 - The concept has practical gotchas that trip people up
 - The concept is frequently misunderstood
