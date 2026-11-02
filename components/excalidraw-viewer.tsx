@@ -31,7 +31,7 @@ export function ExcalidrawViewer({ file }: { file: string }) {
   }
 
   return (
-    <div className="h-[calc(100vh-8rem)] w-full">
+    <div style={{ height: "600px", width: "100%" }}>
       <Excalidraw initialData={initialData} viewModeEnabled={false} />
     </div>
   )
