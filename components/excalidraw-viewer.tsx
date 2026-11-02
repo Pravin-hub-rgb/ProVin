@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import dynamic from "next/dynamic"
+import "@excalidraw/excalidraw/index.css"
 
 const Excalidraw = dynamic(
   () => import("@excalidraw/excalidraw").then((mod) => mod.Excalidraw),
@@ -27,11 +28,11 @@ export function ExcalidrawViewer({ file }: { file: string }) {
   }
 
   if (!initialData) {
-    return <div className="flex items-center justify-center h-full">Loading diagram...</div>
+    return <div className="flex items-center justify-center h-96">Loading diagram...</div>
   }
 
   return (
-    <div style={{ height: "600px", width: "100%" }}>
+    <div style={{ height: "500px", width: "100%", position: "relative", overflow: "hidden" }}>
       <Excalidraw initialData={initialData} viewModeEnabled={false} />
     </div>
   )
