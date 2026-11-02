@@ -9,6 +9,7 @@ import { ShoppingCartDemo } from './shopping-cart-demo'
 import { GymDemo } from './gym-demo'
 import { EcommerceDemo } from './ecommerce-demo'
 import { GeoMap } from './geo-map'
+import { MermaidDiagram } from './mermaid-diagram'
 import type { Element, Root } from 'hast'
 import type { ComponentType } from 'react'
 
@@ -20,6 +21,9 @@ interface MarkdownViewerProps {
 const markdownComponents: Record<string, ComponentType<any> | string> = {
   code({ node, className, children, ...props }: { node?: Element; className?: string; children?: React.ReactNode; [key: string]: any }) {
     const match = /language-(\w+)/.exec(className || '')
+    if (match && match[1] === 'mermaid') {
+      return <MermaidDiagram chart={String(children).replace(/\n$/, '')} />
+    }
     return match ? (
       <pre className="bg-muted/50 p-4 rounded-lg overflow-x-auto">
         <code className="text-sm" {...props}>
