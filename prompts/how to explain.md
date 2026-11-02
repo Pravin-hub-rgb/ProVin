@@ -6,62 +6,30 @@ This guide defines how to write the **"In Plain English"** section for any cours
 
 ## What This Section Is
 
-A short, conversational block at the **end of a topic file** (before "What It Is NOT" or "Next Step") that helps the learner answer: *"How do I explain this to an interviewer?"*
+A short, conversational block that helps the learner answer: *"How do I explain this to an interviewer?"*
 
-It should sound like a **senior dev talking to a junior** — natural, not scripted. No analogies (no restaurants, no phones, no food delivery). Pure technical explanation in plain words.
+It should sound like a **senior dev talking to a junior** — natural, not scripted. No analogies (no restaurants, phones, food delivery, etc.). Pure technical explanation in plain words.
 
 ---
 
-## Structure (5 Parts)
+## Structure (3 Parts Only)
 
-Every "In Plain English" section has these 5 parts in this order:
+Every "In Plain English" section has these 3 parts in this order:
 
-### 1. The 30-Second Answer
-The core explanation in 2-4 sentences. What it is, what it does, why it exists. This is what you say when the interviewer asks "What is X?"
+### 1. The Opening
+The core explanation in 2-4 sentences. What it is, what it does, why it exists. This is what you say when the interviewer asks "What is X?" Start with what it does, not a definition.
 
-**Rules:**
-- No jargon without immediate explanation
-- No analogies
-- Sound like you're explaining to a colleague, not reading from a textbook
-- Lead with the "what" and "why", then the "how"
+### 2. The Basic Flow / Code
+Show the simplest working code. 2-4 lines max. Then explain what each line does in one sentence each.
 
-### 2. The Interview Follow-Up
-What the interviewer typically asks next, and how to answer it. Pick 2-3 most common follow-up questions.
-
-**Rules:**
-- Each follow-up should be a real question interviewers ask
-- Answer should be 2-3 sentences max
-- Include code snippets where they help
-
-### 3. The Trap Question
-The one question interviewers ask to catch people who only memorized the definition.
-
-**Rules:**
-- This should be a practical gotcha, not a theoretical edge case
-- Explain why people get it wrong
-- Give the correct answer clearly
-
-### 4. Quick Cheat-Sheet
-3-5 bullet points of the most important things to remember. These are the facts that should be in your head before walking into the interview.
-
-**Rules:**
-- Each point should be one sentence
-- No fluff — only actionable facts
-- Include code snippets where they're memorable
-
-### 5. The "Explain It Like I'm 5" (optional)
-Only for complex topics. A single paragraph that strips away all complexity and explains the concept in the simplest possible terms. No code, no jargon.
-
-**Rules:**
-- One paragraph only
-- No technical terms
-- A 10-year-old should be able to follow it
+### 3. The Gotchas
+The 2-3 things that trip people up. Not theoretical edge cases — practical mistakes developers actually make. Each one should be 1-2 sentences.
 
 ---
 
 ## Tone Rules
 
-- **Conversational but technical** — like explaining to a smart junior dev, not a child
+- **Conversational but technical** — like explaining to a smart junior dev
 - **No analogies** — no restaurants, phones, food delivery, lockers, etc.
 - **No rigid definitions** — don't start with "X is a..." — start with what it does
 - **Use "you" and "your"** — direct address
@@ -78,36 +46,31 @@ Only for complex topics. A single paragraph that strips away all complexity and 
 
 ## In Plain English
 
-### The 30-Second Answer
+[2-4 sentences explaining what it is and why it exists. No jargon without explanation. No analogies. Start with what it does.]
 
-[2-4 sentences explaining what it is and why it exists. No jargon without explanation. No analogies.]
+**The basic flow:**
+\`\`\`js
+[2-4 lines of simplest working code]
+\`\`\`
 
-### Common Follow-Up Questions
+[One sentence per line explaining what each line does.]
 
-**"Question interviewers ask?"**
+**The part that trips everyone up:**
 
-[2-3 sentence answer with code if helpful]
+[1-3 sentences about the most common mistake or gotcha.]
 
-**"Another common question?"**
+**[Optional: A code example for a specific use case]**
 
-[2-3 sentence answer]
+\`\`\`js
+[code example]
+\`\`\`
 
-### The Trap Question
+[One sentence per line explaining what each line does.]
 
-[Interviewers love to ask this because people get it wrong.]
-
-[Why people get it wrong + correct answer]
-
-### Quick Cheat-Sheet
-
-- [Fact 1 — one sentence]
-- [Fact 2 — one sentence]
-- [Fact 3 — one sentence]
-- [Fact 4 — one sentence]
-
-### In the Simplest Terms (optional)
-
-[One paragraph, no jargon, no code. A 10-year-old could follow it.]
+**The mistakes to remember:**
+- [Mistake 1 — one sentence]
+- [Mistake 2 — one sentence]
+- [Mistake 3 — one sentence]
 ```
 
 ---
@@ -116,37 +79,39 @@ Only for complex topics. A single paragraph that strips away all complexity and 
 
 Here's a complete example using `fetch`:
 
-### The 30-Second Answer
+---
 
-fetch is how your JavaScript code talks to a server. You give it a URL, it sends a request to that server, and the server sends something back. The whole thing runs asynchronously — JavaScript doesn't wait around, it keeps doing other things while fetch is out there getting your data. It returns a Promise, so you use `await` or `.then()` to handle the response when it arrives.
+## In Plain English
 
-### Common Follow-Up Questions
+fetch is how your JavaScript code talks to a server. You give it a URL, it sends a request to that server, and the server sends something back. The whole thing runs asynchronously — meaning JavaScript doesn't wait around, it keeps doing other things while fetch is out there getting your data. It returns a Promise, so you use `await` or `.then()` to handle the response when it arrives.
 
-**"What does fetch return?"**
+**The basic flow:**
+```js
+const response = await fetch('https://api.example.com/users')
+const data = await response.json()
+```
 
-It returns a Promise that resolves with a Response object — not the actual data. You have to call `.json()`, `.text()`, or `.blob()` on the Response to extract the body. And `.json()` returns another Promise, so you need to `await` that too.
+Two awaits. The first one waits for the server to reply. The second one waits for the reply to be converted into usable JavaScript. You need both because fetch only gives you the envelope — the actual data is inside, and you have to open it with `.json()`.
 
-**"How do you make a POST request with fetch?"**
+**The part that trips everyone up:**
 
-Pass a second argument — an options object. Set `method: 'POST'`, add a `headers` object with `'Content-Type': 'application/json'`, and put your data in `body` as a stringified JSON. The key thing is `body` must be a string — fetch doesn't stringify for you.
+fetch does NOT throw an error when the server returns 404 or 500. It only fails if the network itself breaks — like no internet connection. So if you request a user that doesn't exist, fetch says "all good, here's your 404 response." You have to check `response.ok` yourself. That's the number one mistake people make.
 
-### The Trap Question
+**POST request:**
+```js
+await fetch('https://api.example.com/users', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ name: 'Rahul' })
+})
+```
 
-**"Does fetch throw an error on 404?"**
+Three things to notice: `method` says POST, `headers` tells the server "I'm sending JSON", and `body` is a string — you must `JSON.stringify()` your object because fetch doesn't do that for you.
 
-No. `fetch` only rejects on network failure — like no internet connection. If the server returns 404 or 500, `fetch` resolves successfully. You have to check `response.ok` yourself. This is the #1 mistake developers make.
-
-### Quick Cheat-Sheet
-
-- `fetch(url)` sends a GET request and returns a Promise
-- `response.ok` is `true` for 2xx status codes — check this yourself
-- `response.json()` reads the body as JSON — returns another Promise, await it
-- Always `JSON.stringify()` your body for POST requests
-- `fetch` only rejects on network failure, not HTTP errors
-
-### In the Simplest Terms
-
-fetch is like sending a letter and getting a reply. You write the address (URL), send it, and wait. When the reply comes back, it's in a sealed envelope. You have to open it (`.json()`) to read what's inside. And if the reply says "wrong address" (404), fetch still delivers it — it's up to you to check.
+**The mistakes to remember:**
+- Forgetting `response.ok` check — fetch resolves even on 404
+- Forgetting `.json()` returns a Promise — you need `await` on it too
+- Sending `body` as an object instead of stringified
 
 ---
 
@@ -168,7 +133,7 @@ Put it **after the main content** but **before "What It Is NOT"**. If there's no
 
 - ❌ Analogies (restaurants, phones, food delivery, etc.)
 - ❌ Rigid definitions ("X is a...")
+- ❌ Follow-up questions or trap questions (keep it simple)
+- ❌ Cheat-sheets with more than 3-5 points
 - ❌ Redundant code (only include code that clarifies something the text doesn't)
-- ❌ More than 5 cheat-sheet points
-- ❌ More than 3 follow-up questions
 - ❌ Theoretical edge cases nobody asks about in interviews
