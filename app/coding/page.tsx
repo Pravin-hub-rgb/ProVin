@@ -200,7 +200,6 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
       .replace("docs/finance/", "docs/finance-hi/")
       .replace("docs/general/", "docs/general-hi/")
     const hasHi = !!(hinglishManifest as Record<string, boolean>)[hiPath]
-    console.log("[DEBUG] hasHinglish check:", hiPath, "->", hasHi)
     setHasHinglish(hasHi)
   }, [selectedLecture, language])
 
