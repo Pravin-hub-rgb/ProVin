@@ -12,6 +12,12 @@ export const reactSubject: Subject = {
     },
     {
       id: "react-flowchart",
+      title: "📊 React Course Flowchart (Excalidraw)",
+      path: "docs/coding/React JS/React-flowchart.excalidraw",
+      isComponent: true,
+    },
+    {
+      id: "react-flowchart",
       title: "📊 React Course Flowchart",
       path: "docs/coding/React JS/react-course-flowchart.md",
     },
