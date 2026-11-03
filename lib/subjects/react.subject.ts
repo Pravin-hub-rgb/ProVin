@@ -11,7 +11,7 @@ export const reactSubject: Subject = {
       path: "docs/coding/React JS/React-Final-Roadmap.md",
     },
     {
-      id: "react-flowchart",
+      id: "react-flowchart-excalidraw",
       title: "📊 React Course Flowchart (Excalidraw)",
       path: "docs/coding/React JS/React-flowchart.excalidraw",
       isComponent: true,
