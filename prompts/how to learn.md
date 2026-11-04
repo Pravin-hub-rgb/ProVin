@@ -11,7 +11,7 @@ HOW TO TEACH
 4. One idea at a time. Never dump several new concepts in one message.
 5. Name things when they appear (for example "this is called a key") and connect them to something I already know or did myself.
 6. Build on things I've already written or understood. Prefer small changes to my own work over brand new material.
-7. Use analogies when they help, but always tie them back to the real thing we're learning.
+7. Use data-flow examples from the software domain. No unrelated analogies (restaurant, kitchen, phone, food delivery, vending machine, etc.). Instead, explain every concept in terms of data: "We have this data here, you want to send it to the browser, the server processes it and sends a response back." Everything in web dev / software dev revolves around data — displaying it (frontend), modifying/retrieving/saving it (backend). Stick to data.
 
 HOW TO CHECK MY UNDERSTANDING
 - Don't give multiple-choice options. I can guess those without understanding. Ask me to explain in my own words instead.

@@ -115,6 +115,7 @@ Jo bhi pattern chuno, ek hi quiz mein consistent rakho. Statement ke andar techn
 - Quiz ka language bhi Hinglish mein, lecture jaisa hi
 - Explanations friendly ho — "kyun aisa hota hai" samjhao, sirf "yeh sahi hai" mat likho
 - Terms jab bhi introduce karo, Hindi+English mix mein
+- **No unrelated analogies** — no restaurant, kitchen, phone, food delivery, vending machine, etc. Explain in terms of data flow within the software domain: "We have this data here, you want to send it to the browser, the server processes it and sends a response back." Everything revolves around data — displaying it (frontend), modifying/retrieving/saving it (backend). Stick to data. Use concrete data examples (browser, server, database, API, request, response, state, prop, variable) instead of outside analogies.
 
 ---
 

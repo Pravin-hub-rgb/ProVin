@@ -30,7 +30,8 @@ The 2-3 things that trip people up. Not theoretical edge cases — practical mis
 ## Tone Rules
 
 - **Conversational but technical** — like explaining to a smart junior dev
-- **No analogies** — no restaurants, phones, food delivery, lockers, etc.
+- **No analogies** — no restaurants, phones, food delivery, lockers, etc. No unrelated-domain analogies at all.
+- **Data-focused explanations** — explain every concept in terms of data flow within the software domain: "We have this data here, you want to send it to the browser, the server processes it and sends a response back." Everything in web dev / software dev revolves around data — displaying it (frontend), modifying/retrieving/saving it (backend). Use concrete data examples (browser, server, database, API, request, response, state, prop, variable) instead of outside analogies.
 - **No rigid definitions** — don't start with "X is a..." — start with what it does
 - **Use "you" and "your"** — direct address
 - **Short sentences** — break complex ideas into multiple short sentences

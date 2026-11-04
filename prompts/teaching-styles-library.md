@@ -166,6 +166,17 @@ nahi.
 
 ---
 
+## No Unrelated Analogies — Data-Focused Explanations Only
+
+- **Do NOT use analogies from unrelated domains** (restaurant, kitchen, phone, food delivery, vending machine, library, parking meter, etc.) in ANY style
+- **Instead, explain every concept in terms of data flow** within the software domain: "We have this data here, you want to send it to the browser, the server processes it and sends a response back."
+- Everything in web dev / software dev revolves around **data** — displaying it (frontend), modifying/retrieving/saving it (backend). Stick to data.
+- Use concrete data examples from the web dev domain (browser, server, database, API, request, response, state, prop, variable) instead of outside analogies.
+- When explaining a concept, always frame it as: "Here is the data. Here is where it lives. Here is where it needs to go. Here is how it gets there."
+- This rule applies to ALL styles (Senior-Junior, Dost-to-Dost, Co-Explorer, Socratic) — no exceptions.
+
+---
+
 ## Switch Karne Ka Tareeka
 
 Bas bol do:

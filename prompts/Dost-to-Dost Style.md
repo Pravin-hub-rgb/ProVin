@@ -112,6 +112,13 @@ Each section should reference what just happened:
 - **Not dumbed down** — concept full depth mein hai, bas delivery dost jaisi hai
 - **Not apologetic** — "mujhe nahi pata" nahi, "maine bhi seekha tha / galti ki thi" hai
 
+### 5.1 No Unrelated Analogies — Data-Focused Explanations Only
+- **Do NOT use analogies from unrelated domains** (restaurant, kitchen, phone, food delivery, vending machine, library, parking meter, etc.)
+- **Instead, explain every concept in terms of data flow** within the software domain: "We have this data here, you want to send it to the browser, the server processes it and sends a response back."
+- Everything in web dev / software dev revolves around **data** — displaying it (frontend), modifying/retrieving/saving it (backend). Stick to data.
+- Use concrete data examples from the web dev domain (browser, server, database, API, request, response, state, prop, variable) instead of outside analogies.
+- When explaining a concept, always frame it as: "Here is the data. Here is where it lives. Here is where it needs to go. Here is how it gets there."
+
 Dono cheezein sach honi chahiye: dost jaisa feel bhi, aur technically correct bhi.
 
 ---
