@@ -74,13 +74,13 @@
     "js-lec25": true
   },
   "react": {
-    "react-0.0": false,
+    "react-0.0": true,
     "quiz-0.0": false,
-    "react-0.1": false,
+    "react-0.1": true,
     "quiz-0.1": false,
-    "react-0.2": false,
+    "react-0.2": true,
     "quiz-0.2": false,
-    "react-0.3": false,
+    "react-0.3": true,
     "quiz-0.3": false,
     "react-0.4": false,
     "quiz-0.4": false,
