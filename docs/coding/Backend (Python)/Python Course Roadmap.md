@@ -28,15 +28,15 @@ BACKEND FRAMEWORKS (toolbox that handles the server)
 
 # Course Structure — Phases
 
-The course has 4 phases. Each phase has its own complete mini-project. No phase is small.
+The course has 5 phases. Each phase has its own complete mini-project. No phase is small.
 
 | Phase | Topic | Project |
 |-------|-------|---------|
 | 0 | Python Basics | 7 lectures (no project — foundation) |
 | 1 | FastAPI + SQLite + pandas | Trading Backend Basic |
-| — | Appendix A — Docker | Containerize the trading backend |
-| 2 | Real-time (WebSocket) | Chat app |
+| 2 | Real-time (WebSocket) | Chat App |
 | 3 | TradeStack Deep-Dive | Read the real backend |
+| 4 | Docker & Deployment | Containerize Phase 1-3 apps |
 
 ---
 
@@ -83,24 +83,9 @@ This is the mini-project where FastAPI's core features come — and data gets sa
 
 ---
 
-## Appendix A — Docker Basics
-
-Containerize the Phase 1 project so it runs on any machine with one command. Also useful for interview demos.
-
-| # | Topic | File |
-|---|-------|------|
-| A.0 | What is Docker + overview | 2.0 Docker What Is It + Overview.md |
-| A.1 | Dockerfile + .dockerignore | Building the image |
-| A.2 | docker-compose + volume mount | SQLite persistence |
-| A.3 | Test + TradeStack bridge | Deploy verification |
-
----
-
 ## PHASE 2 — Real-time (WebSocket)
 
-Apply what you learned in Appendix A (Docker) + Phases 0, 1 to real-time streaming:
-- Open `~/Desktop/Main/TradeStack/backend/src/streaming.py`
-- `WebSocket`, `ConnectionManager`, live market ticks
+Apply what you learned in Phase 1 to real-time streaming. Open `~/Desktop/Main/TradeStack/backend/src/streaming.py`. `WebSocket`, `ConnectionManager`, live market ticks.
 
 **Note:** Phase 2 doesn't change production code — just reading + notes + small experiment.
 
@@ -108,16 +93,47 @@ Apply what you learned in Appendix A (Docker) + Phases 0, 1 to real-time streami
 
 WebSocket + ConnectionManager + chat rooms. Multiple browser tabs connect to one room, messages reach everyone instantly.
 
+| # | Concept | File |
+|---|---------|------|
+| 2.0 | What we'll learn + project preview | Phase 2 Overview |
+| 2.1 | WebSocket basics | Persistent connections vs HTTP |
+| 2.2 | Connection manager | Track who's connected, broadcast messages |
+| 2.3 | Chat rooms | Multiple rooms, join/leave, message history |
+| 2.4 | TradeStack bridge | See how TradeStack's streaming.py uses the same pattern |
+| 2.5 | Combined project | Full chat app with rooms, users, live messages |
+
 ---
 
 ## PHASE 3 — TradeStack Backend Deep-Dive
 
-Apply what you learned in Phases 0, 1, Appendix A, 2 to the real project:
-- Open `~/Desktop/Main/TradeStack/backend/server.py`
-- `backend/src/db.py`, `cache_manager.py` — SQLite in production
-- One isolated experiment
+Apply what you learned in Phases 1-2 to the real project. Open `~/Desktop/Main/TradeStack/backend/server.py`. `backend/src/db.py`, `cache_manager.py` — SQLite in production. One isolated experiment.
 
 **Note:** Phase 3 doesn't change production code — just reading + notes + small experiment.
+
+| # | Concept | File |
+|---|---------|------|
+| 3.0 | What we'll learn | Phase 3 Overview |
+| 3.1 | Server overview | server.py walkthrough (930 lines) |
+| 3.2 | Database layer | SQLite in production — WAL mode, thread-local |
+| 3.3 | Cache manager | Pickle cache, .pkl files, invalidation |
+| 3.4 | Scanner | ProcessPoolExecutor, 2000 stocks, 13 indicators |
+| 3.5 | Streaming | Upstox WebSocket, live price ticks |
+| 3.6 | State machine | Live trader logic, order state transitions |
+| 3.7 | One experiment | One isolated change to understand the system |
+
+---
+
+## PHASE 4 — Docker & Deployment
+
+Containerize the apps from Phases 1-3 so they run anywhere with one command.
+
+| # | Concept | File |
+|---|---------|------|
+| 4.0 | What we'll learn | Phase 4 Overview |
+| 4.1 | Docker basics | What Docker is, why it matters |
+| 4.2 | Dockerfile | Package your FastAPI app into an image |
+| 4.3 | Docker Compose | Run with one command, persist SQLite data |
+| 4.4 | Test + bridge | Verify persistence, apply to TradeStack |
 
 ---
 
@@ -161,12 +177,16 @@ Apply what you learned in Phases 0, 1, Appendix A, 2 to the real project:
 
 - Phase 0: Start with `python/1 Lec variables & functions/notes.md`
 - Phase 1: `1.0 What We'll Learn + Project Preview.md`
-- Appendix A: `Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.0 Docker What Is It + Overview.md`
+- Phase 2: `Phase 2 - Real-time (WebSocket)/2.0 Phase 2 - Real-time (WebSocket) — Kya Seekhenge.md`
+- Phase 3: `Phase 3 - TradeStack Backend Deep-Dive/3.0 Phase 3 - TradeStack Backend Deep-Dive — Kya Seekhenge.md`
+- Phase 4: `Phase 4 - Docker & Deployment/4.0 Phase 4 - Docker & Deployment — Kya Seekhenge.md`
 
 ---
 
 **Related files:**
 - `lib/subjects/python.subject.ts` (sidebar registration)
-- `Phase 0 - Backend Mindset/0.0 Course How It Works - Backend Map.md` (full backend journey)
-- `Phase 1 - FastAPI Basics (CRUD + SQLite)/1.0 What We'll Learn.md`
-- `Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.1 Dockerfile + .dockerignore.md`
+- `Phase 0 - Backend Mindset/0.0 How the Course Works — Backend Map.md` (full backend journey)
+- `Phase 1 - FastAPI Basics (CRUD + SQLite)/1.0 What We'll Learn + Project Preview.md`
+- `Phase 2 - Real-time (WebSocket)/2.0 Phase 2 - Real-time (WebSocket) — Kya Seekhenge.md`
+- `Phase 3 - TradeStack Backend Deep-Dive/3.0 Phase 3 - TradeStack Backend Deep-Dive — Kya Seekhenge.md`
+- `Phase 4 - Docker & Deployment/4.0 Phase 4 - Docker & Deployment — Kya Seekhenge.md`

@@ -175,7 +175,7 @@ export const pythonSubject: Subject = {
       lectures: [
         {
           id: "fp-0.0",
-          title: "0.0 How Were Course Works - Backend Map",
+          title: "0.0 How the Course Works - Backend Map",
           path: "docs/coding/Backend (Python)/Phase 0 - Backend Mindset/0.0 Course Kaise Chalega - Backend Ki Map.md",
         },
         {
@@ -261,34 +261,60 @@ export const pythonSubject: Subject = {
           path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/1.5.5 Scan Endpoint + Wrap-up.md",
         },
       ],
-      groups: [
-        {
-          id: "fp-1-appendix-a",
-          title: "Appendix A - Docker Basics",
-          lectures: [
-            {
-              id: "fp-2.0",
-              title: "A.0 What Is Docker + Overview",
-              path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.0 Docker Kya Hai + Overview.md",
-            },
-            {
-              id: "fp-2.1",
-              title: "A.1 Dockerfile + .dockerignore",
-              path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.1 Dockerfile + .dockerignore.md",
-            },
-            {
-              id: "fp-2.2",
-              title: "A.2 Docker Compose - Volumes + Service",
-              path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.2 Docker Compose - Volumes + Service.md",
-            },
-            {
-              id: "fp-2.3",
-              title: "A.3 Test + TradeStack Bridge",
-              path: "docs/coding/Backend (Python)/Phase 1 - FastAPI Basics (CRUD + SQLite)/Appendix A - Docker Basics/2.3 Test Karo + TradeStack Bridge.md",
-            },
-          ],
-        },
-      ],
+      groups: [],
+    },
+  {
+  id: "phase2",
+  title: "Real-time (WebSocket) - Phase 2",
+  openByDefault: false,
+  lectures: [
+    {
+      id: "py-2.0",
+      title: "2.0 Phase 2 - What We'll Learn + Project Preview",
+      path: "docs/coding/Backend (Python)/Phase 2 - Real-time (WebSocket)/2.0 Phase 2 - Real-time (WebSocket) — Kya Seekhenge.md",
     },
   ],
+}, {
+  id: "phase3",
+  title: "TradeStack Backend Deep-Dive - Phase 3",
+  openByDefault: false,
+  lectures: [
+    {
+      id: "py-3.0",
+      title: "3.0 Phase 3 - What We'll Learn",
+      path: "docs/coding/Backend (Python)/Phase 3 - TradeStack Backend Deep-Dive/3.0 Phase 3 - TradeStack Backend Deep-Dive — Kya Seekhenge.md",
+    },
+  ],
+}, {
+  id: "phase4",
+  title: "Docker & Deployment - Phase 4",
+  openByDefault: false,
+  lectures: [
+    {
+      id: "py-4.0",
+      title: "4.0 Phase 4 - What We'll Learn",
+      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/4.0 Phase 4 - Docker & Deployment — Kya Seekhenge.md",
+    },
+    {
+      id: "py-4.1",
+      title: "4.1 Docker What Is + Overview",
+      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/2.0 Docker Kya Hai + Overview.md",
+    },
+    {
+      id: "py-4.2",
+      title: "4.2 Dockerfile + .dockerignore",
+      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/2.1 Dockerfile + .dockerignore.md",
+    },
+    {
+      id: "py-4.3",
+      title: "4.3 Docker Compose - Volumes + Service",
+      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/2.2 Docker Compose - Volumes + Service.md",
+    },
+    {
+      id: "py-4.4",
+      title: "4.4 Test + TradeStack Bridge",
+      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/2.3 Test Karo + TradeStack Bridge.md",
+    },
+  ],
+},  ],
 };
