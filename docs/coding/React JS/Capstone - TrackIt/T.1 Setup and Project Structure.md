@@ -12,6 +12,7 @@ All batches (1-7) are complete:
 | **4** | Tailwind, Forms, Accessibility |
 | **5** | Performance (memo, useCallback, lazy) |
 | **6** | Custom Hooks, Generics, Zustand |
+| **6.7** | Redux Toolkit — slices, store, typed hooks, redux-persist |
 | **7** | Error Boundaries, Security, Testing, Deploy |
 
 **Now, bringing it all together** — **THE FINAL CAPSTONE: TrackIt**. This becomes your **main project for resume + portfolio**. So we'll treat it like a batch — our own folder, our own steps (T.1 through T.8), code **from scratch** (starting with `bunx`), with a coder mindset.
@@ -28,9 +29,9 @@ Here's the scene...
 
 | Concept | Batch | In TrackIt |
 |---------|-------|--------------|
-| Custom hooks + Generics | 6 | `useFetch<T>`, `useLocalStorage<T>` |
-| Zustand + persist | 6 | habits, tasks, prefs, auth stores |
-| `useReducer` | 5 | complex task state (discriminated actions) |
+| Custom hooks + Generics | 6 | `useFetch<T>` |
+| Redux Toolkit + redux-persist | 6.7 | habits, tasks, prefs, auth slices + store |
+| RTK slices (Immer reducers) | 6.7 | tasks state — no separate `useReducer` needed |
 | React Router | 3 | dynamic + protected + lazy routes |
 | Tailwind | 4 | responsive, accessible UI |
 | Framer Motion | (new) | smooth animations |
@@ -39,10 +40,11 @@ Here's the scene...
 | Testing | 7 | Vitest + RTL on core pieces |
 | Deploy | 7 | Vercel + README |
 
+**Prerequisite — Batch 6.7 is required, not optional:** TrackIt is now the **Redux Toolkit showcase** (this is what the enterprise/legacy track is for — see `6.7.0`). Zustand stays the "new project default" for learning the state patterns; RTK is what TrackIt uses, the same stack you'd meet in a real codebase. If you skipped Batch 6.7, finish it first — TrackIt assumes `createSlice`, `configureStore`, Provider + typed hooks, and `redux-persist` are familiar.
+
 **Data source decision (senior thinking — remember from 7.2):**
-- **Core data** (habits, tasks, prefs, auth) → Zustand + `persist` → localStorage
+- **Core data** (habits, tasks, prefs, auth) → RTK slices + `redux-persist` → localStorage
 - **`useFetch<T>`** → a real public API (motivational quote on the dashboard) — no fake complexity, an honest use
-- **`useLocalStorage<T>`** → theme preference (to make the hook visible)
 - Frontend app — no private secrets, just `VITE_` public values
 
 ---
@@ -62,14 +64,17 @@ Each step (T.1-T.8) is an isolated milestone:
 trackit/
 ├── src/
 │   ├── stores/
-│   │   ├── habitsStore.ts       # T.2 — habits CRUD + streak
-│   │   ├── tasksStore.ts        # T.2 — tasks (useReducer)
-│   │   ├── prefsStore.ts        # T.2 — theme + preferences
-│   │   └── authStore.ts         # T.2 — dummy auth
+│   │   ├── habitsSlice.ts       # T.2 — habits CRUD (createSlice + Immer)
+│   │   ├── tasksSlice.ts        # T.2 — tasks slice (replaces useReducer)
+│   │   ├── prefsSlice.ts        # T.2 — theme + preferences
+│   │   ├── authSlice.ts         # T.2 — dummy auth
+│   │   ├── store.ts             # T.2 — configureStore + persistReducer
+│   │   ├── hooks.ts             # T.2 — useAppSelector / useAppDispatch (typed)
+│   │   └── selectors.ts         # T.2 — selectIsHabitDone, selectTasks, ...
 │   ├── hooks/
 │   │   ├── useFetch.ts          # T.3 — generic fetch
-│   │   ├── useLocalStorage.ts   # T.3 — generic persistence
-│   │   └── useHabits.ts         # T.5 — habit logic
+│   │   ├── useTheme.ts          # T.4 — theme via prefs slice (redux-persist)
+│   │   └── useHabits.ts         # T.5 — habit business logic (dispatch wrappers)
 │   ├── components/
 │   │   ├── layout/              # T.4 — navbar, layout
 │   │   ├── habits/              # T.5 — habit cards, check-in
@@ -125,7 +130,7 @@ trackit/
 **Now install dependencies** — everything the project needs:
 
 ```bash
-bun add zustand react-router-dom framer-motion
+bun add @reduxjs/toolkit react-redux redux-persist react-router-dom framer-motion
 bun add -d vitest jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom dompurify @types/dompurify
 ```
 
@@ -133,7 +138,9 @@ bun add -d vitest jsdom @testing-library/react @testing-library/user-event @test
 
 | Package | Why |
 |---------|------|
-| `zustand` | Global state management (Batch 6) |
+| `@reduxjs/toolkit` | Global state — `createSlice`, `configureStore` (Batch 6.7) |
+| `react-redux` | React bindings — `Provider`, `useSelector`, `useDispatch` (Batch 6.7) |
+| `redux-persist` | Persist the whole store to localStorage (Batch 6.7.5.5) |
 | `react-router-dom` | Routing (Batch 3) |
 | `framer-motion` | Animations |
 | `dompurify` | HTML sanitization (Batch 7 security) |
@@ -183,6 +190,8 @@ function App() {
 export default App;
 ```
 
+**Note — `main.tsx` gets two new wrappers in T.2:** `<Provider store={store}>` (react-redux) and `<PersistGate>` (redux-persist). We can't add them yet — the store is built in T.2. Keep `main.tsx` minimal for now; T.2 rewires it.
+
 **Cleanup:** Remove default Vite files not needed (`src/App.css`, `src/assets/react.svg`) — in their place, our own structure. Replace `src/index.css` with a basic reset:
 
 ```css
@@ -223,7 +232,7 @@ In the browser, `http://localhost:5173` — the "TrackIt" heading should appear.
 
 ## So Here's the Takeaway
 
-The project foundation is ready. Clean structure, all dependencies, dev server running. Now the next step (T.2) — **types + normalized state + Zustand stores**. Data first, UI later — production-grade thinking.
+The project foundation is ready. Clean structure, all dependencies, dev server running. Now the next step (T.2) — **types + normalized state + Redux Toolkit slices + redux-persist**. Data first, UI later — production-grade thinking.
 
 If you ever get confused about which folder belongs to which step, look back at the structure diagram above — it's all mapped out.
 
@@ -231,12 +240,12 @@ If you ever get confused about which folder belongs to which step, look back at 
 
 ## In Your Own Words
 
-1. What is the role of each main library (zustand, router, framer-motion) in TrackIt?
+1. What is the role of each main library (@reduxjs/toolkit, react-redux, redux-persist, router, framer-motion) in TrackIt?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Zustand is for global state — habits, tasks, prefs, auth stores (Batch 6 approach). react-router-dom is for routing — dynamic routes (habit detail), protected routes (after login), lazy loading (Batch 3). framer-motion is for animations — smooth transitions when cards appear and dashboard updates. Along with these, dompurify for security (sanitizing raw HTML) and vitest+RTL for testing.
+**Sample Answer:** `@reduxjs/toolkit` is for global state — `createSlice` builds the habits/tasks/prefs/auth slices, `configureStore` combines them (Batch 6.7). `react-redux` connects them to React — the `Provider` in `main.tsx` and the typed `useAppSelector`/`useAppDispatch` hooks (6.7.3). `redux-persist` saves the whole store to localStorage and rehydrates it on startup (6.7.5.5) — refresh-safe without a backend. react-router-dom is for routing — protected routes, lazy loading (Batch 3). framer-motion is for animations. Along with these, dompurify for security and vitest+RTL for testing.
 
 </details>
 
@@ -263,7 +272,7 @@ If you ever get confused about which folder belongs to which step, look back at 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Because they're two different things (Batch 6 separation of concerns). `stores/` = Zustand stores — global state + actions + persistence (`persist` middleware). `hooks/` = custom hooks — `useFetch<T>` (data fetching), `useLocalStorage<T>` (persisted values), `useHabits` (habit business logic). The store manages raw state, hooks provide logic/composition. Separate folders = always know where things are, stays clean in bigger projects.
+**Sample Answer:** Because they're two different things (Batch 6.7 separation of concerns). `stores/` = the Redux layer — `createSlice` slices (state + reducers), `store.ts` (`combineReducers` + `persistReducer`), typed hooks, and selectors — persistence via `redux-persist`. `hooks/` = custom hooks — `useFetch<T>` (data fetching), `useTheme` (theme via prefs slice), `useHabits` (habit business logic). The store manages raw state, hooks provide logic/composition. Separate folders = always know where things are, stays clean in bigger projects.
 
 </details>
 
@@ -272,6 +281,6 @@ If you ever get confused about which folder belongs to which step, look back at 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Because TrackIt is a pure frontend app — no backend. Habits/tasks are the user's local data, which the `persist` middleware saves in localStorage. This survives load/refresh — real persistence without a backend. A backend would be needed to fetch data from an API, which we haven't taught. `useFetch<T>` is used for a real public API (quotes) on the dashboard — an honest use, not a fake mock service. Senior thinking: don't add complexity without need — choose the right tool for your data (Zustand+persist) and the right tool for API (useFetch).
+**Sample Answer:** Because TrackIt is a pure frontend app — no backend. Habits/tasks are the user's local data, which `redux-persist` saves in localStorage under one key (`persist:trackit`) and rehydrates on startup — refresh-safe without a backend. A backend would be needed to fetch app data from an API, which we haven't taught. `useFetch<T>` is used for a real public API (quotes) on the dashboard — an honest use, not a fake mock service. Senior thinking: don't add complexity without need — choose the right tool for your data (RTK + redux-persist) and the right tool for API (useFetch).
 
 </details>

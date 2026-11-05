@@ -113,9 +113,9 @@ Multi-column board (Todo, In Progress, Done) with drag-drop cards. Zustand store
 
 ---
 
-# BATCH 6.7 — Redux Toolkit (Enterprise) — Optional, Back-to-Back with Zustand
+# BATCH 6.7 — Redux Toolkit (Enterprise) — Required, Back-to-Back with Zustand (TrackIt capstone isi pe built hai)
 
-> **Kyun 6.7 alag batch?** RTK badi cheez hai — 1 lecture me dump karne se kuch samajh nahi aayega. Zustand (6.4) ke turant baad isliye rakha taaki compare fresh rahe — `Zustand = naya default (🟢)`, `RTK = enterprise/legacy (🟡)`. Lower batches shift nahi — Batch 7 Production as-is rahega, is batch ka Capstone se koi rewrite nahi (TrackIt abhi bhi Zustand).
+> **Kyun 6.7 alag batch?** RTK badi cheez hai — 1 lecture me dump karne se kuch samajh nahi aayega. Zustand (6.4) ke turant baad isliye rakha taaki compare fresh rahe — `Zustand = naya default (🟢)`, `RTK = enterprise/legacy (🟡) — aur TrackIt isi pe build hai`. Capstone TrackIt hi RTK showcase hai — is batch ka poora content (slices, typed hooks, `redux-persist`) wahan apply hota hai — isliye 6.7 complete karna **required** hai capstone se pehle. Baaki Batch 7 Production as-is rahega.
 
 | # | Concept | TypeScript Layer | Mini-Project / Series |
 |---|---|---|---|
@@ -146,9 +146,9 @@ Ye sabse alag hai — ek naya, bada, polished project jisme **saari batches ke l
 - TypeScript throughout
 - Tailwind, responsive, accessible UI
 - React Router (dynamic + protected routes) + lazy-loaded routes
-- Zustand for state (not Context — latest approach)
-- `useReducer` for complex task state (typed discriminated actions)
-- Generic custom hooks (`useFetch<T>`, `useLocalStorage<T>`)
+- Redux Toolkit for state (6.7 wala enterprise track — TrackIt RTK showcase hai)
+- RTK slices for task state (typed actions, Immer reducers — alag useReducer nahi)
+- Generic custom hooks (`useFetch<T>`)
 - Framer Motion animations
 - Error boundary + security hygiene
 - Test coverage on core pieces

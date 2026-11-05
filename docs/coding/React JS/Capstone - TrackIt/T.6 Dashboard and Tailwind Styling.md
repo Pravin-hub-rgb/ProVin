@@ -51,18 +51,18 @@ Then import Tailwind in `src/index.css`:
 
 ## Step 2 — Stats Hook (Derived Data)
 
-Dashboard stats are derived from the habits store. Create a custom hook — `src/hooks/useDashboardStats.ts`:
+Dashboard stats are derived from the habits slice. Create a custom hook — `src/hooks/useDashboardStats.ts`:
 
 ```ts
 // src/hooks/useDashboardStats.ts
 import { useMemo } from "react";
-import { useHabitsStore } from "../stores/habitsStore";
-import { useTasksStore } from "../stores/tasksStore";
+import { useAppSelector } from "../stores/hooks";
+import { selectHabits, selectCheckIns, selectTasks } from "../stores/selectors";
 
 export function useDashboardStats() {
-  const habits = useHabitsStore((s) => s.habits);
-  const checkIns = useHabitsStore((s) => s.checkIns);
-  const tasks = useTasksStore((s) => s.tasks);
+  const habits = useAppSelector(selectHabits);
+  const checkIns = useAppSelector(selectCheckIns);
+  const tasks = useAppSelector(selectTasks);
 
   return useMemo(() => {
     const habitList = Object.values(habits);
@@ -146,13 +146,14 @@ Create new file — `src/pages/Dashboard.tsx`:
 // src/pages/Dashboard.tsx
 import { useDashboardStats } from "../hooks/useDashboardStats";
 import { useQuote } from "../hooks/useQuote";
-import { useAuthStore } from "../stores/authStore";
+import { useAppSelector } from "../stores/hooks";
+import { selectUser } from "../stores/selectors";
 
 export function Dashboard() {
   const { totalHabits, doneToday, totalTasks, pendingTasks, bestStreak, weekRates } =
     useDashboardStats();
   const { data: quote, isLoading: quoteLoading, error: quoteError } = useQuote();
-  const user = useAuthStore((s) => s.user);
+  const user = useAppSelector(selectUser);
 
   return (
     <div className="p-4 md:p-8">

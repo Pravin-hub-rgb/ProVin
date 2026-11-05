@@ -698,13 +698,13 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-t.2",
-          title: "T.2 Types and Zustand Stores",
-          path: "docs/coding/React JS/Capstone - TrackIt/T.2 Types and Zustand Stores.md",
+          title: "T.2 Types and Redux Store",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.2 Types and Redux Store.md",
         },
         {
           id: "react-t.3",
-          title: "T.3 useReducer and Custom Hooks",
-          path: "docs/coding/React JS/Capstone - TrackIt/T.3 useReducer and Custom Hooks.md",
+          title: "T.3 Custom Hooks",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.3 Custom Hooks.md",
         },
         {
           id: "react-t.4",

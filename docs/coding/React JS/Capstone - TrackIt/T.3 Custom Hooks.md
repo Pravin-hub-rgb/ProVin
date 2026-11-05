@@ -1,137 +1,129 @@
-Picking up from the last file — T.2 built the data layer (types, normalized habits store, tasks store, prefs store, auth store). Now **T.3 — Logic Layer**: two things —
-
-1. Refactor the tasks store with **`useReducer`** (Batch 5.5 — discriminated union actions)
-2. Build generic custom hooks: **`useFetch<T>`** and **`useLocalStorage<T>`** (Batch 6.2 — rebuilt for this project)
+Picking up from the last file — T.2 built the data layer (4 slices: habits, tasks, prefs, auth + `store.ts` + typed hooks). Now **T.3 — Logic Layer**: wire the Tasks page into the store, and build the one generic hook the app still needs — **`useFetch<T>`** (Batch 6.2, rebuilt for this project).
 
 So here's the situation...
 
 ---
 
-## Part 1 — Coder Mindset: Why Refactor the Tasks Store?
+## What Changed vs What Stayed the Same
 
-In T.2 the `tasksStore` was simple Zustand actions (`addTask`, `toggleTask`, ...). But in a real app, task state becomes complex:
+| Same as before | Changed in this rewrite |
+|-------|--------|
+| Tasks are predictable, testable state | `useReducer` + `useTasks` wrapper are **gone** — the `tasksSlice` from T.2 *is* the reducer |
+| `useFetch<T>` as the data-fetching hook | Unchanged — this part of T.3 stays as-is |
+| Custom hooks as the composition layer | `useLocalStorage<T>` is **removed** — explained below |
+| Tasks page reads/writes cleanly | Through `useAppSelector` / `useAppDispatch` — no local task state anywhere |
 
-- Need a filter (all/active/completed)
-- Could sort by priority
-- Multiple actions at once (delete + filter update)
-- Future history/undo
-
-When state transitions get numerous, **`useReducer`** is a better fit — all possible actions defined in one place, each action a pure function (reducer), state predictable. **Discriminated union** actions (Batch 5.5) — TypeScript enforces the shape of every action.
-
-**T.2's store was simple — now we evolve it with `useReducer`.**
+**Why `useReducer` disappeared:** `createSlice` is the same guarantee with the boilerplate removed — reducer + discriminated actions, enforced by TypeScript, with Immer on top. Keeping a hand-written `taskReducer.ts` next to `tasksSlice.ts` would mean two definitions of "what a task update is". One definition, one place — the slice.
 
 ---
 
-## Step 1 — Task Actions (Discriminated Union)
+## Step 1 — Wire the Tasks Page into the Store
 
-Create new file — `src/stores/taskReducer.ts`:
+This is the same `Tasks.tsx` the earlier draft built — same JSX, same filter logic — only the **source of the data** changed, not the UI:
 
-```ts
-// src/stores/taskReducer.ts
-import type { Task, FilterStatus } from "../types";
+```tsx
+// src/pages/Tasks.tsx
+import { useState } from "react";
+import { useAppSelector, useAppDispatch } from "../stores/hooks";
+import { selectTasks, selectTaskFilter } from "../stores/selectors";
+import { addTask, toggleTask, deleteTask, setFilter } from "../stores/tasksSlice";
+import type { Task } from "../types";
 
-// Discriminated union — `kind` tells you which action it is
-export type TaskAction =
-  | { kind: "ADD_TASK"; payload: Task }
-  | { kind: "TOGGLE_TASK"; payload: { id: string } }
-  | { kind: "DELETE_TASK"; payload: { id: string } }
-  | { kind: "SET_FILTER"; payload: FilterStatus };
+export function Tasks() {
+  const tasks = useAppSelector(selectTasks);
+  const filter = useAppSelector(selectTaskFilter);
+  const dispatch = useAppDispatch();
+  const [title, setTitle] = useState("");
 
-export interface TaskState {
-  tasks: Task[];
-  filter: FilterStatus;
-}
+  const handleAdd = () => {
+    if (!title.trim()) return;
+    const task: Task = {
+      id: `task-${Date.now()}`,
+      title: title.trim(),
+      completed: false,
+      priority: "medium",
+      createdAt: new Date().toISOString(),
+    };
+    dispatch(addTask(task));          // action → store → tasksSlice reducer → localStorage (redux-persist)
+    setTitle("");
+  };
 
-export const initialTaskState: TaskState = {
-  tasks: [],
-  filter: "all",
-};
+  const filteredTasks = tasks.filter((t) => {
+    if (filter === "active") return !t.completed;
+    if (filter === "completed") return t.completed;
+    return true;
+  });
 
-export function taskReducer(state: TaskState, action: TaskAction): TaskState {
-  switch (action.kind) {
-    case "ADD_TASK":
-      return { ...state, tasks: [...state.tasks, action.payload] };
+  return (
+    <div className="tasks-page">
+      <h1>📝 Tasks</h1>
 
-    case "TOGGLE_TASK":
-      return {
-        ...state,
-        tasks: state.tasks.map((t) =>
-          t.id === action.payload.id ? { ...t, completed: !t.completed } : t
-        ),
-      };
+      <div className="add-task">
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          placeholder="New task..."
+        />
+        <button onClick={handleAdd}>Add</button>
+      </div>
 
-    case "DELETE_TASK":
-      return {
-        ...state,
-        tasks: state.tasks.filter((t) => t.id !== action.payload.id),
-      };
+      <div className="filters">
+        {(["all", "active", "completed"] as const).map((f) => (
+          <button
+            key={f}
+            onClick={() => dispatch(setFilter(f))}
+            aria-pressed={filter === f}
+            className={filter === f ? "active" : ""}
+          >
+            {f}
+          </button>
+        ))}
+      </div>
 
-    case "SET_FILTER":
-      return { ...state, filter: action.payload };
-
-    default:
-      return state;
-  }
-}
-```
-
-**Discriminated union (from 5.5):**
-
-```
-{ kind: "ADD_TASK"; payload: Task }     ← kind = "ADD_TASK"
-{ kind: "TOGGLE_TASK"; payload: {...} } ← kind = "TOGGLE_TASK"
-        │
-        └── `kind` is different in each action — the discriminator
-```
-
-Inside `switch (action.kind)`, TypeScript narrows automatically — in `case "ADD_TASK"`, `action.payload` is automatically typed as `Task`. **Type-safe state management.**
-
-**Why `kind` instead of `type` here?** The property name is just convention — both work fine. We use `kind` to avoid confusion with TypeScript's own `type` keyword. `kind` is clear — "what kind of action is this."
-
----
-
-## Step 2 — useReducer Hook (useTasks)
-
-Create a custom hook to use `useReducer`. New file — `src/hooks/useTasks.ts`:
-
-```ts
-// src/hooks/useTasks.ts
-import { useReducer } from "react";
-import { taskReducer, initialTaskState } from "../stores/taskReducer";
-import type { Task, FilterStatus } from "../types";
-
-export function useTasks() {
-  const [state, dispatch] = useReducer(taskReducer, initialTaskState);
-
-  const addTask = (task: Task) => dispatch({ kind: "ADD_TASK", payload: task });
-  const toggleTask = (id: string) => dispatch({ kind: "TOGGLE_TASK", payload: { id } });
-  const deleteTask = (id: string) => dispatch({ kind: "DELETE_TASK", payload: { id } });
-  const setFilter = (filter: FilterStatus) => dispatch({ kind: "SET_FILTER", payload: filter });
-
-  return { ...state, addTask, toggleTask, deleteTask, setFilter };
+      <ul className="task-list">
+        {filteredTasks.map((task) => (
+          <li key={task.id}>
+            <input
+              type="checkbox"
+              checked={task.completed}
+              onChange={() => dispatch(toggleTask(task.id))}
+            />
+            <span className={task.completed ? "strike" : ""}>{task.title}</span>
+            <button onClick={() => dispatch(deleteTask(task.id))}>🗑️</button>
+          </li>
+        ))}
+        {filteredTasks.length === 0 && <li>No tasks</li>}
+      </ul>
+    </div>
+  );
 }
 ```
 
-**What this gives you:**
+**The flow (follow the data):**
+
+```
+User clicks checkbox
+  → dispatch(toggleTask(id))           Action object { type: "tasks/toggleTask", payload: id }
+  → tasksSlice reducer flips completed  Immer produces new tasks array
+  → store updated                        persist:trackit rewritten automatically
+  → useAppSelector(selectTasks)          sees a new array reference
+  → Tasks re-renders with the change
+```
 
 | Thing | What it does |
 |-------|-----|
-| `useReducer(taskReducer, initialTaskState)` | Reducer + initial state — returns `state` and `dispatch` |
-| `dispatch({ kind: "ADD_TASK", payload: task })` | Dispatch an action — the reducer handles it |
-| Wrapper functions | `addTask(task)` — the caller doesn't need to know the action shape |
-| Return `...state` | Spreads `tasks` + `filter` — plus the action functions |
+| `useAppSelector(selectTasks)` | Reads the tasks array — re-renders only when it changes |
+| `useAppDispatch()` | Typed dispatch — every action you can send is known at compile time |
+| `dispatch(addTask(task))` | The *event* "a task was added" — with payload. DevTools shows it |
+| `(["all", "active", "completed"] as const)` | Readonly tuple — TypeScript enforces the exact literals |
 
-**Benefit:** All task logic lives in one place (`taskReducer.ts`) — predictable, testable (we test it in T.8), type-safe.
-
----
-
-## Part 2 — Generic Custom Hooks
-
-Now we build Batch 6.2's generic hooks for this project. **Why?** This project needs them (fetch a quote, persist theme) — and it's a best practice that reusable logic should live in its own hooks.
+**Note — why no `useTasks` wrapper this time:** the slice's actions are already good API (`addTask`, `toggleTask`...). A wrapper hook that just re-dispatches them adds a layer with no logic in it. Hooks earn their keep when they *compose* — read state, combine with other hooks, transform — not when they just rename calls.
 
 ---
 
-## Step 3 — useFetch\<T\>
+## Step 2 — useFetch\<T\>
+
+Now the one generic hook the app genuinely needs. Batch 6.2 built it; we rebuild it here because the Dashboard (T.6) fetches a quote with it. **Why?** This project needs it (fetch a quote) — and it's a best practice that reusable logic should live in its own hook.
 
 New file — `src/hooks/useFetch.ts`:
 
@@ -196,180 +188,67 @@ export function useFetch<T>(url: string): FetchState<T> {
 
 ---
 
-## Step 4 — useLocalStorage\<T\>
+## Step 3 — Why useLocalStorage Is Gone (and What Owns Persistence)
 
-New file — `src/hooks/useLocalStorage.ts`:
+The previous draft of this file had a `useLocalStorage<T>` section — and honestly, it was redundant. Look at where theme would have lived:
 
-```ts
-// src/hooks/useLocalStorage.ts
-import { useState, useEffect } from "react";
+- `prefsSlice` (T.2) → persisted via `redux-persist` → survives refresh
+- `useLocalStorage("trackit-theme", ...)` → also writes `localStorage["trackit-theme"]`
 
-export function useLocalStorage<T>(key: string, initialValue: T) {
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    try {
-      const item = localStorage.getItem(key);
-      return item ? (JSON.parse(item) as T) : initialValue;
-    } catch {
-      return initialValue;
-    }
-  });
+Two write paths for the same data = **two sources of truth**. Refresh the page — which one wins? The app reads prefs from one, writes from the other, and a bug report becomes "the theme is weird after reload" with two suspects and no alibi.
 
-  useEffect(() => {
-    try {
-      localStorage.setItem(key, JSON.stringify(storedValue));
-    } catch (err) {
-      console.error("Couldn't save to localStorage:", err);
-    }
-  }, [key, storedValue]);
+**The rule:** state has exactly one owner. If a value is part of the app's global state (habits, tasks, theme, login), it lives in the store, and persistence goes through `redux-persist` — one key (`persist:trackit`), one rehydrate on startup. If a value is fully local to one component (input drafts, a toggle), it stays in `useState` — no persistence, no global store.
 
-  return [storedValue, setStoredValue] as const;
-}
-```
-
-**What's happening (recap from 6.2):**
-
-| Thing | Why |
-|-------|------|
-| Lazy initializer `useState(() => {...})` | localStorage is read only once on first render — efficient |
-| `JSON.parse(item) as T` | Parse string + cast to type |
-| `try/catch` | Falls back to `initialValue` on corrupt data |
-| `useEffect` sync | Updates localStorage when `storedValue` changes |
-| `as const` | Makes it a tuple — `[value, setValue]` like `useState` |
-
-**How it's used in TrackIt:** Theme preference (T.4/T.6) — `useLocalStorage<Prefs["theme"]>("trackit-theme", "light")`. We also have Zustand `persist`, but this hook stays visible in the project (per the roadmap) — we'll use it for prefs.
-
----
-
-## Integration — Using useTasks in the Tasks Page
-
-Now plug the `useTasks` hook into a simple demo component. New file — `src/pages/Tasks.tsx`:
-
-```tsx
-// src/pages/Tasks.tsx
-import { useState } from "react";
-import { useTasks } from "../hooks/useTasks";
-import type { Task } from "../types";
-
-export function Tasks() {
-  const { tasks, filter, addTask, toggleTask, deleteTask, setFilter } = useTasks();
-  const [title, setTitle] = useState("");
-
-  const handleAdd = () => {
-    if (!title.trim()) return;
-    const task: Task = {
-      id: `task-${Date.now()}`,
-      title: title.trim(),
-      completed: false,
-      priority: "medium",
-      createdAt: new Date().toISOString(),
-    };
-    addTask(task);
-    setTitle("");
-  };
-
-  const filteredTasks = tasks.filter((t) => {
-    if (filter === "active") return !t.completed;
-    if (filter === "completed") return t.completed;
-    return true;
-  });
-
-  return (
-    <div className="tasks-page">
-      <h1>📝 Tasks</h1>
-
-      <div className="add-task">
-        <input
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder="New task..."
-        />
-        <button onClick={handleAdd}>Add</button>
-      </div>
-
-      <div className="filters">
-        {(["all", "active", "completed"] as const).map((f) => (
-          <button
-            key={f}
-            onClick={() => setFilter(f)}
-            aria-pressed={filter === f}
-            className={filter === f ? "active" : ""}
-          >
-            {f}
-          </button>
-        ))}
-      </div>
-
-      <ul className="task-list">
-        {filteredTasks.map((task) => (
-          <li key={task.id}>
-            <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => toggleTask(task.id)}
-            />
-            <span className={task.completed ? "strike" : ""}>{task.title}</span>
-            <button onClick={() => deleteTask(task.id)}>🗑️</button>
-          </li>
-        ))}
-        {filteredTasks.length === 0 && <li>No tasks</li>}
-      </ul>
-    </div>
-  );
-}
-```
-
-**The flow:**
-
-```
-User adds task → handleAdd → addTask(task) → dispatch(ADD_TASK)
-    → taskReducer → new tasks array → state update → UI re-renders
-
-User clicks filter → setFilter("active") → dispatch(SET_FILTER)
-    → taskReducer → filter update → filteredTasks re-compute
-```
-
-**The `as const` filter array:** `(["all", "active", "completed"] as const).map(...)` — a readonly tuple, TypeScript enforces exact literals.
+**Where `useLocalStorage<T>` still is the right tool:** apps without a store-based persistence setup — e.g., 6.2's context-free apps, small utilities. You already learned it there; TrackIt just doesn't need it because the store owns persistence. (`6.2` remains the reference for the lazy initializer + `as const` tuple pattern.)
 
 ---
 
 ## What T.3 Taught Us
 
-1. **`useReducer` = predictable state** — all actions in one place, discriminated union, type-safe `switch`
-2. **Custom hooks for logic reuse** — `useTasks`, `useFetch`, `useLocalStorage` — reusable throughout the app
-3. **Generic hooks** — `<T>` works with any type
-4. **Wrapper actions** — hide complex dispatch shape from the caller
-5. **`kind` vs `type`** — consistent property naming (the discriminator)
-6. **Integration** — hook + reducer + store work together
+1. **Slices replace useReducer boilerplate** — `createSlice` = reducer + discriminated actions + Immer, generated once
+2. **UI reads through typed hooks** — `useAppSelector` for reads, `useAppDispatch` for writes; no local shadow copies of global state
+3. **Hooks must compose, not just rename** — `useFetch` earns its place (logic + state + lifecycle); a `useTasks` wrapper that only re-dispatched added nothing
+4. **One owner per piece of state** — store owns global/persisted state; `useState` owns local state; no third path
+5. **`ignore` flag** — stale async responses must never overwrite fresh ones
 
 ---
 
 ## So Here's the Takeaway
 
-Logic layer ready. Tasks are now predictable with `useReducer`, and hooks (`useFetch<T>`, `useLocalStorage<T>`) are reusable. Next up (T.4) — **Router**: dynamic routes, protected routes, `React.lazy` + Suspense. The spine of navigation.
+The logic layer is done — components read from and write to the store through typed hooks, and `useFetch<T>` covers the one external data dependency (the quote). Next up (T.4) — **Router**: dynamic routes, protected routes, `useTheme` (now backed by the prefs slice), `React.lazy` + Suspense. The spine of navigation.
 
 ---
 
 ## In Your Own Words
 
-1. What are discriminated union actions, and what role does the `kind` property play?
+1. Why did the separate `taskReducer.ts` + `useTasks` disappear in the RTK version? What did `createSlice` give that they didn't?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** A discriminated union is a TypeScript pattern where each action object shares a common property (`kind`) that identifies the action's type. Like `{ kind: "ADD_TASK"; payload: Task }` vs `{ kind: "DELETE_TASK"; payload: { id } }`. `kind` is the "discriminator" — inside the reducer's `switch (action.kind)`, TypeScript narrows to the exact shape in each case. This means passing the wrong action shape becomes a compile-time error — type-safe state management.
+**Sample Answer:** `createSlice` generates a reducer and action creators from one definition — `toggleTask` exists exactly once, both as the action type string and the action creator function. A hand-written `taskReducer.ts` duplicated that mapping and had to be kept in sync manually (add a case, forget the action type, type errors). It also adds Immer, so "never mutate" is enforced by construction. The `useTasks` wrapper only re-dispatched those actions with no extra logic — a layer with no composition. Less code, one source of truth, same guarantees.
 
 </details>
 
-2. Why is `useReducer` a better fit for tasks than simple Zustand actions?
+2. In `Tasks.tsx`, nothing stores tasks in local component state. Where do the tasks actually live, and how does the checkbox click reach them?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Tasks have complex state — a filter, potentially priority sorting, multiple actions at once. With `useReducer`, all possible actions live in one place (`taskReducer.ts`), each handled by a pure function (the reducer), and all state transitions are predictable. Zustand is fine for simple actions, but when state-change patterns multiply, the reducer keeps state changes traceable — easier to debug, test, and extend. We test the reducer in T.8.
+**Sample Answer:** Tasks live in the store's `tasks` slice (`state.tasks.tasks`). Clicking the checkbox dispatches `toggleTask(id)` — an action object — to the store. The tasks slice reducer flips `completed` on the matching task (through Immer), redux-persist writes the new store to localStorage, `useAppSelector(selectTasks)` sees a new array reference and the component re-renders with the updated list. UI → action → reducer → store → selector → re-render. No local copies, no sync bugs.
 
 </details>
 
-3. How does the `ignore` flag in `useFetch<T>` prevent race conditions?
+3. Why did `useLocalStorage` get removed from TrackIt even though it was previously "kept visible for the roadmap"?
+
+<details>
+<summary>Show Answer</summary>
+
+**Sample Answer:** TrackIt persists through redux-persist — the whole store lives under one key (`persist:trackit`) and rehydrates on startup. Keeping `useLocalStorage("trackit-theme", ...)` for the theme meant two write paths and two sources of truth for the same value — one in the prefs slice, one in `"trackit-theme"`. After a refresh they could disagree. The rule — one piece of state, one owner — won. `useLocalStorage` is still the right tool in apps without a redux persistence setup (like 6.2's demos); TrackIt isn't one of them.
+
+</details>
+
+4. How does the `ignore` flag in `useFetch<T>` prevent race conditions?
 
 <details>
 <summary>Show Answer</summary>
@@ -378,20 +257,11 @@ Logic layer ready. Tasks are now predictable with `useReducer`, and hooks (`useF
 
 </details>
 
-4. Why does `useLocalStorage` use a lazy initializer, and why does it return `as const`?
+5. Why dispatch an action (`dispatch(toggleTask(id))`) instead of updating the tasks array directly in the component?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** The lazy initializer (`() => {...}`) runs only on the first render — reading from localStorage (relatively expensive) happens once, not on every render. `as const` turns the return type into a tuple — `readonly [T, (value) => void]` — so when you destructure (`const [theme, setTheme] = useLocalStorage(...)`), TypeScript gives you the correct types, not just `(T | function)[]`. This is the same pattern `useState` uses — a familiar interface.
-
-</details>
-
-5. Why wrap dispatch calls in wrapper functions (`addTask(task)` vs direct dispatch)?
-
-<details>
-<summary>Show Answer</summary>
-
-**Sample Answer:** Wrapper functions hide the action shape from the caller. Instead of the caller knowing `dispatch({ kind: "ADD_TASK", payload: task })`, they just call `addTask(task)` — intent-based, not implementation-based. Benefits: (a) cleaner API — the component states what it wants, not how; (b) if the action shape changes (restructure the payload), only the hook file changes, all components stay untouched; (c) consistency — every component uses the same wrappers, no duplicated action shapes.
+**Sample Answer:** Direct mutation bypasses the one function that's allowed to change the store — the reducer. `dispatch` sends a plain action object (`{ type: "tasks/toggleTask", payload: id }`) through the store: the reducer produces new state, redux-persist saves it, and every subscriber (DevTools, selectors, other components) sees the same event. You get time-travel debugging, a single reproducible record of what happened ("who changed this task?"), and immutability enforced by Immer — no accidental in-place edits. The component states *what happened*, not *how state must change*.
 
 </details>

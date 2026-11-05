@@ -158,7 +158,7 @@ function escapeHtmlEntities(s: string): string {
 
 function escapeRawHtmlString(raw: string): string {
   const fenced: string[] = []
-  let s = raw.replace(/(`{3,})([a-zA-Z0-9_-]*)[ \t]*\r?\n([\s\S]*?)\r?\n\1[ \t]*/g, (m) => {
+  let s = raw.replace(/([ \t]*(`{3,})([a-zA-Z0-9_-]*)[ \t]*\r?\n([\s\S]*?)\r?\n[ \t]*\2[ \t]*)/g, (m) => {
     const idx = fenced.push(m) - 1
     return `QQFENCEQQ${idx}QQENDQQ`
   })
@@ -170,7 +170,7 @@ function escapeRawHtmlString(raw: string): string {
   })
   return s.replace(/QQFENCEQQ(\d+)QQENDQQ/g, (_, i) => {
     const m = fenced[+i]
-    const mm = /^`{3,}([a-zA-Z0-9_-]*)[ \t]*\r?\n([\s\S]*?)\r?\n`{3,}[ \t]*$/.exec(m)
+    const mm = /^[ \t]*`{3,}([a-zA-Z0-9_-]*)[ \t]*\r?\n([\s\S]*?)\r?\n[ \t]*`{3,}[ \t]*$/.exec(m)
     const code = escapeHtmlEntities(mm![2])
     return mm![1] ? `<code class="language-${mm![1]}">${code}</code>` : `<code>${code}</code>`
   })
@@ -205,7 +205,7 @@ const CUSTOM_COMPONENT_TAGS = new Set(
 function escapeNonHtmlAngleBrackets(markdown: string): string {
   const ALLOWED_HTML_TAGS = new Set([...HTML5_TAGS, ...CUSTOM_COMPONENT_TAGS])
   const codeBlocks: string[] = []
-  const noCodeBlocks = markdown.replace(/(```(?:[a-z]*)\r?\n[\s\S]*?\r?\n```)/g, (m) => {
+  const noCodeBlocks = markdown.replace(/([ \t]*`{3,}[^\n`]*\r?\n[\s\S]*?\r?\n[ \t]*`{3,}[ \t]*)/g, (m) => {
     const idx = codeBlocks.push(m) - 1
     return `QQCODEBLOCKQQ${idx}QQENDQQ`
   })

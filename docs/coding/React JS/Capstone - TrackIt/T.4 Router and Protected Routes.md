@@ -1,4 +1,4 @@
-Picking up from the last file — T.2 built the data layer (stores), T.3 built the logic layer (`useReducer` + generic hooks). Now **T.4 — Navigation**: React Router for dynamic routes, protected routes, and `React.lazy` + Suspense for code splitting.
+Picking up from the last file — T.2 built the data layer (4 slices + `redux-persist`), T.3 wired the logic layer (typed hooks + `useFetch<T>`). Now **T.4 — Navigation**: React Router for dynamic routes, protected routes, and `React.lazy` + Suspense for code splitting.
 
 So here's the situation...
 
@@ -30,17 +30,18 @@ First, create skeletons for all pages. New files:
 // src/pages/Login.tsx
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../stores/authStore";
+import { useAppDispatch } from "../stores/hooks";
+import { login } from "../stores/authSlice";
 
 export function Login() {
-  const login = useAuthStore((s) => s.login);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [name, setName] = useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
-    login(name.trim());
+    dispatch(login(name.trim()));     // action: { type: "auth/login", payload: name }
     navigate("/");
   };
 
@@ -79,11 +80,12 @@ export function NotFound() {
 
 ```
 User enters name and submits
-    → login(name) → authStore sets { isLoggedIn: true, user: { name } }
+    → dispatch(login(name)) → auth slice sets { isLoggedIn: true, user: { name } }
+    → redux-persist rewrites persist:trackit (refresh-safe)
     → navigate("/") → goes to Dashboard route
 ```
 
-**Note:** `useAuthStore((s) => s.login)` — selective subscription, the action reference is stable.
+**Note:** Dispatching the `login` action (instead of a direct `set`) makes the login event visible in Redux DevTools — `auth/login` with the name as payload. Every state change in TrackIt is a traceable action.
 
 ---
 
@@ -95,14 +97,15 @@ The protected route pattern (from Batch 3.3) — a wrapper that checks login sta
 // src/components/ProtectedRoute.tsx
 import { Navigate } from "react-router-dom";
 import type { ReactNode } from "react";
-import { useAuthStore } from "../stores/authStore";
+import { useAppSelector } from "../stores/hooks";
+import { selectIsLoggedIn } from "../stores/selectors";
 
 interface ProtectedRouteProps {
   children: ReactNode;
 }
 
 export function ProtectedRoute({ children }: ProtectedRouteProps) {
-  const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
 
   if (!isLoggedIn) {
     return <Navigate to="/login" replace />;
@@ -135,9 +138,11 @@ Now load pages with `React.lazy` — only when the route is hit. Create the full
 ```tsx
 // src/App.tsx
 import { Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route, Link, NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
 import { ProtectedRoute } from "./components/ProtectedRoute";
-import { useAuthStore } from "./stores/authStore";
+import { useAppSelector, useAppDispatch } from "./stores/hooks";
+import { selectIsLoggedIn } from "./stores/selectors";
+import { logout } from "./stores/authSlice";
 
 // Lazy-loaded pages — only loaded when route is hit
 const Dashboard = lazy(() =>
@@ -157,8 +162,8 @@ const NotFound = lazy(() =>
 );
 
 function App() {
-  const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
-  const logout = useAuthStore((s) => s.logout);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const dispatch = useAppDispatch();
 
   return (
     <BrowserRouter>
@@ -170,7 +175,7 @@ function App() {
           <NavLink to="/tasks">Tasks</NavLink>
           <div className="nav-right">
             {isLoggedIn ? (
-              <button onClick={logout}>Logout</button>
+              <button onClick={() => dispatch(logout())}>Logout</button>
             ) : (
               <NavLink to="/login">Login</NavLink>
             )}
@@ -231,20 +236,22 @@ export default App;
 
 ---
 
-## Step 4 — Integrating useLocalStorage for Theme
+## Step 4 — Integrating useTheme (prefs slice + redux-persist)
 
-We built `useLocalStorage<T>` in T.3. Now integrate it for the theme. Create new file — `src/hooks/useTheme.ts`:
+Theme lives in the **prefs slice** (T.2) — persisted by `redux-persist` like everything else. Create a thin facade — `src/hooks/useTheme.ts`:
 
 ```ts
 // src/hooks/useTheme.ts
-import { useLocalStorage } from "./useLocalStorage";
-
-type Theme = "light" | "dark";
+import { useAppSelector, useAppDispatch } from "../stores/hooks";
+import { selectTheme } from "../stores/selectors";
+import { setTheme } from "../stores/prefsSlice";
+import type { Prefs } from "../types";
 
 export function useTheme() {
-  const [theme, setTheme] = useLocalStorage<Theme>("trackit-theme", "light");
+  const theme = useAppSelector(selectTheme);
+  const dispatch = useAppDispatch();
 
-  return { theme, setTheme };
+  return { theme, setTheme: (t: Prefs["theme"]) => dispatch(setTheme(t)) };
 }
 ```
 
@@ -255,8 +262,8 @@ Then apply the theme to the root div in `App.tsx` (Tailwind in T.6):
 import { useTheme } from "./hooks/useTheme";
 
 function App() {
-  const isLoggedIn = useAuthStore((s) => s.isLoggedIn);
-  const logout = useAuthStore((s) => s.logout);
+  const isLoggedIn = useAppSelector(selectIsLoggedIn);
+  const dispatch = useAppDispatch();
   const { theme } = useTheme();
 
   return (
@@ -269,7 +276,9 @@ function App() {
 }
 ```
 
-**Why `useTheme` as a custom hook:** Keeps theme logic (localStorage + type) in one place — reusable, and `useLocalStorage<T>` stays visible in the project (per the roadmap).
+**Why `useTheme` as a facade:** components shouldn't wire slices + selectors for a one-liner like theme — the hook hides "read `prefs.theme`, dispatch `setTheme`". If theme ever needs extras (system preference, a keyboard shortcut), it changes in one file.
+
+**One persistence path:** theme now flows UI → `dispatch(setTheme(...))` → prefs slice → `redux-persist` → `localStorage["persist:trackit"]` → (on reload) `REHYDRATE` → same slice. There is no `trackit-theme` key anymore — the previous draft kept a second localStorage path through `useLocalStorage`, which meant two sources of truth for one value and a theme that could desync on refresh. (`useLocalStorage<T>` stays in Batch 6.2's toolbox — TrackIt just doesn't need it.)
 
 ---
 
@@ -289,7 +298,7 @@ Run `bun run dev` and try the URLs:
 
 ```
 Not logged in → / → ProtectedRoute → Navigate to /login
-Login → authStore isLoggedIn = true → navigate to /
+Login → dispatch(login(name)) → auth slice: isLoggedIn = true → navigate to /
 Now protected pages are accessible
 ```
 
@@ -298,11 +307,11 @@ Now protected pages are accessible
 ## What T.4 Taught Us
 
 1. **Routing structure** — public (`/login`) + protected (`/`, `/habits`, `/tasks`) + 404
-2. **ProtectedRoute pattern** — `useAuthStore` check + `<Navigate to="/login" replace />`
+2. **ProtectedRoute pattern** — `useAppSelector(selectIsLoggedIn)` check + `<Navigate to="/login" replace />`
 3. **`React.lazy` + `Suspense`** — code splitting, on-demand page loading, loading fallback
 4. **`NavLink`** — highlights the active route (good for accessibility)
 5. **Named export + lazy** — `.then((m) => ({ default: m.X }))` pattern
-6. **`useLocalStorage` integration** — theme through a custom hook
+6. **`useTheme` integration** — theme through the prefs slice (one persistence path via redux-persist)
 
 ---
 
@@ -319,7 +328,7 @@ The spine of the app is ready — routing, protected routes, lazy loading. Next 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** ProtectedRoute is a wrapper component that checks `isLoggedIn` from `useAuthStore`. If logged in → renders children (the protected page). If not → `<Navigate to="/login" replace />` redirects. The `replace` prop means the redirect replaces the history entry instead of pushing — so when the user hits the back button after login, they don't end up back on the protected page they couldn't access. Clean history state.
+**Sample Answer:** ProtectedRoute is a wrapper component that checks `isLoggedIn` from the store via `useAppSelector(selectIsLoggedIn)` (the prefs/auth slice, persisted via redux-persist). If logged in → renders children (the protected page). If not → `<Navigate to="/login" replace />` redirects. The `replace` prop means the redirect replaces the history entry instead of pushing — so when the user hits the back button after login, they don't end up back on the protected page they couldn't access. Clean history state.
 
 </details>
 

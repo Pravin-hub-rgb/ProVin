@@ -32,7 +32,15 @@ Wrap all habit logic in a hook — streak calculation, date helpers. Create new 
 ```ts
 // src/hooks/useHabits.ts
 import { useMemo } from "react";
-import { useHabitsStore } from "../stores/habitsStore";
+import { useAppSelector, useAppDispatch } from "../stores/hooks";
+import { selectHabits, selectCheckIns } from "../stores/selectors";
+import {
+  addHabit as addHabitAction,
+  updateHabit as updateHabitAction,
+  deleteHabit as deleteHabitAction,
+  toggleCheckIn as toggleCheckInAction,
+} from "../stores/habitsSlice";
+import type { Habit } from "../types";
 
 function formatDate(date: Date): string {
   return date.toISOString().slice(0, 10); // "2026-08-04"
@@ -49,17 +57,21 @@ function getLastNDays(n: number): string[] {
 }
 
 export function useHabits() {
-  const habits = useHabitsStore((s) => s.habits);
-  const checkIns = useHabitsStore((s) => s.checkIns);
-  const addHabit = useHabitsStore((s) => s.addHabit);
-  const updateHabit = useHabitsStore((s) => s.updateHabit);
-  const deleteHabit = useHabitsStore((s) => s.deleteHabit);
-  const toggleCheckIn = useHabitsStore((s) => s.toggleCheckIn);
-  const isHabitDone = useHabitsStore((s) => s.isHabitDone);
-  const getCheckInCount = useHabitsStore((s) => s.getCheckInCount);
+  const habits = useAppSelector(selectHabits);
+  const checkIns = useAppSelector(selectCheckIns);
+  const dispatch = useAppDispatch();
 
   const today = formatDate(new Date());
   const last7Days = useMemo(() => getLastNDays(7), []);
+
+  // Derived reads — computed from the state the hook already pulled (no extra subscriptions)
+  const isHabitDone = (date: string, habitId: string): boolean =>
+    Boolean(checkIns[date]?.[habitId]);
+
+  const getCheckInCount = (date: string): number => {
+    const day = checkIns[date];
+    return day ? Object.values(day).filter(Boolean).length : 0;
+  };
 
   // A habit's streak — consecutive done days counting back from today
   function getStreak(habitId: string): number {
@@ -89,10 +101,13 @@ export function useHabits() {
     checkIns,
     today,
     last7Days,
-    addHabit,
-    updateHabit,
-    deleteHabit,
-    toggleCheckIn,
+    // Facade actions — callers never see dispatch; the action names say what happened
+    addHabit: (habit: Habit) => dispatch(addHabitAction(habit)),
+    updateHabit: (id: string, updates: Partial<Omit<Habit, "id">>) =>
+      dispatch(updateHabitAction({ id, updates })),
+    deleteHabit: (id: string) => dispatch(deleteHabitAction(id)),
+    toggleCheckIn: (date: string, habitId: string) =>
+      dispatch(toggleCheckInAction({ date, habitId })),
     isHabitDone,
     getCheckInCount,
     getStreak,
@@ -177,7 +192,7 @@ export const HabitCard = memo(function HabitCard({ habit }: HabitCardProps) {
 });
 ```
 
-**Why `React.memo`:** `useHabits()` pulls all actions — if this hook returned new references on every render, memo would be useless. Since Zustand actions are **stable references**, memo works — the card only re-renders when its `habit` actually changes.
+**Why `React.memo`:** `useHabits()` returns fresh closures each render — but `HabitCard` is memo'd on its **props** (`habit`), not its hook internals, so fresh closures inside don't defeat memo. What matters is the `habit` prop's reference: Immer keeps **unchanged** sub-objects by reference, so only the edited habit gets a new object — memo skips every other card.
 
 **Accessibility:** `aria-pressed` — tells the screen reader the button's toggle state. `aria-label` — describes what the dots mean. `aria-hidden` on decorative emoji.
 
@@ -267,11 +282,11 @@ export function Habits() {
 **The flow:**
 
 ```
-User adds habit → handleAdd → addHabit(habit) → habitsStore → habits update → UI re-renders
+User adds habit → handleAdd → addHabit(habit) → dispatch(addHabit(...)) → habits slice → UI re-renders
 
 HabitCard renders → useHabits → isHabitDone(today), getStreak, getHabitLast7Days → UI
 
-Check-in click → toggleCheckIn(today, habitId) → checkIns update → HabitCard re-renders
+Check-in click → toggleCheckIn(today, habitId) → dispatch(toggleCheckIn(...)) → checkIns update → HabitCard re-renders
 ```
 
 ---
@@ -298,10 +313,10 @@ h2 streak: today done (1) → day 3 done (2) → day 2 no → break → streak =
 ## What T.5 Taught Us
 
 1. **Streak logic** — date math, consecutive days, grace period
-2. **Custom hook wrapping** — `useHabits` puts all habit operations + streak helpers in one place
-3. **`React.memo` + stable actions** — Zustand's stable references make memo work
+2. **Custom hook wrapping** — `useHabits` puts all habit operations + streak helpers in one place — a facade over dispatch
+3. **`React.memo` + Immer reference preservation** — unchanged objects keep their reference, memo works
 4. **Accessibility** — `aria-pressed`, `aria-label`, `aria-hidden`
-5. **Selective subscription** — each component subscribes only to what it needs
+5. **Typed selectors** — `useAppSelector(selectHabits)` — subscribe only to what renders
 6. **Pure date helpers** — `formatDate`, `getLastNDays` — testable
 
 ---
@@ -328,16 +343,16 @@ Core feature ready — add, check-in, streak, delete. The UI now shows real user
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** The `useHabits` hook provides all habit operations + streak helpers in one place — components stay clean, not subscribing directly to the store. The store gives raw data (`checkIns` object), the hook gives derived logic (`getStreak`, `getHabitLast7Days`). Benefits: (a) components stay simple — just call the hook; (b) streak logic lives in one place — easy to test (T.8); (c) if the store structure changes, only the hook adapts, components stay untouched.
+**Sample Answer:** The `useHabits` hook provides all habit operations + streak helpers in one place — components stay clean, not wiring dispatch + slice actions themselves. The store gives raw data (`checkIns` object, exposed via typed selectors), the hook gives derived logic (`getStreak`, `getHabitLast7Days`, facade action functions). Benefits: (a) components stay simple — just call the hook; (b) streak logic lives in one place — easy to test (T.8); (c) if the slice structure changes, only the hook adapts, components stay untouched.
 
 </details>
 
-3. How does `React.memo` work with `HabitCard`, and why does it work well with Zustand?
+3. How does `React.memo` work with `HabitCard`, and why does it play well with the RTK slice?
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `React.memo` skips re-rendering a component if its props haven't changed (shallow comparison). `HabitCard` receives the `habit` prop. If the Zustand store's actions return stable references — which they do — then memo works correctly: a card only re-renders when its specific `habit` object changes, not when unrelated state (like tasks) changes. State management libraries work well with memo when actions are stable references — Zustand is.
+**Sample Answer:** `React.memo` skips re-rendering a component if its props haven't changed (shallow comparison). `HabitCard` receives the `habit` prop. Immer reuses references for state you didn't touch — `addHabit` produces a new `habits` object, but every untouched habit object keeps the same reference. So memo works correctly: a card only re-renders when its own `habit` object changes, not when unrelated state (like tasks) changes. On top of that, `dispatch` from `useAppDispatch` is a stable reference, so the facade actions never cause prop-reference churn either.
 
 </details>
 
