@@ -24,6 +24,7 @@ export function ContactDemo() {
   const [phone, setPhone] = useState("")
   const [email, setEmail] = useState("")
   const [category, setCategory] = useState<Contact["category"]>("friends")
+  const [favorite, setFavorite] = useState(false)
   const [search, setSearch] = useState("")
   const [filter, setFilter] = useState<CategoryFilter>("all")
 
@@ -37,13 +38,14 @@ export function ContactDemo() {
         phone: phone.trim(),
         email: email.trim() || undefined,
         category,
-        favorite: false,
+        favorite,
       },
     ])
     setName("")
     setPhone("")
     setEmail("")
     setCategory("friends")
+    setFavorite(false)
   }
 
   const toggleFavorite = (id: number) =>
@@ -99,6 +101,18 @@ export function ContactDemo() {
           <option value="family">Family</option>
           <option value="work">Work</option>
         </select>
+      </div>
+      <div className="flex items-center gap-2 mb-4">
+        <input
+          id="fav"
+          type="checkbox"
+          checked={favorite}
+          onChange={(e) => setFavorite(e.target.checked)}
+          className="w-4 h-4 accent-primary"
+        />
+        <label htmlFor="fav" className="text-sm text-foreground cursor-pointer">
+          Favorite
+        </label>
       </div>
       <button
         onClick={handleAdd}
@@ -179,7 +193,17 @@ export function ContactDemo() {
         <span>
           {contacts.length} {contacts.length === 1 ? "contact" : "contacts"} · {favoriteCount} ⭐ favorite
         </span>
-        <span>{visible.length} shown</span>
+        <div className="flex items-center gap-3">
+          <span>{visible.length} shown</span>
+          {contacts.length > 0 && (
+            <button
+              onClick={() => setContacts([])}
+              className="text-xs text-muted-foreground hover:text-destructive transition-colors"
+            >
+              Clear All
+            </button>
+          )}
+        </div>
       </div>
     </div>
   )

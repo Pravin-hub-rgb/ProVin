@@ -214,8 +214,53 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-1.12",
-          title: "1.12 Final Project — Contact Book",
+          title: "1.12 Final Project — Contact Book (Overview)",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12 Final Project - Contact Book.md",
+        },
+        {
+          id: "react-1.12.1",
+          title: "1.12.1 Step 1 — Think: App Architecture",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.1 Step 1 — Think App Architecture.md",
+        },
+        {
+          id: "react-1.12.2",
+          title: "1.12.2 Step 2 — Foundation: Types + State",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.2 Step 2 — Foundation Types + State.md",
+        },
+        {
+          id: "react-1.12.3",
+          title: "1.12.3 Step 3 — Create ContactForm",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.3 Step 3 — Create ContactForm.md",
+        },
+        {
+          id: "react-1.12.4",
+          title: "1.12.4 Step 4 — Render the List",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.4 Step 4 — Render the List.md",
+        },
+        {
+          id: "react-1.12.5",
+          title: "1.12.5 Step 5 — Favorite Toggle",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.5 Step 5 — Favorite Toggle.md",
+        },
+        {
+          id: "react-1.12.6",
+          title: "1.12.6 Step 6 — Search + Category Filter",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.6 Step 6 — Search + Category Filter.md",
+        },
+        {
+          id: "react-1.12.7",
+          title: "1.12.7 Step 7 — Component Extraction",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.7 Step 7 — Component Extraction.md",
+        },
+        {
+          id: "react-1.12.8",
+          title: "1.12.8 Step 8 — Verify Concepts Used",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.8 Step 8 — Verify Concepts Used.md",
+        },
+        {
+          id: "react-1.12.9",
+          title: "1.12.9 Wrap-up",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.9 Wrap-up.md",
         },
       ],
       quizzes: [
