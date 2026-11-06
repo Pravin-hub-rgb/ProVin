@@ -7059,14 +7059,14 @@
       "created": 1793720826983,
       "link": null,
       "locked": false,
-      "text": "1.10 Conditional\nRendering + Filter",
+      "text": "1.10 Lists, Keys +\nTypeScript Array",
       "fontSize": 20,
       "baseFontSize": null,
       "fontFamily": 5,
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": "bFU2Zm4ARvFllYzre-TT3",
-      "originalText": "1.10 Conditional\nRendering + Filter",
+      "originalText": "1.10 Lists, Keys +\nTypeScript Array",
       "autoResize": true,
       "lineHeight": 1.25,
       "labelPosition": null
@@ -7128,14 +7128,14 @@
       "created": 1793720826983,
       "link": null,
       "locked": false,
-      "text": "1.11 Lists, Keys +\nTypeScript Array",
+      "text": "1.11 Conditional\nRendering + Filter",
       "fontSize": 20,
       "baseFontSize": null,
       "fontFamily": 5,
       "textAlign": "center",
       "verticalAlign": "middle",
       "containerId": "3UnUH3fRRchjXr4NFDsR4",
-      "originalText": "1.11 Lists, Keys +\nTypeScript Array",
+      "originalText": "1.11 Conditional\nRendering + Filter",
       "autoResize": true,
       "lineHeight": 1.25,
       "labelPosition": null
@@ -28792,9 +28792,9 @@
     "croppingElementId": null,
     "searchMatches": [],
     "offsetLeft": 332,
-    "offsetTop": 208,
-    "width": 1556,
-    "height": 804.9500122070312
+    "offsetTop": 244,
+    "width": 425,
+    "height": 804.0999755859375
   },
   "files": {}
 }

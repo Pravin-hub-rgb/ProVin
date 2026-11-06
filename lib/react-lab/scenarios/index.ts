@@ -19,9 +19,9 @@ import { EXPLICIT_USESTATE_LAB } from "./1.8.2-explicit-usestate"
 import { TYPED_EVENTS_LAB } from "./1.8.3-typed-events"
 import { COMBINED_FORM_LAB } from "./1.8.4-combined-form"
 import { TODO_BASIC_LAB } from "./1.9-array-state"
-import { CONDITIONAL_LAB } from "./1.10-conditional"
-import { LISTS_LAB } from "./1.11-lists-keys"
-import { TODO_POLISH_LAB } from "./1.12-todo-polish"
+import { CONDITIONAL_LAB } from "./1.11-conditional"
+import { LISTS_LAB } from "./1.10-lists-keys"
+import { CONTACT_BOOK_LAB } from "./1.12-contact-book"
 import { ACCORDION_LAB } from "./2.5.1-accordion"
 import { SHOPPING_CART_LAB } from "./2.5.2-shopping-cart"
 import { CONTEXT_API_LAB } from "./2.6-context-api"
@@ -51,7 +51,7 @@ export const reactScenarios: ReactScenario[] = [
   TODO_BASIC_LAB,
   CONDITIONAL_LAB,
   LISTS_LAB,
-  TODO_POLISH_LAB,
+  CONTACT_BOOK_LAB,
   ACCORDION_LAB,
   SHOPPING_CART_LAB,
   CONTEXT_API_LAB,

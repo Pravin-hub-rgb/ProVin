@@ -5,6 +5,7 @@ import remarkGfm from 'remark-gfm'
 import rehypeRaw from 'rehype-raw'
 import { visit } from 'unist-util-visit'
 import { ToDoDemo } from './todo-demo'
+import { ContactDemo } from './contact-demo'
 import { ShoppingCartDemo } from './shopping-cart-demo'
 import { GymDemo } from './gym-demo'
 import { EcommerceDemo } from './ecommerce-demo'
@@ -134,6 +135,7 @@ const markdownComponents: Record<string, ComponentType<any> | string> = {
       </a>
     )
   },
+  "contact-demo": ContactDemo,
   "todo-demo": ToDoDemo,
   "shopping-cart-demo": ShoppingCartDemo,
   "gym-demo": GymDemo,

@@ -280,7 +280,7 @@
 ## G. M7 — React Diagnostic (Step 1), M8 — Next.js Diagnostic (Step 2)
 
 **Method (both milestones, one before the other):**
-1. Open the 100-question file: `docs/coding/React JS/Interview Prep/100 React Interview Questions.md` for M7; `docs/coding/Next JS/Interview Prep/100 Next.js Interview Questions.md` for M8.
+1. Open the interview question file: `docs/coding/React JS/Interview Prep/React Interview Questions.md` for M7; `docs/coding/Next JS/Interview Prep/100 Next.js Interview Questions.md` for M8.
 2. For every question, answer **out loud** (or record), then mark GREEN (could answer now) / YELLOW (half-remembered) / RED (blank).
 3. Marking only — no studying during the pass.
 4. Then patch RED topics (and weak YELLOWs) using the matching course batches (`React JS/Batch 0-6…`, `Next JS/Module 0`, `Batch 1-8…`).

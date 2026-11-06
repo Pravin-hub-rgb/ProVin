@@ -1,38 +1,38 @@
 import type { ReactScenario } from "../types"
 
 export const CONDITIONAL_LAB: ReactScenario = {
-  id: "1.10-conditional",
-  title: "1.10: Conditional Rendering aur Filter",
+  id: "1.11-conditional",
+  title: "1.11: Conditional Rendering aur Filter",
   description: "Practice conditional rendering with toggle and filter patterns",
-  instructions: `## Flagged Items — Toggle & Filter
+  instructions: `## To-Do — Toggle & Filter
 
-Extend the list app with toggle flag and filtering.
+Extend the list app with a done/not-done toggle and filtering.
 
 ### Requirements:
-1. \`interface Item { id: number; text: string; flagged: boolean }\`
-2. Each item has a flag button — click to toggle \`flagged\`
-3. Flagged items show with bold text and a star icon
-4. Add filter buttons: **All** | **Flagged** | **Unflagged**
-5. Show count: "Flagged: X / Total: Y"
+1. \`interface Item { id: number; text: string; completed: boolean }\`
+2. Each item has a checkbox button — click to toggle \`completed\`
+3. Completed items show with strikethrough text and a checked box
+4. Add filter buttons: **All** | **Active** | **Completed**
+5. Show count: "Completed: X / Total: Y"
 
 ### Hints:
-- Toggle: \`.map()\` + spread: \`{...item, flagged: !item.flagged}\`
+- Toggle: \`.map()\` + spread: \`{...item, completed: !item.completed}\`
 - Filter: \`.filter()\` based on current filter state
-- Union type for filter: \`"all" | "flagged" | "unflagged"\`
+- Union type for filter: \`"all" | "active" | "completed"\`
   `,
 
   hints: [
-    "Toggle: `.map()` + spread: `{...item, flagged: !item.flagged}`",
+    "Toggle: `.map()` + spread: `{...item, completed: !item.completed}`",
     "Filter: `.filter()` based on current filter state",
-    "Union type for filter: `\"all\" | \"flagged\" | \"unflagged\"`",
+    "Union type for filter: `\"all\" | \"active\" | \"completed\"`",
   ],
 
   starterFiles: {
     "/App.tsx": `import { useState } from "react";
 
-// TODO: Item interface banao — id, text, flagged
+// TODO: Item interface banao — id, text, completed
 
-type FilterStatus = "all" | "flagged" | "unflagged";
+type FilterStatus = "all" | "active" | "completed";
 
 export default function App() {
   const [items, setItems] = useState<Item[]>([]);
@@ -41,7 +41,7 @@ export default function App() {
 
   const addItem = () => {
     if (input.trim() === "") return;
-    // TODO: Add new item with flagged: false
+    // TODO: Add new item with completed: false
     setItems([...items, { id: Date.now(), text: input }]);
     setInput("");
   };
@@ -50,19 +50,19 @@ export default function App() {
     setItems(items.filter((i) => i.id !== id));
   };
 
-  // TODO: Add toggleFlag function
+  // TODO: Add toggleComplete function
 
   // TODO: Filter items based on current filter
 
   return (
     <div>
-      <h1>Flagged Items</h1>
+      <h1>To-Do</h1>
       <div>
         <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Add an item..." />
         <button onClick={addItem}>Add</button>
       </div>
-      {/* TODO: Add filter buttons (All / Flagged / Unflagged) */}
-      {/* TODO: Render items with flag button + text + delete */}
+      {/* TODO: Add filter buttons (All / Active / Completed) */}
+      {/* TODO: Render items with checkbox button + text + delete */}
       {/* TODO: Show item count */}
     </div>
   );
@@ -86,7 +86,7 @@ button {
 }
 .filters { margin: 1rem 0; }
 .filters button.active { background: #2c5f8a; }
-.star-btn {
+.check-btn {
   background: none; border: 1px solid #ccc; border-radius: 4px;
   cursor: pointer; padding: 2px 8px; font-size: 1rem;
 }`,
@@ -97,10 +97,10 @@ button {
 interface Item {
   id: number;
   text: string;
-  flagged: boolean;
+  completed: boolean;
 }
 
-type FilterStatus = "all" | "flagged" | "unflagged";
+type FilterStatus = "all" | "active" | "completed";
 
 export default function App() {
   const [items, setItems] = useState<Item[]>([]);
@@ -109,7 +109,7 @@ export default function App() {
 
   const addItem = () => {
     if (input.trim() === "") return;
-    setItems([...items, { id: Date.now(), text: input, flagged: false }]);
+    setItems([...items, { id: Date.now(), text: input, completed: false }]);
     setInput("");
   };
 
@@ -117,27 +117,27 @@ export default function App() {
     setItems(items.filter((i) => i.id !== id));
   };
 
-  const toggleFlag = (id: number) => {
+  const toggleComplete = (id: number) => {
     setItems(items.map((item) =>
-      item.id === id ? { ...item, flagged: !item.flagged } : item
+      item.id === id ? { ...item, completed: !item.completed } : item
     ));
   };
 
   const filteredItems = items.filter((item) => {
-    if (filter === "flagged") return item.flagged;
-    if (filter === "unflagged") return !item.flagged;
+    if (filter === "completed") return item.completed;
+    if (filter === "active") return !item.completed;
     return true;
   });
 
   return (
     <div>
-      <h1>Flagged Items</h1>
+      <h1>To-Do</h1>
       <div>
         <input value={input} onChange={(e) => setInput(e.target.value)} placeholder="Add an item..." />
         <button onClick={addItem}>Add</button>
       </div>
       <div className="filters">
-        {(["all", "flagged", "unflagged"] as FilterStatus[]).map((f) => (
+        {(["all", "active", "completed"] as FilterStatus[]).map((f) => (
           <button key={f} className={filter === f ? "active" : ""} onClick={() => setFilter(f)}>
             {f.charAt(0).toUpperCase() + f.slice(1)}
           </button>
@@ -148,10 +148,13 @@ export default function App() {
       ) : (
         filteredItems.map((item) => (
           <div key={item.id} className="item-row">
-            <button className="star-btn" onClick={() => toggleFlag(item.id)}>
-              {item.flagged ? "★" : "☆"}
-            </button>
-            <span style={{ fontWeight: item.flagged ? "bold" : "normal", flex: 1 }}>
+            <input
+              type="checkbox"
+              checked={item.completed}
+              onChange={() => toggleComplete(item.id)}
+              style={{ width: "18px", height: "18px", cursor: "pointer", marginRight: "8px", accentColor: item.completed ? "#28a745" : "#ccc" }}
+            />
+            <span style={{ textDecoration: item.completed ? "line-through" : "none", color: item.completed ? "#999" : "#000", flex: 1 }}>
               {item.text}
             </span>
             <button onClick={() => deleteItem(item.id)} style={{ background: "#e74c3c" }}>Delete</button>
@@ -159,7 +162,7 @@ export default function App() {
         ))
       )}
       <p style={{ color: "#888", marginTop: "1rem" }}>
-        Flagged: {items.filter((i) => i.flagged).length} / {items.length} items
+        Completed: {items.filter((i) => i.completed).length} / {items.length} items
       </p>
     </div>
   );
@@ -183,7 +186,7 @@ button {
 }
 .filters { margin: 1rem 0; }
 .filters button.active { background: #2c5f8a; }
-.star-btn {
+.check-btn {
   background: none; border: 1px solid #ccc; border-radius: 4px;
   cursor: pointer; padding: 2px 8px; font-size: 1rem;
 }`,
@@ -192,11 +195,11 @@ button {
   check: (files) => {
     const app = files["/App.tsx"] ?? ""
     return [
-      { label: "Item interface with flagged", passed: /interface\s+Item\s*\{[\s\S]*id[\s\S]*text[\s\S]*flagged[\s\S]*\}/.test(app) },
-      { label: "Star button for flag toggle", passed: /[★☆]/.test(app) || /toggleFlag/.test(app) },
-      { label: "Conditional style (bold for flagged)", passed: /fontWeight[\s\S]*flagged/.test(app) || /bold[\s\S]*flagged/.test(app) },
-      { label: "Filter buttons (All / Flagged / Unflagged)", passed: /("all"|'all')/.test(app) && /("flagged"|'flagged')/.test(app) && /("unflagged"|'unflagged')/.test(app) },
-      { label: "Item count shown", passed: /flagged[\s\S]*\.length/.test(app) || /Filtered[\s\S]*\.length/.test(app) },
+      { label: "Item interface with completed", passed: /interface\s+Item\s*\{[\s\S]*id[\s\S]*text[\s\S]*completed[\s\S]*\}/.test(app) },
+      { label: "Checkbox input for complete toggle", passed: /type="checkbox"/.test(app) || /toggleComplete/.test(app) },
+      { label: "Conditional style (strikethrough for completed)", passed: /textDecoration[\s\S]*completed/.test(app) || /line-through[\s\S]*completed/.test(app) },
+      { label: "Filter buttons (All / Active / Completed)", passed: /("all"|'all')/.test(app) && /("active"|'active')/.test(app) && /("completed"|'completed')/.test(app) },
+      { label: "Item count shown", passed: /completed[\s\S]*\.length/.test(app) || /Filtered[\s\S]*\.length/.test(app) },
       { label: "Spread operator for toggle", passed: /\.\.\.item|\.\.\.i/.test(app) },
       { label: "App component exported", passed: /export\s+default\s+function\s+App/.test(app) },
     ]

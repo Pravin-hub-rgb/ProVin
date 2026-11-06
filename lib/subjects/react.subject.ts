@@ -18,8 +18,8 @@ export const reactSubject: Subject = {
     },
     {
       id: "react-interview",
-      title: "🎯 100 React Interview Questions",
-      path: "docs/coding/React JS/Interview Prep/100 React Interview Questions.md",
+      title: "React Interview Questions (Beginner → Advanced)",
+      path: "docs/coding/React JS/Interview Prep/React Interview Questions.md",
     },
   ],
   phases: [
@@ -204,18 +204,18 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-1.10",
-          title: "1.10 Conditional Rendering + Filter",
-          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.10 Conditional Rendering aur Filter.md",
+          title: "1.10 Lists, Keys + TypeScript Arrays",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.10 Lists Keys aur TypeScript Arrays.md",
         },
         {
           id: "react-1.11",
-          title: "1.11 Lists, Keys + TypeScript Arrays",
-          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.11 Lists Keys aur TypeScript Arrays.md",
+          title: "1.11 Conditional Rendering + Filter",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.11 Conditional Rendering aur Filter.md",
         },
         {
           id: "react-1.12",
-          title: "1.12 Final Project — To-Do App",
-          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12 Final Project - To-Do App.md",
+          title: "1.12 Final Project — Contact Book",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12 Final Project - Contact Book.md",
         },
       ],
       quizzes: [

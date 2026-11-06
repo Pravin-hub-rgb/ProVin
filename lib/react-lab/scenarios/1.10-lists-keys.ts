@@ -1,8 +1,8 @@
 import type { ReactScenario } from "../types"
 
 export const LISTS_LAB: ReactScenario = {
-  id: "1.11-lists-keys",
-  title: "1.11: Lists, Keys aur TypeScript Arrays",
+  id: "1.10-lists-keys",
+  title: "1.10: Lists, Keys aur TypeScript Arrays",
   description: "Practice rendering lists, using keys, and typed arrays",
   instructions: `## Shopping List
 

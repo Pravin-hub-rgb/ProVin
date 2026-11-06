@@ -33,8 +33,8 @@ flowchart LR
         P2_9["useState + Event Handling"]
         P2_10["TypeScript Generics"]
         P2_11["Array State + List Rendering"]
-        P2_12["Conditional Rendering + Filter"]
-        P2_13["Lists, Keys + TypeScript Arrays"]
+        P2_12["Lists, Keys + TypeScript Arrays"]
+        P2_13["Conditional Rendering + Filter"]
     end
 
     subgraph P3["Batch 2 — Effects, Data & Refs"]
