@@ -78,6 +78,11 @@ export const reactSubject: Subject = {
           title: "0.8 Project Setup",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.8 Project Setup.md",
         },
+        {
+          id: "intv-0.9",
+          title: "0.9 Interview Questions — Module 0",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.9 Interview Questions - Module 0.md",
+        },
       ],
       quizzes: [
         {
@@ -262,6 +267,11 @@ export const reactSubject: Subject = {
           title: "1.12.9 Wrap-up",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.12.9 Wrap-up.md",
         },
+        {
+          id: "intv-1.13",
+          title: "1.13 Interview Questions — Batch 1",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.13 Interview Questions - Batch 1.md",
+        },
       ],
       quizzes: [
         {
@@ -355,6 +365,11 @@ export const reactSubject: Subject = {
           title: "2.7 Combined Project — To-Do App v2",
           path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.7 Combined Project - To-Do App v2.md",
         },
+        {
+          id: "intv-2.8",
+          title: "2.8 Interview Questions — Batch 2",
+          path: "docs/coding/React JS/Batch 2 - Effects, Data & Refs/2.8 Interview Questions - Batch 2.md",
+        },
       ],
       quizzes: [
         {
@@ -412,6 +427,11 @@ export const reactSubject: Subject = {
           id: "react-3.4",
           title: "3.4 Combined Project — Blog Platform",
           path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.4 Combined Project - Blog Platform.md",
+        },
+        {
+          id: "intv-3.5",
+          title: "3.5 Interview Questions — Batch 3",
+          path: "docs/coding/React JS/Batch 3 - Navigation & Access Control/3.5 Interview Questions - Batch 3.md",
         },
       ],
       quizzes: [
@@ -537,6 +557,11 @@ export const reactSubject: Subject = {
           title: "4.5.9 Order Confirmation — E-Commerce Store",
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.9 Order Confirmation — E-Commerce Store.md",
         },
+        {
+          id: "intv-4.6",
+          title: "4.6 Interview Questions — Batch 4",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.6 Interview Questions - Batch 4.md",
+        },
       ],
       quizzes: [
         {
@@ -596,9 +621,9 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Batch 5 - Performance/5.8 Combined Project — Analytics Dashboard.md",
         },
         {
-          id: "react-5.9",
-          title: "5.9 Class Components — Side Note",
-          path: "docs/coding/React JS/Batch 5 - Performance/5.9 Class Components — Side Note.md",
+          id: "intv-5.9",
+          title: "5.9 Interview Questions — Batch 5",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.9 Interview Questions - Batch 5.md",
         },
       ],
       quizzes: [
@@ -642,6 +667,11 @@ export const reactSubject: Subject = {
           id: "react-6.6",
           title: "6.6 Combined Project — Kanban Board",
           path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.6 Combined Project — Kanban Board.md",
+        },
+        {
+          id: "intv-6.6.1",
+          title: "6.6.1 Interview Questions — Batch 6",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.6.1 Interview Questions - Batch 6.md",
         },
       ],
     },
@@ -699,6 +729,11 @@ export const reactSubject: Subject = {
           title: "6.7.5.5 Expense Tracker — States, Testing, Persist & Wrap-up",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.5.5 Expense Tracker — States, Testing, Persist & Wrap-up.md",
         },
+        {
+          id: "intv-6.7.6",
+          title: "6.7.6 Interview Questions — Batch 6.7",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.6 Interview Questions - Batch 6.7.md",
+        },
       ],
     },
     {
@@ -729,6 +764,11 @@ export const reactSubject: Subject = {
           id: "react-7.5",
           title: "7.5 Build & Deploy",
           path: "docs/coding/React JS/Batch 7 - Production-Readiness/7.5 Build & Deploy.md",
+        },
+        {
+          id: "intv-7.6",
+          title: "7.6 Interview Questions — Batch 7",
+          path: "docs/coding/React JS/Batch 7 - Production-Readiness/7.6 Interview Questions - Batch 7.md",
         },
       ],
     },
@@ -775,6 +815,11 @@ export const reactSubject: Subject = {
           id: "react-t.8",
           title: "T.8 Tests, Build, Deploy and README",
           path: "docs/coding/React JS/Capstone - TrackIt/T.8 Tests Build Deploy and README.md",
+        },
+        {
+          id: "intv-t.9",
+          title: "T.9 Interview Questions — TrackIt",
+          path: "docs/coding/React JS/Capstone - TrackIt/T.9 Interview Questions - TrackIt.md",
         },
       ],
     },
