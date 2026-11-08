@@ -332,6 +332,11 @@ export const dsaSubject: Subject = {
         { id: "dsa-15.5", title: "15.5 Convert Sorted Array to BST", path: "docs/coding/DSA/Module 15 - Binary Search Trees/15.5 Convert Sorted Array to BST.md" },
         { id: "dsa-15.6", title: "15.6 Two Sum IV - Input is a BST", path: "docs/coding/DSA/Module 15 - Binary Search Trees/15.6 Two Sum IV - Input is a BST.md" },
         { id: "dsa-15.7", title: "15.7 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 15 - Binary Search Trees/15.7 Binary Search Trees — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-15.8", title: "15.8 Validate Binary Search Tree", path: "docs/coding/DSA/Module 15 - Binary Search Trees/15.8 Validate Binary Search Tree.md" },
+        { id: "dsa-15.9", title: "15.9 Kth Smallest Element in a BST", path: "docs/coding/DSA/Module 15 - Binary Search Trees/15.9 Kth Smallest Element in a BST.md" },
+        { id: "dsa-15.10", title: "15.10 Delete Node in a BST", path: "docs/coding/DSA/Module 15 - Binary Search Trees/15.10 Delete Node in a BST.md" },
+        { id: "dsa-15.11", title: "15.11 Binary Search Tree Iterator", path: "docs/coding/DSA/Module 15 - Binary Search Trees/15.11 Binary Search Tree Iterator.md" },
+        { id: "dsa-15.12", title: "15.12 Practice, Quiz & Cheat Sheet (Tier 2)", path: "docs/coding/DSA/Module 15 - Binary Search Trees/15.12 Binary Search Trees — Practice, Quiz & Cheat Sheet.md" },
       ],
     },
     {
