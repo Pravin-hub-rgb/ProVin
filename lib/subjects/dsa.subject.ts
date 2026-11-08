@@ -349,6 +349,13 @@ export const dsaSubject: Subject = {
         { id: "dsa-16.3", title: "16.3 Kth Largest Element in a Stream", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.3 Kth Largest Element in a Stream.md" },
         { id: "dsa-16.4", title: "16.4 Last Stone Weight", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.4 Last Stone Weight.md" },
         { id: "dsa-16.5", title: "16.5 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.5 Heap & Priority Queue — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-16.6", title: "16.6 Kth Largest Element in an Array", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.6 Kth Largest Element in an Array.md" },
+        { id: "dsa-16.7", title: "16.7 K Closest Points to Origin", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.7 K Closest Points to Origin.md" },
+        { id: "dsa-16.8", title: "16.8 Task Scheduler", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.8 Task Scheduler.md" },
+        { id: "dsa-16.9", title: "16.9 Top K Frequent Words", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.9 Top K Frequent Words.md" },
+        { id: "dsa-16.10", title: "16.10 Reorganize String", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.10 Reorganize String.md" },
+        { id: "dsa-16.11", title: "16.11 Kth Smallest Element in a Sorted Matrix", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.11 Kth Smallest Element in a Sorted Matrix.md" },
+        { id: "dsa-16.12", title: "16.12 Hand of Straights", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.12 Hand of Straights.md" },
       ],
     },
     {
