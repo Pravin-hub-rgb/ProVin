@@ -115,41 +115,33 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   }, [])
 
   // Load first lecture by default when subject changes
-  // Initialize open phases state when subject changes
-  // ✅ Always open the phase that contains currently selected lecture
+  // Reset open phases when the subject changes (apply openByDefault for initial state).
+  // Does NOT run on selectedLecture change, so manually opened phases stay open.
   useEffect(() => {
     if (currentSubject?.phases) {
       const initialState: Record<string, boolean> = {}
-      
-      // Find which phase contains the currently selected lecture/quiz
-      let activePhaseId: string | null = null
-      if (selectedLecture) {
-        for (const phase of currentSubject.phases) {
-          const inLectures = phase.lectures.some(l => l.id === selectedLecture)
-          const inQuizzes = (phase as any).quizzes?.some((q: any) => q.id === selectedLecture)
-          if (inLectures || inQuizzes) {
-            activePhaseId = phase.id
-            break
-          }
+      currentSubject.phases.forEach(phase => {
+        if (phase.openByDefault) initialState[phase.id] = true
+      })
+      setOpenPhases(initialState)
+    } else {
+      setOpenPhases({})
+    }
+  }, [currentSubject])
+
+  // When a lecture is selected, ensure its phase is open (additive — never closes others).
+  useEffect(() => {
+    if (selectedLecture && currentSubject?.phases) {
+      for (const phase of currentSubject.phases) {
+        const inLectures = phase.lectures.some(l => l.id === selectedLecture)
+        const inQuizzes = (phase as any).quizzes?.some((q: any) => q.id === selectedLecture)
+        if (inLectures || inQuizzes) {
+          setOpenPhases(prev => ({ ...prev, [phase.id]: true }))
+          break
         }
       }
-
-      currentSubject.phases.forEach(phase => {
-        // If this is the phase that has current lecture: open it
-        if (phase.id === activePhaseId) {
-          initialState[phase.id] = true
-        } else if (phase.openByDefault) {
-          // ✅ Phase explicitly marked to start open (e.g. new phases)
-          initialState[phase.id] = true
-        } else {
-          // All other phases are force closed
-          initialState[phase.id] = false
-        }
-      })
-      
-      setOpenPhases(initialState)
     }
-  }, [currentSubject, selectedLecture])
+  }, [selectedLecture, currentSubject])
 
   useEffect(() => {
     if (!selectedSubject) {
