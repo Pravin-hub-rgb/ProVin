@@ -54,12 +54,15 @@ export function CourseSidebar({
 
   useEffect(() => {
     if (!selectedLecture) return
-    const el = (containerRef.current ?? document).querySelector(
-      `[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`
-    ) as HTMLElement | null
-    if (el) {
-      try { el.scrollIntoView({ block: "nearest", behavior: "smooth" }) } catch {}
-    }
+    const timer = setTimeout(() => {
+      const el = (containerRef.current ?? document).querySelector(
+        `[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`
+      ) as HTMLElement | null
+      if (el) {
+        try { el.scrollIntoView({ block: "nearest", behavior: "auto" }) } catch {}
+      }
+    }, 50)
+    return () => clearTimeout(timer)
   }, [selectedLecture])
 
   return (

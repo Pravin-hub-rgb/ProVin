@@ -266,11 +266,14 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   // Scroll the sidebar to reveal the selected lecture after refresh/navigation
   useEffect(() => {
     if (!selectedLecture) return
-    const el = document.querySelector(`[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`) as HTMLElement | null
-    if (el) {
-      try { el.scrollIntoView({ block: "nearest", behavior: "smooth" }) } catch {}
-    }
-  }, [selectedLecture])
+    const timer = setTimeout(() => {
+      const el = document.querySelector(`[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`) as HTMLElement | null
+      if (el) {
+        try { el.scrollIntoView({ block: "nearest", behavior: "auto" }) } catch {}
+      }
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [selectedLecture, openPhases])
 
   // Render Dashboard View
   if (!selectedSubject) {
