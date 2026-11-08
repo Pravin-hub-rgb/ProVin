@@ -166,9 +166,13 @@ The practice problems come from a 300-problem, pattern-wise LeetCode sheet (see 
 
 ### Which modules each tier needs
 
-- **Tier 1 learners** follow Modules 0 to 12 and 14 to 16, but do *only the Tier 1 problems* in each. They can **skip Modules 13, 17, 19, and 20** entirely (no Tier 1 problems), and treat Modules 18, 21, and 22 as light (two or three problems each).
+- **Tier 1 learners** follow Modules 0 to 12 and 14 to 16, plus the **recursion basics** part of Module 11 (needed for trees, linked lists, and DP). They can **skip Modules 13, 17, 19, and 20** for practice, but should read a short "awareness" paragraph on each (what it is, one line) so they recognize the name if an interviewer mentions it. Modules 18, 21, and 22 are light (two or three problems each).
 - **Tier 2 learners** do all modules except the Tier 3 problems, so Modules 17, 19, 20 are mostly skipped or read lightly.
 - **Tier 3 learners** do everything.
+
+**Awareness-only rule (Tier 1):** For Modules 13 (Design), 17 (Trie), 19 (Topological Sort), and 20 (Shortest Path / DSU / MST), Tier 1 learners read one paragraph ("what it is, when it's used") and move on. No practice, no solved problems. Each of these modules should start with a line: *"Tier 1: awareness only — read this once, then move on."*
+
+**Recursion fix:** Module 11 is split into two parts. Part A (recursion basics: function calling itself, base case, call stack, simple recursion like factorial and array sum) is **Tier 1 required** — needed before Module 14 (Binary Trees). Part B (backtracking: subsets, permutations, combinations) is **Tier 2+**. Move 1-2 simple classic problems (Subsets, Permutations) to Tier 1 so Tier 1 learners practice recursion on real problems. Put recursion basics before Binary Trees in the module order (it already is — Module 11 comes before Module 14).
 
 The developer should show this as a table or a flowchart in Module 0, and show tier tags clearly at the top of each module and next to each problem.
 

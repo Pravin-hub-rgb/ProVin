@@ -1,8 +1,8 @@
-# Tier 2: Core Product Companies
+﻿# Tier 2: Core Product Companies
 
 **Target:** ~10-20 LPA: mid-level product companies, fintech, good startups  
 **Problems in this file:** 134  
-**Cumulative total:** 217 problems
+**Cumulative total:** 215 problems
 
 Medium problems you should solve on your own, without hints.
 
@@ -117,13 +117,11 @@ Medium problems you should solve on your own, without hints.
 | [ ] | 120 | Sort List | Medium | [Solve](https://leetcode.com/problems/sort-list/) |
 | [ ] | 122 | Rotate List | Medium | [Solve](https://leetcode.com/problems/rotate-list/) |
 
-## Pattern 10: Recursion & Backtracking (13)
+## Pattern 10: Recursion & Backtracking (11)
 
 | Done | # | Problem | Difficulty | Link |
 |---|---|---|---|---|
-| [ ] | 124 | Subsets | Medium | [Solve](https://leetcode.com/problems/subsets/) |
 | [ ] | 125 | Subsets II | Medium | [Solve](https://leetcode.com/problems/subsets-ii/) |
-| [ ] | 126 | Permutations | Medium | [Solve](https://leetcode.com/problems/permutations/) |
 | [ ] | 127 | Permutations II | Medium | [Solve](https://leetcode.com/problems/permutations-ii/) |
 | [ ] | 128 | Combination Sum | Medium | [Solve](https://leetcode.com/problems/combination-sum/) |
 | [ ] | 129 | Combination Sum II | Medium | [Solve](https://leetcode.com/problems/combination-sum-ii/) |
@@ -255,3 +253,5 @@ Medium problems you should solve on your own, without hints.
 | [ ] | 289 | Jump Game II | Medium | [Solve](https://leetcode.com/problems/jump-game-ii/) |
 | [ ] | 290 | Gas Station | Medium | [Solve](https://leetcode.com/problems/gas-station/) |
 | [ ] | 294 | Partition Labels | Medium | [Solve](https://leetcode.com/problems/partition-labels/) |
+
+

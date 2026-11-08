@@ -2,6 +2,17 @@
 
 > **Language: Java.** This course is built in Java, not JavaScript. The old JavaScript-based Phase 1 notes are being migrated to Java modules; until then, treat them as reference only.
 
+## Tier 1: modules to skip (come back in Tier 2)
+
+If you're following **Tier 1** (service companies, small startups), **skip these four modules** — they have no Tier 1 practice problems. Read one paragraph on each (awareness only), then move on. Come back in Tier 2.
+
+- **Module 13 (Design Problems)** — needs HashMap + doubly linked list together; problems (LRU/LFU Cache) are Tier 3 level.
+- **Module 17 (Trie)** — specialized prefix-search structure; service-company interviews rarely ask it.
+- **Module 19 (Topological Sort)** — needs graphs first; Tier 2 topic.
+- **Module 20 (Shortest Path, DSU & MST)** — Dijkstra and Union-Find are advanced; almost all problems are Tier 3.
+
+Tier 1 still covers the **basics** of trees, graphs, and DP (Modules 14, 18, 21 have Tier 1 problems), so you're not missing the "basics" idea.
+
 ---
 
 ## Core Principle

@@ -1,8 +1,8 @@
-# Tier 1: Foundation
+﻿# Tier 1: Foundation
 
 **Target:** ~5-10 LPA: service companies, small startups, basic roles  
 **Problems in this file:** 83  
-**Cumulative total:** 83 problems
+**Cumulative total:** 85 problems
 
 Mostly Easy plus the simpler Mediums. Start here, everyone does this tier.
 
@@ -114,6 +114,12 @@ Mostly Easy plus the simpler Mediums. Start here, everyone does this tier.
 | [ ] | 115 | Add Two Numbers | Medium | [Solve](https://leetcode.com/problems/add-two-numbers/) |
 | [ ] | 123 | Delete Node in a Linked List | Medium | [Solve](https://leetcode.com/problems/delete-node-in-a-linked-list/) |
 
+## Pattern 10: Recursion & Backtracking (2)
+
+| Done | # | Problem | Difficulty | Link |
+|---|---|---|---|---|
+| [ ] | 78 | Subsets | Medium | [Solve](https://leetcode.com/problems/subsets/) |
+| [ ] | 46 | Permutations | Medium | [Solve](https://leetcode.com/problems/permutations/) |
 ## Pattern 11: Bit Manipulation (3)
 
 | Done | # | Problem | Difficulty | Link |
@@ -177,3 +183,5 @@ Mostly Easy plus the simpler Mediums. Start here, everyone does this tier.
 | [ ] | 291 | Assign Cookies | Easy | [Solve](https://leetcode.com/problems/assign-cookies/) |
 | [ ] | 292 | Lemonade Change | Easy | [Solve](https://leetcode.com/problems/lemonade-change/) |
 | [ ] | 298 | Maximum Units on a Truck | Easy | [Solve](https://leetcode.com/problems/maximum-units-on-a-truck/) |
+
+
