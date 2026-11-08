@@ -181,6 +181,17 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
       return
     }
     if (currentSubject && !selectedLecture) {
+      // Try to restore the last opened lecture from localStorage first
+      let saved: string | null = null
+      try { saved = localStorage.getItem("selectedLecture") } catch {}
+      const belongsToSubject = !!saved && !!currentSubject.phases?.some(phase =>
+        phase.lectures.some(l => l.id === saved) ||
+        (phase as any).quizzes?.some((q: any) => q.id === saved)
+      )
+      if (belongsToSubject) {
+        setSelectedLecture(saved)
+        return
+      }
       if (currentSubject.phases?.length) {
         const first = currentSubject.phases[0].lectures[0]
         if (first) setSelectedLecture(first.id)
