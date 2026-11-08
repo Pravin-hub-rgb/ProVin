@@ -288,6 +288,29 @@ export const dsaSubject: Subject = {
       ],
     },
     {
+      id: "module19",
+      title: "Module 19 — Topological Sort (Tier 2+)",
+      openByDefault: true,
+      lectures: [
+        { id: "dsa-19.1", title: "19.1 Topological Sort — The Pattern", path: "docs/coding/DSA/Module 19 - Topological Sort/19.1 Topological Sort — The Pattern.md" },
+        { id: "dsa-19.2", title: "19.2 Course Schedule", path: "docs/coding/DSA/Module 19 - Topological Sort/19.2 Course Schedule.md" },
+        { id: "dsa-19.3", title: "19.3 Course Schedule II", path: "docs/coding/DSA/Module 19 - Topological Sort/19.3 Course Schedule II.md" },
+        { id: "dsa-19.4", title: "19.4 Find Eventual Safe States", path: "docs/coding/DSA/Module 19 - Topological Sort/19.4 Find Eventual Safe States.md" },
+        { id: "dsa-19.5", title: "19.5 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 19 - Topological Sort/19.5 Topological Sort — Practice, Quiz & Cheat Sheet.md" },
+      ],
+    },
+    {
+      id: "module20",
+      title: "Module 20 — Shortest Path, DSU & MST (Tier 2+)",
+      openByDefault: true,
+      lectures: [
+        { id: "dsa-20.1", title: "20.1 Shortest Path, DSU & MST — The Pattern", path: "docs/coding/DSA/Module 20 - Shortest Path, DSU & MST/20.1 Shortest Path, DSU & MST — The Pattern.md" },
+        { id: "dsa-20.2", title: "20.2 Network Delay Time", path: "docs/coding/DSA/Module 20 - Shortest Path, DSU & MST/20.2 Network Delay Time.md" },
+        { id: "dsa-20.3", title: "20.3 Redundant Connection", path: "docs/coding/DSA/Module 20 - Shortest Path, DSU & MST/20.3 Redundant Connection.md" },
+        { id: "dsa-20.4", title: "20.4 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 20 - Shortest Path, DSU & MST/20.4 Shortest Path, DSU & MST — Practice, Quiz & Cheat Sheet.md" },
+      ],
+    },
+    {
       id: "module21",
       title: "Module 21 — Dynamic Programming (Tier 1)",
       openByDefault: true,
