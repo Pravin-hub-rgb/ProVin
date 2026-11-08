@@ -45,7 +45,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module2",
-      title: "Module 2 — Arrays & Hashing (Tier 1)",
+      title: "Module 2 — Arrays & Hashing",
       openByDefault: false,
       lectures: [
         { id: "dsa-2.1", title: "2.1 Arrays & Hashing — The Pattern", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.1 Arrays & Hashing — The Pattern.md" },
@@ -71,7 +71,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module3",
-      title: "Module 3 — Two Pointers (Tier 1)",
+      title: "Module 3 — Two Pointers",
       openByDefault: false,
       lectures: [
         { id: "dsa-3.1", title: "3.1 Two Pointers — The Pattern", path: "docs/coding/DSA/Module 3 - Two Pointers/3.1 Two Pointers — The Pattern.md" },
@@ -89,7 +89,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module4",
-      title: "Module 4 — Sliding Window (Tier 1)",
+      title: "Module 4 — Sliding Window",
       openByDefault: false,
       lectures: [
         { id: "dsa-4.1", title: "4.1 Sliding Window — The Pattern", path: "docs/coding/DSA/Module 4 - Sliding Window/4.1 Sliding Window — The Pattern.md" },
@@ -100,7 +100,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module5",
-      title: "Module 5 — Prefix Sum & Subarrays (Tier 1)",
+      title: "Module 5 — Prefix Sum & Subarrays",
       openByDefault: false,
       lectures: [
         { id: "dsa-5.1", title: "5.1 Prefix Sum & Subarrays — The Pattern", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.1 Prefix Sum & Subarrays — The Pattern.md" },
@@ -111,7 +111,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module6",
-      title: "Module 6 — Binary Search (Tier 1)",
+      title: "Module 6 — Binary Search",
       openByDefault: false,
       lectures: [
         { id: "dsa-6.1", title: "6.1 Binary Search — The Pattern", path: "docs/coding/DSA/Module 6 - Binary Search/6.1 Binary Search — The Pattern.md" },
@@ -127,7 +127,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module7",
-      title: "Module 7 — Sorting & Intervals (Tier 1)",
+      title: "Module 7 — Sorting & Intervals",
       openByDefault: false,
       lectures: [
         { id: "dsa-7.1", title: "7.1 Sorting & Intervals — The Pattern", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.1 Sorting & Intervals — The Pattern.md" },
@@ -138,7 +138,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module8",
-      title: "Module 8 — Strings & Math (Tier 1)",
+      title: "Module 8 — Strings & Math",
       openByDefault: false,
       lectures: [
         { id: "dsa-8.1", title: "8.1 Strings & Math — The Pattern", path: "docs/coding/DSA/Module 8 - Strings & Math/8.1 Strings & Math — The Pattern.md" },
@@ -153,7 +153,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module9",
-      title: "Module 9 — Stack & Monotonic Stack (Tier 1)",
+      title: "Module 9 — Stack & Monotonic Stack",
       openByDefault: false,
       lectures: [
         { id: "dsa-9.1", title: "9.1 Stack & Monotonic Stack — The Pattern", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.1 Stack & Monotonic Stack — The Pattern.md" },
@@ -171,7 +171,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module10",
-      title: "Module 10 — Linked List (Tier 1)",
+      title: "Module 10 — Linked List",
       openByDefault: false,
       lectures: [
         { id: "dsa-10.1", title: "10.1 Linked List — The Pattern", path: "docs/coding/DSA/Module 10 - Linked List/10.1 Linked List — The Pattern.md" },
@@ -192,7 +192,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module11",
-      title: "Module 11 — Recursion & Backtracking (Tier 2+)",
+      title: "Module 11 — Recursion & Backtracking",
       openByDefault: false,
       lectures: [
         { id: "dsa-11.1", title: "11.1 Recursion & Backtracking — The Pattern", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.1 Recursion & Backtracking — The Pattern.md" },
@@ -201,7 +201,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module12",
-      title: "Module 12 — Bit Manipulation (Tier 1)",
+      title: "Module 12 — Bit Manipulation",
       openByDefault: true,
       lectures: [
         { id: "dsa-12.1", title: "12.1 Bit Manipulation — The Pattern", path: "docs/coding/DSA/Module 12 - Bit Manipulation/12.1 Bit Manipulation — The Pattern.md" },
@@ -213,7 +213,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module13",
-      title: "Module 13 — Design Problems (Tier 2+)",
+      title: "Module 13 — Design Problems",
       openByDefault: true,
       lectures: [
         { id: "dsa-13.1", title: "13.1 Design Problems — The Pattern", path: "docs/coding/DSA/Module 13 - Design Problems/13.1 Design Problems — The Pattern.md" },
@@ -222,7 +222,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module14",
-      title: "Module 14 — Binary Trees (Tier 1)",
+      title: "Module 14 — Binary Trees",
       openByDefault: true,
       lectures: [
         { id: "dsa-14.1", title: "14.1 Binary Trees — The Pattern", path: "docs/coding/DSA/Module 14 - Binary Trees/14.1 Binary Trees — The Pattern.md" },
@@ -243,7 +243,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module15",
-      title: "Module 15 — Binary Search Trees (Tier 1)",
+      title: "Module 15 — Binary Search Trees",
       openByDefault: true,
       lectures: [
         { id: "dsa-15.1", title: "15.1 Binary Search Trees — The Pattern", path: "docs/coding/DSA/Module 15 - Binary Search Trees/15.1 Binary Search Trees — The Pattern.md" },
@@ -257,7 +257,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module16",
-      title: "Module 16 — Heap / Priority Queue (Tier 1)",
+      title: "Module 16 — Heap / Priority Queue",
       openByDefault: true,
       lectures: [
         { id: "dsa-16.1", title: "16.1 Heap / Priority Queue — The Pattern", path: "docs/coding/DSA/Module 16 - Heap & Priority Queue/16.1 Heap & Priority Queue — The Pattern.md" },
@@ -269,7 +269,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module17",
-      title: "Module 17 — Trie (Tier 2+)",
+      title: "Module 17 — Trie",
       openByDefault: true,
       lectures: [
         { id: "dsa-17.1", title: "17.1 Trie (Prefix Tree) — The Pattern", path: "docs/coding/DSA/Module 17 - Trie/17.1 Trie (Prefix Tree) — The Pattern.md" },
@@ -278,7 +278,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module18",
-      title: "Module 18 — Graphs: BFS / DFS / Matrix (Tier 1)",
+      title: "Module 18 — Graphs: BFS / DFS / Matrix",
       openByDefault: true,
       lectures: [
         { id: "dsa-18.1", title: "18.1 Graphs (BFS DFS Matrix) — The Pattern", path: "docs/coding/DSA/Module 18 - Graphs (BFS DFS Matrix)/18.1 Graphs (BFS DFS Matrix) — The Pattern.md" },
@@ -289,7 +289,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module19",
-      title: "Module 19 — Topological Sort (Tier 2+)",
+      title: "Module 19 — Topological Sort",
       openByDefault: true,
       lectures: [
         { id: "dsa-19.1", title: "19.1 Topological Sort — The Pattern", path: "docs/coding/DSA/Module 19 - Topological Sort/19.1 Topological Sort — The Pattern.md" },
@@ -301,7 +301,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module20",
-      title: "Module 20 — Shortest Path, DSU & MST (Tier 2+)",
+      title: "Module 20 — Shortest Path, DSU & MST",
       openByDefault: true,
       lectures: [
         { id: "dsa-20.1", title: "20.1 Shortest Path, DSU & MST — The Pattern", path: "docs/coding/DSA/Module 20 - Shortest Path, DSU & MST/20.1 Shortest Path, DSU & MST — The Pattern.md" },
@@ -312,7 +312,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module21",
-      title: "Module 21 — Dynamic Programming (Tier 1)",
+      title: "Module 21 — Dynamic Programming",
       openByDefault: true,
       lectures: [
         { id: "dsa-21.1", title: "21.1 Dynamic Programming — The Pattern", path: "docs/coding/DSA/Module 21 - Dynamic Programming/21.1 Dynamic Programming — The Pattern.md" },
@@ -324,7 +324,7 @@ export const dsaSubject: Subject = {
     },
     {
       id: "module22",
-      title: "Module 22 — Greedy (Tier 1)",
+      title: "Module 22 — Greedy",
       openByDefault: true,
       lectures: [
         { id: "dsa-22.1", title: "22.1 Greedy — The Pattern", path: "docs/coding/DSA/Module 22 - Greedy/22.1 Greedy — The Pattern.md" },
@@ -336,3 +336,4 @@ export const dsaSubject: Subject = {
     },
   ],
 };
+
