@@ -1,6 +1,7 @@
 "use client"
 
 import { Book, ChevronDown, ChevronRight, FileText, HelpCircle } from "lucide-react"
+import { useEffect, useRef } from "react"
 
 export type SidebarLecture = {
   id: string
@@ -49,8 +50,20 @@ export function CourseSidebar({
   onSelect,
   onToggleProgress,
   }: CourseSidebarProps) {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!selectedLecture) return
+    const el = (containerRef.current ?? document).querySelector(
+      `[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`
+    ) as HTMLElement | null
+    if (el) {
+      try { el.scrollIntoView({ block: "nearest", behavior: "smooth" }) } catch {}
+    }
+  }, [selectedLecture])
+
   return (
-    <div className="p-6 pb-20">
+    <div ref={containerRef} className="p-6 pb-20">
       <h2 className="text-lg font-semibold text-foreground mb-4 flex items-center gap-2">
         <Book className="w-5 h-5 text-primary" />
         {subjectTitle}
@@ -74,9 +87,10 @@ export function CourseSidebar({
                     onTouchEnd={(e) => e.stopPropagation()}
                     className="ml-4 accent-primary shrink-0"
                   />
-                  <button
-                    onClick={() => onSelect(lecture.id)}
-                    className={`flex flex-1 items-center gap-3 px-4 py-3 text-left text-sm ${
+                   <button
+                     onClick={() => onSelect(lecture.id)}
+                     data-lecture-id={lecture.id}
+                     className={`flex flex-1 items-center gap-3 px-4 py-3 text-left text-sm ${
                       selectedLecture === lecture.id
                         ? "bg-primary/15 text-foreground font-semibold"
                         : "text-muted-foreground hover:text-foreground"
@@ -128,10 +142,11 @@ export function CourseSidebar({
                           onTouchEnd={(e) => e.stopPropagation()}
                           className="ml-6 accent-primary shrink-0"
                         />
-                        <button
-                          onClick={() => onSelect(lecture.id)}
-                          className={rowClasses(selectedLecture === lecture.id)}
-                        >
+                   <button
+                     onClick={() => onSelect(lecture.id)}
+                     data-lecture-id={lecture.id}
+                     className={rowClasses(selectedLecture === lecture.id)}
+                   >
                           <FileText className="w-3.5 h-3.5" />
                           {lecture.title}
                         </button>
@@ -151,9 +166,10 @@ export function CourseSidebar({
                             onTouchEnd={(e) => e.stopPropagation()}
                             className="ml-6 accent-primary scale-75 shrink-0"
                           />
-                          <button
-                            onClick={() => onSelect(quiz.id)}
-                            className={`flex flex-1 items-center gap-2.5 py-1.5 pl-2 pr-6 text-left text-xs ${
+                           <button
+                             onClick={() => onSelect(quiz.id)}
+                             data-quiz-id={quiz.id}
+                             className={`flex flex-1 items-center gap-2.5 py-1.5 pl-2 pr-6 text-left text-xs ${
                               selectedLecture === quiz.id
                                 ? "bg-primary/10 text-foreground font-semibold border-primary/40"
                                 : "text-muted-foreground hover:text-foreground border-border/30"
