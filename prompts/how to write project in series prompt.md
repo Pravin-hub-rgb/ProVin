@@ -246,6 +246,16 @@ dono ek saath nahi rehte (duplicate content).
 ❌ Registration done? (har part alag lecture)acha ach
    → subject.ts mein har part ka id/title/path
 
+❌ Koi section empty ya sirf intro-without-code toh nahi?
+   → "Step 4d style placeholder" (sirf intro, implementation absent)
+     fail karta hai — har part ya toh complete code dikhaye ya explicit
+     pointer de (kaunsi doc/step mein woh part hai)
+
+❌ Concept reference verify kiya? (jaise "2.2 se ignore pattern")
+   → Kaunsi lecture, kaunsi step, kya content — match karke likho; warna
+     claim ko rewrite karo ya target doc mein wo concept add karo
+     (Master Teaching Prompt — Section 15.5)
+
 ❌ Purana single-file combined project delete kiya?
    → Series + single file dono nahi rehte
 ```

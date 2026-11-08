@@ -107,6 +107,8 @@ Jo bhi pattern chuno, ek hi quiz mein consistent rakho. Statement ke andar techn
 - "We'll explore in next topic" wali cheezein quiz mein mat daalo
 - Har subsection/topic jo lecture mein covered hai, usse at least ek question chhuna chahiye
 - Lecture ke "In Your Own Words" wale questions se inspiration le sakte ho
+- **Quiz ka code lecture ke code se consistent rehna chahiye** — lecture jis rule/pattern sikha raha hai (jaise loading-off hamesha `finally` mein), wahi quiz ke code samples mein bhi dikhein. Lecture ne ignore pattern/cleanup teach nahi kiya, toh wo style quiz mein nahi milega.
+- **Quiz ke code samples mein undefined variables ya copy-paste artifacts nahi** — sample structural level pe runnable hona chahiye; koi `(c: any)` type ki escapes bhi nahi.
 
 ---
 
@@ -198,4 +200,7 @@ Question CONCEPT test kar raha hai (variable/example names memorize karna nahi).
 [ ] Explanation (>) mein kyun correct aur kyun wrong dono hai?
 [ ] Quiz file naming sahi hai? (<version> Quiz — <Title>.md)
 [ ] Subject config mein quiz ID lecture suffix se match karta hai?
+[ ] Quiz ka code lecture ke taught rules follow karta? (loading-off `finally` mein, cleanup consistency, koi undefined variables ya artifacts nahi)
+[ ] Quiz lecture ke hi taught patterns test karta hai — lecture jinko cover nahi karta unko nahi?
+[ ] Har cross-reference ("yaad hai 2.2 mein ye seekha tha") lecture mein actually exist karta?
 ```
