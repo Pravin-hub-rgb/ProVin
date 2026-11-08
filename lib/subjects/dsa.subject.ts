@@ -190,6 +190,8 @@ export const dsaSubject: Subject = {
         { id: "dsa-8.6", title: "8.6 Count Primes", path: "docs/coding/DSA/Module 8 - Strings & Math/8.6 Count Primes.md" },
         { id: "dsa-8.7", title: "8.7 Add Binary", path: "docs/coding/DSA/Module 8 - Strings & Math/8.7 Add Binary.md" },
         { id: "dsa-8.8", title: "8.8 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 8 - Strings & Math/8.8 Strings & Math — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-8.9", title: "8.9 String to Integer (atoi)", path: "docs/coding/DSA/Module 8 - Strings & Math/8.9 String to Integer (atoi).md" },
+        { id: "dsa-8.10", title: "8.10 Multiply Strings", path: "docs/coding/DSA/Module 8 - Strings & Math/8.10 Multiply Strings.md" },
       ],
     },
     {
