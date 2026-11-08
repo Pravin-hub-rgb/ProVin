@@ -278,6 +278,7 @@ export const dsaSubject: Subject = {
         { id: "dsa-12.3", title: "12.3 Number of 1 Bits", path: "docs/coding/DSA/Module 12 - Bit Manipulation/12.3 Number of 1 Bits.md" },
         { id: "dsa-12.4", title: "12.4 Power of Two", path: "docs/coding/DSA/Module 12 - Bit Manipulation/12.4 Power of Two.md" },
         { id: "dsa-12.5", title: "12.5 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 12 - Bit Manipulation/12.5 Bit Manipulation — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-12.6", title: "12.6 Counting Bits", path: "docs/coding/DSA/Module 12 - Bit Manipulation/12.6 Counting Bits.md" },
       ],
     },
     {
