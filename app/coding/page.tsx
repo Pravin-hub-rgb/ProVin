@@ -192,6 +192,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
 
   // Load markdown content when lecture changes or language changes
   const requestIdRef = useRef(0)
+  const contentRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (!currentLecture) {
@@ -224,6 +225,21 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     const hasHi = !!(hinglishManifest as Record<string, boolean>)[hiPath]
     setHasHinglish(hasHi)
   }, [selectedLecture, language])
+
+  // Restore scroll position when content finishes loading
+  useEffect(() => {
+    if (isLoading) return
+    if (!contentRef.current) return
+    if (!selectedLecture) return
+    try {
+      const saved = localStorage.getItem(`scroll-${selectedLecture}`)
+      if (saved) {
+        contentRef.current.scrollTop = parseInt(saved, 10) || 0
+      } else {
+        contentRef.current.scrollTop = 0
+      }
+    } catch {}
+  }, [selectedLecture, isLoading, markdownContent])
 
   // Render Dashboard View
   if (!selectedSubject) {
@@ -492,7 +508,17 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
         </SidebarLayout>
 
         {/* Content Area */}
-        <div className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
+        <div
+          ref={contentRef}
+          onScroll={() => {
+            if (contentRef.current && selectedLecture) {
+              try {
+                localStorage.setItem(`scroll-${selectedLecture}`, String(contentRef.current.scrollTop))
+              } catch {}
+            }
+          }}
+          className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}
+        >
           {currentLecture ? (  
             <div className={currentLecture?.isComponent ? "w-full pb-12" : "max-w-4xl pb-12"}>
               <div className="mb-6">
