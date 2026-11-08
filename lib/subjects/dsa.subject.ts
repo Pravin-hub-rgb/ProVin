@@ -311,6 +311,13 @@ export const dsaSubject: Subject = {
         { id: "dsa-14.12", title: "14.12 Binary Tree Postorder Traversal", path: "docs/coding/DSA/Module 14 - Binary Trees/14.12 Binary Tree Postorder Traversal.md" },
         { id: "dsa-14.13", title: "14.13 Path Sum", path: "docs/coding/DSA/Module 14 - Binary Trees/14.13 Path Sum.md" },
         { id: "dsa-14.14", title: "14.14 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 14 - Binary Trees/14.14 Binary Trees — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-14.15", title: "14.15 Binary Tree Zigzag Level Order Traversal", path: "docs/coding/DSA/Module 14 - Binary Trees/14.15 Binary Tree Zigzag Level Order Traversal.md" },
+        { id: "dsa-14.16", title: "14.16 Binary Tree Right Side View", path: "docs/coding/DSA/Module 14 - Binary Trees/14.16 Binary Tree Right Side View.md" },
+        { id: "dsa-14.17", title: "14.17 Lowest Common Ancestor of a Binary Tree", path: "docs/coding/DSA/Module 14 - Binary Trees/14.17 Lowest Common Ancestor of a Binary Tree.md" },
+        { id: "dsa-14.18", title: "14.18 Subtree of Another Tree", path: "docs/coding/DSA/Module 14 - Binary Trees/14.18 Subtree of Another Tree.md" },
+        { id: "dsa-14.19", title: "14.19 Construct Binary Tree from Preorder and Inorder Traversal", path: "docs/coding/DSA/Module 14 - Binary Trees/14.19 Construct Binary Tree from Preorder and Inorder Traversal.md" },
+        { id: "dsa-14.20", title: "14.20 Construct Binary Tree from Inorder and Postorder Traversal", path: "docs/coding/DSA/Module 14 - Binary Trees/14.20 Construct Binary Tree from Inorder and Postorder Traversal.md" },
+        { id: "dsa-14.21", title: "14.21 Flatten Binary Tree to Linked List", path: "docs/coding/DSA/Module 14 - Binary Trees/14.21 Flatten Binary Tree to Linked List.md" },
       ],
     },
     {
