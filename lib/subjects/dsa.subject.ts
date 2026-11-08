@@ -1,4 +1,4 @@
-import type { Subject } from "../coding-data";
+﻿import type { Subject } from "../coding-data";
 
 export const dsaSubject: Subject = {
   id: "dsa",
@@ -7,12 +7,12 @@ export const dsaSubject: Subject = {
   lectures: [
     {
       id: "dsa-roadmap",
-      title: "📋 DSA Course Roadmap",
+      title: "ðŸ“‹ DSA Course Roadmap",
       path: "docs/coding/DSA/roadmap.md",
     },
     {
       id: "dsa-questions",
-      title: "📝 Full Question Bank",
+      title: "ðŸ“ Full Question Bank",
       path: "docs/coding/DSA/quesitons.md",
     },
   ],
@@ -196,7 +196,20 @@ export const dsaSubject: Subject = {
       openByDefault: false,
       lectures: [
         { id: "dsa-11.1", title: "11.1 Recursion & Backtracking — The Pattern", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.1 Recursion & Backtracking — The Pattern.md" },
-        { id: "dsa-11.2", title: "11.2 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.2 Recursion & Backtracking — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-11.3", title: "11.3 Subsets (Tier 1)", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.3 Subsets.md" },
+        { id: "dsa-11.4", title: "11.4 Permutations (Tier 1)", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.4 Permutations.md" },
+        { id: "dsa-11.5", title: "11.5 Subsets II", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.5 Subsets II.md" },
+        { id: "dsa-11.6", title: "11.6 Permutations II", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.6 Permutations II.md" },
+        { id: "dsa-11.7", title: "11.7 Combination Sum", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.7 Combination Sum.md" },
+        { id: "dsa-11.8", title: "11.8 Combination Sum II", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.8 Combination Sum II.md" },
+        { id: "dsa-11.9", title: "11.9 Combination Sum III", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.9 Combination Sum III.md" },
+        { id: "dsa-11.10", title: "11.10 Combinations", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.10 Combinations.md" },
+        { id: "dsa-11.11", title: "11.11 Letter Combinations of a Phone Number", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.11 Letter Combinations of a Phone Number.md" },
+        { id: "dsa-11.12", title: "11.12 Generate Parentheses", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.12 Generate Parentheses.md" },
+        { id: "dsa-11.13", title: "11.13 Palindrome Partitioning", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.13 Palindrome Partitioning.md" },
+        { id: "dsa-11.14", title: "11.14 Word Search", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.14 Word Search.md" },
+        { id: "dsa-11.15", title: "11.15 Restore IP Addresses", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.15 Restore IP Addresses.md" },
+        { id: "dsa-11.16", title: "11.16 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.14 Recursion & Backtracking — Practice, Quiz & Cheat Sheet.md" },
       ],
     },
     {
@@ -217,7 +230,9 @@ export const dsaSubject: Subject = {
       openByDefault: true,
       lectures: [
         { id: "dsa-13.1", title: "13.1 Design Problems — The Pattern", path: "docs/coding/DSA/Module 13 - Design Problems/13.1 Design Problems — The Pattern.md" },
-        { id: "dsa-13.2", title: "13.2 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 13 - Design Problems/13.2 Design Problems — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-13.2", title: "13.2 Insert Delete GetRandom O(1)", path: "docs/coding/DSA/Module 13 - Design Problems/13.2 Insert Delete GetRandom O(1).md" },
+        { id: "dsa-13.3", title: "13.3 Design HashMap", path: "docs/coding/DSA/Module 13 - Design Problems/13.3 Design HashMap.md" },
+        { id: "dsa-13.4", title: "13.4 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 13 - Design Problems/13.4 Design Problems — Practice, Quiz & Cheat Sheet.md" },
       ],
     },
     {
@@ -273,7 +288,9 @@ export const dsaSubject: Subject = {
       openByDefault: true,
       lectures: [
         { id: "dsa-17.1", title: "17.1 Trie (Prefix Tree) — The Pattern", path: "docs/coding/DSA/Module 17 - Trie/17.1 Trie (Prefix Tree) — The Pattern.md" },
-        { id: "dsa-17.2", title: "17.2 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 17 - Trie/17.2 Trie (Prefix Tree) — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-17.2", title: "17.2 Implement Trie (Prefix Tree)", path: "docs/coding/DSA/Module 17 - Trie/17.2 Implement Trie (Prefix Tree).md" },
+        { id: "dsa-17.3", title: "17.3 Design Add and Search Words Data Structure", path: "docs/coding/DSA/Module 17 - Trie/17.3 Design Add and Search Words Data Structure.md" },
+        { id: "dsa-17.4", title: "17.4 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 17 - Trie/17.4 Trie (Prefix Tree) — Practice, Quiz & Cheat Sheet.md" },
       ],
     },
     {
@@ -336,4 +353,6 @@ export const dsaSubject: Subject = {
     },
   ],
 };
+
+
 
