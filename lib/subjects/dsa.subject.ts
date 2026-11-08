@@ -128,6 +128,12 @@ export const dsaSubject: Subject = {
         { id: "dsa-5.2", title: "5.2 Range Sum Query - Immutable", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.2 Range Sum Query - Immutable.md" },
         { id: "dsa-5.3", title: "5.3 Find Pivot Index", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.3 Find Pivot Index.md" },
         { id: "dsa-5.4", title: "5.4 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.4 Prefix Sum & Subarrays — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-5.5", title: "5.5 Continuous Subarray Sum", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.5 Continuous Subarray Sum.md" },
+        { id: "dsa-5.6", title: "5.6 Subarray Sums Divisible by K", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.6 Subarray Sums Divisible by K.md" },
+        { id: "dsa-5.7", title: "5.7 Contiguous Array", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.7 Contiguous Array.md" },
+        { id: "dsa-5.8", title: "5.8 Maximum Product Subarray", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.8 Maximum Product Subarray.md" },
+        { id: "dsa-5.9", title: "5.9 Range Sum Query 2D - Immutable", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.9 Range Sum Query 2D - Immutable.md" },
+        { id: "dsa-5.10", title: "5.10 Car Pooling", path: "docs/coding/DSA/Module 5 - Prefix Sum & Subarrays/5.10 Car Pooling.md" },
       ],
     },
     {
