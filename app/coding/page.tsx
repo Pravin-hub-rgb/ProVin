@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useState, useEffect, useCallback, useRef } from "react"
 import { ChevronDown, ChevronRight, Book, FileText, HelpCircle } from "lucide-react"
@@ -136,7 +136,18 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
           if (phase.openByDefault) initial[phase.id] = true
         })
       }
+      // Ensure the phase containing the (restored) selected lecture is open
+      if (selectedLecture) {
+        for (const phase of currentSubject.phases) {
+          const inLectures = phase.lectures.some(l => l.id === selectedLecture)
+          const inQuizzes = (phase as any).quizzes?.some((q: any) => q.id === selectedLecture)
+          if (inLectures || inQuizzes) { initial[phase.id] = true; break }
+        }
+      }
       setOpenPhases(initial)
+      try {
+        if (currentSubject?.id) localStorage.setItem(key, JSON.stringify(initial))
+      } catch {}
       // also restore openGroups
       try {
         const savedGroups = typeof window !== "undefined" ? localStorage.getItem(`openGroups-${currentSubject.id}`) : null
@@ -151,7 +162,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     }
   }, [currentSubject])
 
-  // When a lecture is selected, ensure its phase is open (additive — never closes others).
+  // When a lecture is selected, ensure its phase is open (additive â€” never closes others).
   // Persist the change so it survives refresh.
   useEffect(() => {
     if (selectedLecture && currentSubject?.phases) {
@@ -252,6 +263,15 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     } catch {}
   }, [selectedLecture, isLoading, markdownContent])
 
+  // Scroll the sidebar to reveal the selected lecture after refresh/navigation
+  useEffect(() => {
+    if (!selectedLecture) return
+    const el = document.querySelector(`[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`) as HTMLElement | null
+    if (el) {
+      try { el.scrollIntoView({ block: "nearest", behavior: "smooth" }) } catch {}
+    }
+  }, [selectedLecture])
+
   // Render Dashboard View
   if (!selectedSubject) {
     return (
@@ -318,7 +338,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
             
             <div className="space-y-3">
 
-              {/* Top Level Lectures (Roadmap / Checklist) — only when subject HAS phases,
+              {/* Top Level Lectures (Roadmap / Checklist) â€” only when subject HAS phases,
                   otherwise the legacy list below renders them */}
               {currentSubject.phases && currentSubject.lectures.length > 0 && (
                 <div className="border border-border/50 rounded-lg overflow-hidden">
@@ -326,7 +346,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                     {currentSubject.lectures.map((lecture) => (
                       <button
                         key={lecture.id}
-                        onClick={() => setSelectedLecture(lecture.id)}
+                        onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
                         className={`w-full px-4 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                           selectedLecture === lecture.id 
                             ? "bg-primary/15 text-foreground font-semibold" 
@@ -405,7 +425,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                                   {subGroup.lectures.map((lecture: any) => (
                                     <button
                                       key={lecture.id}
-                                      onClick={() => setSelectedLecture(lecture.id)}
+                                      onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
                                       className={`w-full px-4 py-2 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                                         selectedLecture === lecture.id 
                                           ? "bg-primary/15 text-foreground font-semibold" 
@@ -437,7 +457,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                         return (
                           <div key={lecture.id}>
                             <button
-                              onClick={() => setSelectedLecture(lecture.id)}
+                              onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
                               className={`w-full px-6 py-2.5 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                                 selectedLecture === lecture.id 
                                   ? "bg-primary/15 text-foreground font-semibold" 
@@ -459,7 +479,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                             {relatedQuizzes?.map((quiz: Lecture) => (
                               <button
                                 key={quiz.id}
-                                onClick={() => setSelectedLecture(quiz.id)}
+                                onClick={() => setSelectedLecture(quiz.id)} data-quiz-id={quiz.id}
                                 className={`w-full pl-14 pr-6 py-1.5 text-left text-xs hover:bg-accent/50 transition-colors flex items-center gap-2.5 border-l-2 border-border/40 ml-8 ${
                                   selectedLecture === quiz.id
                                     ? "bg-primary/10 text-foreground font-semibold border-primary/40"
@@ -492,7 +512,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                     {currentSubject.lectures.map((lecture) => (
                       <button
                         key={lecture.id}
-                        onClick={() => setSelectedLecture(lecture.id)}
+                        onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
                         className={`w-full px-6 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
                           selectedLecture === lecture.id 
                             ? "bg-primary/15 text-foreground font-semibold" 
@@ -555,7 +575,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
             </div>
           ) : (
             <div className="max-w-4xl mx-auto text-center py-16">
-              <div className="text-6xl mb-4">📖</div>
+              <div className="text-6xl mb-4">ðŸ“–</div>
               <h2 className="text-2xl font-bold text-foreground mb-4">Select a Lecture</h2>
               <p className="text-muted-foreground">
                 Choose a lecture from the sidebar to view its notes.
