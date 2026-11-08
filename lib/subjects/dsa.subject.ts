@@ -67,6 +67,13 @@ export const dsaSubject: Subject = {
         { id: "dsa-2.18", title: "2.18 Maximum Subarray", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.18 Maximum Subarray.md" },
         { id: "dsa-2.19", title: "2.19 Sort Colors", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.19 Sort Colors.md" },
         { id: "dsa-2.20", title: "2.20 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.20 Arrays & Hashing — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-2.21", title: "2.21 Longest Consecutive Sequence", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.21 Longest Consecutive Sequence.md" },
+        { id: "dsa-2.22", title: "2.22 Majority Element II", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.22 Majority Element II.md" },
+        { id: "dsa-2.23", title: "2.23 Rotate Image", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.23 Rotate Image.md" },
+        { id: "dsa-2.24", title: "2.24 Spiral Matrix", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.24 Spiral Matrix.md" },
+        { id: "dsa-2.25", title: "2.25 Next Permutation", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.25 Next Permutation.md" },
+        { id: "dsa-2.26", title: "2.26 Subarray Sum Equals K", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.26 Subarray Sum Equals K.md" },
+        { id: "dsa-2.27", title: "2.27 Find the Duplicate Number", path: "docs/coding/DSA/Module 2 - Arrays & Hashing/2.27 Find the Duplicate Number.md" },
       ],
     },
     {
