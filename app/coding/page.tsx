@@ -115,28 +115,58 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   }, [])
 
   // Load first lecture by default when subject changes
-  // Reset open phases when the subject changes (apply openByDefault for initial state).
+  // Reset open phases when the subject changes. Load persisted state from
+  // localStorage if present, otherwise apply openByDefault for initial state.
   // Does NOT run on selectedLecture change, so manually opened phases stay open.
   useEffect(() => {
     if (currentSubject?.phases) {
-      const initialState: Record<string, boolean> = {}
-      currentSubject.phases.forEach(phase => {
-        if (phase.openByDefault) initialState[phase.id] = true
-      })
-      setOpenPhases(initialState)
+      const key = `openPhases-${currentSubject.id}`
+      let initial: Record<string, boolean> = {}
+      try {
+        const saved = typeof window !== "undefined" ? localStorage.getItem(key) : null
+        if (saved) {
+          initial = JSON.parse(saved)
+        } else {
+          currentSubject.phases.forEach(phase => {
+            if (phase.openByDefault) initial[phase.id] = true
+          })
+        }
+      } catch {
+        currentSubject.phases.forEach(phase => {
+          if (phase.openByDefault) initial[phase.id] = true
+        })
+      }
+      setOpenPhases(initial)
+      // also restore openGroups
+      try {
+        const savedGroups = typeof window !== "undefined" ? localStorage.getItem(`openGroups-${currentSubject.id}`) : null
+        if (savedGroups) setOpenGroups(JSON.parse(savedGroups))
+        else setOpenGroups({})
+      } catch {
+        setOpenGroups({})
+      }
     } else {
       setOpenPhases({})
+      setOpenGroups({})
     }
   }, [currentSubject])
 
   // When a lecture is selected, ensure its phase is open (additive — never closes others).
+  // Persist the change so it survives refresh.
   useEffect(() => {
     if (selectedLecture && currentSubject?.phases) {
       for (const phase of currentSubject.phases) {
         const inLectures = phase.lectures.some(l => l.id === selectedLecture)
         const inQuizzes = (phase as any).quizzes?.some((q: any) => q.id === selectedLecture)
         if (inLectures || inQuizzes) {
-          setOpenPhases(prev => ({ ...prev, [phase.id]: true }))
+          setOpenPhases(prev => {
+            if (prev[phase.id]) return prev
+            const next = { ...prev, [phase.id]: true }
+            try {
+              if (currentSubject?.id) localStorage.setItem(`openPhases-${currentSubject.id}`, JSON.stringify(next))
+            } catch {}
+            return next
+          })
           break
         }
       }
@@ -295,10 +325,15 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
               {currentSubject.phases && currentSubject.phases.map((phase) => (
                 <div key={phase.id} className="border border-border/50 rounded-lg overflow-hidden">
                   <button
-                    onClick={() => setOpenPhases(prev => ({
-                      ...prev,
-                      [phase.id]: !prev[phase.id]
-                    }))}
+                    onClick={() => {
+                      setOpenPhases(prev => {
+                        const next = { ...prev, [phase.id]: !prev[phase.id] }
+                        try {
+                          if (currentSubject?.id) localStorage.setItem(`openPhases-${currentSubject.id}`, JSON.stringify(next))
+                        } catch {}
+                        return next
+                      })
+                    }}
                     className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-accent/50 transition-colors"
                   >
                     <span className="font-medium text-foreground">{phase.title}</span>
@@ -318,10 +353,15 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                       {(phase as any).groups?.map((subGroup: any) => (
                         <div key={subGroup.id}>
                           <button
-                            onClick={() => setOpenGroups(prev => ({
-                              ...prev,
-                              [subGroup.id]: !prev[subGroup.id]
-                            }))}
+                            onClick={() => {
+                              setOpenGroups(prev => {
+                                const next = { ...prev, [subGroup.id]: !prev[subGroup.id] }
+                                try {
+                                  if (currentSubject?.id) localStorage.setItem(`openGroups-${currentSubject.id}`, JSON.stringify(next))
+                                } catch {}
+                                return next
+                              })
+                            }}
                             className="w-full px-6 py-2 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-2 text-muted-foreground"
                           >
                             {openGroups[subGroup.id] ? (
