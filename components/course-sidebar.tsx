@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { Book, ChevronDown, ChevronRight, FileText, HelpCircle } from "lucide-react"
 import { useEffect, useRef } from "react"
@@ -36,7 +36,7 @@ function rowClasses(selected: boolean) {
 /**
  * Sidebar used by the Geopolitics course. Checkbox is a sibling of the
  * lecture button (not nested inside it) so tapping it works on mobile
- * touch devices — a checkbox nested in a <button> is invalid HTML and
+ * touch devices â€” a checkbox nested in a <button> is invalid HTML and
  * mobile browsers often swallow the tap.
  */
 export function CourseSidebar({
@@ -59,7 +59,7 @@ export function CourseSidebar({
         `[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`
       ) as HTMLElement | null
       if (el) {
-        try { el.scrollIntoView({ block: "nearest", behavior: "auto" }) } catch {}
+        try { el.scrollIntoView({ block: "center", behavior: "auto" }) } catch {}
       }
     }, 50)
     return () => clearTimeout(timer)
@@ -194,3 +194,4 @@ export function CourseSidebar({
     </div>
   )
 }
+

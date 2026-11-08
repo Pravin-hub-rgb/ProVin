@@ -269,7 +269,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     const timer = setTimeout(() => {
       const el = document.querySelector(`[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`) as HTMLElement | null
       if (el) {
-        try { el.scrollIntoView({ block: "nearest", behavior: "auto" }) } catch {}
+        try { el.scrollIntoView({ block: "center", behavior: "auto" }) } catch {}
       }
     }, 50)
     return () => clearTimeout(timer)
@@ -590,3 +590,4 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     </div>
   )
 }
+
