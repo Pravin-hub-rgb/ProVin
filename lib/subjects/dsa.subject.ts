@@ -238,6 +238,11 @@ export const dsaSubject: Subject = {
         { id: "dsa-10.12", title: "10.12 Add Two Numbers", path: "docs/coding/DSA/Module 10 - Linked List/10.12 Add Two Numbers.md" },
         { id: "dsa-10.13", title: "10.13 Delete Node in a Linked List", path: "docs/coding/DSA/Module 10 - Linked List/10.13 Delete Node in a Linked List.md" },
         { id: "dsa-10.14", title: "10.14 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 10 - Linked List/10.14 Linked List — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-10.15", title: "10.15 Odd Even Linked List", path: "docs/coding/DSA/Module 10 - Linked List/10.15 Odd Even Linked List.md" },
+        { id: "dsa-10.16", title: "10.16 Reorder List", path: "docs/coding/DSA/Module 10 - Linked List/10.16 Reorder List.md" },
+        { id: "dsa-10.17", title: "10.17 Copy List with Random Pointer", path: "docs/coding/DSA/Module 10 - Linked List/10.17 Copy List with Random Pointer.md" },
+        { id: "dsa-10.18", title: "10.18 Sort List", path: "docs/coding/DSA/Module 10 - Linked List/10.18 Sort List.md" },
+        { id: "dsa-10.19", title: "10.19 Rotate List", path: "docs/coding/DSA/Module 10 - Linked List/10.19 Rotate List.md" },
       ],
     },
     {
