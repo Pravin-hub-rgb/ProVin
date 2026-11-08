@@ -210,6 +210,13 @@ export const dsaSubject: Subject = {
         { id: "dsa-9.9", title: "9.9 Next Greater Element I", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.9 Next Greater Element I.md" },
         { id: "dsa-9.10", title: "9.10 Implement Queue using Stacks", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.10 Implement Queue using Stacks.md" },
         { id: "dsa-9.11", title: "9.11 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.11 Stack & Monotonic Stack — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-9.12", title: "9.12 Next Greater Element II", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.12 Next Greater Element II.md" },
+        { id: "dsa-9.13", title: "9.13 Online Stock Span", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.13 Online Stock Span.md" },
+        { id: "dsa-9.14", title: "9.14 Car Fleet", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.14 Car Fleet.md" },
+        { id: "dsa-9.15", title: "9.15 Asteroid Collision", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.15 Asteroid Collision.md" },
+        { id: "dsa-9.16", title: "9.16 Decode String", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.16 Decode String.md" },
+        { id: "dsa-9.17", title: "9.17 Remove K Digits", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.17 Remove K Digits.md" },
+        { id: "dsa-9.18", title: "9.18 Basic Calculator II", path: "docs/coding/DSA/Module 9 - Stack & Monotonic Stack/9.18 Basic Calculator II.md" },
       ],
     },
     {
