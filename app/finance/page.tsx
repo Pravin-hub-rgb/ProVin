@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useCallback } from "react"
+import { useState, useEffect, useCallback, useRef } from "react"
 import { ChevronDown, ChevronRight, Book, FileText } from "lucide-react"
 import { LectureViewer } from "@/components/lecture-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
@@ -58,6 +58,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
   const [openPhases, setOpenPhases] = useState<Record<string, boolean>>({})
   
   const [markdownContent, setMarkdownContent] = useState<string>('')
+  const contentRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState<Record<string, boolean>>({})
   const [allProgress, setAllProgress] = useState<Record<string, Record<string, boolean>>>({})
@@ -162,6 +163,17 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
       setHasHinglish(false)
     }
   }, [selectedLecture, language])
+
+  useEffect(() => {
+    if (isLoading) return
+    if (!contentRef.current) return
+    if (!selectedLecture) return
+    try {
+      const saved = localStorage.getItem(`scroll-${selectedLecture}`)
+      if (saved) contentRef.current.scrollTop = parseInt(saved, 10) || 0
+      else contentRef.current.scrollTop = 0
+    } catch {}
+  }, [selectedLecture, isLoading, markdownContent])
 
   // Render Dashboard View
   if (!selectedSubject) {
@@ -315,7 +327,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
         </SidebarLayout>
 
         {/* Content Area */}
-        <div className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
+        <div ref={contentRef} onScroll={() => { if (contentRef.current && selectedLecture) { try { localStorage.setItem(`scroll-${selectedLecture}`, String(contentRef.current.scrollTop)) } catch {} } }} className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
           {currentLecture ? (  
             <div className="max-w-4xl pb-12">
               <div className="mb-6">
