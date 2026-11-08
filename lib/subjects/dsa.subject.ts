@@ -169,6 +169,12 @@ export const dsaSubject: Subject = {
         { id: "dsa-7.2", title: "7.2 Merge Intervals", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.2 Merge Intervals.md" },
         { id: "dsa-7.3", title: "7.3 Sort an Array", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.3 Sort an Array.md" },
         { id: "dsa-7.4", title: "7.4 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.4 Sorting & Intervals — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-7.5", title: "7.5 Insert Interval", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.5 Insert Interval.md" },
+        { id: "dsa-7.6", title: "7.6 Non-overlapping Intervals", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.6 Non-overlapping Intervals.md" },
+        { id: "dsa-7.7", title: "7.7 Minimum Number of Arrows to Burst Balloons", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.7 Minimum Number of Arrows to Burst Balloons.md" },
+        { id: "dsa-7.8", title: "7.8 Interval List Intersections", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.8 Interval List Intersections.md" },
+        { id: "dsa-7.9", title: "7.9 My Calendar I", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.9 My Calendar I.md" },
+        { id: "dsa-7.10", title: "7.10 Largest Number", path: "docs/coding/DSA/Module 7 - Sorting & Intervals/7.10 Largest Number.md" },
       ],
     },
     {
