@@ -216,7 +216,8 @@ export const dsaSubject: Subject = {
       title: "Module 11 — Recursion & Backtracking",
       openByDefault: false,
       lectures: [
-        { id: "dsa-11.1", title: "11.1 Recursion & Backtracking — The Pattern", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.1 Recursion & Backtracking — The Pattern.md" },
+        { id: "dsa-11.1", title: "11.1 Recursion Basics — The Pattern", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.1 Recursion Basics — The Pattern.md" },
+        { id: "dsa-11.2", title: "11.2 Backtracking — The Pattern (Tier 2+)", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.2 Backtracking — The Pattern.md" },
         { id: "dsa-11.3", title: "11.3 Subsets (Tier 1)", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.3 Subsets.md" },
         { id: "dsa-11.4", title: "11.4 Permutations (Tier 1)", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.4 Permutations.md" },
         { id: "dsa-11.5", title: "11.5 Subsets II", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.5 Subsets II.md" },
@@ -230,7 +231,7 @@ export const dsaSubject: Subject = {
         { id: "dsa-11.13", title: "11.13 Palindrome Partitioning", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.13 Palindrome Partitioning.md" },
         { id: "dsa-11.14", title: "11.14 Word Search", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.14 Word Search.md" },
         { id: "dsa-11.15", title: "11.15 Restore IP Addresses", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.15 Restore IP Addresses.md" },
-        { id: "dsa-11.16", title: "11.16 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.14 Recursion & Backtracking — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-11.17", title: "11.17 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 11 - Recursion & Backtracking/11.17 Recursion & Backtracking — Practice, Quiz & Cheat Sheet.md" },
       ],
     },
     {
@@ -374,6 +375,7 @@ export const dsaSubject: Subject = {
     },
   ],
 };
+
 
 
 
