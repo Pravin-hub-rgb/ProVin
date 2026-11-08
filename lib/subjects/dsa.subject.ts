@@ -92,6 +92,11 @@ export const dsaSubject: Subject = {
         { id: "dsa-3.9", title: "3.9 Reverse Words in a String", path: "docs/coding/DSA/Module 3 - Two Pointers/3.9 Reverse Words in a String.md" },
         { id: "dsa-3.10", title: "3.10 Is Subsequence", path: "docs/coding/DSA/Module 3 - Two Pointers/3.10 Is Subsequence.md" },
         { id: "dsa-3.11", title: "3.11 Practice, Quiz & Cheat Sheet", path: "docs/coding/DSA/Module 3 - Two Pointers/3.11 Two Pointers — Practice, Quiz & Cheat Sheet.md" },
+        { id: "dsa-3.12", title: "3.12 4Sum", path: "docs/coding/DSA/Module 3 - Two Pointers/3.12 4Sum.md" },
+        { id: "dsa-3.13", title: "3.13 Trapping Rain Water", path: "docs/coding/DSA/Module 3 - Two Pointers/3.13 Trapping Rain Water.md" },
+        { id: "dsa-3.14", title: "3.14 3Sum Closest", path: "docs/coding/DSA/Module 3 - Two Pointers/3.14 3Sum Closest.md" },
+        { id: "dsa-3.15", title: "3.15 Boats to Save People", path: "docs/coding/DSA/Module 3 - Two Pointers/3.15 Boats to Save People.md" },
+        { id: "dsa-3.16", title: "3.16 Longest Palindromic Substring", path: "docs/coding/DSA/Module 3 - Two Pointers/3.16 Longest Palindromic Substring.md" },
       ],
     },
     {
