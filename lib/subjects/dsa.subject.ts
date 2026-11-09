@@ -7,12 +7,12 @@ export const dsaSubject: Subject = {
   lectures: [
     {
       id: "dsa-roadmap",
-      title: "ðŸ“‹ DSA Course Roadmap",
+      title: "📑 DSA Course Roadmap",
       path: "docs/coding/DSA/roadmap.md",
     },
     {
       id: "dsa-questions",
-      title: "ðŸ“ Full Question Bank",
+      title: "📝 Full Question Bank",
       path: "docs/coding/DSA/quesitons.md",
     },
   ],
