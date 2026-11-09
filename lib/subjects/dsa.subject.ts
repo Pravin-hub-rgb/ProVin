@@ -10,11 +10,6 @@ export const dsaSubject: Subject = {
       title: "📑 DSA Course Roadmap",
       path: "docs/coding/DSA/roadmap.md",
     },
-    {
-      id: "dsa-questions",
-      title: "📝 Full Question Bank",
-      path: "docs/coding/DSA/quesitons.md",
-    },
   ],
   phases: [
     {
