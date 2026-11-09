@@ -6,17 +6,13 @@ import { LectureViewer } from "@/components/lecture-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
 import { cfoSubject } from "@/lib/finance-subjects/cfo.subject"
 import { algotradingSubject } from "@/lib/finance-subjects/algotrading.subject"
+import { getDefaultLecture } from "@/lib/subject-utils"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/finance-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
 import { useLanguage } from "@/lib/language-context"
 import hinglishManifest from "@/docs/coding-hi/manifest.json"
 import SubjectCard from "@/components/subject-card"
 import styles from "../coding/page.module.css"
-
-// ✅ Proper TypeScript Type Narrowing (No `any`)
-const isComponentLecture = (lecture: Lecture | null): lecture is Lecture & { isComponent: true } => {
-  return lecture !== null && 'isComponent' in lecture && lecture.isComponent === true
-}
 
 import type { Dispatch, SetStateAction } from "react"
 
@@ -30,10 +26,6 @@ type FinancePageProps = {
 export default function FinancePage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: FinancePageProps) {
   const { language, setHasHinglish } = useLanguage()
 
-  // ✅ DEBUG: Force render check
-  console.log("FINANCE PAGE RENDERED ✅", selectedSubject, selectedLecture);
-  
-  // Lookup actual objects from ids
   const currentSubject = selectedSubject === 'cfo' ? cfoSubject : selectedSubject === 'algotrading' ? algotradingSubject : null
   
   // Find lecture in both top level and inside phases
@@ -56,6 +48,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
   }
   const [sidebarWidth, setSidebarWidth] = useState(300)
   const [openPhases, setOpenPhases] = useState<Record<string, boolean>>({})
+  const lastScrollSaveRef = useRef(0)
   
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const contentRef = useRef<HTMLDivElement>(null)
@@ -65,6 +58,15 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
 
   const saveProgress = useCallback(async (lectureId: string, completed: boolean) => {
     setProgress(prev => ({ ...prev, [lectureId]: completed }))
+    if (currentSubject?.id) {
+      setAllProgress(prev => ({
+        ...prev,
+        [currentSubject.id!]: {
+          ...(prev[currentSubject.id!] ?? {}),
+          [lectureId]: completed,
+        },
+      }))
+    }
     try {
       await fetch("/api/progress", {
         method: "POST",
@@ -133,12 +135,8 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
       return
     }
     if (currentSubject && !selectedLecture) {
-      if (currentSubject.phases?.length) {
-        const first = currentSubject.phases[0].lectures[0]
-        if (first) setSelectedLecture(first.id)
-      } else if (currentSubject.lectures?.length) {
-        setSelectedLecture(currentSubject.lectures[0].id)
-      }
+      const first = getDefaultLecture(currentSubject) as Lecture | null
+      if (first) setSelectedLecture(first.id)
     }
   }, [selectedSubject, selectedLecture, currentSubject, setSelectedLecture])
 
@@ -173,7 +171,18 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
       if (saved) contentRef.current.scrollTop = parseInt(saved, 10) || 0
       else contentRef.current.scrollTop = 0
     } catch {}
-  }, [selectedLecture, isLoading, markdownContent])
+  }, [selectedLecture, isLoading])
+
+  useEffect(() => {
+    if (!selectedLecture) return
+    const timer = setTimeout(() => {
+      const el = document.querySelector(`[data-lecture-id="${selectedLecture}"]`) as HTMLElement | null
+      if (el) {
+        try { el.scrollIntoView({ block: "nearest", behavior: "auto" }) } catch {}
+      }
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [selectedLecture])
 
   // Render Dashboard View
   if (!selectedSubject) {
@@ -223,6 +232,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
         onClick={() => {
           setSelectedSubject(null)
           setSelectedLecture(null)
+          setOpenPhases({})
         }}
         className="absolute top-4 left-4 z-[101] flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-xl border border-border/50 rounded-md text-sm hover:bg-accent/50 transition-colors"
       >
@@ -249,25 +259,26 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
                 <div className="border border-border/50 rounded-lg overflow-hidden">
                   <div className="border-t border-border/50 bg-background/50">
                     {lectureList.map((lecture) => (
-                      <button
-                        key={lecture.id}
-                        onClick={() => setSelectedLecture(lecture.id)}
-                        className={`w-full px-4 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                          selectedLecture === lecture.id 
-                            ? "bg-primary/15 text-foreground font-semibold" 
-                            : "text-muted-foreground hover:text-foreground"
-                        }`}
-                      >
+                      <div key={lecture.id} className="flex items-center hover:bg-accent/50 transition-colors">
                         <input
                           type="checkbox"
+                          aria-label={`Mark ${lecture.title} complete`}
                           checked={progress[lecture.id] ?? false}
                           onChange={(e) => saveProgress(lecture.id, e.target.checked)}
-                          onClick={(e) => e.stopPropagation()}
-                          className="accent-primary"
+                          className="ml-6 accent-primary shrink-0"
                         />
-                        <FileText className="w-4 h-4" />
-                        {lecture.title}
-                      </button>
+                        <button
+                          onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
+                          className={`flex flex-1 items-center gap-3 px-4 py-3 text-left text-sm ${
+                            selectedLecture === lecture.id
+                              ? "bg-primary/15 text-foreground font-semibold"
+                              : "text-muted-foreground hover:text-foreground"
+                          }`}
+                        >
+                          <FileText className="w-4 h-4" />
+                          {lecture.title}
+                        </button>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -297,25 +308,26 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
                   {openPhases[phase.id] && (
                     <div className="border-t border-border/50 bg-background/50">
                       {phase.lectures.map((lecture) => (
-                        <button
-                          key={lecture.id}
-                          onClick={() => setSelectedLecture(lecture.id)}
-                          className={`w-full px-6 py-2.5 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                            selectedLecture === lecture.id 
-                              ? "bg-primary/15 text-foreground font-semibold" 
-                              : "text-muted-foreground hover:text-foreground"
-                          }`}
-                        >
+                        <div key={lecture.id} className="flex items-center hover:bg-accent/50 transition-colors">
                           <input
                             type="checkbox"
+                            aria-label={`Mark ${lecture.title} complete`}
                             checked={progress[lecture.id] ?? false}
                             onChange={(e) => saveProgress(lecture.id, e.target.checked)}
-                            onClick={(e) => e.stopPropagation()}
-                            className="accent-primary"
+                            className="ml-6 accent-primary shrink-0"
                           />
-                          <FileText className="w-3.5 h-3.5" />
-                          {lecture.title}
-                        </button>
+                          <button
+                            onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
+                            className={`flex flex-1 items-center gap-3 px-3 py-2.5 text-left text-sm ${
+                              selectedLecture === lecture.id
+                                ? "bg-primary/15 text-foreground font-semibold"
+                                : "text-muted-foreground hover:text-foreground"
+                            }`}
+                          >
+                            <FileText className="w-3.5 h-3.5" />
+                            {lecture.title}
+                          </button>
+                        </div>
                       ))}
                     </div>
                   )}
@@ -327,7 +339,14 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
         </SidebarLayout>
 
         {/* Content Area */}
-        <div ref={contentRef} onScroll={() => { if (contentRef.current && selectedLecture) { try { localStorage.setItem(`scroll-${selectedLecture}`, String(contentRef.current.scrollTop)) } catch {} } }} className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
+        <div ref={contentRef} onScroll={() => {
+          if (contentRef.current && selectedLecture) {
+            const now = Date.now()
+            if (now - lastScrollSaveRef.current < 100) return
+            lastScrollSaveRef.current = now
+            try { localStorage.setItem(`scroll-${selectedLecture}`, String(contentRef.current.scrollTop)) } catch {}
+          }
+        }} className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
           {currentLecture ? (  
             <div className="max-w-4xl pb-12">
               <div className="mb-6">

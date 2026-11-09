@@ -12,9 +12,14 @@ export const reactSubject: Subject = {
     },
     {
       id: "react-flowchart-excalidraw",
-      title: "📊 React Course Flowchart (Excalidraw)",
+      title: "📋 React Course Flowchart (Excalidraw)",
       path: "docs/coding/React JS/React-flowchart.excalidraw",
       isComponent: true,
+    },
+    {
+      id: "react-story",
+      title: "📖 React Story",
+      path: "docs/coding/React JS/React Story.md",
     },
     {
       id: "react-interview",

@@ -6,8 +6,9 @@ import { LectureViewer } from "@/components/lecture-viewer"
 import { ExcalidrawViewer } from "@/components/excalidraw-viewer"
 import { QuizViewer } from "@/components/quiz-viewer"
 import { SidebarLayout } from "@/components/sidebar-layout"
-import { subjects, loadMarkdownContent, type Subject, type Lecture, type LectureGroup } from "@/lib/coding-data"
+import { subjects, loadMarkdownContent, type Lecture } from "@/lib/coding-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
+import { getDefaultLecture } from "@/lib/subject-utils"
 import hinglishManifest from "@/docs/coding-hi/manifest.json"
 import { useLanguage } from "@/lib/language-context"
 import SubjectCard from "@/components/subject-card"
@@ -42,16 +43,14 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
           currentLecture = found
           break
         }
-        // Check quizzes inside phase
-        const foundQuiz = (phase as any).quizzes?.find((q: Lecture) => q.id === selectedLecture)
+        const foundQuiz = phase.quizzes?.find(q => q.id === selectedLecture)
         if (foundQuiz) {
           currentLecture = foundQuiz
           break
         }
-        // Also check nested groups inside phase
-        if (!currentLecture && (phase as any).groups) {
-          for (const subGroup of (phase as any).groups) {
-            const foundInGroup = subGroup.lectures.find((l: Lecture) => l.id === selectedLecture)
+        if (!currentLecture && phase.groups) {
+          for (const subGroup of phase.groups) {
+            const foundInGroup = subGroup.lectures.find(l => l.id === selectedLecture)
             if (foundInGroup) {
               currentLecture = foundInGroup
               break
@@ -67,7 +66,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
   let isQuiz = false
   if (currentSubject?.phases && currentLecture) {
     for (const phase of currentSubject.phases) {
-      if ((phase as any).quizzes?.find((q: Lecture) => q.id === selectedLecture)) {
+      if (phase.quizzes?.find(q => q.id === selectedLecture)) {
         isQuiz = true
         break
       }
@@ -85,6 +84,11 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
 
   const saveProgress = useCallback(async (lectureId: string, completed: boolean) => {
     setProgress(prev => ({ ...prev, [lectureId]: completed }))
+    setAllProgress(prev => {
+      if (!currentSubject?.id) return prev
+      const current = prev[currentSubject.id] ?? {}
+      return { ...prev, [currentSubject.id]: { ...current, [lectureId]: completed } }
+    })
     try {
       await fetch("/api/progress", {
         method: "POST",
@@ -114,70 +118,51 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
       .catch(() => {})
   }, [])
 
-  // Load first lecture by default when subject changes
-  // Reset open phases when the subject changes. Load persisted state from
-  // localStorage if present, otherwise apply openByDefault for initial state.
+  // Reset open phases when the subject changes: start collapsed, and open
+  // only the phase containing the selected lecture. Follows from the selection,
+  // not from any saved snapshot of the accordion.
   // Does NOT run on selectedLecture change, so manually opened phases stay open.
   useEffect(() => {
     if (currentSubject?.phases) {
-      const key = `openPhases-${currentSubject.id}`
-      let initial: Record<string, boolean> = {}
-      try {
-        const saved = typeof window !== "undefined" ? localStorage.getItem(key) : null
-        if (saved) {
-          initial = JSON.parse(saved)
-        } else {
-          currentSubject.phases.forEach(phase => {
-            if (phase.openByDefault) initial[phase.id] = true
-          })
-        }
-      } catch {
-        currentSubject.phases.forEach(phase => {
-          if (phase.openByDefault) initial[phase.id] = true
-        })
-      }
-      // Ensure the phase containing the (restored) selected lecture is open
+      const initial: Record<string, boolean> = {}
       if (selectedLecture) {
         for (const phase of currentSubject.phases) {
           const inLectures = phase.lectures.some(l => l.id === selectedLecture)
-          const inQuizzes = (phase as any).quizzes?.some((q: any) => q.id === selectedLecture)
-          if (inLectures || inQuizzes) { initial[phase.id] = true; break }
+          const inQuizzes = phase.quizzes?.some(q => q.id === selectedLecture)
+          const inGroups = phase.groups?.some(g => g.lectures.some(l => l.id === selectedLecture))
+          if (inLectures || inQuizzes || inGroups) {
+            initial[phase.id] = true
+            break
+          }
         }
       }
       setOpenPhases(initial)
-      try {
-        if (currentSubject?.id) localStorage.setItem(key, JSON.stringify(initial))
-      } catch {}
-      // also restore openGroups
-      try {
-        const savedGroups = typeof window !== "undefined" ? localStorage.getItem(`openGroups-${currentSubject.id}`) : null
-        if (savedGroups) setOpenGroups(JSON.parse(savedGroups))
-        else setOpenGroups({})
-      } catch {
-        setOpenGroups({})
-      }
+      setOpenGroups({})
     } else {
       setOpenPhases({})
       setOpenGroups({})
     }
   }, [currentSubject])
 
-  // When a lecture is selected, ensure its phase is open (additive â€” never closes others).
+  // When a lecture is selected, ensure its phase (and its group, if any) is open (additive — never closes others).
   // Persist the change so it survives refresh.
   useEffect(() => {
     if (selectedLecture && currentSubject?.phases) {
       for (const phase of currentSubject.phases) {
         const inLectures = phase.lectures.some(l => l.id === selectedLecture)
-        const inQuizzes = (phase as any).quizzes?.some((q: any) => q.id === selectedLecture)
-        if (inLectures || inQuizzes) {
+        const inQuizzes = phase.quizzes?.some(q => q.id === selectedLecture)
+        const containingGroup = phase.groups?.find(g => g.lectures.some(l => l.id === selectedLecture))
+        if (inLectures || inQuizzes || containingGroup) {
           setOpenPhases(prev => {
             if (prev[phase.id]) return prev
-            const next = { ...prev, [phase.id]: true }
-            try {
-              if (currentSubject?.id) localStorage.setItem(`openPhases-${currentSubject.id}`, JSON.stringify(next))
-            } catch {}
-            return next
+            return { ...prev, [phase.id]: true }
           })
+          if (containingGroup) {
+            setOpenGroups(prev => {
+              if (prev[containingGroup.id]) return prev
+              return { ...prev, [containingGroup.id]: true }
+            })
+          }
           break
         }
       }
@@ -195,26 +180,26 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
       // Try to restore the last opened lecture from localStorage first
       let saved: string | null = null
       try { saved = localStorage.getItem("selectedLecture") } catch {}
-      const belongsToSubject = !!saved && !!currentSubject.phases?.some(phase =>
-        phase.lectures.some(l => l.id === saved) ||
-        (phase as any).quizzes?.some((q: any) => q.id === saved)
+      const belongsToSubject = !!saved && (
+        !!currentSubject.lectures?.some(l => l.id === saved) ||
+        !!currentSubject.phases?.some(phase =>
+          phase.lectures.some(l => l.id === saved) ||
+          phase.quizzes?.some(q => q.id === saved)
+        )
       )
       if (belongsToSubject) {
         setSelectedLecture(saved)
         return
       }
-      if (currentSubject.phases?.length) {
-        const first = currentSubject.phases[0].lectures[0]
-        if (first) setSelectedLecture(first.id)
-      } else if (currentSubject.lectures.length) {
-        setSelectedLecture(currentSubject.lectures[0].id)
-      }
+      const first = getDefaultLecture(currentSubject) as Lecture | null
+      if (first) setSelectedLecture(first.id)
     }
   }, [selectedSubject, selectedLecture, currentSubject, setSelectedLecture])
 
   // Load markdown content when lecture changes or language changes
   const requestIdRef = useRef(0)
   const contentRef = useRef<HTMLDivElement>(null)
+  const lastScrollSaveRef = useRef(0)
 
   useEffect(() => {
     if (!currentLecture) {
@@ -261,7 +246,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
         contentRef.current.scrollTop = 0
       }
     } catch {}
-  }, [selectedLecture, isLoading, markdownContent])
+  }, [selectedLecture, isLoading])
 
   // Scroll the sidebar to reveal the selected lecture after refresh/navigation
   useEffect(() => {
@@ -269,11 +254,11 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
     const timer = setTimeout(() => {
       const el = document.querySelector(`[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`) as HTMLElement | null
       if (el) {
-        try { el.scrollIntoView({ block: "center", behavior: "auto" }) } catch {}
+        try { el.scrollIntoView({ block: "nearest", behavior: "auto" }) } catch {}
       }
     }, 50)
     return () => clearTimeout(timer)
-  }, [selectedLecture, openPhases])
+  }, [selectedLecture])
 
   // Render Dashboard View
   if (!selectedSubject) {
@@ -320,6 +305,15 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
         onClick={() => {
           setSelectedSubject(null)
           setSelectedLecture(null)
+          setOpenPhases({})
+          setOpenGroups({})
+          if (selectedSubject) {
+            try {
+              localStorage.removeItem(`openPhases-${selectedSubject}`)
+              localStorage.removeItem(`openGroups-${selectedSubject}`)
+              localStorage.removeItem("selectedLecture")
+            } catch {}
+          }
         }}
         className="absolute top-4 left-4 z-[101] flex items-center gap-2 px-3 py-2 bg-background/80 backdrop-blur-xl border border-border/50 rounded-md text-sm hover:bg-accent/50 transition-colors"
       >
@@ -347,25 +341,26 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                 <div className="border border-border/50 rounded-lg overflow-hidden">
                   <div className="border-t border-border/50 bg-background/50">
                     {currentSubject.lectures.map((lecture) => (
-                      <button
-                        key={lecture.id}
-                        onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
-                        className={`w-full px-4 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                          selectedLecture === lecture.id 
-                            ? "bg-primary/15 text-foreground font-semibold" 
-                            : "text-muted-foreground hover:text-foreground"
-                        }`}
-                      >
+                      <div key={lecture.id} className="flex items-center hover:bg-accent/50 transition-colors">
                         <input
                           type="checkbox"
+                          aria-label={`Mark ${lecture.title} complete`}
                           checked={progress[lecture.id] ?? false}
                           onChange={(e) => saveProgress(lecture.id, e.target.checked)}
-                          onClick={(e) => e.stopPropagation()}
-                          className="accent-primary"
+                          className="ml-6 accent-primary shrink-0"
                         />
-                        <FileText className="w-4 h-4" />
-                        {lecture.title}
-                      </button>
+                        <button
+                          onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
+                          className={`flex flex-1 items-center gap-3 px-4 py-3 text-left text-sm ${
+                            selectedLecture === lecture.id
+                              ? "bg-primary/15 text-foreground font-semibold"
+                              : "text-muted-foreground hover:text-foreground"
+                          }`}
+                        >
+                          <FileText className="w-4 h-4" />
+                          {lecture.title}
+                        </button>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -375,15 +370,12 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
               {currentSubject.phases && currentSubject.phases.map((phase) => (
                 <div key={phase.id} className="border border-border/50 rounded-lg overflow-hidden">
                   <button
-                    onClick={() => {
-                      setOpenPhases(prev => {
-                        const next = { ...prev, [phase.id]: !prev[phase.id] }
-                        try {
-                          if (currentSubject?.id) localStorage.setItem(`openPhases-${currentSubject.id}`, JSON.stringify(next))
-                        } catch {}
-                        return next
-                      })
-                    }}
+                     onClick={() => {
+                       setOpenPhases(prev => ({
+                         ...prev,
+                         [phase.id]: !prev[phase.id],
+                       }))
+                     }}
                     className="w-full px-4 py-3 text-left flex items-center justify-between hover:bg-accent/50 transition-colors"
                   >
                     <span className="font-medium text-foreground">{phase.title}</span>
@@ -400,18 +392,15 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                   {openPhases[phase.id] && (
                     <div className="border-t border-border/50 bg-background/50">
                       {/* Sub-groups first (like folders in explorer) */}
-                      {(phase as any).groups?.map((subGroup: any) => (
+                      {phase.groups?.map((subGroup) => (
                         <div key={subGroup.id}>
                           <button
-                            onClick={() => {
-                              setOpenGroups(prev => {
-                                const next = { ...prev, [subGroup.id]: !prev[subGroup.id] }
-                                try {
-                                  if (currentSubject?.id) localStorage.setItem(`openGroups-${currentSubject.id}`, JSON.stringify(next))
-                                } catch {}
-                                return next
-                              })
-                            }}
+                             onClick={() => {
+                               setOpenGroups(prev => ({
+                                 ...prev,
+                                 [subGroup.id]: !prev[subGroup.id],
+                               }))
+                             }}
                             className="w-full px-6 py-2 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-2 text-muted-foreground"
                           >
                             {openGroups[subGroup.id] ? (
@@ -425,26 +414,27 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                           
                           {openGroups[subGroup.id] && (
                             <div className="ml-3 border-l border-border/30 pl-2">
-                                  {subGroup.lectures.map((lecture: any) => (
-                                    <button
-                                      key={lecture.id}
-                                      onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
-                                      className={`w-full px-4 py-2 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                                        selectedLecture === lecture.id 
-                                          ? "bg-primary/15 text-foreground font-semibold" 
-                                          : "text-muted-foreground hover:text-foreground"
-                                      }`}
-                                    >
+                                  {subGroup.lectures.map((lecture) => (
+                                    <div key={lecture.id} className="flex items-center hover:bg-accent/50 transition-colors">
                                       <input
                                         type="checkbox"
+                                        aria-label={`Mark ${lecture.title} complete`}
                                         checked={progress[lecture.id] ?? false}
                                         onChange={(e) => saveProgress(lecture.id, e.target.checked)}
-                                        onClick={(e) => e.stopPropagation()}
-                                        className="accent-primary"
+                                        className="ml-4 accent-primary shrink-0"
                                       />
-                                      <FileText className="w-3 h-3" />
-                                      {lecture.title}
-                                    </button>
+                                      <button
+                                        onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
+                                        className={`flex flex-1 items-center gap-3 px-4 py-2 text-left text-sm ${
+                                          selectedLecture === lecture.id
+                                            ? "bg-primary/15 text-foreground font-semibold"
+                                            : "text-muted-foreground hover:text-foreground"
+                                        }`}
+                                      >
+                                        <FileText className="w-3 h-3" />
+                                        {lecture.title}
+                                      </button>
+                                    </div>
                                   ))}
                             </div>
                           )}
@@ -454,51 +444,56 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                       {/* Main lectures after groups */}
                       {phase.lectures.map((lecture) => {
                         const lectureSuffix = lecture.id.replace(/^[^-]+-/, "")
-                        const relatedQuizzes = (phase as any).quizzes?.filter(
+                        const relatedQuizzes = phase.quizzes?.filter(
                           (q: Lecture) => q.id.replace(/^[^-]+-/, "") === lectureSuffix
                         )
                         return (
                           <div key={lecture.id}>
-                            <button
-                              onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
-                              className={`w-full px-6 py-2.5 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                                selectedLecture === lecture.id 
-                                  ? "bg-primary/15 text-foreground font-semibold" 
-                                  : "text-muted-foreground hover:text-foreground"
-                              }`}
-                            >
+                            <div className="flex items-center hover:bg-accent/50 transition-colors">
                               <input
                                 type="checkbox"
+                                aria-label={`Mark ${lecture.title} complete`}
                                 checked={progress[lecture.id] ?? false}
                                 onChange={(e) => saveProgress(lecture.id, e.target.checked)}
-                                onClick={(e) => e.stopPropagation()}
-                                className="accent-primary"
+                                className="ml-6 accent-primary shrink-0"
                               />
-                              <FileText className="w-3.5 h-3.5" />
-                              {lecture.title}
-                            </button>
-
-                            {/* Quiz nested under lecture */}
-                            {relatedQuizzes?.map((quiz: Lecture) => (
                               <button
-                                key={quiz.id}
-                                onClick={() => setSelectedLecture(quiz.id)} data-quiz-id={quiz.id}
-                                className={`w-full pl-14 pr-6 py-1.5 text-left text-xs hover:bg-accent/50 transition-colors flex items-center gap-2.5 border-l-2 border-border/40 ml-8 ${
-                                  selectedLecture === quiz.id
-                                    ? "bg-primary/10 text-foreground font-semibold border-primary/40"
-                                    : "text-muted-foreground hover:text-foreground border-border/30"
+                                onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
+                                className={`flex flex-1 items-center gap-3 px-3 py-2.5 text-left text-sm ${
+                                  selectedLecture === lecture.id
+                                    ? "bg-primary/15 text-foreground font-semibold"
+                                    : "text-muted-foreground hover:text-foreground"
                                 }`}
+                              >
+                                <FileText className="w-3.5 h-3.5" />
+                                {lecture.title}
+                              </button>
+                            </div>
+
+                            {relatedQuizzes?.map((quiz: Lecture) => (
+                              <div
+                                key={quiz.id}
+                                className="ml-8 flex items-center border-l-2 border-border/30 hover:bg-accent/50 transition-colors"
                               >
                                 <input
                                   type="checkbox"
+                                  aria-label={`Mark ${quiz.title} complete`}
                                   checked={progress[quiz.id] ?? false}
                                   onChange={(e) => saveProgress(quiz.id, e.target.checked)}
-                                  onClick={(e) => e.stopPropagation()}
-                                  className="accent-primary scale-75"
+                                  className="ml-6 accent-primary shrink-0"
                                 />
-                                <HelpCircle className="w-3 h-3" />
-                                {quiz.title}
-                              </button>
+                                <button
+                                  onClick={() => setSelectedLecture(quiz.id)} data-quiz-id={quiz.id}
+                                  className={`flex flex-1 items-center gap-2.5 py-1.5 pl-2 pr-6 text-left text-xs ${
+                                    selectedLecture === quiz.id
+                                      ? "bg-primary/10 text-foreground font-semibold border-primary/40"
+                                      : "text-muted-foreground hover:text-foreground border-border/30"
+                                  }`}
+                                >
+                                  <HelpCircle className="w-3 h-3" />
+                                  {quiz.title}
+                                </button>
+                              </div>
                             ))}
                           </div>
                         )
@@ -513,25 +508,26 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
                 <div className="border border-border/50 rounded-lg overflow-hidden">
                   <div className="border-t border-border/50 bg-background/50">
                     {currentSubject.lectures.map((lecture) => (
-                      <button
-                        key={lecture.id}
-                        onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
-                        className={`w-full px-6 py-3 text-left text-sm hover:bg-accent/50 transition-colors flex items-center gap-3 ${
-                          selectedLecture === lecture.id 
-                            ? "bg-primary/15 text-foreground font-semibold" 
-                            : "text-muted-foreground hover:text-foreground"
-                        }`}
-                      >
+                      <div key={lecture.id} className="flex items-center hover:bg-accent/50 transition-colors">
                         <input
                           type="checkbox"
+                          aria-label={`Mark ${lecture.title} complete`}
                           checked={progress[lecture.id] ?? false}
                           onChange={(e) => saveProgress(lecture.id, e.target.checked)}
-                          onClick={(e) => e.stopPropagation()}
-                          className="accent-primary"
+                          className="ml-6 accent-primary shrink-0"
                         />
-                        <FileText className="w-4 h-4" />
-                        {lecture.title}
-                      </button>
+                        <button
+                          onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
+                          className={`flex flex-1 items-center gap-3 px-3 py-3 text-left text-sm ${
+                            selectedLecture === lecture.id
+                              ? "bg-primary/15 text-foreground font-semibold"
+                              : "text-muted-foreground hover:text-foreground"
+                          }`}
+                        >
+                          <FileText className="w-4 h-4" />
+                          {lecture.title}
+                        </button>
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -546,6 +542,9 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
           ref={contentRef}
           onScroll={() => {
             if (contentRef.current && selectedLecture) {
+              const now = Date.now()
+              if (now - lastScrollSaveRef.current < 100) return
+              lastScrollSaveRef.current = now
               try {
                 localStorage.setItem(`scroll-${selectedLecture}`, String(contentRef.current.scrollTop))
               } catch {}

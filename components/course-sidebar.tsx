@@ -59,7 +59,7 @@ export function CourseSidebar({
         `[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`
       ) as HTMLElement | null
       if (el) {
-        try { el.scrollIntoView({ block: "center", behavior: "auto" }) } catch {}
+        try { el.scrollIntoView({ block: "nearest", behavior: "auto" }) } catch {}
       }
     }, 50)
     return () => clearTimeout(timer)

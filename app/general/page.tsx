@@ -9,6 +9,7 @@ import { CourseSidebar } from "@/components/course-sidebar"
 import { spokenEnglishSubject } from "@/lib/general-subjects/spoken-english.subject"
 import { chessSubject } from "@/lib/general-subjects/chess-to-1000.subject"
 import { geopoliticsSubject } from "@/lib/general-subjects/geopolitics.subject"
+import { getDefaultLecture } from "@/lib/subject-utils"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/general-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
 import { useLanguage } from "@/lib/language-context"
@@ -61,6 +62,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
 
   const [markdownContent, setMarkdownContent] = useState<string>('')
   const contentRef = useRef<HTMLDivElement>(null)
+  const lastScrollSaveRef = useRef(0)
   const [isLoading, setIsLoading] = useState(false)
   const [progress, setProgress] = useState<Record<string, boolean>>({})
   const [allProgress, setAllProgress] = useState<Record<string, Record<string, boolean>>>({})
@@ -125,15 +127,25 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
       }
 
       currentSubject.phases.forEach(phase => {
-        if (phase.id === activePhaseId) {
-          initialState[phase.id] = true
-        } else {
-          initialState[phase.id] = phase.openByDefault || false
-        }
+        initialState[phase.id] = phase.id === activePhaseId
       })
       setOpenPhases(initialState)
     }
   }, [currentSubject, selectedLecture])
+
+  // Load first lecture by default when subject changes (or selection is empty)
+  useEffect(() => {
+    if (!selectedSubject) {
+      if (typeof setSelectedLecture === "function") {
+        setSelectedLecture(null)
+      }
+      return
+    }
+    if (currentSubject && !selectedLecture) {
+      const first = getDefaultLecture(currentSubject) as Lecture | null
+      if (first) setSelectedLecture(first.id)
+    }
+  }, [selectedSubject, selectedLecture, currentSubject, setSelectedLecture])
 
   useEffect(() => {
     if (currentLecture) {
@@ -169,7 +181,18 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
       if (saved) contentRef.current.scrollTop = parseInt(saved, 10) || 0
       else contentRef.current.scrollTop = 0
     } catch {}
-  }, [selectedLecture, isLoading, markdownContent])
+  }, [selectedLecture, isLoading])
+
+  useEffect(() => {
+    if (!selectedLecture) return
+    const timer = setTimeout(() => {
+      const el = document.querySelector(`[data-lecture-id="${selectedLecture}"], [data-quiz-id="${selectedLecture}"]`) as HTMLElement | null
+      if (el) {
+        try { el.scrollIntoView({ block: "nearest", behavior: "auto" }) } catch {}
+      }
+    }, 50)
+    return () => clearTimeout(timer)
+  }, [selectedLecture])
 
   // Render Dashboard View
   if (!selectedSubject) {
@@ -220,6 +243,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
         onClick={() => {
           setSelectedSubject(null)
           setSelectedLecture(null)
+          setOpenPhases({})
         }}
         className="absolute top-4 left-4 z-[101] flex items-center gap-2 px-3 py-3 bg-background/80 backdrop-blur-xl border border-border/50 rounded-md text-sm hover:bg-accent/50 transition-colors"
       >
@@ -271,7 +295,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
                           className="ml-4 accent-primary"
                         />
                         <button
-                          onClick={() => setSelectedLecture(lecture.id)}
+                          onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
                           className={`flex flex-1 items-center gap-3 px-4 py-3 text-left text-sm ${
                             selectedLecture === lecture.id
                               ? "bg-primary/15 text-foreground font-semibold"
@@ -327,7 +351,7 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
                                 className="ml-6 accent-primary"
                               />
                               <button
-                                onClick={() => setSelectedLecture(lecture.id)}
+                                onClick={() => setSelectedLecture(lecture.id)} data-lecture-id={lecture.id}
                                 className={`flex flex-1 items-center gap-3 px-4 py-2.5 text-left text-sm ${
                                   selectedLecture === lecture.id
                                     ? "bg-primary/15 text-foreground font-semibold"
@@ -346,10 +370,10 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
                                   aria-label={`Mark ${quiz.title} complete`}
                                   checked={progress[quiz.id] ?? false}
                                   onChange={(e) => saveProgress(quiz.id, e.target.checked)}
-                                  className="ml-6 accent-primary scale-75"
+                                  className="ml-6 accent-primary shrink-0"
                                 />
                                 <button
-                                  onClick={() => setSelectedLecture(quiz.id)}
+                                  onClick={() => setSelectedLecture(quiz.id)} data-quiz-id={quiz.id}
                                   className={`flex flex-1 items-center gap-2.5 py-1.5 pl-2 pr-6 text-left text-xs ${
                                     selectedLecture === quiz.id
                                       ? "bg-primary/10 text-foreground font-semibold"
@@ -375,7 +399,14 @@ export default function GeneralPage({selectedSubject, setSelectedSubject, select
         </SidebarLayout>
 
         {/* Content Area */}
-        <div ref={contentRef} onScroll={() => { if (contentRef.current && selectedLecture) { try { localStorage.setItem(`scroll-${selectedLecture}`, String(contentRef.current.scrollTop)) } catch {} } }} className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
+        <div ref={contentRef} onScroll={() => {
+          if (contentRef.current && selectedLecture) {
+            const now = Date.now()
+            if (now - lastScrollSaveRef.current < 100) return
+            lastScrollSaveRef.current = now
+            try { localStorage.setItem(`scroll-${selectedLecture}`, String(contentRef.current.scrollTop)) } catch {}
+          }
+        }} className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
           {currentLecture ? (
             <div className="max-w-4xl pb-12">
               <div className="mb-6">

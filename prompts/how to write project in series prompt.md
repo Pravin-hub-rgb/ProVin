@@ -49,23 +49,46 @@ Project.Part 4 — States + Strategy + Testing
 
 ---
 
-## 1. Part 1 — Planning: Code Se Pehle Sochna (Sabse Important)
+## 1. Part 1 — Planning: Client Brief + Code Se Pehle Sochna (Sabse Important)
 
 Project ki pehli file **hamesha planning** hai. Koi code nahi, koi file
 structure demo nahi — sirf **sochne ka process.** Yehi coder mindset hai jo
 user ko "code dump" se alag karta hai.
 
-Isme ye 4 sawaal poocho aur jawab do:
+**Client Brief pehla step hai — planning ke bhi pehle waale 10 minutes.**
+Doc `"# Planning"` section mein koi bhi kaam karne se pehle reader ko ek
+client ki conversation sunna chahiye. Client (waanis user) requirements ente
+hain apne words mein — features ki list, na ki file paths. Jaise:
 
-1. **Kya banana hai?** — Project ka purpose, kyun ye project (kya concepts
-   combine karta hai)
-2. **Kaunse pages chahiye?** — Routes ka structure, table mein. Har route pe
+> "Ek to-do app banana hai. Tasks add karo, check off karo, delete karo,
+> filter karo — all / active / completed. Har task pe category dikhega.
+> Dark mode toggle bhi chahiye. Bas."
+
+Reader ko code se pehle **exactly samajh aa jana chahiye ki kya banana hai —**
+features kya-kya hain, kya interaction chahiye. Ye conversation frame hi
+doc ka anchor hai — saara baaki content isse derive hota hai.
+
+**Client Brief mein ye sawaal hote hain aur unke answers (natural flow mein,
+list nahi):**
+
+1. **Kya banana hai?** Project ka purpose, na ki implementation. "Tasks,
+   filter, category aur dark mode — bas itna."
+2. **User kya-kya karega?** Har feature ek interaction hai — add, toggle,
+   delete, filter, toggle theme. Har interaction se pata chalta hai ki
+   task mein kya data rakhna padega.
+3. **Data kahan dikhega?** List mein kya-kya dikhega, buttons kahan honge,
+   empty state kya hoga.
+4. **Data kahan se aayega?** Categories API se? Hardcoded? Client ko
+   pata hoga, developer ko derive karna hai.
+
+**Planning file mein ye 4 planning sawaal poocho aur jawab do (Client Brief ke baad):**
+
+4. **Kaunse pages chahiye?** — Routes ka structure, table mein. Har route pe
    kaunsa concept (batch ke) apply hoga — ye explicitly point out karo.
-3. **Data ka shape kya hai?** — **UI se decide hota hai, ulta nahi.** Pehle
-   socho "list page pe kya dikhega, detail page pe kya" — phir data ke fields
-   wahi banao. **Har field ka ek reason hona chahiye** — koi field random
-   nahi.
-4. **Data flow kaise hoga?** — Data kahan rakhenge (alag file = DRY),
+5. **Data ka shape kya hai?** — **UI se decide hota hai, ulta nahi.** Pehle
+   socho "list page pe kya dikhega" — phir data ke fields wahi banao.
+   **HAR FIELD KA EK REASON HONA CHAHIYE** — koi field random nahi.
+6. **Data flow kaise hoga?** — Data kahan rakhenge (alag file = DRY),
    kaunse functions chahiye, pages ko kaise milega.
 
 **Planning file ke end mein "Ab Tak Ka Plan" summary table** — kya, pages,
@@ -111,7 +134,17 @@ cheez ka reason** explain karo:
 
 - **Type kyun?** (`Post` type) — TypeScript ka contract, compile-time pe
   typo/missing field pakadna. Pehle bina type wala example dikhao (typo
-  chhup jaata hai), phir type ke saath (compile error). Har field ka reason.
+  chhup jaata hai), phir type ke saath (compile error). **Har field ka
+  reason bhi ek ek karke match karo** Client Brief se:
+  - (1) Yeh field UI pe kahan dikhega? (2) Yeh field kis operation ke liye
+    zaroori hai (add / toggle / delete / filter)? (3) Yeh type kyun hua
+    (string vs number, boolean vs union, etc.)?
+  - **Har field ek ek line explain karo —** jaise: `id` because delete/toggle
+    needs a unique handle; `text` the task name in the row; `completed` the
+    checkbox state; `category` the muted tag displayed on the row;
+    `FilterStatus` union because only exactly three buttons exist.
+  - **Union types bhi derivation se explain karo** — "all/active/completed"
+    ke alawa aur koi value possible hi nahi, union kyun (typo-proof).
 - **Data array kyun ek jagah?** — DRY, single source of truth. Part 2 ki
   duplication ka reference.
 - **Functions kyun?** (`getAllPosts`, `getPostBySlug`) — abstraction.
@@ -170,6 +203,55 @@ Jab project upgrade ho raha ho (spine rule — sirf Batch 1-2 upgrade allowed):
 
 ---
 
+## 6.5 No Blind Coding — Har Code Step Ke Baad Checkpoint Zaroor Hai
+
+**Rule:** Project doc ka har code-writing step (har `function`, har `useState`
+line, har file — chahe kitna bhi chhota kyun na ho) ke bilkul BAAD ek
+**"Checkpoint"** line aani chahiye — kya verify karein:
+
+```
+**Checkpoint:** <save → kya dekho/dhoondoge (browser/console/terminal)>
+```
+
+Checkpoint mein teen cheezein honi chahiye:
+1. **Kya save karna hai** — file save (Vite fast refresh runs)
+2. **Kya dekhae/dhoondna hai** — browser Console, browser page, DevTools, terminal, `tsc` output
+3. **Kya expected hai** — specific success cue (e.g., "cursor focuses on load", "checkbox strikes through"), NOT vague "it works".
+
+**Bina checkpoint ke koi step nahi.** Example se ek "Checkpoint":
+
+```tsx
+**Checkpoint:** save — cursor lands in the input automatically.
+(If nothing happens, the effect isn't in place — check the deps `[]` are present.) ✅
+```
+
+**Kyun?** Code likhi jaati hai lekin reader ka brain blind nahi chalta — agar
+reader sirf "aur code paste kar liya" karke agle step pe chala gaya, to jab
+final app error dega, pata nahi chalega kahan galti hui. Checkpoint reader ko
+har step pe feedback leta hai — component boot ho raha hai ya nahi, ab
+re-render trigger toh hua ya nahi, console mein "Adding: ..." dikh raha hai
+ya nahi.
+
+**"Compile ho raha hai" bhi checkpoint hai.** Agar step kaam karta hai, but
+kahi sign nahi dikhna, to kam se kam ye likho:
+
+```
+**Checkpoint:** save — file compiles; nothing renders yet (setup steps
+are still not wired). Full wired verification at Step N.
+```
+
+**ORDER:** Checkpoint hamesha us step ka code *ke baad* aayegi, next step
+*se pehle* — step complete hone ka signal.
+
+Checkpoint chain (har part mein):
+- Planning — reader plan se nahi bhatke
+- Hardcoded UI — browser mein dikhta hai ya nahi (pehla visual checkpoint)
+- Data Layer — `tsc`/compile checkpoint
+- Dynamic wiring — actual interaction checkpoint
+- States — console/browser me verify
+
+---
+
 ## 7. Har Series Part Ka Structure (Common Sections)
 
 Har part file mein ye sections hote hain (Master Teaching Prompt se):
@@ -177,8 +259,8 @@ Har part file mein ye sections hote hain (Master Teaching Prompt se):
 1. **Opening** — pichle part se bridge ("1.5.3 mein data layer banai, ab
    usse UI se jodna hai"), ya relatable cheez
 2. **Broader goal** — is part mein kya hoga, overall kahan khade hain
-3. **Step-by-step content** — SOCH → CONCEPT → CODE → TEST har step mein
-   (Master Teaching Prompt section 3-5)
+3. **Step-by-step content** — SOCH → CONCEPT → CODE → CHECKPOINT har step
+   mein (Master Teaching Prompt section 3-5)
 4. **Nutshell** — naye concepts ke liye crisp definition
 5. **Common Mistakes** — project-specific
 6. **In Your Own Words** — 3-5 questions, `details` accordion, **logic
@@ -216,8 +298,21 @@ dono ek saath nahi rehte (duplicate content).
 ❌ Project ek single file mein dump toh nahi kar rahe?
    → 5-part (ya zyada) series banao, har part ka ek teaching point
 
+❌ Doc opening mein client brief hai?
+   → Client kya chahta hai — features in their words — clearly written.
+     Agar reader ko kya banana hai pata nahi, code kuch kaam ka nahi.
+
+❌ Every code step followed by a Checkpoint?
+   → Save + kya dekhna hai + expected feedback line (browser/console/$ tsc).
+     No blind coding — har step reader ko visually/console verify karwa ke
+     next step pe leke jaye.
+
+❌ Types derivation line-by-line hai?
+   → Har field (id, text, completed, category, unions) ka ek reason:
+     UI pe kahan dikhega, kaunsi operation ke liye, kyun yeh type.
+
 ❌ Planning file hai? (code se pehle sochna)
-   → Part 1 hamesha planning — 4 sawaal: kya, pages, data shape, flow
+   → Part 1 hamesha planning — client brief + planning questions
 
 ❌ Data shape ka reason hai?
    → Har field UI se justified — list pe kya, detail pe kya
