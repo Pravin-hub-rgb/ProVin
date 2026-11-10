@@ -1,5 +1,3 @@
-# DSA Course Build Guide (Java, Pattern-Based)
-
 *A brief for the course developer. It explains what to build, in what order, and how every module should look.*
 
 ## 1. What we are building

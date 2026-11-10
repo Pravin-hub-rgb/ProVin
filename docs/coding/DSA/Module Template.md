@@ -1,5 +1,3 @@
-# Module Template (Reusable Skeleton)
-
 > This is the skeleton every pattern module (Modules 2–22) follows. Copy this file, fill in each section. Section order is fixed so the learner always knows where to look. Theory stays short — learning happens in the practice problems.
 
 ---

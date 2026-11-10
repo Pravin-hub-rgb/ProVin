@@ -1,5 +1,3 @@
-# DSA Course Roadmap (Java, Pattern-Based)
-
 > **Language: Java.** This course is built in Java, not JavaScript. The old JavaScript-based Phase 1 notes are being migrated to Java modules; until then, treat them as reference only.
 
 ## What You're Building

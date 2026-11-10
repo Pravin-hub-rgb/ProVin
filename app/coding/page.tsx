@@ -577,7 +577,7 @@ export default function CodingPage({selectedSubject, setSelectedSubject, selecte
             </div>
           ) : (
             <div className="max-w-4xl mx-auto text-center py-16">
-              <div className="text-6xl mb-4">ðŸ“–</div>
+              <div className="text-6xl mb-4">📚</div>
               <h2 className="text-2xl font-bold text-foreground mb-4">Select a Lecture</h2>
               <p className="text-muted-foreground">
                 Choose a lecture from the sidebar to view its notes.

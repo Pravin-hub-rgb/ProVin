@@ -1,5 +1,3 @@
-# Tier 3+: Extra Practice (Beyond the 300)
-
 **Target:** the 400-500 range suggested for Amazon / Microsoft / Google-style interviews  
 **Problems in this file:** 274  
 **Cumulative total after the 300 + this file:** 574 problems

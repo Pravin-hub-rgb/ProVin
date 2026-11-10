@@ -1,5 +1,3 @@
-﻿# Tier 1: Foundation
-
 **Target:** ~5-10 LPA: service companies, small startups, basic roles  
 **Problems in this file:** 83  
 **Cumulative total:** 85 problems

@@ -1,5 +1,3 @@
-# Tier 3: Advanced / Big Tech Prep
-
 **Target:** ~20-40 LPA: Amazon, Microsoft, Google-style interviews  
 **Problems in this file:** 83  
 **Cumulative total:** 300 problems

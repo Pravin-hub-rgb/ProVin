@@ -1,5 +1,3 @@
-﻿# Tier 2: Core Product Companies
-
 **Target:** ~10-20 LPA: mid-level product companies, fintech, good startups  
 **Problems in this file:** 134  
 **Cumulative total:** 215 problems
