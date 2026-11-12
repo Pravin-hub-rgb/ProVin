@@ -91,8 +91,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-1.0",
-          title: "1.0 Routing Fundamentals — What to Learn",
-          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.0 Routing Fundamentals — What to Learn.md",
+          title: "1.0 Routing Fundamentals — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.0 Routing Fundamentals — Kya Seekhenge.md",
         },
         {
           id: "next-1.1",
@@ -136,7 +136,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-1.5.5",
-          title: "1.5.5 States + Testing — Completing Were Project",
+          title: "1.5.5 States + Testing — Completing the Project",
           path: "docs/coding/Next JS/Batch 1 - Routing Fundamentals/1.5.5 States + Testing — Project Complete Karna.md",
         },
         {
@@ -153,8 +153,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-2.0",
-          title: "2.0 Rendering & Data Fetching — What to Learn",
-          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.0 Rendering & Data Fetching — What to Learn.md",
+          title: "2.0 Rendering & Data Fetching — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 2 - Rendering & Data Fetching/2.0 Rendering & Data Fetching — Kya Seekhenge.md",
         },
         {
           id: "next-2.1",
@@ -210,8 +210,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-3.0",
-          title: "3.0 Mutations — What to Learn",
-          path: "docs/coding/Next JS/Batch 3 - Mutations/3.0 Mutations — What to Learn.md",
+          title: "3.0 Mutations — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.0 Mutations — Kya Seekhenge.md",
         },
         {
           id: "next-3.1",
@@ -372,7 +372,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-4.6",
-          title: "4.6 Reading Cookies — Inside Were Request",
+          title: "4.6 Reading Cookies — Inside the Request",
           path: "docs/coding/Next JS/Batch 4 - Proxy (Middleware) Deep Dive/4.6 Cookies Padhna — Request Ke Andar.md",
         },
         {
@@ -439,8 +439,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-5.0",
-          title: "5.0 Authentication — What to Learn",
-          path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.0 Authentication — What to Learn.md",
+          title: "5.0 Authentication — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 5 - Authentication & Protected Access/5.0 Authentication — Kya Seekhenge.md",
         },
         {
           id: "next-5.1",
@@ -536,8 +536,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-6.0",
-          title: "6.0 Database Integration — What to Learn",
-          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.0 Database Integration — What to Learn.md",
+          title: "6.0 Database Integration — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 6 - Database Integration/6.0 Database Integration — Kya Seekhenge.md",
         },
         {
           id: "next-6.1",
@@ -551,7 +551,7 @@ export const nextjsSubject: Subject = {
         },
         {
           id: "next-6.3",
-          title: "6.3 ORM & Providers — Tools to Talk to Were Database",
+          title: "6.3 ORM & Providers — Tools to Talk to the Database",
           path: "docs/coding/Next JS/Batch 6 - Database Integration/6.3 ORM aur Providers — Database Se Baat Karne Ke Tools.md",
         },
         {
@@ -663,8 +663,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-7.0",
-          title: "7.0 Optimization & Production — What to Learn",
-          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.0 Optimization & Production — What to Learn.md",
+          title: "7.0 Optimization & Production — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 7 - Optimization & Production Concerns/7.0 Optimization & Production — Kya Seekhenge.md",
         },
         {
           id: "next-7.1",
@@ -735,8 +735,8 @@ export const nextjsSubject: Subject = {
       lectures: [
         {
           id: "next-8.0",
-          title: "8.0 Security & Deployment — What to Learn",
-          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.0 Security & Deployment — What to Learn.md",
+          title: "8.0 Security & Deployment — Kya Seekhenge",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.0 Security & Deployment — Kya Seekhenge.md",
         },
         {
           id: "next-8.1",
@@ -781,7 +781,7 @@ export const nextjsSubject: Subject = {
         {
           id: "next-8.6",
           title: "8.6 Next.js MCP — What Is It & Why",
-          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.6 Next.js MCP — AI Assistant That Reads Your Code.md",
+          path: "docs/coding/Next JS/Batch 8 - Security & Deployment/8.6 Next.js MCP — AI Dev Tool That Reads Your Code.md",
         },
         {
           id: "next-8.6-1",

@@ -76,7 +76,7 @@ export const agenticaiProSubject: Subject = {
         },
         {
           id: "ai-2.3",
-          title: "2.3 Adding Tools & Were ReAct Agent",
+          title: "2.3 Adding Tools & the ReAct Agent",
           path: "docs/coding/Agentic AI Production/Phase 2 - LangGraph/2.3 Adding Tools & the ReAct Agent.md",
         },
         {
@@ -127,7 +127,7 @@ export const agenticaiProSubject: Subject = {
       lectures: [
         {
           id: "ai-3.1",
-          title: "3.1 RAG from Were Ground Up",
+          title: "3.1 RAG from the Ground Up",
           path: "docs/coding/Agentic AI Production/Phase 3 - RAG Deep Dive/3.1 RAG from the Ground Up.md",
         },
         {
@@ -147,7 +147,7 @@ export const agenticaiProSubject: Subject = {
         },
         {
           id: "ai-3.5",
-          title: "3.5 Were Full RAG Pipeline",
+          title: "3.5 The Full RAG Pipeline",
           path: "docs/coding/Agentic AI Production/Phase 3 - RAG Deep Dive/3.5 The Full RAG Pipeline.md",
         },
         {

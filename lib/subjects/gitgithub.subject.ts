@@ -14,7 +14,7 @@ export const gitgithubSubject: Subject = {
   phases: [
     {
       id: "phase0",
-      title: "Phase 0 — Were Mental Model (No Typing Yet)",
+      title: "Phase 0 — the Mental Model (No Typing Yet)",
       openByDefault: true,
       lectures: [
         {
@@ -29,7 +29,7 @@ export const gitgithubSubject: Subject = {
         },
         {
           id: "git-0.3",
-          title: "0.3 Were Three Areas: Working Directory, Staging Area, Repository",
+          title: "0.3 The Three Areas: Working Directory, Staging Area, Repository",
           path: "docs/coding/Git & Github/Phase 0 - The Mental Model (No Typing Yet)/0.3 The Three Areas Working Directory, Staging Area, Repository.md",
         },
         {
@@ -66,7 +66,7 @@ export const gitgithubSubject: Subject = {
         },
         {
           id: "git-1.4",
-          title: "1.4 Visualizing Were Branch Graph",
+          title: "1.4 Visualizing the Branch Graph",
           path: "docs/coding/Git & Github/Phase 1 - Branching, Done Properly/1.4 Visualizing the Branch Graph.md",
         },
         {
@@ -78,7 +78,7 @@ export const gitgithubSubject: Subject = {
     },
     {
       id: "phase2",
-      title: "Phase 2 — Were Pull Request Workflow (Were Real \"Team\" Skill)",
+      title: "Phase 2 — the Pull Request Workflow (the Real \"Team\" Skill)",
       openByDefault: false,
       lectures: [
         {
@@ -93,7 +93,7 @@ export const gitgithubSubject: Subject = {
         },
         {
           id: "git-2.3",
-          title: "2.3 Were Full Loop: Push → Open PR → Review → Approve → Merge",
+          title: "2.3 The Full Loop: Push → Open PR → Review → Approve → Merge",
           path: "docs/coding/Git & Github/Phase 2 - The Pull Request Workflow/2.3 The Full Loop Push Branch → Open PR → Review → Approve → Merge.md",
         },
         {
@@ -135,7 +135,7 @@ export const gitgithubSubject: Subject = {
         },
         {
           id: "git-3.4",
-          title: "3.4 Resolving Conflicts via Were GitHub Web Editor",
+          title: "3.4 Resolving Conflicts via the GitHub Web Editor",
           path: "docs/coding/Git & Github/Phase 3 - Conflicts, On Purpose/3.4 Resolving Conflicts via the GitHub Web Editor.md",
         },
         {
@@ -179,7 +179,7 @@ export const gitgithubSubject: Subject = {
     },
     {
       id: "phase5",
-      title: "Phase 5 — GitHub Team Features (Were Process Layer)",
+      title: "Phase 5 — GitHub Team Features (the Process Layer)",
       openByDefault: false,
       lectures: [
         {
@@ -236,7 +236,7 @@ export const gitgithubSubject: Subject = {
         },
         {
           id: "git-6.5",
-          title: "6.5 Continue Were Remaining Features",
+          title: "6.5 Continue the Remaining Features",
           path: "docs/coding/Git & Github/Phase 6 - Capstone Project/6.5 Continue the Remaining Features.md",
         },
         {
@@ -246,7 +246,7 @@ export const gitgithubSubject: Subject = {
         },
         {
           id: "git-6.7",
-          title: "6.7 Final Review of Were Repo's Story",
+          title: "6.7 Final Review of the Repo's Story",
           path: "docs/coding/Git & Github/Phase 6 - Capstone Project/6.7 Final Review of the Repo Story.md",
         },
         {

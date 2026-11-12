@@ -50,7 +50,7 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-0.3",
-           title: "0.3 Reconciliation, Diffing, and Were key Prop",
+           title: "0.3 Reconciliation, Diffing, and the key Prop",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.3 Reconciliation, Diffing aur key Prop.md",
         },
         {
@@ -523,24 +523,24 @@ export const reactSubject: Subject = {
         },
 
         {
+          id: "react-4.4.2",
+          title: "4.4.2 RHF — Built-in Validation",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.2 RHF — Built-in Validation.md",
+        },
+        {
           id: "react-4.4.3",
-          title: "4.4.3 RHF — Built-in Validation",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.3 RHF — Built-in Validation.md",
+          title: "4.4.3 Zod — Introduction",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.3 Zod — Introduction.md",
         },
         {
           id: "react-4.4.4",
-          title: "4.4.4 Zod — Introduction",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.4 Zod — Introduction.md",
+          title: "4.4.4 Zod — Validation Rules",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.4 Zod — Validation Rules.md",
         },
         {
           id: "react-4.4.5",
-          title: "4.4.5 Zod — Validation Rules",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.5 Zod — Validation Rules.md",
-        },
-        {
-          id: "react-4.4.6",
-          title: "4.4.6 RHF + Zod — Complete Form",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.6 RHF + Zod — Complete Form.md",
+          title: "4.4.5 RHF + Zod — Complete Form",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.5 RHF + Zod — Complete Form.md",
         },
         {
           id: "react-4.5.1",
@@ -716,7 +716,7 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-6.7.1",
-          title: "6.7.1 Redux Core — Store, Action, Reducer (Were Manual Pain)",
+          title: "6.7.1 Redux Core — Store, Action, Reducer (the Manual Pain)",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.1 Redux Core — Store, Action, Reducer (Manual Wala Dard).md",
         },
         {
