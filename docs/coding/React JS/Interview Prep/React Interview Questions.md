@@ -442,9 +442,9 @@ function UserMenu({ theme }) { return <div className={theme}>…</div>; }
 const ThemeContext = createContext();
 function App() {
   return (
-    <ThemeContext.Provider value={{ theme: 'dark' }}>
+    <ThemeContext value={{ theme: 'dark' }}>
       <Header />
-    </ThemeContext.Provider>
+    </ThemeContext>
   );
 }
 function UserMenu() {
@@ -638,12 +638,12 @@ const ThemeContext = createContext();
 function App() {
   const [theme, setTheme] = useState('light');
   return (
-    <ThemeContext.Provider value={{
+    <ThemeContext value={{
       theme,
       toggle: () => setTheme(t => (t === 'light' ? 'dark' : 'light'))
     }}>
       <Toolbar />
-    </ThemeContext.Provider>
+    </ThemeContext>
   );
 }
 
@@ -828,9 +828,9 @@ Split Context (separate providers for separate concerns), memoize the provider v
 
 ```jsx
 // ❌ every micro-update re-renders all consumers
-<HeaderContext.Provider value={liveData}>
+<HeaderContext value={liveData}>
   <Header /><Sidebar /><Content />
-</HeaderContext.Provider>
+</HeaderContext>
 
 // ✅ split contexts + memoize values
 const HeaderContext = createContext();   // rarely changes

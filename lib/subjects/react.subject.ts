@@ -84,6 +84,11 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.8 Project Setup.md",
         },
         {
+          id: "react-0.8.5",
+          title: "0.8.5 The Four Scripts — dev, build, preview, lint",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.8.5 The Four Scripts — dev, build, preview, lint.md",
+        },
+        {
           id: "intv-0.9",
           title: "0.9 Interview Questions — Module 0",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.9 Interview Questions - Module 0.md",
@@ -134,6 +139,11 @@ export const reactSubject: Subject = {
           id: "quiz-0.8",
           title: "❓ 0.8 Quiz",
           path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.8 Quiz — Project Setup.md",
+        },
+        {
+          id: "quiz-0.8.5",
+          title: "❓ 0.8.5 Quiz",
+          path: "docs/coding/React JS/Module 0 - React Kaise Kaam Karta Hai/0.8.5 Quiz — The Four Scripts.md",
         },
         {
           id: "quiz-0.2",
@@ -840,6 +850,22 @@ export const reactSubject: Subject = {
           id: "intv-t.9",
           title: "T.9 Interview Questions — TrackIt",
           path: "docs/coding/React JS/Capstone - TrackIt/T.9 Interview Questions - TrackIt.md",
+        },
+      ],
+    },
+    {
+      id: "mock-interview",
+      title: "Mock Interview — BookShelf Take-Home",
+      lectures: [
+        {
+          id: "react-m.1",
+          title: "M.1 The Brief, Strategy & Submission",
+          path: "docs/coding/React JS/Mock Interview - BookShelf Take-Home/M.1 The Brief, Strategy and Submission.md",
+        },
+        {
+          id: "react-m.2",
+          title: "M.2 Walkthrough Notes (Read After Attempting)",
+          path: "docs/coding/React JS/Mock Interview - BookShelf Take-Home/M.2 Walkthrough Notes (Read After Attempting).md",
         },
       ],
     },

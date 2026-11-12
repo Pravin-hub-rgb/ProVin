@@ -24,21 +24,23 @@ What should the Dashboard show? Senior thinking — the user needs a **quick ove
 Run in the project root:
 
 ```bash
-bun add -d tailwindcss @tailwindcss/postcss postcss
+bun add tailwindcss @tailwindcss/vite
 ```
 
-Create `postcss.config.js` (in the root folder — a common mistake from 4.1.1, don't put it in `src/`):
+Register the plugin in `vite.config.ts` (no `postcss.config.js` needed — the v4 Vite-plugin way from 4.1.1):
 
-```js
-// postcss.config.js — in project ROOT (not src/)
-export default {
-  plugins: {
-    "@tailwindcss/postcss": {},
-  },
-};
+```ts
+// vite.config.ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+
+export default defineConfig({
+  plugins: [react(), tailwindcss()],
+});
 ```
 
-Then import Tailwind in `src/index.css`:
+Then import Tailwind in `src/index.css` (one file only):
 
 ```css
 /* src/index.css */
@@ -260,7 +262,7 @@ Now add Tailwind classes to the pages from T.4/T.5. Example — the add-habit se
 
 ## What T.6 Taught Us
 
-1. **Tailwind setup** — postcss config in root, `@import "tailwindcss"`
+1. **Tailwind setup** — `@tailwindcss/vite` registered in `vite.config.ts`, `@import "tailwindcss"` in one CSS file
 2. **Derived data with `useMemo`** — stats, streaks, week rates — cached
 3. **`useFetch<T>` in real use** — quote API, env var fallback, loading/error states
 4. **Responsive grid** — `grid-cols-2 lg:grid-cols-4`, `p-4 md:p-8`
@@ -277,12 +279,12 @@ The Dashboard is ready — the user gets a quick overview, a motivational quote,
 
 ## In Your Own Words
 
-1. Why does the `postcss.config.js` go in the root folder? (Lesson from 4.1.1)
+1. Why must `@tailwindcss/vite` be registered in `vite.config.ts`? (Lesson from 4.1.1)
 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** Vite looks for PostCSS config in the root folder — not in `src/`. If you put the config in `src/`, Vite won't use it and Tailwind won't work. The complete setup is: `postcss.config.js` in the root folder, plus `@import "tailwindcss"` in `src/index.css`. (In 4.1.1, this was highlighted as a common mistake — keep the config in the root.)
+**Sample Answer:** Vite only runs plugins — it doesn't know Tailwind by itself. Registering `tailwindcss()` in the `plugins` array teaches Vite how to convert Tailwind syntax into plain CSS. Without the registration, `@import "tailwindcss"` sits unprocessed in `src/index.css` and no utility class works — no error, just silence. The complete v4 setup: install `tailwindcss @tailwindcss/vite`, register the plugin, `@import "tailwindcss"` in one CSS file, restart dev server.
 
 </details>
 

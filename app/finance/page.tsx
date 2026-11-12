@@ -348,7 +348,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
           }
         }} className={`flex-1 overflow-auto p-8 ${styles.contentArea}`}>
           {currentLecture ? (  
-            <div className="max-w-4xl pb-12">
+            <div className="pb-12 px-4 lg:px-8">
               <div className="mb-6">
                 <h1 className="text-3xl font-bold text-foreground mb-2">
                   {currentLecture.title}
@@ -367,7 +367,7 @@ export default function FinancePage({selectedSubject, setSelectedSubject, select
                )}
             </div>
           ) : (
-            <div className="max-w-4xl mx-auto text-center py-16">
+            <div className="w-full max-w-[1200px] mx-auto text-center py-16">
               <div className="text-6xl mb-4">📖</div>
               <h2 className="text-2xl font-bold text-foreground mb-4">Select a Lecture</h2>
               <p className="text-muted-foreground">
