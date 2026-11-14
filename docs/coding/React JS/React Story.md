@@ -180,7 +180,8 @@ Two batches came before this point: Module 0 built the *mechanism* (VDOM, reconc
 
 - **Navigation (react-router)** — how routes become components and guard who sees what.
 - **Styling + Forms** — Tailwind, responsive design, React Hook Form + Zod.
-- **Performance** — `React.memo`, `useMemo`, `useCallback`, `useReducer`, lazy loading.
+- **State management** — `useReducer` + Context, and the E-Commerce Store built on it.
+- **Performance** — `React.memo`, `useMemo`, `useCallback`, lazy loading.
 - **Reusability + state libraries** — custom hooks, Zustand, Redux Toolkit.
 - **One ending? No — multiple endings.**
 

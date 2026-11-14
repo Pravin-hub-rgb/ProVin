@@ -1,5 +1,3 @@
-# DBMS — Interview Prep (Deep Dive)
-
 > Target: Full-stack developer roles, Gurgaon, 5–30 LPA range
 > Context: You already use Postgres/Supabase + Prisma in DukaanOS — wherever possible, use that schema as the example instead of cramming. Connect concepts to your actual work.
 

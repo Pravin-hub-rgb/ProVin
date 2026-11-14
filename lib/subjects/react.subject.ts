@@ -542,50 +542,35 @@ export const reactSubject: Subject = {
           title: "4.4.5 RHF + Zod — Complete Form",
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.5 RHF + Zod — Complete Form.md",
         },
-        {
-          id: "react-4.5.1",
-          title: "4.5.1 Project Start — E-Commerce Store",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.1 Project Start — E-Commerce Store.md",
+                {
+          id: "react-4.4.7",
+          title: "4.4.7 Auth Demo — Project Start",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.7 Auth Demo - Project Start.md",
         },
         {
-          id: "react-4.5.2",
-          title: "4.5.2 Product List — E-Commerce Store",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.2 Product List — E-Commerce Store.md",
+          id: "react-4.4.8",
+          title: "4.4.8 Auth Validation — Zod Schemas",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.8 Auth Validation - Zod Schemas.md",
         },
         {
-          id: "react-4.5.3",
-          title: "4.5.3 Product Card — E-Commerce Store",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.3 Product Card — E-Commerce Store.md",
+          id: "react-4.4.9",
+          title: "4.4.9 Registration Form — RHF + Zod",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.9 Registration Form - RHF + Zod.md",
         },
         {
-          id: "react-4.5.4",
-          title: "4.5.4 Product Detail — E-Commerce Store",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.4 Product Detail — E-Commerce Store.md",
+          id: "react-4.4.10",
+          title: "4.4.10 Login Form + Fake Session",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.10 Login Form + Fake Session.md",
         },
         {
-          id: "react-4.5.5",
-          title: "4.5.5 Types and Shared Data — E-Commerce Store",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.5 Types aur Shared Data — E-Commerce Store.md",
+          id: "react-4.4.11",
+          title: "4.4.11 Protected Routes Practice",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.11 Protected Routes Practice.md",
         },
         {
-          id: "react-4.5.6",
-          title: "4.5.6 Cart Context — E-Commerce Store",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.6 Cart Context — E-Commerce Store.md",
-        },
-        {
-          id: "react-4.5.7",
-          title: "4.5.7 Cart Drawer — E-Commerce Store",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.7 Cart Drawer — E-Commerce Store.md",
-        },
-        {
-          id: "react-4.5.8",
-          title: "4.5.8 Checkout — E-Commerce Store",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.8 Checkout — E-Commerce Store.md",
-        },
-        {
-          id: "react-4.5.9",
-          title: "4.5.9 Order Confirmation — E-Commerce Store",
-          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.5.9 Order Confirmation — E-Commerce Store.md",
+          id: "react-4.4.12",
+          title: "4.4.12 Logout, Persistence aur Wrap-up",
+          path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.12 Logout, Persistence aur Wrap-up.md",
         },
         {
           id: "intv-4.6",
@@ -603,6 +588,67 @@ export const reactSubject: Subject = {
           id: "quiz-4.4.6",
           title: "❓ 4.4.6 Quiz",
           path: "docs/coding/React JS/Batch 4 - Styling, Forms & Accessibility/4.4.6 Quiz — React Hook Form aur Zod.md",
+        },
+      ],
+    },
+    {
+      id: "batch45",
+      title: "Batch 4.5 — State Management",
+      lectures: [
+        {
+          id: "react-4.5.0",
+          title: "4.5.0 useReducer — Complex State Management",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.0 useReducer — Complex State Management.md",
+        },
+        {
+          id: "react-4.5.1",
+          title: "4.5.1 Project Start — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.1 Project Start — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.2",
+          title: "4.5.2 Product List — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.2 Product List — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.3",
+          title: "4.5.3 Product Card — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.3 Product Card — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.4",
+          title: "4.5.4 Product Detail — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.4 Product Detail — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.5",
+          title: "4.5.5 Types aur Shared Data — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.5 Types aur Shared Data — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.6",
+          title: "4.5.6 Cart Context — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.6 Cart Context — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.7",
+          title: "4.5.7 Cart Drawer — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.7 Cart Drawer — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.8",
+          title: "4.5.8 Checkout — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.8 Checkout — E-Commerce Store.md",
+        },
+        {
+          id: "react-4.5.9",
+          title: "4.5.9 Order Confirmation — E-Commerce Store",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.9 Order Confirmation — E-Commerce Store.md",
+        },
+        {
+          id: "intv-4.5.10",
+          title: "4.5.10 Interview Questions — Batch 4.5",
+          path: "docs/coding/React JS/Batch 4.5 - State Management/4.5.10 Interview Questions - Batch 4.5.md",
         },
       ],
     },
@@ -630,32 +676,27 @@ export const reactSubject: Subject = {
           title: "5.4 Mini-Project — Re-render Visualizer",
           path: "docs/coding/React JS/Batch 5 - Performance/5.4 Mini-Project — Re-render Visualizer.md",
         },
-        {
+                {
           id: "react-5.5",
-          title: "5.5 useReducer — Complex State Management",
-          path: "docs/coding/React JS/Batch 5 - Performance/5.5 useReducer — Complex State Management.md",
+          title: "5.5 Lazy Loading, Suspense aur Code Splitting",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.5 Lazy Loading, Suspense aur Code Splitting.md",
         },
         {
           id: "react-5.6",
-          title: "5.6 Lazy Loading, Suspense and Code Splitting",
-          path: "docs/coding/React JS/Batch 5 - Performance/5.6 Lazy Loading, Suspense aur Code Splitting.md",
+          title: "5.6 Mini-Project — Image Gallery",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.6 Mini-Project — Image Gallery.md",
         },
         {
           id: "react-5.7",
-          title: "5.7 Mini-Project — Image Gallery",
-          path: "docs/coding/React JS/Batch 5 - Performance/5.7 Mini-Project — Image Gallery.md",
+          title: "5.7 Combined Project — Analytics Dashboard",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.7 Combined Project — Analytics Dashboard.md",
         },
         {
-          id: "react-5.8",
-          title: "5.8 Combined Project — Analytics Dashboard",
-          path: "docs/coding/React JS/Batch 5 - Performance/5.8 Combined Project — Analytics Dashboard.md",
+          id: "intv-5.8",
+          title: "5.8 Interview Questions — Batch 5",
+          path: "docs/coding/React JS/Batch 5 - Performance/5.8 Interview Questions - Batch 5.md",
         },
-        {
-          id: "intv-5.9",
-          title: "5.9 Interview Questions — Batch 5",
-          path: "docs/coding/React JS/Batch 5 - Performance/5.9 Interview Questions - Batch 5.md",
-        },
-      ],
+        ],
       quizzes: [
         {
           id: "quiz-5.1",
@@ -707,7 +748,7 @@ export const reactSubject: Subject = {
     },
     {
       id: "batch6-rtk",
-      title: "Batch 6.7 — Redux Toolkit (Enterprise) — Optional",
+      title: "Batch 6.7 — Redux Toolkit (Enterprise) — Required",
       lectures: [
         {
           id: "react-6.7.0",

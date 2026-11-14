@@ -1,5 +1,3 @@
-# Computer Networks — Interview Prep (Deep Dive)
-
 > Target: Full-stack developer roles, Gurgaon, 5–30 LPA range
 > Context: This subject connects most directly to web dev — everything you do daily, API calls, WebSockets (the Upstox one), voice streaming in DukaanOS/trading bot, all of it is concepts from here. So no deep cramming — build the "I've already used this" understanding.
 

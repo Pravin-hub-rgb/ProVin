@@ -67,14 +67,19 @@ flowchart LR
         P5_8["Zod"]
         P5_9["RHF + Zod"]
     end
+    subgraph P45["Batch 4.5 — State Management"]
+        direction TB
+        P45_0["useReducer"]
+        P45_1["E-Commerce Store"]
+    end
+
 
     subgraph P6["Batch 5 — Performance"]
         direction TB
         P6_0["React.memo"]
         P6_1["useMemo"]
         P6_2["useCallback"]
-        P6_3["useReducer"]
-        P6_4["Lazy Loading, Suspense and Code Splittin"]
+        P6_4["Lazy Loading, Suspense and Code Splitting"]
         P6_5["Class Components"]
     end
 
@@ -85,7 +90,7 @@ flowchart LR
         P7_2["Zustand"]
     end
 
-    subgraph P8["Batch 6.7 — Redux Toolkit (Enterprise) — Optional"]
+    subgraph P8["Batch 6.7 — Redux Toolkit (Enterprise) — Required"]
         direction TB
         P8_0["What is RTK and Why"]
         P8_1["Redux Core"]
@@ -108,7 +113,8 @@ flowchart LR
     P2 --> P3
     P3 --> P4
     P4 --> P5
-    P5 --> P6
+    P5 --> P45
+    P45 --> P6
     P6 --> P7
     P7 --> P8
     P8 --> P9
@@ -119,7 +125,8 @@ flowchart LR
     P3_0 --> P3_1 --> P3_2 --> P3_3 --> P3_4 --> P3_5
     P4_0 --> P4_1 --> P4_2
     P5_0 --> P5_1 --> P5_2 --> P5_3 --> P5_4 --> P5_5 --> P5_6 --> P5_7 --> P5_8 --> P5_9
-    P6_0 --> P6_1 --> P6_2 --> P6_3 --> P6_4 --> P6_5
+    P45_0 --> P45_1
+    P6_0 --> P6_1 --> P6_2 --> P6_4 --> P6_5
     P7_0 --> P7_1 --> P7_2
     P8_0 --> P8_1 --> P8_2 --> P8_3 --> P8_4
     P9_0 --> P9_1 --> P9_2 --> P9_3

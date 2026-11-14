@@ -25,6 +25,7 @@ Run in the project root:
 
 ```bash
 bun add tailwindcss @tailwindcss/vite
+# npm: npm install tailwindcss @tailwindcss/vite
 ```
 
 Register the plugin in `vite.config.ts` (no `postcss.config.js` needed — the v4 Vite-plugin way from 4.1.1):

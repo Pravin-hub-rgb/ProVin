@@ -1,5 +1,3 @@
-# Core Subjects — Complete Roadmap
-
 ### CS Fundamentals for Full-Stack Developer Roles
 
 **Prerequisite:** TypeScript basics should be in place (classes, interfaces, async/await). You're already using Prisma + Supabase in the DukaanOS project — so you have practical experience with databases, API calls, and data structures.

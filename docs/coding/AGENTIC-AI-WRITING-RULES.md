@@ -68,6 +68,8 @@ Every file must connect to the previous one. Use these transition techniques:
 
 Each file's opening sentence should reference something specific from the previous file — not a generic "in the last chapter."
 
+- **Prior-project references are never load-bearing.** Teach every concept with its own reasoning inside the current file. Mentioning an earlier project (gym, To-Do, etc.) is fine as an optional aside in parentheses, but the explanation must not depend on it — a reader who skipped that project must lose nothing. Bad: "The gym's features grid, same thinking: base = mobile." Good: state the mobile-first rule fully here, then "(the gym's feature grid used the same trick)" as a nod.
+
 ---
 
 ## 3. Conversational Tone

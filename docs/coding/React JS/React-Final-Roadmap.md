@@ -83,6 +83,17 @@ Build a multi-page blog: `/` home (post list), `/posts/:id` (dynamic route with 
 | M | Forms — **Manual** controlled inputs + manual `if`-based validation (first) | typed form state `interface`, `React.FormEvent` | **Notes App v1** — form-heavy app (create/edit/delete note), with all validation written by hand (empty fields, length checks) |
 | M2 | Forms — **Better**: React Hook Form + Zod (validation library) | Zod schema + `z.infer<typeof schema>` for automatic types | **Notes App v2** — same app, now rebuilt with RHF (fewer re-renders, less boilerplate) + Zod (schema-based, type-safe) — keep both versions side by side so the difference is visible |
 
+### 🔗 Batch 4 capstone — **Auth Demo**
+Registration + login (RHF + Zod, cross-field refine), fake session in Context (`User | null`), protected routes re-practiced from 3.3, logout + persistence (lazy initializer). Files 4.4.7-4.4.12.
+
+---
+
+# BATCH 4.5 — State Management
+
+| # | Concept | TypeScript Layer | Mini-Project |
+|---|---|---|---|
+| O | `useReducer` + Context (the hand-built store) | discriminated union action types (`{type:'add', payload:...}`) | **E-Commerce Store** - below |
+
 ### 🔗 Combined Project #4 — **E-Commerce Store**
 Product listing page (Tailwind responsive grid, accessible product cards), product detail page, shopping cart (lifted state + context), checkout form with React Hook Form + Zod validation, order confirmation. Keyboard + screen-reader testing across the whole app.
 
@@ -93,7 +104,6 @@ Product listing page (Tailwind responsive grid, accessible product cards), produ
 | # | Concept | TypeScript Layer | Mini-Project |
 |---|---|---|---|
 | N | `React.memo`, `useMemo`, `useCallback` | props typing revisit | **Re-render Visualizer** — a small demo app where a counter/border flashes on every render, so the difference shows up with the Profiler |
-| O | `useReducer` | discriminated union action types (`{type:'add', payload:...}`) | (no new isolated project — we'll migrate state inside the combined project) |
 | P | Lazy Loading, Suspense, Code Splitting | — | **Image Gallery** with `React.lazy()` — routes/components load on demand (matches the reference course's Gallery Project) |
 
 ### 🔗 Combined Project #5 — **Analytics Dashboard**

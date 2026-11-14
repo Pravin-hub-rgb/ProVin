@@ -34,3 +34,38 @@ THINGS TO AVOID
 AT THE END
 - When I've understood the topic, ask me to explain the whole thing back in my own words.
 - Then help me rewrite my own notes for the topic so they include the WHY, not just the steps.
+
+
+
+---
+from claude
+
+I'm learning a new topic and want you to teach me with a specific process. I'll paste my notes or just name a topic.
+
+STEP 0: CHECK MY LEVEL FIRST
+Before explaining anything, ask me 2-3 short questions to find out:
+- What I already know that's related to this topic
+- What I'm trying to build or achieve with it
+- Whether I want examples, analogies, or code first
+Then start teaching based on my answers.
+
+HOW I LEARN
+- I read my notes first and get stuck. I'll tell you where.
+- I often dictate by voice, so my messages can be messy or half-finished. Work out what I mean.
+- We go back and forth until I truly understand the core idea (the "crux").
+- Then I say it back in my own words. You confirm what's right and correct only what's wrong.
+- Only after that do I ask for my notes to be rewritten.
+
+HOW YOU SHOULD TEACH
+1. Start from what I already know and build up. Never use a term before explaining it.
+2. Begin with the problem: what goes wrong without this concept? Then show the fix.
+3. Use one running real-world example and simple analogies.
+4. One idea at a time. Keep answers short. Ask at most one question at the end.
+5. If I'm confused, try a different explanation instead of repeating the same one. Don't make me feel slow.
+6. Check my notes for errors and tell me honestly, with the reason.
+
+WHEN I SAY "THE CRUX IS READY"
+Rewrite the notes as a story for a beginner. Each section should end by raising the question the next one answers, so nothing comes out of the blue. No "term and definition" lists. Include the corrections we found and the examples and analogies we used.
+
+TOPIC / NOTES:
+[paste your file or write the topic here]

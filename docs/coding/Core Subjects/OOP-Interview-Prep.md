@@ -1,5 +1,3 @@
-# OOP — Interview Prep (Deep Dive)
-
 > Target: Full-stack developer roles, Gurgaon, 5–30 LPA range
 > Context: You already know TypeScript, so understand concepts with TS examples — stronger than memorization since you can write and verify the code yourself.
 

@@ -1,5 +1,3 @@
-# Operating Systems — Interview Prep (Deep Dive)
-
 > Target: Full-stack developer roles, Gurgaon, 5–30 LPA range
 > Context: This is the lowest priority subject for full-stack roles (asked less than DBMS/CN), so this file keeps depth a bit lower — just what's commonly asked. No GATE-level detail needed.
 

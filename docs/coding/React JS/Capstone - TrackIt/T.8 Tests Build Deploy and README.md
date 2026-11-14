@@ -292,6 +292,7 @@ describe("ProtectedRoute", () => {
 
 ```bash
 bun run test
+# npm: npm run test
 ```
 
 ```
@@ -314,6 +315,7 @@ Production build:
 
 ```bash
 bun run build
+# npm: npm run build
 ```
 
 Output:
@@ -335,6 +337,7 @@ Small initial bundle + pages load on demand — **code splitting is working** (T
 
 ```bash
 bun run preview
+# npm: npm run preview
 ```
 
 ---
@@ -395,7 +398,9 @@ tasks, and progress visualization. A production-grade React + TypeScript capston
 
 ## Setup
 bun install
+# npm: npm install
 bun run dev
+# npm: npm run dev
 
 ## Scripts
 - `bun run dev` — development server

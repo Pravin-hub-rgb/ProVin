@@ -108,6 +108,7 @@ In a new directory, create a Vite + React + TypeScript project with `bunx`:
 
 ```bash
 bunx create-vite@latest trackit --template react-ts
+# npm: npx create-vite@latest trackit --template react-ts
 cd trackit
 ```
 
@@ -131,7 +132,9 @@ trackit/
 
 ```bash
 bun add @reduxjs/toolkit react-redux redux-persist react-router-dom framer-motion
+# npm: npm install @reduxjs/toolkit react-redux redux-persist react-router-dom framer-motion
 bun add -d vitest jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom dompurify @types/dompurify
+# npm: npm install -D vitest jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom dompurify @types/dompurify
 ```
 
 **What each dependency does:**
@@ -215,6 +218,7 @@ body {
 
 ```bash
 bun run dev
+# npm: npm run dev
 ```
 
 In the browser, `http://localhost:5173` — the "TrackIt" heading should appear. **Project setup is complete.** This milestone is small but very important — big projects are built on clean structure.
