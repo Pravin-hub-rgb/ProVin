@@ -9,6 +9,7 @@ import { CourseSidebar } from "@/components/course-sidebar"
 import { spokenEnglishSubject } from "@/lib/general-subjects/spoken-english.subject"
 import { chessSubject } from "@/lib/general-subjects/chess-to-1000.subject"
 import { geopoliticsSubject } from "@/lib/general-subjects/geopolitics.subject"
+import { engineSubject } from "@/lib/general-subjects/engine.subject"
 import { getDefaultLecture } from "@/lib/subject-utils"
 import { loadMarkdownContent, type Subject, type Lecture } from "@/lib/general-data"
 import { getSubjectProgress } from "@/lib/progress-utils"
@@ -26,7 +27,7 @@ type GeneralPageProps = {
   setSelectedLecture: Dispatch<SetStateAction<string | null>>
 }
 
-const subjects: Subject[] = [spokenEnglishSubject, chessSubject, geopoliticsSubject]
+const subjects: Subject[] = [spokenEnglishSubject, chessSubject, geopoliticsSubject, engineSubject]
 
 export default function GeneralPage({selectedSubject, setSelectedSubject, selectedLecture, setSelectedLecture}: GeneralPageProps) {
   const { language, setHasHinglish } = useLanguage()

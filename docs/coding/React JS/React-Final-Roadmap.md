@@ -103,7 +103,7 @@ Product listing page (Tailwind responsive grid, accessible product cards), produ
 
 | # | Concept | TypeScript Layer | Mini-Project |
 |---|---|---|---|
-| N | `React.memo`, `useMemo`, `useCallback` | props typing revisit | **Re-render Visualizer** — a small demo app where a counter/border flashes on every render, so the difference shows up with the Profiler |
+| N | `React.memo`, `useMemo`, `useCallback`, `React Compiler` (automatic memoization) | props typing revisit | **Re-render Visualizer** — a small demo app where a counter/border flashes on every render, so the difference shows up with the Profiler |
 | P | Lazy Loading, Suspense, Code Splitting | — | **Image Gallery** with `React.lazy()` — routes/components load on demand (matches the reference course's Gallery Project) |
 
 ### 🔗 Combined Project #5 — **Analytics Dashboard**
