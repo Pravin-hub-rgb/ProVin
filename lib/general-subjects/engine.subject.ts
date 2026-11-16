@@ -249,12 +249,17 @@ export const engineSubject: Subject = {
           title: "The Differential",
           path: `${BASE}/Phase 6 - Transmission/6.4 The Differential.md`,
         },
+        {
+          id: "engine-6.5",
+          title: "The Automatic - The Torque Converter",
+          path: `${BASE}/Phase 6 - Transmission/6.5 The Automatic - The Torque Converter.md`,
+        },
       ],
       quizzes: [
         {
-          id: "quiz-6.5",
+          id: "quiz-6.6",
           title: "Quiz - Transmission",
-          path: `${BASE}/Phase 6 - Transmission/6.5 Quiz - Transmission.md`,
+          path: `${BASE}/Phase 6 - Transmission/6.6 Quiz - Transmission.md`,
         },
       ],
     },
@@ -289,6 +294,30 @@ export const engineSubject: Subject = {
           id: "quiz-7.5",
           title: "Quiz - Reading the Spec Sheet",
           path: `${BASE}/Phase 7 - Reading the Spec Sheet/7.5 Quiz - Reading the Spec Sheet.md`,
+        },
+      ],
+    },
+    {
+      id: "engine-phase-8",
+      title: "Phase 8 - Oil and Cooling",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "engine-8.1",
+          title: "Engine Oil - The Oil's Four Jobs",
+          path: `${BASE}/Phase 8 - Oil and Cooling/8.1 Engine Oil - The Oil's Four Jobs.md`,
+        },
+        {
+          id: "engine-8.2",
+          title: "The Radiator - Where the Heat Goes",
+          path: `${BASE}/Phase 8 - Oil and Cooling/8.2 The Radiator - Where the Heat Goes.md`,
+        },
+      ],
+      quizzes: [
+        {
+          id: "quiz-8.3",
+          title: "Quiz - Oil and Cooling",
+          path: `${BASE}/Phase 8 - Oil and Cooling/8.3 Quiz - Oil and Cooling.md`,
         },
       ],
     },

@@ -10,7 +10,7 @@ This course also starts from history on purpose. Engines were not designed all a
 
 ## What this course covers
 
-The full journey, in eight phases:
+The full journey, in nine phases:
 
 | Phase | Files | The question it answers |
 |---|---|---|
@@ -20,10 +20,13 @@ The full journey, in eight phases:
 | Phase 3 - Fuel Systems | 3.1-3.5 | Why can petrol and diesel not share the same ignition? |
 | Phase 4 - Flywheel, Starter and Clutch | 4.1-4.4 | How does the engine start, stay smooth, and connect to the car? |
 | Phase 5 - Cylinder Layouts | 5.1-5.4 | Why do engines come as inline, V, flat and rotary? |
-| Phase 6 - Transmission | 6.1-6.5 | How does engine spin reach the wheels at the right speed and force? |
+| Phase 6 - Transmission | 6.1-6.6 | How does engine spin reach the wheels at the right speed and force? |
 | Phase 7 - Reading the Spec Sheet | 7.1-7.5 | What do 1.5 litre, turbo, RPM, hp and Nm actually measure? |
+| Phase 8 - Oil and Cooling | 8.1-8.3 | What keeps the finished machine running without destroying itself? |
 
 Phase 7 answers the questions this course opened with. When you first heard "petrol 1.5 litre" or "turbo boost", none of it made sense, and that was correct - those numbers mean nothing until you know what a cylinder, a stroke and a bang are. By the time you reach them, they will be simple.
+
+Phase 8 adds the last layer: the support systems the spec sheet never names. A decoded machine is a map; a running machine also needs oil keeping metal off metal and coolant carrying the heat of every bang out to the air. Without those two loops, the beautiful machine from Phases 0-7 destroys itself in minutes.
 
 ## How to read this course
 
