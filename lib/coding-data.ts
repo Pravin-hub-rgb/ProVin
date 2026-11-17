@@ -49,6 +49,7 @@ import { webdevSubject } from "./subjects/webdev.subject";
 import { iknowcomputersSubject } from "./subjects/iknowcomputers.subject";
 import { agenticaiProSubject } from "./subjects/agenticai-pro.subject";
 import { agenticaiSubject } from "./subjects/agenticai.subject";
+import { aiFoundationSubject } from "./subjects/ai.subject";
 import { gitgithubSubject } from "./subjects/gitgithub.subject";
 import { reactSubject } from "./subjects/react.subject";
 import { typescriptSubject } from "./subjects/typescript.subject";
@@ -67,6 +68,7 @@ export const subjects: Subject[] = [
   iknowcomputersSubject,
   agenticaiProSubject,
   agenticaiSubject,
+  aiFoundationSubject,
   gitgithubSubject,
   reactSubject,
   typescriptSubject,
