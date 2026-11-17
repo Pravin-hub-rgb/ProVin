@@ -145,7 +145,7 @@
     "react-5.3": true,
     "react-5.4": true,
     "quiz-5.4": false,
-    "react-5.5": false,
+    "react-5.5": true,
     "react-5.6": false,
     "react-5.7": false,
     "react-6.1": false,
@@ -184,7 +184,8 @@
     "dsa-2.7": true,
     "dsa-2.11": true,
     "dsa-2.12": true,
-    "dsa-2.19": true
+    "dsa-2.19": true,
+    "dsa-2.13": true
   },
   "nextjs": {
     "next-0.0": false,
