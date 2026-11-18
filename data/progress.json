@@ -185,7 +185,8 @@
     "dsa-2.11": true,
     "dsa-2.12": true,
     "dsa-2.19": true,
-    "dsa-2.13": true
+    "dsa-2.13": true,
+    "dsa-2.14": true
   },
   "nextjs": {
     "next-0.0": false,
