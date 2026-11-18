@@ -177,5 +177,16 @@ export const webdevSubject: Subject = {
         { id: "hist-05", title: "Web History Part 5", path: "docs/coding/WEB-DEV/web history/web-history-part5.md" }
       ]
     },
+    {
+      id: "fullstack-road",
+      title: "🗺️ Full-Stack Roadmap",
+      openByDefault: false,
+      lectures: [
+        { id: "road-beginner", title: "Beginner", path: "docs/coding/WEB-DEV/fullstack_road/beginner.md" },
+        { id: "road-pre-int", title: "Pre-Intermediate", path: "docs/coding/WEB-DEV/fullstack_road/pre-intermediate.md" },
+        { id: "road-intermediate", title: "Intermediate", path: "docs/coding/WEB-DEV/fullstack_road/intermediate.md" },
+        { id: "road-advanced", title: "Advanced", path: "docs/coding/WEB-DEV/fullstack_road/advanced.md" }
+      ]
+    },
   ]
 };

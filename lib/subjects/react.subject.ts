@@ -173,6 +173,11 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.2 Pehla Component.md",
         },
         {
+          id: "react-1.2.5",
+          title: "1.2.5 Class Components - Side Note",
+          path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.2.5 Class Components — Side Note.md",
+        },
+        {
           id: "react-1.3",
           title: "1.3 Import / Export",
           path: "docs/coding/React JS/Batch 1 - Core Building Blocks/1.3 Import Export.md",
@@ -723,6 +728,21 @@ export const reactSubject: Subject = {
           id: "react-6.1",
           title: "6.1 Custom Hooks Basics",
           path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.1 Custom Hooks Basics.md",
+        },
+        {
+          id: "react-6.1.1",
+          title: "6.1.1 First Hook — useToggle",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.1.1 First Hook — useToggle.md",
+        },
+        {
+          id: "react-6.1.2",
+          title: "6.1.2 useDocumentTitle & usePrevious",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.1.2 useDocumentTitle & usePrevious.md",
+        },
+        {
+          id: "react-6.1.3",
+          title: "6.1.3 useBoolean & Wrap-Up",
+          path: "docs/coding/React JS/Batch 6 - Reusability & State Management/6.1.3 useBoolean & Wrap-Up.md",
         },
         {
           id: "react-6.2",

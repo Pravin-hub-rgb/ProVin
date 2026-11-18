@@ -172,5 +172,32 @@ export const coreSubjectsSubject: Subject = {
         },
       ],
     },
+    {
+      id: "phase5",
+      title: "Interview Prep",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "cs-int-dbms",
+          title: "DBMS Interview Prep",
+          path: "docs/coding/Core Subjects/DBMS-Interview-Prep.md",
+        },
+        {
+          id: "cs-int-cn",
+          title: "Computer Networks Interview Prep",
+          path: "docs/coding/Core Subjects/CN-Interview-Prep.md",
+        },
+        {
+          id: "cs-int-oop",
+          title: "OOP Interview Prep",
+          path: "docs/coding/Core Subjects/OOP-Interview-Prep.md",
+        },
+        {
+          id: "cs-int-os",
+          title: "Operating Systems Interview Prep",
+          path: "docs/coding/Core Subjects/OS-Interview-Prep.md",
+        },
+      ],
+    },
   ],
 };

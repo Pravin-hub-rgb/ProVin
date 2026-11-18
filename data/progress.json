@@ -148,7 +148,7 @@
     "react-5.5": true,
     "react-5.6": true,
     "react-5.7": false,
-    "react-6.1": false,
+    "react-6.1": true,
     "react-6.4": false,
     "quiz-2.5": true,
     "react-2.7": true,
@@ -161,7 +161,11 @@
     "react-4.5.6": true,
     "react-4.5.7": true,
     "react-4.5.8": true,
-    "react-4.5.9": true
+    "react-4.5.9": true,
+    "react-6.1.1": true,
+    "react-6.1.2": true,
+    "react-6.1.3": true,
+    "react-6.2": true
   },
   "dsa": {
     "dsa-1.3.1": true,

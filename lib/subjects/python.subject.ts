@@ -273,6 +273,31 @@ export const pythonSubject: Subject = {
       title: "2.0 Phase 2 - What We'll Learn + Project Preview",
       path: "docs/coding/Backend (Python)/Phase 2 - Real-time (WebSocket)/2.0 Phase 2 - Real-time (WebSocket) — Kya Seekhenge.md",
     },
+    {
+      id: "py-2.1",
+      title: "2.1 WebSocket Kya Hai",
+      path: "docs/coding/Backend (Python)/Phase 2 - Real-time (WebSocket)/2.1 WebSocket Kya Hai.md",
+    },
+    {
+      id: "py-2.2",
+      title: "2.2 ConnectionManager",
+      path: "docs/coding/Backend (Python)/Phase 2 - Real-time (WebSocket)/2.2 ConnectionManager.md",
+    },
+    {
+      id: "py-2.3",
+      title: "2.3 Chat Rooms",
+      path: "docs/coding/Backend (Python)/Phase 2 - Real-time (WebSocket)/2.3 Chat Rooms.md",
+    },
+    {
+      id: "py-2.4",
+      title: "2.4 TradeStack WebSocket",
+      path: "docs/coding/Backend (Python)/Phase 2 - Real-time (WebSocket)/2.4 TradeStack WebSocket.md",
+    },
+    {
+      id: "py-2.5",
+      title: "2.5 Chat App - Build It",
+      path: "docs/coding/Backend (Python)/Phase 2 - Real-time (WebSocket)/2.5 Chat App — Build It.md",
+    },
   ],
 }, {
   id: "phase3",
@@ -283,6 +308,41 @@ export const pythonSubject: Subject = {
       id: "py-3.0",
       title: "3.0 Phase 3 - What We'll Learn",
       path: "docs/coding/Backend (Python)/Phase 3 - TradeStack Backend Deep-Dive/3.0 Phase 3 - TradeStack Backend Deep-Dive — Kya Seekhenge.md",
+    },
+    {
+      id: "py-3.1",
+      title: "3.1 Server.py Walkthrough",
+      path: "docs/coding/Backend (Python)/Phase 3 - TradeStack Backend Deep-Dive/3.1 Server.py Walkthrough.md",
+    },
+    {
+      id: "py-3.2",
+      title: "3.2 DB Layer",
+      path: "docs/coding/Backend (Python)/Phase 3 - TradeStack Backend Deep-Dive/3.2 DB Layer.md",
+    },
+    {
+      id: "py-3.3",
+      title: "3.3 Cache Manager",
+      path: "docs/coding/Backend (Python)/Phase 3 - TradeStack Backend Deep-Dive/3.3 Cache Manager.md",
+    },
+    {
+      id: "py-3.4",
+      title: "3.4 Scanner",
+      path: "docs/coding/Backend (Python)/Phase 3 - TradeStack Backend Deep-Dive/3.4 Scanner.md",
+    },
+    {
+      id: "py-3.5",
+      title: "3.5 Streaming",
+      path: "docs/coding/Backend (Python)/Phase 3 - TradeStack Backend Deep-Dive/3.5 Streaming.md",
+    },
+    {
+      id: "py-3.6",
+      title: "3.6 State Machine",
+      path: "docs/coding/Backend (Python)/Phase 3 - TradeStack Backend Deep-Dive/3.6 State Machine.md",
+    },
+    {
+      id: "py-3.7",
+      title: "3.7 One Experiment",
+      path: "docs/coding/Backend (Python)/Phase 3 - TradeStack Backend Deep-Dive/3.7 One Experiment.md",
     },
   ],
 }, {
@@ -298,22 +358,22 @@ export const pythonSubject: Subject = {
     {
       id: "py-4.1",
       title: "4.1 Docker What Is + Overview",
-      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/2.0 Docker Kya Hai + Overview.md",
+      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/4.1 Docker Kya Hai + Overview.md",
     },
     {
       id: "py-4.2",
       title: "4.2 Dockerfile + .dockerignore",
-      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/2.1 Dockerfile + .dockerignore.md",
+      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/4.2 Dockerfile + .dockerignore.md",
     },
     {
       id: "py-4.3",
       title: "4.3 Docker Compose - Volumes + Service",
-      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/2.2 Docker Compose - Volumes + Service.md",
+      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/4.3 Docker Compose - Volumes + Service.md",
     },
     {
       id: "py-4.4",
       title: "4.4 Test + TradeStack Bridge",
-      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/2.3 Test Karo + TradeStack Bridge.md",
+      path: "docs/coding/Backend (Python)/Phase 4 - Docker & Deployment/4.4 Test + TradeStack Bridge.md",
     },
   ],
 },  ],

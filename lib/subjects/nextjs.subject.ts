@@ -209,6 +209,11 @@ export const nextjsSubject: Subject = {
       openByDefault: false,
       lectures: [
         {
+          id: "next-3.0a",
+          title: "3.0 HTTP Methods & API Integration - Concept",
+          path: "docs/coding/Next JS/Batch 3 - Mutations/3.0 - HTTP Methods Aur API Integration Ka Concept.md",
+        },
+        {
           id: "next-3.0",
           title: "3.0 Mutations — Kya Seekhenge",
           path: "docs/coding/Next JS/Batch 3 - Mutations/3.0 Mutations — Kya Seekhenge.md",
