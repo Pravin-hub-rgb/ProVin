@@ -129,7 +129,7 @@ Multi-column board (Todo, In Progress, Done) with drag-drop cards. Zustand store
 
 | # | Concept | TypeScript Layer | Mini-Project / Series |
 |---|---|---|---|
-| Q2 | Redux Core — Store, Action, Reducer (manual pain) | `CounterState` interface, `CounterAction` union | **Manual Counter** — `switch` + `createStore` factory (40 lines, just to understand) |
+| Q2 | Redux History — Store, Action, Reducer (the old way, read-only) | `CounterAction` union, reducer `switch` | **Short history note** — one old-style excerpt to read, nothing built (no project) |
 | R2 | `createSlice` + `configureStore` (RTK's better way) | `PayloadAction<T>`, `RootState`/`AppDispatch` | Same Counter in **RTK in 15 lines** — Immer makes `state.count++` safe |
 | S2 | `Provider` + Typed Hooks `useAppSelector/useAppDispatch` | `withTypes<RootState>` | **CounterRTK** — wrap with `Provider` + typed selectors |
 | T2 | `createAsyncThunk` — Async Pending/Fulfilled/Rejected | `createAsyncThunk`, `extraReducers` | **Categories fetch** — `fetchCategories` thunk, `status`/`error` |

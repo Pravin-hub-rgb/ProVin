@@ -787,8 +787,8 @@ export const reactSubject: Subject = {
         },
         {
           id: "react-6.7.1",
-          title: "6.7.1 Redux Core — Store, Action, Reducer (the Manual Pain)",
-          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.1 Redux Core — Store, Action, Reducer (Manual Wala Dard).md",
+          title: "6.7.1 Redux History — The Old Way (Short Note)",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.1 Redux History - The Old Way (Short Note).md",
         },
         {
           id: "react-6.7.2",
@@ -834,6 +834,13 @@ export const reactSubject: Subject = {
           id: "intv-6.7.6",
           title: "6.7.6 Interview Questions — Batch 6.7",
           path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7.6 Interview Questions - Batch 6.7.md",
+        },
+      ],
+      quizzes: [
+        {
+          id: "quiz-6.7.5.5",
+          title: "❓ 6.7 Quiz",
+          path: "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/6.7 Quiz - Redux Toolkit.md",
         },
       ],
     },
