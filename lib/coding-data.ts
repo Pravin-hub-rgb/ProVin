@@ -60,6 +60,7 @@ import { coreSubjectsSubject } from "./subjects/coresubjects.subject";
 import { csharpSubject } from "./subjects/csharp.subject";
 import { careerSubject } from "./subjects/career.subject"
 import { systemDesignSubject } from "./subjects/systemdesign.subject";
+import { reactnativeSubject } from "./subjects/reactnative.subject";
 
 export const subjects: Subject[] = [
   pythonSubject,
@@ -79,6 +80,7 @@ export const subjects: Subject[] = [
   csharpSubject,
   careerSubject,
   systemDesignSubject,
+  reactnativeSubject,
 ];
 
 /**
