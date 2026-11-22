@@ -20,6 +20,37 @@ Build and run real apps on my own phone, one project per batch, ending with a ca
 - Expo is the tooling on my computer. Expo Go is just the viewer app on my phone.
 - Running the dev server shows a QR code. Scanning it with Expo Go opens the app on the phone, and saving a file in VS Code updates it instantly.
 
+## How This Course Works
+
+This course is for learning React Native (with TypeScript/JavaScript). Reading is done differently here.
+
+| Feature | Purpose |
+|---------|---------|
+| **Batches** | 7 batches. Each batch has a few concepts |
+| **Mini-Projects** | A small isolated project for each concept |
+| **Combined Projects** | After each batch, all concepts are combined into a real app |
+| **Capstone** | Final project — your best app polished and shipped, for your resume |
+| **TypeScript/JavaScript** | The entire course uses TypeScript/JavaScript |
+| **Manual → Better** | First the manual approach (feel the problem), then the library (learn the solution) |
+
+### Module Breakdown
+
+- **Module 0** (this module) — Theory only. How React Native works under the hood. No code.
+- **Batch 1** — Core components, Flexbox, StyleSheet. Project: To-do list app.
+- **Batch 2** — Navigation, Context, NativeWind, safe areas. Project: Multi-screen notes app.
+- **Batch 3** — FlatList, forms, validation. Project: Expense tracker.
+- **Batch 4** — Fetching, global state, local storage. Project: Movie browser.
+- **Batch 5** — Camera, location, notifications, permissions. Project: Photo journal.
+- **Batch 6** — Animations, gestures, theming, performance. Project: Animated habit tracker.
+- **Batch 7** — EAS, Jest, icon/splash, env, store. Project: Capstone.
+
+### Prerequisites
+
+- JavaScript basics (variables, functions, arrays, objects, Promises, async/await)
+- React basics (components, props, state, hooks)
+- HTML & CSS basics (helpful, not strictly required)
+- No prior native (Kotlin/Swift) experience needed — we start from scratch
+
 ## Module 0: How React Native Works
 
 No project. This is the under-the-hood module, like Module 0 in the React roadmap.

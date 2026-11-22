@@ -20,8 +20,8 @@ export const reactnativeSubject: Subject = {
       lectures: [
         {
           id: "rn-0.0",
-          title: "0.0 What is React Native and How This Course Works",
-          path: "docs/coding/React Native/Module 0 - How React Native Works/0.0 What is React Native and How This Course Works.md",
+          title: "0.0 What is React Native",
+          path: "docs/coding/React Native/Module 0 - How React Native Works/0.0 What is React Native.md",
         },
         {
           id: "rn-0.1",
