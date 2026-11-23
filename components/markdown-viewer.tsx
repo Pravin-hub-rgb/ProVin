@@ -9,6 +9,7 @@ import { ContactDemo } from './contact-demo'
 import { ShoppingCartDemo } from './shopping-cart-demo'
 import { GymDemo } from './gym-demo'
 import { EcommerceDemo } from './ecommerce-demo'
+import { ExpenseTrackerDemo } from './expense-tracker-demo'
 import { GeoMap } from './geo-map'
 import { MermaidDiagram } from './mermaid-diagram'
 import type { Element, Root } from 'hast'
@@ -140,6 +141,7 @@ const markdownComponents: Record<string, ComponentType<any> | string> = {
   "shopping-cart-demo": ShoppingCartDemo,
   "gym-demo": GymDemo,
   "ecommerce-demo": EcommerceDemo,
+  "expense-tracker-demo": ExpenseTrackerDemo,
   "geo-map": GeoMap,
 }
 

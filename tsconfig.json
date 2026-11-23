@@ -39,6 +39,7 @@
     "dist/dev/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "docs/coding/React JS/Batch 6.7 - Redux Toolkit (Enterprise)/ExpenseTrackerDemo"
   ]
 }
