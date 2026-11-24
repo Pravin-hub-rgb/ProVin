@@ -1,0 +1,142 @@
+# Doc CSS 21 — Max-width
+
+## Cheat Sheet (Quick Recall)
+
+- `max-width`: upper limit on width.
+- `min-width`: lower limit.
+- Useful for responsive containers.
+- Combine with `width` and `margin: 0 auto` for centered responsive box.
+
+## Where We Are So Far
+
+CSS 20 covered display. Now max-width — constraining width.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: max-width.
+
+## Main Content
+
+### THINK
+
+Elements can stretch too wide on large screens. `max-width` caps the width. First basic, then responsive container pattern.
+
+### CONCEPT
+
+```css
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+```
+
+- `max-width`: upper limit.
+- `min-width`: lower limit.
+- Combined with `margin: 0 auto` → centered responsive box.
+
+### CODE (gradual)
+
+Stage 1 — Fixed width (problem):
+
+```css
+.container { width: 1200px; } /* overflow on small screens */
+```
+
+Stage 2 — max-width:
+
+```css
+.container { max-width: 1200px; }
+```
+
+Stage 3 — Responsive centered:
+
+```css
+.container { width: 100%; max-width: 1200px; margin: 0 auto; }
+```
+
+### TEST
+
+Three questions:
+
+1. What does `max-width` do? (upper limit)
+2. What does `min-width` do? (lower limit)
+3. How to center a responsive container? (`margin: 0 auto` with `max-width`)
+
+**Checkpoint:** Create a centered container that is responsive.
+
+## Common Mistakes
+
+- Fixed width instead of max-width (not responsive).
+- Forgetting `margin: 0 auto` (not centered).
+- Not setting `width: 100%` (may not fill on small screens).
+
+## Try It Yourself
+
+1. Set `max-width: 800px`.
+2. Center with `margin: 0 auto`.
+3. Test on different screen sizes.
+
+## Summary
+
+- `max-width` caps width; `min-width` sets floor.
+- Combine with `margin: 0 auto` for centered responsive box.
+
+## Next Step
+
+Max-width is clear. Next, position. Next: CSS 22 — Position.
+
+---
+
+**In Your Own Words**
+
+1. What does `max-width` do?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Sets an upper limit on width.
+
+</details>
+
+2. What does `min-width` do?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Sets a lower limit on width.
+
+</details>
+
+3. How to center a responsive container?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `width: 100%; max-width: X; margin: 0 auto;`.
+
+</details>
+
+4. Difference between `width` and `max-width`?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `width` is fixed; `max-width` is an upper limit (can be smaller).
+
+</details>
+
+5. Why use `max-width` instead of fixed `width`?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Prevents overflow on small screens.
+
+</details>
+
+## What It Is NOT
+
+- ❌ `max-width` is **not** a fixed width.
+- ❌ `min-width` is **not** `max-width`.
+- ❌ Without `margin: 0 auto`, it is **not** centered.

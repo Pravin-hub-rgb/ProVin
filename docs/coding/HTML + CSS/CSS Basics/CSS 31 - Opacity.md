@@ -1,0 +1,139 @@
+# Doc CSS 31 — Opacity
+
+## Cheat Sheet (Quick Recall)
+
+- `opacity: 0` to `1` (0 = invisible, 1 = fully visible).
+- Affects entire element (including children).
+- `rgba()` for background-only transparency.
+- `transparent` keyword.
+
+## Where We Are So Far
+
+CSS 30 covered pseudo-elements. Now opacity — transparency.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: opacity.
+
+## Main Content
+
+### THINK
+
+Opacity controls transparency. First basic opacity, then RGBA (background only), then use cases (hover, overlays).
+
+### CONCEPT
+
+```css
+div { opacity: 0.5; }       /* entire element 50% transparent */
+div { background: rgba(0,0,0,0.5); } /* background only */
+```
+
+- `opacity`: 0 (invisible) to 1 (opaque). Affects children too.
+- `rgba()`/`hsla()`: transparency for color only.
+- `transparent` keyword.
+
+### CODE (gradual)
+
+Stage 1 — Opacity:
+
+```css
+div { opacity: 0.5; }
+```
+
+Stage 2 — Hover fade:
+
+```css
+button:hover { opacity: 0.8; }
+```
+
+Stage 3 — RGBA background:
+
+```css
+.overlay { background: rgba(0, 0, 0, 0.5); }
+```
+
+### TEST
+
+Three questions:
+
+1. Opacity range? (0 to 1)
+2. Does opacity affect children? (Yes)
+3. How to make only background transparent? (`rgba()`)
+
+**Checkpoint:** Create a semi-transparent overlay.
+
+## Common Mistakes
+
+- Using `opacity` when only background should be transparent (use `rgba`).
+- `opacity: 0` still takes space (use `display: none` to remove).
+- Forgetting children inherit opacity.
+
+## Try It Yourself
+
+1. Set `opacity: 0.5`.
+2. Use `rgba` for background only.
+3. Add hover opacity transition.
+
+## Summary
+
+- `opacity`: 0–1, affects whole element.
+- `rgba()`/`hsla()` for color-only transparency.
+
+## Next Step
+
+Opacity is clear. Next, navigation bar. Next: CSS 32 — Navigation Bar.
+
+---
+
+**In Your Own Words**
+
+1. What is the opacity range?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** 0 (invisible) to 1 (fully visible).
+
+</details>
+
+2. Does opacity affect child elements?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Yes.
+
+</details>
+
+3. How to make only the background transparent?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Use `rgba()` or `hsla()` for the background color.
+
+</details>
+
+4. What is `transparent`?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** A keyword for fully transparent.
+
+</details>
+
+5. Difference between `opacity: 0` and `display: none`?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `opacity: 0` keeps space; `display: none` removes it.
+
+</details>
+
+## What It Is NOT
+
+- ❌ `opacity` is **not** for background only (use rgba).
+- ❌ `opacity: 0` is **not** `display: none`.
+- ❌ Opacity is **not** inherited selectively.

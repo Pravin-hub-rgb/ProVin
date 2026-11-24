@@ -1,0 +1,143 @@
+# Doc CSS 29 — Pseudo-classes
+
+## Cheat Sheet (Quick Recall)
+
+- `:hover`, `:focus`, `:active`, `:visited`.
+- `:first-child`, `:last-child`, `:nth-child(n)`.
+- `:not(selector)`, `:checked`, `:disabled`.
+- Dynamic states based on user interaction/DOM.
+
+## Where We Are So Far
+
+CSS 28 covered combinators. Now pseudo-classes — dynamic states.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: pseudo-classes.
+
+## Main Content
+
+### THINK
+
+Pseudo-classes style elements based on state or position. First user-interaction (`:hover`, `:focus`), then structural (`:first-child`, `:nth-child`), then others.
+
+### CONCEPT
+
+```css
+a:hover { color: red; }
+input:focus { border-color: blue; }
+li:first-child { font-weight: bold; }
+li:nth-child(2) { color: green; }
+li:not(.special) { color: gray; }
+input:checked { accent-color: blue; }
+button:disabled { opacity: 0.5; }
+```
+
+- `:hover`, `:focus`, `:active`, `:visited`: user interaction.
+- `:first-child`, `:last-child`, `:nth-child(n)`: position.
+- `:not()`, `:checked`, `:disabled`: other states.
+
+### CODE (gradual)
+
+Stage 1 — Hover:
+
+```css
+a:hover { color: red; }
+```
+
+Stage 2 — Focus:
+
+```css
+input:focus { border-color: blue; }
+```
+
+Stage 3 — Nth-child:
+
+```css
+li:nth-child(2) { color: green; }
+```
+
+### TEST
+
+Three questions:
+
+1. Pseudo-class for hover? (`:hover`)
+2. How to target first child? (`:first-child`)
+3. How to target every other row? (`:nth-child(odd)`/`:nth-child(even)`)
+
+**Checkpoint:** Style hover, focus, and nth-child.
+
+## Common Mistakes
+
+- Wrong nth-child formula.
+- Forgetting `:focus` for accessibility.
+- Overusing pseudo-classes (specificity).
+
+## Try It Yourself
+
+1. Add hover effect to links.
+2. Style first and last list items.
+3. Use `:nth-child(odd)` for zebra striping.
+
+## Summary
+
+- Pseudo-classes: `:hover`, `:focus`, `:nth-child`, `:not`, `:checked`, `:disabled`.
+
+## Next Step
+
+Pseudo-classes are clear. Next, pseudo-elements. Next: CSS 30 — Pseudo-elements.
+
+---
+
+**In Your Own Words**
+
+1. What is a pseudo-class?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** A keyword that selects elements in a specific state (e.g., `:hover`).
+
+</details>
+
+2. How to target the first child?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `:first-child`.
+
+</details>
+
+3. How to target every other row?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `:nth-child(odd)` or `:nth-child(even)`.
+
+</details>
+
+4. What is `:not()` for?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Selects elements that do not match a selector.
+
+</details>
+
+5. Why is `:focus` important?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Accessibility — keyboard navigation.
+
+</details>
+
+## What It Is NOT
+
+- ❌ Pseudo-class is **not** pseudo-element (`::before`).
+- ❌ `:nth-child` is **not** `:nth-of-type`.
+- ❌ `:hover` is **not** `:active`.

@@ -1,0 +1,139 @@
+# Doc CSS Advanced 01 — Rounded Corners
+
+## Cheat Sheet (Quick Recall)
+
+- `border-radius: 8px;` rounds all corners.
+- Per-corner: `border-top-left-radius`, etc.
+- Elliptical: `border-radius: 10px / 20px;`.
+- `50%` makes a circle (on square element).
+
+## Where We Are So Far
+
+CSS Basics is complete. Now CSS Advanced. First, rounded corners.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: rounded corners.
+
+## Main Content
+
+### THINK
+
+Rounded corners soften UI. First all corners, then per-corner, then elliptical, then circle.
+
+### CONCEPT
+
+```css
+div { border-radius: 8px; }              /* all corners */
+div { border-radius: 8px 16px 24px 32px; } /* TL TR BR BL */
+div { border-top-left-radius: 8px; }
+div { border-radius: 50%; }              /* circle if square */
+div { border-radius: 10px / 20px; }     /* elliptical */
+```
+
+### CODE (gradual)
+
+Stage 1 — All corners:
+
+```css
+div { border-radius: 8px; }
+```
+
+Stage 2 — Per corner:
+
+```css
+div { border-top-left-radius: 8px; border-bottom-right-radius: 8px; }
+```
+
+Stage 3 — Circle:
+
+```css
+div { width: 100px; height: 100px; border-radius: 50%; }
+```
+
+### TEST
+
+Three questions:
+
+1. Property for rounded corners? (`border-radius`)
+2. How to make a circle? (`border-radius: 50%` on square)
+3. How to round one corner? (`border-top-left-radius`)
+
+**Checkpoint:** Create a card with rounded corners and a circular avatar.
+
+## Common Mistakes
+
+- `border-radius: 50%` on non-square → oval.
+- Forgetting border (radius works on background too).
+- Using images without `object-fit`.
+
+## Try It Yourself
+
+1. Round all corners.
+2. Round one corner.
+3. Make a circle avatar.
+
+## Summary
+
+- `border-radius` for rounded corners.
+- Per-corner properties.
+- `50%` for circles.
+
+## Next Step
+
+Rounded corners are clear. Next, border images. Next: CSS Advanced 02 — Border Images.
+
+---
+
+**In Your Own Words**
+
+1. What property rounds corners?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `border-radius`.
+
+</details>
+
+2. How to make a circle?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `border-radius: 50%` on a square element.
+
+</details>
+
+3. Can you round individual corners?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Yes, with `border-top-left-radius`, etc.
+
+</details>
+
+4. What is elliptical radius?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `border-radius: x / y`.
+
+</details>
+
+5. Does border-radius work without a border?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Yes — on background too.
+
+</details>
+
+## What It Is NOT
+
+- ❌ `50%` is **not** a circle on non-square.
+- ❌ Border is **not** required for radius.
+- ❌ Radius is **not** for all corners only.

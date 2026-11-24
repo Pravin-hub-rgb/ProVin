@@ -1,0 +1,140 @@
+# Doc CSS 25 — Float
+
+## Cheat Sheet (Quick Recall)
+
+- `float: left/right` removes element from flow, pushes to side.
+- Text wraps around floated element.
+- `clear: left/right/both` stops wrapping.
+- Legacy layout; use flexbox/grid for modern layouts.
+
+## Where We Are So Far
+
+CSS 24 covered overflow. Now float — legacy layout.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: float.
+
+## Main Content
+
+### THINK
+
+Float was used for layouts (images with text wrap). Now flexbox/grid are preferred. First float basics, then clear, then modern alternative.
+
+### CONCEPT
+
+```css
+img { float: left; margin-right: 10px; }
+.clear { clear: both; }
+```
+
+- `float: left/right` — element pushed to side, text wraps.
+- `clear` — stops wrapping (`left`, `right`, `both`).
+- Legacy: use for text wrap around images, not page layout.
+
+### CODE (gradual)
+
+Stage 1 — Float image:
+
+```css
+img { float: left; margin: 0 10px 10px 0; }
+```
+
+Stage 2 — Clear:
+
+```css
+.footer { clear: both; }
+```
+
+Stage 3 — Modern (flexbox):
+
+```css
+.container { display: flex; }
+```
+
+### TEST
+
+Three questions:
+
+1. What does `float: left` do? (pushes element left, text wraps)
+2. What does `clear: both` do? (stops wrapping)
+3. Modern alternative to float for layout? (flexbox/grid)
+
+**Checkpoint:** Create a floated image with text wrapping.
+
+## Common Mistakes
+
+- Using float for page layout (use flexbox/grid).
+- Forgetting `clear` (layout breaks).
+- Collapsed parent (use clearfix or overflow hidden).
+
+## Try It Yourself
+
+1. Float an image left.
+2. Add `clear: both` to a footer.
+3. Rebuild with flexbox.
+
+## Summary
+
+- `float` for text wrap around elements.
+- `clear` stops wrapping.
+- Prefer flexbox/grid for layout.
+
+## Next Step
+
+Float is clear. Next, inline-block. Next: CSS 26 — Inline-block.
+
+---
+
+**In Your Own Words**
+
+1. What does `float: left` do?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Pushes the element to the left; text wraps around it.
+
+</details>
+
+2. What does `clear: both` do?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Stops text/elements from wrapping around floats.
+
+</details>
+
+3. Is float recommended for page layout?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** No — use flexbox/grid.
+
+</details>
+
+4. What is the clearfix hack?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** A technique to contain floated children (e.g., `overflow: hidden` or `::after` clear).
+
+</details>
+
+5. Common use of float today?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Text wrapping around images.
+
+</details>
+
+## What It Is NOT
+
+- ❌ Float is **not** for page layout (use flexbox/grid).
+- ❌ `clear` is **not** for floats themselves.
+- ❌ Collapsed parents are **not** automatic.

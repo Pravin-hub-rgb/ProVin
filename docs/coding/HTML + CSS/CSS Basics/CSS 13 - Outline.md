@@ -1,0 +1,147 @@
+# Doc CSS 13 — Outline
+
+## Cheat Sheet (Quick Recall)
+
+- `outline` draws around element (outside border).
+- Does not affect layout (no space taken).
+- Styles: solid, dashed, dotted, etc.
+- `outline-offset` for gap between border and outline.
+
+## Where We Are So Far
+
+CSS 12 covered box model. Now outline — a line outside the border.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: outline.
+
+## Main Content
+
+### THINK
+
+Outline is like border but does not affect layout. Used for focus indicators. First basic outline, then offset, then difference from border.
+
+### CONCEPT
+
+```css
+div {
+  outline: 2px solid red;
+  outline-offset: 4px;
+}
+```
+
+- `outline`: shorthand (width style color).
+- Does not take space (no layout shift).
+- `outline-offset`: gap between border and outline.
+
+**Outline vs border:**
+
+- Border: affects layout, can be per-side.
+- Outline: no layout impact, all sides.
+
+### CODE (gradual)
+
+Stage 1 — Basic outline:
+
+```css
+div { outline: 2px solid red; }
+```
+
+Stage 2 — Offset:
+
+```css
+div { outline: 2px solid red; outline-offset: 4px; }
+```
+
+Stage 3 — Focus style:
+
+```css
+button:focus { outline: 3px solid blue; }
+```
+
+### TEST
+
+Three questions:
+
+1. Does outline affect layout? (No)
+2. What is `outline-offset`? (gap between border and outline)
+3. Outline vs border key difference? (layout impact)
+
+**Checkpoint:** Add outline to a focused button.
+
+## Common Mistakes
+
+- Removing outline (accessibility).
+- Confusing outline with border.
+- Not providing focus indicators.
+
+## Try It Yourself
+
+1. Add an outline to a div.
+2. Add `outline-offset`.
+3. Style `:focus` with outline.
+
+## Summary
+
+- `outline` = line outside border, no layout impact.
+- `outline-offset` for gap.
+- Important for accessibility (focus).
+
+## Next Step
+
+Outline is clear. Next, text. Next: CSS 14 — Text.
+
+---
+
+**In Your Own Words**
+
+1. Does outline affect layout?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** No.
+
+</details>
+
+2. What is `outline-offset`?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Gap between border and outline.
+
+</details>
+
+3. Outline vs border key difference?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Outline does not affect layout; border does.
+
+</details>
+
+4. Why is outline important?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Accessibility — focus indicators.
+
+</details>
+
+5. Can outline be per-side?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** No — outline applies to all sides.
+
+</details>
+
+## What It Is NOT
+
+- ❌ Outline is **not** a border.
+- ❌ Outline does **not** take space.
+- ❌ Removing outline is **not** accessible.

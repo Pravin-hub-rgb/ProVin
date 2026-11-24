@@ -46,6 +46,7 @@ export type LectureGroup = {
 import { pythonSubject } from "./subjects/python.subject";
 import { javascriptSubject } from "./subjects/javascript.subject";
 import { webdevSubject } from "./subjects/webdev.subject";
+import { htmlcssSubject } from "./subjects/htmlcss.subject";
 import { iknowcomputersSubject } from "./subjects/iknowcomputers.subject";
 import { agenticaiProSubject } from "./subjects/agenticai-pro.subject";
 import { agenticaiSubject } from "./subjects/agenticai.subject";
@@ -81,6 +82,7 @@ export const subjects: Subject[] = [
   careerSubject,
   systemDesignSubject,
   reactnativeSubject,
+  htmlcssSubject,
 ];
 
 /**

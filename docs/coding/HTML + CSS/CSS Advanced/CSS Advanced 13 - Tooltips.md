@@ -1,0 +1,154 @@
+# Doc CSS Advanced 13 — Tooltips
+
+## Cheat Sheet (Quick Recall)
+
+- Tooltip: hidden text shown on hover.
+- CSS-only: `:hover` + `display: block` on child.
+- Position with `absolute` inside `relative` parent.
+- Arrow via `::after` border trick.
+
+## Where We Are So Far
+
+CSS Advanced 12 covered animations. Now tooltips — hover text.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: tooltips.
+
+## Main Content
+
+### THINK
+
+Tooltips show extra info on hover. First hidden span, then show on hover, then position, then arrow.
+
+### CONCEPT
+
+```html
+<div class="tooltip">
+  Hover me
+  <span class="tooltiptext">Tooltip text</span>
+</div>
+```
+
+```css
+.tooltip { position: relative; display: inline-block; }
+.tooltiptext {
+  visibility: hidden;
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: black;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
+.tooltip:hover .tooltiptext { visibility: visible; }
+```
+
+### CODE (gradual)
+
+Stage 1 — Hidden text:
+
+```css
+.tooltiptext { display: none; }
+```
+
+Stage 2 — Show on hover:
+
+```css
+.tooltip:hover .tooltiptext { display: block; }
+```
+
+Stage 3 — Position + style:
+
+```css
+.tooltiptext { position: absolute; bottom: 125%; left: 50%; transform: translateX(-50%); }
+```
+
+### TEST
+
+Three questions:
+
+1. How to show tooltip on hover? (`:hover` + `visibility: visible`/`display: block`)
+2. What position for tooltip? (`absolute`)
+3. What position for parent? (`relative`)
+
+**Checkpoint:** Build a tooltip with hover.
+
+## Common Mistakes
+
+- Parent not `position: relative`.
+- Tooltip off-screen on small screens.
+- No accessibility (use `aria-label` or JS).
+
+## Try It Yourself
+
+1. Build a hover tooltip.
+2. Add an arrow with `::after`.
+3. Position it above/below.
+
+## Summary
+
+- Tooltip: hidden text shown on hover.
+- Parent `relative`, tooltip `absolute`.
+- Show via `:hover`.
+
+## Next Step
+
+Tooltips are clear. Next, image styling. Next: CSS Advanced 14 — Image Styling.
+
+---
+
+**In Your Own Words**
+
+1. How to show a tooltip on hover?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `.tooltip:hover .tooltiptext { visibility: visible; }`.
+
+</details>
+
+2. What position for the tooltip?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `absolute`.
+
+</details>
+
+3. What position for the parent?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `relative`.
+
+</details>
+
+4. How to center the tooltip horizontally?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `left: 50%; transform: translateX(-50%);`.
+
+</details>
+
+5. Why is CSS-only tooltip not accessible?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Keyboard users cannot trigger `:hover`.
+
+</details>
+
+## What It Is NOT
+
+- ❌ CSS-only tooltip is **not** accessible (use JS).
+- ❌ Tooltip is **not** a modal.
+- ❌ `visibility: hidden` is **not** `display: none`.

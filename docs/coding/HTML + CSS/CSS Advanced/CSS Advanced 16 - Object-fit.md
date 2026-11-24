@@ -1,0 +1,145 @@
+# Doc CSS Advanced 16 — Object-fit
+
+## Cheat Sheet (Quick Recall)
+
+- `object-fit: fill` (default) — stretches.
+- `object-fit: contain` — fits entire image (may have gaps).
+- `object-fit: cover` — covers container (may crop).
+- `object-fit: scale-down` — smaller of contain/none.
+- `object-fit: none` — original size.
+
+## Where We Are So Far
+
+CSS Advanced 15 covered image modal. Now `object-fit` — how images fit containers.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: object-fit.
+
+## Main Content
+
+### THINK
+
+Images have intrinsic sizes. When placed in fixed containers, they may distort. `object-fit` controls how they fit. First values, then use cases.
+
+### CONCEPT
+
+```css
+img {
+  width: 200px;
+  height: 200px;
+  object-fit: cover; /* or contain, fill, scale-down, none */
+}
+```
+
+- `fill`: stretch to fill (may distort).
+- `contain`: fit entire image (gaps possible).
+- `cover`: cover container (crop possible).
+- `scale-down`: smaller of contain/none.
+- `none`: original size.
+
+### CODE (gradual)
+
+Stage 1 — fill (default, distorts):
+
+```css
+img { width: 200px; height: 200px; object-fit: fill; }
+```
+
+Stage 2 — contain:
+
+```css
+img { object-fit: contain; }
+```
+
+Stage 3 — cover:
+
+```css
+img { object-fit: cover; }
+```
+
+### TEST
+
+Three questions:
+
+1. Which value crops to fill? (`cover`)
+2. Which value shows full image (may have gaps)? (`contain`)
+3. Which is default? (`fill`)
+
+**Checkpoint:** Compare `cover` vs `contain` on a non-square image.
+
+## Common Mistakes
+
+- Using `fill` (distorts).
+- Missing width/height (object-fit needs dimensions).
+- Confusing with `background-size`.
+
+## Try It Yourself
+
+1. Use `object-fit: cover`.
+2. Use `object-fit: contain`.
+3. Compare all values.
+
+## Summary
+
+- `fill`, `contain`, `cover`, `scale-down`, `none`.
+- Needs fixed dimensions on the element.
+
+## Next Step
+
+Object-fit is clear. Next, object-position. Next: CSS Advanced 17 — Object-position.
+
+---
+
+**In Your Own Words**
+
+1. What does `object-fit: cover` do?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Scales image to cover container (may crop).
+
+</details>
+
+2. What does `object-fit: contain` do?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Fits entire image in container (may have gaps).
+
+</details>
+
+3. What is the default `object-fit`?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `fill`.
+
+</details>
+
+4. Does `object-fit` need dimensions?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Yes — width/height on the element.
+
+</details>
+
+5. Difference between `object-fit` and `background-size`?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `object-fit` for `<img>`/`<video>`; `background-size` for CSS backgrounds.
+
+</details>
+
+## What It Is NOT
+
+- ❌ `cover` is **not** `contain`.
+- ❌ `object-fit` is **not** `background-size`.
+- ❌ Without dimensions, `object-fit` is **not** effective.

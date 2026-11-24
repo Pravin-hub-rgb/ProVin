@@ -1,0 +1,149 @@
+# Doc CSS Advanced 02 — Border Images
+
+## Cheat Sheet (Quick Recall)
+
+- `border-image: source slice width outset repeat;`.
+- `border-image-source`: image URL.
+- `border-image-slice`: how to slice the image.
+- `border-image-repeat`: stretch/repeat/round/space.
+
+## Where We Are So Far
+
+CSS Advanced 01 covered rounded corners. Now border images — images as borders.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: border images.
+
+## Main Content
+
+### THINK
+
+Borders can be images, not just solid colors. First source, then slice, then repeat.
+
+### CONCEPT
+
+```css
+div {
+  border: 10px solid;
+  border-image-source: url("border.png");
+  border-image-slice: 30;
+  border-image-repeat: round;
+}
+```
+
+Shorthand:
+
+```css
+div { border-image: url("border.png") 30 round; }
+```
+
+- `border-image-source`: image URL.
+- `border-image-slice`: slicing (number or %).
+- `border-image-repeat`: stretch/repeat/round/space.
+
+### CODE (gradual)
+
+Stage 1 — Source:
+
+```css
+div { border-image-source: url("border.png"); }
+```
+
+Stage 2 — Slice:
+
+```css
+div { border-image-slice: 30; }
+```
+
+Stage 3 — Shorthand:
+
+```css
+div { border-image: url("border.png") 30 round; }
+```
+
+### TEST
+
+Three questions:
+
+1. Property for border image source? (`border-image-source`)
+2. What does slice do? (how to cut the image)
+3. Repeat values? (stretch, repeat, round, space)
+
+**Checkpoint:** Apply a border image to a div.
+
+## Common Mistakes
+
+- Missing `border` (border-image needs border).
+- Wrong slice value.
+- Image not loading.
+
+## Try It Yourself
+
+1. Add a border image.
+2. Try different repeat values.
+3. Adjust slice.
+
+## Summary
+
+- `border-image` for image borders.
+- Source, slice, repeat.
+
+## Next Step
+
+Border images are clear. Next, backgrounds (advanced). Next: CSS Advanced 03 — Backgrounds.
+
+---
+
+**In Your Own Words**
+
+1. What property sets the border image source?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `border-image-source`.
+
+</details>
+
+2. What does `border-image-slice` do?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Defines how to slice the image into regions.
+
+</details>
+
+3. Name the repeat values.
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** stretch, repeat, round, space.
+
+</details>
+
+4. Does border-image require a border?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Yes.
+
+</details>
+
+5. What is the shorthand?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `border-image: source slice repeat;`.
+
+</details>
+
+## What It Is NOT
+
+- ❌ Border image is **not** background-image.
+- ❌ Border is **not** optional.
+- ❌ `stretch` is **not** `repeat`.

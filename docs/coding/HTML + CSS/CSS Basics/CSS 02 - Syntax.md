@@ -1,0 +1,160 @@
+# Doc CSS 02 — Syntax
+
+## Cheat Sheet (Quick Recall)
+
+```css
+selector {
+  property: value;
+}
+```
+
+- Selector targets elements.
+- Declaration block in braces.
+- Property: value pairs separated by semicolons.
+
+## Where We Are So Far
+
+CSS 01 introduced CSS. Now syntax — how CSS is written.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: CSS syntax.
+
+## Main Content
+
+### THINK
+
+CSS has a specific syntax: selector, then declaration block with property:value pairs. First syntax, then examples, then comments.
+
+### CONCEPT
+
+```css
+h1 {
+  color: blue;
+  font-size: 32px;
+  margin: 0;
+}
+```
+
+- `h1` = selector.
+- `{ ... }` = declaration block.
+- `color: blue;` = declaration (property: value).
+- Semicolon separates declarations.
+
+**Multiple selectors:**
+
+```css
+h1, h2, h3 {
+  color: blue;
+}
+```
+
+### CODE (gradual)
+
+Stage 1 — Single declaration:
+
+```css
+p { color: red; }
+```
+
+Stage 2 — Multiple:
+
+```css
+p {
+  color: red;
+  font-size: 16px;
+}
+```
+
+Stage 3 — Multiple selectors:
+
+```css
+h1, h2 { color: blue; }
+```
+
+### TEST
+
+Three questions:
+
+1. What is the CSS syntax? (`selector { property: value; }`)
+2. What separates declarations? (semicolon)
+3. How to target multiple selectors? (comma-separated)
+
+**Checkpoint:** Write a CSS rule with 3 declarations.
+
+## Common Mistakes
+
+- Missing semicolon.
+- Missing braces.
+- Wrong selector.
+
+## Try It Yourself
+
+1. Style a paragraph.
+2. Add multiple properties.
+3. Target h1 and h2 together.
+
+## Summary
+
+- Syntax: `selector { property: value; }`.
+- Semicolon separates declarations.
+- Comma for multiple selectors.
+
+## Next Step
+
+Syntax is clear. Next, selectors. Next: CSS 03 — Selectors.
+
+---
+
+**In Your Own Words**
+
+1. What is CSS syntax?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `selector { property: value; }`.
+
+</details>
+
+2. What separates declarations?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Semicolon (`;`).
+
+</details>
+
+3. How to target multiple selectors?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Comma-separated: `h1, h2 { ... }`.
+
+</details>
+
+4. What are braces for?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Enclose the declaration block.
+
+</details>
+
+5. What is a declaration?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** A property: value pair (e.g., `color: red;`).
+
+</details>
+
+## What It Is NOT
+
+- ❌ Missing semicolon is **not** valid.
+- ❌ Braces are **not** optional.
+- ❌ Selectors are **not** case-sensitive (but use lowercase).

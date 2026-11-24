@@ -1,0 +1,149 @@
+# Doc CSS 05 — Comments
+
+## Cheat Sheet (Quick Recall)
+
+- CSS comments: `/* comment */`.
+- Not displayed.
+- Use for notes and temporarily disabling rules.
+
+## Where We Are So Far
+
+CSS 04 covered how to add CSS. Now comments.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: comments.
+
+## Main Content
+
+### THINK
+
+Code needs notes and temporarily disabled rules. CSS comments provide that. They are not rendered.
+
+### CONCEPT
+
+```css
+/* This is a comment */
+p {
+  color: red; /* inline comment */
+}
+
+/* 
+  Multi-line
+  comment
+*/
+```
+
+- `/* ... */` syntax.
+- Can be single or multi-line.
+- Not displayed in browser.
+
+### CODE (gradual)
+
+Stage 1 — Single-line:
+
+```css
+/* TODO: fix color */
+```
+
+Stage 2 — Multi-line:
+
+```css
+/*
+  Header styles
+  Updated 2026
+*/
+```
+
+Stage 3 — Disable rule:
+
+```css
+/* p { color: red; } */
+```
+
+### TEST
+
+Three questions:
+
+1. CSS comment syntax? (`/* */`)
+2. Are comments displayed? (No)
+3. Can comments be multi-line? (Yes)
+
+**Checkpoint:** Add comments to a CSS file and verify they don't render.
+
+## Common Mistakes
+
+- Using `//` (not valid in CSS).
+- Forgetting closing `*/`.
+- Leaving sensitive info in comments.
+
+## Try It Yourself
+
+1. Add a single-line comment.
+2. Disable a rule with comment.
+3. Use multi-line comment.
+
+## Summary
+
+- `/* comment */` syntax.
+- Not displayed.
+- Use for notes/debugging.
+
+## Next Step
+
+Comments are clear. Next, colors. Next: CSS 06 — Colors.
+
+---
+
+**In Your Own Words**
+
+1. What is CSS comment syntax?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `/* comment */`.
+
+</details>
+
+2. Are CSS comments displayed?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** No.
+
+</details>
+
+3. Can CSS comments be multi-line?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Yes.
+
+</details>
+
+4. Is `//` valid in CSS?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** No.
+
+</details>
+
+5. Where can you see CSS comments?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** In "View Page Source" / DevTools.
+
+</details>
+
+## What It Is NOT
+
+- ❌ `//` is **not** valid CSS.
+- ❌ Comments are **not** rendered.
+- ❌ Missing `*/` is **not** valid.

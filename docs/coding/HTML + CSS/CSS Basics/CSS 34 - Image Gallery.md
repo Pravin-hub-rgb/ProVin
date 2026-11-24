@@ -1,0 +1,154 @@
+# Doc CSS 34 — Image Gallery
+
+## Cheat Sheet (Quick Recall)
+
+- Grid/flexbox for gallery layout.
+- `object-fit: cover` for consistent thumbnails.
+- Hover effects: scale, overlay.
+- Responsive: media queries or auto-fit grid.
+
+## Where We Are So Far
+
+CSS 33 covered dropdowns. Now image gallery — grid of images.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: image gallery.
+
+## Main Content
+
+### THINK
+
+An image gallery is a grid of images. First layout (flex/grid), then thumbnail styling (`object-fit`), then hover effects.
+
+### CONCEPT
+
+```css
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 10px;
+}
+.gallery img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+.gallery img:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s;
+}
+```
+
+- Grid with `auto-fit` + `minmax` for responsive.
+- `object-fit: cover` for consistent thumbnails.
+- Hover scale for interactivity.
+
+### CODE (gradual)
+
+Stage 1 — Flexbox gallery:
+
+```css
+.gallery { display: flex; flex-wrap: wrap; gap: 10px; }
+.gallery img { width: 200px; height: 200px; }
+```
+
+Stage 2 — Grid (responsive):
+
+```css
+.gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px; }
+```
+
+Stage 3 — Object-fit + hover:
+
+```css
+.gallery img { width: 100%; height: 200px; object-fit: cover; }
+.gallery img:hover { transform: scale(1.05); transition: 0.3s; }
+```
+
+### TEST
+
+Three questions:
+
+1. How to make gallery responsive? (`auto-fit` + `minmax`)
+2. What property ensures consistent thumbnail sizing? (`object-fit: cover`)
+3. How to add hover zoom? (`transform: scale()` + `transition`)
+
+**Checkpoint:** Build a responsive image gallery.
+
+## Common Mistakes
+
+- Fixed widths (not responsive).
+- Inconsistent image sizes without `object-fit`.
+- Missing `gap`.
+
+## Try It Yourself
+
+1. Build a grid gallery.
+2. Add `object-fit: cover`.
+3. Add hover scale.
+
+## Summary
+
+- Grid with `auto-fit` + `minmax` for responsive.
+- `object-fit: cover` for thumbnails.
+- Hover effects with transform + transition.
+
+## Next Step
+
+Image gallery is clear. Next, attribute selectors. Next: CSS 35 — Attribute Selectors.
+
+---
+
+**In Your Own Words**
+
+1. How to make a gallery responsive?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `grid-template-columns: repeat(auto-fit, minmax(200px, 1fr))`.
+
+</details>
+
+2. What does `object-fit: cover` do?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Scales image to cover container (may crop).
+
+</details>
+
+3. How to add hover zoom?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `transform: scale(1.05)` + `transition`.
+
+</details>
+
+4. Why use `gap` in grid?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Spacing between grid items.
+
+</details>
+
+5. Difference between `cover` and `contain`?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `cover` crops to fill; `contain` shows full image.
+
+</details>
+
+## What It Is NOT
+
+- ❌ `object-fit` is **not** `background-size`.
+- ❌ Fixed widths are **not** responsive.
+- ❌ `cover` is **not** `contain`.

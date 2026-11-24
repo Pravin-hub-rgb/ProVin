@@ -1,0 +1,151 @@
+# Doc CSS Flexbox 04 — Flex Responsive
+
+## Cheat Sheet (Quick Recall)
+
+- `flex-wrap: wrap` for wrapping.
+- Media queries to change `flex-direction`.
+- `flex-basis` or `min-width` for item sizing.
+- Mobile-first: column on small, row on large.
+
+## Where We Are So Far
+
+CSS Flexbox 03 covered flex items. Now responsive flex — adapting to screen size.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: responsive flex.
+
+## Main Content
+
+### THINK
+
+Flexbox layouts must adapt to screen size. First wrapping, then media queries for direction, then item sizing.
+
+### CONCEPT
+
+```css
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.item {
+  flex: 1 1 200px; /* grow, shrink, min 200px */
+}
+@media (max-width: 600px) {
+  .container { flex-direction: column; }
+}
+```
+
+- `flex-wrap: wrap` allows items to wrap.
+- `flex-basis` / `min-width` sets minimum item size.
+- Media queries change direction/properties.
+
+### CODE (gradual)
+
+Stage 1 — Wrap:
+
+```css
+.container { display: flex; flex-wrap: wrap; gap: 10px; }
+```
+
+Stage 2 — Item sizing:
+
+```css
+.item { flex: 1 1 200px; }
+```
+
+Stage 3 — Responsive direction:
+
+```css
+@media (max-width: 600px) {
+  .container { flex-direction: column; }
+}
+```
+
+### TEST
+
+Three questions:
+
+1. How to allow wrapping? (`flex-wrap: wrap`)
+2. How to set minimum item size? (`flex-basis` or `min-width`)
+3. How to stack on mobile? (media query + `flex-direction: column`)
+
+**Checkpoint:** Build a responsive flex layout.
+
+## Common Mistakes
+
+- Not using `flex-wrap` (items shrink too much).
+- Fixed widths on items (not responsive).
+- Forgetting media query for mobile.
+
+## Try It Yourself
+
+1. Create a wrapping flex layout.
+2. Add `flex-basis: 200px`.
+3. Add a mobile media query.
+
+## Summary
+
+- `flex-wrap: wrap` for wrapping.
+- `flex-basis`/`min-width` for item sizing.
+- Media queries for responsive direction.
+
+## Next Step
+
+Flexbox is complete. Next, CSS Grid. Next: CSS Grid 01 — Intro.
+
+---
+
+**In Your Own Words**
+
+1. How to allow flex items to wrap?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `flex-wrap: wrap`.
+
+</details>
+
+2. How to set minimum item size?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `flex-basis` or `min-width`.
+
+</details>
+
+3. How to stack items on mobile?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Media query + `flex-direction: column`.
+
+</details>
+
+4. Why use `flex-wrap`?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Prevents items from shrinking too small; wraps to next line.
+
+</details>
+
+5. Difference between flexbox and grid?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Flexbox = 1D; Grid = 2D.
+
+</details>
+
+## What It Is NOT
+
+- ❌ Flexbox is **not** 2D (that's Grid).
+- ❌ `flex-wrap` is **not** default.
+- ❌ Fixed widths are **not** responsive.

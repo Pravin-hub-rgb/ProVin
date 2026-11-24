@@ -1,0 +1,156 @@
+# Doc CSS 27 — Align
+
+## Cheat Sheet (Quick Recall)
+
+- Text align: `text-align: left/center/right/justify`.
+- Vertical align (inline): `vertical-align: top/middle/bottom`.
+- Centering block: `margin: 0 auto` (horizontal), flexbox (both).
+- Flexbox: `justify-content`, `align-items`.
+
+## Where We Are So Far
+
+CSS 26 covered inline-block. Now align — positioning content.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: alignment.
+
+## Main Content
+
+### THINK
+
+Alignment is needed for text and elements. First text align, then vertical align (inline), then centering blocks, then flexbox alignment.
+
+### CONCEPT
+
+**Text align:**
+
+```css
+p { text-align: center; } /* left, right, justify */
+```
+
+**Vertical align (inline elements):**
+
+```css
+img { vertical-align: middle; } /* top, bottom, baseline */
+```
+
+**Centering a block:**
+
+```css
+div { margin: 0 auto; } /* horizontal only */
+```
+
+**Flexbox centering (both):**
+
+```css
+.container { display: flex; justify-content: center; align-items: center; }
+```
+
+### CODE (gradual)
+
+Stage 1 — Text align:
+
+```css
+p { text-align: center; }
+```
+
+Stage 2 — Vertical align:
+
+```css
+img { vertical-align: middle; }
+```
+
+Stage 3 — Flexbox center:
+
+```css
+.container { display: flex; justify-content: center; align-items: center; }
+```
+
+### TEST
+
+Three questions:
+
+1. Property for text alignment? (`text-align`)
+2. How to center a block horizontally? (`margin: 0 auto`)
+3. Flexbox property for horizontal centering? (`justify-content: center`)
+
+**Checkpoint:** Center text, an image, and a div.
+
+## Common Mistakes
+
+- Using `text-align` for block centering.
+- Confusing `justify-content` with `align-items`.
+- Forgetting `display: flex` on container.
+
+## Try It Yourself
+
+1. Center text in a div.
+2. Center an image vertically.
+3. Center a div both ways with flexbox.
+
+## Summary
+
+- `text-align` for text.
+- `vertical-align` for inline elements.
+- `margin: 0 auto` for horizontal block center.
+- Flexbox for both axes.
+
+## Next Step
+
+Alignment is clear. Next, combinators. Next: CSS 28 — Combinators.
+
+---
+
+**In Your Own Words**
+
+1. What property aligns text?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `text-align`.
+
+</details>
+
+2. How to center a block horizontally?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `margin: 0 auto;`.
+
+</details>
+
+3. Flexbox property for horizontal centering?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `justify-content: center`.
+
+</details>
+
+4. Flexbox property for vertical centering?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `align-items: center`.
+
+</details>
+
+5. What is `vertical-align` for?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Aligns inline elements vertically.
+
+</details>
+
+## What It Is NOT
+
+- ❌ `text-align` is **not** for block centering.
+- ❌ `margin: 0 auto` does **not** center vertically.
+- ❌ Flexbox needs **container** `display: flex`.

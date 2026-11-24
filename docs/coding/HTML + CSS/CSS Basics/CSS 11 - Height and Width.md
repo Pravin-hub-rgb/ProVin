@@ -1,0 +1,146 @@
+# Doc CSS 11 — Height and Width
+
+## Cheat Sheet (Quick Recall)
+
+- `width`, `height`: fixed sizes.
+- `max-width`, `min-width`, `max-height`, `min-height`: constraints.
+- Units: `px`, `%`, `vw`, `vh`, `rem`, `em`.
+- `auto`: default (content-based).
+
+## Where We Are So Far
+
+CSS 10 covered padding. Now height and width — sizing elements.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: sizing.
+
+## Main Content
+
+### THINK
+
+Elements need sizes. First fixed (px), then relative (%/vw/vh), then constraints (min/max).
+
+### CONCEPT
+
+```css
+div {
+  width: 300px;
+  height: 200px;
+  max-width: 100%;
+  min-height: 100px;
+}
+```
+
+- `width`/`height`: fixed.
+- `%`: relative to parent.
+- `vw`/`vh`: relative to viewport.
+- `max-width`/`min-width`: constraints.
+- `auto`: content-based (default).
+
+### CODE (gradual)
+
+Stage 1 — Fixed:
+
+```css
+div { width: 300px; height: 200px; }
+```
+
+Stage 2 — Relative:
+
+```css
+div { width: 50%; height: 100vh; }
+```
+
+Stage 3 — Constraints:
+
+```css
+div { max-width: 600px; min-height: 200px; }
+```
+
+### TEST
+
+Three questions:
+
+1. What units for relative sizing? (`%`, `vw`, `vh`)
+2. What does `max-width` do? (upper limit)
+3. Default width value? (`auto`)
+
+**Checkpoint:** Create elements with various sizes and constraints.
+
+## Common Mistakes
+
+- Fixed widths breaking responsiveness.
+- Forgetting `box-sizing` → unexpected sizes.
+- Using `height: 100%` without parent height.
+
+## Try It Yourself
+
+1. Set fixed width/height.
+2. Use percentage width.
+3. Add max-width constraint.
+
+## Summary
+
+- `width`/`height`: fixed or relative.
+- Units: px, %, vw, vh, rem, em.
+- Constraints: min/max.
+
+## Next Step
+
+Height/width are clear. Next, box model. Next: CSS 12 — Box Model.
+
+---
+
+**In Your Own Words**
+
+1. What units are relative to viewport?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `vw` (width), `vh` (height).
+
+</details>
+
+2. What does `max-width` do?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Sets an upper limit on width.
+
+</details>
+
+3. What is the default width value?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `auto` (content-based).
+
+</details>
+
+4. Why avoid fixed widths for responsiveness?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** They cause overflow on small screens.
+
+</details>
+
+5. What is `min-height` for?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Sets a lower limit on height.
+
+</details>
+
+## What It Is NOT
+
+- ❌ Fixed px is **not** responsive.
+- ❌ `%` is relative to **parent**, not viewport.
+- ❌ `height: 100%` needs **parent height**.

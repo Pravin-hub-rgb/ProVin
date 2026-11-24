@@ -1,0 +1,159 @@
+# Doc CSS Advanced 20 — Pagination
+
+## Cheat Sheet (Quick Recall)
+
+- Pagination: numbered links for pages.
+- Style: inline-block or flex items.
+- Active page: different background.
+- Hover: background change.
+
+## Where We Are So Far
+
+CSS Advanced 19 covered buttons. Now pagination — page navigation links.
+
+## Broader Goal
+
+The overall goal of the CSS section is styling and layout. Current step: pagination.
+
+## Main Content
+
+### THINK
+
+Pagination is a row of numbered links. First structure (ul/li/a), then styling (inline/flex), then active/hover states.
+
+### CONCEPT
+
+```html
+<div class="pagination">
+  <a href="#">&laquo;</a>
+  <a href="#" class="active">1</a>
+  <a href="#">2</a>
+  <a href="#">3</a>
+  <a href="#">&raquo;</a>
+</div>
+```
+
+```css
+.pagination a {
+  display: inline-block;
+  padding: 8px 16px;
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ddd;
+}
+.pagination a.active {
+  background: #007bff;
+  color: white;
+}
+.pagination a:hover:not(.active) {
+  background: #ddd;
+}
+```
+
+### CODE (gradual)
+
+Stage 1 — Basic links:
+
+```html
+<a href="#">1</a> <a href="#">2</a> <a href="#">3</a>
+```
+
+Stage 2 — Styled:
+
+```css
+.pagination a { padding: 8px 16px; border: 1px solid #ddd; }
+```
+
+Stage 3 — Active/hover:
+
+```css
+.pagination a.active { background: blue; color: white; }
+.pagination a:hover:not(.active) { background: #ddd; }
+```
+
+### TEST
+
+Three questions:
+
+1. How to style pagination? (inline-block/flex items)
+2. How to highlight active page? (`.active` class)
+3. How to prevent hover on active? (`:not(.active)`)
+
+**Checkpoint:** Build a styled pagination.
+
+## Common Mistakes
+
+- No active state (user loses place).
+- Hover on active (confusing).
+- Not responsive (wrap on small screens).
+
+## Try It Yourself
+
+1. Build pagination links.
+2. Style active page.
+3. Add hover effect.
+
+## Summary
+
+- Pagination = row of numbered links.
+- Active page highlighted.
+- Hover on non-active.
+
+## Next Step
+
+Pagination is clear. Next, multiple columns. Next: CSS Advanced 21 — Multiple Columns.
+
+---
+
+**In Your Own Words**
+
+1. What is pagination?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Numbered links for navigating pages.
+
+</details>
+
+2. How to highlight the active page?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Add `.active` class with different background.
+
+</details>
+
+3. How to prevent hover on active page?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `:hover:not(.active)`.
+
+</details>
+
+4. How to make pagination responsive?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** Use flexbox with `flex-wrap: wrap`.
+
+</details>
+
+5. What HTML element for pagination?
+
+<details>
+<summary>Sample Answer</summary>
+
+**Answer:** `<nav>` with links (or `<ul>`/`<li>`).
+
+</details>
+
+## What It Is NOT
+
+- ❌ Pagination is **not** a single link.
+- ❌ Active page is **not** hoverable.
+- ❌ Pagination is **not** a menu.
