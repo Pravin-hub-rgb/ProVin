@@ -1,4 +1,4 @@
-# HTML + CSS Roadmap
+﻿# HTML + CSS Roadmap
 
 Vin's personal roadmap for learning HTML and CSS, one topic per lecture, ending with a responsive landing page project.
 
@@ -21,18 +21,19 @@ Learn HTML structure and CSS styling well enough to build and style real web pag
 
 ## Module 0: How HTML and CSS Work
 
-No project. This is the under-the-hood module.
+No project. This is the under-the-hood module. Conceptual only - no hands-on coding, no folders, no tools.
 
-- What HTML and CSS are and why they exist
-- How the browser renders HTML and CSS
-- Folder structure and file paths
-- How to view, inspect, and debug
-
+- Why the web exists (history, internet vs web, URL/DNS/HTTP/HTML)
+- What HTML and CSS are (labeled content vs look/layout, cascading)
+- How the browser renders HTML and CSS (DOM, CSSOM, render tree, layout, paint, composite)
+- Folder structure and file paths (moved to HTML 01 as setup step)
+- How to view, inspect, and debug (now in HTML 01 as Viewing Your Page section)
 ## HTML Basics
 
 Project: small semantic pages for each topic
 
-- Introduction, editors, basic structure, elements, attributes
+- Viewing and debugging with browser DevTools
+- Editors and DevTools, basic structure, elements, attributes
 - Headings, paragraphs, styles, formatting, quotations, comments
 - Colors, CSS in HTML, links, images, favicon
 - Tables, lists, block/inline, classes, IDs
