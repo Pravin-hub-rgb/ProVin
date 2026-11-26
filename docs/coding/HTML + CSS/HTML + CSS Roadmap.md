@@ -32,14 +32,20 @@ No project. This is the under-the-hood module. Conceptual only - no hands-on cod
 
 Project: small semantic pages for each topic
 
-- Viewing and debugging with browser DevTools
-- Editors and DevTools, basic structure, elements, attributes
-- Headings, paragraphs, styles, formatting, quotations, comments
-- Colors, CSS in HTML, links, images, favicon
-- Tables, lists, block/inline, classes, IDs
-- Iframes, JavaScript in HTML, file paths, head element
-- Layout, responsive design, code elements, semantic HTML
-- Style guide, entities, symbols, emojis, charset, URL encoding, HTML vs XHTML
+- Introduction, editors, basic structure, elements, attributes
+- Headings, paragraphs, formatting, quotations, comments
+- Links (URLs, relative/absolute paths, anchors, mailto/tel, target)
+- Images, lists, tables, block vs inline, div and span
+- How to view, inspect, and debug with DevTools
+- Computer code elements
+- Head element: title, meta (charset, viewport), favicon, link
+- Iframes
+- Semantic HTML
+- HTML entities, symbols, emojis
+- URL encoding
+- HTML vs XHTML
+
+Topics moved out of Module 1 (deferred to later modules): classes, IDs as styling hooks, JavaScript in HTML, file paths as a standalone topic, layout, responsive design, style guide, colors, styles, CSS in HTML.
 
 ## HTML Forms
 

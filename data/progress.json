@@ -299,5 +299,31 @@
   },
   "geopolitics": {
     "geo-0.1": true
+  },
+  "htmlcss": {
+    "hc-1-23-html-vs-xhtml": true,
+    "hc-1-22-url-encoding": true,
+    "hc-1-21-symbols-and-emojis": true,
+    "hc-1-20-html-entities": true,
+    "hc-1-19-semantic-html": true,
+    "hc-1-18-iframes": true,
+    "hc-1-17-head-element": true,
+    "hc-1-16-computer-code-elements": true,
+    "hc-1-15-how-to-view-inspect-and-debug": true,
+    "hc-1-14-block-and-inline-elements": true,
+    "hc-1-13-tables": true,
+    "hc-1-12-lists": true,
+    "hc-1-11-images": true,
+    "hc-1-10-links": true,
+    "hc-1-9-comments": true,
+    "hc-1-8-quotations": true,
+    "hc-1-0-introduction": true,
+    "hc-1-1-editors": true,
+    "hc-1-2-basic-structure": true,
+    "hc-1-3-elements": true,
+    "hc-1-4-attributes": true,
+    "hc-1-5-headings": true,
+    "hc-1-6-paragraphs": true,
+    "hc-1-7-formatting": true
   }
 }
