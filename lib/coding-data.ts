@@ -56,7 +56,6 @@ import { gitgithubSubject } from "./subjects/gitgithub.subject";
 import { reactSubject } from "./subjects/react.subject";
 import { typescriptSubject } from "./subjects/typescript.subject";
 import { nextjsSubject } from "./subjects/nextjs.subject";
-import { nodejsSubject } from "./subjects/nodejs.subject";
 import { dsaSubject } from "./subjects/dsa.subject";
 import { coreSubjectsSubject } from "./subjects/coresubjects.subject";
 import { csharpSubject } from "./subjects/csharp.subject";
@@ -76,7 +75,6 @@ export const subjects: Subject[] = [
   reactSubject,
   typescriptSubject,
   nextjsSubject,
-  nodejsSubject,
   dsaSubject,
   coreSubjectsSubject,
   csharpSubject,

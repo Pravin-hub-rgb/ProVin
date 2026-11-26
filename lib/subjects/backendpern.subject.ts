@@ -54,6 +54,7 @@ export const backendpernSubject: Subject = {
         { id: "b-1.15", title: "1.15 Debugging", path: "docs/coding/Backend (PERN)/Batch 1 - Node.js and TypeScript Foundations/1.15 Debugging.md" },
         { id: "b-1.16", title: "1.16 Code Quality", path: "docs/coding/Backend (PERN)/Batch 1 - Node.js and TypeScript Foundations/1.16 Code Quality.md" },
         { id: "b-1.17", title: "1.17 Project - Log Analyzer CLI", path: "docs/coding/Backend (PERN)/Batch 1 - Node.js and TypeScript Foundations/1.17 Project - Log Analyzer CLI.md" },
+        { id: "b-1.18", title: "1.18 Bridge - Raw Node to React and Next.js", path: "docs/coding/Backend (PERN)/Batch 1 - Node.js and TypeScript Foundations/1.18 Bridge - Raw Node to React and Next.js.md" },
       ],
     },
   ],
