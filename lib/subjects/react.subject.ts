@@ -1,4 +1,4 @@
-import type { Subject } from "../coding-data";
+﻿import type { Subject } from "../coding-data";
 
 export const reactSubject: Subject = {
   id: "react",
@@ -926,8 +926,70 @@ export const reactSubject: Subject = {
         },
         {
           id: "intv-t.9",
-          title: "T.9 Interview Questions — TrackIt",
+          title: "T.9 Interview Questions - TrackIt",
           path: "docs/coding/React JS/Capstone - TrackIt/T.9 Interview Questions - TrackIt.md",
+        },
+      ],
+    },
+    {
+      id: "capstone2",
+      title: "Capstone 2 - Trading Dashboard (Real-time + Charts)",
+      lectures: [
+        {
+          id: "td-t.1",
+          title: "T.1 Setup and Project Structure",
+          path: "docs/coding/React JS/Capstone 2 - Trading Dashboard/T.1 Setup and Project Structure.md",
+        },
+        {
+          id: "td-t.2",
+          title: "T.2 Types and State Management",
+          path: "docs/coding/React JS/Capstone 2 - Trading Dashboard/T.2 Types and State Management.md",
+        },
+        {
+          id: "td-t.3",
+          title: "T.3 Custom Hooks",
+          path: "docs/coding/React JS/Capstone 2 - Trading Dashboard/T.3 Custom Hooks.md",
+        },
+        {
+          id: "td-t.4",
+          title: "T.4 Router and Protected Routes",
+          path: "docs/coding/React JS/Capstone 2 - Trading Dashboard/T.4 Router and Protected Routes.md",
+        },
+        {
+          id: "td-t.5",
+          title: "T.5 Trading Feature - Buy Sell Portfolio PnL",
+          path: "docs/coding/React JS/Capstone 2 - Trading Dashboard/T.5 Trading Feature - Buy Sell Portfolio PnL.md",
+        },
+        {
+          id: "td-t.6",
+          title: "T.6 Dashboard and Tailwind Styling",
+          path: "docs/coding/React JS/Capstone 2 - Trading Dashboard/T.6 Dashboard and Tailwind Styling.md",
+        },
+        {
+          id: "td-t.7",
+          title: "T.7 Charts and Technical Indicators",
+          path: "docs/coding/React JS/Capstone 2 - Trading Dashboard/T.7 Charts and Technical Indicators.md",
+        },
+        {
+          id: "td-t.8",
+          title: "T.8 Tests Build Deploy and README",
+          path: "docs/coding/React JS/Capstone 2 - Trading Dashboard/T.8 Tests Build Deploy and README.md",
+        },
+        {
+          id: "td-t.9",
+          title: "T.9 Interview Questions - Trading Dashboard",
+          path: "docs/coding/React JS/Capstone 2 - Trading Dashboard/T.9 Interview Questions - Trading Dashboard.md",
+        },
+      ],
+    },
+    {
+      id: "capstone3",
+      title: "Capstone 3 - Team Task Dashboard (Kanban + Redux)",
+      lectures: [
+        {
+          id: "tt-t.1",
+          title: "T.1 Setup and Project Structure",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/T.1 Setup and Project Structure.md",
         },
       ],
     },
