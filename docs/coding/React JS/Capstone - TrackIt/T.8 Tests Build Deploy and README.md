@@ -231,7 +231,7 @@ Create new file — `src/components/__tests__/ProtectedRoute.test.tsx`:
 ```tsx
 // src/components/__tests__/ProtectedRoute.test.tsx
 import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { MemoryRouter } from "react-router";
 import { Provider } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
 import { describe, it, expect } from "vitest";

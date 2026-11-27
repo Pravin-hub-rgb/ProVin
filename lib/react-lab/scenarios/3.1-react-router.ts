@@ -44,12 +44,12 @@ Har link \`<NavLink>\` se replace karo aur \`isActive\` ke according class \`"na
   hints: [
     "App.tsx mein <Route path=\"*\"> last mein rakhna — pehle specific routes",
     "NavLink ka className: `({ isActive }) => isActive ? \"nav-link active\" : \"nav-link\"`",
-    "useNavigate import: `import { useNavigate } from \"react-router-dom\"`",
+    "useNavigate import: `import { useNavigate } from \"react-router\"`",
     "NotFound mein Link to=\"/\" — \"Go to Home\"",
   ],
 
   dependencies: {
-    "react-router-dom": "^6.20.0",
+    "react-router": "^6.20.0",
   },
 
   starterFiles: {
@@ -66,7 +66,7 @@ Har link \`<NavLink>\` se replace karo aur \`isActive\` ke according class \`"na
 </html>`,
     "/index.tsx": `import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
+import { HashRouter } from "react-router";
 import App from "./App";
 import "./styles.css";
 
@@ -77,7 +77,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </HashRouter>
   </React.StrictMode>
 );`,
-    "/App.tsx": `import { Routes, Route } from "react-router-dom";
+    "/App.tsx": `import { Routes, Route } from "react-router";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
@@ -99,7 +99,7 @@ export default function App() {
     </div>
   );
 }`,
-    "/components/Navbar.tsx": `import { NavLink } from "react-router-dom";
+    "/components/Navbar.tsx": `import { NavLink } from "react-router";
 
 export default function Navbar() {
   return (
@@ -111,7 +111,7 @@ export default function Navbar() {
     </nav>
   );
 }`,
-    "/components/Home.tsx": `import { useNavigate } from "react-router-dom";
+    "/components/Home.tsx": `import { useNavigate } from "react-router";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -132,7 +132,7 @@ export default function Home() {
     </div>
   );
 }`,
-    "/components/Contact.tsx": `import { useNavigate } from "react-router-dom";
+    "/components/Contact.tsx": `import { useNavigate } from "react-router";
 
 export default function Contact() {
   const navigate = useNavigate();
@@ -146,7 +146,7 @@ export default function Contact() {
     </div>
   );
 }`,
-    "/components/NotFound.tsx": `import { Link } from "react-router-dom";
+    "/components/NotFound.tsx": `import { Link } from "react-router";
 
 export default function NotFound() {
   return (
@@ -192,7 +192,7 @@ h1 { margin-top: 0; }`,
   solutionFiles: {
     "/index.tsx": `import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
+import { HashRouter } from "react-router";
 import App from "./App";
 import "./styles.css";
 
@@ -203,7 +203,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </HashRouter>
   </React.StrictMode>
 );`,
-    "/App.tsx": `import { Routes, Route } from "react-router-dom";
+    "/App.tsx": `import { Routes, Route } from "react-router";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import About from "./components/About";
@@ -225,7 +225,7 @@ export default function App() {
     </div>
   );
 }`,
-    "/components/Navbar.tsx": `import { NavLink } from "react-router-dom";
+    "/components/Navbar.tsx": `import { NavLink } from "react-router";
 
 export default function Navbar() {
   return (
@@ -236,7 +236,7 @@ export default function Navbar() {
     </nav>
   );
 }`,
-    "/components/Home.tsx": `import { useNavigate } from "react-router-dom";
+    "/components/Home.tsx": `import { useNavigate } from "react-router";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -249,7 +249,7 @@ export default function Home() {
     </div>
   );
 }`,
-    "/components/Contact.tsx": `import { useNavigate } from "react-router-dom";
+    "/components/Contact.tsx": `import { useNavigate } from "react-router";
 
 export default function Contact() {
   const navigate = useNavigate();
@@ -263,7 +263,7 @@ export default function Contact() {
     </div>
   );
 }`,
-    "/components/NotFound.tsx": `import { Link } from "react-router-dom";
+    "/components/NotFound.tsx": `import { Link } from "react-router";
 
 export default function NotFound() {
   return (

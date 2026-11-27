@@ -14,7 +14,7 @@ We set up React Router with protected routes: login page → dashboard → portf
 
 ```tsx
 // src/App.tsx
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router";
 import { useTradingStore } from "./store/tradingStore";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
@@ -66,7 +66,7 @@ export default function App() {
 
 ```tsx
 // src/components/Layout.tsx
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router";
 import { useTradingStore } from "../store/tradingStore";
 
 export default function Layout() {
@@ -105,7 +105,7 @@ export default function Layout() {
 ```tsx
 // src/pages/Login.tsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useTradingStore } from "../store/tradingStore";
 
 export default function Login() {

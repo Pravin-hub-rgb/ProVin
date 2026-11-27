@@ -40,7 +40,7 @@ Har product card mein \`<Link>\` ke \`to\` mein product ID daalo — jaise \`/pr
   `,
 
   hints: [
-    "Outlet import: `import { Outlet } from \"react-router-dom\"`",
+    "Outlet import: `import { Outlet } from \"react-router\"`",
     "Index route syntax: `<Route index element={<Home />} />` — path nahi lagta",
     "Dynamic route: `<Route path=\"products/:id\" element={<ProductDetail />} />`",
     "useParams: `const { id } = useParams()` — colon ke baad ka naam match karo",
@@ -48,7 +48,7 @@ Har product card mein \`<Link>\` ke \`to\` mein product ID daalo — jaise \`/pr
   ],
 
   dependencies: {
-    "react-router-dom": "^6.20.0",
+    "react-router": "^6.20.0",
   },
 
   starterFiles: {
@@ -65,7 +65,7 @@ Har product card mein \`<Link>\` ke \`to\` mein product ID daalo — jaise \`/pr
 </html>`,
     "/index.tsx": `import React from "react";
 import ReactDOM from "react-dom/client";
-import { HashRouter } from "react-router-dom";
+import { HashRouter } from "react-router";
 import App from "./App";
 import "./styles.css";
 
@@ -76,7 +76,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </HashRouter>
   </React.StrictMode>
 );`,
-    "/App.tsx": `import { Routes, Route } from "react-router-dom";
+    "/App.tsx": `import { Routes, Route } from "react-router";
 // TODO: Outlet import karo
 import Header from "./components/Header";
 import Home from "./components/Home";
@@ -111,7 +111,7 @@ export default function App() {
     </HashRouter>
   );
 }`,
-    "/components/Header.tsx": `import { NavLink } from "react-router-dom";
+    "/components/Header.tsx": `import { NavLink } from "react-router";
 
 export default function Header() {
   return (
@@ -125,7 +125,7 @@ export default function Header() {
     </nav>
   );
 }`,
-    "/components/Home.tsx": `import { Link } from "react-router-dom";
+    "/components/Home.tsx": `import { Link } from "react-router";
 
 export default function Home() {
   return (
@@ -136,7 +136,7 @@ export default function Home() {
     </div>
   );
 }`,
-    "/components/ProductList.tsx": `import { Link } from "react-router-dom";
+    "/components/ProductList.tsx": `import { Link } from "react-router";
 
 const products = [
   { id: 1, name: "Wireless Headphones", price: 2499 },
@@ -161,7 +161,7 @@ export default function ProductList() {
     </div>
   );
 }`,
-    "/components/ProductDetail.tsx": `import { Link } from "react-router-dom";
+    "/components/ProductDetail.tsx": `import { Link } from "react-router";
 // TODO: useParams import karo
 
 const productData: Record<string, { name: string; price: number; desc: string }> = {
@@ -184,7 +184,7 @@ export default function ProductDetail() {
     </div>
   );
 }`,
-    "/components/NotFound.tsx": `import { Link } from "react-router-dom";
+    "/components/NotFound.tsx": `import { Link } from "react-router";
 
 export default function NotFound() {
   return (
@@ -246,7 +246,7 @@ button:hover { background: #2ea043; }`,
   },
 
   solutionFiles: {
-    "/App.tsx": `import { Routes, Route, Outlet } from "react-router-dom";
+    "/App.tsx": `import { Routes, Route, Outlet } from "react-router";
 import Header from "./components/Header";
 import Home from "./components/Home";
 import ProductList from "./components/ProductList";
@@ -280,7 +280,7 @@ export default function App() {
     </HashRouter>
   );
 }`,
-    "/components/ProductList.tsx": `import { Link } from "react-router-dom";
+    "/components/ProductList.tsx": `import { Link } from "react-router";
 
 const products = [
   { id: 1, name: "Wireless Headphones", price: 2499 },
@@ -304,8 +304,8 @@ export default function ProductList() {
     </div>
   );
 }`,
-    "/components/ProductDetail.tsx": `import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+    "/components/ProductDetail.tsx": `import { useParams } from "react-router";
+import { Link } from "react-router";
 
 const productData: Record<string, { name: string; price: number; desc: string }> = {
   "1": { name: "Wireless Headphones", price: 2499, desc: "Noise-cancelling Bluetooth 5.0 headphones with 30hr battery life." },

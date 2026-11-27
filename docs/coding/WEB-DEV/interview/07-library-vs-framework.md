@@ -129,13 +129,13 @@ npm run dev
 
 | Tool | Description | Setup |
 |------|-------------|-------|
-| **React Router** | Most popular | `npm install react-router-dom` |
+| **React Router** | Most popular | `npm install react-router` |
 | **Reach Router** | Accessibility focused | `npm install @reach/router` |
 | **Next.js Router** | Built-in (file-based) | Automatic |
 
 ```javascript
 // With React Router:
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router';
 
 function App() {
   return (
@@ -330,7 +330,7 @@ In Next.js:
 npm create vite@latest my-app -- --template react
 
 // 2. Install React Router for routing
-npm install react-router-dom
+npm install react-router
 
 // 3. Install Redux for state management
 npm install @reduxjs/toolkit react-redux
@@ -340,7 +340,7 @@ npm create remix@latest
 
 // Your code:
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router';
 
 function App() {
   return (

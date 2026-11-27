@@ -29,7 +29,7 @@ First, create skeletons for all pages. New files:
 ```tsx
 // src/pages/Login.tsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 import { useAppDispatch } from "../stores/hooks";
 import { login } from "../stores/authSlice";
 
@@ -63,7 +63,7 @@ export function Login() {
 
 ```tsx
 // src/pages/NotFound.tsx
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 export function NotFound() {
   return (
@@ -95,7 +95,7 @@ The protected route pattern (from Batch 3.3) — a wrapper that checks login sta
 
 ```tsx
 // src/components/ProtectedRoute.tsx
-import { Navigate } from "react-router-dom";
+import { Navigate } from "react-router";
 import type { ReactNode } from "react";
 import { useAppSelector } from "../stores/hooks";
 import { selectIsLoggedIn } from "../stores/selectors";
@@ -138,7 +138,7 @@ Now load pages with `React.lazy` — only when the route is hit. Create the full
 ```tsx
 // src/App.tsx
 import { Suspense, lazy } from "react";
-import { BrowserRouter, Routes, Route, NavLink } from "react-router-dom";
+import { BrowserRouter, Routes, Route, NavLink } from "react-router";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { useAppSelector, useAppDispatch } from "./stores/hooks";
 import { selectIsLoggedIn } from "./stores/selectors";

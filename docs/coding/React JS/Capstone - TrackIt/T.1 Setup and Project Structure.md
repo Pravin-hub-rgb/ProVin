@@ -131,8 +131,8 @@ trackit/
 **Now install dependencies** — everything the project needs:
 
 ```bash
-bun add @reduxjs/toolkit react-redux redux-persist react-router-dom framer-motion
-# npm: npm install @reduxjs/toolkit react-redux redux-persist react-router-dom framer-motion
+bun add @reduxjs/toolkit react-redux redux-persist react-router framer-motion
+# npm: npm install @reduxjs/toolkit react-redux redux-persist react-router framer-motion
 bun add -d vitest jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom dompurify @types/dompurify
 # npm: npm install -D vitest jsdom @testing-library/react @testing-library/user-event @testing-library/jest-dom dompurify @types/dompurify
 ```
@@ -144,7 +144,7 @@ bun add -d vitest jsdom @testing-library/react @testing-library/user-event @test
 | `@reduxjs/toolkit` | Global state — `createSlice`, `configureStore` (Batch 6.7) |
 | `react-redux` | React bindings — `Provider`, `useSelector`, `useDispatch` (Batch 6.7) |
 | `redux-persist` | Persist the whole store to localStorage (Batch 6.7.5.5) |
-| `react-router-dom` | Routing (Batch 3) |
+| `react-router` | Routing (Batch 3) |
 | `framer-motion` | Animations |
 | `dompurify` | HTML sanitization (Batch 7 security) |
 | `vitest` + Testing Library | Tests (Batch 7) |
@@ -249,7 +249,7 @@ If you ever get confused about which folder belongs to which step, look back at 
 <details>
 <summary>Show Answer</summary>
 
-**Sample Answer:** `@reduxjs/toolkit` is for global state — `createSlice` builds the habits/tasks/prefs/auth slices, `configureStore` combines them (Batch 6.7). `react-redux` connects them to React — the `Provider` in `main.tsx` and the typed `useAppSelector`/`useAppDispatch` hooks (6.7.3). `redux-persist` saves the whole store to localStorage and rehydrates it on startup (6.7.5.5) — refresh-safe without a backend. react-router-dom is for routing — protected routes, lazy loading (Batch 3). framer-motion is for animations. Along with these, dompurify for security and vitest+RTL for testing.
+**Sample Answer:** `@reduxjs/toolkit` is for global state — `createSlice` builds the habits/tasks/prefs/auth slices, `configureStore` combines them (Batch 6.7). `react-redux` connects them to React — the `Provider` in `main.tsx` and the typed `useAppSelector`/`useAppDispatch` hooks (6.7.3). `redux-persist` saves the whole store to localStorage and rehydrates it on startup (6.7.5.5) — refresh-safe without a backend. react-router is for routing — protected routes, lazy loading (Batch 3). framer-motion is for animations. Along with these, dompurify for security and vitest+RTL for testing.
 
 </details>
 

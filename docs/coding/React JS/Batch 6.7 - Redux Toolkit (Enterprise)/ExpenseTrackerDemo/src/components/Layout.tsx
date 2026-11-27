@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet } from "react-router";
 import { fetchRate } from "../rtk/rateSlice";
 import { useAppDispatch } from "../rtk/hooks";
 

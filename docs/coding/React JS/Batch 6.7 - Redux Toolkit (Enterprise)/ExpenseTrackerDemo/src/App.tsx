@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import ExpensesPage from './components/ExpensesPage'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router'
 import Layout from './components/Layout'
 import Category from './components/Category'
 import Summary from './components/Summary'

@@ -991,6 +991,26 @@ export const reactSubject: Subject = {
           title: "T.1 Setup and Project Structure",
           path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/T.1 Setup and Project Structure.md",
         },
+        {
+          id: "tt-srs",
+          title: "SRS - Software Requirements Specification",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team_Task_Dashboard_SRS.md",
+        },
+        {
+          id: "tt-datamodel",
+          title: "Data Model (Design Phase)",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard Data Model (Design Phase).md",
+        },
+        {
+          id: "tt-statedesign",
+          title: "State Design",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard State Design.md",
+        },
+        {
+          id: "tt-tickets",
+          title: "Tickets (Planning Phase)",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard Tickets (Planning Phase).md",
+        },
       ],
     },
     {

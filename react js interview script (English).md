@@ -194,7 +194,7 @@ Summary:
 
 ## 22. What is React Router?
 
-React Router is a library you install inside React (react-router-dom) for navigation in single page applications (SPAs). In an SPA, when you navigate between pages (e.g., from home to about), the page doesn't reload — React Router handles the navigation. You define routes with a path and the component (element) to render for that path.
+React Router is a library you install inside React (react-router) for navigation in single page applications (SPAs). In an SPA, when you navigate between pages (e.g., from home to about), the page doesn't reload — React Router handles the navigation. You define routes with a path and the component (element) to render for that path.
 
 ## 23. What is Prop Drilling?
 
