@@ -221,7 +221,9 @@
     "dsa-4.2": true,
     "dsa-4.3": true,
     "dsa-4.1": true,
-    "dsa-5.2": true
+    "dsa-5.2": true,
+    "dsa-5.3": true,
+    "dsa-5.1": true
   },
   "nextjs": {
     "next-0.0": false,
