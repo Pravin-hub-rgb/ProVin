@@ -136,6 +136,11 @@ export const javascriptSubject: Subject = {
           id: "js-lec19",
           title: "3.6 Fetch API",
           path: "docs/coding/JS/Phase 3 - Async JavaScript/3.6 Fetch API.md",
+        },
+        {
+          id: "js-lec20",
+          title: "3.7 Project - API App",
+          path: "docs/coding/JS/Phase 3 - Async JavaScript/3.7 Project - API App.md",
         }
       ]
     },
@@ -230,6 +235,11 @@ export const javascriptSubject: Subject = {
           id: "js-lec34",
           title: "5.6 localStorage & sessionStorage",
           path: "docs/coding/JS/Phase 5 - DOM & Browser/5.6 localStorage & sessionStorage.md",
+        },
+        {
+          id: "js-lec35",
+          title: "5.9 Project - Card Stack",
+          path: "docs/coding/JS/Phase 5 - DOM & Browser/5.9 Project - Card Stack.md",
         }
       ]
     },
@@ -262,6 +272,48 @@ export const javascriptSubject: Subject = {
           id: "js-lec39",
           title: "6.5 Generators",
           path: "docs/coding/JS/Phase 6 - Advanced Topics/6.5 Generators.md",
+        }
+      ]
+    },
+    {
+      id: "phase7",
+      title: "Phase 7 — ES6 & Modern JavaScript",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "js-lec40",
+          title: "7.1 ES6 Overview",
+          path: "docs/coding/JS/Phase 7 - ES6 & Modern JavaScript/7.1 ES6 Overview.md",
+        },
+        {
+          id: "js-lec41",
+          title: "7.2 Default Parameters",
+          path: "docs/coding/JS/Phase 7 - ES6 & Modern JavaScript/7.2 Default Parameters.md",
+        },
+        {
+          id: "js-lec42",
+          title: "7.3 for...of and for...in",
+          path: "docs/coding/JS/Phase 7 - ES6 & Modern JavaScript/7.3 for...of and for...in.md",
+        },
+        {
+          id: "js-lec43",
+          title: "7.4 Map and Set",
+          path: "docs/coding/JS/Phase 7 - ES6 & Modern JavaScript/7.4 Map and Set.md",
+        },
+        {
+          id: "js-lec44",
+          title: "7.5 Symbol",
+          path: "docs/coding/JS/Phase 7 - ES6 & Modern JavaScript/7.5 Symbol.md",
+        },
+        {
+          id: "js-lec45",
+          title: "7.6 Object Shorthand",
+          path: "docs/coding/JS/Phase 7 - ES6 & Modern JavaScript/7.6 Object Shorthand.md",
+        },
+        {
+          id: "js-lec46",
+          title: "7.7 Project - ES6 Feature Showcase",
+          path: "docs/coding/JS/Phase 7 - ES6 & Modern JavaScript/7.7 Project - ES6 Feature Showcase.md",
         }
       ]
     }

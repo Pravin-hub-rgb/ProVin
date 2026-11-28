@@ -1007,14 +1007,25 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard State Design.md",
         },
         {
+          id: "tt-designbasics",
+          title: "Design Basics for Developers (Friendly Guide)",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Design Basics for Developers A Friendly Guide (Team Task Dashboard).md",
+        },
+        {
           id: "tt-uidesign",
           title: "UI Design Guide (Wireframes and Screens)",
           path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard UI Design Guide (Wireframes and Screens).md",
         },
         {
-          id: "tt-tickets",
-          title: "Tickets (Planning Phase)",
-          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard Tickets (Planning Phase).md",
+          id: "capstone3-flowchart-excalidraw",
+          title: "Task Flow Dashboard (Excalidraw)",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/task flow dashboard wireframe.excalidraw",
+          isComponent: true,
+        },
+        {
+          id: "capstone3-palette",
+          title: "Task Dashboard Palette (HTML)",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Task Dashboard Palette.html",
         },
         {
           id: "tt-tickets-v2",
@@ -1052,6 +1063,11 @@ export const reactSubject: Subject = {
           id: "bu-8.4",
           title: "8.4 Architecture and Tradeoffs",
           path: "docs/coding/React JS/Batch 8 - Project Understanding/8.4 Architecture and Tradeoffs.md",
+        },
+        {
+          id: "bu-8.4b",
+          title: "8.4b Design Basics for Developers (Friendly Guide)",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Design Basics for Developers A Friendly Guide (Team Task Dashboard).md",
         },
         {
           id: "bu-8.5",
