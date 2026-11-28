@@ -22,8 +22,8 @@ No prior AI knowledge needed. You bring nothing but curiosity (and, if you have 
 |---|---|---|
 | Phase 1 | AI Foundations — The Map | ✅ Done |
 | Phase 2 | Inside the Building — LLM, Limits & Orchestration | ✅ Done |
-| Phase 3 | Tools and the Agent Loop | 📋 Planned — next discussions |
-| Phase 4 | Training, Tokens and Fine-Tuning | 📋 Planned |
+| Phase 3 | Tools and the Agent Loop | ✅ Done |
+| Phase 4 | Training, Tokens and Fine-Tuning | ✅ Done |
 | Phase 5 | Frameworks Deeper — LangChain & LangGraph | 📋 Planned |
 | Phase 6+ | Prompting, Ethics, Landscape & more | ⏳ Built as discussions continue |
 
@@ -58,19 +58,19 @@ The zoom-in. You know the map — now what's actually under the floorboards: wha
 
 ---
 
-## Phase 3 — Tools and the Agent Loop 📋
+## Phase 3 — Tools and the Agent Loop ✅
 
 The string that got previewed but never pulled: **actions**. This is where your months of using agents finally get their under-the-hood explanation.
 
-| # | Lesson (planned) | What it will lock in |
+| # | Lesson | What it locks in |
 |---|---|---|
-| 3.1 | Tools — The String That Lets the LLM Act | What tools are, how the LLM "chooses" one, why the tools live outside the model |
+| 3.1 | Tools — The String That Lets the LLM Act | What tools are, how the LLM "chooses" one, why the tools live outside the model, tool calls |
 | 3.2 | Live Lookups vs Stored Knowledge | Web search and APIs as plain-text fetches; when to use a tool instead of RAG |
 | 3.3 | The Agent Loop, Step by Step | think → act → observe → think again; why the loop ends; where your chatbot stops and your agent continues |
 
 ---
 
-## Phase 4 — Training, Tokens and Fine-Tuning 📋
+## Phase 4 — Training, Tokens and Fine-Tuning ✅
 
 The factory side. Training was one box in the Phase 1 pipeline — here it opens up.
 
@@ -80,6 +80,8 @@ The factory side. Training was one box in the Phase 1 pipeline — here it opens
 | 4.2 | Pre-training | The first, giant learning pass — where the base model and its knowledge cutoff come from |
 | 4.3 | Fine-Tuning | The second, smaller pass — how a general model gets its personality and skills |
 | 4.4 | From Base Model to Helpful Assistant | How the pieces (pre-training, fine-tuning, instructions) combine into the chatbots you use |
+| 4.5 | The Transformer — The LLM's Blueprint | Architecture of the neural network; RNN history; parallel processing; GPUs |
+| 4.6 | Attention — How Each Word Weighs the Others | How each token looks at the others; relevance scoring; feed-forward; layer stacking |
 
 ---
 
@@ -132,4 +134,4 @@ The map is never finished — it grows. Candidate modules, decided as conversati
 
 ---
 
-**Next up:** Phase 2 is complete — start at `2.1 The LLM Up Close`. Phase 3 (tools and the agent loop) gets written as the next discussions land.
+**Next up:** Phase 4 is complete. Phase 5 (Frameworks Deeper — LangChain & LangGraph) gets written as the next discussions land.

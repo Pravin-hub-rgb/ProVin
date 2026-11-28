@@ -226,7 +226,8 @@
     "dsa-5.1": true,
     "dsa-6.2": true,
     "dsa-6.1": true,
-    "dsa-6.3": true
+    "dsa-6.3": true,
+    "dsa-6.4": true
   },
   "nextjs": {
     "next-0.0": false,
@@ -335,6 +336,8 @@
     "hc-2-2-form-elements": true,
     "hc-2-3-input-types": true,
     "hc-2-4-input-attributes": true,
-    "hc-2-5-input-form-attributes": true
+    "hc-2-5-input-form-attributes": true,
+    "hc-3-0-canvas": true,
+    "hc-3-1-svg": true
   }
 }
