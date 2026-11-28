@@ -1007,9 +1007,76 @@ export const reactSubject: Subject = {
           path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard State Design.md",
         },
         {
+          id: "tt-uidesign",
+          title: "UI Design Guide (Wireframes and Screens)",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard UI Design Guide (Wireframes and Screens).md",
+        },
+        {
           id: "tt-tickets",
           title: "Tickets (Planning Phase)",
           path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard Tickets (Planning Phase).md",
+        },
+        {
+          id: "tt-tickets-v2",
+          title: "Tickets v2 (Vertical Slices)",
+          path: "docs/coding/React JS/Capstone 3 - Team Task Dashboard/Team Task Dashboard Tickets v2 (Vertical Slices).md",
+        },
+      ],
+    },
+    {
+      id: "batch8",
+      title: "Batch 8 - Project Understanding",
+      openByDefault: false,
+      lectures: [
+        {
+          id: "bu-8.0",
+          title: "8.0 Introduction - Why Project Understanding Matters",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.0 Introduction - Why Project Understanding Matters.md",
+        },
+        {
+          id: "bu-8.1",
+          title: "8.1 Requirements Gathering",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.1 Requirements Gathering.md",
+        },
+        {
+          id: "bu-8.2",
+          title: "8.2 Data Modeling",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.2 Data Modeling.md",
+        },
+        {
+          id: "bu-8.3",
+          title: "8.3 State Management Design",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.3 State Management Design.md",
+        },
+        {
+          id: "bu-8.4",
+          title: "8.4 Architecture and Tradeoffs",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.4 Architecture and Tradeoffs.md",
+        },
+        {
+          id: "bu-8.5",
+          title: "8.5 Case Study 1 - Team Task Dashboard",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.5 Case Study 1 - Team Task Dashboard.md",
+        },
+        {
+          id: "bu-8.6",
+          title: "8.6 Case Study 2 - TrackIt",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.6 Case Study 2 - TrackIt.md",
+        },
+        {
+          id: "bu-8.7",
+          title: "8.7 Case Study 3 - Trading Dashboard",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.7 Case Study 3 - Trading Dashboard.md",
+        },
+        {
+          id: "bu-8.8",
+          title: "8.8 Interview Preparation",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.8 Interview Preparation.md",
+        },
+        {
+          id: "bu-8.9",
+          title: "8.9 Developer Process and Interview Guide",
+          path: "docs/coding/React JS/Batch 8 - Project Understanding/8.9 Developer Process and Interview Guide.md",
         },
       ],
     },

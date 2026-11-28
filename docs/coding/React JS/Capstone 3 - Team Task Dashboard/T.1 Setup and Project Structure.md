@@ -364,25 +364,17 @@ Billing, integrations, full real-time collaboration, native mobile app.
 
 ## Build Plan (Tickets)
 
-Each ticket ends in something that runs and can be demoed.
+The build plan has been rewritten as **vertical slices** in Team Task Dashboard Tickets v2 (Vertical Slices).md. 
 
-| Ticket | Title | Outcome |
-| --- | --- | --- |
-| **TD-1** | Project setup | Vite, React, TypeScript, Tailwind, ESLint and Prettier, folder structure, dev server runs. |
-| **TD-2** | Types and seed data | All types defined. Seed users, projects and tasks. |
-| **TD-3** | Store | Slices, `configureStore`, redux-persist, typed hooks, selectors with unit tests. |
-| **TD-4** | Auth and routing | Login, protected and role routes, lazy loading, not-found page, redirects by role. |
-| **TD-5** | App layout | Navbar, sidebar, responsive shell, theme toggle. |
-| **TD-6** | Projects module | List, create, edit, delete with confirmation. |
-| **TD-7** | Tasks module | Task form, validation, assignment, filters and search. |
-| **TD-8** | Kanban board | Columns, dnd-kit drag and drop, keyboard alternative, overdue flags. |
-| **TD-9** | Task detail | Comments, activity history. |
-| **TD-10** | Admin dashboard | Stat cards, charts, progress per project, workload per person. |
-| **TD-11** | Polish | Loading, empty and error states, error boundary, light animations, accessibility pass. |
-| **TD-12** | Testing | Slice and selector tests, component tests for login and task move. |
-| **TD-13** | Deploy and docs | Vercel deploy, README with screenshots, architecture notes and honest limitations. |
+**Why v2?** The original plan (v1) was horizontal — build all types, then the whole store, then all screens. Nothing was visible until late. v2 builds one small feature through all layers at once (data + logic + screen), so every ticket ends with something you can see and click.
 
----
+**v2 has 17 tickets (TD-1 to TD-17)** with 4 demo points:
+- Demo 1 after TD-5 (login + navigation)
+- Demo 2 (MVP) after TD-10 (first Kanban board)
+- Demo 3 after TD-14 (full board with drag-and-drop)
+- Final after TD-17 (deployed app)
+
+See Team Task Dashboard Tickets v2 (Vertical Slices).md for the full build plan.
 
 ## Definition of Done (for every ticket)
 
@@ -416,6 +408,17 @@ Each ticket ends in something that runs and can be demoed.
 - Be ready to explain: why normalized state, why Redux Toolkit here, how roles work without a backend, and what you would change with a real server.
 
 ---
+
+## The Flow (Read in This Order)
+
+The documents in this capstone follow a proper software development flow. Read them in this order:
+
+1. **SRS** (Software Requirements Specification) — What to build. Requirements, user flows, functional/non-functional requirements, scope.
+2. **Data Model (Design Phase)** — How to store data. Entities, attributes, relationships, ER diagram, normalized state.
+3. **State Design** — How Redux slices map to the data model. Slices, selectors, permissions, thunks, persistence.
+4. **UI Design Guide (Wireframes and Screens)** — How the app looks. Wireframes, screen layouts, component hierarchy, user flows visualized.
+5. **Tickets (Planning Phase)** — Original horizontal build plan (v1). Build all types, then store, then screens.
+6. **Tickets v2 (Vertical Slices)** — Rewritten build plan. Each ticket cuts through data + logic + screen. Ends with something visible.
 
 ## Next Step
 

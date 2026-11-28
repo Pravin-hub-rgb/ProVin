@@ -394,6 +394,7 @@ Storing these would risk them going out of date. Calculating them (with selector
 ## 11. Next steps
 
 1. ~~Draw the **ER diagram**~~ — Done! See Section 5.5 above.
-2. Design the **state** (which Redux slices hold which entities, and the selectors).
-3. Break the work into tickets.
-4. Open VS Code and start TD-1.
+2. Design the **state** (which Redux slices hold which entities, and the selectors). See Team Task Dashboard State Design.md.
+3. Design the **UI** (wireframes and screens). See Team Task Dashboard UI Design Guide (Wireframes and Screens).md.
+4. Break the work into tickets. See Team Task Dashboard Tickets v2 (Vertical Slices).md.
+5. Open VS Code and start TD-1.
